@@ -44,7 +44,9 @@ $relpath =~ s,\\,/,g;
 # the current directory is the "build tree" or "object tree"
 my $outpath = getcwd();
 
-system_v("perl $relpath/init-repository -q") and die("init-repository failed");
+if (! -e "$outpath/qtbase/configure") {
+    die("$outpath/qtbase/configure not found. Did you forget to run \"init-repository\"?");
+}
 
 ensureDir("$outpath/qtbase");
 chdir("$outpath/qtbase");
