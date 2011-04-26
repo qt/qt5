@@ -46,8 +46,6 @@ my $outpath = getcwd();
 
 system_v("perl $relpath/init-repository -q") and die("init-repository failed");
 
-system_v("perl $relpath/fix-webkit") and die("Applying webkit patches failed");
-
 ensureDir("$outpath/qtbase");
 chdir("$outpath/qtbase");
 system_v("$relpath/qtbase/configure @ARGV");
