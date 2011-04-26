@@ -39,7 +39,7 @@
 	url = git://gitorious.org/qt-labs/qlalr.git
 [submodule "qtrepotools"]
 	path = qtrepotools
-	url = git://gitorious.org/qt/qtrepotools.git
+	url = git://gitorious.org/qt-labs/qtrepotools.git
 [submodule "qtwebkit-examples-and-demos"]
 	path = qtwebkit-examples-and-demos
 	url = git://gitorious.org/qt/qtwebkit-examples-and-demos.git
