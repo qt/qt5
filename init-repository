@@ -105,13 +105,11 @@ if ($nokia_developer) {
         if (/(submodule\.[^.=]+\.url)=(.*)/) {
             my $key = $1;
             my $value = $2;
-            if ($key eq "submodule.qtwebkit.url") {
-                # WebKit is special, and has only external link.
-                $value =~ s,^git://gitorious\.org/,git\@gitorious.org:,;
-            } else {
+            # WebKit is special, and has only external link.
+            if ($key ne "submodule.qtwebkit.url") {
                 # qt-labs projects are still hosted under qt internally.
-                $value =~ s,^git://gitorious\.org/qt-labs/,git\@scm.dev.nokia.troll.no:qt/,;
-                $value =~ s,^git://gitorious\.org/,git\@scm.dev.nokia.troll.no:,;
+                $value =~ s,^git://gitorious\.org/qt-labs/,git://scm.dev.nokia.troll.no/qt/,;
+                $value =~ s,^git://gitorious\.org/,git://scm.dev.nokia.troll.no/,;
             }
             system_v("git config \"$key\" \"$value\"");
         }
