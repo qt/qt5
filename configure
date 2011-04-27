@@ -44,8 +44,8 @@ $relpath =~ s,\\,/,g;
 # the current directory is the "build tree" or "object tree"
 my $outpath = getcwd();
 
-if (! -e "$outpath/qtbase/configure") {
-    die("$outpath/qtbase/configure not found. Did you forget to run \"init-repository\"?");
+if (! -e "$relpath/qtbase/configure") {
+    die("$relpath/qtbase/configure not found. Did you forget to run \"init-repository\"?");
 }
 
 ensureDir("$outpath/qtbase");
