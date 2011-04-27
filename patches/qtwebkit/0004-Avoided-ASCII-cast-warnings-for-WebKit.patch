@@ -1,0 +1,31 @@
+From ec71d9e0ea77a0648eaf80d3f5b6eebe4e33628d Mon Sep 17 00:00:00 2001
+From: axis <qt-info@nokia.com>
+Date: Thu, 17 Feb 2011 15:21:07 +0100
+Subject: [PATCH 4/7] Avoided ASCII-cast warnings for WebKit.
+
+Normally they won't be enabled anyway, but if you build webkit from
+within the Qt qt5 repository it will pick up Qt's default build
+settings, which do enable it. We need to disable them because
+warnings are treated as errors and there are way too many of them in
+the WebKit code.
+---
+ Source/WebKit/qt/QtWebKit.pro |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Source/WebKit/qt/QtWebKit.pro b/Source/WebKit/qt/QtWebKit.pro
+index e876f5b..f43c49a 100644
+--- a/Source/WebKit/qt/QtWebKit.pro
++++ b/Source/WebKit/qt/QtWebKit.pro
+@@ -87,6 +87,9 @@ CONFIG(QTDIR_build) {
+     symbian: TARGET =$$TARGET$${QT_LIBINFIX}
+ }
+ 
++# Avoid ASCII-cast warnings because Qt use them a lot and warnings are treated as errors.
++DEFINES -= QT_ASCII_CAST_WARNINGS
++
+ symbian {
+     TARGET.EPOCALLOWDLLDATA=1
+     # DRM and Allfiles capabilites need to be audited to be signed on Symbian
+-- 
+1.7.2.2
+

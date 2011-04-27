@@ -1,0 +1,39 @@
+From 061e406697c5ab7d0daf5050e55217b2048c0fc5 Mon Sep 17 00:00:00 2001
+From: Marius Storm-Olsen <marius.storm-olsen@nokia.com>
+Date: Tue, 15 Feb 2011 16:37:20 -0600
+Subject: [PATCH 5/7] Properly detect phonon include, and avoid double qtLibraryTarget() call
+
+---
+ Source/WebCore/WebCore.pri    |    2 +-
+ Source/WebKit/qt/QtWebKit.pro |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Source/WebCore/WebCore.pri b/Source/WebCore/WebCore.pri
+index 4cbc003..704e1dd 100644
+--- a/Source/WebCore/WebCore.pri
++++ b/Source/WebCore/WebCore.pri
+@@ -300,7 +300,7 @@ contains (CONFIG, text_breaking_with_icu) {
+ !CONFIG(QTDIR_build) {
+     win32-*|wince* {
+         DLLDESTDIR = $$OUTPUT_DIR/bin
+-        build_pass: TARGET = $$qtLibraryTarget($$TARGET)
++        isEmpty(QT_SOURCE_TREE):build_pass: TARGET = $$qtLibraryTarget($$TARGET)
+ 
+         dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
+         dlltarget.CONFIG = no_path
+diff --git a/Source/WebKit/qt/QtWebKit.pro b/Source/WebKit/qt/QtWebKit.pro
+index f43c49a..7f6943d 100644
+--- a/Source/WebKit/qt/QtWebKit.pro
++++ b/Source/WebKit/qt/QtWebKit.pro
+@@ -441,7 +441,7 @@ contains(DEFINES, ENABLE_GEOLOCATION=1) {
+ 
+                 CONFIG += build_all
+             } else {
+-                debug_and_release:TARGET = $$qtLibraryTarget($$TARGET)
++                isEmpty(QT_SOURCE_TREE):debug_and_release:TARGET = $$qtLibraryTarget($$TARGET)
+             }
+ 
+             CONFIG += lib_bundle qt_no_framework_direct_includes qt_framework
+-- 
+1.7.2.2
+

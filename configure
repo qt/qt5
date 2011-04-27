@@ -1,0 +1,63 @@
+#!/usr/bin/perl -w
+####################################################################################################
+#
+# Mother script for Qt Modularization
+#
+# Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+# Contact: Nokia Corporation (qt-info@nokia.com)
+#
+####################################################################################################
+use strict;
+
+use File::Basename;
+use File::Path;
+use Cwd;
+use Cwd 'abs_path';
+use Config;
+
+# Makes sure the arguments are directories, and creates them if not.
+# Will die if there is an error.
+sub ensureDir {
+    foreach (@_) {
+        if (-e $_) {
+            if (-d $_) {
+                next;
+            } else {
+                die ("$_ exists, but is not a directory");
+            }
+        }
+        File::Path::mkpath($_) or die("Could not create $_");
+    }
+}
+
+# `system', but also print the command
+sub system_v
+{
+    print "+ ";
+    print @_;
+    print "\n";
+    return system(@_);
+}
+
+my $relpath = dirname(abs_path($0));
+$relpath =~ s,\\,/,g;
+# the current directory is the "build tree" or "object tree"
+my $outpath = getcwd();
+
+system_v("perl $relpath/init-repository -q") and die("init-repository failed");
+
+system_v("perl $relpath/fix-webkit") and die("Applying webkit patches failed");
+
+ensureDir("$outpath/qtbase");
+chdir("$outpath/qtbase");
+system_v("$relpath/qtbase/configure @ARGV");
+
+chdir("$outpath");
+
+open QMAKE_CACHE, ">.qmake.cache" || die "Could not open .qmake.cache for writing!\n";
+print QMAKE_CACHE "include(\$\$PWD/qtbase/.qmake.cache)\n";
+close QMAKE_CACHE;
+
+system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
+
+exit 0;

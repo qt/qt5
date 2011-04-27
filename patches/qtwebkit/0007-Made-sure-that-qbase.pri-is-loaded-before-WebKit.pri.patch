@@ -1,0 +1,46 @@
+From 9ae00b7dc7a23715ff91c01b99b7370a47148b17 Mon Sep 17 00:00:00 2001
+From: Prasanth Ullattil <prasanth.ullattil@nokia.com>
+Date: Thu, 3 Mar 2011 16:08:52 +0100
+Subject: [PATCH] Made sure that qbase.pri is loaded before WebKit.pri.
+
+This is needed because WebKit.pri changes some of qbase.pri's
+options. Updating the previous patch for the same.
+---
+ Source/WebKit/qt/QtWebKit.pro |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Source/WebKit/qt/QtWebKit.pro b/Source/WebKit/qt/QtWebKit.pro
+index b4f953c..78ffee2 100644
+--- a/Source/WebKit/qt/QtWebKit.pro
++++ b/Source/WebKit/qt/QtWebKit.pro
+@@ -25,6 +25,13 @@ CONFIG(standalone_package) {
+     isEmpty(WC_GENERATED_SOURCES_DIR):WEBKIT2_GENERATED_SOURCES_DIR = ../../WebKit2/generated
+ }
+ 
++CONFIG(QTDIR_build) {
++    include($$QT_SOURCE_TREE/src/qbase.pri)
++} else {
++    DESTDIR = $$OUTPUT_DIR/lib
++    symbian: TARGET =$$TARGET$${QT_LIBINFIX}
++}
++
+ include($$PWD/Api/headers.pri)
+ include($$SOURCE_DIR/WebKit.pri)
+ include($$SOURCE_DIR/JavaScriptCore/JavaScriptCore.pri)
+@@ -75,13 +82,6 @@ CONFIG(release):!CONFIG(standalone_package) {
+     unix:contains(QT_CONFIG, reduce_relocations):CONFIG += bsymbolic_functions
+ }
+ 
+-CONFIG(QTDIR_build) {
+-    include($$QT_SOURCE_TREE/src/qbase.pri)
+-} else {
+-    DESTDIR = $$OUTPUT_DIR/lib
+-    symbian: TARGET =$$TARGET$${QT_LIBINFIX}
+-}
+-
+ # Avoid ASCII-cast warnings because Qt use them a lot and warnings are treated as errors.
+ DEFINES -= QT_ASCII_CAST_WARNINGS
+ 
+-- 
+1.7.3.1
+

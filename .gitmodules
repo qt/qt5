@@ -1,0 +1,51 @@
+[submodule "qtbase"]
+	path = qtbase
+	url = git://gitorious.org/qt/qtbase.git
+[submodule "qtsvg"]
+	path = qtsvg
+	url = git://gitorious.org/qt/qtsvg.git
+[submodule "qtdeclarative"]
+	path = qtdeclarative
+	url = git://gitorious.org/qt/qtdeclarative.git
+[submodule "qt3support"]
+	path = qt3support
+	url = git://gitorious.org/qt/qt3support.git
+[submodule "qtactiveqt"]
+	path = qtactiveqt
+	url = git://gitorious.org/qt/qtactiveqt.git
+[submodule "qtscript"]
+	path = qtscript
+	url = git://gitorious.org/qt/qtscript.git
+[submodule "qtphonon"]
+	path = qtphonon
+	url = git://gitorious.org/qt/qtphonon.git
+[submodule "qtmultimedia"]
+	path = qtmultimedia
+	url = git://gitorious.org/qt/qtmultimedia.git
+[submodule "qttools"]
+	path = qttools
+	url = git://gitorious.org/qt/qttools.git
+[submodule "qtxmlpatterns"]
+	path = qtxmlpatterns
+	url = git://gitorious.org/qt/qtxmlpatterns.git
+[submodule "qttranslations"]
+	path = qttranslations
+	url = git://gitorious.org/qt/qttranslations.git
+[submodule "qtdoc"]
+	path = qtdoc
+	url = git://gitorious.org/qt/qtdoc.git
+[submodule "qlalr"]
+	path = qlalr
+	url = git://gitorious.org/qt/qlalr.git
+[submodule "qtrepotools"]
+	path = qtrepotools
+	url = git://gitorious.org/qt/qtrepotools.git
+[submodule "qtwebkit-examples-and-demos"]
+	path = qtwebkit-examples-and-demos
+	url = git://gitorious.org/qt/qtwebkit-examples-and-demos.git
+[submodule "qtqa"]
+	path = qtqa
+	url = git://gitorious.org/qt/qtqa.git
+[submodule "qtwebkit"]
+	path = qtwebkit
+	url = git://gitorious.org/webkit/qtwebkit.git

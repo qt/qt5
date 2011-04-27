@@ -1,0 +1,29 @@
+From 32f4532d214af8eb833965b042135878c083df68 Mon Sep 17 00:00:00 2001
+From: Prasanth Ullattil <prasanth.ullattil@nokia.com>
+Date: Tue, 15 Mar 2011 11:15:05 +0100
+Subject: [PATCH] Remove the reference to modular for install_name flag
+
+The install_name change for mac is now disabled. At least in the
+modularized version of Qt the path used for install_name is correctly
+set. We need to discuss this with the WebKit team before we forward
+the patch.
+---
+ Source/WebKit/qt/QtWebKit.pro |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Source/WebKit/qt/QtWebKit.pro b/Source/WebKit/qt/QtWebKit.pro
+index d38ddbd..21715f7 100644
+--- a/Source/WebKit/qt/QtWebKit.pro
++++ b/Source/WebKit/qt/QtWebKit.pro
+@@ -315,7 +315,7 @@ mac {
+         QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
+     }
+ 
+-    !contains(QT_CONFIG, modular):QMAKE_LFLAGS_SONAME = "$${QMAKE_LFLAGS_SONAME}$${DESTDIR}$${QMAKE_DIR_SEP}"
++    #!contains(QT_CONFIG, modular):QMAKE_LFLAGS_SONAME = "$${QMAKE_LFLAGS_SONAME}$${DESTDIR}$${QMAKE_DIR_SEP}"
+ }
+ 
+ symbian {
+-- 
+1.7.3.1
+

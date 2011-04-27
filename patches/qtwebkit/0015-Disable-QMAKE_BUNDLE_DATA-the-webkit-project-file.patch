@@ -1,0 +1,30 @@
+From 95d05245c8da84ee385e57d53f35f907cb2d87c1 Mon Sep 17 00:00:00 2001
+From: Prasanth Ullattil <prasanth.ullattil@nokia.com>
+Date: Fri, 25 Mar 2011 10:53:16 +0100
+Subject: [PATCH] Disable QMAKE_BUNDLE_DATA the webkit project file
+
+QMAKE_BUNDLE_DATA in QtWebKit.pro seems to add the rules for Headers
+inside the Framework in both Debug and Release Makefiles. The
+variable already gets set through qbase.pri. After this, the rule
+is created only in the Release Makefile. Not sure whether this should
+go upstream.
+---
+ Source/WebKit/qt/QtWebKit.pro |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Source/WebKit/qt/QtWebKit.pro b/Source/WebKit/qt/QtWebKit.pro
+index 21715f7..646b77d 100644
+--- a/Source/WebKit/qt/QtWebKit.pro
++++ b/Source/WebKit/qt/QtWebKit.pro
+@@ -312,7 +312,7 @@ mac {
+         FRAMEWORK_HEADERS.version = Versions
+         FRAMEWORK_HEADERS.files = $${headers.files}
+         FRAMEWORK_HEADERS.path = Headers
+-        QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
++        #QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
+     }
+ 
+     #!contains(QT_CONFIG, modular):QMAKE_LFLAGS_SONAME = "$${QMAKE_LFLAGS_SONAME}$${DESTDIR}$${QMAKE_DIR_SEP}"
+-- 
+1.7.3.1
+
