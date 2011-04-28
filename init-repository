@@ -60,13 +60,13 @@ sub system_v
 sub printUsage
 {
     print("$0 <options>\n");
-    print("-f\tForce initialization\n");
-    print("-q\tQuiet operation. Will exit cleanly if repository is already\n");
+    print("-f\n\tForce initialization\n");
+    print("-q\n\tQuiet operation. Will exit cleanly if repository is already\n");
     print("\tinitialized\n");
-    print("-nokia-developer Switch to internal Nokia URLs.\n");
-    print("-brisbane-nokia-developer Switch to internal Nokia URLs, and setup the brisbane mirrors.\n");
-    print("-no-webkit Skip webkit and webkit examples submodules.\n");
-    print("-no-update Skip the git submodule update command.\n");
+    print("-nokia-developer\n\tSwitch to internal Nokia URLs.\n");
+    print("-brisbane-nokia-developer\n\tSwitch to internal Nokia URLs, and setup the brisbane mirrors.\n");
+    print("-no-webkit\n\tSkip webkit and webkit examples submodules.\n");
+    print("-no-update\n\t Skip the git submodule update command.\n");
 }
 
 while (@ARGV) {
