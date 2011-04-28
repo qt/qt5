@@ -44,6 +44,7 @@ my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
 my $no_webkit = 0;
+my $no_update = 0;
 
 sub system_v
 {
@@ -63,6 +64,7 @@ sub printUsage
     print("\tinitialized\n");
     print("-nokia-developer Switch to internal Nokia URLs.\n");
     print("-no-webkit Skip webkit and webkit examples submodules.\n");
+    print("-no-update Skip the git submodule update command.\n");
 }
 
 while (@ARGV) {
@@ -78,6 +80,8 @@ while (@ARGV) {
         exit 0;
     } elsif ($arg eq "-no-webkit") {
         $no_webkit = 1;
+    } elsif ($arg eq "-no-update") {
+        $no_update = 1;
     } else {
         die("Illegal argument: $arg");
     }
@@ -124,4 +128,6 @@ if ($nokia_developer) {
     }
 }
 
-system_v("git submodule update");
+unless ($no_update){
+    system_v("git submodule update");
+}
