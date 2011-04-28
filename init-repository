@@ -142,18 +142,18 @@ if ($nokia_developer) {
                 my $this_mirror_url;
                 no warnings 'uninitialized';
                 if($exceptions{$repo} ne undef){
-                    print("Alpha\n");
                     $this_mirror_url = $exceptions{$repo};
                 } else {
-                    print("Beta\n");
                     $this_mirror_url = "$mirror_url$repo.git";
                 }
                 print("Using mirror $this_mirror_url to clone $url\n");
-                chdir($repo) or die "cd failed";#is there a continue instead of die?
-                system_v("git clone $this_mirror_url .");
-                system_v("git config remote.origin.url $url");
-                system_v("git remote add mirror $this_mirror_url");
-                chdir("..") or die "cd fail";
+                unless ($no_update) {
+                    system_v("git clone $this_mirror_url $repo");
+                    chdir($repo) or die "cd failed";
+                    system_v("git config remote.origin.url $url");
+                    system_v("git remote add mirror $this_mirror_url");
+                    chdir("..") or die "cd fail";
+                }
             }
         }
     }
