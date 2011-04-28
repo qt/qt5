@@ -43,6 +43,7 @@
 my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
+my $brisbane_mirror = 0;
 my $no_webkit = 0;
 my $no_update = 0;
 
@@ -63,6 +64,7 @@ sub printUsage
     print("-q\tQuiet operation. Will exit cleanly if repository is already\n");
     print("\tinitialized\n");
     print("-nokia-developer Switch to internal Nokia URLs.\n");
+    print("-brisbane-nokia-developer Switch to internal Nokia URLs, and setup the brisbane mirrors.\n");
     print("-no-webkit Skip webkit and webkit examples submodules.\n");
     print("-no-update Skip the git submodule update command.\n");
 }
@@ -73,6 +75,9 @@ while (@ARGV) {
         $force = 1;
     } elsif ($arg eq "-q") {
         $quiet = 1;
+    } elsif ($arg eq "-brisbane-nokia-developer") {
+        $nokia_developer = 1;
+        $brisbane_mirror = 1;
     } elsif ($arg eq "-nokia-developer") {
         $nokia_developer = 1;
     } elsif ($arg eq "-h" || $arg eq "--help") {
@@ -124,6 +129,32 @@ if ($nokia_developer) {
                 $value =~ s,^git://gitorious\.org/,git://scm.dev.nokia.troll.no/,;
             }
             system_v("git config \"$key\" \"$value\"");
+        }
+    }
+    if ($brisbane_mirror) {
+        my $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
+        my %exceptions = ("qtwebkit", "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git");
+        my @configresult2 = `git config -l`;
+        foreach (@configresult2) {
+            if(/submodule\.([^.=]+)\.url=(.*)/){
+                my $repo = $1;
+                my $url = $2;
+                my $this_mirror_url;
+                no warnings 'uninitialized';
+                if($exceptions{$repo} ne undef){
+                    print("Alpha\n");
+                    $this_mirror_url = $exceptions{$repo};
+                } else {
+                    print("Beta\n");
+                    $this_mirror_url = "$mirror_url$repo.git";
+                }
+                print("Using mirror $this_mirror_url to clone $url\n");
+                chdir($repo) or die "cd failed";#is there a continue instead of die?
+                system_v("git clone $this_mirror_url .");
+                system_v("git config remote.origin.url $url");
+                system_v("git remote add mirror $this_mirror_url");
+                chdir("..") or die "cd fail";
+            }
         }
     }
 }
