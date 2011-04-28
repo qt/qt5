@@ -46,7 +46,7 @@ qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtscript module_qtdeclarative module_qt3support module_qtwebkit
+module_qttools.depends = module_qtbase module_qtscript module_qtdeclarative module_qt3support
 win32:module_qttools.depends += module_activeqt
 
 module_qttranslations.subdir = $$IN_PWD/qttranslations
@@ -70,11 +70,14 @@ SUBDIRS       = \
                 module_qtscript \
                 module_qtdeclarative \
                 module_qt3support \
-                module_qtwebkit \
                 module_qtmultimedia \
                 module_qttools \
                 module_qttranslations \
                 module_qtdoc \
-                qtwebkit_examples_and_demos \
 
+exists(qtwebkit/Tools/Scripts/build-webkit) {
+    SUBDIRS +=  module_qtwebkit \
+                qtwebkit_examples_and_demos
+    module_qttools.depends += module_qtwebkit
+}
 win32:SUBDIRS += module_activeqt
