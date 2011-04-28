@@ -51,7 +51,8 @@ if (! -e "$relpath/qtbase/configure") {
 
 ensureDir("$outpath/qtbase");
 chdir("$outpath/qtbase");
-system_v("$relpath/qtbase/configure @ARGV");
+my $ret = system_v("$relpath/qtbase/configure @ARGV");
+exit $ret unless ($ret == 0);
 
 chdir("$outpath");
 
@@ -59,6 +60,5 @@ open QMAKE_CACHE, ">.qmake.cache" || die "Could not open .qmake.cache for writin
 print QMAKE_CACHE "include(\$\$PWD/qtbase/.qmake.cache)\n";
 close QMAKE_CACHE;
 
-system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
-
-exit 0;
+$ret = system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
+exit $ret;
