@@ -43,6 +43,7 @@
 my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
+my $no_webkit = 0;
 
 sub system_v
 {
@@ -61,6 +62,7 @@ sub printUsage
     print("-q\tQuiet operation. Will exit cleanly if repository is already\n");
     print("\tinitialized\n");
     print("-nokia-developer Switch to internal Nokia URLs.\n");
+    print("-no-webkit Skip webkit and webkit examples submodules.\n");
 }
 
 while (@ARGV) {
@@ -74,6 +76,8 @@ while (@ARGV) {
     } elsif ($arg eq "-h" || $arg eq "--help") {
         printUsage();
         exit 0;
+    } elsif ($arg eq "-no-webkit") {
+        $no_webkit = 1;
     } else {
         die("Illegal argument: $arg");
     }
@@ -98,6 +102,10 @@ if (`git config --get submodule.qtbase.url`) {
 my $init_args = "";
 $init_args = "-q" if ($quiet);
 system_v("git submodule init $init_args");
+if ($no_webkit){
+    system_v("git config --remove submodule.qtwebkit");
+    system_v("git config --remove submodule.qtwebkit-examples-and-demos");
+}
 
 if ($nokia_developer) {
     my @configresult = `git config -l`;
