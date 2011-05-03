@@ -44,6 +44,7 @@ my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
 my $brisbane_mirror = 0;
+my $ssh_protocol = 0;
 my $no_webkit = 0;
 my $no_update = 0;
 
@@ -65,6 +66,8 @@ sub printUsage
     print("\tinitialized\n");
     print("-nokia-developer\n\tSwitch to internal Nokia URLs.\n");
     print("-brisbane-nokia-developer\n\tSwitch to internal Nokia URLs, and setup the brisbane mirrors.\n");
+    print("-ssh-protocol\n\tUse SSH protocol, for restrictive firewalls. Note that this requires\n");
+    print("\ta user account with an uploaded SSH key on all servers used.\n");
     print("-no-webkit\n\tSkip webkit and webkit examples submodules.\n");
     print("-no-update\n\t Skip the git submodule update command.\n");
 }
@@ -80,6 +83,8 @@ while (@ARGV) {
         $brisbane_mirror = 1;
     } elsif ($arg eq "-nokia-developer") {
         $nokia_developer = 1;
+    } elsif ($arg eq "-ssh-protocol") {
+        $ssh_protocol = 1;
     } elsif ($arg eq "-h" || $arg eq "--help") {
         printUsage();
         exit 0;
@@ -116,21 +121,27 @@ if ($no_webkit){
     system_v("git config --remove submodule.qtwebkit-examples-and-demos");
 }
 
-if ($nokia_developer) {
-    my @configresult = `git config -l`;
-    foreach (@configresult) {
-        if (/(submodule\.[^.=]+\.url)=(.*)/) {
-            my $key = $1;
-            my $value = $2;
+my @configresult = `git config -l`;
+foreach (@configresult) {
+    if (/(submodule\.[^.=]+\.url)=(.*)/) {
+        my $key = $1;
+        my $value = $2;
+        if ($nokia_developer) {
             # WebKit is special, and has only external link.
             if ($key ne "submodule.qtwebkit.url") {
                 # qt-labs projects are still hosted under qt internally.
                 $value =~ s,^git://gitorious\.org/qt-labs/,git://scm.dev.nokia.troll.no/qt/,;
                 $value =~ s,^git://gitorious\.org/,git://scm.dev.nokia.troll.no/,;
             }
-            system_v("git config \"$key\" \"$value\"");
         }
+        if ($ssh_protocol) {
+            $value =~ s,git://([^/:]+)/(.*),git\@$1:$2,;
+        }
+        system_v("git config \"$key\" \"$value\"");
     }
+}
+
+if ($nokia_developer) {
     if ($brisbane_mirror) {
         my $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
         my %exceptions = ("qtwebkit", "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git");
