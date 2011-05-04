@@ -96,7 +96,9 @@ while (@ARGV) {
     } elsif ($arg eq "-no-update") {
         $no_update = 1;
     } else {
-        die("Illegal argument: $arg");
+        print("*** Unknown option: $arg\n");
+        printUsage();
+        exit(1);
     }
     shift;
 }
