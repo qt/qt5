@@ -47,11 +47,16 @@ my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
 my $brisbane_mirror = 0;
-my $ssh_protocol = 0;
 my $no_webkit = 0;
 my $no_update = 0;
 my $ignore_submodules = 0;
 
+my $protocol = "";
+my %protocols = (
+    'internal' => 'git://scm.dev.nokia.troll.no',
+    'ssh' => 'git@scm.dev.nokia.troll.no',
+    'http' => 'http://git.gitorious.org'
+);
 
 sub system_v
 {
@@ -66,20 +71,27 @@ sub system_v
 sub printUsage
 {
     print("$0 <options>\n");
-    print("-f\n\tForce initialization\n");
-    print("-q\n\tQuiet operation. Will exit cleanly if repository is already\n");
-    print("\tinitialized\n");
-    print("-nokia-developer\n\tSwitch to internal Nokia URLs.\n");
-    print("-brisbane-nokia-developer\n\tSwitch to internal Nokia URLs, and setup the brisbane mirrors.\n");
-    print("-ssh-protocol\n\tUse SSH protocol, for restrictive firewalls. Note that this requires\n");
-    print("\ta user account with an uploaded SSH key on all servers used.\n");
-    print("-no-webkit\n\tSkip webkit and webkit examples submodules.\n");
-    print("-no-update\n\t Skip the git submodule update command.\n");
+    print("  -f               Force initialization.\n");
+    print("  -q               Quiet operation. Will exit cleanly if repository is already\n");
+    print("                   initialized.\n\n");
+
+    print("Module options\n");
+    print("  -no-webkit       Skip webkit and webkit examples submodules.\n");
+    print("  -no-update       Skip the 'git submodule update' command.\n");
     print("  -ignore-submodules\n");
     print("                   Ignores submodules when doing operations on qt5 repo, such\n");
     print("                   as 'pull', 'fetch', 'diff' etc. Use\n");
     print("                   --ignore-submodules=none to override, when needed\n\n");
 
+    print("Repository options:\n");
+    print("  -nokia-developer Switch to internal Nokia URLs.\n");
+    print("  -brisbane        Switch to internal Nokia URLs, and setup the brisbane\n");
+    print("                   mirrors.\n");
+    print("  -ssh             Use SSH protocol, for restrictive firewalls. Note that this\n");
+    print("                   requires a user account with an uploaded SSH key on all\n");
+    print("                   servers used. (Implies -nokia-developer!)\n");
+    print("  -http            Use HTTP protocol, for restrictive firewalls. Note that this\n");
+    print("                   only works with the external Gitorious server.\n");
 }
 
 while (@ARGV) {
@@ -88,14 +100,21 @@ while (@ARGV) {
         $force = 1;
     } elsif ($arg eq "-q") {
         $quiet = 1;
-    } elsif ($arg eq "-brisbane-nokia-developer") {
+    } elsif ($arg eq "-brisbane" || $arg eq "-brisbane-nokia-developer") {
         $nokia_developer = 1;
         $brisbane_mirror = 1;
     } elsif ($arg eq "-nokia-developer") {
         $nokia_developer = 1;
-    } elsif ($arg eq "-ssh-protocol") {
-        $ssh_protocol = 1;
-    } elsif ($arg eq "-h" || $arg eq "--help") {
+        $protocol = "internal";
+    } elsif ($arg eq "-ssh" || $arg eq "-ssh-protocol") {
+        $protocol = "ssh";
+    } elsif ($arg eq "-http") {
+        if ($nokia_developer || $brisbane_mirror) {
+            print("*** Ignoring use of HTTP protocol, as it's only usable with external server\n");
+        } else {
+            $protocol = "http";
+        }
+    } elsif ($arg eq "/?" || $arg eq "-?" || $arg eq "/h" || $arg eq "-h" || $arg eq "--help") {
         printUsage();
         exit 0;
     } elsif ($arg eq "-no-webkit") {
@@ -136,20 +155,18 @@ if ($no_webkit){
 }
 
 my @configresult = `git config -l`;
+my $proto = $protocols{$protocol};
 foreach (@configresult) {
     if (/(submodule\.[^.=]+\.url)=(.*)/) {
         my $key = $1;
         my $value = $2;
-        if ($nokia_developer) {
+        if ($protocol) {
             # WebKit is special, and has only external link.
             if ($key ne "submodule.qtwebkit.url") {
                 # qt-labs projects are still hosted under qt internally.
-                $value =~ s,^git://gitorious\.org/qt-labs/,git://scm.dev.nokia.troll.no/qt/,;
-                $value =~ s,^git://gitorious\.org/,git://scm.dev.nokia.troll.no/,;
+                $value =~ s,^git://gitorious\.org/qt-labs/,$proto/qt/, if ($protocol ne "http") ;
+                $value =~ s,^git://gitorious\.org/,$proto/,;
             }
-        }
-        if ($ssh_protocol) {
-            $value =~ s,git://([^/:]+)/(.*),git\@$1:$2,;
         }
         system_v("git config \"$key\" \"$value\"");
         if ($ignore_submodules) {
