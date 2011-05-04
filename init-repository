@@ -107,8 +107,8 @@ if (`git config --get submodule.qtbase.url`) {
     if ($force) {
         my @configresult = `git config -l`;
         foreach (@configresult) {
-            if (/(submodule\.[^.=]+\.url)=.*/) {
-                system_v("git config --unset $1");
+            if (/(submodule\.[^.=]+)\.url=.*/) {
+                system_v("git config --remove-section $1");
             }
         }
     } else {
