@@ -50,6 +50,8 @@ my $brisbane_mirror = 0;
 my $ssh_protocol = 0;
 my $no_webkit = 0;
 my $no_update = 0;
+my $ignore_submodules = 0;
+
 
 sub system_v
 {
@@ -73,6 +75,11 @@ sub printUsage
     print("\ta user account with an uploaded SSH key on all servers used.\n");
     print("-no-webkit\n\tSkip webkit and webkit examples submodules.\n");
     print("-no-update\n\t Skip the git submodule update command.\n");
+    print("  -ignore-submodules\n");
+    print("                   Ignores submodules when doing operations on qt5 repo, such\n");
+    print("                   as 'pull', 'fetch', 'diff' etc. Use\n");
+    print("                   --ignore-submodules=none to override, when needed\n\n");
+
 }
 
 while (@ARGV) {
@@ -95,6 +102,8 @@ while (@ARGV) {
         $no_webkit = 1;
     } elsif ($arg eq "-no-update") {
         $no_update = 1;
+    } elsif ($arg eq "-ignore-submodules") {
+        $ignore_submodules = 1;
     } else {
         print("*** Unknown option: $arg\n");
         printUsage();
@@ -143,6 +152,10 @@ foreach (@configresult) {
             $value =~ s,git://([^/:]+)/(.*),git\@$1:$2,;
         }
         system_v("git config \"$key\" \"$value\"");
+        if ($ignore_submodules) {
+            $key =~ s,\.url,.ignore,;
+            system_v("git config \"$key\" \"all\"");
+        }
     }
 }
 
