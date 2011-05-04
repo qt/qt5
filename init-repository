@@ -46,11 +46,12 @@ use warnings;
 my $force = 0;
 my $quiet = 0;
 my $nokia_developer = 0;
-my $brisbane_mirror = 0;
 my $no_webkit = 0;
 my $no_update = 0;
 my $ignore_submodules = 0;
 my $alternates = "";
+my $mirror_url = "";
+my $mirror_webkit_url = "";
 
 my $protocol = "";
 my %protocols = (
@@ -87,7 +88,7 @@ sub printUsage
     print("Repository options:\n");
     print("  -nokia-developer Switch to internal Nokia URLs.\n");
     print("  -brisbane        Switch to internal Nokia URLs, and setup the brisbane\n");
-    print("                   mirrors.\n");
+    print("                   mirrors. (Uses the -mirror and -mirror-webkit options.)\n");
     print("  -ssh             Use SSH protocol, for restrictive firewalls. Note that this\n");
     print("                   requires a user account with an uploaded SSH key on all\n");
     print("                   servers used. (Implies -nokia-developer!)\n");
@@ -102,6 +103,12 @@ sub printUsage
     print("                   PSS:This will make this repo dependent on the alternate!\n");
     print("                       The dependency can be broken by running 'git repack -a'\n");
     print("                       in each submodule, where required.\n");
+    print("  -mirror=<url>    Uses <url> as the base URL for cloning submodules.\n");
+    print("                     -mirror=user\@machine/foo/bar\n");
+    print("                   while for example clone qtbase from\n");
+    print("                     user\@machine/foo/bar/qtbase.git\n");
+    print("  -mirror-webkit=<url>\n");
+    print("                   Uses <url> as the URL for cloning webkit.\n");
 }
 
 while (@ARGV) {
@@ -112,14 +119,15 @@ while (@ARGV) {
         $quiet = 1;
     } elsif ($arg eq "-brisbane" || $arg eq "-brisbane-nokia-developer") {
         $nokia_developer = 1;
-        $brisbane_mirror = 1;
+        $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
+        $mirror_webkit_url = "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git";
     } elsif ($arg eq "-nokia-developer") {
         $nokia_developer = 1;
         $protocol = "internal";
     } elsif ($arg eq "-ssh" || $arg eq "-ssh-protocol") {
         $protocol = "ssh";
     } elsif ($arg eq "-http") {
-        if ($nokia_developer || $brisbane_mirror) {
+        if ($nokia_developer) {
             print("*** Ignoring use of HTTP protocol, as it's only usable with external server\n");
         } else {
             $protocol = "http";
@@ -134,7 +142,12 @@ while (@ARGV) {
     } elsif ($arg eq "-ignore-submodules") {
         $ignore_submodules = 1;
     } elsif ($arg =~ /-alternates=(.*)/) {
-        $alternates = "$1"
+        $alternates = "$1";
+    } elsif ($arg =~ /-mirror=(.*)/) {
+        $mirror_url = "$1/";
+        $mirror_url =~ s,\/\/+$,/,;
+    } elsif ($arg =~ /-mirror-webkit=(.*)/) {
+        $mirror_webkit_url = "$1"
     } else {
         print("*** Unknown option: $arg\n");
         printUsage();
@@ -204,36 +217,17 @@ if (!$no_update) {
                     print(" *** $alternates/$repo not found, ignoring alternate for this submodule\n");
                 }
             }
-            system_v("git clone $ref $url $repo");
-        }
-    }
-}
-
-
-if ($nokia_developer) {
-    if ($brisbane_mirror) {
-        my $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
-        my %exceptions = ("qtwebkit", "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git");
-        my @configresult2 = `git config -l`;
-        foreach (@configresult2) {
-            if(/submodule\.([^.=]+)\.url=(.*)/){
-                my $repo = $1;
-                my $url = $2;
-                my $this_mirror_url;
-                no warnings 'uninitialized';
-                if($exceptions{$repo} ne undef){
-                    $this_mirror_url = $exceptions{$repo};
-                } else {
-                    $this_mirror_url = "$mirror_url$repo.git";
-                }
-                print("Using mirror $this_mirror_url to clone $url\n");
-                unless ($no_update) {
-                    system_v("git clone $this_mirror_url $repo");
-                    chdir($repo) or die "cd failed";
-                    system_v("git config remote.origin.url $url");
-                    system_v("git remote add mirror $this_mirror_url");
-                    chdir("..") or die "cd fail";
-                }
+            if (($mirror_url && $repo ne "qtwebkit") || ($mirror_webkit_url && $repo eq "qtwebkit") {
+                my $mirror = $mirror_url.$repo;
+                $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
+                $mirror = $mirror_webkit_url if ($repo eq "qtwebkit");
+                system_v("git clone $ref $mirror $repo");
+                chdir($repo) or die "'cd $repo' failed...";
+                system_v("git config remote.origin.url $url");
+                system_v("git remote add mirror $mirror");
+                chdir("..") or die "'cd ..' failed..";
+            } else {
+                system_v("git clone $ref $url $repo");
             }
         }
     }
