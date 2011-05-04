@@ -50,6 +50,7 @@ my $brisbane_mirror = 0;
 my $no_webkit = 0;
 my $no_update = 0;
 my $ignore_submodules = 0;
+my $alternates = "";
 
 my $protocol = "";
 my %protocols = (
@@ -92,6 +93,15 @@ sub printUsage
     print("                   servers used. (Implies -nokia-developer!)\n");
     print("  -http            Use HTTP protocol, for restrictive firewalls. Note that this\n");
     print("                   only works with the external Gitorious server.\n");
+    print("  -alternates=<path to other Qt5 repo>\n");
+    print("                   Adds alternates for each submodule to another full qt5\n");
+    print("                   checkout. This makes this qt5 checkout very small, as it\n");
+    print("                   will use the object store of the alternates before unique\n");
+    print("                   objects are stored in its own object store.\n");
+    print("                   PS: This option does not work with -no-update!\n");
+    print("                   PSS:This will make this repo dependent on the alternate!\n");
+    print("                       The dependency can be broken by running 'git repack -a'\n");
+    print("                       in each submodule, where required.\n");
 }
 
 while (@ARGV) {
@@ -123,6 +133,8 @@ while (@ARGV) {
         $no_update = 1;
     } elsif ($arg eq "-ignore-submodules") {
         $ignore_submodules = 1;
+    } elsif ($arg =~ /-alternates=(.*)/) {
+        $alternates = "$1"
     } else {
         print("*** Unknown option: $arg\n");
         printUsage();
@@ -175,6 +187,28 @@ foreach (@configresult) {
         }
     }
 }
+
+# manually clone each repo here, so we can easily use reference repos, mirrors and add all staging
+# repos
+if (!$no_update) {
+    @configresult = `git config -l`;
+    foreach (@configresult) {
+        if(/submodule\.([^.=]+)\.url=(.*)/){
+            my $repo = $1;
+            my $url = $2;
+            my $ref = "";
+            if ($alternates) {
+                if (-d "$alternates/$repo") {
+                    $ref = "--reference $alternates/$repo";
+                } else {
+                    print(" *** $alternates/$repo not found, ignoring alternate for this submodule\n");
+                }
+            }
+            system_v("git clone $ref $url $repo");
+        }
+    }
+}
+
 
 if ($nokia_developer) {
     if ($brisbane_mirror) {
