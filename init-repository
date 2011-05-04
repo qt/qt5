@@ -50,6 +50,7 @@ my $no_webkit = 0;
 my $no_update = 0;
 my $ignore_submodules = 0;
 my $alternates = "";
+my $detach_alternates = 0;
 my $mirror_url = "";
 my $mirror_webkit_url = "";
 
@@ -103,6 +104,9 @@ sub printUsage
     print("                   PSS:This will make this repo dependent on the alternate!\n");
     print("                       The dependency can be broken by running 'git repack -a'\n");
     print("                       in each submodule, where required.\n");
+    print("  -copy-objects    Copies all objects from the alternates into the individual\n");
+    print("                   repos, to ensure that the repositories are independent from\n");
+    print("                   the source used as a reference for cloning.\n");
     print("  -mirror=<url>    Uses <url> as the base URL for cloning submodules.\n");
     print("                     -mirror=user\@machine/foo/bar\n");
     print("                   while for example clone qtbase from\n");
@@ -143,6 +147,8 @@ while (@ARGV) {
         $ignore_submodules = 1;
     } elsif ($arg =~ /-alternates=(.*)/) {
         $alternates = "$1";
+    } elsif ($arg eq "-copy-objects") {
+        $detach_alternates = 1;
     } elsif ($arg =~ /-mirror=(.*)/) {
         $mirror_url = "$1/";
         $mirror_url =~ s,\/\/+$,/,;
@@ -228,6 +234,12 @@ if (!$no_update) {
                 chdir("..") or die "'cd ..' failed..";
             } else {
                 system_v("git clone $ref $url $repo");
+            }
+            if ($detach_alternates) {
+                chdir($repo) or die "'cd $repo' failed...";
+                system_v("git repack -a");
+                unlink(".git/objects/info/alternates");
+                chdir("..") or die "'cd ..' failed..";
             }
         }
     }
