@@ -145,6 +145,7 @@ while (@ARGV) {
         $quiet = 1;
     } elsif ($arg eq "-brisbane" || $arg eq "-brisbane-nokia-developer") {
         $nokia_developer = 1;
+        $protocol = "internal";
         $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
         $mirror_webkit_url = "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git";
     } elsif ($arg eq "-nokia-developer") {
