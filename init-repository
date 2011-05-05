@@ -73,46 +73,48 @@ sub system_v
 
 sub printUsage
 {
-    print("$0 <options>\n");
-    print("  -f               Force initialization.\n");
-    print("  -q               Quiet operation. Will exit cleanly if repository is already\n");
-    print("                   initialized.\n\n");
+    print <<EOU;
+$0 <options>
+  -f               Force initialization.
+  -q               Quiet operation. Will exit cleanly if repository is already
+                   initialized.
 
-    print("Module options\n");
-    print("  -no-webkit       Skip webkit and webkit examples submodules.\n");
-    print("  -no-update       Skip the 'git submodule update' command.\n");
-    print("  -ignore-submodules\n");
-    print("                   Ignores submodules when doing operations on qt5 repo, such\n");
-    print("                   as 'pull', 'fetch', 'diff' etc. Use\n");
-    print("                   --ignore-submodules=none to override, when needed\n\n");
+Module options
+  -no-webkit       Skip webkit and webkit examples submodules.
+  -no-update       Skip the 'git submodule update' command.
+  -ignore-submodules
+                   Ignores submodules when doing operations on qt5 repo, such
+                   as 'pull', 'fetch', 'diff' etc. Use
+                   --ignore-submodules=none to override, when needed
 
-    print("Repository options:\n");
-    print("  -nokia-developer Switch to internal Nokia URLs.\n");
-    print("  -brisbane        Switch to internal Nokia URLs, and setup the brisbane\n");
-    print("                   mirrors. (Uses the -mirror and -mirror-webkit options.)\n");
-    print("  -ssh             Use SSH protocol, for restrictive firewalls. Note that this\n");
-    print("                   requires a user account with an uploaded SSH key on all\n");
-    print("                   servers used. (Implies -nokia-developer!)\n");
-    print("  -http            Use HTTP protocol, for restrictive firewalls. Note that this\n");
-    print("                   only works with the external Gitorious server.\n");
-    print("  -alternates=<path to other Qt5 repo>\n");
-    print("                   Adds alternates for each submodule to another full qt5\n");
-    print("                   checkout. This makes this qt5 checkout very small, as it\n");
-    print("                   will use the object store of the alternates before unique\n");
-    print("                   objects are stored in its own object store.\n");
-    print("                   PS: This option does not work with -no-update!\n");
-    print("                   PSS:This will make this repo dependent on the alternate!\n");
-    print("                       The dependency can be broken by running 'git repack -a'\n");
-    print("                       in each submodule, where required.\n");
-    print("  -copy-objects    Copies all objects from the alternates into the individual\n");
-    print("                   repos, to ensure that the repositories are independent from\n");
-    print("                   the source used as a reference for cloning.\n");
-    print("  -mirror=<url>    Uses <url> as the base URL for cloning submodules.\n");
-    print("                     -mirror=user\@machine/foo/bar\n");
-    print("                   while for example clone qtbase from\n");
-    print("                     user\@machine/foo/bar/qtbase.git\n");
-    print("  -mirror-webkit=<url>\n");
-    print("                   Uses <url> as the URL for cloning webkit.\n");
+Repository options:
+  -nokia-developer Switch to internal Nokia URLs.
+  -brisbane        Switch to internal Nokia URLs, and setup the brisbane
+                   mirrors. (Uses the -mirror and -mirror-webkit options.)
+  -ssh             Use SSH protocol, for restrictive firewalls. Note that this
+                   requires a user account with an uploaded SSH key on all
+                   servers used. (Implies -nokia-developer!)
+  -http            Use HTTP protocol, for restrictive firewalls. Note that this
+                   only works with the external Gitorious server.
+  -alternates=<path to other Qt5 repo>
+                   Adds alternates for each submodule to another full qt5
+                   checkout. This makes this qt5 checkout very small, as it
+                   will use the object store of the alternates before unique
+                   objects are stored in its own object store.
+                   PS: This option does not work with -no-update!
+                   PSS:This will make this repo dependent on the alternate!
+                       The dependency can be broken by running 'git repack -a'
+                       in each submodule, where required.
+  -copy-objects    Copies all objects from the alternates into the individual
+                   repos, to ensure that the repositories are independent from
+                   the source used as a reference for cloning.
+  -mirror=<url>    Uses <url> as the base URL for cloning submodules.
+                     -mirror=user\@machine/foo/bar
+                   while for example clone qtbase from
+                     user\@machine/foo/bar/qtbase.git
+  -mirror-webkit=<url>
+                   Uses <url> as the URL for cloning webkit.
+EOU
 }
 
 while (@ARGV) {
