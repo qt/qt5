@@ -27,10 +27,6 @@ module_qtdeclarative.subdir = $$IN_PWD/qtdeclarative
 module_qtdeclarative.target = module-qtdeclarative
 module_qtdeclarative.depends = module_qtbase module_qtscript module_qtsvg module_qtxmlpatterns
 
-module_qt3support.subdir = $$IN_PWD/qt3support
-module_qt3support.target = module-qt3support
-module_qt3support.depends = module_qtbase
-
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
 module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative module_phonon
@@ -46,7 +42,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtscript module_qtdeclarative module_qt3support
+module_qttools.depends = module_qtbase module_qtscript module_qtdeclarative
 win32:module_qttools.depends += module_activeqt
 
 module_qttranslations.subdir = $$IN_PWD/qttranslations
@@ -76,7 +72,6 @@ SUBDIRS       = \
                 module_qtxmlpatterns \
                 module_qtscript \
                 module_qtdeclarative \
-                module_qt3support \
                 module_qtmultimedia \
                 module_qttools \
                 module_qttranslations \
