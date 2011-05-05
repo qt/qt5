@@ -7,9 +7,9 @@ module_qtsvg.subdir = $$IN_PWD/qtsvg
 module_qtsvg.target = module-qtsvg
 module_qtsvg.depends = module_qtbase
 
-module_phonon.subdir = $$IN_PWD/qtphonon
-module_phonon.target = module-phonon
-module_phonon.depends = module_qtbase
+module_qtphonon.subdir = $$IN_PWD/qtphonon
+module_qtphonon.target = module-qtphonon
+module_qtphonon.depends = module_qtbase
 
 module_qtmultimedia.subdir = $$IN_PWD/qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
@@ -40,9 +40,9 @@ module_qtwebkit_target.commands =
 module_qtwebkit_target.depends = sub-qtwebkit-pri
 QMAKE_EXTRA_TARGETS += module_qtwebkit_target
 
-qtwebkit_examples_and_demos.subdir = $$IN_PWD/qtwebkit-examples-and-demos
-qtwebkit_examples_and_demos.target = qtwebkit-examples-and-demos
-qtwebkit_examples_and_demos.depends = module_qtwebkit
+module_qtwebkit_examples_and_demos.subdir = $$IN_PWD/qtwebkit-examples-and-demos
+module_qtwebkit_examples_and_demos.target = module-qtwebkit-examples-and-demos
+module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
@@ -57,15 +57,22 @@ module_qtdoc.subdir = $$IN_PWD/qtdoc
 module_qtdoc.target = module-qtdoc
 module_qtdoc.depends = module_qtdeclarative module_qttools #for the demos and QtHelp
 
-module_activeqt.subdir = $$IN_PWD/qtactiveqt
-module_activeqt.target = module-activeqt
-module_activeqt.depends = module_qtbase
+module_qtactiveqt.subdir = $$IN_PWD/qtactiveqt
+module_qtactiveqt.target = module-qtactiveqt
+module_qtactiveqt.depends = module_qtbase
 
+module_qlalr.subdir = $$IN_PWD/qlalr
+module_qlalr.target = module-qlalr
+module_qlalr.depends = module-qtbase
+
+module_qtqa.subdir = $$IN_PWD/qtqa
+module_qtqa.target = module-qtqa
+module_qtqa.depends = module-qtbase
 
 SUBDIRS       = \
                 module_qtbase \
                 module_qtsvg \
-                module_phonon \
+                module_qtphonon \
                 module_qtxmlpatterns \
                 module_qtscript \
                 module_qtdeclarative \
@@ -74,10 +81,12 @@ SUBDIRS       = \
                 module_qttools \
                 module_qttranslations \
                 module_qtdoc \
+                module_qlalr \
+                module_qtqa \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
-                qtwebkit_examples_and_demos
+                module_qtwebkit_examples_and_demos
     module_qttools.depends += module_qtwebkit
 }
-win32:SUBDIRS += module_activeqt
+win32:SUBDIRS += module_qtactiveqt
