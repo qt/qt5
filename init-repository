@@ -249,7 +249,7 @@ if (!$no_update) {
 
             my $mirror;
             if ($mirror_url && ($repo ne "qtwebkit")) {
-                my $mirror = $mirror_url.$repo;
+                $mirror = $mirror_url.$repo;
                 $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
             } elsif ($mirror_webkit_url && ($repo eq "qtwebkit")) {
                 $mirror = $mirror_webkit_url;
