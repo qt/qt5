@@ -56,10 +56,30 @@ my $mirror_webkit_url = "";
 
 my $protocol = "";
 my %protocols = (
-    'internal' => 'git://scm.dev.nokia.troll.no',
-    'ssh' => 'git@scm.dev.nokia.troll.no',
-    'http' => 'http://git.gitorious.org'
+    'internal' => 'git://scm.dev.nokia.troll.no/',
+    'ssh' => 'git@scm.dev.nokia.troll.no:',
+    'http' => 'http://git.gitorious.org/'
 );
+
+my %staging_repos = (
+    'qt3support-staging' => 'git://gitorious.org/qt/qt3support-staging.git',
+    'qtactiveqt-staging' => 'git://gitorious.org/qt/qtactiveqt-staging.git',
+    'qtbase-earth-staging' => 'git://gitorious.org/qt/qtbase-earth-staging.git',
+    'qtbase-staging' => 'git://gitorious.org/qt/qtbase-staging.git',
+    'qtdeclarative-staging' => 'git://gitorious.org/qt/qtdeclarative-staging.git',
+    'qtdoc-staging' => 'git://gitorious.org/qt/qtdoc-staging.git',
+    'qtmultimedia-staging' => 'git://gitorious.org/qt/qtmultimedia-staging.git',
+    'qtphonon-staging' => 'git://gitorious.org/qt/qtphonon-staging.git',
+    'qtqa-staging' => 'git://gitorious.org/qt/qtqa-staging.git',
+    'qtscript-staging' => 'git://gitorious.org/qt/qtscript-staging.git',
+    'qtsvg-staging' => 'git://gitorious.org/qt/qtsvg-staging.git',
+    'qttools-staging' => 'git://gitorious.org/qt/qttools-staging.git',
+    'qttranslations-staging' => 'git://gitorious.org/qt/qttranslations-staging.git',
+    'qtwebkit-examples-and-demos-staging' => 'git://gitorious.org/qt/qtwebkit-examples-and-demos-staging.git',
+    'qtxmlpatterns-staging' => 'git://gitorious.org/qt/qtxmlpatterns-staging.git',
+);
+
+
 
 sub system_v
 {
@@ -197,8 +217,8 @@ foreach (@configresult) {
             # WebKit is special, and has only external link.
             if ($key ne "submodule.qtwebkit.url") {
                 # qt-labs projects are still hosted under qt internally.
-                $value =~ s,^git://gitorious\.org/qt-labs/,$proto/qt/, if ($protocol ne "http") ;
-                $value =~ s,^git://gitorious\.org/,$proto/,;
+                $value =~ s,^git://gitorious\.org/qt-labs/,${proto}qt/, if ($protocol ne "http") ;
+                $value =~ s,^git://gitorious\.org/,$proto,;
             }
         }
         system_v("git config \"$key\" \"$value\"");
@@ -225,28 +245,47 @@ if (!$no_update) {
                     print(" *** $alternates/$repo not found, ignoring alternate for this submodule\n");
                 }
             }
-            if (($mirror_url && $repo ne "qtwebkit") || ($mirror_webkit_url && $repo eq "qtwebkit") {
+
+            my $mirror;
+            if ($mirror_url && ($repo ne "qtwebkit")) {
                 my $mirror = $mirror_url.$repo;
                 $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
-                $mirror = $mirror_webkit_url if ($repo eq "qtwebkit");
-                system_v("git clone $ref $mirror $repo");
-                chdir($repo) or die "'cd $repo' failed...";
+            } elsif ($mirror_webkit_url && ($repo eq "qtwebkit")) {
+                $mirror = $mirror_webkit_url;
+            }
+
+            my $do_clone = (! -d "$repo/.git");
+            system_v("git clone $ref " . ($mirror ? $mirror : $url) . " $repo") if ($do_clone);
+            chdir($repo) or die "'cd $repo' failed...";
+            system_v("git fetch " . ($mirror ? $mirror : $url)) if (!$do_clone);
+
+            if ($mirror) {
                 system_v("git config remote.origin.url $url");
                 system_v("git remote add mirror $mirror");
-                chdir("..") or die "'cd ..' failed..";
-            } else {
-                system_v("git clone $ref $url $repo");
             }
+
+            # add missing staging repos as remotes
+            my @staging = grep(/^$repo/, keys %staging_repos);
+            my @current_remotes = `git remote show`;
+            chomp @current_remotes;
+            my %diff = map { $_ => 1 } @current_remotes;
+            my @add_staging =  grep !$diff{"$_"}, @staging;
+            foreach (@add_staging) {
+                my $staging_repo = $_;
+                my $staging_repo_url = $staging_repos{$_};
+                if ($protocol) {
+                    $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${proto}qt/, if ($protocol ne "http") ;
+                    $staging_repo_url =~ s,^git://gitorious\.org/,$proto,;
+                }
+                system_v("git remote add $staging_repo $staging_repo_url");
+            }
+
             if ($detach_alternates) {
-                chdir($repo) or die "'cd $repo' failed...";
                 system_v("git repack -a");
                 unlink(".git/objects/info/alternates");
-                chdir("..") or die "'cd ..' failed..";
             }
+            chdir("..") or die "'cd ..' failed..";
         }
     }
-}
-
-unless ($no_update){
     system_v("git submodule update");
 }
