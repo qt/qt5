@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #############################################################################
 ##
 ## Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
@@ -43,250 +43,469 @@
 use strict;
 use warnings;
 
-my $force = 0;
-my $quiet = 0;
-my $nokia_developer = 0;
-my $no_webkit = 0;
-my $no_update = 0;
-my $ignore_submodules = 0;
-my $alternates = "";
-my $detach_alternates = 0;
-my $mirror_url = "";
-my $mirror_webkit_url = "";
+package Qt::InitRepository;
 
-my $protocol = "";
-my %protocols = (
-    'internal' => 'git://scm.dev.nokia.troll.no/',
-    'ssh' => 'git@scm.dev.nokia.troll.no:',
-    'http' => 'http://git.gitorious.org/'
+
+=head1 NAME
+
+init-repository - initialize the Qt5 repository and all submodules
+
+=head1 SYNOPSIS
+
+  ./init-repository [options]
+
+This script may be run after an initial `git clone' of Qt5 in order to check
+out all submodules.
+
+
+=head2 Global options:
+
+=over
+
+=item --force, -f
+
+Force initialization (even if the submodules are already checked out).
+
+
+=item --quiet, -q
+
+Be quiet.  Will exit cleanly if the repository is already initialized.
+
+=back
+
+
+=head2 Module options:
+
+=over
+
+=item --no-webkit
+
+Skip webkit and webkit examples submodules.
+It may be desirable to skip these modules due to the large size of the webkit
+git repository.
+
+
+=item --no-update
+
+Skip the `git submodule update' command.
+
+
+=item --ignore-submodules
+
+Set git config to ignore submodules by default when doing operations on the
+qt5 repo, such as `pull', `fetch', `diff' etc.
+
+After using this option, pass `--ignore-submodules=none' to git to override
+it as needed.
+
+=back
+
+
+=head2 Repository options:
+
+=over
+
+=item --nokia-developer
+
+Switch to internal Nokia URLs.
+
+
+=item --brisbane
+
+Switch to internal Nokia URLs and make use of the Brisbane git mirrors.
+(Implies `--mirror' and `--mirror-webkit').
+
+
+=item --ssh
+
+Use the SSH protocol for git operations.  This may be useful if the git
+protocol is blocked by a firewall. Note that this requires a user account
+with an uploaded SSH key on all servers used.  (Implies `--nokia-developer').
+
+
+=item --http
+
+Use the HTTP protocol for git operations.  This may be useful if the git
+protocol is blocked by a firewall.  Note that this only works with the
+external Gitorious server.
+
+
+=item --alternates <path to other Qt5 repo>
+
+Adds alternates for each submodule to another full qt5 checkout. This makes
+this qt5 checkout very small, as it will use the object store of the
+alternates before unique objects are stored in its own object store.
+
+This option has no effect when using `--no-update'.
+
+B<NOTE:> This will make this repo dependent on the alternate, which is
+potentially dangerous!  The dependency can be broken by also using
+the `--copy-objects' option, or by running C<git repack -a> in each
+submodule, where required.  Please read the note about the `--shared' option
+in the documentation of `git clone' for more information.
+
+
+=item --copy-objects
+
+When `--alternates' is used, automatically do a C<git repack -a> in each
+submodule after cloning, to ensure that the repositories are independent
+from the source used as a reference for cloning.
+
+Note that this negates the disk usage benefits gained from the use of
+`--alternates'.
+
+
+=item --mirror <url-base>
+
+Uses <url-base> as the base URL for submodule git mirrors.
+
+For example:
+
+  --mirror user@machine:/foo/bar
+
+...will use the following as a mirror for qtbase:
+
+  user@machine:/foo/bar/qtbase.git
+
+
+=item --mirror-webkit <url>
+
+Uses <url> as the URL for the webkit git mirror.
+
+=back
+
+=cut
+
+use Carp         qw( confess             );
+use English      qw( -no_match_vars      );
+use Getopt::Long qw( GetOptionsFromArray );
+use Pod::Usage   qw( pod2usage           );
+
+my %PROTOCOLS = (
+    'internal'  => 'git://scm.dev.nokia.troll.no/' ,
+    'ssh'       => 'git@scm.dev.nokia.troll.no:'   ,
+    'http'      => 'http://git.gitorious.org/'     ,
 );
 
-my %staging_repos = (
-    'qt3support-staging' => 'git://gitorious.org/qt/qt3support-staging.git',
-    'qtactiveqt-staging' => 'git://gitorious.org/qt/qtactiveqt-staging.git',
-    'qtbase-earth-staging' => 'git://gitorious.org/qt/qtbase-earth-staging.git',
-    'qtbase-staging' => 'git://gitorious.org/qt/qtbase-staging.git',
-    'qtdeclarative-staging' => 'git://gitorious.org/qt/qtdeclarative-staging.git',
-    'qtdoc-staging' => 'git://gitorious.org/qt/qtdoc-staging.git',
-    'qtmultimedia-staging' => 'git://gitorious.org/qt/qtmultimedia-staging.git',
-    'qtphonon-staging' => 'git://gitorious.org/qt/qtphonon-staging.git',
-    'qtqa-staging' => 'git://gitorious.org/qt/qtqa-staging.git',
-    'qtscript-staging' => 'git://gitorious.org/qt/qtscript-staging.git',
-    'qtsvg-staging' => 'git://gitorious.org/qt/qtsvg-staging.git',
-    'qttools-staging' => 'git://gitorious.org/qt/qttools-staging.git',
-    'qttranslations-staging' => 'git://gitorious.org/qt/qttranslations-staging.git',
-    'qtwebkit-examples-and-demos-staging' => 'git://gitorious.org/qt/qtwebkit-examples-and-demos-staging.git',
-    'qtxmlpatterns-staging' => 'git://gitorious.org/qt/qtxmlpatterns-staging.git',
+my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_.git" } qw(
+    qt3support-staging
+    qtactiveqt-staging
+    qtbase-earth-staging
+    qtbase-staging
+    qtdeclarative-staging
+    qtdoc-staging
+    qtmultimedia-staging
+    qtphonon-staging
+    qtqa-staging
+    qtscript-staging
+    qtsvg-staging
+    qttools-staging
+    qttranslations-staging
+    qtwebkit-examples-and-demos-staging
+    qtxmlpatterns-staging
 );
 
+my $BNE_MIRROR_URL_BASE
+    = 'git://bq-git.apac.nokia.com/qtsoftware/qt/';
 
+my $BNE_MIRROR_WEBKIT_URL
+    = 'git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git';
 
-sub system_v
+sub new
 {
-    if (!$quiet) {
-        print "+ ";
-        print @_;
-        print "\n";
-    }
-    return system(@_);
+    my ($class, @arguments) = @_;
+
+    my $self = {};
+    bless $self, $class;
+    $self->parse_arguments(@arguments);
+
+    return $self;
 }
 
-sub printUsage
+# Like `system', but possibly log the command, and die on non-zero exit code
+sub exe
 {
-    print <<EOU;
-$0 <options>
-  -f               Force initialization.
-  -q               Quiet operation. Will exit cleanly if repository is already
-                   initialized.
+    my ($self, @cmd) = @_;
 
-Module options
-  -no-webkit       Skip webkit and webkit examples submodules.
-  -no-update       Skip the 'git submodule update' command.
-  -ignore-submodules
-                   Ignores submodules when doing operations on qt5 repo, such
-                   as 'pull', 'fetch', 'diff' etc. Use
-                   --ignore-submodules=none to override, when needed
-
-Repository options:
-  -nokia-developer Switch to internal Nokia URLs.
-  -brisbane        Switch to internal Nokia URLs, and setup the brisbane
-                   mirrors. (Uses the -mirror and -mirror-webkit options.)
-  -ssh             Use SSH protocol, for restrictive firewalls. Note that this
-                   requires a user account with an uploaded SSH key on all
-                   servers used. (Implies -nokia-developer!)
-  -http            Use HTTP protocol, for restrictive firewalls. Note that this
-                   only works with the external Gitorious server.
-  -alternates=<path to other Qt5 repo>
-                   Adds alternates for each submodule to another full qt5
-                   checkout. This makes this qt5 checkout very small, as it
-                   will use the object store of the alternates before unique
-                   objects are stored in its own object store.
-                   PS: This option does not work with -no-update!
-                   PSS:This will make this repo dependent on the alternate!
-                       The dependency can be broken by running 'git repack -a'
-                       in each submodule, where required.
-  -copy-objects    Copies all objects from the alternates into the individual
-                   repos, to ensure that the repositories are independent from
-                   the source used as a reference for cloning.
-  -mirror=<url>    Uses <url> as the base URL for cloning submodules.
-                     -mirror=user\@machine/foo/bar
-                   while for example clone qtbase from
-                     user\@machine/foo/bar/qtbase.git
-  -mirror-webkit=<url>
-                   Uses <url> as the URL for cloning webkit.
-EOU
-}
-
-while (@ARGV) {
-    my $arg = $ARGV[0];
-    if ($arg eq "-f") {
-        $force = 1;
-    } elsif ($arg eq "-q") {
-        $quiet = 1;
-    } elsif ($arg eq "-brisbane" || $arg eq "-brisbane-nokia-developer") {
-        $nokia_developer = 1;
-        $protocol = "internal";
-        $mirror_url = "git://bq-git.apac.nokia.com/qtsoftware/qt/";
-        $mirror_webkit_url = "git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git";
-    } elsif ($arg eq "-nokia-developer") {
-        $nokia_developer = 1;
-        $protocol = "internal";
-    } elsif ($arg eq "-ssh" || $arg eq "-ssh-protocol") {
-        $protocol = "ssh";
-    } elsif ($arg eq "-http") {
-        if ($nokia_developer) {
-            print("*** Ignoring use of HTTP protocol, as it's only usable with external server\n");
-        } else {
-            $protocol = "http";
-        }
-    } elsif ($arg eq "/?" || $arg eq "-?" || $arg eq "/h" || $arg eq "-h" || $arg eq "--help") {
-        printUsage();
-        exit 0;
-    } elsif ($arg eq "-no-webkit") {
-        $no_webkit = 1;
-    } elsif ($arg eq "-no-update") {
-        $no_update = 1;
-    } elsif ($arg eq "-ignore-submodules") {
-        $ignore_submodules = 1;
-    } elsif ($arg =~ /-alternates=(.*)/) {
-        $alternates = "$1";
-    } elsif ($arg eq "-copy-objects") {
-        $detach_alternates = 1;
-    } elsif ($arg =~ /-mirror=(.*)/) {
-        $mirror_url = "$1/";
-        $mirror_url =~ s,\/\/+$,/,;
-    } elsif ($arg =~ /-mirror-webkit=(.*)/) {
-        $mirror_webkit_url = "$1"
-    } else {
-        print("*** Unknown option: $arg\n");
-        printUsage();
-        exit(1);
+    if (!$self->{quiet}) {
+        print "+ @cmd\n";
     }
-    shift;
+
+    if (system(@cmd) != 0) {
+        confess "@cmd exited with status $CHILD_ERROR";
+    }
+
+    return;
 }
 
-if (`git config --get submodule.qtbase.url`) {
-    if ($force) {
-        my @configresult = `git config -l`;
-        foreach (@configresult) {
-            if (/(submodule\.[^.=]+)\.url=.*/) {
-                system_v("git config --remove-section $1");
+sub parse_arguments
+{
+    my ($self, @args) = @_;
+
+    %{$self} = (%{$self},
+        'alternates'          => "",
+        'detach-alternates'   => 0 ,
+        'force'               => 0 ,
+        'ignore-submodules'   => 0 ,
+        'mirror-url'          => "",
+        'mirror-webkit-url'   => "",
+        'nokia-developer'     => 0 ,
+        'protocol'            => "",
+        'update'              => 1 ,
+        'webkit'              => 1 ,
+    );
+
+    GetOptionsFromArray(\@args,
+        'alternates=s'      =>  \$self->{qw{ alternates        }},
+        'copy-objects'      =>  \$self->{qw{ detach-alternates }},
+        'force'             =>  \$self->{qw{ force             }},
+        'ignore-submodules' =>  \$self->{qw{ ignore_submodules }},
+        'mirror-webkit=s'   =>  \$self->{qw{ mirror-webkit-url }},
+        'mirror=s'          =>  \$self->{qw{ mirror-url        }},
+        'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
+        'quiet'             =>  \$self->{qw{ quiet             }},
+        'update!'           =>  \$self->{qw{ update            }},
+        'webkit!'           =>  \$self->{qw{ webkit            }},
+
+        'help|?'            =>  sub { pod2usage(1);                   },
+        'http'              =>  sub { $self->{protocol} = 'http'; },
+        'ssh|ssh-protocol'  =>  sub { $self->{protocol} = 'ssh';  },
+
+        'brisbane|brisbane-nokia-developer' => sub {
+            $self->{'nokia-developer'}   = 1;
+            $self->{'protocol'}          = 'internal';
+            $self->{'mirror-url'}        = $BNE_MIRROR_URL_BASE;
+            $self->{'mirror-webkit-url'} = $BNE_MIRROR_WEBKIT_URL;
+        },
+
+        'nokia-developer' => sub {
+            $self->{'nokia-developer'}   = 1;
+            $self->{'protocol'}          = 'internal';
+        },
+    ) || pod2usage(2);
+
+    if ($self->{'nokia-developer'} && $self->{'protocol'} eq 'http') {
+        print "*** Ignoring use of HTTP protocol, as it's only usable with external server\n";
+        $self->{'protocol'} = '';
+    }
+
+    # Replace any double trailing slashes from end of mirror
+    $self->{'mirror-url'} =~ s{//+$}{/};
+
+    return;
+}
+
+sub check_if_already_initialized
+{
+    my ($self) = @_;
+
+    # We consider the repo as `initialized' if submodule.qtbase.url is set
+    if (qx(git config --get submodule.qtbase.url)) {
+        if ($self->{force}) {
+            my @configresult = qx(git config -l);
+            foreach (@configresult) {
+                # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+                if (/(submodule\.[^.=]+)\.url=.*/) {
+                    $self->exe('git', 'config', '--remove-section', $1);
+                }
             }
         }
-    } else {
-        exit 0 if ($quiet);
-        print("Will not reinitialize already initialized repository (use -f to force)!\n");
-        exit 1;
+        else {
+            exit 0 if ($self->{quiet});
+            print "Will not reinitialize already initialized repository (use -f to force)!\n";
+            exit 1;
+        }
     }
+
+    return;
 }
 
-my $init_args = "";
-$init_args = "-q" if ($quiet);
-system_v("git submodule init $init_args");
-if ($no_webkit){
-    system_v("git config --remove submodule.qtwebkit");
-    system_v("git config --remove submodule.qtwebkit-examples-and-demos");
+sub git_submodule_init
+{
+    my ($self) = @_;
+
+    my @init_args;
+    if ($self->{quiet}) {
+        push @init_args, '--quiet';
+    }
+    $self->exe('git', 'submodule', 'init', @init_args);
+
+    return;
 }
 
-my @configresult = `git config -l`;
-my $proto = $protocols{$protocol};
-foreach (@configresult) {
-    if (/(submodule\.[^.=]+\.url)=(.*)/) {
-        my $key = $1;
+sub git_disable_webkit_submodule
+{
+    my ($self) = @_;
+
+    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit');
+    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples-and-demos');
+
+    return;
+}
+
+sub git_set_submodule_config
+{
+    my ($self) = @_;
+
+    my @configresult          = qx(git config -l);
+    my $protocol              = $self->{protocol};
+    my $url_base_for_protocol = $PROTOCOLS{$protocol};
+
+    GITCONFIG:
+    foreach my $line (@configresult) {
+        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+        next GITCONFIG if ($line !~ /(submodule\.[^.=]+\.url)=(.*)/);
+
+        my $key   = $1;
         my $value = $2;
+
         if ($protocol) {
             # WebKit is special, and has only external link.
-            if ($key ne "submodule.qtwebkit.url") {
+            if ($key ne 'submodule.qtwebkit.url') {
                 # qt-labs projects are still hosted under qt internally.
-                $value =~ s,^git://gitorious\.org/qt-labs/,${proto}qt/, if ($protocol ne "http") ;
-                $value =~ s,^git://gitorious\.org/,$proto,;
+                if ($protocol ne 'http') {
+                    $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
+                }
+                $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
             }
         }
-        system_v("git config \"$key\" \"$value\"");
-        if ($ignore_submodules) {
+
+        $self->exe('git', 'config', $key, $value);
+
+        if ($self->{'ignore-submodules'}) {
             $key =~ s,\.url,.ignore,;
-            system_v("git config \"$key\" \"all\"");
+            $self->exe('git', 'config', $key, 'all');
         }
     }
+
+    return;
 }
 
-# manually clone each repo here, so we can easily use reference repos, mirrors and add all staging
-# repos
-if (!$no_update) {
-    @configresult = `git config -l`;
-    foreach (@configresult) {
-        if(/submodule\.([^.=]+)\.url=(.*)/){
-            my $repo = $1;
-            my $url = $2;
-            my $ref = "";
-            if ($alternates) {
-                if (-d "$alternates/$repo") {
-                    $ref = "--reference $alternates/$repo";
-                } else {
-                    print(" *** $alternates/$repo not found, ignoring alternate for this submodule\n");
-                }
-            }
+sub git_clone_all_submodules
+{
+    my ($self) = @_;
 
-            my $mirror;
-            if ($mirror_url && ($repo ne "qtwebkit")) {
-                $mirror = $mirror_url.$repo;
-                $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
-            } elsif ($mirror_webkit_url && ($repo eq "qtwebkit")) {
-                $mirror = $mirror_webkit_url;
-            }
-
-            my $do_clone = (! -d "$repo/.git");
-            system_v("git clone $ref " . ($mirror ? $mirror : $url) . " $repo") if ($do_clone);
-            chdir($repo) or die "'cd $repo' failed...";
-            system_v("git fetch " . ($mirror ? $mirror : $url)) if (!$do_clone);
-
-            if ($mirror) {
-                system_v("git config remote.origin.url $url");
-                system_v("git remote add mirror $mirror");
-            }
-
-            # add missing staging repos as remotes
-            my @staging = grep(/^$repo/, keys %staging_repos);
-            my @current_remotes = `git remote show`;
-            chomp @current_remotes;
-            my %diff = map { $_ => 1 } @current_remotes;
-            my @add_staging =  grep !$diff{"$_"}, @staging;
-            foreach (@add_staging) {
-                my $staging_repo = $_;
-                my $staging_repo_url = $staging_repos{$_};
-                if ($protocol) {
-                    $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${proto}qt/, if ($protocol ne "http") ;
-                    $staging_repo_url =~ s,^git://gitorious\.org/,$proto,;
-                }
-                system_v("git remote add $staging_repo $staging_repo_url");
-            }
-
-            if ($detach_alternates) {
-                system_v("git repack -a");
-                unlink(".git/objects/info/alternates");
-            }
-            chdir("..") or die "'cd ..' failed..";
+    # manually clone each repo here, so we can easily use reference repos, mirrors and
+    # add all staging repos
+    my @configresult = qx(git config -l);
+    foreach my $line (@configresult) {
+        if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
+            $self->git_clone_one_submodule($1, $2);
         }
     }
-    system_v("git submodule update");
+
+    $self->exe('git', 'submodule', 'update');
+
+    return;
 }
+
+sub git_clone_one_submodule
+{
+    my ($self, $submodule, $url) = @_;
+
+    my $alternates            = $self->{ 'alternates'        };
+    my $mirror_url            = $self->{ 'mirror-url'        };
+    my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
+    my $protocol              = $self->{protocol};
+    my $url_base_for_protocol = $PROTOCOLS{$protocol};
+
+    # `--reference FOO' args for the clone, if any.
+    my @reference_args;
+
+    if ($alternates) {
+        # alternates is a qt5 repo, so the submodule will be under that.
+        if (-d "$alternates/$submodule") {
+            @reference_args = ('--reference', "$alternates/$submodule");
+        }
+        else {
+            print " *** $alternates/$submodule not found, ignoring alternate for this submodule\n";
+        }
+    }
+
+    my $mirror;
+    if ($mirror_url && ($submodule ne 'qtwebkit')) {
+        $mirror = $mirror_url.$submodule;
+        $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
+    }
+    elsif ($mirror_webkit_url && ($submodule eq 'qtwebkit')) {
+        $mirror = $mirror_webkit_url;
+    }
+
+    my $do_clone = (! -d "$submodule/.git");
+    if ($do_clone) {
+        $self->exe('git', 'clone', @reference_args, ($mirror ? $mirror : $url), $submodule);
+    }
+
+    chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
+
+    if (!$do_clone) {
+        $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
+    }
+
+    if ($mirror) {
+        $self->exe('git', 'config', 'remote.origin.url', $url);
+        $self->exe('git', 'remote', 'add', 'mirror', $mirror);
+    }
+
+    my %current_remotes;
+    for my $line (qx(git remote show)) {
+        chomp $line;
+        $current_remotes{$line} = 1;
+    }
+
+    # We assume that any staging starting with `$submodule-' relates to this
+    # submodule.  For example, for the `qtbase' module, `qtbase-staging'
+    # and `qtbase-earth-staging' are considered as related staging repos.
+    my @staging = grep { /^\Q$submodule\E-/; } keys %STAGING_REPOS;
+
+    STAGING:
+    foreach my $staging_repo (@staging) {
+        # nothing to do if remote already exists
+        next STAGING if ($current_remotes{$staging_repo});
+
+        my $staging_repo_url = $STAGING_REPOS{$staging_repo};
+        if ($protocol) {
+            if ($protocol ne 'http') {
+                $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
+            }
+            $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
+        }
+        $self->exe('git', 'remote', 'add', $staging_repo, $staging_repo_url);
+    }
+
+    if ($self->{'detach-alternates'}) {
+        $self->exe('git', 'repack', '-a');
+
+        my $alternates_path = '.git/objects/info/alternates';
+        unlink($alternates_path) || confess "unlink $alternates_path: $OS_ERROR";
+    }
+
+    chdir("..") or confess "cd ..: $OS_ERROR";
+
+    return;
+}
+
+sub run
+{
+    my ($self) = @_;
+
+    $self->check_if_already_initialized;
+    $self->git_submodule_init;
+
+    if (!$self->{webkit}) {
+        $self->git_disable_webkit_submodule;
+    }
+
+    $self->git_set_submodule_config;
+
+    if ($self->{update}) {
+        $self->git_clone_all_submodules;
+    }
+
+    return;
+}
+
+#==============================================================================
+
+Qt::InitRepository->new(@ARGV)->run if (!caller);
+1;
