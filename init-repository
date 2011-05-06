@@ -479,6 +479,13 @@ sub git_clone_one_submodule
 
     if ($mirror) {
         $self->exe('git', 'config', 'remote.origin.url', $url);
+
+        # In `force' mode, remove the mirror if it already exists,
+        # since we may be reinitializing the module.
+        if ($self->{force}) {
+            eval { $self->exe('git', 'remote', 'rm', 'mirror'); }; # failure is OK
+        }
+
         $self->exe('git', 'remote', 'add', 'mirror', $mirror);
     }
 
