@@ -188,6 +188,7 @@ my %PROTOCOLS = (
 );
 
 my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_.git" } qw(
+    qt5-staging
     qt3support-staging
     qtactiveqt-staging
     qtbase-earth-staging
@@ -399,6 +400,42 @@ sub git_clone_all_submodules
     return;
 }
 
+sub git_add_staging_remote
+{
+    my ($self, $repo_basename) = @_;
+
+    my $protocol              = $self->{protocol};
+    my $url_base_for_protocol = $PROTOCOLS{$protocol};
+
+    my %current_remotes;
+    for my $line (qx(git remote show)) {
+        chomp $line;
+        $current_remotes{$line} = 1;
+    }
+
+    # We assume that any staging starting with `$repo_basename-' relates to this
+    # repo.  For example, for the `qtbase' module, `qtbase-staging'
+    # and `qtbase-earth-staging' are considered as related staging repos.
+    my @staging = grep { /^\Q$repo_basename\E-/; } keys %STAGING_REPOS;
+
+    STAGING:
+    foreach my $staging_repo (@staging) {
+        # nothing to do if remote already exists
+        next STAGING if ($current_remotes{$staging_repo});
+
+        my $staging_repo_url = $STAGING_REPOS{$staging_repo};
+        if ($protocol) {
+            if ($protocol ne 'http') {
+                $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
+            }
+            $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
+        }
+        $self->exe('git', 'remote', 'add', $staging_repo, $staging_repo_url);
+    }
+
+    return;
+}
+
 sub git_clone_one_submodule
 {
     my ($self, $submodule, $url) = @_;
@@ -406,8 +443,6 @@ sub git_clone_one_submodule
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
     my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
-    my $protocol              = $self->{protocol};
-    my $url_base_for_protocol = $PROTOCOLS{$protocol};
 
     # `--reference FOO' args for the clone, if any.
     my @reference_args;
@@ -447,31 +482,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'remote', 'add', 'mirror', $mirror);
     }
 
-    my %current_remotes;
-    for my $line (qx(git remote show)) {
-        chomp $line;
-        $current_remotes{$line} = 1;
-    }
-
-    # We assume that any staging starting with `$submodule-' relates to this
-    # submodule.  For example, for the `qtbase' module, `qtbase-staging'
-    # and `qtbase-earth-staging' are considered as related staging repos.
-    my @staging = grep { /^\Q$submodule\E-/; } keys %STAGING_REPOS;
-
-    STAGING:
-    foreach my $staging_repo (@staging) {
-        # nothing to do if remote already exists
-        next STAGING if ($current_remotes{$staging_repo});
-
-        my $staging_repo_url = $STAGING_REPOS{$staging_repo};
-        if ($protocol) {
-            if ($protocol ne 'http') {
-                $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
-            }
-            $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
-        }
-        $self->exe('git', 'remote', 'add', $staging_repo, $staging_repo_url);
-    }
+    $self->git_add_staging_remote($submodule);
 
     if ($self->{'detach-alternates'}) {
         $self->exe('git', 'repack', '-a');
@@ -501,6 +512,8 @@ sub run
     if ($self->{update}) {
         $self->git_clone_all_submodules;
     }
+
+    $self->git_add_staging_remote('qt5');
 
     return;
 }
