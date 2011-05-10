@@ -65,6 +65,11 @@ module_qtqa.subdir = $$IN_PWD/qtqa
 module_qtqa.target = module-qtqa
 module_qtqa.depends = module-qtbase
 
+# not yet enabled via SUBDIRS
+module_qtlocation.subdir = $$IN_PWD/qtlocation
+module_qtlocation.target = module-qtlocation
+module_qtlocation.depends = module-qtbase
+
 SUBDIRS       = \
                 module_qtbase \
                 module_qtsvg \
