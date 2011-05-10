@@ -269,7 +269,7 @@ sub parse_arguments
         'update!'           =>  \$self->{qw{ update            }},
         'webkit!'           =>  \$self->{qw{ webkit            }},
 
-        'help|?'            =>  sub { pod2usage(1);                   },
+        'help|?'            =>  sub { pod2usage(1);               },
         'http'              =>  sub { $self->{protocol} = 'http'; },
         'ssh|ssh-protocol'  =>  sub { $self->{protocol} = 'ssh';  },
 
