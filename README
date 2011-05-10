@@ -9,3 +9,8 @@ If you are a Nokia developer, you should add the -nokia-developer argument.
   ./init-repository -nokia-developer
   ./configure -nokia-developer
   make
+
+
+In order to install the grafts, run
+git submodule foreach '../qtrepotools/bin/git-qt-grafts  <path_to_history>'
+
