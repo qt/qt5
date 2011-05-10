@@ -204,6 +204,7 @@ my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_.git" } qw(
     qttranslations-staging
     qtwebkit-examples-and-demos-staging
     qtxmlpatterns-staging
+    qtlocation-staging
 );
 
 my $BNE_MIRROR_URL_BASE
