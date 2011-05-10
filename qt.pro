@@ -65,10 +65,11 @@ module_qtqa.subdir = $$IN_PWD/qtqa
 module_qtqa.target = module-qtqa
 module_qtqa.depends = module-qtbase
 
-# not yet enabled via SUBDIRS
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
 module_qtlocation.depends = module-qtbase
+# not yet enabled by default
+module_qtlocation.CONFIG = no_default_target no_default_install
 
 SUBDIRS       = \
                 module_qtbase \
@@ -83,6 +84,7 @@ SUBDIRS       = \
                 module_qtdoc \
                 module_qlalr \
                 module_qtqa \
+                module_qtlocation \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
