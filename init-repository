@@ -180,6 +180,7 @@ use Carp         qw( confess             );
 use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptionsFromArray );
 use Pod::Usage   qw( pod2usage           );
+use Cwd          qw( getcwd              );
 
 my %PROTOCOLS = (
     'internal'  => 'git://scm.dev.nokia.troll.no/' ,
@@ -332,6 +333,11 @@ sub git_submodule_init
     }
     $self->exe('git', 'submodule', 'init', @init_args);
 
+    my $template = getcwd()."/.commit-template";
+    if (-e $template) {
+        $self->exe('git', 'config', 'commit.template', $template);
+    }
+
     return;
 }
 
@@ -476,6 +482,11 @@ sub git_clone_one_submodule
 
     if (!$do_clone) {
         $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
+    }
+
+    my $template = getcwd()."/../.commit-template";
+    if (-e $template) {
+        $self->exe('git', 'config', 'commit.template', $template);
     }
 
     if ($mirror) {
