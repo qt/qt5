@@ -85,10 +85,10 @@ SUBDIRS       = \
                 module_qlalr \
                 module_qtqa \
                 module_qtlocation \
+                module_qtactiveqt \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
                 module_qtwebkit_examples_and_demos
     module_qttools.depends += module_qtwebkit
 }
-win32:SUBDIRS += module_qtactiveqt
