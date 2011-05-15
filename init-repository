@@ -58,7 +58,9 @@ This script may be run after an initial `git clone' of Qt5 in order to check
 out all submodules.
 
 
-=head2 Global options:
+=head1 OPTIONS
+
+B<Global options:>
 
 =over
 
@@ -74,7 +76,7 @@ Be quiet.  Will exit cleanly if the repository is already initialized.
 =back
 
 
-=head2 Module options:
+B<Module options:>
 
 =over
 
@@ -101,7 +103,7 @@ it as needed.
 =back
 
 
-=head2 Repository options:
+B<Repository options:>
 
 =over
 
