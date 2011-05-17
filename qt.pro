@@ -67,7 +67,7 @@ module_qtqa.depends = module-qtbase
 
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module-qtbase
+module_qtlocation.depends = module-qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtlocation.CONFIG = no_default_target no_default_install
 
