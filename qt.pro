@@ -59,15 +59,15 @@ module_qtactiveqt.depends = module_qtbase
 
 module_qlalr.subdir = $$IN_PWD/qlalr
 module_qlalr.target = module-qlalr
-module_qlalr.depends = module-qtbase
+module_qlalr.depends = module_qtbase
 
 module_qtqa.subdir = $$IN_PWD/qtqa
 module_qtqa.target = module-qtqa
-module_qtqa.depends = module-qtbase
+module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module-qtbase
+module_qtlocation.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtlocation.CONFIG = no_default_target no_default_install
 
