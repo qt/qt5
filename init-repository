@@ -265,7 +265,7 @@ sub parse_arguments
         'alternates=s'      =>  \$self->{qw{ alternates        }},
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
         'force'             =>  \$self->{qw{ force             }},
-        'ignore-submodules' =>  \$self->{qw{ ignore_submodules }},
+        'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
         'mirror-webkit=s'   =>  \$self->{qw{ mirror-webkit-url }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
