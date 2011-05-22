@@ -49,3 +49,6 @@
 [submodule "qtlocation"]
 	path = qtlocation
 	url = git://gitorious.org/qt/qtlocation.git
+[submodule "qtsensors"]
+	path = qtsensors
+	url = git://gitorious.org/qt/qtsensors.git
