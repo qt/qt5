@@ -1,16 +1,26 @@
 To clone and compile the submodules, do execute the following:
 
   ./init-repository
-  ./configure
+  ./qtrepotools/bin/qt5_tool -p
+  ./configure 
   make
 
-If you are a Nokia developer, you should add the -nokia-developer argument.
+If you are a Nokia developer, you should add the -nokia-developer argument:
 
   ./init-repository -nokia-developer
-  ./configure -nokia-developer
+  ./qtrepotools/bin/qt5_tool -p
+  ./configure -nokia-developer 
   make
 
+Checkout qt5_tool --help for more interesting features, like -s <module> to 
+switch to the staging repo of a module.
 
 In order to install the grafts, run
 git submodule foreach '../qtrepotools/bin/git-qt-grafts  <path_to_history>'
+
+Note: Currently the repo is in a state, where it does not always build,
+especially tests, examples, and demos.  Unfortunately make -k also does not 
+help. A workaround is to configure with 
+
+	-nomake tests -nomake examples -nomake demos.
 
