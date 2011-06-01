@@ -135,6 +135,14 @@ protocol is blocked by a firewall.  Note that this only works with the
 external Gitorious server.
 
 
+=item --codereview-username <Gerrit/JIRA username>
+
+Adds a gerrit alias to repos under Gerrit codereview management.
+This requires a username for SSH access to the codereview.qt.nokia.com
+server, which will be the same username you have for the bugtracker at
+bugreports.qt.nokia.com.
+
+
 =item --alternates <path to other Qt5 repo>
 
 Adds alternates for each submodule to another full qt5 checkout. This makes
@@ -213,6 +221,10 @@ my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_-staging.git" } qw(
     qtsensors
 );
 
+my %GERRIT_REPOS = map { $_ => "codereview.qt.nokia.com:qt/$_.git" } qw(
+    qtbase
+);
+
 my $BNE_MIRROR_URL_BASE
     = 'git://bq-git.apac.nokia.com/qtsoftware/qt/';
 
@@ -252,6 +264,7 @@ sub parse_arguments
 
     %{$self} = (%{$self},
         'alternates'          => "",
+        'codereview-username' => "",
         'detach-alternates'   => 0 ,
         'force'               => 0 ,
         'ignore-submodules'   => 0 ,
@@ -265,6 +278,7 @@ sub parse_arguments
 
     GetOptionsFromArray(\@args,
         'alternates=s'      =>  \$self->{qw{ alternates        }},
+        'codereview-username=s' => \$self->{qw{ codereview-username }},
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
         'force'             =>  \$self->{qw{ force             }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
@@ -413,7 +427,7 @@ sub git_clone_all_submodules
     return;
 }
 
-sub git_add_staging_remote
+sub git_add_remotes
 {
     my ($self, $repo_basename) = @_;
 
@@ -426,23 +440,17 @@ sub git_add_staging_remote
         $current_remotes{$line} = 1;
     }
 
-    my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
-
-    if (!@staging) {
-        # Add origin's URL as staging's URL, since this repo has no separate staging area
-        unless ($current_remotes{'staging'}) {
-            my @configresult = qx(git remote -v);
-            foreach (@configresult) {
-                if (/origin\s+(\S+) \(fetch\)/) {
-                    $self->exe('git', 'remote', 'add', 'staging', $1);
-                }
-            }
+    my @gerrit = grep { /^$repo_basename$/; } keys %GERRIT_REPOS;
+    if (!$current_remotes{'gerrit'} && $self->{'codereview-username'}) {
+        foreach my $gerrit_repo (@gerrit) {
+            my $gerrit_repo_url = $GERRIT_REPOS{$gerrit_repo};
+            $self->exe('git', 'remote', 'add', 'gerrit', $self->{'codereview-username'}."@".$gerrit_repo_url);
         }
-    } else {
-        foreach my $staging_repo (@staging) {
-            # nothing to do if remote already exists
-            next if ($current_remotes{'staging'});
+    }
 
+    my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
+    if (!$current_remotes{'staging'}) {
+        foreach my $staging_repo (@staging) {
             my $staging_repo_url = $STAGING_REPOS{$staging_repo};
             if ($protocol) {
                 if ($protocol ne 'http') {
@@ -451,6 +459,34 @@ sub git_add_staging_remote
                 $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
             }
             $self->exe('git', 'remote', 'add', 'staging', $staging_repo_url);
+        }
+    }
+
+    # if repo has no staging repo defined, alias it to gerrit or origin
+    if (!$current_remotes{'staging'} && !@staging) {
+        my @configresult = qx(git remote -v);
+        my $staging_set = 0;
+        foreach (@configresult) {
+            if (/^gerrit\s+(\S+) \(fetch\)/) {
+                $self->exe('git', 'remote', 'add', 'staging', $1);
+                $staging_set = 1;
+            }
+        }
+        unless($staging_set) {
+            foreach (@configresult) {
+                if (/^origin\s+(\S+) \(fetch\)/) {
+                    $self->exe('git', 'remote', 'add', 'staging', $1);
+                }
+            }
+        }
+    }
+    #if repo has no gerrit repo defined, alias it to whatever staging now points to (could be origin)
+    if (!$current_remotes{'gerrit'} && !@gerrit) {
+        my @configresult = qx(git remote -v);
+        foreach (@configresult) {
+            if (/^staging\s+(\S+) \(fetch\)/) {
+                $self->exe('git', 'remote', 'add', 'gerrit', $1);
+            }
         }
     }
 
@@ -515,7 +551,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'remote', 'add', 'mirror', $mirror);
     }
 
-    $self->git_add_staging_remote($submodule);
+    $self->git_add_remotes($submodule);
 
     if ($self->{'detach-alternates'}) {
         $self->exe('git', 'repack', '-a');
@@ -546,7 +582,7 @@ sub run
         $self->git_clone_all_submodules;
     }
 
-    $self->git_add_staging_remote('qt5');
+    $self->git_add_remotes('qt5');
 
     return;
 }
