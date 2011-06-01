@@ -428,18 +428,30 @@ sub git_add_staging_remote
 
     my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
 
-    foreach my $staging_repo (@staging) {
-        # nothing to do if remote already exists
-        next if ($current_remotes{$staging_repo});
-
-        my $staging_repo_url = $STAGING_REPOS{$staging_repo};
-        if ($protocol) {
-            if ($protocol ne 'http') {
-                $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
+    if (!@staging) {
+        # Add origin's URL as staging's URL, since this repo has no separate staging area
+        unless ($current_remotes{'staging'}) {
+            my @configresult = qx(git remote -v);
+            foreach (@configresult) {
+                if (/origin\s+(\S+) \(fetch\)/) {
+                    $self->exe('git', 'remote', 'add', 'staging', $1);
+                }
             }
-            $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
         }
-        $self->exe('git', 'remote', 'add', 'staging', $staging_repo_url);
+    } else {
+        foreach my $staging_repo (@staging) {
+            # nothing to do if remote already exists
+            next if ($current_remotes{'staging'});
+
+            my $staging_repo_url = $STAGING_REPOS{$staging_repo};
+            if ($protocol) {
+                if ($protocol ne 'http') {
+                    $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
+                }
+                $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
+            }
+            $self->exe('git', 'remote', 'add', 'staging', $staging_repo_url);
+        }
     }
 
     return;
