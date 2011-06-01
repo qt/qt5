@@ -193,24 +193,24 @@ my %PROTOCOLS = (
     'http'      => 'http://git.gitorious.org/'     ,
 );
 
-my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_.git" } qw(
-    qt5-staging
-    qt3support-staging
-    qtactiveqt-staging
-    qtbase-staging
-    qtdeclarative-staging
-    qtdoc-staging
-    qtmultimedia-staging
-    qtphonon-staging
-    qtqa-staging
-    qtscript-staging
-    qtsvg-staging
-    qttools-staging
-    qttranslations-staging
-    qtwebkit-examples-and-demos-staging
-    qtxmlpatterns-staging
-    qtlocation-staging
-    qtsensors-staging
+my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_-staging.git" } qw(
+    qt5
+    qt3support
+    qtactiveqt
+    qtbase
+    qtdeclarative
+    qtdoc
+    qtmultimedia
+    qtphonon
+    qtqa
+    qtscript
+    qtsvg
+    qttools
+    qttranslations
+    qtwebkit-examples-and-demos
+    qtxmlpatterns
+    qtlocation
+    qtsensors
 );
 
 my $BNE_MIRROR_URL_BASE
@@ -427,10 +427,7 @@ sub git_add_staging_remote
         $current_remotes{$line} = 1;
     }
 
-    # We assume that any staging starting with `$repo_basename-' relates to this
-    # repo.  For example, for the `qtbase' module, `qtbase-staging'
-    # and `qtbase-earth-staging' are considered as related staging repos.
-    my @staging = grep { /^\Q$repo_basename\E-/; } keys %STAGING_REPOS;
+    my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
 
     STAGING:
     foreach my $staging_repo (@staging) {
@@ -444,7 +441,7 @@ sub git_add_staging_remote
             }
             $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
         }
-        $self->exe('git', 'remote', 'add', $staging_repo, $staging_repo_url);
+        $self->exe('git', 'remote', 'add', 'staging', $staging_repo_url);
     }
 
     return;
