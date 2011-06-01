@@ -366,10 +366,9 @@ sub git_set_submodule_config
     my $protocol              = $self->{protocol};
     my $url_base_for_protocol = $PROTOCOLS{$protocol};
 
-    GITCONFIG:
     foreach my $line (@configresult) {
         # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-        next GITCONFIG if ($line !~ /(submodule\.[^.=]+\.url)=(.*)/);
+        next if ($line !~ /(submodule\.[^.=]+\.url)=(.*)/);
 
         my $key   = $1;
         my $value = $2;
@@ -429,10 +428,9 @@ sub git_add_staging_remote
 
     my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
 
-    STAGING:
     foreach my $staging_repo (@staging) {
         # nothing to do if remote already exists
-        next STAGING if ($current_remotes{$staging_repo});
+        next if ($current_remotes{$staging_repo});
 
         my $staging_repo_url = $STAGING_REPOS{$staging_repo};
         if ($protocol) {
