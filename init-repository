@@ -195,7 +195,6 @@ my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_.git" } qw(
     qt5-staging
     qt3support-staging
     qtactiveqt-staging
-    qtbase-earth-staging
     qtbase-staging
     qtdeclarative-staging
     qtdoc-staging
