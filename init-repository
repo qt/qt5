@@ -579,6 +579,11 @@ sub git_clone_one_submodule
         unlink($alternates_path) || confess "unlink $alternates_path: $OS_ERROR";
     }
 
+    if ($submodule eq "qtdeclarative") { #Extra step needed to setup declarative 
+        $self->exe('git', 'submodule', 'init'); 
+        $self->exe('git', 'submodule', 'update'); 
+    } 
+
     chdir("..") or confess "cd ..: $OS_ERROR";
 
     return;
