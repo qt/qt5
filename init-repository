@@ -120,6 +120,11 @@ Switch to internal Nokia URLs.
 Switch to internal Nokia URLs and make use of the Brisbane git mirrors.
 (Implies `--mirror' and `--mirror-webkit').
 
+=item --berlin
+
+Switch to internal Nokia URLs and make use of the Berlin git mirrors.
+(Implies `--mirror' and `--mirror-webkit').
+
 
 =item --ssh
 
@@ -231,6 +236,13 @@ my $BNE_MIRROR_URL_BASE
 my $BNE_MIRROR_WEBKIT_URL
     = 'git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git';
 
+my $BER_MIRROR_URL_BASE
+    = 'git://ber-git.europe.nokia.com/qt/';
+
+my $BER_MIRROR_WEBKIT_URL
+    = 'git://ber-git.europe.nokia.com/qtwebkit/qtwebkit.git';
+
+
 sub new
 {
     my ($class, @arguments) = @_;
@@ -299,6 +311,13 @@ sub parse_arguments
             $self->{'mirror-url'}        = $BNE_MIRROR_URL_BASE;
             $self->{'mirror-webkit-url'} = $BNE_MIRROR_WEBKIT_URL;
             $self->{'ignore-submodules'} = 1;
+        },
+
+        'berlin|berlin-nokia-developer' => sub {
+            $self->{'nokia-developer'}   = 1;
+            $self->{'protocol'}          = 'internal';
+            $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
+            $self->{'mirror-webkit-url'} = $BER_MIRROR_WEBKIT_URL;
         },
 
         'nokia-developer' => sub {
