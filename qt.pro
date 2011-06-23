@@ -73,6 +73,12 @@ module_qtsensors.subdir = $$IN_PWD/qtsensors
 module_qtsensors.target = module-qtsensors
 module_qtsensors.depends = module_qtbase module_qtdeclarative
 
+module_qtsystems.subdir = $$IN_PWD/qtsystems
+module_qtsystems.target = module-qtsystems
+module_qtsystems.depends = module_qtbase module_qtdeclarative
+# not yet enabled by default
+module_qtsystems.CONFIG = no_default_target no_default_install
+
 SUBDIRS       = \
                 module_qtbase \
                 module_qtsvg \
@@ -89,6 +95,7 @@ SUBDIRS       = \
                 module_qtlocation \
                 module_qtactiveqt \
                 module_qtsensors \
+                module_qtsystems \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
