@@ -79,6 +79,12 @@ module_qtsystems.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtsystems.CONFIG = no_default_target no_default_install
 
+module_qtmultimediakit.subdir = $$IN_PWD/qtmultimediakit
+module_qtmultimediakit.target = module-qtmultimediakit
+module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
+# not yet enabled by default
+module_qtmultimediakit.CONFIG = no_default_target no_default_install
+
 SUBDIRS       = \
                 module_qtbase \
                 module_qtsvg \
@@ -96,6 +102,7 @@ SUBDIRS       = \
                 module_qtactiveqt \
                 module_qtsensors \
                 module_qtsystems \
+                module_qtmultimediakit \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
