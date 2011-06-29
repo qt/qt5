@@ -55,3 +55,6 @@
 [submodule "qtsystems"]
 	path = qtsystems
 	url = git://gitorious.org/qt/qtsystems.git
+[submodule "qtmultimediakit"]
+	path = qtmultimediakit
+	url = git://gitorious.org/qt/qtmultimediakit.git
