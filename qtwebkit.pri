@@ -30,6 +30,11 @@ contains(DS, /) {
     GNUTOOLS = $$quote("set \"PATH=$$PWD/gnuwin32/bin;%PATH%\" &&")
 }
 
+# Any configuration making use of QMAKE_POST_LINK will not work for this project,
+# since the building is done by webkit's own build script and qmake at this level
+# does not know the real TARGET.  Disable them here.
+CONFIG -= separate_debug_info
+
 exists($$PWD/qtwebkit/WebKitTools):qtwebkit_tools_dir = WebKitTools
 else:qtwebkit_tools_dir = Tools
 
