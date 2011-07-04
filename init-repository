@@ -225,6 +225,7 @@ my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_-staging.git" } qw(
     qtlocation
     qtsensors
     qtsystems
+    qtfeedback
 );
 
 my %GERRIT_REPOS = map { $_ => "codereview.qt.nokia.com:qt/$_.git" } qw(

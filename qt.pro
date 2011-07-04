@@ -83,6 +83,12 @@ module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtmultimediakit.CONFIG = no_default_target no_default_install
 
+module_qtfeedback.subdir = $$IN_PWD/qtfeedback
+module_qtfeedback.target = module-qtfeedback
+module_qtfeedback.depends = module_qtbase module_qtdeclarative
+# not yet enabled by default
+module_qtfeedback.CONFIG = no_default_target no_default_install
+
 SUBDIRS       = \
                 module_qtbase \
                 module_qtsvg \
@@ -101,6 +107,7 @@ SUBDIRS       = \
                 module_qtsensors \
                 module_qtsystems \
                 module_qtmultimediakit \
+                module_qtfeedback \
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
