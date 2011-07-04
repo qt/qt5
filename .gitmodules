@@ -58,3 +58,6 @@
 [submodule "qtmultimediakit"]
 	path = qtmultimediakit
 	url = git://gitorious.org/qt/qtmultimediakit.git
+[submodule "qtfeedback"]
+	path = qtfeedback
+	url = git://gitorious.org/qt/qtfeedback.git
