@@ -1,26 +1,105 @@
-To clone and compile the submodules, do execute the following:
+HOW TO BUILD QT5
+================
 
-  ./init-repository
-  ./qtrepotools/bin/qt5_tool -p
-  ./configure 
-  make
 
-If you are a Nokia developer, you should add the -nokia-developer argument:
+ Synopsis
+ ========
 
-  ./init-repository -nokia-developer
-  ./qtrepotools/bin/qt5_tool -p
-  ./configure -nokia-developer 
-  make
+ For a stable build of Qt5:
 
-Checkout qt5_tool --help for more interesting features, like -s <module> to 
-switch to the staging repo of a module.
+   ./init-repository
+   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   make -j4
 
-In order to install the grafts, run
-git submodule foreach '../qtrepotools/bin/git-qt-grafts  <path_to_history>'
+ More details follow.
 
-Note: Currently the repo is in a state, where it does not always build,
-especially tests, examples, and demos.  Unfortunately make -k also does not 
-help. A workaround is to configure with 
 
-	-nomake tests -nomake examples -nomake demos.
+ Get The Submodules
+ ==================
 
+ Cloning Qt5 does not automatically clone all submodules.
+ To get the submodules, it is recommended to use the `init-repository' script.
+
+   ./init-repository
+
+ If you are a Nokia developer, you should add the -nokia-developer argument:
+
+   ./init-repository -nokia-developer
+
+ See `./init-repository -help' for full documentation on the many supported
+ options.
+
+
+ Update The Submodules (optional)
+ ================================
+
+ After a plain `git clone' and `init-repository', you will have each submodule
+ checked out to a particular SHA1.  This combination of SHA1s is guaranteed to
+ have passed some basic acceptance testing.
+
+ If (and only if!) you need newer versions of some submodules, you can manually
+ fetch and/or pull and/or reset any modules you like, or use the qt5_tool to
+ pull all modules:
+
+   ./qtrepotools/bin/qt5_tool -p
+
+ NOTE! As soon as you change the SHA1 of any submodule, you are using a
+ combination of modules which is potentially untested and broken!  If you want
+ something which is more likely to compile, stick to the module SHA1s provided
+ in this repository.
+
+
+ Install The Git Grafts (optional)
+ =================================
+
+ If you want to be able to connect the Qt5 and Qt4 development history, you
+ may set up git grafts with the following command:
+
+   git submodule foreach '../qtrepotools/bin/git-qt-grafts <path_to_history>'
+
+
+ Build!
+ ======
+
+ A typical `configure; make' build process is used.
+
+ Example for a release build:
+ (adjust the `-jN' parameter as appropriate for your system)
+
+   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   make -j4
+
+ Example for a developer build: (enables more autotests)
+
+   ./configure -nokia-developer
+   make -j4
+
+ See output of `./configure -help' for documentation on various options to
+ configure.
+
+ The above examples will build whatever Qt5 modules have been enabled by
+ default in the build system.
+
+ It is possible to build selected modules with their dependencies by doing
+ a `make module-<foo>'.  For example, to build only qtscript and qtwebkit,
+ and the modules they depend on:
+
+   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   make -j4 module-qtscript module-qtwebkit
+
+ This can save a lot of time if you are only interested in a subset of Qt5.
+
+
+ Hints
+ =====
+
+ Shadow builds are possible, but not as well tested/supported as in-source
+ builds.
+
+ You can disable parts of the build to speed up compilation or to work around
+ problems by configuring with:
+
+    -nomake tests -nomake examples -nomake demos.
+
+ The qt5_tool in qtrepotools has some more features which may be of interest.
+ Try `qt5_tool --help'.
