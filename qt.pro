@@ -87,25 +87,29 @@ module_qtfeedback.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtfeedback.CONFIG = no_default_target no_default_install
 
-SUBDIRS       = \
-                module_qtbase \
-                module_qtsvg \
-                module_qtphonon \
-                module_qtxmlpatterns \
-                module_qtscript \
-                module_qtdeclarative \
-                module_qtmultimedia \
-                module_qttools \
-                module_qttranslations \
-                module_qtdoc \
-                module_qlalr \
-                module_qtqa \
-                module_qtlocation \
-                module_qtactiveqt \
-                module_qtsensors \
-                module_qtsystems \
-                module_qtmultimediakit \
-                module_qtfeedback \
+# only qtbase is required to exist. The others may not - but it is the
+# users responsibility to ensure that all needed dependencies exist, or
+# it may not build.
+
+SUBDIRS = module_qtbase
+
+exists(qtsvg/qtsvg.pro): SUBDIRS += module_qtsvg
+exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
+exists(qtxmlpatterns/qtxmlpatterns.pro): SUBDIRS += module_qtxmlpatterns
+exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
+exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
+exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
+exists(qttools/qttools.pro): SUBDIRS += module_qttools
+exists(qttranslations/qttranslations.pro): SUBDIRS += module_qttranslations
+exists(qtdoc/qtdoc.pro): SUBDIRS += module_qtdoc
+exists(qlalr/qlalr.pro): SUBDIRS += module_qlalr
+exists(qtqa/qtqa.pro): SUBDIRS += module_qtqa
+exists(qtlocation/qtlocation.pro): SUBDIRS += module_qtlocation
+exists(qtactiveqt/qtactiveqt.pro): SUBDIRS += module_qtactiveqt
+exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
+exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
+exists(qtmultimediakit/qtmultimediakit.pro): SUBDIRS += module_qtmultimediakit
+exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \

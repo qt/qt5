@@ -87,6 +87,10 @@ Skip webkit and webkit examples submodules.
 It may be desirable to skip these modules due to the large size of the webkit
 git repository.
 
+=item --module-subset=<module1>,<module2>...
+
+Only initialize the specified subset of modules given as the argument. Specified
+modules must already exist in .gitmodules.
 
 =item --no-update
 
@@ -300,6 +304,7 @@ sub parse_arguments
         'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
+        'module-subset'       => "",
     );
 
     GetOptionsFromArray(\@args,
@@ -314,6 +319,7 @@ sub parse_arguments
         'quiet'             =>  \$self->{qw{ quiet             }},
         'update!'           =>  \$self->{qw{ update            }},
         'webkit!'           =>  \$self->{qw{ webkit            }},
+        'module-subset=s'   =>  \$self->{qw{ module-subset     }},
 
         'help|?'            =>  sub { pod2usage(1);               },
         'http'              =>  sub { $self->{protocol} = 'http'; },
@@ -348,6 +354,12 @@ sub parse_arguments
 
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
+
+    if ($self->{'module-subset'}) {
+        $self->{'module-subset'} = {
+            map { $_ => 1 } split(qr{,}, $self->{'module-subset'})
+        };
+    }
 
     return;
 }
@@ -403,6 +415,21 @@ sub git_disable_webkit_submodule
     $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples-and-demos');
 
     return;
+}
+
+sub git_prune_submodules
+{
+    my ($self) = @_;
+
+    my @configresult = qx(git config -l);
+    foreach my $line (@configresult) {
+        if ($line =~ /submodule\.([^.=]+)\.url=/) {
+            my $module_name = $1;
+            if (!$self->{'module-subset'}{$module_name}) {
+                $self->exe('git', 'config', '--remove', "submodule.$module_name");
+            }
+        }
+    }
 }
 
 sub git_set_submodule_config
@@ -591,6 +618,10 @@ sub run
 
     if (!$self->{webkit}) {
         $self->git_disable_webkit_submodule;
+    }
+
+    if ($self->{'module-subset'}) {
+        $self->git_prune_submodules;
     }
 
     $self->git_set_submodule_config;
