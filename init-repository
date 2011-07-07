@@ -132,6 +132,8 @@ Use the SSH protocol for git operations.  This may be useful if the git
 protocol is blocked by a firewall. Note that this requires a user account
 with an uploaded SSH key on all servers used.  (Implies `--nokia-developer').
 
+The `--ssh' option does not affect the gerrit remotes.
+
 
 =item --http
 
@@ -139,13 +141,19 @@ Use the HTTP protocol for git operations.  This may be useful if the git
 protocol is blocked by a firewall.  Note that this only works with the
 external Gitorious server.
 
+The `--http' option does not affect the gerrit remotes.
+
 
 =item --codereview-username <Gerrit/JIRA username>
 
-Adds a gerrit alias to repos under Gerrit codereview management.
+Adds a (potentially) writable remote named `gerrit' for each module,
+for use with the Gerrit code review tool.
 This requires a username for SSH access to the codereview.qt.nokia.com
 server, which will be the same username you have for the bugtracker at
 bugreports.qt.nokia.com.
+
+If this option is omitted, the gerrit remote is created with read-only
+access (using HTTP protocol).
 
 
 =item --alternates <path to other Qt5 repo>
@@ -206,34 +214,35 @@ my %PROTOCOLS = (
     'http'      => 'http://git.gitorious.org/'     ,
 );
 
-my %STAGING_REPOS = map { $_ => "git://gitorious.org/qt/$_-staging.git" } qw(
+my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qt5
-    qt3support
+    qlalr
     qtactiveqt
     qtbase
     qtdeclarative
     qtdoc
+    qtfeedback
+    qtlocation
     qtmultimedia
+    qtmultimediakit
     qtphonon
     qtqa
+    qtrepotools
     qtscript
+    qtsensors
     qtsvg
+    qtsystems
     qttools
     qttranslations
     qtwebkit-examples-and-demos
     qtxmlpatterns
-    qtlocation
-    qtsensors
-    qtsystems
-    qtfeedback
 );
 
-my %GERRIT_REPOS = map { $_ => "codereview.qt.nokia.com:qt/$_.git" } qw(
-    qtbase
-    qtdeclarative
-    qtdoc
-    qtmultimediakit
-);
+my $GERRIT_SSH_BASE
+    = 'ssh://codereview.qt.nokia.com:29418/';
+
+my $GERRIT_HTTP_BASE
+    = 'http://codereview.qt.nokia.com/p/';
 
 my $BNE_MIRROR_URL_BASE
     = 'git://bq-git.apac.nokia.com/qtsoftware/qt/';
@@ -437,8 +446,7 @@ sub git_clone_all_submodules
 {
     my ($self) = @_;
 
-    # manually clone each repo here, so we can easily use reference repos, mirrors and
-    # add all staging repos
+    # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
         if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
@@ -464,51 +472,31 @@ sub git_add_remotes
         $current_remotes{$line} = 1;
     }
 
-    my @gerrit = grep { /^$repo_basename$/; } keys %GERRIT_REPOS;
-    if (!$current_remotes{'gerrit'} && $self->{'codereview-username'}) {
-        foreach my $gerrit_repo (@gerrit) {
-            my $gerrit_repo_url = $GERRIT_REPOS{$gerrit_repo};
-            $self->exe('git', 'remote', 'add', 'gerrit', $self->{'codereview-username'}."@".$gerrit_repo_url);
+    my $gerrit_repo_basename = $GERRIT_REPOS{$repo_basename};
+    if ($gerrit_repo_basename && !$current_remotes{'gerrit'}) {
+        my $gerrit_repo_url;
+
+        # If given a username, we use writable remote (ssh).
+        # Otherwise, we use read-only (http).
+        if ($self->{'codereview-username'}) {
+            $gerrit_repo_url = $GERRIT_SSH_BASE;
+            $gerrit_repo_url =~ s[^ssh://][ssh://$self->{'codereview-username'}@];
         }
+        else {
+            $gerrit_repo_url = $GERRIT_HTTP_BASE;
+        }
+
+        $gerrit_repo_url .= $gerrit_repo_basename;
+        $self->exe('git', 'remote', 'add', 'gerrit', $gerrit_repo_url);
+
+        $current_remotes{'gerrit'} = 1;
     }
 
-    my @staging = grep { /^$repo_basename$/; } keys %STAGING_REPOS;
-    if (!$current_remotes{'staging'}) {
-        foreach my $staging_repo (@staging) {
-            my $staging_repo_url = $STAGING_REPOS{$staging_repo};
-            if ($protocol) {
-                if ($protocol ne 'http') {
-                    $staging_repo_url =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
-                }
-                $staging_repo_url =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
-            }
-            $self->exe('git', 'remote', 'add', 'staging', $staging_repo_url);
-        }
-    }
-
-    # if repo has no staging repo defined, alias it to gerrit or origin
-    if (!$current_remotes{'staging'} && !@staging) {
-        my @configresult = qx(git remote -v);
-        my $staging_set = 0;
-        foreach (@configresult) {
-            if (/^gerrit\s+(\S+) \(fetch\)/) {
-                $self->exe('git', 'remote', 'add', 'staging', $1);
-                $staging_set = 1;
-            }
-        }
-        unless($staging_set) {
-            foreach (@configresult) {
-                if (/^origin\s+(\S+) \(fetch\)/) {
-                    $self->exe('git', 'remote', 'add', 'staging', $1);
-                }
-            }
-        }
-    }
-    #if repo has no gerrit repo defined, alias it to whatever staging now points to (could be origin)
-    if (!$current_remotes{'gerrit'} && !@gerrit) {
+    # if repo still has no gerrit repo defined, alias it to origin
+    if (!$current_remotes{'gerrit'}) {
         my @configresult = qx(git remote -v);
         foreach (@configresult) {
-            if (/^staging\s+(\S+) \(fetch\)/) {
+            if (/^origin\s+(\S+) \(fetch\)/) {
                 $self->exe('git', 'remote', 'add', 'gerrit', $1);
             }
         }
