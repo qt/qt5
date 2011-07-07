@@ -80,8 +80,6 @@ module_qtsystems.depends = module_qtbase module_qtdeclarative
 module_qtmultimediakit.subdir = $$IN_PWD/qtmultimediakit
 module_qtmultimediakit.target = module-qtmultimediakit
 module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
-# not yet enabled by default
-module_qtmultimediakit.CONFIG = no_default_target no_default_install
 
 module_qtfeedback.subdir = $$IN_PWD/qtfeedback
 module_qtfeedback.target = module-qtfeedback
