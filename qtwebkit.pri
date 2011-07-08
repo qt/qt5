@@ -41,6 +41,10 @@ else:qtwebkit_tools_dir = Tools
 QTWEBKIT_BUILD_CONFIG =
 contains(CONFIG, release):!contains(CONFIG, debug_and_release): {QTWEBKIT_BUILD_CONFIG = --release}
 
+# npapi does not work for qpa, as of qtwebkit 81b8dac16049715b94dc36256bd9f433f7dfacc5 .
+# This should be reverted once npapi either works, or gracefully disables itself, for qpa.
+qpa:QTWEBKIT_BUILD_CONFIG += --no-netscape-plugin
+
 # The '+' is to make parallel "make" work across the script boundary.
 module_qtwebkit.commands = $${OPTI}$${SBC}cd qtwebkit && \
                            $$env_export \"WEBKITOUTPUTDIR=$$OUT_PWD/qtwebkit/WebKitBuild\" && $$GNUTOOLS \
