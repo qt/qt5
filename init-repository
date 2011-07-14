@@ -241,6 +241,16 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtwebkit-examples-and-demos
     qtxmlpatterns
 );
+$GERRIT_REPOS{qtquick3d} = "qt/quick3d";
+
+# Protocol-specific repo overrides, if they differ from the values set in the git submodule config
+# (e.g. because public vs private names differ for whatever reason)
+my %PROTOCOL_REPOS = (
+    qtquick3d   =>  {
+        internal    =>  "qt/quick3d",   # instead of qt-quick3d/qt-quick3d on gitorious
+        ssh         =>  "qt/quick3d",
+    },
+);
 
 my $GERRIT_SSH_BASE
     = 'ssh://codereview.qt.nokia.com:29418/';
@@ -249,7 +259,7 @@ my $GERRIT_HTTP_BASE
     = 'http://codereview.qt.nokia.com/p/';
 
 my $BNE_MIRROR_URL_BASE
-    = 'git://bq-git.apac.nokia.com/qtsoftware/qt/';
+    = 'git://bq-git.apac.nokia.com/qtsoftware/';
 
 my $BNE_MIRROR_WEBKIT_URL
     = 'git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git';
@@ -258,7 +268,7 @@ my $BNE_MIRROR_V8_URL
     = 'git://bq-git.apac.nokia.com/github/v8.git';
 
 my $BER_MIRROR_URL_BASE
-    = 'git://ber-git.europe.nokia.com/qt/';
+    = 'git://ber-git.europe.nokia.com/';
 
 my $BER_MIRROR_WEBKIT_URL
     = 'git://ber-git.europe.nokia.com/qtwebkit/qtwebkit.git';
@@ -447,27 +457,37 @@ sub git_set_submodule_config
 
     foreach my $line (@configresult) {
         # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-        next if ($line !~ /(submodule\.[^.=]+\.url)=(.*)/);
+        next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
 
         my $key   = $1;
         my $value = $2;
 
         if ($protocol) {
             # WebKit is special, and has only external link.
-            if ($key ne 'submodule.qtwebkit.url') {
+            if ($key ne 'qtwebkit') {
                 # qt-labs projects are still hosted under qt internally.
                 if ($protocol ne 'http') {
                     $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
                 }
-                $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
+
+                if ($PROTOCOL_REPOS{$key}->{$protocol}) {
+                    # If this repo has an explicitly set basename for this protocol, use it...
+                    # e.g.   'git@example.com:'     . 'qt/quick3d'
+                    $value = $url_base_for_protocol . $PROTOCOL_REPOS{$key}->{$protocol};
+                }
+                else {
+                    # ...otherwise, assume the selected protocol uses same naming structure
+                    # as gitorious.org
+                    # e.g. git://gitorious.org/qt/qt5 => git@example.com:qt/qt5
+                    $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
+                }
             }
         }
 
-        $self->exe('git', 'config', $key, $value);
+        $self->exe('git', 'config', "submodule.$key.url", $value);
 
         if ($self->{'ignore-submodules'}) {
-            $key =~ s,\.url,.ignore,;
-            $self->exe('git', 'config', $key, 'all');
+            $self->exe('git', 'config', "submodule.$key.ignore", 'all');
         }
     }
 
@@ -561,7 +581,7 @@ sub git_clone_one_submodule
 
     my $mirror;
     if ($mirror_url && ($submodule ne 'qtwebkit')) {
-        $mirror = $mirror_url.$submodule;
+        $mirror = $mirror_url.( $PROTOCOL_REPOS{$submodule}->{internal} // "qt/$submodule" );
         $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
     }
     elsif ($mirror_webkit_url && ($submodule eq 'qtwebkit')) {
