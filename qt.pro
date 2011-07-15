@@ -11,9 +11,11 @@ module_qtphonon.subdir = $$IN_PWD/qtphonon
 module_qtphonon.target = module-qtphonon
 module_qtphonon.depends = module_qtbase
 
+# Disabled and will be removed
 module_qtmultimedia.subdir = $$IN_PWD/qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
 module_qtmultimedia.depends = module_qtbase
+module_qtmultimedia.CONFIG = no_default_target no_default_install
 
 module_qtxmlpatterns.subdir = $$IN_PWD/qtxmlpatterns
 module_qtxmlpatterns.target = module-qtxmlpatterns
