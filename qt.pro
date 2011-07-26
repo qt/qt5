@@ -53,7 +53,7 @@ module_qttranslations.depends = module_qttools
 
 module_qtdoc.subdir = $$IN_PWD/qtdoc
 module_qtdoc.target = module-qtdoc
-module_qtdoc.depends = module_qtdeclarative module_qttools #for the demos and QtHelp
+module_qtdoc.depends = module_qtbase
 
 module_qtactiveqt.subdir = $$IN_PWD/qtactiveqt
 module_qtactiveqt.target = module-qtactiveqt
