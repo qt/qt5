@@ -95,6 +95,12 @@ module_qtquick3d.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtquick3d.CONFIG = no_default_target no_default_install
 
+module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
+module_qtdocgallery.target = module-qtdocgallery
+module_qtdocgallery.depends = module_qtbase module_qtdeclarative
+# not yet enabled by default
+module_qtdocgallery.CONFIG = no_default_target no_default_install
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -119,6 +125,7 @@ exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
 exists(qtmultimediakit/qtmultimediakit.pro): SUBDIRS += module_qtmultimediakit
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
+exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
