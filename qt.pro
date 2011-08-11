@@ -97,7 +97,7 @@ module_qtquick3d.CONFIG = no_default_target no_default_install
 
 module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
-module_qtdocgallery.depends = module_qtbase module_qtdeclarative
+module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
 # not yet enabled by default
 module_qtdocgallery.CONFIG = no_default_target no_default_install
 
