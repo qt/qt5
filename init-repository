@@ -566,6 +566,7 @@ sub git_clone_one_submodule
     my $mirror_url            = $self->{ 'mirror-url'        };
     my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
     my $mirror_v8_url         = $self->{ 'mirror-v8-url'     };
+    my $protocol              = $self->{ 'protocol'          };
 
     # `--reference FOO' args for the clone, if any.
     my @reference_args;
@@ -628,7 +629,7 @@ sub git_clone_one_submodule
 
     if ($submodule eq "qtdeclarative") { #Extra step needed to setup declarative 
         $self->exe('git', 'submodule', 'init'); 
-        if ($do_clone and $mirror_v8_url) {
+        if ($mirror_v8_url || $protocol eq 'http') {
             my @configresult = qx(git config -l);
             my $v8url;
             foreach my $line (@configresult) {
@@ -636,11 +637,25 @@ sub git_clone_one_submodule
                 next if ($line !~ /submodule.src\/3rdparty\/v8.url=(.*)/);
                 $v8url = $1;
             }
-            chdir('src/3rdparty/') or confess "chdir $submodule/src/3rdparty: $OS_ERROR";
-            $self->exe('git', 'clone', $mirror_v8_url, 'v8');
-            chdir('v8') or confess "chdir $submodule/src/3rdparty/v8: $OS_ERROR";
-            $self->exe('git', 'config', 'remote.origin.url', $v8url);
-            chdir('../../..') or confess "cd ../../..: $OS_ERROR";
+
+            if ($protocol eq 'http') {
+                # rewrite the git:// url to https://
+                if ($v8url =~ s{^git://github}{https://github}) {
+                    $self->exe('git', 'config', 'submodule.src/3rdparty/v8.url', $v8url);
+                }
+                else {
+                    warn 'You requested git over http, but I could not figure out how to '
+                        ."rewrite v8's giturl of $v8url";
+                }
+            }
+
+            if ($mirror_v8_url && $do_clone) {
+                chdir('src/3rdparty/') or confess "chdir $submodule/src/3rdparty: $OS_ERROR";
+                $self->exe('git', 'clone', $mirror_v8_url, 'v8');
+                chdir('v8') or confess "chdir $submodule/src/3rdparty/v8: $OS_ERROR";
+                $self->exe('git', 'config', 'remote.origin.url', $v8url);
+                chdir('../../..') or confess "cd ../../..: $OS_ERROR";
+            }
         }
         $self->exe('git', 'submodule', 'update'); 
     } 
