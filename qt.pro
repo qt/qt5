@@ -86,20 +86,14 @@ module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
 module_qtfeedback.subdir = $$IN_PWD/qtfeedback
 module_qtfeedback.target = module-qtfeedback
 module_qtfeedback.depends = module_qtbase module_qtdeclarative
-# not yet enabled by default
-module_qtfeedback.CONFIG = no_default_target no_default_install
 
 module_qtquick3d.subdir = $$IN_PWD/qtquick3d
 module_qtquick3d.target = module-qtquick3d
 module_qtquick3d.depends = module_qtbase module_qtdeclarative
-# not yet enabled by default
-module_qtquick3d.CONFIG = no_default_target no_default_install
 
 module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
 module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
-# not yet enabled by default
-module_qtdocgallery.CONFIG = no_default_target no_default_install
 
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
