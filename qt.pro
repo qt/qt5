@@ -98,8 +98,6 @@ module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
 module_qtpim.subdir = $$IN_PWD/qtpim
 module_qtpim.target = module-qtpim
 module_qtpim.depends = module_qtdeclarative
-# not yet enabled by default
-module_qtpim.CONFIG = no_default_target no_default_install
 
 module_qtconnectivity.subdir = $$IN_PWD/qtconnectivity
 module_qtconnectivity.target = module-qtconnectivity
