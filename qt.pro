@@ -95,6 +95,12 @@ module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
 module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
 
+module_qtpim.subdir = $$IN_PWD/qtpim
+module_qtpim.target = module-qtpim
+module_qtpim.depends = module_qtdeclarative
+# not yet enabled by default
+module_qtpim.CONFIG = no_default_target no_default_install
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -120,6 +126,7 @@ exists(qtmultimediakit/qtmultimediakit.pro): SUBDIRS += module_qtmultimediakit
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
+exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
