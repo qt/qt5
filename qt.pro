@@ -101,6 +101,12 @@ module_qtpim.depends = module_qtdeclarative
 # not yet enabled by default
 module_qtpim.CONFIG = no_default_target no_default_install
 
+module_qtconnectivity.subdir = $$IN_PWD/qtconnectivity
+module_qtconnectivity.target = module-qtconnectivity
+module_qtconnectivity.depends = module_qtsystems
+# not yet enabled by default
+module_qtconnectivity.CONFIG = no_default_target no_default_install
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -127,6 +133,7 @@ exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
+exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
