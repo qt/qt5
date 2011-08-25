@@ -11,12 +11,6 @@ module_qtphonon.subdir = $$IN_PWD/qtphonon
 module_qtphonon.target = module-qtphonon
 module_qtphonon.depends = module_qtbase
 
-# Disabled and will be removed
-module_qtmultimedia.subdir = $$IN_PWD/qtmultimedia
-module_qtmultimedia.target = module-qtmultimedia
-module_qtmultimedia.depends = module_qtbase
-module_qtmultimedia.CONFIG = no_default_target no_default_install
-
 module_qtxmlpatterns.subdir = $$IN_PWD/qtxmlpatterns
 module_qtxmlpatterns.target = module-qtxmlpatterns
 module_qtxmlpatterns.depends = module_qtbase
@@ -116,7 +110,6 @@ exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
 exists(qtxmlpatterns/qtxmlpatterns.pro): SUBDIRS += module_qtxmlpatterns
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
 exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
-exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
 exists(qttools/qttools.pro): SUBDIRS += module_qttools
 exists(qttranslations/qttranslations.pro): SUBDIRS += module_qttranslations
 exists(qtdoc/qtdoc.pro): SUBDIRS += module_qtdoc
