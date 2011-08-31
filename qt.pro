@@ -85,7 +85,7 @@ module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
 
 module_qtfeedback.subdir = $$IN_PWD/qtfeedback
 module_qtfeedback.target = module-qtfeedback
-module_qtfeedback.depends = module_qtbase module_qtdeclarative
+module_qtfeedback.depends = module_qtbase module_qtmultimediakit module_qtdeclarative
 
 module_qtquick3d.subdir = $$IN_PWD/qtquick3d
 module_qtquick3d.target = module-qtquick3d
