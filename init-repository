@@ -152,7 +152,7 @@ The `--http' option does not affect the gerrit remotes.
 
 Adds a (potentially) writable remote named `gerrit' for each module,
 for use with the Gerrit code review tool.
-This requires a username for SSH access to the codereview.qt.nokia.com
+This requires a username for SSH access to the codereview.qt-project.org
 server, which will be the same username you have for the bugtracker at
 bugreports.qt.nokia.com.
 
@@ -255,10 +255,10 @@ my %PROTOCOL_REPOS = (
 );
 
 my $GERRIT_SSH_BASE
-    = 'ssh://codereview.qt.nokia.com:29418/';
+    = 'ssh://codereview.qt-project.org:29418/';
 
 my $GERRIT_HTTP_BASE
-    = 'http://codereview.qt.nokia.com/p/';
+    = 'http://codereview.qt-project.org/p/';
 
 my $BNE_MIRROR_URL_BASE
     = 'git://bq-git.apac.nokia.com/qtsoftware/';
