@@ -510,7 +510,9 @@ sub git_clone_all_submodules
         }
     }
 
-    $self->exe('git', 'submodule', 'update', '--recursive');
+    if ($self->{update}) {
+        $self->exe('git', 'submodule', 'update', '--recursive');
+    }
 
     return;
 }
@@ -641,7 +643,9 @@ sub git_clone_one_submodule
                 }
             }
         }
-        $self->exe('git', 'submodule', 'update'); 
+        if ($self->{update}) {
+            $self->exe('git', 'submodule', 'update');
+        }
     } 
 
     chdir("..") or confess "cd ..: $OS_ERROR";
@@ -666,9 +670,7 @@ sub run
 
     $self->git_set_submodule_config;
 
-    if ($self->{update}) {
-        $self->git_clone_all_submodules;
-    }
+    $self->git_clone_all_submodules;
 
     $self->git_add_remotes('qt5');
 
