@@ -47,7 +47,7 @@ module_qttranslations.depends = module_qttools
 
 module_qtdoc.subdir = $$IN_PWD/qtdoc
 module_qtdoc.target = module-qtdoc
-module_qtdoc.depends = module_qtbase
+module_qtdoc.depends = module_qtbase module_qtdeclarative
 
 module_qtactiveqt.subdir = $$IN_PWD/qtactiveqt
 module_qtactiveqt.target = module-qtactiveqt
@@ -63,7 +63,9 @@ module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase module_qtdeclarative
+module_qtlocation.depends = module_qtbase module_qtdeclarative module_qtquick3d module_qtscript
+# temporarily disabled to resolve deadlock as commented on http://codereview.qt-project.org/5337
+module_qtlocation.CONFIG = no_default_target no_default_install
 
 module_qtsensors.subdir = $$IN_PWD/qtsensors
 module_qtsensors.target = module-qtsensors
