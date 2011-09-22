@@ -98,8 +98,6 @@ module_qtpim.depends = module_qtdeclarative
 module_qtconnectivity.subdir = $$IN_PWD/qtconnectivity
 module_qtconnectivity.target = module-qtconnectivity
 module_qtconnectivity.depends = module_qtsystems
-# not yet enabled by default
-module_qtconnectivity.CONFIG = no_default_target no_default_install
 
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
