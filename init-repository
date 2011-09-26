@@ -240,6 +240,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtsystems
     qttools
     qttranslations
+    qtwayland
     qtwebkit-examples-and-demos
     qtxmlpatterns
 );
