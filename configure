@@ -51,8 +51,18 @@ if (! -e "$relpath/qtbase/configure") {
 
 ensureDir("$outpath/qtbase");
 chdir("$outpath/qtbase");
+if (-e ".qmake.cache") {
+    # Remove this so we can detect if configure finished properly
+    unlink ".qmake.cache";
+}
 my $ret = system_v("$relpath/qtbase/configure @ARGV");
 exit $ret unless ($ret == 0);
+if (! -e ".qmake.cache") {
+    # Even though there was no error code, this file wasn't created
+    # so configure didn't finish properly. This is probaby because
+    # the user passed -help
+    exit 0;
+}
 
 chdir("$outpath");
 
