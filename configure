@@ -59,7 +59,7 @@ my $ret = system_v("$relpath/qtbase/configure @ARGV");
 exit $ret unless ($ret == 0);
 if (! -e ".qmake.cache") {
     # Even though there was no error code, this file wasn't created
-    # so configure didn't finish properly. This is probaby because
+    # so configure didn't finish properly. This is probably because
     # the user passed -help
     exit 0;
 }
