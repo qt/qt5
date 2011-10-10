@@ -21,7 +21,7 @@ module_qtscript.depends = module_qtbase
 
 module_qtdeclarative.subdir = $$IN_PWD/qtdeclarative
 module_qtdeclarative.target = module-qtdeclarative
-module_qtdeclarative.depends = module_qtbase module_qtsvg module_qtxmlpatterns
+module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
