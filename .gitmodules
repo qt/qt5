@@ -33,7 +33,7 @@
 	url = git://gitorious.org/qt/qtdoc.git
 [submodule "qlalr"]
 	path = qlalr
-	url = git://gitorious.org/qt-labs/qlalr.git
+	url = git://gitorious.org/qt/qlalr.git
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = git://gitorious.org/qt/qtrepotools.git
