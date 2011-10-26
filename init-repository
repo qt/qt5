@@ -570,7 +570,6 @@ sub git_clone_one_submodule
     my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
     my $mirror_v8_url         = $self->{ 'mirror-v8-url'     };
     my $protocol              = $self->{ 'protocol'          };
-    my $nokia_developer       = $self->{ 'nokia-developer'   };
 
     # `--reference FOO' args for the clone, if any.
     my @reference_args;
@@ -622,7 +621,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'remote', 'add', 'mirror', $mirror);
     }
 
-    $self->git_add_remotes($submodule) if $nokia_developer;
+    $self->git_add_remotes($submodule);
 
     if ($self->{'detach-alternates'}) {
         $self->exe('git', 'repack', '-a');
@@ -675,8 +674,6 @@ sub run
 {
     my ($self) = @_;
 
-    my $nokia_developer       = $self->{ 'nokia-developer'   };
-
     $self->check_if_already_initialized;
     $self->git_submodule_init;
 
@@ -694,7 +691,7 @@ sub run
         $self->git_clone_all_submodules;
     }
 
-    $self->git_add_remotes('qt5') if $nokia_developer;
+    $self->git_add_remotes('qt5');
 
     return;
 }
