@@ -63,7 +63,7 @@
 	url = git://gitorious.org/qt/qtfeedback.git
 [submodule "qtquick3d"]
 	path = qtquick3d
-	url = git://gitorious.org/qt-quick3d/qt-quick3d.git
+	url = git://gitorious.org/qt/quick3d.git
 [submodule "qtdocgallery"]
 	path = qtdocgallery
 	url = git://gitorious.org/qt/qtdocgallery.git
