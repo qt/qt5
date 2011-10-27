@@ -230,7 +230,6 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtfeedback
     qtlocation
     qtmultimedia
-    qtmultimediakit
     qtphonon
     qtpim
     qtqa

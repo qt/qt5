@@ -76,16 +76,10 @@ module_qtsystems.depends = module_qtbase module_qtdeclarative
 module_qtmultimedia.subdir = $$IN_PWD/qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
 module_qtmultimedia.depends = module_qtbase module_qtdeclarative
-# Have this turned off to start with so qt5 integrates
-module_qtmultimedia.CONFIG = no_default_target no_default_install
-
-module_qtmultimediakit.subdir = $$IN_PWD/qtmultimediakit
-module_qtmultimediakit.target = module-qtmultimediakit
-module_qtmultimediakit.depends = module_qtbase module_qtdeclarative
 
 module_qtfeedback.subdir = $$IN_PWD/qtfeedback
 module_qtfeedback.target = module-qtfeedback
-module_qtfeedback.depends = module_qtbase module_qtmultimediakit module_qtdeclarative
+module_qtfeedback.depends = module_qtbase module_qtmultimedia module_qtdeclarative
 
 module_qtquick3d.subdir = $$IN_PWD/qtquick3d
 module_qtquick3d.target = module-qtquick3d
@@ -130,7 +124,6 @@ exists(qtactiveqt/qtactiveqt.pro): SUBDIRS += module_qtactiveqt
 exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
 exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
 exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
-exists(qtmultimediakit/qtmultimediakit.pro): SUBDIRS += module_qtmultimediakit
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
