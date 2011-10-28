@@ -73,3 +73,6 @@
 [submodule "qtwayland"]
 	path = qtwayland
 	url = git://gitorious.org/qt/qtwayland.git
+[submodule "qtjsondb"]
+	path = qtjsondb
+	url = git://gitorious.org/qt/qtjsondb.git
