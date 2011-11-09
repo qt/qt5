@@ -519,9 +519,6 @@ sub git_add_remotes
 {
     my ($self, $repo_basename) = @_;
 
-    my $protocol              = $self->{protocol};
-    my $url_base_for_protocol = $PROTOCOLS{$protocol};
-
     my %current_remotes;
     for my $line (qx(git remote show)) {
         chomp $line;
