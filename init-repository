@@ -150,14 +150,11 @@ The `--http' option does not affect the gerrit remotes.
 
 =item --codereview-username <Gerrit/JIRA username>
 
-Adds a (potentially) writable remote named `gerrit' for each module,
-for use with the Gerrit code review tool.
-This requires a username for SSH access to the codereview.qt-project.org
-server, which will be the same username you have for the bugtracker at
-bugreports.qt.nokia.com.
+Specify the user name for the (potentially) writable `gerrit' remote
+for each module, for use with the Gerrit code review tool.
 
-If this option is omitted, the gerrit remote is created with read-only
-access (using HTTP protocol).
+If this option is omitted, the gerrit remote is created without a username
+and port number, and thus relies on a correct SSH configuration.
 
 
 =item --alternates <path to other Qt5 repo>
@@ -257,10 +254,7 @@ my %PROTOCOL_REPOS = (
 );
 
 my $GERRIT_SSH_BASE
-    = 'ssh://codereview.qt-project.org:29418/';
-
-my $GERRIT_HTTP_BASE
-    = 'http://codereview.qt-project.org/p/';
+    = 'ssh://@USER@codereview.qt-project.org@PORT@/';
 
 my $BNE_MIRROR_URL_BASE
     = 'git://bq-git.apac.nokia.com/qtsoftware/';
@@ -529,14 +523,16 @@ sub git_add_remotes
     if ($gerrit_repo_basename && !$current_remotes{'gerrit'}) {
         my $gerrit_repo_url;
 
-        # If given a username, we use writable remote (ssh).
-        # Otherwise, we use read-only (http).
+        # If given a username, make a "verbose" remote.
+        # Otherwise, rely on proper SSH configuration.
         if ($self->{'codereview-username'}) {
             $gerrit_repo_url = $GERRIT_SSH_BASE;
-            $gerrit_repo_url =~ s[^ssh://][ssh://$self->{'codereview-username'}@];
+            $gerrit_repo_url =~ s,\@USER\@,$self->{'codereview-username'}\@,;
+            $gerrit_repo_url =~ s,\@PORT\@,:29418,;
         }
         else {
-            $gerrit_repo_url = $GERRIT_HTTP_BASE;
+            $gerrit_repo_url = $GERRIT_SSH_BASE;
+            $gerrit_repo_url =~ s,\@[^\@]+\@,,g;
         }
 
         $gerrit_repo_url .= $gerrit_repo_basename;
