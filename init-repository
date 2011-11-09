@@ -513,14 +513,8 @@ sub git_add_remotes
 {
     my ($self, $repo_basename) = @_;
 
-    my %current_remotes;
-    for my $line (qx(git remote show)) {
-        chomp $line;
-        $current_remotes{$line} = 1;
-    }
-
     my $gerrit_repo_basename = $GERRIT_REPOS{$repo_basename};
-    if ($gerrit_repo_basename && !$current_remotes{'gerrit'}) {
+    if ($gerrit_repo_basename) {
         my $gerrit_repo_url;
 
         # If given a username, make a "verbose" remote.
@@ -536,19 +530,8 @@ sub git_add_remotes
         }
 
         $gerrit_repo_url .= $gerrit_repo_basename;
-        $self->exe('git', 'remote', 'add', 'gerrit', $gerrit_repo_url);
-
-        $current_remotes{'gerrit'} = 1;
-    }
-
-    # if repo still has no gerrit repo defined, alias it to origin
-    if (!$current_remotes{'gerrit'}) {
-        my @configresult = qx(git remote -v);
-        foreach (@configresult) {
-            if (/^origin\s+(\S+) \(fetch\)/) {
-                $self->exe('git', 'remote', 'add', 'gerrit', $1);
-            }
-        }
+        $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
+        $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*');
     }
 
     return;
@@ -593,6 +576,12 @@ sub git_clone_one_submodule
 
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
+    $self->exe('git', 'config', 'remote.origin.url', $url);
+    if ($mirror) {
+        $self->exe('git', 'config', 'remote.mirror.url', $mirror);
+        $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
+    }
+
     if (!$do_clone) {
         $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
     }
@@ -600,18 +589,6 @@ sub git_clone_one_submodule
     my $template = getcwd()."/../.commit-template";
     if (-e $template) {
         $self->exe('git', 'config', 'commit.template', $template);
-    }
-
-    if ($mirror) {
-        $self->exe('git', 'config', 'remote.origin.url', $url);
-
-        # In `force' mode, remove the mirror if it already exists,
-        # since we may be reinitializing the module.
-        if ($self->{force}) {
-            eval { $self->exe('git', 'remote', 'rm', 'mirror'); }; # failure is OK
-        }
-
-        $self->exe('git', 'remote', 'add', 'mirror', $mirror);
     }
 
     $self->git_add_remotes($submodule);
