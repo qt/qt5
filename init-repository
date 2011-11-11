@@ -510,7 +510,7 @@ sub git_clone_all_submodules
         }
     }
 
-    $self->exe('git', 'submodule', 'update');
+    $self->exe('git', 'submodule', 'update', '--recursive');
 
     return;
 }
