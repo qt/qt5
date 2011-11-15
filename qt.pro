@@ -105,7 +105,7 @@ module_qtwayland.CONFIG = no_default_target no_default_install
 
 module_qtjsondb.subdir = $$IN_PWD/qtjsondb
 module_qtjsondb.target = module-qtjsondb
-module_qtjsondb.depends = module_qtbase module_qtdeclarative module_qtsvg module_qtxmlpatterns
+module_qtjsondb.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
 # not yet enabled by default
 module_qtjsondb.CONFIG = no_default_target no_default_install
 
