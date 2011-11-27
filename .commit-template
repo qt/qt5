@@ -1,10 +1,18 @@
-# ===[ Subject ]==========[ one line, please wrap at 72 characters ]===|
+# ==[ Subject: One line only short meaningful description for logs ]===|
 
-# ---[ Details ]---------[ remember extra blank line after subject ]---|
 
-# ---[ Fields ]-----------------[ uncomment and edit as applicable ]---|
+# ==[ Details: Describe what changed and explain why it changed ]======|
 
-#Task-number:
-#Reviewed-by:
 
-# ==================================[ please wrap at 72 characters ]===|
+# ==[ Footers: Uncomment and edit where applicable ]===================|
+#
+# One task per entry. Remember space after colon.
+#Task-number: 
+#
+# Solicit reviewers. They still need to use the Gerrit frontend.
+#Reviewed-by: 
+
+# ==[ Please wrap at 72 characters ]===================================|
+#
+# Remember to read http://wiki.qt-project.org/Commit_Policy
+#
