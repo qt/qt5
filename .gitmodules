@@ -76,3 +76,6 @@
 [submodule "qtjsondb"]
 	path = qtjsondb
 	url = git://gitorious.org/qt/qtjsondb.git
+[submodule "qt3d"]
+	path = qt3d
+	url = git://gitorious.org/qt/qt3d.git

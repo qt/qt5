@@ -81,9 +81,15 @@ module_qtfeedback.subdir = $$IN_PWD/qtfeedback
 module_qtfeedback.target = module-qtfeedback
 module_qtfeedback.depends = module_qtbase module_qtmultimedia module_qtdeclarative
 
+module_qt3d.subdir = $$IN_PWD/qt3d
+module_qt3d.target = module-qt3d
+module_qt3d.depends = module_qtbase module_qtdeclarative
+# not yet enabled by default (enable it when removing qtquick3d)
+module_qt3d.CONFIG = no_default_target no_default_install
+
 module_qtquick3d.subdir = $$IN_PWD/qtquick3d
 module_qtquick3d.target = module-qtquick3d
-module_qtquick3d.depends = module_qtbase module_qtdeclarative
+module_qtquick3d.depends = $${module_qt3d.depends}
 
 module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
@@ -132,6 +138,7 @@ exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
 exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
+exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity

@@ -220,6 +220,7 @@ my %PROTOCOLS = (
 );
 
 my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
+    qt3d
     qt5
     qlalr
     qtactiveqt
@@ -467,7 +468,7 @@ sub git_set_submodule_config
 
         if ($protocol) {
             # WebKit is special, and has only external link.
-            if ($key ne 'qtwebkit') {
+            if ($key ne 'qtwebkit' and $key ne 'qt3d') {
                 # qt-labs projects are still hosted under qt internally.
                 if ($protocol ne 'http') {
                     $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
@@ -572,6 +573,9 @@ sub git_clone_one_submodule
     }
     elsif ($mirror_webkit_url && ($submodule eq 'qtwebkit')) {
         $mirror = $mirror_webkit_url;
+    }
+    if ($mirror && ($submodule eq 'qt3d')) {
+        $mirror =~ s/qtsoftware/gitorious/ ;
     }
 
     my $do_clone = (! -d "$submodule/.git");
