@@ -199,6 +199,10 @@ For example:
 
 Uses <url> as the URL for the webkit git mirror.
 
+=item --mirror-v8 <url>
+
+Uses <url> as the URL for the V8 git mirror.
+
 =back
 
 =cut
@@ -326,6 +330,7 @@ sub parse_arguments
         'force'             =>  \$self->{qw{ force             }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
         'mirror-webkit=s'   =>  \$self->{qw{ mirror-webkit-url }},
+        'mirror-v8=s'       =>  \$self->{qw{ mirror-v8-url     }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
         'quiet'             =>  \$self->{qw{ quiet             }},
