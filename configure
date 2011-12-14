@@ -56,7 +56,7 @@ if (-e ".qmake.cache") {
     unlink ".qmake.cache";
 }
 my $ret = system_v("$relpath/qtbase/configure @ARGV");
-exit $ret unless ($ret == 0);
+exit ($ret>>8) unless ($ret == 0);
 if (! -e ".qmake.cache") {
     # Even though there was no error code, this file wasn't created
     # so configure didn't finish properly. This is probably because
@@ -71,4 +71,4 @@ print QMAKE_CACHE "include(\$\$PWD/qtbase/.qmake.cache)\n";
 close QMAKE_CACHE;
 
 $ret = system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
-exit $ret;
+exit ($ret>>8);
