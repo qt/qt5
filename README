@@ -99,7 +99,7 @@ HOW TO BUILD QT5
  You can disable parts of the build to speed up compilation or to work around
  problems by configuring with:
 
-    -nomake tests -nomake examples -nomake demos.
+    -nomake tests -nomake examples
 
  The qt5_tool in qtrepotools has some more features which may be of interest.
  Try `qt5_tool --help'.
