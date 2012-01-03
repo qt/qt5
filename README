@@ -8,7 +8,7 @@ HOW TO BUILD QT5
  For a stable build of Qt5:
 
    ./init-repository
-   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   ./configure -prefix $PWD/qtbase -opensource
    make -j4
 
  More details follow.
@@ -66,13 +66,13 @@ HOW TO BUILD QT5
  Example for a release build:
  (adjust the `-jN' parameter as appropriate for your system)
 
-   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   ./configure -prefix $PWD/qtbase -opensource
    make -j4
 
  Example for a developer build:
  (enables more autotests, builds debug version of libraries, ...)
 
-   ./configure -developer-build -opensource -confirm-license
+   ./configure -developer-build -opensource
    make -j4
 
  See output of `./configure -help' for documentation on various options to
@@ -85,7 +85,7 @@ HOW TO BUILD QT5
  a `make module-<foo>'.  For example, to build only qtscript and qtwebkit,
  and the modules they depend on:
 
-   ./configure -prefix $PWD/qtbase -opensource -confirm-license
+   ./configure -prefix $PWD/qtbase -opensource
    make -j4 module-qtscript module-qtwebkit
 
  This can save a lot of time if you are only interested in a subset of Qt5.
@@ -101,6 +101,9 @@ HOW TO BUILD QT5
  problems by configuring with:
 
     -nomake tests -nomake examples
+
+ You can pass -confirm-license to configure to automatically acknowledge the
+ LGPL 2.1 license.
 
  The qt5_tool in qtrepotools has some more features which may be of interest.
  Try `qt5_tool --help'.
