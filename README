@@ -69,9 +69,10 @@ HOW TO BUILD QT5
    ./configure -prefix $PWD/qtbase -opensource -confirm-license
    make -j4
 
- Example for a developer build: (enables more autotests)
+ Example for a developer build:
+ (enables more autotests, builds debug version of libraries, ...)
 
-   ./configure -nokia-developer
+   ./configure -developer-build -opensource -confirm-license
    make -j4
 
  See output of `./configure -help' for documentation on various options to
