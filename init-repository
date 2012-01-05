@@ -201,10 +201,6 @@ missing modules will fall back to the canonical URLs.
 
 Uses <url> as the URL for the webkit git mirror.
 
-=item --mirror-v8 <url>
-
-Uses <url> as the URL for the V8 git mirror.
-
 =back
 
 =cut
@@ -270,9 +266,6 @@ my $BNE_MIRROR_URL_BASE
 my $BNE_MIRROR_WEBKIT_URL
     = 'git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git';
 
-my $BNE_MIRROR_V8_URL
-    = 'git://bq-git.apac.nokia.com/github/v8.git';
-
 my $BER_MIRROR_URL_BASE
     = 'git://ber-git.europe.nokia.com/';
 
@@ -319,7 +312,6 @@ sub parse_arguments
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
         'mirror-webkit-url'   => "",
-        'mirror-v8-url'       => "",
         'nokia-developer'     => 0 ,
         'protocol'            => "",
         'update'              => 1 ,
@@ -334,7 +326,6 @@ sub parse_arguments
         'force'             =>  \$self->{qw{ force             }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
         'mirror-webkit=s'   =>  \$self->{qw{ mirror-webkit-url }},
-        'mirror-v8=s'       =>  \$self->{qw{ mirror-v8-url     }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
         'quiet'             =>  \$self->{qw{ quiet             }},
@@ -350,7 +341,6 @@ sub parse_arguments
             $self->{'nokia-developer'}   = 1;
             $self->{'protocol'}          = 'internal';
             $self->{'mirror-url'}        = $BNE_MIRROR_URL_BASE;
-            $self->{'mirror-v8-url'}     = $BNE_MIRROR_V8_URL;
             $self->{'mirror-webkit-url'} = $BNE_MIRROR_WEBKIT_URL;
             $self->{'ignore-submodules'} = 1;
         },
@@ -555,7 +545,6 @@ sub git_clone_one_submodule
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
     my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
-    my $mirror_v8_url         = $self->{ 'mirror-v8-url'     };
     my $protocol              = $self->{ 'protocol'          };
 
     # `--reference FOO' args for the clone, if any.
@@ -620,43 +609,6 @@ sub git_clone_one_submodule
         my $alternates_path = '.git/objects/info/alternates';
         unlink($alternates_path) || confess "unlink $alternates_path: $OS_ERROR";
     }
-
-    if ($submodule eq "qtbase" || $submodule eq "qtdeclarative") { #Extra steps needed to setup base and declarative
-        $self->exe('git', 'submodule', 'init'); 
-        if ($mirror_v8_url || $protocol eq 'http') {
-            my @configresult = qx(git config -l);
-            my $v8url;
-            foreach my $line (@configresult) {
-                # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-                next if ($line !~ /submodule.src\/3rdparty\/v8.url=(.*)/);
-                $v8url = $1;
-            }
-
-            if ($v8url) {
-                if ($protocol eq 'http') {
-                    # rewrite the git:// url to https://
-                    if ($v8url =~ s{^git://github}{https://github}) {
-                        $self->exe('git', 'config', 'submodule.src/3rdparty/v8.url', $v8url);
-                    }
-                    else {
-                        warn 'You requested git over http, but I could not figure out how to '
-                            ."rewrite v8's giturl of $v8url";
-                    }
-                }
-
-                if ($mirror_v8_url && $do_clone) {
-                    chdir('src/3rdparty/') or confess "chdir $submodule/src/3rdparty: $OS_ERROR";
-                    $self->exe('git', 'clone', $mirror_v8_url, 'v8');
-                    chdir('v8') or confess "chdir $submodule/src/3rdparty/v8: $OS_ERROR";
-                    $self->exe('git', 'config', 'remote.origin.url', $v8url);
-                    chdir('../../..') or confess "cd ../../..: $OS_ERROR";
-                }
-            }
-        }
-        if ($self->{update}) {
-            $self->exe('git', 'submodule', 'update');
-        }
-    } 
 
     chdir("..") or confess "cd ..: $OS_ERROR";
 
