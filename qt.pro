@@ -19,9 +19,13 @@ module_qtscript.subdir = $$IN_PWD/qtscript
 module_qtscript.target = module-qtscript
 module_qtscript.depends = module_qtbase
 
+module_qtjsbackend.subdir = $$IN_PWD/qtjsbackend
+module_qtjsbackend.target = module-qtjsbackend
+module_qtjsbackend.depends = module_qtbase
+
 module_qtdeclarative.subdir = $$IN_PWD/qtdeclarative
 module_qtdeclarative.target = module-qtdeclarative
-module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns
+module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns module_qtjsbackend
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit

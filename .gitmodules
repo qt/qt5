@@ -79,3 +79,6 @@
 [submodule "qt3d"]
 	path = qt3d
 	url = git://gitorious.org/qt/qt3d.git
+[submodule "qtjsbackend"]
+	path = qtjsbackend
+	url = git://gitorious.org/qt/qtjsbackend.git

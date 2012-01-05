@@ -231,6 +231,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtdocgallery
     qtfeedback
     qtjsondb
+    qtjsbackend
     qtlocation
     qtmultimedia
     qtphonon
@@ -468,7 +469,7 @@ sub git_set_submodule_config
 
         if ($protocol) {
             # WebKit is special, and has only external link.
-            if ($key ne 'qtwebkit' and $key ne 'qt3d') {
+            if ($key ne 'qtwebkit' and $key ne 'qt3d' and $key ne 'qtjsbackend') {
                 # qt-labs projects are still hosted under qt internally.
                 if ($protocol ne 'http') {
                     $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
