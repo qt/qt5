@@ -45,7 +45,7 @@
 	url = git://gitorious.org/qt/qtqa.git
 [submodule "qtwebkit"]
 	path = qtwebkit
-	url = git://gitorious.org/webkit/qtwebkit.git
+	url = git://gitorious.org/qtwebkit/qt5-module.git
 [submodule "qtlocation"]
 	path = qtlocation
 	url = git://gitorious.org/qt/qtlocation.git

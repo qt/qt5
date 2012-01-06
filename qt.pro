@@ -25,7 +25,7 @@ module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
-module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative module_qtphonon
+module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative
 # The qtwebkit subdir does not follow the "module-*" scheme, so make our own target that does.
 module_qtwebkit_target.target = module-qtwebkit
 module_qtwebkit_target.commands =
