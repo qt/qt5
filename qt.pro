@@ -116,8 +116,6 @@ module_qtwayland.CONFIG = no_default_target no_default_install
 module_qtjsondb.subdir = $$IN_PWD/qtjsondb
 module_qtjsondb.target = module-qtjsondb
 module_qtjsondb.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
-# not yet enabled by default
-module_qtjsondb.CONFIG = no_default_target no_default_install
 
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
@@ -147,7 +145,13 @@ exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
 exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
-exists(qtjsondb/qtjsondb.pro): SUBDIRS += module_qtjsondb
+exists(qtjsondb/qtjsondb.pro) {
+    SUBDIRS += module_qtjsondb
+    # These modules do not require qtjsondb, but can use it if it is available
+    module_qtpim.depends += module_qtjsondb
+    module_qtdocgallery.depends += module_qtjsondb
+    module_qtsystems.depends += module_qtjsondb
+}
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
