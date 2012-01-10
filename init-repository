@@ -194,6 +194,8 @@ For example:
 
   user@machine:/foo/bar/qtbase.git
 
+The mirror is permitted to contain a subset of the submodules; any
+missing modules will fall back to the canonical URLs.
 
 =item --mirror-webkit <url>
 
@@ -579,6 +581,13 @@ sub git_clone_one_submodule
     }
     if ($mirror && ($submodule eq 'qt3d')) {
         $mirror =~ s/qtsoftware/gitorious/ ;
+    }
+
+    # Only use the mirror if it can be reached.
+    eval { $self->exe('git', 'ls-remote', $mirror, 'test/if/mirror/exists') };
+    if ($@) {
+        warn "mirror [$mirror] is not accessible; $url will be used\n";
+        undef $mirror;
     }
 
     my $do_clone = (! -d "$submodule/.git");
