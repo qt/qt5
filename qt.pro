@@ -148,6 +148,7 @@ exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
 exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtjsondb/qtjsondb.pro): SUBDIRS += module_qtjsondb
+exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
