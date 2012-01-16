@@ -572,11 +572,13 @@ sub git_clone_one_submodule
         $mirror =~ s/qtsoftware/gitorious/ ;
     }
 
-    # Only use the mirror if it can be reached.
-    eval { $self->exe('git', 'ls-remote', $mirror, 'test/if/mirror/exists') };
-    if ($@) {
-        warn "mirror [$mirror] is not accessible; $url will be used\n";
-        undef $mirror;
+    if ($mirror) {
+        # Only use the mirror if it can be reached.
+        eval { $self->exe('git', 'ls-remote', $mirror, 'test/if/mirror/exists') };
+        if ($@) {
+            warn "mirror [$mirror] is not accessible; $url will be used\n";
+            undef $mirror;
+        }
     }
 
     my $do_clone = (! -d "$submodule/.git");
