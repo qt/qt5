@@ -67,7 +67,7 @@ module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase module_qtdeclarative module_qtquick3d
+module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d
 
 module_qtsensors.subdir = $$IN_PWD/qtsensors
 module_qtsensors.target = module-qtsensors
@@ -88,12 +88,12 @@ module_qtfeedback.depends = module_qtbase module_qtmultimedia module_qtdeclarati
 module_qt3d.subdir = $$IN_PWD/qt3d
 module_qt3d.target = module-qt3d
 module_qt3d.depends = module_qtbase module_qtdeclarative
-# not yet enabled by default (enable it when removing qtquick3d)
-module_qt3d.CONFIG = no_default_target no_default_install
 
 module_qtquick3d.subdir = $$IN_PWD/qtquick3d
 module_qtquick3d.target = module-qtquick3d
 module_qtquick3d.depends = $${module_qt3d.depends}
+# disabled by default (to be removed in favor of qt3d)
+module_qtquick3d.CONFIG = no_default_target no_default_install
 
 module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
