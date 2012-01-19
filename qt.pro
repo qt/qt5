@@ -89,12 +89,6 @@ module_qt3d.subdir = $$IN_PWD/qt3d
 module_qt3d.target = module-qt3d
 module_qt3d.depends = module_qtbase module_qtdeclarative
 
-module_qtquick3d.subdir = $$IN_PWD/qtquick3d
-module_qtquick3d.target = module-qtquick3d
-module_qtquick3d.depends = $${module_qt3d.depends}
-# disabled by default (to be removed in favor of qt3d)
-module_qtquick3d.CONFIG = no_default_target no_default_install
-
 module_qtdocgallery.subdir = $$IN_PWD/qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
 module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
@@ -139,7 +133,6 @@ exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
 exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
 exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
-exists(qtquick3d/qtquick3d.pro): SUBDIRS += module_qtquick3d
 exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
