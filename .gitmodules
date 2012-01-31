@@ -79,3 +79,6 @@
 [submodule "qtjsbackend"]
 	path = qtjsbackend
 	url = git://gitorious.org/qt/qtjsbackend.git
+[submodule "qtimageformats"]
+	path = qtimageformats
+	url = git://gitorious.org/qt/qtimageformats.git

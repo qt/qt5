@@ -111,6 +111,10 @@ module_qtjsondb.subdir = $$IN_PWD/qtjsondb
 module_qtjsondb.target = module-qtjsondb
 module_qtjsondb.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
 
+module_qtimageformats.subdir = $$IN_PWD/qtimageformats
+module_qtimageformats.target = module-qtimageformats
+module_qtimageformats.depends = module_qtbase
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -146,6 +150,7 @@ exists(qtjsondb/qtjsondb.pro) {
     module_qtsystems.depends += module_qtjsondb
 }
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
+exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
