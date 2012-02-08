@@ -29,7 +29,7 @@ module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns module_qtjsbac
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
-module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative
+module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative module_qtquick1
 # The qtwebkit subdir does not follow the "module-*" scheme, so make our own target that does.
 module_qtwebkit_target.target = module-qtwebkit
 module_qtwebkit_target.commands =
@@ -42,7 +42,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtscript module_qtdeclarative
+module_qttools.depends = module_qtbase module_qtscript module_qtquick1
 win32:module_qttools.depends += module_qtactiveqt
 
 module_qttranslations.subdir = $$IN_PWD/qttranslations
@@ -115,6 +115,10 @@ module_qtimageformats.subdir = $$IN_PWD/qtimageformats
 module_qtimageformats.target = module-qtimageformats
 module_qtimageformats.depends = module_qtbase
 
+module_qtquick1.subdir = $$IN_PWD/qtquick1
+module_qtquick1.target = module-qtquick1
+module_qtquick1.depends = module_qtbase module_qtscript module_qtxmlpatterns
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -151,6 +155,7 @@ exists(qtjsondb/qtjsondb.pro) {
 }
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
+exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \

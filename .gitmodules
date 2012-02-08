@@ -82,3 +82,6 @@
 [submodule "qtimageformats"]
 	path = qtimageformats
 	url = git://gitorious.org/qt/qtimageformats.git
+[submodule "qtquick1"]
+	path = qtquick1
+	url = git://gitorious.org/qt/qtquick1.git
