@@ -42,7 +42,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtscript module_qtquick1
+module_qttools.depends = module_qtbase module_qtscript module_qtquick1 module_qtdeclarative
 win32:module_qttools.depends += module_qtactiveqt
 
 module_qttranslations.subdir = $$IN_PWD/qttranslations
