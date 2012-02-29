@@ -67,7 +67,7 @@ module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = $$IN_PWD/qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d
+module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d module_qtjsondb
 
 module_qtsensors.subdir = $$IN_PWD/qtsensors
 module_qtsensors.target = module-qtsensors
