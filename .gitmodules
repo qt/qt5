@@ -85,3 +85,6 @@
 [submodule "qtquick1"]
 	path = qtquick1
 	url = git://gitorious.org/qt/qtquick1.git
+[submodule "qtgraphicaleffects"]
+	path = qtgraphicaleffects
+	url = git://gitorious.org/qt/qtgraphicaleffects.git

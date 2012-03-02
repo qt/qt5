@@ -119,6 +119,12 @@ module_qtquick1.subdir = $$IN_PWD/qtquick1
 module_qtquick1.target = module-qtquick1
 module_qtquick1.depends = module_qtbase module_qtscript module_qtxmlpatterns
 
+module_qtgraphicaleffects.subdir = $$IN_PWD/qtgraphicaleffects
+module_qtgraphicaleffects.target = module-qtgraphicaleffects
+module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative module_qtsvg module_qtxmlpatterns
+# not yet enabled by default
+module_qtgraphicaleffects.CONFIG = no_default_target no_default_install
+
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
@@ -156,6 +162,7 @@ exists(qtjsondb/qtjsondb.pro) {
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
+exists(qtgraphicaleffects/qtgraphicaleffects.pro): SUBDIRS += module_qtgraphicaleffects
 
 exists(qtwebkit/Tools/Scripts/build-webkit) {
     SUBDIRS +=  module_qtwebkit \
