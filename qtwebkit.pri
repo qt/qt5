@@ -45,6 +45,9 @@ contains(CONFIG, release):!contains(CONFIG, debug_and_release): {QTWEBKIT_BUILD_
 # This should be reverted once npapi either works, or gracefully disables itself, for qpa.
 qpa:QTWEBKIT_BUILD_CONFIG += --no-netscape-plugin
 
+# WebKit2 is not yet supported on Windows, so avoid trying to build it
+win32:QTWEBKIT_BUILD_CONFIG += --no-webkit2
+
 # The '+' is to make parallel "make" work across the script boundary.
 module_qtwebkit.commands = $${OPTI}$${SBC}cd qtwebkit && \
                            $$env_export \"WEBKITOUTPUTDIR=$$OUT_PWD/qtwebkit/WebKitBuild\" && $$GNUTOOLS \
