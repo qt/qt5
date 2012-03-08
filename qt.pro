@@ -131,7 +131,12 @@ module_qtgraphicaleffects.CONFIG = no_default_target no_default_install
 
 SUBDIRS = module_qtbase
 
-exists(qtsvg/qtsvg.pro): SUBDIRS += module_qtsvg
+exists(qtsvg/qtsvg.pro) {
+    SUBDIRS += module_qtsvg
+    # These modules do not require qtsvg, but can use it if it is available
+    module_qtdeclarative.depends += module_qtsvg
+    module_qtquick1.depends += module_qtsvg
+}
 exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
 exists(qtxmlpatterns/qtxmlpatterns.pro): SUBDIRS += module_qtxmlpatterns
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
