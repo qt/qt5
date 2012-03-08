@@ -151,7 +151,7 @@ exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
-exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
+!win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtjsondb/qtjsondb.pro) {
     SUBDIRS += module_qtjsondb
     # These modules do not require qtjsondb, but can use it if it is available
