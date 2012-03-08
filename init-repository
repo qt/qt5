@@ -590,7 +590,9 @@ sub git_clone_one_submodule
         $self->exe('git', 'repack', '-a');
 
         my $alternates_path = '.git/objects/info/alternates';
-        unlink($alternates_path) || confess "unlink $alternates_path: $OS_ERROR";
+        if (-e $alternates_path) {
+            unlink($alternates_path) || confess "unlink $alternates_path: $OS_ERROR";
+        }
     }
 
     chdir("..") or confess "cd ..: $OS_ERROR";
