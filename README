@@ -5,26 +5,85 @@ HOW TO BUILD QT5
  Synopsis
  ========
 
- For a stable build of Qt5:
+     See http://qt-project.org/wiki/Building_Qt_5_from_Git for instructions
+     on building Qt 5.
 
-   ./init-repository
-   ./configure -prefix $PWD/qtbase -opensource
-   make -j4
+   New dependencies in Qt 5
+   ------------------------
+
+     Linux: On systems running X11, the XCB libraries are required for
+     the platform plugin to build. qtbase/src/plugins/platforms/xcb/README
+     lists the required packages.
+
+     Qt 5 can make use of the ICU libraries providing Unicode and Globalization
+     support (see http://site.icu-project.org/). They are required for building
+     QtWebKit.
+     On Linux, they will be auto-detected.
+     On Windows, they need to be manually installed and the "include" and "lib"
+     folders of the ICU installation must be appended to the INCLUDE and LIB
+     environment variables after calling the Windows SDK setup script.
+     The "bin" folder of the ICU installation should be appended to the PATH
+     environment variable in order to for the DLLs to be found at run-time.
+
+   Linux, Mac:
+   -----------
+
+     cd <path>/qt-everywhere-opensource-src-<version>
+     export PATH=$PATH:$PWD/qtbase/bin
+     ./configure -prefix $PWD/qtbase -opensource -nomake tests
+     make -j4
+
+   Windows:
+   --------
+
+     Open a Windows SDK (7.0, 7.1 or later) command prompt. Ensure that Perl
+     version 5.12 or later and Python version 2.7 or later can be found in the
+     path.
+
+     cd <path>\qt-everywhere-opensource-src-<version>
+     set PATH=%PATH%;%CD%\qtbase\bin;%CD%\gnuwin32\bin
+     configure -prefix %CD%\qtbase -opensource -nomake tests
+     nmake
+
+     For MinGW (gcc version 4.6 or later), ensure that the compiler can
+     be found in the path.
 
  More details follow.
 
+ Building QtWebKit
+ =================
+
+   Linux, Mac:
+   -----------
+
+     The tools bison, flex and gperf which are required for building.
+
+     cd qtwebkit
+     export WEBKITOUTPUTDIR=$$PWD/WebKitBuild
+     perl Tools/Scripts/build-webkit --qt --qmake=../qtbase/bin/qmake --install-libs=<install dir> --release --makeargs=$MAKEFLAGS
+
+   Windows:
+   --------
+
+     The tools bison, flex and gperf which are required for building are
+     provided for convenience in the folder gnuwin32\bin.
+
+     set PATH=%PATH%;%CD%\gnuwin32\bin
+     cd qtwebkit
+     set WEBKITOUTPUTDIR=%CD%/WebKitBuild
+     perl Tools\Scripts\build-webkit --qt --qmake=..\qtbase\bin\qmake.exe --install-libs=<install dir> --release --makeargs=%MAKEFLAGS%
 
  Get The Submodules
  ==================
+
+ Obtaining the source code is described in detail at
+ http://wiki.qt-project.org/Main_Page and
+ http://qt-project.org/wiki/Get_The_Source.
 
  Cloning Qt5 does not automatically clone all submodules.
  To get the submodules, it is recommended to use the `init-repository' script.
 
    ./init-repository
-
- If you are a Nokia developer, you should add the -nokia-developer argument:
-
-   ./init-repository -nokia-developer
 
  See `./init-repository -help' for full documentation on the many supported
  options.
@@ -63,6 +122,14 @@ HOW TO BUILD QT5
 
  A typical `configure; make' build process is used.
 
+ Some relevant configure options (see configure -help):
+
+ -release              Compile and link Qt with debugging turned off.
+ -debug                Compile and link Qt with debugging turned on.
+ -nomake tests         Disable building of tests to speed up compilation
+ -nomake examples      Disable building of examples to speed up compilation
+ -confirm-license      Automatically acknowledge the LGPL 2.1 license.
+
  Example for a release build:
  (adjust the `-jN' parameter as appropriate for your system)
 
@@ -97,13 +164,9 @@ HOW TO BUILD QT5
  Shadow builds are possible, but not as well tested/supported as in-source
  builds.
 
- You can disable parts of the build to speed up compilation or to work around
- problems by configuring with:
-
-    -nomake tests -nomake examples
-
- You can pass -confirm-license to configure to automatically acknowledge the
- LGPL 2.1 license.
+ The submodule repository qtrepotools contains useful scripts for
+ developers and release engineers. Consider adding qtrepotools/bin
+ to your PATH environment variable to access them.
 
  The qt5_tool in qtrepotools has some more features which may be of interest.
  Try `qt5_tool --help'.
