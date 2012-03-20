@@ -1,0 +1,408 @@
+#!/usr/bin/perl
+#############################################################################
+##
+## Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+## Contact: http://www.qt-project.org/
+##
+## This file is part of the utilities of the Qt Toolkit.
+##
+## $QT_BEGIN_LICENSE:LGPL$
+## GNU Lesser General Public License Usage
+## This file may be used under the terms of the GNU Lesser General Public
+## License version 2.1 as published by the Free Software Foundation and
+## appearing in the file LICENSE.LGPL included in the packaging of this
+## file. Please review the following information to ensure the GNU Lesser
+## General Public License version 2.1 requirements will be met:
+## http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+##
+## In addition, as a special exception, Nokia gives you certain additional
+## rights. These rights are described in the Nokia Qt LGPL Exception
+## version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+##
+## GNU General Public License Usage
+## Alternatively, this file may be used under the terms of the GNU General
+## Public License version 3.0 as published by the Free Software Foundation
+## and appearing in the file LICENSE.GPL included in the packaging of this
+## file. Please review the following information to ensure the GNU General
+## Public License version 3.0 requirements will be met:
+## http://www.gnu.org/copyleft/gpl.html.
+##
+## Other Usage
+## Alternatively, this file may be used in accordance with the terms and
+## conditions contained in a signed written agreement between you and Nokia.
+##
+##
+##
+##
+##
+##
+## $QT_END_LICENSE$
+##
+#############################################################################
+
+use v5.008;
+use strict;
+use warnings;
+
+package Qt::Build;
+
+use Carp         qw( confess             );
+use English      qw( -no_match_vars      );
+use Getopt::Long qw( GetOptionsFromArray );
+use Pod::Usage   qw( pod2usage           );
+use Cwd          qw( getcwd              );
+use Config;
+use thread;
+use threads::shared;
+
+# Like `system', but possibly log the command, and die on non-zero exit code
+sub exe
+{
+    my ($self, @cmd) = @_;
+
+    print "+ @cmd\n" unless ($self->{quiet});
+
+    if (system(@cmd) != 0) {
+        confess "@cmd exited with status $CHILD_ERROR";
+    }
+
+    return;
+}
+
+sub dropPrivileges()
+{
+    my ($self) = @_;
+
+    if ($> == 0) { # EUID == 0: must drop if possible
+        local $! = undef;
+        if ($< != 0) { # UID != 0 (run through setuid). swap UID with EUID
+            ($(, $)) = ($), $();
+            die "Cannot lower gid privileges: $!" if $!;
+            ($<, $>) = ($>, $<);
+            die "Cannot lower uid privileges: $!" if $!;
+        } else { # UID == 0: run through sudo?
+            if (defined $ENV{SUDO_GID}) {
+                $) = "$ENV{SUDO_GID} $ENV{SUDO_GID}";
+                die "Cannot lower gid privileges: $!" if $!;
+            }
+            if (defined $ENV{SUDO_UID}) {
+                $> = $ENV{SUDO_UID};
+                die "Cannot lower uid privileges: $!" if $!;
+            }
+        }
+    }
+}
+
+sub exeHighPriv()
+{
+    my ($self, @cmd) = @_;
+    return $self->exe(@cmd);
+}
+
+sub exeLowPriv()
+{
+    my ($self, @cmd) = @_;
+
+    if ("$Config{osname}" =~ /mswin/i) {
+        # Just like exeHighPriv for now
+        return $self->exe(@cmd);
+    } else {
+        my $ret;
+        my $pid = fork();
+        die "Couldn't fork" unless defined $pid;
+        if ($pid == 0) {
+            $self->dropPrivileges;
+            $ret = $self->exe(@cmd);
+            exit $ret;
+        } else {
+            waitpid($pid, 0);
+            return $?;
+        }
+    }
+}
+
+sub new
+{
+    my ($class, @arguments) = @_;
+
+    my $self = {};
+    bless $self, $class;
+
+    $self->parse_arguments(@arguments);
+    $self->detect_configuration;
+
+    my $depfile = "build.dependencies";
+    my $result;
+    our (%build_dependencies, %build_commands);
+
+    # following variables may be expanded in the evaluation below
+    my $MAKEOPTS = $self->{'MAKEOPTS'};
+    my $MAKE = $self->{'MAKE'};
+
+    unless ($result = do $depfile) {
+        die "build couldn't parse $depfile: $@" if $@;
+        die "build couldn't execute $depfile: $!" unless defined $result;
+    }
+
+    $self->{'deps'} = \%build_dependencies;
+    $self->{'cmds'} = \%build_commands;
+
+    return $self;
+}
+
+sub parse_arguments
+{
+    my ($self, @args) = @_;
+
+    %{$self} = (%{$self},
+        'verbose'             => 0,
+        'continue'            => 0,
+        'jobs'                => 1,
+        'build-submodules'    => [],
+    );
+
+    GetOptionsFromArray(\@args,
+        'verbose|v:1'   =>  \$self->{'verbose'},
+        'continue'      =>  \$self->{'continue'},
+        'jobs|j:1'      =>  \$self->{'jobs'},
+        'help|?'        =>  sub { pod2usage(1); },
+    ) || pod2usage(2);
+
+    push(@{$self->{'build-submodules'}}, @args) if (@args);
+
+    return;
+}
+
+sub detect_configuration
+{
+    my ($self) = @_;
+
+    die "You need to configure Qt before you try to build it, aborting." if (!-e 'qtbase/.qmake.cache');
+
+    $self->{'MAKEOPTS'} = "-s -j $self->{'jobs'}";
+    $self->{'MAKE'} = "make";
+
+    if ("$Config{osname}" =~ /(ms|cyg)win/i) {
+        use File::Which;
+        my $exe = which("nmake.exe");
+        $exe = which("jom.exe") if (defined $exe && which("jom.exe"));
+        $exe = which("mingw32-make") if (!defined $exe);
+
+         # Use the /MP compiler option, if using nmake, to use all CPU threads when compiling
+        if ($exe =~ 'nmake') {
+            use Env qw(@CL);
+            unshift @CL, '/MP';
+        }
+
+        $self->{'MAKE'} = $exe if (defined $exe);
+        $self->{'MAKEOPTS'} = "/s" if (defined $exe && $exe =~ /nmake/);
+    }
+
+    if (-e 'qtbase/bin') {
+        use Cwd qw(abs_path);
+        use Env qw(@PATH);
+        my $abs_path = abs_path('qtbase/bin');
+        unshift @PATH, "$abs_path";
+    }
+}
+
+sub find_pro_file
+{
+    my ($self, $dir) = @_;
+    my $D;
+    if (opendir($D,$dir)) {
+        ($dir =~ /\/$/) || ($dir .= "/");
+        foreach my $file (sort readdir($D)) {
+            if ($file  =~ /^.*\.pro$/) {
+                closedir($D);
+                return $file;
+            }
+        }
+        closedir($D);
+    }
+}
+
+sub eliminate_empty_modules
+{
+    my ($self) = @_;
+    foreach my $repo (keys(%{$self->{'deps'}})) {
+        if (!$self->find_pro_file($repo)) {
+            printf "Missing module %s, ignored\n", $repo;
+            delete $self->{'deps'}->{$repo};
+        }
+    }
+}
+
+sub check_build_module
+{
+    my ($self, $module) = @_;
+    my @missing_link;
+    foreach my $submod (split(/,/, $self->{'deps'}->{$module})) {
+        next if ($submod =~ /:s$/);  # Soft dependency
+        if (defined $self->{'deps'}->{$submod}) {
+            push(@missing_link, $self->check_build_module($submod));
+        } else {
+            push(@missing_link, $submod);
+        }
+    }
+    return @missing_link;
+}
+
+sub check_build_modules
+{
+    my ($self, $fail) = @_;
+    my $letsdie = 0;
+    foreach my $module (@{$self->{'build-submodules'}}) {
+        if (defined $self->{'deps'}->{$module}) {
+            my @missing_link = $self->check_build_module($module);
+            if (scalar @missing_link) {
+                $letsdie = 1;
+                my $mods = join(", ", @missing_link);
+                print STDERR "Ignoring module '$module': requires $mods\n";
+            }
+        } else {
+            print STDERR "No module named '$module'\n";
+            $letsdie = 1;
+        }
+    }
+    die "FAIL: Missing module dependencies, build aborted." if ($letsdie && $fail);
+}
+
+sub resolve_soft_dependencies
+{
+    my ($self) = @_;
+
+    foreach my $module (keys(%{$self->{'deps'}})) {
+        my @deps = split(/,/, $self->{'deps'}->{$module});
+        my @newdeps;
+        foreach my $dep (@deps) {
+            if ($dep =~ /(.*):s$/) {
+                push(@newdeps, $1) if (defined $self->{'deps'}->{$1})
+            } else {
+                push(@newdeps, $dep);
+            }
+        }
+        $self->{'deps'}->{$module} = join(",", @newdeps);
+    }
+}
+
+sub mark_as_finished
+{
+    my ($self, $doneModule) = @_;
+
+    delete $self->{'deps'}->{$doneModule};
+    foreach my $module (keys(%{$self->{'deps'}})) {
+        my @deps = split(/,/, $self->{'deps'}->{$module});
+        @deps = grep { $_ !~ /$doneModule/ } @deps;
+        $self->{'deps'}->{$module} = join(",", @deps);
+    }
+}
+
+sub get_next_modules
+{
+    my ($self, $module) = @_;
+
+    my @nextModules;
+    my $deps = $self->{'deps'}->{$module};
+    return if (!defined $deps);
+    $self->{'seenHash'}->{$module}++;
+    if ($deps eq '') {
+        push (@nextModules, $module);
+        return @nextModules;
+     }
+
+    foreach my $dep (split(/,/, $deps)) {
+        push (@nextModules, $self->get_next_modules($dep)) unless $self->{'seenHash'}->{$module};
+    }
+
+    return @nextModules;
+}
+
+sub get_all_next_modules
+{
+    my ($self) = @_;
+
+    $self->{'seenHash'} = ();
+
+    my @nextModules;
+    foreach my $module (@{$self->{'build-submodules'}}) {
+        my @mods = $self->get_next_modules($module);
+        push(@nextModules, @mods);
+    }
+
+    my %seen = ();
+    my @uniqModules;
+    foreach my $item (@nextModules) {
+        push(@uniqModules, $item) unless $seen{$item}++;
+    }
+
+    return @uniqModules;
+}
+
+sub build_project
+{
+    my ($self, $module) = @_;
+    my $build_command = $self->{'cmds'}->{$module};
+    $build_command = "qmake -r && $self->{MAKE} $self->{MAKEOPTS}" if (!defined $build_command);
+    exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
+    exeHighPriv("cd $module && $self->{MAKE} install") && die "'cd $module && $self->{MAKE} install failed: $?";
+    $self->mark_as_finished($module);
+    return 0;
+}
+
+sub build_qt
+{
+    my ($self) = @_;
+
+    printf "OS Name ........ %s\n", $Config{osname};
+    printf "Verbose ........ %s\n", ($self->{'verbose'} ? $self->{'verbose'} : "no");
+    printf "Continue ....... %s\n", ($self->{'continue'} ? "yes" : "no");
+    printf "Jobs ........... %d\n", $self->{'jobs'};
+
+    my $path = $ENV{'PATH'};
+    print "PATH $path\n";
+
+    print "Modules to build:\n";
+    my $mods = "(all present)";
+    $mods = join(", ", @{$self->{'build-submodules'}}) if (@{$self->{'build-submodules'}});
+    print "    $mods\n";
+
+    while (my @modules = $self->get_all_next_modules) {
+        my @modules = $self->get_all_next_modules;
+        foreach my $module (@modules) {
+            print "build $module...\n";
+            $self->build_project($module);
+        }
+    }
+
+    print "build done!\n";
+
+    return 0;
+}
+
+sub run
+{
+    my ($self) = @_;
+
+    $self->eliminate_empty_modules;
+
+    if (scalar @{$self->{'build-submodules'}} > 0) {
+        $self->check_build_modules(1);
+    } else {
+        push(@{$self->{'build-submodules'}}, keys(%{$self->{'deps'}}));
+        $self->check_build_modules(0);
+    }
+
+    $self->resolve_soft_dependencies;
+
+    $self->build_qt;
+
+#    print Dumper($self);
+
+    return;
+}
+
+#==============================================================================
+
+Qt::Build->new(@ARGV)->run if (!caller);
+1;
