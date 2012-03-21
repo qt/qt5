@@ -102,7 +102,7 @@ module_qtconnectivity.depends = module_qtsystems
 
 module_qtwayland.subdir = $$IN_PWD/qtwayland
 module_qtwayland.target = module-qtwayland
-module_qtwayland.depends = module_qtbase
+module_qtwayland.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtwayland.CONFIG = no_default_target no_default_install
 
