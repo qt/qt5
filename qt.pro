@@ -43,7 +43,6 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 module_qttools.subdir = $$IN_PWD/qttools
 module_qttools.target = module-qttools
 module_qttools.depends = module_qtbase module_qtscript module_qtquick1 module_qtdeclarative
-win32:module_qttools.depends += module_qtactiveqt
 
 module_qttranslations.subdir = $$IN_PWD/qttranslations
 module_qttranslations.target = module-qttranslations
@@ -147,7 +146,10 @@ exists(qtdoc/qtdoc.pro): SUBDIRS += module_qtdoc
 exists(qlalr/qlalr.pro): SUBDIRS += module_qlalr
 exists(qtqa/qtqa.pro): SUBDIRS += module_qtqa
 exists(qtlocation/qtlocation.pro): SUBDIRS += module_qtlocation
-exists(qtactiveqt/qtactiveqt.pro): SUBDIRS += module_qtactiveqt
+exists(qtactiveqt/qtactiveqt.pro) {
+    SUBDIRS += module_qtactiveqt
+    module_qttools.depends += module_qtactiveqt
+}
 exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
 exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
 exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
