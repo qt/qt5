@@ -19,7 +19,7 @@ use Config;
     "qtimageformats" => "qtbase",
     "qtjsbackend" => "qtbase",
     "qtjsondb" => "qtbase,qtdeclarative,qtxmlpatterns",
-    "qtlocation" => "qtbase,qtdeclarative,qt3d,qtjsondb",
+    "qtlocation" => "qtbase,qtdeclarative,qt3d,qtjsondb:s",
     "qtmultimedia" => "qtbase,qtdeclarative",
     "qtphonon" => "qtbase",
     "qtpim" => "qtdeclarative,qtjsondb:s",
@@ -36,14 +36,24 @@ use Config;
     "qtxmlpatterns" => "qtbase",
 );
 
-%build_commands = (
-    "qtwebkit" => "QMAKEPATH=Tools/qmake qmake && make",
+if ("$Config{osname}" =~ /mswin/i) {
+    %build_commands = (
+        "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --no-netscape-plugin --no-webkit2",
+    );
+} else {
+    %build_commands = (
+        "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --release --no-netscape-plugin",
+    );
+}
+
+%install_commands = (
+    "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --makeargs=\"install\"",
 );
 
 # Platform specific modules
 
 if ("$Config{osname}" =~ /linux/i) {
-    $build_dependencies{"qtwaysland"} = "qtbase";
+    $build_dependencies{"qtwayland"} = "qtbase";
 }
 
 if ("$Config{osname}" =~ /(ms|cyg)win/i) {
