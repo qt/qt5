@@ -51,9 +51,8 @@ use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptionsFromArray );
 use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
+use File::Spec   qw( path catfile        );
 use Config;
-use thread;
-use threads::shared;
 
 # Like `system', but possibly log the command, and die on non-zero exit code
 sub exe
@@ -66,7 +65,7 @@ sub exe
         confess "@cmd exited with status $CHILD_ERROR";
     }
 
-    return;
+    return 0;
 }
 
 sub dropPrivileges()
@@ -112,8 +111,8 @@ sub exeLowPriv()
         die "Couldn't fork" unless defined $pid;
         if ($pid == 0) {
             $self->dropPrivileges;
-            $ret = $self->exe(@cmd);
-            exit $ret;
+            $self->exe(@cmd);
+            exit 0;
         } else {
             waitpid($pid, 0);
             return $?;
@@ -133,7 +132,7 @@ sub new
 
     my $depfile = "build.dependencies";
     my $result;
-    our (%build_dependencies, %build_commands);
+    our (%build_dependencies, %build_commands, %install_commands);
 
     # following variables may be expanded in the evaluation below
     my $MAKEOPTS = $self->{'MAKEOPTS'};
@@ -145,7 +144,8 @@ sub new
     }
 
     $self->{'deps'} = \%build_dependencies;
-    $self->{'cmds'} = \%build_commands;
+    $self->{'buildcmds'} = \%build_commands;
+    $self->{'instcmds'} = \%install_commands;
 
     return $self;
 }
@@ -157,7 +157,8 @@ sub parse_arguments
     %{$self} = (%{$self},
         'verbose'             => 0,
         'continue'            => 0,
-        'jobs'                => 1,
+        'jobs'                => -1,
+        'force_qmake'         => 0,
         'build-submodules'    => [],
     );
 
@@ -165,11 +166,22 @@ sub parse_arguments
         'verbose|v:1'   =>  \$self->{'verbose'},
         'continue'      =>  \$self->{'continue'},
         'jobs|j:1'      =>  \$self->{'jobs'},
+        'force-qmake'   =>  \$self->{'force_qmake'},
         'help|?'        =>  sub { pod2usage(1); },
     ) || pod2usage(2);
 
     push(@{$self->{'build-submodules'}}, @args) if (@args);
 
+    return;
+}
+
+sub which {
+    my ($self, $exe) = @_;
+
+    foreach my $path (File::Spec->path()) {
+        my $file = File::Spec->catfile($path, $exe);
+        return $file if -x $file;
+    }
     return;
 }
 
@@ -179,14 +191,23 @@ sub detect_configuration
 
     die "You need to configure Qt before you try to build it, aborting." if (!-e 'qtbase/.qmake.cache');
 
-    $self->{'MAKEOPTS'} = "-s -j $self->{'jobs'}";
-    $self->{'MAKE'} = "make";
+    use Cwd qw(abs_path);
+    use Env qw(@PATH);
 
-    if ("$Config{osname}" =~ /(ms|cyg)win/i) {
-        use File::Which;
-        my $exe = which("nmake.exe");
-        $exe = which("jom.exe") if (defined $exe && which("jom.exe"));
-        $exe = which("mingw32-make") if (!defined $exe);
+    my $abs_path = abs_path('qtbase/bin');
+    unshift @PATH, $abs_path;
+
+    if ($self->{'jobs'} >= 0) {
+        $self->{'MAKEOPTS'} = "-j $self->{'jobs'}";
+    } else {
+        $self->{'MAKEOPTS'} = "";
+    }
+    $self->{'MAKE'} = $ENV{MAKE} || "make";
+
+    if ("$Config{osname}" =~ /mswin/i) {
+        my $exe = $self->which("nmake.exe");
+        $exe = $self->which("jom.exe") if (defined $exe && $self->which("jom.exe"));
+        $exe = $self->which("mingw32-make.exe") if (!defined $exe);
 
          # Use the /MP compiler option, if using nmake, to use all CPU threads when compiling
         if ($exe =~ 'nmake') {
@@ -194,14 +215,11 @@ sub detect_configuration
             unshift @CL, '/MP';
         }
 
-        $self->{'MAKE'} = $exe if (defined $exe);
-        $self->{'MAKEOPTS'} = "/s" if (defined $exe && $exe =~ /nmake/);
-    }
+        $self->{'MAKE'} = "\"$exe\"" if (defined $exe);
+        $self->{'MAKEOPTS'} = "" if (defined $exe && $exe =~ /nmake/);
 
-    if (-e 'qtbase/bin') {
-        use Cwd qw(abs_path);
-        use Env qw(@PATH);
-        my $abs_path = abs_path('qtbase/bin');
+        # Tools needed for building QtWebKit/Windows (Bison, Flex, gperf, iconv)
+        my $abs_path = abs_path('gnuwin32/bin');
         unshift @PATH, "$abs_path";
     }
 }
@@ -342,10 +360,17 @@ sub get_all_next_modules
 sub build_project
 {
     my ($self, $module) = @_;
-    my $build_command = $self->{'cmds'}->{$module};
-    $build_command = "qmake -r && $self->{MAKE} $self->{MAKEOPTS}" if (!defined $build_command);
-    exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
-    exeHighPriv("cd $module && $self->{MAKE} install") && die "'cd $module && $self->{MAKE} install failed: $?";
+    my $build_command = $self->{'buildcmds'}->{$module};
+    my $install_command = $self->{'instcmds'}->{$module};
+    if (!defined $build_command) {
+        if (!-e "$module/Makefile") {
+            $self->exeLowPriv("cd $module && qmake -r") && die "'cd $module && $build_command' failed: $?";
+        }
+        $build_command = "$self->{MAKE} $self->{MAKEOPTS}" if (!defined $build_command);
+    }
+    $self->exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
+    $install_command = "$self->{MAKE} install" if (!defined $install_command);
+    $self->exeHighPriv("cd $module && $install_command") && die "'cd $module && $install_command failed: $?";
     $self->mark_as_finished($module);
     return 0;
 }
@@ -357,7 +382,8 @@ sub build_qt
     printf "OS Name ........ %s\n", $Config{osname};
     printf "Verbose ........ %s\n", ($self->{'verbose'} ? $self->{'verbose'} : "no");
     printf "Continue ....... %s\n", ($self->{'continue'} ? "yes" : "no");
-    printf "Jobs ........... %d\n", $self->{'jobs'};
+    printf "Force qmake..... %s\n", ($self->{'force_qmake'} ? "yes" : "no");
+    printf "Jobs ........... %s\n", ($self->{'jobs'} >= 0 ? $self->{'jobs'} : "unset");
 
     my $path = $ENV{'PATH'};
     print "PATH $path\n";
