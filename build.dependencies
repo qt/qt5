@@ -36,6 +36,10 @@ use Config;
     "qtxmlpatterns" => "qtbase",
 );
 
+@nondefault_modules = (
+    "qtwayland",
+);
+
 if ("$Config{osname}" =~ /mswin/i) {
     %build_commands = (
         "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --no-netscape-plugin --no-webkit2",
@@ -53,7 +57,7 @@ if ("$Config{osname}" =~ /mswin/i) {
 # Platform specific modules
 
 if ("$Config{osname}" =~ /linux/i) {
-    $build_dependencies{"qtwayland"} = "qtbase";
+    $build_dependencies{"qtwayland"} = "qtbase,qtdeclarative";
 }
 
 if ("$Config{osname}" =~ /(ms|cyg)win/i) {
