@@ -375,7 +375,10 @@ sub build_project
     }
     $self->exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
     $install_command = "$self->{MAKE} install" if (!defined $install_command);
-    $self->exeHighPriv("cd $module && $install_command") && die "'cd $module && $install_command failed: $?";
+    ### TODO: Should be fixed after the alpha
+    unless ("$Config{osname}" =~ /mswin/i) {
+        $self->exeHighPriv("cd $module && $install_command") && die "'cd $module && $install_command failed: $?";
+    }
     $self->mark_as_finished($module);
     return 0;
 }
