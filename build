@@ -132,7 +132,7 @@ sub new
 
     my $depfile = "build.dependencies";
     my $result;
-    our (%build_dependencies, %build_commands, %install_commands);
+    our (%build_dependencies, %build_commands, %install_commands, @nondefault_modules);
 
     # following variables may be expanded in the evaluation below
     my $MAKEOPTS = $self->{'MAKEOPTS'};
@@ -146,6 +146,7 @@ sub new
     $self->{'deps'} = \%build_dependencies;
     $self->{'buildcmds'} = \%build_commands;
     $self->{'instcmds'} = \%install_commands;
+    $self->{'nondefault'} = \@nondefault_modules;
 
     return $self;
 }
@@ -415,7 +416,12 @@ sub run
     if (scalar @{$self->{'build-submodules'}} > 0) {
         $self->check_build_modules(1);
     } else {
-        push(@{$self->{'build-submodules'}}, keys(%{$self->{'deps'}}));
+        my @default = keys(%{$self->{'deps'}});
+        my @nondefault = @{$self->{'nondefault'}};
+        foreach my $item (@nondefault) {
+            @default = grep { $_ ne $item } @default;
+        }
+        push(@{$self->{'build-submodules'}}, @default);
         $self->check_build_modules(0);
     }
 
