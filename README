@@ -31,7 +31,7 @@ HOW TO BUILD QT5
      cd <path>/qt-everywhere-opensource-src-<version>
      export PATH=$PATH:$PWD/qtbase/bin
      ./configure -prefix $PWD/qtbase -opensource -nomake tests
-     make -j4
+     ./build -j4
 
    Windows:
    --------
@@ -41,12 +41,17 @@ HOW TO BUILD QT5
      path.
 
      cd <path>\qt-everywhere-opensource-src-<version>
-     set PATH=%PATH%;%CD%\qtbase\bin;%CD%\gnuwin32\bin
+     set PATH=%PATH%;%CD%\qtbase\bin;
      configure -prefix %CD%\qtbase -opensource -nomake tests
-     nmake
+     perl build
 
      For MinGW (gcc version 4.6 or later), ensure that the compiler can
      be found in the path.
+
+     The build script will use jom if it's found in the path, which means you can
+     use -j <n> options on Windows as well. If not, the /MP option is added to the
+     compile options of the Microsoft Visual Studio compiler, to use all available
+     cores for batch building.
 
  More details follow.
 
