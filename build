@@ -291,12 +291,17 @@ sub resolve_soft_dependencies
 {
     my ($self) = @_;
 
+    my @nondefault = @{$self->{'nondefault'}};
     foreach my $module (keys(%{$self->{'deps'}})) {
         my @deps = split(/,/, $self->{'deps'}->{$module});
         my @newdeps;
         foreach my $dep (@deps) {
             if ($dep =~ /(.*):s$/) {
-                push(@newdeps, $1) if (defined $self->{'deps'}->{$1})
+                my $mod = $1;
+                if (defined $self->{'deps'}->{$mod}
+                    && !grep {$_ eq $mod} @nondefault) {
+                    push(@newdeps, $mod);
+                }
             } else {
                 push(@newdeps, $dep);
             }
@@ -331,7 +336,7 @@ sub get_next_modules
      }
 
     foreach my $dep (split(/,/, $deps)) {
-        push (@nextModules, $self->get_next_modules($dep)) unless $self->{'seenHash'}->{$module};
+        push (@nextModules, $self->get_next_modules($dep)) unless $self->{'seenHash'}->{$dep};
     }
 
     return @nextModules;
@@ -372,7 +377,7 @@ sub build_project
     $self->exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
     $install_command = "$self->{MAKE} install" if (!defined $install_command);
     ### TODO: Should be fixed after the alpha
-    unless ("$Config{osname}" =~ /mswin/i) {
+    unless ("$Config{osname}" =~ /(dar|ms)win/i) {
         $self->exeHighPriv("cd $module && $install_command") && die "'cd $module && $install_command failed: $?";
     }
     $self->mark_as_finished($module);
@@ -398,7 +403,6 @@ sub build_qt
     print "    $mods\n";
 
     while (my @modules = $self->get_all_next_modules) {
-        my @modules = $self->get_all_next_modules;
         foreach my $module (@modules) {
             print "build $module...\n";
             $self->build_project($module);
