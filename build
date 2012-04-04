@@ -211,8 +211,13 @@ sub detect_configuration
 
          # Use the /MP compiler option, if using nmake, to use all CPU threads when compiling
         if ($exe =~ 'nmake') {
-            use Env qw(@CL);
-            unshift @CL, '/MP';
+            my $cl = $ENV{'CL'};
+            if (defined $cl) {
+                $cl .= ' /MP';
+            } else {
+                $cl = '/MP';
+            }
+            $ENV{'CL'} = $cl;
         }
 
         $self->{'MAKE'} = "\"$exe\"" if (defined $exe);
