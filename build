@@ -64,6 +64,7 @@ sub parse_arguments
         'jobs'                => -1,
         'force_qmake'         => 0,
         'build-submodules'    => [],
+        'dry-run'             => 0,
     );
 
     GetOptionsFromArray(\@args,
@@ -71,6 +72,7 @@ sub parse_arguments
         'continue'      =>  \$self->{'continue'},
         'jobs|j:1'      =>  \$self->{'jobs'},
         'force-qmake'   =>  \$self->{'force_qmake'},
+        'dry-run|n:1'   =>  \$self->{'dry-run'},
         'help|?'        =>  sub { pod2usage(1); },
     ) || pod2usage(2);
 
@@ -86,8 +88,8 @@ sub exe
 
     print "+ @cmd\n" unless ($self->{quiet});
 
-    if (system(@cmd) != 0) {
-        confess "@cmd exited with status $CHILD_ERROR";
+    if ($self->{'dry-run'} != 1) {
+        confess "@cmd exited with status $CHILD_ERROR" if (system(@cmd) != 0);
     }
 
     return 0;
@@ -179,23 +181,32 @@ sub detect_configuration
         $exe = $self->which("jom.exe") if (defined $exe && $self->which("jom.exe"));
         $exe = $self->which("mingw32-make.exe") if (!defined $exe);
 
-         # Use the /MP compiler option, if using nmake, to use all CPU threads when compiling
-        if ($exe =~ 'nmake') {
-            my $cl = $ENV{'CL'};
-            if (defined $cl) {
-                $cl .= ' /MP';
-            } else {
-                $cl = '/MP';
-            }
-            $ENV{'CL'} = $cl;
-        }
+        if (defined $exe) {
+            $self->{'MAKE'} = "\"$exe\"";
 
-        $self->{'MAKE'} = "\"$exe\"" if (defined $exe);
-        $self->{'MAKEOPTS'} = "" if (defined $exe && $exe =~ /nmake/);
+            if ($exe =~ 'nmake') {
+                # Use the /MP compiler option if using nmake, to use all CPU threads when compiling
+                my $cl = $ENV{'CL'};
+                if (defined $cl) {
+                    $cl .= ' /MP';
+                } else {
+                    $cl = '/MP';
+                }
+                $ENV{'CL'} = $cl;
+                # Remove the -j option, since nmake cannot handle it.
+                $self->{'MAKEOPTS'} = "";
+            }
+
+            if ($exe =~ 'nmake|jom' && $self->{'dry-run'} > 1) {
+                $self->{'MAKEOPTS'} = "/N $self->{'MAKEOPTS'}";
+            }
+        }
 
         # Tools needed for building QtWebKit/Windows (Bison, Flex, gperf, iconv)
         my $abs_path = abs_path('gnuwin32/bin');
         unshift @PATH, "$abs_path";
+    } else {
+        $self->{'MAKEOPTS'} = "--dry-run $self->{'MAKEOPTS'}" if ($self->{'dry-run'} > 1);
     }
 }
 
