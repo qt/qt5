@@ -46,6 +46,73 @@ use warnings;
 
 package Qt::Build;
 
+=head1 NAME
+
+build - builds the Qt5 repository with all submodules in order
+
+=head1 SYNOPSIS
+
+B<build> [B<-v>|B<--verbose> [n]] [B<-c>|B<--continue> [n]] [B<-j>|B<--jobs> [n]] [B<-n>|B<--dry-run> [n]] [B<--force-qmake>] [modules to build]
+
+=head1 DESCRIPTION
+
+This script is used to build all the Qt modules in the correct order. The way of building the Qt
+modules is fairly complex, since they need to both be built and installed in the proper order, if
+configured prefix happens to be in a different location than the build directory of QtBase.
+
+It's not enough to do first a top-level 'make', then a 'make install', since modules would then no
+be available to the consecutive modules. The build script also handles a situation where Jom
+exposes a dependency bug with parallel builds, by doing a 'qmake -r' on each individual module as
+part of each modules build process.
+
+If no modules to build are passed on the command-line, all the default modules will be built.
+
+=head1 OPTIONS
+
+=over
+
+=item  B<-v> [n], B<--verbose> [n]
+
+Makes output more verbose. Level of verboseness optional (default: 1).
+
+=item B<-c> [n], B<--continue> [n]
+
+Ignore failed submodules, and continue building. Continue has levels (default: 1). The default
+level will make the build script ignore any errors in a submodule, and continue to build the next
+dependency. Level 2 means that the --keep-going option is also passed to make for each submodule.
+
+=item B<-j> [n], B<--jobs> [n]
+
+Sets the number of parallel builds. Number is optional, but providing no number indicates
+Unlimited, which you most likely do not want.
+
+=item B<--force-qmake>
+
+Forces a 'qmake -r' on a module, even if the build script detects an already existing Makefile in
+the module.
+
+=item B<-n> [n], B<--dry-run> [n]
+
+Does a dry-run, show which actions will be taken without actually performing them. Dry-run has
+levels (default: 1). The default level only shows which commands this script will execute. Level 2
+will also do a dry-run on make, showing all the actions the build-script will result in. Level 2
+requires C<qmake -r> to run, so it is not completely "dry" in its purest sense, although nothing is
+built.
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+Contact: http://www.qt-project.org/
+
+=head1 LICENSE
+
+This file is part of the utilities of the Qt Toolkit, and may be used under the terms of the GNU
+Lesser General Public (LGPL 2.1), or the GNU General Public License (GPL 3.0)
+
+=cut
+
 use Carp         qw( confess             );
 use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptionsFromArray );
