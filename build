@@ -54,6 +54,31 @@ use Cwd          qw( getcwd              );
 use File::Spec   qw( path catfile        );
 use Config;
 
+sub parse_arguments
+{
+    my ($self, @args) = @_;
+
+    %{$self} = (%{$self},
+        'verbose'             => 0,
+        'continue'            => 0,
+        'jobs'                => -1,
+        'force_qmake'         => 0,
+        'build-submodules'    => [],
+    );
+
+    GetOptionsFromArray(\@args,
+        'verbose|v:1'   =>  \$self->{'verbose'},
+        'continue'      =>  \$self->{'continue'},
+        'jobs|j:1'      =>  \$self->{'jobs'},
+        'force-qmake'   =>  \$self->{'force_qmake'},
+        'help|?'        =>  sub { pod2usage(1); },
+    ) || pod2usage(2);
+
+    push(@{$self->{'build-submodules'}}, @args) if (@args);
+
+    return;
+}
+
 # Like `system', but possibly log the command, and die on non-zero exit code
 sub exe
 {
@@ -118,62 +143,6 @@ sub exeLowPriv()
             return $?;
         }
     }
-}
-
-sub new
-{
-    my ($class, @arguments) = @_;
-
-    my $self = {};
-    bless $self, $class;
-
-    $self->parse_arguments(@arguments);
-    $self->detect_configuration;
-
-    my $depfile = "build.dependencies";
-    my $result;
-    our (%build_dependencies, %build_commands, %install_commands, @nondefault_modules);
-
-    # following variables may be expanded in the evaluation below
-    my $MAKEOPTS = $self->{'MAKEOPTS'};
-    my $MAKE = $self->{'MAKE'};
-
-    unless ($result = do $depfile) {
-        die "build couldn't parse $depfile: $@" if $@;
-        die "build couldn't execute $depfile: $!" unless defined $result;
-    }
-
-    $self->{'deps'} = \%build_dependencies;
-    $self->{'buildcmds'} = \%build_commands;
-    $self->{'instcmds'} = \%install_commands;
-    $self->{'nondefault'} = \@nondefault_modules;
-
-    return $self;
-}
-
-sub parse_arguments
-{
-    my ($self, @args) = @_;
-
-    %{$self} = (%{$self},
-        'verbose'             => 0,
-        'continue'            => 0,
-        'jobs'                => -1,
-        'force_qmake'         => 0,
-        'build-submodules'    => [],
-    );
-
-    GetOptionsFromArray(\@args,
-        'verbose|v:1'   =>  \$self->{'verbose'},
-        'continue'      =>  \$self->{'continue'},
-        'jobs|j:1'      =>  \$self->{'jobs'},
-        'force-qmake'   =>  \$self->{'force_qmake'},
-        'help|?'        =>  sub { pod2usage(1); },
-    ) || pod2usage(2);
-
-    push(@{$self->{'build-submodules'}}, @args) if (@args);
-
-    return;
 }
 
 sub which {
@@ -417,6 +386,37 @@ sub build_qt
     print "build done!\n";
 
     return 0;
+}
+
+sub new
+{
+    my ($class, @arguments) = @_;
+
+    my $self = {};
+    bless $self, $class;
+
+    $self->parse_arguments(@arguments);
+    $self->detect_configuration;
+
+    my $depfile = "build.dependencies";
+    my $result;
+    our (%build_dependencies, %build_commands, %install_commands, @nondefault_modules);
+
+    # following variables may be expanded in the evaluation below
+    my $MAKEOPTS = $self->{'MAKEOPTS'};
+    my $MAKE = $self->{'MAKE'};
+
+    unless ($result = do $depfile) {
+        die "build couldn't parse $depfile: $@" if $@;
+        die "build couldn't execute $depfile: $!" unless defined $result;
+    }
+
+    $self->{'deps'} = \%build_dependencies;
+    $self->{'buildcmds'} = \%build_commands;
+    $self->{'instcmds'} = \%install_commands;
+    $self->{'nondefault'} = \@nondefault_modules;
+
+    return $self;
 }
 
 sub run
