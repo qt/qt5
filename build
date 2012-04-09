@@ -155,11 +155,10 @@ sub exe
 
     print "+ @cmd\n" unless ($self->{quiet});
 
+    # dry-run > 1 means run sub-processes with dry-run too
     if ($self->{'dry-run'} != 1) {
         confess "@cmd exited with status $CHILD_ERROR" if (system(@cmd) != 0);
     }
-
-    return 0;
 }
 
 sub dropPrivileges()
@@ -189,29 +188,33 @@ sub dropPrivileges()
 sub exeHighPriv()
 {
     my ($self, @cmd) = @_;
-    return $self->exe(@cmd);
+    # confesses upon system() failure
+    $self->exe(@cmd);
 }
 
 sub exeLowPriv()
 {
     my ($self, @cmd) = @_;
 
-    if ("$Config{osname}" =~ /mswin/i) {
-        # Just like exeHighPriv for now
-        return $self->exe(@cmd);
-    } else {
+    if ("$Config{osname}" !~ /mswin/i) {
         my $ret;
         my $pid = fork();
         die "Couldn't fork" unless defined $pid;
         if ($pid == 0) {
             $self->dropPrivileges;
-            $self->exe(@cmd);
-            exit 0;
+            # just exit on error, exception propagated below
+            eval { $self->exe(@cmd); };
+            exit $?;
         } else {
             waitpid($pid, 0);
-            return $?;
+            # propagate exception upon system() failure in fork
+            die if ($? != 0);
+            return;
         }
     }
+
+    # Just like exeHighPriv for now, and confesses upon failure
+    $self->exe(@cmd);
 }
 
 sub which {
@@ -422,15 +425,15 @@ sub build_project
     my $install_command = $self->{'instcmds'}->{$module};
     if (!defined $build_command) {
         if (!-e "$module/Makefile") {
-            $self->exeLowPriv("cd $module && qmake -r") && die "'cd $module && qmake -r' failed: $?";
+            $self->exeLowPriv("cd $module && qmake -r");
         }
         $build_command = "$self->{MAKE} $self->{MAKEOPTS}";
     }
-    $self->exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
+    $self->exeLowPriv("cd $module && $build_command");
     $install_command = "$self->{MAKE} install" if (!defined $install_command);
     ### TODO: Should be fixed after the alpha
     unless ("$Config{osname}" =~ /(dar|ms)win/i) {
-        $self->exeHighPriv("cd $module && $install_command") && die "'cd $module && $install_command failed: $?";
+        $self->exeHighPriv("cd $module && $install_command");
     }
     $self->mark_as_finished($module);
     return 0;
