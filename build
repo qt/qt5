@@ -137,7 +137,7 @@ sub parse_arguments
     GetOptionsFromArray(\@args,
         'verbose|v:1'   =>  \$self->{'verbose'},
         'continue'      =>  \$self->{'continue'},
-        'jobs|j:1'      =>  \$self->{'jobs'},
+        'jobs|j:0'      =>  \$self->{'jobs'},
         'force-qmake'   =>  \$self->{'force_qmake'},
         'dry-run|n:1'   =>  \$self->{'dry-run'},
         'help|?'        =>  sub { pod2usage(1); },
@@ -239,11 +239,10 @@ sub detect_configuration
     my $abs_path = abs_path('qtbase/bin');
     unshift @PATH, $abs_path;
 
-    if ($self->{'jobs'} >= 0) {
-        $self->{'MAKEOPTS'} = "-j $self->{'jobs'}";
-    } else {
-        $self->{'MAKEOPTS'} = "";
-    }
+    my $opts = "";
+    $opts = "-j" if ($self->{'jobs'} >= 0);
+    $opts .= " $self->{'jobs'}" if ($self->{'jobs'} > 0);
+    $self->{'MAKEOPTS'} = $opts;
     $self->{'MAKE'} = $ENV{MAKE} || "make";
 
     if ("$Config{osname}" =~ /mswin/i) {
@@ -264,6 +263,9 @@ sub detect_configuration
                 }
                 $ENV{'CL'} = $cl;
                 # Remove the -j option, since nmake cannot handle it.
+                $self->{'MAKEOPTS'} = "";
+            } elsif ($exe =~ 'jom' && $self->{'jobs'} == 0) {
+                # Jom currently doesn't handle the -j (unlimited) option, so remove it.
                 $self->{'MAKEOPTS'} = "";
             }
 
