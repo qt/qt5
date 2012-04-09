@@ -136,7 +136,7 @@ sub parse_arguments
 
     GetOptionsFromArray(\@args,
         'verbose|v:1'   =>  \$self->{'verbose'},
-        'continue'      =>  \$self->{'continue'},
+        'continue|c:1'  =>  \$self->{'continue'},
         'jobs|j:0'      =>  \$self->{'jobs'},
         'force-qmake'   =>  \$self->{'force_qmake'},
         'dry-run|n:1'   =>  \$self->{'dry-run'},
@@ -269,16 +269,19 @@ sub detect_configuration
                 $self->{'MAKEOPTS'} = "";
             }
 
-            if ($exe =~ 'nmake|jom' && $self->{'dry-run'} > 1) {
-                $self->{'MAKEOPTS'} = "/N $self->{'MAKEOPTS'}";
+            if ($exe =~ 'nmake|jom') {
+                $self->{'MAKEOPTS'} = "/N $self->{'MAKEOPTS'}" if ($self->{'dry-run'} > 1);
+                $self->{'MAKEOPTS'} = "/K $self->{'MAKEOPTS'}" if ($self->{'continue'} > 1);
             }
         }
 
         # Tools needed for building QtWebKit/Windows (Bison, Flex, gperf, iconv)
         my $abs_path = abs_path('gnuwin32/bin');
         unshift @PATH, "$abs_path";
-    } else {
+    }
+    if ($self->{'MAKE'} !~ "nmake|jom") {
         $self->{'MAKEOPTS'} = "--dry-run $self->{'MAKEOPTS'}" if ($self->{'dry-run'} > 1);
+        $self->{'MAKEOPTS'} = "--keep-going $self->{'MAKEOPTS'}" if ($self->{'continue'} > 1);
     }
 }
 
@@ -431,11 +434,27 @@ sub build_project
         }
         $build_command = "$self->{MAKE} $self->{MAKEOPTS}";
     }
-    $self->exeLowPriv("cd $module && $build_command");
+    eval { $self->exeLowPriv("cd $module && $build_command"); };
+    if ($@) {
+        print STDERR "'cd $module && $build_command' failed: $?\n";
+        if ($self->{'continue'}) {
+            print STDERR "Ignoring failure building $module (--continue)\n";
+        } else {
+            confess "Fatal failure building $module";
+        }
+    }
     $install_command = "$self->{MAKE} install" if (!defined $install_command);
     ### TODO: Should be fixed after the alpha
     unless ("$Config{osname}" =~ /(dar|ms)win/i) {
-        $self->exeHighPriv("cd $module && $install_command");
+        eval { $self->exeHighPriv("cd $module && $install_command"); };
+        if ($@) {
+            print STDERR "'cd $module && $install_command failed: $?\n";
+            if ($self->{'continue'}) {
+                print STDERR "Ignoring failure installing $module (--continue)\n";
+            } else {
+                confess "Fatal failure installing $module";
+            }
+        }
     }
     $self->mark_as_finished($module);
     return 0;
