@@ -422,9 +422,9 @@ sub build_project
     my $install_command = $self->{'instcmds'}->{$module};
     if (!defined $build_command) {
         if (!-e "$module/Makefile") {
-            $self->exeLowPriv("cd $module && qmake -r") && die "'cd $module && $build_command' failed: $?";
+            $self->exeLowPriv("cd $module && qmake -r") && die "'cd $module && qmake -r' failed: $?";
         }
-        $build_command = "$self->{MAKE} $self->{MAKEOPTS}" if (!defined $build_command);
+        $build_command = "$self->{MAKE} $self->{MAKEOPTS}";
     }
     $self->exeLowPriv("cd $module && $build_command") && die "'cd $module && $build_command' failed: $?";
     $install_command = "$self->{MAKE} install" if (!defined $install_command);
