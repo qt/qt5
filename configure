@@ -95,7 +95,10 @@ if (-e ".qmake.cache") {
     unlink ".qmake.cache";
 }
 my $ret = system_v("$relpath/qtbase/configure @ARGV");
-exit ($ret>>8) unless ($ret == 0);
+if ($ret != 0) {
+    print "*** qtbase/configure exited with non-zero status.\n";
+    exit ($ret>>8) ;
+}
 if (! -e ".qmake.cache") {
     # Even though there was no error code, this file wasn't created
     # so configure didn't finish properly. This is probably because
