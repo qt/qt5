@@ -516,7 +516,7 @@ sub git_add_remotes
 
         $gerrit_repo_url .= $gerrit_repo_basename;
         $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
-        $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*');
+        $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
     }
 
     return;
