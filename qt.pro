@@ -66,7 +66,7 @@ module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d module_qtjsondb
+module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d
 
 module_qtsensors.subdir = qtsensors
 module_qtsensors.target = module-qtsensors
@@ -148,10 +148,15 @@ exists(qtjsondb/qtjsondb.pro) {
     module_qtpim.depends += module_qtjsondb
     module_qtdocgallery.depends += module_qtjsondb
     module_qtsystems.depends += module_qtjsondb
+    module_qtlocation.depends += module_qtjsondb
 }
 exists(qtlocation/qtlocation.pro): SUBDIRS += module_qtlocation
 exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
-exists(qtsystems/qtsystems.pro): SUBDIRS += module_qtsystems
+exists(qtsystems/qtsystems.pro) {
+    SUBDIRS += module_qtsystems
+    # These modules do not require qtsystems, but can use it if it is available
+    module_qtlocation.depends += module_qtsystems
+}
 exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
 exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
