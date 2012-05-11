@@ -42,7 +42,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtscript module_qtquick1 module_qtdeclarative
+module_qttools.depends = module_qtbase module_qtquick1 module_qtdeclarative
 
 module_qttranslations.subdir = qttranslations
 module_qttranslations.target = module-qttranslations
