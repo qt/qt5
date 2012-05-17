@@ -82,7 +82,7 @@ module_qtmultimedia.depends = module_qtbase module_qtdeclarative
 
 module_qtfeedback.subdir = qtfeedback
 module_qtfeedback.target = module-qtfeedback
-module_qtfeedback.depends = module_qtbase module_qtmultimedia module_qtdeclarative
+module_qtfeedback.depends = module_qtbase module_qtdeclarative
 
 module_qt3d.subdir = qt3d
 module_qt3d.target = module-qt3d
@@ -158,7 +158,10 @@ exists(qtsystems/qtsystems.pro) {
     module_qtlocation.depends += module_qtsystems
 }
 exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
-exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
+exists(qtmultimedia/qtmultimedia.pro) {
+    SUBDIRS += module_qtmultimedia
+    module_qtfeedback.depends += module_qtmultimedia
+}
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
