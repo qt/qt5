@@ -120,7 +120,7 @@ module_qtquick1.depends = module_qtbase module_qtscript module_qtxmlpatterns
 
 module_qtgraphicaleffects.subdir = qtgraphicaleffects
 module_qtgraphicaleffects.target = module-qtgraphicaleffects
-module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative module_qtsvg module_qtxmlpatterns
+module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
 # not yet enabled by default
 module_qtgraphicaleffects.CONFIG = no_default_target no_default_install
 
