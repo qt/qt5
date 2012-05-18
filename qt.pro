@@ -1,3 +1,6 @@
+# Create the super cache so modules will add themselves to it.
+cache(, super)
+
 TEMPLATE      = subdirs
 
 module_qtbase.subdir = qtbase

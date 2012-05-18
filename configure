@@ -108,9 +108,5 @@ if (! -e ".qmake.cache") {
 
 chdir("$outpath");
 
-open QMAKE_CACHE, ">.qmake.cache" || die "Could not open .qmake.cache for writing!\n";
-print QMAKE_CACHE "include(\$\$PWD/qtbase/.qmake.cache)\n";
-close QMAKE_CACHE;
-
 $ret = system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
 exit ($ret>>8);
