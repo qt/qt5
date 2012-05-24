@@ -25,7 +25,7 @@ module_qtjsbackend.depends = module_qtbase
 
 module_qtdeclarative.subdir = qtdeclarative
 module_qtdeclarative.target = module-qtdeclarative
-module_qtdeclarative.depends = module_qtbase module_qtxmlpatterns module_qtjsbackend
+module_qtdeclarative.depends = module_qtbase module_qtjsbackend
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
@@ -108,7 +108,7 @@ module_qtwayland.CONFIG = no_default_target no_default_install
 
 module_qtjsondb.subdir = qtjsondb
 module_qtjsondb.target = module-qtjsondb
-module_qtjsondb.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
+module_qtjsondb.depends = module_qtbase module_qtdeclarative
 
 module_qtimageformats.subdir = qtimageformats
 module_qtimageformats.target = module-qtimageformats
@@ -116,11 +116,11 @@ module_qtimageformats.depends = module_qtbase
 
 module_qtquick1.subdir = qtquick1
 module_qtquick1.target = module-qtquick1
-module_qtquick1.depends = module_qtbase module_qtscript module_qtxmlpatterns
+module_qtquick1.depends = module_qtbase module_qtscript
 
 module_qtgraphicaleffects.subdir = qtgraphicaleffects
 module_qtgraphicaleffects.target = module-qtgraphicaleffects
-module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative module_qtxmlpatterns
+module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtgraphicaleffects.CONFIG = no_default_target no_default_install
 
@@ -136,7 +136,13 @@ exists(qtsvg/qtsvg.pro) {
     module_qtdeclarative.depends += module_qtsvg
     module_qtquick1.depends += module_qtsvg
 }
-exists(qtxmlpatterns/qtxmlpatterns.pro): SUBDIRS += module_qtxmlpatterns
+exists(qtxmlpatterns/qtxmlpatterns.pro) {
+    SUBDIRS += module_qtxmlpatterns
+    # These modules do not require qtxmlpatterns, but can use it if it is available
+    module_qtdeclarative.depends += module_qtxmlpatterns
+    module_qtquick1.depends += module_qtxmlpatterns
+}
+
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
 exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
