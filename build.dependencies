@@ -21,7 +21,6 @@ use Config;
     "qtjsondb" => "qtbase,qtdeclarative,qtxmlpatterns",
     "qtlocation" => "qtbase,qtdeclarative,qt3d,qtjsondb:s",
     "qtmultimedia" => "qtbase,qtdeclarative",
-    "qtphonon" => "qtbase",
     "qtpim" => "qtdeclarative,qtjsondb:s",
     "qtqa" => "qtbase",
     "qtquick1" => "qtbase,qtscript,qtxmlpatterns,qttools,qtsvg:s",

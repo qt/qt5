@@ -13,9 +13,6 @@
 [submodule "qtscript"]
 	path = qtscript
 	url = git://gitorious.org/qt/qtscript.git
-[submodule "qtphonon"]
-	path = qtphonon
-	url = git://gitorious.org/qt/qtphonon.git
 [submodule "qtmultimedia"]
 	path = qtmultimedia
 	url = git://gitorious.org/qt/qtmultimedia.git

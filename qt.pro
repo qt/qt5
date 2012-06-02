@@ -10,10 +10,6 @@ module_qtsvg.subdir = qtsvg
 module_qtsvg.target = module-qtsvg
 module_qtsvg.depends = module_qtbase
 
-module_qtphonon.subdir = qtphonon
-module_qtphonon.target = module-qtphonon
-module_qtphonon.depends = module_qtbase
-
 module_qtxmlpatterns.subdir = qtxmlpatterns
 module_qtxmlpatterns.target = module-qtxmlpatterns
 module_qtxmlpatterns.depends = module_qtbase
@@ -171,7 +167,6 @@ exists(qtsystems/qtsystems.pro) {
     # These modules do not require qtsystems, but can use it if it is available
     module_qtlocation.depends += module_qtsystems
 }
-exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
 exists(qtmultimedia/qtmultimedia.pro) {
     SUBDIRS += module_qtmultimedia
     # These modules do not require qtmultimedia, but can use it if it is available
