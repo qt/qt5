@@ -90,7 +90,7 @@ module_qt3d.depends = module_qtbase module_qtdeclarative
 
 module_qtdocgallery.subdir = qtdocgallery
 module_qtdocgallery.target = module-qtdocgallery
-module_qtdocgallery.depends = module_qtbase module_qtscript module_qtdeclarative
+module_qtdocgallery.depends = module_qtbase module_qtdeclarative
 
 module_qtpim.subdir = qtpim
 module_qtpim.target = module-qtpim
