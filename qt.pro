@@ -42,7 +42,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit
 
 module_qttools.subdir = qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtquick1 module_qtdeclarative
+module_qttools.depends = module_qtbase module_qtdeclarative
 
 module_qttranslations.subdir = qttranslations
 module_qttranslations.target = module-qttranslations
@@ -116,7 +116,7 @@ module_qtimageformats.depends = module_qtbase
 
 module_qtquick1.subdir = qtquick1
 module_qtquick1.target = module-qtquick1
-module_qtquick1.depends = module_qtbase module_qtscript
+module_qtquick1.depends = module_qtbase module_qtscript module_qtxmlpatterns
 
 module_qtgraphicaleffects.subdir = qtgraphicaleffects
 module_qtgraphicaleffects.target = module-qtgraphicaleffects
@@ -181,7 +181,11 @@ exists(qtactiveqt/qtactiveqt.pro) {
     SUBDIRS += module_qtactiveqt
     module_qttools.depends += module_qtactiveqt
 }
-exists(qttools/qttools.pro): SUBDIRS += module_qttools
+exists(qttools/qttools.pro) {
+    SUBDIRS += module_qttools
+# disable this for now to avoid a circula dependency quick1 -> tools -> webkit -> quick1
+#    module_qtquick1.depends += module_qttools
+}
 !win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 exists(qtgraphicaleffects/qtgraphicaleffects.pro): SUBDIRS += module_qtgraphicaleffects
