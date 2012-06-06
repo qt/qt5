@@ -82,7 +82,7 @@ HOW TO BUILD QT5
  ==================
 
  Obtaining the source code is described in detail at
- http://wiki.qt-project.org/Main_Page and
+ http://qt-project.org/wiki/Category:Developing_Qt and
  http://qt-project.org/wiki/Get_The_Source.
 
  Cloning Qt5 does not automatically clone all submodules.
