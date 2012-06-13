@@ -29,7 +29,7 @@ module_qtdeclarative.depends = module_qtbase module_qtjsbackend
 
 module_qtwebkit.file = qtwebkit.pri
 module_qtwebkit.makefile = Makefile.qtwebkit
-module_qtwebkit.depends = module_qtbase module_qtscript module_qtdeclarative module_qtquick1
+module_qtwebkit.depends = module_qtbase module_qtdeclarative
 # The qtwebkit subdir does not follow the "module-*" scheme, so make our own target that does.
 module_qtwebkit_target.target = module-qtwebkit
 module_qtwebkit_target.commands =
@@ -156,8 +156,16 @@ exists(qtjsondb/qtjsondb.pro) {
     module_qtsystems.depends += module_qtjsondb
     module_qtlocation.depends += module_qtjsondb
 }
-exists(qtlocation/qtlocation.pro): SUBDIRS += module_qtlocation
-exists(qtsensors/qtsensors.pro): SUBDIRS += module_qtsensors
+exists(qtlocation/qtlocation.pro) {
+    SUBDIRS += module_qtlocation
+    # These modules do not require qtlocation, but can use it if it is available
+    module_qtwebkit.depends += module_qtlocation
+}
+exists(qtsensors/qtsensors.pro) {
+    SUBDIRS += module_qtsensors
+    # These modules do not require qtsensors, but can use it if it is available
+    module_qtwebkit.depends += module_qtsensors
+}
 exists(qtsystems/qtsystems.pro) {
     SUBDIRS += module_qtsystems
     # These modules do not require qtsystems, but can use it if it is available

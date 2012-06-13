@@ -51,6 +51,7 @@ module_qtwebkit.commands = $${OPTI}$${SBC}cd qtwebkit && \
                                --qt \
                                --qmake=$(QMAKE) \
                                --install-libs=$$[QT_INSTALL_LIBS] \
+                               --qmakearg=CONFIG+=production_build \
                                $$QTWEBKIT_BUILD_CONFIG
 #                               "--makeargs=\"-$(MAKEFLAGS)\""
 # Trick to force dependency on this rule.
