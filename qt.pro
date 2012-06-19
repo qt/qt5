@@ -190,8 +190,7 @@ exists(qtactiveqt/qtactiveqt.pro) {
 }
 exists(qttools/qttools.pro) {
     SUBDIRS += module_qttools
-# disable this for now when webkit is there to avoid a circula dependency quick1 -> tools -> webkit -> quick1
-    !exists(qtwebkit/Tools/Scripts/build-webkit):module_qtquick1.depends += module_qttools
+    module_qtquick1.depends += module_qttools
 }
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 !win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
