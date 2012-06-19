@@ -38,7 +38,7 @@ QMAKE_EXTRA_TARGETS += module_qtwebkit_target
 
 module_qtwebkit_examples_and_demos.subdir = qtwebkit-examples-and-demos
 module_qtwebkit_examples_and_demos.target = module-qtwebkit-examples-and-demos
-module_qtwebkit_examples_and_demos.depends = module_qtwebkit
+module_qtwebkit_examples_and_demos.depends = module_qtwebkit module_qttools
 
 module_qttools.subdir = qttools
 module_qttools.target = module-qttools
@@ -179,19 +179,20 @@ exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
-exists(qtwebkit/Tools/Scripts/build-webkit) {
-    SUBDIRS +=  module_qtwebkit \
-                module_qtwebkit_examples_and_demos
-    module_qttools.depends += module_qtwebkit
-}
 exists(qtactiveqt/qtactiveqt.pro) {
     SUBDIRS += module_qtactiveqt
     module_qttools.depends += module_qtactiveqt
+}
+exists(qtwebkit/WebKit.pro) {
+    SUBDIRS +=  module_qtwebkit
+    module_qttools.depends += module_qtwebkit
 }
 exists(qttools/qttools.pro) {
     SUBDIRS += module_qttools
     module_qtquick1.depends += module_qttools
 }
+exists(qtwebkit/WebKit.pro):exists(qtwebkit-examples-and-demos/qtwebkit-examples-and-demos.pro): \
+    SUBDIRS += module_qtwebkit_examples_and_demos
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 !win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
