@@ -147,7 +147,6 @@ exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
 exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
-exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 exists(qtjsondb/qtjsondb.pro) {
     SUBDIRS += module_qtjsondb
     # These modules do not require qtjsondb, but can use it if it is available
@@ -194,6 +193,7 @@ exists(qttools/qttools.pro) {
 # disable this for now when webkit is there to avoid a circula dependency quick1 -> tools -> webkit -> quick1
     !exists(qtwebkit/Tools/Scripts/build-webkit):module_qtquick1.depends += module_qttools
 }
+exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 !win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 exists(qtgraphicaleffects/qtgraphicaleffects.pro): SUBDIRS += module_qtgraphicaleffects
