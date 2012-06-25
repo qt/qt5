@@ -124,8 +124,6 @@ module_qtquick1.depends = module_qtbase module_qtscript
 module_qtgraphicaleffects.subdir = qtgraphicaleffects
 module_qtgraphicaleffects.target = module-qtgraphicaleffects
 module_qtgraphicaleffects.depends = module_qtbase module_qtdeclarative
-# not yet enabled by default
-module_qtgraphicaleffects.CONFIG = no_default_target no_default_install
 
 # only qtbase is required to exist. The others may not - but it is the
 # users responsibility to ensure that all needed dependencies exist, or
