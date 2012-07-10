@@ -174,7 +174,9 @@ exists(qtsystems/qtsystems.pro) {
 exists(qtphonon/qtphonon.pro): SUBDIRS += module_qtphonon
 exists(qtmultimedia/qtmultimedia.pro) {
     SUBDIRS += module_qtmultimedia
+    # These modules do not require qtmultimedia, but can use it if it is available
     module_qtfeedback.depends += module_qtmultimedia
+    module_qtlocation.depends += module_qtmultimedia
 }
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
 exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
