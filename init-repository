@@ -454,7 +454,7 @@ sub git_set_submodule_config
 
         if ($protocol) {
             # WebKit is special, and has only external link.
-            if ($key ne 'qtwebkit') {
+            if (!($key eq 'qtwebkit' && $protocol eq 'internal')) {
                 # qt-labs projects are still hosted under qt internally.
                 if ($protocol ne 'http') {
                     $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
