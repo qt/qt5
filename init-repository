@@ -192,7 +192,7 @@ For example:
 
 ...will use the following as a mirror for qtbase:
 
-  user@machine:/foo/bar/qtbase.git
+  user@machine:/foo/bar/qt/qtbase.git
 
 The mirror is permitted to contain a subset of the submodules; any
 missing modules will fall back to the canonical URLs.
