@@ -41,7 +41,7 @@ module_qtwebkit_examples_and_demos.depends = module_qtwebkit module_qttools
 
 module_qttools.subdir = qttools
 module_qttools.target = module-qttools
-module_qttools.depends = module_qtbase module_qtdeclarative
+module_qttools.depends = module_qtbase
 
 module_qttranslations.subdir = qttranslations
 module_qttranslations.target = module-qttranslations
@@ -65,19 +65,19 @@ module_qtqa.depends = module_qtbase
 
 module_qtlocation.subdir = qtlocation
 module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase module_qtdeclarative module_qt3d
+module_qtlocation.depends = module_qtbase
 
 module_qtsensors.subdir = qtsensors
 module_qtsensors.target = module-qtsensors
-module_qtsensors.depends = module_qtbase module_qtdeclarative
+module_qtsensors.depends = module_qtbase
 
 module_qtsystems.subdir = qtsystems
 module_qtsystems.target = module-qtsystems
-module_qtsystems.depends = module_qtbase module_qtdeclarative
+module_qtsystems.depends = module_qtbase
 
 module_qtmultimedia.subdir = qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
-module_qtmultimedia.depends = module_qtbase module_qtdeclarative
+module_qtmultimedia.depends = module_qtbase
 
 module_qtfeedback.subdir = qtfeedback
 module_qtfeedback.target = module-qtfeedback
@@ -97,7 +97,7 @@ module_qtconnectivity.depends = module_qtsystems
 
 module_qtwayland.subdir = qtwayland
 module_qtwayland.target = module-qtwayland
-module_qtwayland.depends = module_qtbase module_qtdeclarative
+module_qtwayland.depends = module_qtbase
 # not yet enabled by default
 module_qtwayland.CONFIG = no_default_target no_default_install
 
@@ -133,8 +133,20 @@ exists(qtxmlpatterns/qtxmlpatterns.pro) {
 }
 
 exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
-exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
-exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
+exists(qtdeclarative/qtdeclarative.pro) {
+    SUBDIRS += module_qtdeclarative
+    # These modules do not require qtdeclarative, but can use it if it is available
+    module_qttools.depends += module_qtdeclarative
+    module_qtsensors.depends += module_qtdeclarative
+    module_qtsystems.depends += module_qtdeclarative
+    module_qtmultimedia.depends += module_qtdeclarative
+    module_qtwayland.depends += module_qtdeclarative
+}
+exists(qt3d/qt3d.pro) {
+    SUBDIRS += module_qt3d
+    # These modules do not require qt3d, but can use it if it is available
+    module_qtlocation.depends += module_qtdeclarative module_qt3d
+}
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
 exists(qtlocation/qtlocation.pro) {
     SUBDIRS += module_qtlocation

@@ -17,16 +17,16 @@ use Config;
     "qtgraphicaleffects" => "qtbase,qtdeclarative,qtxmlpatterns",
     "qtimageformats" => "qtbase",
     "qtjsbackend" => "qtbase",
-    "qtlocation" => "qtbase,qtdeclarative,qt3d",
-    "qtmultimedia" => "qtbase,qtdeclarative",
+    "qtlocation" => "qtbase,qtdeclarative:s,qt3d",
+    "qtmultimedia" => "qtbase,qtdeclarative:s",
     "qtpim" => "qtdeclarative",
     "qtqa" => "qtbase",
     "qtquick1" => "qtbase,qtscript,qtxmlpatterns,qttools,qtsvg:s",
     "qtscript" => "qtbase",
-    "qtsensors" => "qtbase,qtdeclarative",
+    "qtsensors" => "qtbase,qtdeclarative:s",
     "qtsvg" => "qtbase",
-    "qtsystems" => "qtbase,qtdeclarative",
-    "qttools" => "qtbase,qtdeclarative,qtwebkit:s",
+    "qtsystems" => "qtbase,qtdeclarative:s",
+    "qttools" => "qtbase,qtdeclarative:s,qtwebkit:s",
     "qttranslations" => "qttools",
     "qtwebkit" => "qtbase,qtscript,qtdeclarative,qtquick1,qtlocation",
     "qtwebkit-examples-and-demos" => "qtwebkit",
@@ -55,7 +55,7 @@ if ("$Config{osname}" =~ /mswin/i) {
 # Platform specific modules
 
 if ("$Config{osname}" =~ /linux/i) {
-    $build_dependencies{"qtwayland"} = "qtbase,qtdeclarative";
+    $build_dependencies{"qtwayland"} = "qtbase,qtdeclarative:s";
 }
 
 if ("$Config{osname}" =~ /(ms|cyg)win/i) {
