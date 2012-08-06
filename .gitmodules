@@ -55,9 +55,6 @@
 [submodule "qtfeedback"]
 	path = qtfeedback
 	url = git://gitorious.org/qt/qtfeedback.git
-[submodule "qtdocgallery"]
-	path = qtdocgallery
-	url = git://gitorious.org/qt/qtdocgallery.git
 [submodule "qtpim"]
 	path = qtpim
 	url = git://gitorious.org/qt/qtpim.git

@@ -87,10 +87,6 @@ module_qt3d.subdir = qt3d
 module_qt3d.target = module-qt3d
 module_qt3d.depends = module_qtbase module_qtdeclarative
 
-module_qtdocgallery.subdir = qtdocgallery
-module_qtdocgallery.target = module-qtdocgallery
-module_qtdocgallery.depends = module_qtbase module_qtdeclarative
-
 module_qtpim.subdir = qtpim
 module_qtpim.target = module-qtpim
 module_qtpim.depends = module_qtdeclarative
@@ -148,7 +144,6 @@ exists(qtjsondb/qtjsondb.pro) {
     SUBDIRS += module_qtjsondb
     # These modules do not require qtjsondb, but can use it if it is available
     module_qtpim.depends += module_qtjsondb
-    module_qtdocgallery.depends += module_qtjsondb
     module_qtsystems.depends += module_qtjsondb
     module_qtlocation.depends += module_qtjsondb
 }
@@ -174,7 +169,6 @@ exists(qtmultimedia/qtmultimedia.pro) {
     module_qtlocation.depends += module_qtmultimedia
 }
 exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
-exists(qtdocgallery/qtdocgallery.pro): SUBDIRS += module_qtdocgallery
 exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
 exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
 exists(qtactiveqt/qtactiveqt.pro) {

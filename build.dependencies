@@ -13,7 +13,6 @@ use Config;
     "qtconnectivity" => "qtsystems",
     "qtdeclarative" => "qtbase,qtxmlpatterns,qtjsbackend",
     "qtdoc" => "qtbase,qtdeclarative",
-    "qtdocgallery" => "qtbase,qtdeclarative,qtjsondb:s",
     "qtfeedback" => "qtbase,qtmultimedia,qtdeclarative",
     "qtgraphicaleffects" => "qtbase,qtdeclarative,qtxmlpatterns",
     "qtimageformats" => "qtbase",
