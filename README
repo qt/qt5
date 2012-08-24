@@ -5,8 +5,23 @@ HOW TO BUILD QT5
  Synopsis
  ========
 
-     See http://qt-project.org/wiki/Building-Qt-5-from-Git for instructions
-     on building Qt 5.
+   System requirements
+   ------------------
+
+    - Perl 5.8 or later
+    - Python 2.7 or later
+    - C++ compiler supporting the C++98 standard
+
+     For other platform specific requirements,
+     please see section "Setting up your machine" on:
+     http://qt-project.org/wiki/Get_The_Source
+
+   Optional requirements
+   ---------------------
+
+   - OpenSSL for SSL sockets or HTTPS
+   - Wayland
+   - See QtWebKit section.
 
    New dependencies in Qt 5
    ------------------------
@@ -78,49 +93,6 @@ HOW TO BUILD QT5
      set WEBKITOUTPUTDIR=%CD%/WebKitBuild
      perl Tools\Scripts\build-webkit --qt --qmake=..\qtbase\bin\qmake.exe --install-libs=<install dir> --release --makeargs=%MAKEFLAGS%
 
- Get The Submodules
- ==================
-
- Obtaining the source code is described in detail at
- http://qt-project.org/wiki/Category:Developing_Qt and
- http://qt-project.org/wiki/Get_The_Source.
-
- Cloning Qt5 does not automatically clone all submodules.
- To get the submodules, it is recommended to use the `init-repository' script.
-
-   ./init-repository
-
- See `./init-repository -help' for full documentation on the many supported
- options.
-
-
- Update The Submodules (optional)
- ================================
-
- After a plain `git clone' and `init-repository', you will have each submodule
- checked out to a particular SHA1.  This combination of SHA1s is guaranteed to
- have passed some basic acceptance testing.
-
- If (and only if!) you need newer versions of some submodules, you can manually
- fetch and/or pull and/or reset any modules you like, or use the qt5_tool to
- pull all modules:
-
-   ./qtrepotools/bin/qt5_tool -p
-
- NOTE! As soon as you change the SHA1 of any submodule, you are using a
- combination of modules which is potentially untested and broken!  If you want
- something which is more likely to compile, stick to the module SHA1s provided
- in this repository.
-
-
- Install The Git Grafts (optional)
- =================================
-
- If you want to be able to connect the Qt5 and Qt4 development history, you
- may set up git grafts with the following command:
-
-   git submodule foreach '../qtrepotools/bin/git-qt-grafts <path_to_history>'
-
 
  Build!
  ======
@@ -175,3 +147,9 @@ HOW TO BUILD QT5
 
  The qt5_tool in qtrepotools has some more features which may be of interest.
  Try `qt5_tool --help'.
+
+
+ Building Qt5 from git
+ =====================
+ See http://qt-project.org/wiki/Building-Qt-5-from-Git and README.git
+ for more information.
