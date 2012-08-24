@@ -101,10 +101,6 @@ module_qtwayland.depends = module_qtbase module_qtdeclarative
 # not yet enabled by default
 module_qtwayland.CONFIG = no_default_target no_default_install
 
-module_qtjsondb.subdir = qtjsondb
-module_qtjsondb.target = module-qtjsondb
-module_qtjsondb.depends = module_qtbase module_qtdeclarative
-
 module_qtimageformats.subdir = qtimageformats
 module_qtimageformats.target = module-qtimageformats
 module_qtimageformats.depends = module_qtbase
@@ -140,13 +136,6 @@ exists(qtjsbackend/qtjsbackend.pro): SUBDIRS += module_qtjsbackend
 exists(qtdeclarative/qtdeclarative.pro): SUBDIRS += module_qtdeclarative
 exists(qt3d/qt3d.pro): SUBDIRS += module_qt3d
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
-exists(qtjsondb/qtjsondb.pro) {
-    SUBDIRS += module_qtjsondb
-    # These modules do not require qtjsondb, but can use it if it is available
-    module_qtpim.depends += module_qtjsondb
-    module_qtsystems.depends += module_qtjsondb
-    module_qtlocation.depends += module_qtjsondb
-}
 exists(qtlocation/qtlocation.pro) {
     SUBDIRS += module_qtlocation
     # These modules do not require qtlocation, but can use it if it is available
