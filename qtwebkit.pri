@@ -42,7 +42,8 @@ QTWEBKIT_BUILD_CONFIG =
 contains(CONFIG, release):!contains(CONFIG, debug_and_release): {QTWEBKIT_BUILD_CONFIG = --release}
 
 # WebKit2 is not yet supported on Windows, so avoid trying to build it
-win32:QTWEBKIT_BUILD_CONFIG += --no-webkit2
+# Disable WebKit2 until https://bugs.webkit.org/show_bug.cgi?id=94914 is fixed.
+QTWEBKIT_BUILD_CONFIG += --no-webkit2
 
 # The '+' is to make parallel "make" work across the script boundary.
 module_qtwebkit.commands = $${OPTI}$${SBC}cd qtwebkit && \
