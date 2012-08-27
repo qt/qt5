@@ -73,13 +73,7 @@ module_qtwebkit_clean.commands = $${OPTI}$${SBC}cd qtwebkit && \
 module_qtwebkit_clean.commands += $$escape_expand(\\n)clean: module-qtwebkit-clean
 module_qtwebkit_clean.target = module-qtwebkit-clean
 
-module_qtwebkit_install.commands = $${OPTI}$${SBC}cd qtwebkit && \
-                           $$env_export \"WEBKITOUTPUTDIR=$$OUT_PWD/qtwebkit/WebKitBuild\" && $$GNUTOOLS \
-                           perl $$PWD$${DS}qtwebkit$${DS}$${qtwebkit_tools_dir}$${DS}Scripts$${DS}build-webkit \
-                               --qt \
-                               --qmake=$(QMAKE) \
-                               --install-libs=$$[QT_INSTALL_LIBS] \
-                               "--makeargs=\"install\""
+module_qtwebkit_install.commands = $${OPTI}$${SBC}cd qtwebkit/WebKitBuild/Release && $(MAKE) install
 # Trick to force dependency on this rule.
 module_qtwebkit_install.commands+= $$escape_expand(\\n)install: module-qtwebkit-install
 module_qtwebkit_install.target = module-qtwebkit-install
