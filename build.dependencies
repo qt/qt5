@@ -37,21 +37,6 @@ use Config;
     "qtwayland",
 );
 
-if ("$Config{osname}" =~ /mswin/i) {
-    %build_commands = (
-        "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --no-netscape-plugin --no-webkit2",
-    );
-    push @nondefault_modules, ("qtwebkit", "qtwebkit-examples-and-demos");
-} else {
-    %build_commands = (
-        "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --release --no-netscape-plugin",
-    );
-}
-
-%install_commands = (
-    "qtwebkit" => "perl Tools/Scripts/build-webkit --qt --makeargs=\"install\"",
-);
-
 # Platform specific modules
 
 if ("$Config{osname}" =~ /linux/i) {

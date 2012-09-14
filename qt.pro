@@ -26,14 +26,9 @@ module_qtdeclarative.subdir = qtdeclarative
 module_qtdeclarative.target = module-qtdeclarative
 module_qtdeclarative.depends = module_qtbase module_qtjsbackend
 
-module_qtwebkit.file = qtwebkit.pri
-module_qtwebkit.makefile = Makefile.qtwebkit
+module_qtwebkit.file = qtwebkit/WebKit.pro
 module_qtwebkit.depends = module_qtbase module_qtdeclarative
-# The qtwebkit subdir does not follow the "module-*" scheme, so make our own target that does.
-module_qtwebkit_target.target = module-qtwebkit
-module_qtwebkit_target.commands =
-module_qtwebkit_target.depends = sub-qtwebkit-pri
-QMAKE_EXTRA_TARGETS += module_qtwebkit_target
+module_qtwebkit.target = module-qtwebkit
 
 module_qtwebkit_examples_and_demos.subdir = qtwebkit-examples-and-demos
 module_qtwebkit_examples_and_demos.target = module-qtwebkit-examples-and-demos
