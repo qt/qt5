@@ -138,9 +138,6 @@ HOW TO BUILD QT5
  Hints
  =====
 
- Shadow builds are possible, but not as well tested/supported as in-source
- builds.
-
  The submodule repository qtrepotools contains useful scripts for
  developers and release engineers. Consider adding qtrepotools/bin
  to your PATH environment variable to access them.
