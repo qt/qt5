@@ -21,7 +21,6 @@ HOW TO BUILD QT5
 
    - OpenSSL for SSL sockets or HTTPS
    - Wayland
-   - See QtWebKit section.
 
    New dependencies in Qt 5
    ------------------------
@@ -69,30 +68,6 @@ HOW TO BUILD QT5
      cores for batch building.
 
  More details follow.
-
- Building QtWebKit
- =================
-
-   Linux, Mac:
-   -----------
-
-     The tools bison, flex and gperf which are required for building.
-
-     cd qtwebkit
-     export WEBKITOUTPUTDIR=$$PWD/WebKitBuild
-     perl Tools/Scripts/build-webkit --qt --qmake=../qtbase/bin/qmake --install-libs=<install dir> --release --makeargs=$MAKEFLAGS
-
-   Windows:
-   --------
-
-     The tools bison, flex and gperf which are required for building are
-     provided for convenience in the folder gnuwin32\bin.
-
-     set PATH=%PATH%;%CD%\gnuwin32\bin
-     cd qtwebkit
-     set WEBKITOUTPUTDIR=%CD%/WebKitBuild
-     perl Tools\Scripts\build-webkit --qt --qmake=..\qtbase\bin\qmake.exe --install-libs=<install dir> --release --makeargs=%MAKEFLAGS%
-
 
  Build!
  ======
