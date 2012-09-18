@@ -45,7 +45,7 @@ HOW TO BUILD QT5
      cd <path>/qt-everywhere-opensource-src-<version>
      export PATH=$PATH:$PWD/qtbase/bin
      ./configure -prefix $PWD/qtbase -opensource -nomake tests
-     ./build -j 4
+     make -j 4
 
    Windows:
    --------
@@ -57,15 +57,14 @@ HOW TO BUILD QT5
      cd <path>\qt-everywhere-opensource-src-<version>
      set PATH=%PATH%;%CD%\qtbase\bin;
      configure -prefix %CD%\qtbase -opensource -nomake tests
-     perl build
+     nmake // jom // mingw32-make
 
      For MinGW (gcc version 4.6 or later), ensure that the compiler can
      be found in the path.
 
-     The build script will use jom if it's found in the path, which means you can
-     use -j <n> options on Windows as well. If not, the /MP option is added to the
-     compile options of the Microsoft Visual Studio compiler, to use all available
-     cores for batch building.
+     To accelerate the bootstrap of qmake with MSVC, it may be useful to pass
+     "-make-tool jom" on the configure command line. If you do not use jom,
+     adding "/MP" to the CL environment variable is a good idea.
 
  More details follow.
 
