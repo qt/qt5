@@ -254,7 +254,7 @@ my $BNE_MIRROR_URL_BASE
     = 'git://bq-git.apac.nokia.com/qtsoftware/';
 
 my $BNE_MIRROR_WEBKIT_URL
-    = 'git://bq-git.apac.nokia.com/qtsoftware/research/gitorious-org-webkit-qtwebkit-mirror.git';
+    = 'git://bq-git.apac.nokia.com/gitorious/qtwebkit/qt5-module.git';
 
 my $BER_MIRROR_URL_BASE
     = 'git://ber-git.europe.nokia.com/';
