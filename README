@@ -43,7 +43,6 @@ HOW TO BUILD QT5
    -----------
 
      cd <path>/qt-everywhere-opensource-src-<version>
-     export PATH=$PATH:$PWD/qtbase/bin
      ./configure -prefix $PWD/qtbase -opensource -nomake tests
      make -j 4
 
@@ -55,7 +54,6 @@ HOW TO BUILD QT5
      path.
 
      cd <path>\qt-everywhere-opensource-src-<version>
-     set PATH=%PATH%;%CD%\qtbase\bin;
      configure -prefix %CD%\qtbase -opensource -nomake tests
      nmake // jom // mingw32-make
 
