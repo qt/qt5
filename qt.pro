@@ -172,15 +172,20 @@ exists(qtactiveqt/qtactiveqt.pro) {
     module_qttools.depends += module_qtactiveqt
 }
 exists(qtwebkit/WebKit.pro) {
-    SUBDIRS +=  module_qtwebkit
-    module_qttools.depends += module_qtwebkit
+    mac|contains(QT_CONFIG, icu) {
+        SUBDIRS += module_qtwebkit
+        module_qttools.depends += module_qtwebkit
+        exists(qtwebkit-examples-and-demos/qtwebkit-examples-and-demos.pro) {
+            SUBDIRS += module_qtwebkit_examples_and_demos
+        }
+    } else {
+        message("WebKit: Qt was built without ICU support, WebKit disabled.")
+    }
 }
 exists(qttools/qttools.pro) {
     SUBDIRS += module_qttools
     module_qtquick1.depends += module_qttools
 }
-exists(qtwebkit/WebKit.pro):exists(qtwebkit-examples-and-demos/qtwebkit-examples-and-demos.pro): \
-    SUBDIRS += module_qtwebkit_examples_and_demos
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 !win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
