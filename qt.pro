@@ -175,6 +175,7 @@ exists(qtwebkit/WebKit.pro) {
     mac|contains(QT_CONFIG, icu) {
         SUBDIRS += module_qtwebkit
         module_qttools.depends += module_qtwebkit
+        module_qtquick1.depends += module_qtwebkit
         exists(qtwebkit-examples-and-demos/qtwebkit-examples-and-demos.pro) {
             SUBDIRS += module_qtwebkit_examples_and_demos
         }
