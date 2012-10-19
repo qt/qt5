@@ -27,6 +27,7 @@ module_qtdeclarative.target = module-qtdeclarative
 module_qtdeclarative.depends = module_qtbase module_qtjsbackend
 
 module_qtwebkit.file = qtwebkit/WebKit.pro
+module_qtwebkit.makefile = Makefile
 module_qtwebkit.depends = module_qtbase module_qtdeclarative
 module_qtwebkit.target = module-qtwebkit
 
