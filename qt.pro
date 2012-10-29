@@ -51,51 +51,13 @@ module_qtactiveqt.subdir = qtactiveqt
 module_qtactiveqt.target = module-qtactiveqt
 module_qtactiveqt.depends = module_qtbase
 
-module_qlalr.subdir = qlalr
-module_qlalr.target = module-qlalr
-module_qlalr.depends = module_qtbase
-
 module_qtqa.subdir = qtqa
 module_qtqa.target = module-qtqa
 module_qtqa.depends = module_qtbase
 
-module_qtlocation.subdir = qtlocation
-module_qtlocation.target = module-qtlocation
-module_qtlocation.depends = module_qtbase
-
-module_qtsensors.subdir = qtsensors
-module_qtsensors.target = module-qtsensors
-module_qtsensors.depends = module_qtbase
-
-module_qtsystems.subdir = qtsystems
-module_qtsystems.target = module-qtsystems
-module_qtsystems.depends = module_qtbase
-
 module_qtmultimedia.subdir = qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
 module_qtmultimedia.depends = module_qtbase
-
-module_qtfeedback.subdir = qtfeedback
-module_qtfeedback.target = module-qtfeedback
-module_qtfeedback.depends = module_qtbase module_qtdeclarative
-
-module_qt3d.subdir = qt3d
-module_qt3d.target = module-qt3d
-module_qt3d.depends = module_qtbase module_qtdeclarative
-
-module_qtpim.subdir = qtpim
-module_qtpim.target = module-qtpim
-module_qtpim.depends = module_qtdeclarative
-
-module_qtconnectivity.subdir = qtconnectivity
-module_qtconnectivity.target = module-qtconnectivity
-module_qtconnectivity.depends = module_qtsystems
-
-module_qtwayland.subdir = qtwayland
-module_qtwayland.target = module-qtwayland
-module_qtwayland.depends = module_qtbase
-# not yet enabled by default
-module_qtwayland.CONFIG = no_default_target no_default_install
 
 module_qtimageformats.subdir = qtimageformats
 module_qtimageformats.target = module-qtimageformats
@@ -133,41 +95,10 @@ exists(qtdeclarative/qtdeclarative.pro) {
     SUBDIRS += module_qtdeclarative
     # These modules do not require qtdeclarative, but can use it if it is available
     module_qttools.depends += module_qtdeclarative
-    module_qtsensors.depends += module_qtdeclarative
-    module_qtsystems.depends += module_qtdeclarative
     module_qtmultimedia.depends += module_qtdeclarative
-    module_qtwayland.depends += module_qtdeclarative
-}
-exists(qt3d/qt3d.pro) {
-    SUBDIRS += module_qt3d
-    # These modules do not require qt3d, but can use it if it is available
-    module_qtlocation.depends += module_qtdeclarative module_qt3d
 }
 exists(qtscript/qtscript.pro): SUBDIRS += module_qtscript
-exists(qtlocation/qtlocation.pro) {
-    SUBDIRS += module_qtlocation
-    # These modules do not require qtlocation, but can use it if it is available
-    module_qtwebkit.depends += module_qtlocation
-}
-exists(qtsensors/qtsensors.pro) {
-    SUBDIRS += module_qtsensors
-    # These modules do not require qtsensors, but can use it if it is available
-    module_qtwebkit.depends += module_qtsensors
-}
-exists(qtsystems/qtsystems.pro) {
-    SUBDIRS += module_qtsystems
-    # These modules do not require qtsystems, but can use it if it is available
-    module_qtlocation.depends += module_qtsystems
-}
-exists(qtmultimedia/qtmultimedia.pro) {
-    SUBDIRS += module_qtmultimedia
-    # These modules do not require qtmultimedia, but can use it if it is available
-    module_qtfeedback.depends += module_qtmultimedia
-    module_qtlocation.depends += module_qtmultimedia
-}
-exists(qtfeedback/qtfeedback.pro): SUBDIRS += module_qtfeedback
-exists(qtpim/qtpim.pro): SUBDIRS += module_qtpim
-exists(qtconnectivity/qtconnectivity.pro): SUBDIRS += module_qtconnectivity
+exists(qtmultimedia/qtmultimedia.pro): SUBDIRS += module_qtmultimedia
 exists(qtactiveqt/qtactiveqt.pro) {
     SUBDIRS += module_qtactiveqt
     module_qttools.depends += module_qtactiveqt
@@ -189,10 +120,8 @@ exists(qttools/qttools.pro) {
     module_qtquick1.depends += module_qttools
 }
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
-!win32:!mac:exists(qtwayland/qtwayland.pro): SUBDIRS += module_qtwayland
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 exists(qtgraphicaleffects/qtgraphicaleffects.pro): SUBDIRS += module_qtgraphicaleffects
 exists(qttranslations/qttranslations.pro): SUBDIRS += module_qttranslations
 exists(qtdoc/qtdoc.pro): SUBDIRS += module_qtdoc
 exists(qtqa/qtqa.pro): SUBDIRS += module_qtqa
-exists(qlalr/qlalr.pro): SUBDIRS += module_qlalr
