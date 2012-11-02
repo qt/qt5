@@ -91,6 +91,8 @@ git repository.
 
 Only initialize the specified subset of modules given as the argument. Specified
 modules must already exist in .gitmodules.
+The string "all" results in cloning all known modules. The default is the set of
+maintained modules.
 
 =item --no-update
 
@@ -239,6 +241,27 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtxmlpatterns
 );
 
+my @DEFAULT_REPOS = qw(
+    qtactiveqt
+    qtbase
+    qtdeclarative
+    qtdoc
+    qtgraphicaleffects
+    qtimageformats
+    qtjsbackend
+    qtmultimedia
+    qtqa
+    qtquick1
+    qtrepotools
+    qtscript
+    qtsvg
+    qttools
+    qttranslations
+    qtwebkit
+    qtwebkit-examples-and-demos
+    qtxmlpatterns
+);
+
 my $GERRIT_SSH_BASE
     = 'ssh://@USER@codereview.qt-project.org@PORT@/';
 
@@ -287,7 +310,7 @@ sub parse_arguments
         'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
-        'module-subset'       => "",
+        'module-subset'       => join(",", @DEFAULT_REPOS),
     );
 
     GetOptionsFromArray(\@args,
@@ -328,7 +351,9 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    if ($self->{'module-subset'}) {
+    if ($self->{'module-subset'} eq "all") {
+        $self->{'module-subset'} = "";
+    } else {
         $self->{'module-subset'} = {
             map { $_ => 1 } split(qr{,}, $self->{'module-subset'})
         };
