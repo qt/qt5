@@ -73,9 +73,7 @@ sub ensureDir {
 # `system', but also print the command
 sub system_v
 {
-    print "+ ";
-    print @_;
-    print "\n";
+    print "+ @_\n";
     return system(@_);
 }
 
@@ -90,7 +88,7 @@ if (! -e "$relpath/qtbase/configure") {
 
 ensureDir("$outpath/qtbase");
 chdir("$outpath/qtbase");
-my $ret = system_v("$relpath/qtbase/configure @ARGV");
+my $ret = system_v("$relpath/qtbase/configure", @ARGV);
 if ($ret != 0) {
     print "*** qtbase/configure exited with non-zero status.\n";
     exit ($ret>>8) ;
@@ -98,5 +96,5 @@ if ($ret != 0) {
 
 chdir("$outpath");
 
-$ret = system_v("$outpath/qtbase/bin/qmake $relpath/qt.pro");
+$ret = system_v("$outpath/qtbase/bin/qmake", "$relpath/qt.pro");
 exit ($ret>>8);
