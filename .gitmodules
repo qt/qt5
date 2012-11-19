@@ -31,15 +31,15 @@
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = git://gitorious.org/qt/qtrepotools.git
+[submodule "qtwebkit"]
+	path = qtwebkit
+	url = git://gitorious.org/qt/qtwebkit.git
 [submodule "qtwebkit-examples-and-demos"]
 	path = qtwebkit-examples-and-demos
 	url = git://gitorious.org/qt/qtwebkit-examples-and-demos.git
 [submodule "qtqa"]
 	path = qtqa
 	url = git://gitorious.org/qt/qtqa.git
-[submodule "qtwebkit"]
-	path = qtwebkit
-	url = git://gitorious.org/qtwebkit/qt5-module.git
 [submodule "qtjsbackend"]
 	path = qtjsbackend
 	url = git://gitorious.org/qt/qtjsbackend.git

@@ -122,7 +122,7 @@ Switch to internal Nokia URLs.
 =item --berlin
 
 Switch to internal Nokia URLs and make use of the Berlin git mirrors.
-(Implies `--mirror' and `--mirror-webkit').
+(Implies `--mirror').
 
 
 =item --ssh
@@ -192,10 +192,6 @@ For example:
 The mirror is permitted to contain a subset of the submodules; any
 missing modules will fall back to the canonical URLs.
 
-=item --mirror-webkit <url>
-
-Uses <url> as the URL for the webkit git mirror.
-
 =back
 
 =cut
@@ -238,6 +234,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qttools
     qttranslations
     qtwayland
+    qtwebkit
     qtwebkit-examples-and-demos
     qtxmlpatterns
 );
@@ -247,10 +244,6 @@ my $GERRIT_SSH_BASE
 
 my $BER_MIRROR_URL_BASE
     = 'git://ber-git.europe.nokia.com/';
-
-my $BER_MIRROR_WEBKIT_URL
-    = 'git://ber-git.europe.nokia.com/qtwebkit/qtwebkit.git';
-
 
 sub new
 {
@@ -290,7 +283,6 @@ sub parse_arguments
         'force'               => 0 ,
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
-        'mirror-webkit-url'   => "",
         'nokia-developer'     => 0 ,
         'protocol'            => "",
         'update'              => 1 ,
@@ -304,7 +296,6 @@ sub parse_arguments
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
         'force'             =>  \$self->{qw{ force             }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
-        'mirror-webkit=s'   =>  \$self->{qw{ mirror-webkit-url }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
         'quiet'             =>  \$self->{qw{ quiet             }},
@@ -320,7 +311,6 @@ sub parse_arguments
             $self->{'nokia-developer'}   = 1;
             $self->{'protocol'}          = 'internal';
             $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
-            $self->{'mirror-webkit-url'} = $BER_MIRROR_WEBKIT_URL;
         },
 
         'nokia-developer' => sub {
@@ -431,8 +421,6 @@ sub git_set_submodule_config
         my $value = $2;
 
         if ($protocol) {
-            # WebKit is special, and has only external link.
-            if (!($key eq 'qtwebkit' && $protocol eq 'internal')) {
                 # qt-labs projects are still hosted under qt internally.
                 if ($protocol ne 'http') {
                     $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
@@ -440,7 +428,6 @@ sub git_set_submodule_config
 
                 # assume all other projects hosted under gitorious publicly.
                 $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
-            }
         }
 
         $self->exe('git', 'config', "submodule.$key.url", $value);
@@ -506,7 +493,6 @@ sub git_clone_one_submodule
 
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
-    my $mirror_webkit_url     = $self->{ 'mirror-webkit-url' };
     my $protocol              = $self->{ 'protocol'          };
 
     # `--reference FOO' args for the clone, if any.
@@ -523,12 +509,9 @@ sub git_clone_one_submodule
     }
 
     my $mirror;
-    if ($mirror_url && ($submodule ne 'qtwebkit')) {
+    if ($mirror_url) {
         $mirror = $mirror_url."qt/$submodule";
         $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
-    }
-    elsif ($mirror_webkit_url && ($submodule eq 'qtwebkit')) {
-        $mirror = $mirror_webkit_url;
     }
 
     if ($mirror) {
