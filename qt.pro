@@ -3,6 +3,8 @@ cache(, super)
 
 TEMPLATE      = subdirs
 
+CONFIG += prepare_docs
+
 module_qtbase.subdir = qtbase
 module_qtbase.target = module-qtbase
 
