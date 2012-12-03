@@ -219,9 +219,11 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtconnectivity
     qtdeclarative
     qtdoc
+    qtdocgallery
     qtfeedback
     qtgraphicaleffects
     qtimageformats
+    qtjsondb
     qtjsbackend
     qtlocation
     qtmultimedia

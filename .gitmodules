@@ -28,6 +28,9 @@
 [submodule "qtdoc"]
 	path = qtdoc
 	url = git://gitorious.org/qt/qtdoc.git
+[submodule "qlalr"]
+	path = qlalr
+	url = git://gitorious.org/qt/qlalr.git
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = git://gitorious.org/qt/qtrepotools.git
@@ -40,6 +43,36 @@
 [submodule "qtqa"]
 	path = qtqa
 	url = git://gitorious.org/qt/qtqa.git
+[submodule "qtlocation"]
+	path = qtlocation
+	url = git://gitorious.org/qt/qtlocation.git
+[submodule "qtsensors"]
+	path = qtsensors
+	url = git://gitorious.org/qt/qtsensors.git
+[submodule "qtsystems"]
+	path = qtsystems
+	url = git://gitorious.org/qt/qtsystems.git
+[submodule "qtfeedback"]
+	path = qtfeedback
+	url = git://gitorious.org/qt/qtfeedback.git
+[submodule "qtdocgallery"]
+	path = qtdocgallery
+	url = git://gitorious.org/qt/qtdocgallery.git
+[submodule "qtpim"]
+	path = qtpim
+	url = git://gitorious.org/qt/qtpim.git
+[submodule "qtconnectivity"]
+	path = qtconnectivity
+	url = git://gitorious.org/qt/qtconnectivity.git
+[submodule "qtwayland"]
+	path = qtwayland
+	url = git://gitorious.org/qt/qtwayland.git
+[submodule "qtjsondb"]
+	path = qtjsondb
+	url = git://gitorious.org/qt/qtjsondb.git
+[submodule "qt3d"]
+	path = qt3d
+	url = git://gitorious.org/qt/qt3d.git
 [submodule "qtjsbackend"]
 	path = qtjsbackend
 	url = git://gitorious.org/qt/qtjsbackend.git
