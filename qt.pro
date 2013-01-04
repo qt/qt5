@@ -61,6 +61,10 @@ module_qtmultimedia.subdir = qtmultimedia
 module_qtmultimedia.target = module-qtmultimedia
 module_qtmultimedia.depends = module_qtbase
 
+module_qtx11extras.subdir = qtx11extras
+module_qtx11extras.target = module-qtx11extras
+module_qtx11extras.depends = module_qtbase
+
 module_qtimageformats.subdir = qtimageformats
 module_qtimageformats.target = module-qtimageformats
 module_qtimageformats.depends = module_qtbase
@@ -124,6 +128,7 @@ exists(qttools/qttools.pro) {
 exists(qtquick1/qtquick1.pro): SUBDIRS += module_qtquick1
 exists(qtimageformats/qtimageformats.pro): SUBDIRS += module_qtimageformats
 exists(qtgraphicaleffects/qtgraphicaleffects.pro): SUBDIRS += module_qtgraphicaleffects
+exists(qtx11extras/qtx11extras.pro): SUBDIRS += module_qtx11extras
 exists(qttranslations/qttranslations.pro): SUBDIRS += module_qttranslations
 exists(qtdoc/qtdoc.pro): SUBDIRS += module_qtdoc
 exists(qtqa/qtqa.pro): SUBDIRS += module_qtqa

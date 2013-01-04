@@ -237,6 +237,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtwebkit
     qtwebkit-examples-and-demos
     qtxmlpatterns
+    qtx11extras
 );
 
 my $GERRIT_SSH_BASE
