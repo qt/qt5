@@ -1,9 +1,10 @@
 # Create the super cache so modules will add themselves to it.
 cache(, super)
 
-TEMPLATE      = subdirs
+CONFIG += build_pass   # hack to disable the .qmake.super auto-add
+load(qt_build_config)
 
-CONFIG += prepare_docs qt_docs_targets testcase_targets
+TEMPLATE      = subdirs
 
 defineReplace(moduleName) {
     return(module_$$replace(1, -, _))
@@ -11,6 +12,7 @@ defineReplace(moduleName) {
 
 # Arguments: module name, [mandatory deps], [optional deps], [project file]
 defineTest(addModule) {
+    contains(QT_SKIP_MODULES, $$1): return(false)
     mod = $$moduleName($$1)
 
     isEmpty(4) {
