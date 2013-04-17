@@ -27,8 +27,12 @@ defineTest(addModule) {
         export($${mod}.makefile)
     }
 
-    for(d, 2): \
-        $${mod}.depends += $$moduleName($$d)
+    for(d, 2) {
+        dn = $$moduleName($$d)
+        !contains(SUBDIRS, $$dn): \
+            return(false)
+        $${mod}.depends += $$dn
+    }
     for(d, 3) {
         dn = $$moduleName($$d)
         contains(SUBDIRS, $$dn): \
