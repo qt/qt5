@@ -37,9 +37,9 @@
 [submodule "qtwebkit"]
 	path = qtwebkit
 	url = git://gitorious.org/qt/qtwebkit.git
-[submodule "qtwebkit-examples-and-demos"]
-	path = qtwebkit-examples-and-demos
-	url = git://gitorious.org/qt/qtwebkit-examples-and-demos.git
+[submodule "qtwebkit-examples"]
+	path = qtwebkit-examples
+	url = git://gitorious.org/qt/qtwebkit-examples.git
 [submodule "qtqa"]
 	path = qtqa
 	url = git://gitorious.org/qt/qtqa.git

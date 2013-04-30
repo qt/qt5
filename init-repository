@@ -241,7 +241,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qttranslations
     qtwayland
     qtwebkit
-    qtwebkit-examples-and-demos
+    qtwebkit-examples
     qtx11extras
     qtxmlpatterns
 );
@@ -266,7 +266,7 @@ my @DEFAULT_REPOS = qw(
     qttools
     qttranslations
     qtwebkit
-    qtwebkit-examples-and-demos
+    qtwebkit-examples
     qtx11extras
     qtxmlpatterns
 );
@@ -419,7 +419,7 @@ sub git_disable_webkit_submodule
     my ($self) = @_;
 
     $self->exe('git', 'config', '--remove', 'submodule.qtwebkit');
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples-and-demos');
+    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples');
 
     return;
 }
