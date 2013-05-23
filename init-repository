@@ -91,6 +91,8 @@ git repository.
 
 Only initialize the specified subset of modules given as the argument. Specified
 modules must already exist in .gitmodules.
+The string "all" results in cloning all known modules. The default is the set of
+maintained modules.
 
 =item --no-update
 
@@ -217,25 +219,55 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtconnectivity
     qtdeclarative
     qtdoc
+    qtdocgallery
     qtfeedback
     qtgraphicaleffects
     qtimageformats
+    qtjsondb
     qtjsbackend
     qtlocation
     qtmultimedia
     qtpim
     qtqa
     qtquick1
+    qtquickcontrols
     qtrepotools
     qtscript
     qtsensors
+    qtserialport
     qtsvg
     qtsystems
     qttools
     qttranslations
     qtwayland
     qtwebkit
-    qtwebkit-examples-and-demos
+    qtwebkit-examples
+    qtx11extras
+    qtxmlpatterns
+);
+
+my @DEFAULT_REPOS = qw(
+    qtactiveqt
+    qtbase
+    qtdeclarative
+    qtdoc
+    qtgraphicaleffects
+    qtimageformats
+    qtjsbackend
+    qtmultimedia
+    qtqa
+    qtquick1
+    qtquickcontrols
+    qtrepotools
+    qtscript
+    qtsensors
+    qtserialport
+    qtsvg
+    qttools
+    qttranslations
+    qtwebkit
+    qtwebkit-examples
+    qtx11extras
     qtxmlpatterns
 );
 
@@ -287,7 +319,7 @@ sub parse_arguments
         'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
-        'module-subset'       => "",
+        'module-subset'       => join(",", @DEFAULT_REPOS),
     );
 
     GetOptionsFromArray(\@args,
@@ -328,7 +360,9 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    if ($self->{'module-subset'}) {
+    if ($self->{'module-subset'} eq "all") {
+        $self->{'module-subset'} = "";
+    } else {
         $self->{'module-subset'} = {
             map { $_ => 1 } split(qr{,}, $self->{'module-subset'})
         };
@@ -385,7 +419,7 @@ sub git_disable_webkit_submodule
     my ($self) = @_;
 
     $self->exe('git', 'config', '--remove', 'submodule.qtwebkit');
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples-and-demos');
+    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples');
 
     return;
 }
