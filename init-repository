@@ -275,7 +275,7 @@ my $GERRIT_SSH_BASE
     = 'ssh://@USER@codereview.qt-project.org@PORT@/';
 
 my $BER_MIRROR_URL_BASE
-    = 'git://ber-git.europe.nokia.com/';
+    = 'git://hegel/';
 
 sub new
 {
