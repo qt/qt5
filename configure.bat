@@ -1,3 +1,4 @@
+@echo off
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::
 :: Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
@@ -38,5 +39,30 @@
 :: $QT_END_LICENSE$
 ::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-@rem ***** This assumes PERL is in the PATH *****
-@perl.exe %~dp0configure %*
+
+set "srcpath=%~dp0"
+set "configure=%srcpath%qtbase\configure.bat"
+if not exist "%configure%" (
+    echo %configure% not found. Did you forget to run "init-repository"? >&2
+    exit /b 1
+)
+
+if not exist qtbase mkdir qtbase || exit /b 1
+
+echo + cd qtbase
+cd qtbase || exit /b 1
+
+echo + %configure% %*
+call %configure% %*
+set err=%errorlevel%
+
+cd ..
+
+if not %err% == 0 goto out
+
+echo + qtbase\bin\qmake %srcpath%
+qtbase\bin\qmake %srcpath%
+set err=%errorlevel%
+
+:out
+exit /b %err%
