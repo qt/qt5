@@ -54,6 +54,8 @@ defineTest(addModule) {
 # it may not build.
 
 addModule(qtbase)
+addModule(qtmacextras, qtbase)
+addModule(qtwinextras, qtbase)
 addModule(qtx11extras, qtbase)
 addModule(qlalr, qtbase)
 addModule(qtsvg, qtbase)
