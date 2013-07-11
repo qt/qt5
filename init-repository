@@ -226,6 +226,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtjsondb
     qtjsbackend
     qtlocation
+    qtmacextras
     qtmultimedia
     qtpim
     qtqa
@@ -242,6 +243,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtwayland
     qtwebkit
     qtwebkit-examples
+    qtwinextras
     qtx11extras
     qtxmlpatterns
 );

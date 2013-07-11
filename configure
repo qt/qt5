@@ -53,11 +53,5 @@ mkdir -p qtbase || exit
 echo "+ cd qtbase"
 cd qtbase || exit
 
-echo "+ $configure $@"
-"$configure" "$@" || exit 1
-
-echo "+ cd .."
-cd ..
-
-echo "+ qtbase/bin/qmake $srcpath"
-exec qtbase/bin/qmake "$srcpath"
+echo "+ $configure -top-level $@"
+exec "$configure" -top-level "$@"

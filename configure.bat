@@ -52,17 +52,10 @@ if not exist qtbase mkdir qtbase || exit /b 1
 echo + cd qtbase
 cd qtbase || exit /b 1
 
-echo + %configure% %*
-call %configure% %*
+echo + %configure% -top-level %*
+call %configure% -top-level %*
 set err=%errorlevel%
 
 cd ..
 
-if not %err% == 0 goto out
-
-echo + qtbase\bin\qmake %srcpath%
-qtbase\bin\qmake %srcpath%
-set err=%errorlevel%
-
-:out
 exit /b %err%
