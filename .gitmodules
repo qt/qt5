@@ -94,3 +94,9 @@
 [submodule "qtx11extras"]
 	path = qtx11extras
 	url = ../qtx11extras.git
+[submodule "qtmacextras"]
+	path = qtmacextras
+	url = ../qtmacextras.git
+[submodule "qtwinextras"]
+	path = qtwinextras
+	url = ../qtwinextras.git
