@@ -119,6 +119,11 @@ B<Repository options:>
 Switch to internal URLs and make use of the Berlin git mirrors.
 (Implies `--mirror').
 
+=item --oslo
+
+Switch to internal URLs and make use of the Oslo git mirrors.
+(Implies `--mirror').
+
 
 =item --http
 
@@ -261,6 +266,9 @@ my $GERRIT_SSH_BASE
 my $BER_MIRROR_URL_BASE
     = 'git://hegel/';
 
+my $OSLO_MIRROR_URL_BASE
+    = 'git://qilin/';
+
 sub new
 {
     my ($class, @arguments) = @_;
@@ -322,6 +330,9 @@ sub parse_arguments
 
         'berlin' => sub {
             $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
+        },
+        'oslo' => sub {
+            $self->{'mirror-url'}        = $OSLO_MIRROR_URL_BASE;
         },
     ) || pod2usage(2);
 
