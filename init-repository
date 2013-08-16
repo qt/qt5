@@ -224,7 +224,6 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtgraphicaleffects
     qtimageformats
     qtjsondb
-    qtjsbackend
     qtlocation
     qtmacextras
     qtmultimedia
@@ -255,7 +254,6 @@ my @DEFAULT_REPOS = qw(
     qtdoc
     qtgraphicaleffects
     qtimageformats
-    qtjsbackend
     qtmultimedia
     qtqa
     qtquick1

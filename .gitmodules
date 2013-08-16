@@ -73,9 +73,6 @@
 [submodule "qt3d"]
 	path = qt3d
 	url = ../qt3d.git
-[submodule "qtjsbackend"]
-	path = qtjsbackend
-	url = ../qtjsbackend.git
 [submodule "qtimageformats"]
 	path = qtimageformats
 	url = ../qtimageformats.git
