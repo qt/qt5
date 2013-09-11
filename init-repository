@@ -104,8 +104,6 @@ Skip the `git submodule update' command.
 Set git config to ignore submodules by default when doing operations on the
 qt5 repo, such as `pull', `fetch', `diff' etc.
 
-This option is default for --nokia-developer.
-
 After using this option, pass `--ignore-submodules=none' to git to override
 it as needed.
 
@@ -116,24 +114,15 @@ B<Repository options:>
 
 =over
 
-=item --nokia-developer
-
-Switch to internal Nokia URLs.
-
-
 =item --berlin
 
-Switch to internal Nokia URLs and make use of the Berlin git mirrors.
+Switch to internal URLs and make use of the Berlin git mirrors.
 (Implies `--mirror').
 
+=item --oslo
 
-=item --ssh
-
-Use the SSH protocol for git operations.  This may be useful if the git
-protocol is blocked by a firewall. Note that this requires a user account
-with an uploaded SSH key on all servers used.  (Implies `--nokia-developer').
-
-The `--ssh' option does not affect the gerrit remotes.
+Switch to internal URLs and make use of the Oslo git mirrors.
+(Implies `--mirror').
 
 
 =item --http
@@ -205,8 +194,6 @@ use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
 
 my %PROTOCOLS = (
-    'internal'  => 'git://scm.dev.nokia.troll.no/' ,
-    'ssh'       => 'git@scm.dev.nokia.troll.no:'   ,
     'http'      => 'http://git.gitorious.org/'     ,
 );
 
@@ -279,6 +266,9 @@ my $GERRIT_SSH_BASE
 my $BER_MIRROR_URL_BASE
     = 'git://hegel/';
 
+my $OSLO_MIRROR_URL_BASE
+    = 'git://qilin/';
+
 sub new
 {
     my ($class, @arguments) = @_;
@@ -317,7 +307,6 @@ sub parse_arguments
         'force'               => 0 ,
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
-        'nokia-developer'     => 0 ,
         'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
@@ -331,7 +320,6 @@ sub parse_arguments
         'force'             =>  \$self->{qw{ force             }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
-        'nokia-developer'   =>  \$self->{qw{ nokia-developer   }},
         'quiet'             =>  \$self->{qw{ quiet             }},
         'update!'           =>  \$self->{qw{ update            }},
         'webkit!'           =>  \$self->{qw{ webkit            }},
@@ -339,25 +327,14 @@ sub parse_arguments
 
         'help|?'            =>  sub { pod2usage(1);               },
         'http'              =>  sub { $self->{protocol} = 'http'; },
-        'ssh|ssh-protocol'  =>  sub { $self->{protocol} = 'ssh';  },
 
-        'berlin|berlin-nokia-developer' => sub {
-            $self->{'nokia-developer'}   = 1;
-            $self->{'protocol'}          = 'internal';
+        'berlin' => sub {
             $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
         },
-
-        'nokia-developer' => sub {
-            $self->{'nokia-developer'}   = 1;
-            $self->{'protocol'}          = 'internal';
-            $self->{'ignore-submodules'} = 1;
+        'oslo' => sub {
+            $self->{'mirror-url'}        = $OSLO_MIRROR_URL_BASE;
         },
     ) || pod2usage(2);
-
-    if ($self->{'nokia-developer'} && $self->{'protocol'} eq 'http') {
-        print "*** Ignoring use of HTTP protocol, as it's only usable with external server\n";
-        $self->{'protocol'} = '';
-    }
 
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
@@ -457,12 +434,7 @@ sub git_set_submodule_config
         my $value = $2;
 
         if ($protocol) {
-                # qt-labs projects are still hosted under qt internally.
-                if ($protocol ne 'http') {
-                    $value =~ s,^git://gitorious\.org/qt-labs/,${url_base_for_protocol}qt/,;
-                }
-
-                # assume all other projects hosted under gitorious publicly.
+                # rewrite URL to chosen protocol
                 $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
         }
 

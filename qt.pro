@@ -55,12 +55,12 @@ defineTest(addModule) {
 
 addModule(qtbase)
 addModule(qtmacextras, qtbase)
-addModule(qtwinextras, qtbase)
 addModule(qtx11extras, qtbase)
 addModule(qlalr, qtbase)
 addModule(qtsvg, qtbase)
 addModule(qtxmlpatterns, qtbase)
 addModule(qtdeclarative, qtbase, qtsvg qtxmlpatterns)
+addModule(qtwinextras, qtbase, qtdeclarative)
 addModule(qtquickcontrols, qtdeclarative)
 addModule(qtmultimedia, qtdeclarative)
 addModule(qtactiveqt, qtbase)

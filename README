@@ -127,12 +127,13 @@ HOW TO BUILD QT5
  Documentation
  =============
 
- After the configure step, building the documentation is possible by running
+ After configuring and compiling Qt, building the documentation is possible by running
  "make docs".
- Example:
 
-    ./configure -prefix $PWD/qtbase -opensource
-    make docs
+ After having built the documentation, you need to install it with the following
+ command:
+
+    make install_docs
 
  The documentation is installed in the path set to $QT_INSTALL_DOCS.
  Running "qmake -query" will list the value of QT_INSTALL_DOCS.
