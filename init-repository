@@ -242,6 +242,7 @@ my @DEFAULT_REPOS = qw(
     qtdoc
     qtgraphicaleffects
     qtimageformats
+    qtmacextras
     qtmultimedia
     qtqa
     qtquick1
