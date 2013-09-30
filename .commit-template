@@ -6,14 +6,14 @@
 
 # ==[ Footers: Uncomment and edit where applicable ]===================|
 #
+# Change log entry (see below for instructions).
+#[ChangeLog][][]
+#
 # One task per entry. Remember space after colon.
 #Task-number: 
 #
 # Solicit reviewers. They still need to use the Gerrit frontend.
 #Reviewed-by: 
-#
-# Change log entry (see below for instructions).
-#[ChangeLog][][]
 #
 # ==[ Please wrap at 72 characters ]===================================|
 #
