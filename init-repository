@@ -202,6 +202,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qt5
     qlalr
     qtactiveqt
+    qtandroidextras
     qtbase
     qtconnectivity
     qtdeclarative
@@ -236,12 +237,14 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
 
 my @DEFAULT_REPOS = qw(
     qtactiveqt
+    qtandroidextras
     qtbase
     qtconnectivity
     qtdeclarative
     qtdoc
     qtgraphicaleffects
     qtimageformats
+    qtmacextras
     qtmultimedia
     qtqa
     qtquick1

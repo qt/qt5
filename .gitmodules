@@ -97,3 +97,6 @@
 [submodule "qtwinextras"]
 	path = qtwinextras
 	url = ../qtwinextras.git
+[submodule "qtandroidextras"]
+	path = qtandroidextras
+	url = ../qtandroidextras.git
