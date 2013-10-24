@@ -231,6 +231,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtwayland
     qtwebkit
     qtwebkit-examples
+    qtwebsockets
     qtwinextras
     qtx11extras
     qtxmlpatterns
@@ -258,6 +259,7 @@ my @DEFAULT_REPOS = qw(
     qtsvg
     qttools
     qttranslations
+    qtwebsockets
     qtwebkit
     qtwebkit-examples
     qtwinextras
