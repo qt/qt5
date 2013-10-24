@@ -100,3 +100,6 @@
 [submodule "qtandroidextras"]
 	path = qtandroidextras
 	url = ../qtandroidextras.git
+[submodule "qtenginio"]
+	path = qtenginio
+	url = ../qtenginio.git
