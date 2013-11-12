@@ -3,6 +3,7 @@ cache(, super)
 
 CONFIG += build_pass   # hack to disable the .qmake.super auto-add
 load(qt_build_config)
+CONFIG -= build_pass   # unhack, as it confuses Qt Creator
 
 TEMPLATE      = subdirs
 
