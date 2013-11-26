@@ -14,6 +14,7 @@ defineReplace(moduleName) {
 # Arguments: module name, [mandatory deps], [optional deps], [project file]
 defineTest(addModule) {
     contains(QT_SKIP_MODULES, $$1): return(false)
+    !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$1): return(false)
     mod = $$moduleName($$1)
 
     isEmpty(4) {
