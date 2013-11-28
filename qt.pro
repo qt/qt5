@@ -53,6 +53,9 @@ defineTest(addModule) {
 # users responsibility to ensure that all needed dependencies exist, or
 # it may not build.
 
+ANDROID_EXTRAS =
+android: ANDROID_EXTRAS = qtandroidextras
+
 addModule(qtbase)
 addModule(qtandroidextras, qtbase)
 addModule(qtmacextras, qtbase)
@@ -70,7 +73,7 @@ addModule(qtjsondb, qtdeclarative)
 addModule(qtsystems, qtbase, qtdeclarative)
 addModule(qtlocation, qtbase, qt3d qtsystems qtmultimedia)
 addModule(qtsensors, qtbase, qtdeclarative)
-addModule(qtconnectivity, qtbase, qtdeclarative)
+addModule(qtconnectivity, qtbase $$ANDROID_EXTRAS, qtdeclarative)
 addModule(qtfeedback, qtdeclarative, qtmultimedia)
 addModule(qtpim, qtdeclarative, qtjsondb)
 addModule(qtwebkit, qtdeclarative, qtlocation qtsensors, WebKit.pro)
