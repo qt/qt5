@@ -3,6 +3,7 @@ cache(, super)
 
 CONFIG += build_pass   # hack to disable the .qmake.super auto-add
 load(qt_build_config)
+CONFIG -= build_pass   # unhack, as it confuses Qt Creator
 
 TEMPLATE      = subdirs
 
@@ -76,16 +77,17 @@ addModule(qtsensors, qtbase, qtdeclarative)
 addModule(qtconnectivity, qtbase $$ANDROID_EXTRAS, qtdeclarative)
 addModule(qtfeedback, qtdeclarative, qtmultimedia)
 addModule(qtpim, qtdeclarative, qtjsondb)
-addModule(qtwebkit, qtdeclarative, qtlocation qtsensors, WebKit.pro)
+addModule(qtwebkit, qtdeclarative, qtlocation qtmultimedia qtsensors, WebKit.pro)
 addModule(qttools, qtbase, qtdeclarative qtactiveqt qtwebkit)
 addModule(qtwebkit-examples, qtwebkit qttools)
 addModule(qtimageformats, qtbase)
 addModule(qtgraphicaleffects, qtdeclarative)
-addModule(qtscript, qtbase)
-addModule(qtquick1, qtscript, qtsvg qtxmlpatterns qtwebkit qttools)
+addModule(qtscript, qtbase, qttools)
+addModule(qtquick1, qtscript, qtsvg qtxmlpatterns qtwebkit)
 addModule(qtdocgallery, qtdeclarative, qtjsondb)
 !win32:!mac:addModule(qtwayland, qtbase, qtdeclarative)
 addModule(qtserialport, qtbase)
+addModule(qtenginio, qtdeclarative)
 addModule(qttranslations, qttools)
 addModule(qtdoc, qtdeclarative)
 addModule(qtqa, qtbase)
