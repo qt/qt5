@@ -200,7 +200,6 @@ my %PROTOCOLS = (
 my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qt3d
     qt5
-    qlalr
     qtactiveqt
     qtandroidextras
     qtbase
