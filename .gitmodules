@@ -103,3 +103,6 @@
 [submodule "qtenginio"]
 	path = qtenginio
 	url = ../qtenginio.git
+[submodule "qtwebsockets"]
+	path = qtwebsockets
+	url = ../qtwebsockets.git
