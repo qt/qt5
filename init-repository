@@ -249,6 +249,7 @@ my @DEFAULT_REPOS = qw(
     qtconnectivity
     qtdeclarative
     qtdoc
+    qtenginio
     qtgraphicaleffects
     qtimageformats
     qtmacextras
