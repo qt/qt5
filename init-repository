@@ -70,6 +70,12 @@ B<Global options:>
 Force initialization (even if the submodules are already checked out).
 
 
+=item --force-hooks
+
+Force initialization of hooks (even if there are already hooks in checked out
+submodules).
+
+
 =item --quiet, -q
 
 Be quiet.  Will exit cleanly if the repository is already initialized.
@@ -200,7 +206,6 @@ my %PROTOCOLS = (
 my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qt3d
     qt5
-    qlalr
     qtactiveqt
     qtandroidextras
     qtbase
@@ -231,6 +236,7 @@ my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qtwayland
     qtwebkit
     qtwebkit-examples
+    qtwebsockets
     qtwinextras
     qtx11extras
     qtxmlpatterns
@@ -243,6 +249,7 @@ my @DEFAULT_REPOS = qw(
     qtconnectivity
     qtdeclarative
     qtdoc
+    qtenginio
     qtgraphicaleffects
     qtimageformats
     qtmacextras
@@ -258,6 +265,7 @@ my @DEFAULT_REPOS = qw(
     qtsvg
     qttools
     qttranslations
+    qtwebsockets
     qtwebkit
     qtwebkit-examples
     qtwinextras
@@ -310,6 +318,7 @@ sub parse_arguments
         'codereview-username' => "",
         'detach-alternates'   => 0 ,
         'force'               => 0 ,
+        'force-hooks'         => 0 ,
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
         'protocol'            => "",
@@ -322,7 +331,8 @@ sub parse_arguments
         'alternates=s'      =>  \$self->{qw{ alternates        }},
         'codereview-username=s' => \$self->{qw{ codereview-username }},
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
-        'force'             =>  \$self->{qw{ force             }},
+        'force|f'           =>  \$self->{qw{ force             }},
+        'force-hooks'       =>  \$self->{qw{ force-hooks       }},
         'ignore-submodules' =>  \$self->{qw{ ignore-submodules }},
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'quiet'             =>  \$self->{qw{ quiet             }},
@@ -574,6 +584,38 @@ sub git_clone_one_submodule
     return;
 }
 
+sub ensure_link
+{
+    my ($self, $src, $tgt) = @_;
+    return if (!$self->{'force-hooks'} and -f $tgt);
+    unlink($tgt); # In case we have a dead symlink or pre-existing hook
+    print "Aliasing $src\n      as $tgt ...\n" if (!$self->{quiet});
+    return if eval { symlink($src, $tgt) };
+    # Windows doesn't do (proper) symlinks. As the post_commit script needs
+    # them to locate itself, we write a forwarding script instead.
+    open SCRIPT, ">".$tgt or die "Cannot create forwarding script $tgt: $!\n";
+    print SCRIPT "#!/bin/sh\nexec `dirname \$0`/$src \"\$\@\"\n";
+    close SCRIPT;
+}
+
+sub git_install_hooks
+{
+    my ($self) = @_;
+
+    return if (!-d 'qtrepotools/git-hooks');
+
+    chomp(my @modules = `git submodule foreach :`);
+    push @modules, "";
+    for my $module (@modules) {
+        $module =~ s,^Entering \'([^\']+)\'$,$1/,;
+        my $rel = $module;
+        $rel =~ s,[^/]+,..,g;
+        $rel .= "../../qtrepotools/git-hooks/";
+        $self->ensure_link($rel.'gerrit_commit_msg_hook', $module.'.git/hooks/commit-msg');
+        $self->ensure_link($rel.'git_post_commit_hook', $module.'.git/hooks/post-commit');
+    }
+}
+
 sub run
 {
     my ($self) = @_;
@@ -594,6 +636,8 @@ sub run
     $self->git_clone_all_submodules;
 
     $self->git_add_remotes('qt5');
+
+    $self->git_install_hooks;
 
     return;
 }
