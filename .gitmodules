@@ -28,9 +28,6 @@
 [submodule "qtdoc"]
 	path = qtdoc
 	url = ../qtdoc.git
-[submodule "qlalr"]
-	path = qlalr
-	url = ../qlalr.git
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = ../qtrepotools.git

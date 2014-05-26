@@ -12,9 +12,6 @@
 # One task per entry. Remember space after colon.
 #Task-number: 
 #
-# Solicit reviewers. They still need to use the Gerrit frontend.
-#Reviewed-by: 
-#
 # ==[ Please wrap at 72 characters ]===================================|
 #
 # Remember to read http://wiki.qt-project.org/Commit_Policy
