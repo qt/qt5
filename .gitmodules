@@ -103,3 +103,6 @@
 [submodule "qtwebsockets"]
 	path = qtwebsockets
 	url = ../qtwebsockets.git
+[submodule "qtwebchannel"]
+	path = qtwebchannel
+	url = ../qtwebchannel.git
