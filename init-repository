@@ -474,6 +474,12 @@ sub git_clone_all_submodules
     foreach my $line (@configresult) {
         if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
             $self->git_clone_one_submodule($1, $2);
+            if ($1 eq "qtwebengine") {
+                chdir($1) or confess "chdir $1: $OS_ERROR";
+                $self->exe('git', 'submodule', 'init');
+                $self->git_clone_all_submodules;
+                chdir("..") or confess "chdir $1: $OS_ERROR";
+            }
         }
     }
 
