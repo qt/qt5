@@ -266,6 +266,7 @@ my @DEFAULT_REPOS = qw(
     qtsvg
     qttools
     qttranslations
+    qtwayland
     qtwebchannel
     qtwebsockets
     qtwebkit
