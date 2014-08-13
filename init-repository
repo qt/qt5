@@ -475,6 +475,7 @@ sub git_clone_all_submodules
         if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
             $self->git_clone_one_submodule($1, $2);
             if ($1 eq "qtwebengine") {
+                $self->exe('git', 'submodule', 'update', $1);
                 chdir($1) or confess "chdir $1: $OS_ERROR";
                 $self->exe('git', 'submodule', 'init');
                 $self->git_clone_all_submodules;
