@@ -476,10 +476,11 @@ sub git_clone_all_submodules
             $self->git_clone_one_submodule($1, $2);
             if ($1 eq "qtwebengine") {
                 $self->exe('git', 'submodule', 'update', $1);
+                my $orig_cwd = getcwd();
                 chdir($1) or confess "chdir $1: $OS_ERROR";
                 $self->exe('git', 'submodule', 'init');
                 $self->git_clone_all_submodules;
-                chdir("..") or confess "chdir $1: $OS_ERROR";
+                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
             }
         }
     }
@@ -560,6 +561,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'clone', @reference_args, ($mirror ? $mirror : $url), $submodule);
     }
 
+    my $orig_cwd = getcwd();
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
     $self->exe('git', 'config', 'remote.origin.url', $url);
@@ -588,7 +590,7 @@ sub git_clone_one_submodule
         }
     }
 
-    chdir("..") or confess "cd ..: $OS_ERROR";
+    chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
 
     return;
 }
