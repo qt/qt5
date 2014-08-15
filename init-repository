@@ -352,7 +352,7 @@ sub git_clone_all_submodules
 
     my @modules = sort keys %include;
 
-    $self->git_submodule_init(@modules);
+    $self->git_submodule_init(map { $subdirs{$_} } @modules);
 
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
@@ -373,18 +373,19 @@ sub git_clone_all_submodules
 
     foreach my $module (@modules) {
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
-        if ($module eq "qtwebengine") {
-            $self->exe('git', 'submodule', 'update', $module);
-            my $orig_cwd = getcwd();
-            chdir($module) or confess "chdir $module: $OS_ERROR";
-            $self->exe('git', 'submodule', 'init');
-            $self->git_clone_all_submodules($subbases{$module}, "all");
-            chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
-        }
     }
 
     if ($self->{update}) {
-        $self->exe('git', 'submodule', 'update', '--recursive');
+        $self->exe('git', 'submodule', 'update');
+
+        foreach my $module (@modules) {
+            if (-f $module.'/.gitmodules') {
+                my $orig_cwd = getcwd();
+                chdir($module) or confess "chdir $module: $OS_ERROR";
+                $self->git_clone_all_submodules($subbases{$module}, "all");
+                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+            }
+        }
     }
 
     return;
