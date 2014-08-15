@@ -99,6 +99,7 @@ Only initialize the specified subset of modules given as the argument. Specified
 modules must already exist in .gitmodules.
 The string "all" results in cloning all known modules. The default is the set of
 maintained modules.
+Module names may be prefixed with a dash to exclude them from a bigger set.
 
 =item --no-update
 
@@ -315,7 +316,7 @@ sub parse_arguments
         'mirror-url'          => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
-        'module-subset'       => join(",", @DEFAULT_REPOS),
+        'module-subset'       => "default",
     );
 
     GetOptionsFromArray(\@args,
@@ -344,12 +345,10 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    if ($self->{'module-subset'} eq "all") {
-        $self->{'module-subset'} = "";
-    } else {
-        $self->{'module-subset'} = {
-            map { $_ => 1 } split(qr{,}, $self->{'module-subset'})
-        };
+    $self->{'module-subset'} = [ map { $_ eq "default" ? (@DEFAULT_REPOS) : ($_) }
+                                     split(/,/, $self->{'module-subset'}) ];
+    if (!$self->{webkit}) {
+        push @{$self->{'module-subset'}}, "-qtwebkit", "-qtwebkit-examples";
     }
 
     return;
@@ -398,65 +397,49 @@ sub git_submodule_init
     return;
 }
 
-sub git_disable_webkit_submodule
-{
-    my ($self) = @_;
-
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit');
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples');
-
-    return;
-}
-
-sub git_prune_submodules
-{
-    my ($self) = @_;
-
-    my @configresult = qx(git config -l);
-    foreach my $line (@configresult) {
-        if ($line =~ /submodule\.([^.=]+)\.url=/) {
-            my $module_name = $1;
-            if (!$self->{'module-subset'}{$module_name}) {
-                $self->exe('git', 'config', '--remove', "submodule.$module_name");
-            }
-        }
-    }
-}
-
-sub git_set_submodule_config
-{
-    my ($self) = @_;
-
-    return unless ($self->{'ignore-submodules'});
-
-    my @configresult          = qx(git config -l);
-    foreach my $line (@configresult) {
-        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-        next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
-
-        $self->exe('git', 'config', "submodule.$1.ignore", 'all');
-    }
-
-    return;
-}
-
 sub git_clone_all_submodules
 {
-    my ($self) = @_;
+    my ($self, @subset) = @_;
+
+    my %include = ();
+    my %exclude = ();
+    my $include_all = 0;
+    foreach my $mod (@subset) {
+        if ($mod eq "all") {
+            $include_all = 1;
+        } elsif ($mod =~ s/^-//) {
+            $exclude{$mod} = 1;
+        } else {
+            $include{$mod} = 1;
+        }
+    }
+
+    $self->git_submodule_init;
 
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
-        if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
-            $self->git_clone_one_submodule($1, $2);
-            if ($1 eq "qtwebengine") {
-                $self->exe('git', 'submodule', 'update', $1);
-                my $orig_cwd = getcwd();
-                chdir($1) or confess "chdir $1: $OS_ERROR";
-                $self->exe('git', 'submodule', 'init');
-                $self->git_clone_all_submodules;
-                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
-            }
+        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+        next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
+        my ($module, $url) = ($1, $2);
+
+        if (defined($exclude{$module}) || (!$include_all && !defined($include{$module}))) {
+            $self->exe('git', 'config', '--remove-section', "submodule.$module");
+            next;
+        }
+
+        if ($self->{'ignore-submodules'}) {
+            $self->exe('git', 'config', "submodule.$module.ignore", 'all');
+        }
+
+        $self->git_clone_one_submodule($module, $url);
+        if ($module eq "qtwebengine") {
+            $self->exe('git', 'submodule', 'update', $module);
+            my $orig_cwd = getcwd();
+            chdir($module) or confess "chdir $module: $OS_ERROR";
+            $self->exe('git', 'submodule', 'init');
+            $self->git_clone_all_submodules("all");
+            chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
         }
     }
 
@@ -607,19 +590,8 @@ sub run
     my ($self) = @_;
 
     $self->check_if_already_initialized;
-    $self->git_submodule_init;
 
-    if (!$self->{webkit}) {
-        $self->git_disable_webkit_submodule;
-    }
-
-    if ($self->{'module-subset'}) {
-        $self->git_prune_submodules;
-    }
-
-    $self->git_set_submodule_config;
-
-    $self->git_clone_all_submodules;
+    $self->git_clone_all_submodules(@{$self->{'module-subset'}});
 
     $self->git_add_remotes('qt5');
 
