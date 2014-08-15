@@ -284,16 +284,7 @@ sub check_if_already_initialized
 
     # We consider the repo as `initialized' if submodule.qtbase.url is set
     if (qx(git config --get submodule.qtbase.url)) {
-        if ($self->{force}) {
-            my @configresult = qx(git config -l);
-            foreach (@configresult) {
-                # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-                if (/(submodule\.[^.=]+)\.url=.*/) {
-                    $self->exe('git', 'config', '--remove-section', $1);
-                }
-            }
-        }
-        else {
+        if (!$self->{force}) {
             exit 0 if ($self->{quiet});
             print "Will not reinitialize already initialized repository (use -f to force)!\n";
             exit 1;
