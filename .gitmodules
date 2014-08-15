@@ -1,51 +1,67 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
+	initrepo = true
 [submodule "qtsvg"]
 	path = qtsvg
 	url = ../qtsvg.git
+	initrepo = true
 [submodule "qtdeclarative"]
 	path = qtdeclarative
 	url = ../qtdeclarative.git
+	initrepo = true
 [submodule "qtactiveqt"]
 	path = qtactiveqt
 	url = ../qtactiveqt.git
+	initrepo = true
 [submodule "qtscript"]
 	path = qtscript
 	url = ../qtscript.git
+	initrepo = true
 [submodule "qtmultimedia"]
 	path = qtmultimedia
 	url = ../qtmultimedia.git
+	initrepo = true
 [submodule "qttools"]
 	path = qttools
 	url = ../qttools.git
+	initrepo = true
 [submodule "qtxmlpatterns"]
 	path = qtxmlpatterns
 	url = ../qtxmlpatterns.git
+	initrepo = true
 [submodule "qttranslations"]
 	path = qttranslations
 	url = ../qttranslations.git
+	initrepo = true
 [submodule "qtdoc"]
 	path = qtdoc
 	url = ../qtdoc.git
+	initrepo = true
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = ../qtrepotools.git
+	initrepo = true
 [submodule "qtwebkit"]
 	path = qtwebkit
 	url = ../qtwebkit.git
+	initrepo = true
 [submodule "qtwebkit-examples"]
 	path = qtwebkit-examples
 	url = ../qtwebkit-examples.git
+	initrepo = true
 [submodule "qtqa"]
 	path = qtqa
 	url = ../qtqa.git
+	initrepo = true
 [submodule "qtlocation"]
 	path = qtlocation
 	url = ../qtlocation.git
+	initrepo = true
 [submodule "qtsensors"]
 	path = qtsensors
 	url = ../qtsensors.git
+	initrepo = true
 [submodule "qtsystems"]
 	path = qtsystems
 	url = ../qtsystems.git
@@ -61,6 +77,7 @@
 [submodule "qtconnectivity"]
 	path = qtconnectivity
 	url = ../qtconnectivity.git
+	initrepo = true
 [submodule "qtwayland"]
 	path = qtwayland
 	url = ../qtwayland.git
@@ -73,39 +90,51 @@
 [submodule "qtimageformats"]
 	path = qtimageformats
 	url = ../qtimageformats.git
+	initrepo = true
 [submodule "qtquick1"]
 	path = qtquick1
 	url = ../qtquick1.git
 [submodule "qtgraphicaleffects"]
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
+	initrepo = true
 [submodule "qtquickcontrols"]
 	path = qtquickcontrols
 	url = ../qtquickcontrols.git
+	initrepo = true
 [submodule "qtserialport"]
 	path = qtserialport
 	url = ../qtserialport.git
+	initrepo = true
 [submodule "qtx11extras"]
 	path = qtx11extras
 	url = ../qtx11extras.git
+	initrepo = true
 [submodule "qtmacextras"]
 	path = qtmacextras
 	url = ../qtmacextras.git
+	initrepo = true
 [submodule "qtwinextras"]
 	path = qtwinextras
 	url = ../qtwinextras.git
+	initrepo = true
 [submodule "qtandroidextras"]
 	path = qtandroidextras
 	url = ../qtandroidextras.git
+	initrepo = true
 [submodule "qtenginio"]
 	path = qtenginio
 	url = ../qtenginio.git
+	initrepo = true
 [submodule "qtwebsockets"]
 	path = qtwebsockets
 	url = ../qtwebsockets.git
+	initrepo = true
 [submodule "qtwebchannel"]
 	path = qtwebchannel
 	url = ../qtwebchannel.git
+	initrepo = true
 [submodule "qtwebengine"]
 	path = qtwebengine
 	url = ../qtwebengine.git
+	initrepo = true

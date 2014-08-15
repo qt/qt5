@@ -191,40 +191,6 @@ use Getopt::Long qw( GetOptionsFromArray );
 use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
 
-my @DEFAULT_REPOS = qw(
-    qtactiveqt
-    qtandroidextras
-    qtbase
-    qtconnectivity
-    qtdeclarative
-    qtdoc
-    qtenginio
-    qtgraphicaleffects
-    qtimageformats
-    qtmacextras
-    qtmultimedia
-    qtqa
-    qtquick1
-    qtquickcontrols
-    qtlocation
-    qtrepotools
-    qtscript
-    qtsensors
-    qtserialport
-    qtsvg
-    qttools
-    qttranslations
-    qtwayland
-    qtwebchannel
-    qtwebengine
-    qtwebsockets
-    qtwebkit
-    qtwebkit-examples
-    qtwinextras
-    qtx11extras
-    qtxmlpatterns
-);
-
 my $GERRIT_SSH_BASE
     = 'ssh://@USER@codereview.qt-project.org@PORT@/';
 
@@ -304,8 +270,7 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    $self->{'module-subset'} = [ map { $_ eq "default" ? (@DEFAULT_REPOS) : ($_) }
-                                     split(/,/, $self->{'module-subset'}) ];
+    $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
     if (!$self->{webkit}) {
         push @{$self->{'module-subset'}}, "-qtwebkit", "-qtwebkit-examples";
     }
@@ -362,6 +327,7 @@ sub git_clone_all_submodules
 
     my %subdirs = ();
     my %subbases = ();
+    my %subinits = ();
     my @submodconfig = qx(git config -l -f .gitmodules);
     foreach my $line (@submodconfig) {
         # Example line: submodule.qtqa.url=../qtqa.git
@@ -376,6 +342,8 @@ sub git_clone_all_submodules
             $subbases{$mod} = $base;
         } elsif ($2 eq "update") {
             push @subset, '-'.$1 if ($3 eq 'ignore');
+        } elsif ($2 eq "initrepo") {
+            $subinits{$1} = ($3 eq "yes" or $3 eq "true");
         }
     }
 
@@ -383,6 +351,8 @@ sub git_clone_all_submodules
     foreach my $mod (@subset) {
         if ($mod eq "all") {
             map { $include{$_} = 1; } keys %subbases;
+        } elsif ($mod eq "default") {
+            map { $include{$_} = 1; } grep { $subinits{$_} } keys %subbases;
         } elsif ($mod =~ s/^-//) {
             delete $include{$mod};
         } else {
