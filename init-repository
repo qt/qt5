@@ -296,11 +296,10 @@ sub check_if_already_initialized
 
 sub git_submodule_init
 {
-    my ($self) = @_;
+    my ($self, @init_args) = @_;
 
-    my @init_args;
     if ($self->{quiet}) {
-        push @init_args, '--quiet';
+        unshift @init_args, '--quiet';
     }
     $self->exe('git', 'submodule', 'init', @init_args);
 
@@ -353,7 +352,7 @@ sub git_clone_all_submodules
 
     my @modules = sort keys %include;
 
-    $self->git_submodule_init;
+    $self->git_submodule_init(@modules);
 
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
