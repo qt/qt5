@@ -131,15 +131,6 @@ Switch to internal URLs and make use of the Oslo git mirrors.
 (Implies `--mirror').
 
 
-=item --http
-
-Use the HTTP protocol for git operations.  This may be useful if the git
-protocol is blocked by a firewall.  Note that this only works with the
-external Gitorious server.
-
-The `--http' option does not affect the gerrit remotes.
-
-
 =item --codereview-username <Gerrit/JIRA username>
 
 Specify the user name for the (potentially) writable `gerrit' remote
@@ -198,10 +189,6 @@ use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptionsFromArray );
 use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
-
-my %PROTOCOLS = (
-    'http'      => 'http://git.gitorious.org/'     ,
-);
 
 my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
     qt3d
@@ -326,7 +313,6 @@ sub parse_arguments
         'force-hooks'         => 0 ,
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
-        'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
         'module-subset'       => join(",", @DEFAULT_REPOS),
@@ -346,7 +332,6 @@ sub parse_arguments
         'module-subset=s'   =>  \$self->{qw{ module-subset     }},
 
         'help|?'            =>  sub { pod2usage(1);               },
-        'http'              =>  sub { $self->{protocol} = 'http'; },
 
         'berlin' => sub {
             $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
@@ -442,27 +427,14 @@ sub git_set_submodule_config
 {
     my ($self) = @_;
 
-    my @configresult          = qx(git config -l);
-    my $protocol              = $self->{protocol};
-    my $url_base_for_protocol = $PROTOCOLS{$protocol};
+    return unless ($self->{'ignore-submodules'});
 
+    my @configresult          = qx(git config -l);
     foreach my $line (@configresult) {
         # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
         next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
 
-        my $key   = $1;
-        my $value = $2;
-
-        if ($protocol) {
-                # rewrite URL to chosen protocol
-                $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
-        }
-
-        $self->exe('git', 'config', "submodule.$key.url", $value);
-
-        if ($self->{'ignore-submodules'}) {
-            $self->exe('git', 'config', "submodule.$key.ignore", 'all');
-        }
+        $self->exe('git', 'config', "submodule.$1.ignore", 'all');
     }
 
     return;
