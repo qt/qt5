@@ -390,14 +390,16 @@ sub git_clone_all_submodules
         }
     }
 
+    my @modules = sort keys %include;
+
     $self->git_submodule_init;
 
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
         # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-        next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
-        my ($module, $url) = ($1, $2);
+        next if ($line !~ /submodule\.([^.=]+)\.url=/);
+        my $module = $1;
 
         if (!defined($include{$module})) {
             $self->exe('git', 'config', '--remove-section', "submodule.$module");
@@ -407,8 +409,10 @@ sub git_clone_all_submodules
         if ($self->{'ignore-submodules'}) {
             $self->exe('git', 'config', "submodule.$module.ignore", 'all');
         }
+    }
 
-        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module}, $url);
+    foreach my $module (@modules) {
+        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
         if ($module eq "qtwebengine") {
             $self->exe('git', 'submodule', 'update', $module);
             my $orig_cwd = getcwd();
@@ -447,7 +451,7 @@ sub git_add_remotes
 
 sub git_clone_one_submodule
 {
-    my ($self, $submodule, $repo_basename, $url) = @_;
+    my ($self, $submodule, $repo_basename) = @_;
 
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
@@ -466,9 +470,10 @@ sub git_clone_one_submodule
         }
     }
 
+    my $url = $self->{'base-url'}.$repo_basename;
     my $mirror;
-    if ($mirror_url and $url =~ /\/(qt\/[^.]+)\.git/) {
-        $mirror = $mirror_url.$1;
+    if ($mirror_url) {
+        $mirror = $mirror_url.$repo_basename;
         $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
     }
 
@@ -557,6 +562,12 @@ sub run
     my ($self) = @_;
 
     $self->check_if_already_initialized;
+
+    chomp(my $url = `git config remote.origin.url`);
+    die("Have no origin remote.\n") if (!$url);
+    $url =~ s,\.git$,,;
+    $url =~ s,qt/qt5$,,;
+    $self->{'base-url'} = $url;
 
     $self->git_clone_all_submodules('qt/qt5', @{$self->{'module-subset'}});
 
