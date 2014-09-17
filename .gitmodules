@@ -81,9 +81,6 @@
 [submodule "qtwayland"]
 	path = qtwayland
 	url = ../qtwayland.git
-[submodule "qtjsondb"]
-	path = qtjsondb
-	url = ../qtjsondb.git
 [submodule "qt3d"]
 	path = qt3d
 	url = ../qt3d.git
