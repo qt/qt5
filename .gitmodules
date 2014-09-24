@@ -81,6 +81,7 @@
 [submodule "qtwayland"]
 	path = qtwayland
 	url = ../qtwayland.git
+	initrepo = true
 [submodule "qt3d"]
 	path = qt3d
 	url = ../qt3d.git
@@ -91,6 +92,7 @@
 [submodule "qtquick1"]
 	path = qtquick1
 	url = ../qtquick1.git
+	initrepo = true
 [submodule "qtgraphicaleffects"]
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
