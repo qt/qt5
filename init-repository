@@ -506,6 +506,8 @@ sub git_install_hooks
 
     return if (!-d 'qtrepotools/git-hooks');
 
+    # Force C locale as git submodule returns the localized string "Entering"
+    local $ENV{LC_ALL} = 'C';
     chomp(my @modules = `git submodule foreach :`);
     push @modules, "";
     for my $module (@modules) {
