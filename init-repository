@@ -423,7 +423,7 @@ sub git_clone_one_submodule
 
     if ($alternates) {
         # alternates is a qt5 repo, so the submodule will be under that.
-        if (-d "$alternates/$submodule") {
+        if (-e "$alternates/$submodule/.git") {
             @reference_args = ('--reference', "$alternates/$submodule");
         }
         else {
