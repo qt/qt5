@@ -485,7 +485,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
-    if (!$do_clone) {
+    if (!$do_clone && $self->{update}) {
         $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
     }
 
