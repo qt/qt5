@@ -178,7 +178,7 @@ Uses <url-base> as the base URL for submodule git mirrors.
 
 For example:
 
-  --mirror user@machine:/foo/bar
+  --mirror user@machine:/foo/bar/
 
 ...will use the following as a mirror for qtbase:
 
