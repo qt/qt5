@@ -105,6 +105,12 @@ Module names may be prefixed with a dash to exclude them from a bigger set.
 
 Skip the `git submodule update' command.
 
+=item --branch
+
+Instead of checking out specific SHA1s, check out the submodule branches that
+correspond with the current supermodule commit.
+By default, this option will cause local commits in the submodules to be rebased.
+With --no-update, the branches will be checked out, but their heads will not move.
 
 =item --ignore-submodules
 
@@ -172,7 +178,7 @@ Uses <url-base> as the base URL for submodule git mirrors.
 
 For example:
 
-  --mirror user@machine:/foo/bar
+  --mirror user@machine:/foo/bar/
 
 ...will use the following as a mirror for qtbase:
 
@@ -233,6 +239,7 @@ sub parse_arguments
 
     %{$self} = (%{$self},
         'alternates'          => "",
+        'branch'              => 0,
         'codereview-username' => "",
         'detach-alternates'   => 0 ,
         'force'               => 0 ,
@@ -246,6 +253,7 @@ sub parse_arguments
 
     GetOptionsFromArray(\@args,
         'alternates=s'      =>  \$self->{qw{ alternates        }},
+        'branch'            =>  \$self->{qw{ branch            }},
         'codereview-username=s' => \$self->{qw{ codereview-username }},
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
         'force|f'           =>  \$self->{qw{ force             }},
@@ -313,9 +321,10 @@ sub git_submodule_init
 
 sub git_clone_all_submodules
 {
-    my ($self, $my_repo_base, @subset) = @_;
+    my ($self, $my_repo_base, $co_branch, @subset) = @_;
 
     my %subdirs = ();
+    my %subbranches = ();
     my %subbases = ();
     my %subinits = ();
     my @submodconfig = qx(git config -l -f .gitmodules);
@@ -324,6 +333,8 @@ sub git_clone_all_submodules
         next if ($line !~ /^submodule\.([^.=]+)\.([^.=]+)=(.*)$/);
         if ($2 eq "path") {
             $subdirs{$1} = $3;
+        } elsif ($2 eq "branch") {
+            $subbranches{$1} = $3;
         } elsif ($2 eq "url") {
             my ($mod, $base) = ($1, $3);
             next if ($base !~ /^\.\.\//);
@@ -376,15 +387,29 @@ sub git_clone_all_submodules
     }
 
     if ($self->{update}) {
-        $self->exe('git', 'submodule', 'update');
+        $self->exe('git', 'submodule', 'update', ($co_branch ? ('--remote', '--rebase') : ()));
 
         foreach my $module (@modules) {
             if (-f $module.'/.gitmodules') {
                 my $orig_cwd = getcwd();
                 chdir($module) or confess "chdir $module: $OS_ERROR";
-                $self->git_clone_all_submodules($subbases{$module}, "all");
+                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
                 chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
             }
+        }
+    } elsif ($co_branch) {
+        foreach my $module (@modules) {
+            my $branch = $subbranches{$module};
+            die("No branch defined for submodule $module.\n") if (!defined($branch));
+            my $orig_cwd = getcwd();
+            chdir($module) or confess "chdir $module: $OS_ERROR";
+            my $br = qx(git rev-parse -q --verify $branch);
+            if (!$br) {
+                $self->exe('git', 'checkout', '-b', $branch, "origin/$branch");
+            } else {
+                $self->exe('git', 'checkout', $branch);
+            }
+            chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
         }
     }
 
@@ -435,7 +460,6 @@ sub git_clone_one_submodule
     my $mirror;
     if ($mirror_url) {
         $mirror = $mirror_url.$repo_basename;
-        $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
     }
 
     if ($mirror) {
@@ -461,7 +485,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
-    if (!$do_clone) {
+    if (!$do_clone && $self->{update}) {
         $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
     }
 
@@ -532,7 +556,7 @@ sub run
     $url =~ s,qt/qt5$,,;
     $self->{'base-url'} = $url;
 
-    $self->git_clone_all_submodules('qt/qt5', @{$self->{'module-subset'}});
+    $self->git_clone_all_submodules('qt/qt5', $self->{branch}, @{$self->{'module-subset'}});
 
     $self->git_add_remotes('qt/qt5');
 
