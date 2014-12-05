@@ -99,11 +99,18 @@ Only initialize the specified subset of modules given as the argument. Specified
 modules must already exist in .gitmodules.
 The string "all" results in cloning all known modules. The default is the set of
 maintained modules.
+Module names may be prefixed with a dash to exclude them from a bigger set.
 
 =item --no-update
 
 Skip the `git submodule update' command.
 
+=item --branch
+
+Instead of checking out specific SHA1s, check out the submodule branches that
+correspond with the current supermodule commit.
+By default, this option will cause local commits in the submodules to be rebased.
+With --no-update, the branches will be checked out, but their heads will not move.
 
 =item --ignore-submodules
 
@@ -129,15 +136,6 @@ Switch to internal URLs and make use of the Berlin git mirrors.
 
 Switch to internal URLs and make use of the Oslo git mirrors.
 (Implies `--mirror').
-
-
-=item --http
-
-Use the HTTP protocol for git operations.  This may be useful if the git
-protocol is blocked by a firewall.  Note that this only works with the
-external Gitorious server.
-
-The `--http' option does not affect the gerrit remotes.
 
 
 =item --codereview-username <Gerrit/JIRA username>
@@ -180,7 +178,7 @@ Uses <url-base> as the base URL for submodule git mirrors.
 
 For example:
 
-  --mirror user@machine:/foo/bar
+  --mirror user@machine:/foo/bar/
 
 ...will use the following as a mirror for qtbase:
 
@@ -198,82 +196,6 @@ use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptionsFromArray );
 use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
-
-my %PROTOCOLS = (
-    'http'      => 'http://git.gitorious.org/'     ,
-);
-
-my %GERRIT_REPOS = map { $_ => "qt/$_" } qw(
-    qt3d
-    qt5
-    qtactiveqt
-    qtandroidextras
-    qtbase
-    qtconnectivity
-    qtdeclarative
-    qtdoc
-    qtdocgallery
-    qtenginio
-    qtfeedback
-    qtgraphicaleffects
-    qtimageformats
-    qtjsondb
-    qtlocation
-    qtmacextras
-    qtmultimedia
-    qtpim
-    qtqa
-    qtquick1
-    qtquickcontrols
-    qtrepotools
-    qtscript
-    qtsensors
-    qtserialport
-    qtsvg
-    qtsystems
-    qttools
-    qttranslations
-    qtwayland
-    qtwebchannel
-    qtwebkit
-    qtwebkit-examples
-    qtwebsockets
-    qtwinextras
-    qtx11extras
-    qtxmlpatterns
-);
-
-my @DEFAULT_REPOS = qw(
-    qtactiveqt
-    qtandroidextras
-    qtbase
-    qtconnectivity
-    qtdeclarative
-    qtdoc
-    qtenginio
-    qtgraphicaleffects
-    qtimageformats
-    qtmacextras
-    qtmultimedia
-    qtqa
-    qtquick1
-    qtquickcontrols
-    qtlocation
-    qtrepotools
-    qtscript
-    qtsensors
-    qtserialport
-    qtsvg
-    qttools
-    qttranslations
-    qtwebchannel
-    qtwebsockets
-    qtwebkit
-    qtwebkit-examples
-    qtwinextras
-    qtx11extras
-    qtxmlpatterns
-);
 
 my $GERRIT_SSH_BASE
     = 'ssh://@USER@codereview.qt-project.org@PORT@/';
@@ -317,20 +239,21 @@ sub parse_arguments
 
     %{$self} = (%{$self},
         'alternates'          => "",
+        'branch'              => 0,
         'codereview-username' => "",
         'detach-alternates'   => 0 ,
         'force'               => 0 ,
         'force-hooks'         => 0 ,
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
-        'protocol'            => "",
         'update'              => 1 ,
         'webkit'              => 1 ,
-        'module-subset'       => join(",", @DEFAULT_REPOS),
+        'module-subset'       => "default",
     );
 
     GetOptionsFromArray(\@args,
         'alternates=s'      =>  \$self->{qw{ alternates        }},
+        'branch'            =>  \$self->{qw{ branch            }},
         'codereview-username=s' => \$self->{qw{ codereview-username }},
         'copy-objects'      =>  \$self->{qw{ detach-alternates }},
         'force|f'           =>  \$self->{qw{ force             }},
@@ -343,7 +266,6 @@ sub parse_arguments
         'module-subset=s'   =>  \$self->{qw{ module-subset     }},
 
         'help|?'            =>  sub { pod2usage(1);               },
-        'http'              =>  sub { $self->{protocol} = 'http'; },
 
         'berlin' => sub {
             $self->{'mirror-url'}        = $BER_MIRROR_URL_BASE;
@@ -356,12 +278,9 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    if ($self->{'module-subset'} eq "all") {
-        $self->{'module-subset'} = "";
-    } else {
-        $self->{'module-subset'} = {
-            map { $_ => 1 } split(qr{,}, $self->{'module-subset'})
-        };
+    $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
+    if (!$self->{webkit}) {
+        push @{$self->{'module-subset'}}, "-qtwebkit", "-qtwebkit-examples";
     }
 
     return;
@@ -373,16 +292,7 @@ sub check_if_already_initialized
 
     # We consider the repo as `initialized' if submodule.qtbase.url is set
     if (qx(git config --get submodule.qtbase.url)) {
-        if ($self->{force}) {
-            my @configresult = qx(git config -l);
-            foreach (@configresult) {
-                # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-                if (/(submodule\.[^.=]+)\.url=.*/) {
-                    $self->exe('git', 'config', '--remove-section', $1);
-                }
-            }
-        }
-        else {
+        if (!$self->{force}) {
             exit 0 if ($self->{quiet});
             print "Will not reinitialize already initialized repository (use -f to force)!\n";
             exit 1;
@@ -394,11 +304,10 @@ sub check_if_already_initialized
 
 sub git_submodule_init
 {
-    my ($self) = @_;
+    my ($self, @init_args) = @_;
 
-    my @init_args;
     if ($self->{quiet}) {
-        push @init_args, '--quiet';
+        unshift @init_args, '--quiet';
     }
     $self->exe('git', 'submodule', 'init', @init_args);
 
@@ -410,75 +319,98 @@ sub git_submodule_init
     return;
 }
 
-sub git_disable_webkit_submodule
-{
-    my ($self) = @_;
-
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit');
-    $self->exe('git', 'config', '--remove', 'submodule.qtwebkit-examples');
-
-    return;
-}
-
-sub git_prune_submodules
-{
-    my ($self) = @_;
-
-    my @configresult = qx(git config -l);
-    foreach my $line (@configresult) {
-        if ($line =~ /submodule\.([^.=]+)\.url=/) {
-            my $module_name = $1;
-            if (!$self->{'module-subset'}{$module_name}) {
-                $self->exe('git', 'config', '--remove', "submodule.$module_name");
-            }
-        }
-    }
-}
-
-sub git_set_submodule_config
-{
-    my ($self) = @_;
-
-    my @configresult          = qx(git config -l);
-    my $protocol              = $self->{protocol};
-    my $url_base_for_protocol = $PROTOCOLS{$protocol};
-
-    foreach my $line (@configresult) {
-        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
-        next if ($line !~ /submodule\.([^.=]+)\.url=(.*)/);
-
-        my $key   = $1;
-        my $value = $2;
-
-        if ($protocol) {
-                # rewrite URL to chosen protocol
-                $value =~ s,^git://gitorious\.org/,$url_base_for_protocol,;
-        }
-
-        $self->exe('git', 'config', "submodule.$key.url", $value);
-
-        if ($self->{'ignore-submodules'}) {
-            $self->exe('git', 'config', "submodule.$key.ignore", 'all');
-        }
-    }
-
-    return;
-}
-
 sub git_clone_all_submodules
 {
-    my ($self) = @_;
+    my ($self, $my_repo_base, $co_branch, @subset) = @_;
+
+    my %subdirs = ();
+    my %subbranches = ();
+    my %subbases = ();
+    my %subinits = ();
+    my @submodconfig = qx(git config -l -f .gitmodules);
+    foreach my $line (@submodconfig) {
+        # Example line: submodule.qtqa.url=../qtqa.git
+        next if ($line !~ /^submodule\.([^.=]+)\.([^.=]+)=(.*)$/);
+        if ($2 eq "path") {
+            $subdirs{$1} = $3;
+        } elsif ($2 eq "branch") {
+            $subbranches{$1} = $3;
+        } elsif ($2 eq "url") {
+            my ($mod, $base) = ($1, $3);
+            next if ($base !~ /^\.\.\//);
+            $base = $my_repo_base.'/'.$base;
+            while ($base =~ s,/(?!\.\./)[^/]+/\.\./,/,g) {}
+            $subbases{$mod} = $base;
+        } elsif ($2 eq "update") {
+            push @subset, '-'.$1 if ($3 eq 'ignore');
+        } elsif ($2 eq "initrepo") {
+            $subinits{$1} = ($3 eq "yes" or $3 eq "true");
+        }
+    }
+
+    my %include = ();
+    foreach my $mod (@subset) {
+        if ($mod eq "all") {
+            map { $include{$_} = 1; } keys %subbases;
+        } elsif ($mod eq "default") {
+            map { $include{$_} = 1; } grep { $subinits{$_} } keys %subbases;
+        } elsif ($mod =~ s/^-//) {
+            delete $include{$mod};
+        } else {
+            $include{$mod} = 1;
+        }
+    }
+
+    my @modules = sort keys %include;
+
+    $self->git_submodule_init(map { $subdirs{$_} } @modules);
 
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
-        if ($line =~ /submodule\.([^.=]+)\.url=(.*)/) {
-            $self->git_clone_one_submodule($1, $2);
+        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+        next if ($line !~ /submodule\.([^.=]+)\.url=/);
+        my $module = $1;
+
+        if (!defined($include{$module})) {
+            $self->exe('git', 'config', '--remove-section', "submodule.$module");
+            next;
+        }
+
+        if ($self->{'ignore-submodules'}) {
+            $self->exe('git', 'config', "submodule.$module.ignore", 'all');
         }
     }
 
+    foreach my $module (@modules) {
+        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
+    }
+
     if ($self->{update}) {
-        $self->exe('git', 'submodule', 'update', '--recursive');
+        $self->exe('git', 'submodule', 'update', ($co_branch ? ('--remote', '--rebase') : ()));
+
+        foreach my $module (@modules) {
+            if (-f $module.'/.gitmodules') {
+                my $orig_cwd = getcwd();
+                chdir($module) or confess "chdir $module: $OS_ERROR";
+                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
+                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+            }
+        }
+    } elsif ($co_branch) {
+        foreach my $module (@modules) {
+            my $branch = $subbranches{$module};
+            die("No branch defined for submodule $module.\n") if (!defined($branch));
+            my $orig_cwd = getcwd();
+            chdir($module) or confess "chdir $module: $OS_ERROR";
+            my $br = qx(git rev-parse -q --verify $branch);
+            if (!$br) {
+                $self->exe('git', 'checkout', '-b', $branch, "origin/$branch");
+            } else {
+                $self->exe('git', 'checkout', $branch);
+            }
+            chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+        }
     }
 
     return;
@@ -486,35 +418,26 @@ sub git_clone_all_submodules
 
 sub git_add_remotes
 {
-    my ($self, $repo_basename) = @_;
+    my ($self, $gerrit_repo_basename) = @_;
 
-    my $gerrit_repo_basename = $GERRIT_REPOS{$repo_basename};
-    if ($gerrit_repo_basename) {
-        my $gerrit_repo_url;
-
-        # If given a username, make a "verbose" remote.
-        # Otherwise, rely on proper SSH configuration.
-        if ($self->{'codereview-username'}) {
-            $gerrit_repo_url = $GERRIT_SSH_BASE;
-            $gerrit_repo_url =~ s,\@USER\@,$self->{'codereview-username'}\@,;
-            $gerrit_repo_url =~ s,\@PORT\@,:29418,;
-        }
-        else {
-            $gerrit_repo_url = $GERRIT_SSH_BASE;
-            $gerrit_repo_url =~ s,\@[^\@]+\@,,g;
-        }
-
-        $gerrit_repo_url .= $gerrit_repo_basename;
-        $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
-        $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
+    my $gerrit_repo_url = $GERRIT_SSH_BASE;
+    # If given a username, make a "verbose" remote.
+    # Otherwise, rely on proper SSH configuration.
+    if ($self->{'codereview-username'}) {
+        $gerrit_repo_url =~ s,\@USER\@,$self->{'codereview-username'}\@,;
+        $gerrit_repo_url =~ s,\@PORT\@,:29418,;
+    } else {
+        $gerrit_repo_url =~ s,\@[^\@]+\@,,g;
     }
 
-    return;
+    $gerrit_repo_url .= $gerrit_repo_basename;
+    $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
+    $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
 }
 
 sub git_clone_one_submodule
 {
-    my ($self, $submodule, $url) = @_;
+    my ($self, $submodule, $repo_basename) = @_;
 
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
@@ -525,7 +448,7 @@ sub git_clone_one_submodule
 
     if ($alternates) {
         # alternates is a qt5 repo, so the submodule will be under that.
-        if (-d "$alternates/$submodule") {
+        if (-e "$alternates/$submodule/.git") {
             @reference_args = ('--reference', "$alternates/$submodule");
         }
         else {
@@ -533,10 +456,10 @@ sub git_clone_one_submodule
         }
     }
 
+    my $url = $self->{'base-url'}.$repo_basename;
     my $mirror;
     if ($mirror_url) {
-        $mirror = $mirror_url."qt/$submodule";
-        $mirror .= ".git" unless (-d $mirror); # Support local disk mirror
+        $mirror = $mirror_url.$repo_basename;
     }
 
     if ($mirror) {
@@ -548,11 +471,12 @@ sub git_clone_one_submodule
         }
     }
 
-    my $do_clone = (! -d "$submodule/.git");
+    my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
         $self->exe('git', 'clone', @reference_args, ($mirror ? $mirror : $url), $submodule);
     }
 
+    my $orig_cwd = getcwd();
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
     $self->exe('git', 'config', 'remote.origin.url', $url);
@@ -561,7 +485,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
-    if (!$do_clone) {
+    if (!$do_clone && $self->{update}) {
         $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
     }
 
@@ -570,7 +494,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'commit.template', $template);
     }
 
-    $self->git_add_remotes($submodule);
+    $self->git_add_remotes($repo_basename);
 
     if ($self->{'detach-alternates'}) {
         $self->exe('git', 'repack', '-a');
@@ -581,7 +505,7 @@ sub git_clone_one_submodule
         }
     }
 
-    chdir("..") or confess "cd ..: $OS_ERROR";
+    chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
 
     return;
 }
@@ -606,6 +530,8 @@ sub git_install_hooks
 
     return if (!-d 'qtrepotools/git-hooks');
 
+    # Force C locale as git submodule returns the localized string "Entering"
+    local $ENV{LC_ALL} = 'C';
     chomp(my @modules = `git submodule foreach :`);
     push @modules, "";
     for my $module (@modules) {
@@ -623,21 +549,16 @@ sub run
     my ($self) = @_;
 
     $self->check_if_already_initialized;
-    $self->git_submodule_init;
 
-    if (!$self->{webkit}) {
-        $self->git_disable_webkit_submodule;
-    }
+    chomp(my $url = `git config remote.origin.url`);
+    die("Have no origin remote.\n") if (!$url);
+    $url =~ s,\.git$,,;
+    $url =~ s,qt/qt5$,,;
+    $self->{'base-url'} = $url;
 
-    if ($self->{'module-subset'}) {
-        $self->git_prune_submodules;
-    }
+    $self->git_clone_all_submodules('qt/qt5', $self->{branch}, @{$self->{'module-subset'}});
 
-    $self->git_set_submodule_config;
-
-    $self->git_clone_all_submodules;
-
-    $self->git_add_remotes('qt5');
+    $self->git_add_remotes('qt/qt5');
 
     $self->git_install_hooks;
 
