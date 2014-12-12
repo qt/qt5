@@ -387,7 +387,9 @@ sub git_clone_all_submodules
     }
 
     if ($self->{update}) {
-        $self->exe('git', 'submodule', 'update', ($co_branch ? ('--remote', '--rebase') : ()));
+        my @cmd = ('git', 'submodule', 'update');
+        push @cmd, '--remote', '--rebase' if ($co_branch);
+        $self->exe(@cmd);
 
         foreach my $module (@modules) {
             if (-f $module.'/.gitmodules') {
