@@ -386,20 +386,7 @@ sub git_clone_all_submodules
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
     }
 
-    if ($self->{update}) {
-        my @cmd = ('git', 'submodule', 'update');
-        push @cmd, '--remote', '--rebase' if ($co_branch);
-        $self->exe(@cmd);
-
-        foreach my $module (@modules) {
-            if (-f $module.'/.gitmodules') {
-                my $orig_cwd = getcwd();
-                chdir($module) or confess "chdir $module: $OS_ERROR";
-                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
-                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
-            }
-        }
-    } elsif ($co_branch) {
+    if ($co_branch) {
         foreach my $module (@modules) {
             my $branch = $subbranches{$module};
             die("No branch defined for submodule $module.\n") if (!defined($branch));
@@ -412,6 +399,20 @@ sub git_clone_all_submodules
                 $self->exe('git', 'checkout', $branch);
             }
             chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+        }
+    }
+    if ($self->{update}) {
+        my @cmd = ('git', 'submodule', 'update');
+        push @cmd, '--remote', '--rebase' if ($co_branch);
+        $self->exe(@cmd);
+
+        foreach my $module (@modules) {
+            if (-f $module.'/.gitmodules') {
+                my $orig_cwd = getcwd();
+                chdir($module) or confess "chdir $module: $OS_ERROR";
+                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
+                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+            }
         }
     }
 
