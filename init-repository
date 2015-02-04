@@ -476,7 +476,8 @@ sub git_clone_one_submodule
 
     my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
-        $self->exe('git', 'clone', @reference_args, ($mirror ? $mirror : $url), $submodule);
+        $self->exe('git', 'clone', '--no-checkout', @reference_args,
+                   ($mirror ? $mirror : $url), $submodule);
     }
 
     my $orig_cwd = getcwd();
