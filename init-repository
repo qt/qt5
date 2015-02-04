@@ -402,7 +402,7 @@ sub git_clone_all_submodules
         }
     }
     if ($self->{update}) {
-        my @cmd = ('git', 'submodule', 'update');
+        my @cmd = ('git', 'submodule', 'update', '--no-fetch');
         push @cmd, '--remote', '--rebase' if ($co_branch);
         $self->exe(@cmd);
 
