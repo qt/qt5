@@ -482,14 +482,23 @@ sub git_clone_one_submodule
     my $orig_cwd = getcwd();
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
-    $self->exe('git', 'config', 'remote.origin.url', $url);
     if ($mirror) {
+        # This is only for the user's convenience - we make no use of it.
         $self->exe('git', 'config', 'remote.mirror.url', $mirror);
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
     if (!$do_clone && $self->{update}) {
-        $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
+        # If we didn't clone, fetch from the right location. We always update
+        # the origin remote, so that submodule update --remote works.
+        $self->exe('git', 'config', 'remote.origin.url', ($mirror ? $mirror : $url));
+        $self->exe('git', 'fetch', 'origin');
+    }
+
+    if (!($do_clone || $self->{update}) || $mirror) {
+        # Leave the origin configured to the canonical URL. It's already correct
+        # if we cloned/fetched without a mirror; otherwise it may be anything.
+        $self->exe('git', 'config', 'remote.origin.url', $url);
     }
 
     my $template = getcwd()."/../.commit-template";
