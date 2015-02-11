@@ -173,3 +173,8 @@
 	url = ../qtwebengine.git
 	branch = dev
 	initrepo = true
+[submodule "qtcanvas3d"]
+	path = qtcanvas3d
+	url = ../qtcanvas3d.git
+	branch = dev
+	initrepo = true
