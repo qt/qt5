@@ -386,18 +386,7 @@ sub git_clone_all_submodules
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
     }
 
-    if ($self->{update}) {
-        $self->exe('git', 'submodule', 'update', ($co_branch ? ('--remote', '--rebase') : ()));
-
-        foreach my $module (@modules) {
-            if (-f $module.'/.gitmodules') {
-                my $orig_cwd = getcwd();
-                chdir($module) or confess "chdir $module: $OS_ERROR";
-                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
-                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
-            }
-        }
-    } elsif ($co_branch) {
+    if ($co_branch) {
         foreach my $module (@modules) {
             my $branch = $subbranches{$module};
             die("No branch defined for submodule $module.\n") if (!defined($branch));
@@ -410,6 +399,20 @@ sub git_clone_all_submodules
                 $self->exe('git', 'checkout', $branch);
             }
             chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+        }
+    }
+    if ($self->{update}) {
+        my @cmd = ('git', 'submodule', 'update', '--no-fetch');
+        push @cmd, '--remote', '--rebase' if ($co_branch);
+        $self->exe(@cmd);
+
+        foreach my $module (@modules) {
+            if (-f $module.'/.gitmodules') {
+                my $orig_cwd = getcwd();
+                chdir($module) or confess "chdir $module: $OS_ERROR";
+                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
+                chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
+            }
         }
     }
 
@@ -473,20 +476,30 @@ sub git_clone_one_submodule
 
     my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
-        $self->exe('git', 'clone', @reference_args, ($mirror ? $mirror : $url), $submodule);
+        $self->exe('git', 'clone', '--no-checkout', @reference_args,
+                   ($mirror ? $mirror : $url), $submodule);
     }
 
     my $orig_cwd = getcwd();
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
-    $self->exe('git', 'config', 'remote.origin.url', $url);
     if ($mirror) {
+        # This is only for the user's convenience - we make no use of it.
         $self->exe('git', 'config', 'remote.mirror.url', $mirror);
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
     if (!$do_clone && $self->{update}) {
-        $self->exe('git', 'fetch', ($mirror ? $mirror : $url));
+        # If we didn't clone, fetch from the right location. We always update
+        # the origin remote, so that submodule update --remote works.
+        $self->exe('git', 'config', 'remote.origin.url', ($mirror ? $mirror : $url));
+        $self->exe('git', 'fetch', 'origin');
+    }
+
+    if (!($do_clone || $self->{update}) || $mirror) {
+        # Leave the origin configured to the canonical URL. It's already correct
+        # if we cloned/fetched without a mirror; otherwise it may be anything.
+        $self->exe('git', 'config', 'remote.origin.url', $url);
     }
 
     my $template = getcwd()."/../.commit-template";
