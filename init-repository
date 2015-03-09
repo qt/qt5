@@ -375,7 +375,7 @@ sub git_clone_all_submodules
     }
 
     foreach my $module (@modules) {
-        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module});
+        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module}, $subbranches{$module});
     }
 
     if ($co_branch) {
@@ -432,7 +432,7 @@ sub git_add_remotes
 
 sub git_clone_one_submodule
 {
-    my ($self, $submodule, $repo_basename) = @_;
+    my ($self, $submodule, $repo_basename, $branch) = @_;
 
     my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
@@ -468,7 +468,8 @@ sub git_clone_one_submodule
 
     my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
-        $self->exe('git', 'clone', '--no-checkout', @reference_args,
+        push @reference_args, '--branch', $branch if ($branch);
+        $self->exe('git', 'clone', @reference_args,
                    ($mirror ? $mirror : $url), $submodule);
     }
 
