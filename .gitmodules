@@ -108,6 +108,7 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
+	initrepo = true
 [submodule "qtimageformats"]
 	path = qtimageformats
 	url = ../qtimageformats.git
