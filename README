@@ -14,7 +14,7 @@ HOW TO BUILD QT5
 
      For other platform specific requirements,
      please see section "Setting up your machine" on:
-     http://qt-project.org/wiki/Get_The_Source
+     http://wiki.qt.io/Get_The_Source
 
    Optional requirements
    ---------------------
@@ -119,9 +119,9 @@ HOW TO BUILD QT5
 
  Building Qt5 from git
  =====================
- See http://qt-project.org/wiki/Building-Qt-5-from-Git and README.git
+ See http://wiki.qt.io/Building_Qt_5_from_Git and README.git
  for more information.
- See http://qt-project.org/wiki/Qt-5 for the reference platforms.
+ See http://wiki.qt.io/Qt_5 for the reference platforms.
 
 
  Documentation
@@ -139,6 +139,6 @@ HOW TO BUILD QT5
  Running "qmake -query" will list the value of QT_INSTALL_DOCS.
 
  Information about Qt 5's documentation is located in qtbase/doc/README
- or in the following page: http://qt-project.org/wiki/Qt5DocumentationProject
+ or in the following page: http://wiki.qt.io/Qt5DocumentationProject
 
  Note: Building the documentation is only tested on desktop platforms.
