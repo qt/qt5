@@ -126,6 +126,10 @@
 	url = ../qtquickcontrols.git
 	branch = 5.6
 	initrepo = true
+[submodule "qtserialbus"]
+	path = qtserialbus
+	url = ../qtserialbus.git
+	branch = 5.6
 [submodule "qtserialport"]
 	path = qtserialport
 	url = ../qtserialport.git
