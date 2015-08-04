@@ -185,3 +185,8 @@
 	url = ../qtwebview.git
 	branch = 5.6
 	initrepo = true
+[submodule "qtquickcontrols2"]
+	path = qtquickcontrols2
+	url = ../qtquickcontrols2.git
+	branch = 5.6
+	initrepo = true
