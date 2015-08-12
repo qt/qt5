@@ -177,5 +177,5 @@
 [submodule "qtcanvas3d"]
 	path = qtcanvas3d
 	url = ../qtcanvas3d.git
-	branch = 5.5
+	branch = 5.6
 	initrepo = true
