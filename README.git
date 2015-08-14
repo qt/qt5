@@ -5,7 +5,7 @@ OBTAINING QT5 FROM GIT
  ========
 
  For a more in-depth description on how to build Qt5 from git,
- please see: http://qt-project.org/wiki/Building-Qt-5-from-Git
+ please see: http://wiki.qt.io/Building_Qt_5_from_Git
 
 
  Get The Submodules
@@ -52,4 +52,4 @@ OBTAINING QT5 FROM GIT
  ================================
 
  For more information on how to develop and contribute to Qt, please see:
- http://qt-project.org/wiki/Category:Developing_Qt
+ http://wiki.qt.io/Category:Developing_Qt
