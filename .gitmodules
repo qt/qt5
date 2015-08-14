@@ -118,7 +118,6 @@
 	path = qtquick1
 	url = ../qtquick1.git
 	branch = 5.6
-	initrepo = true
 [submodule "qtgraphicaleffects"]
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
