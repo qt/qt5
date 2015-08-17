@@ -180,7 +180,7 @@ missing modules will fall back to the canonical URLs.
 
 use Carp         qw( confess             );
 use English      qw( -no_match_vars      );
-use Getopt::Long qw( GetOptionsFromArray );
+use Getopt::Long qw( GetOptions          );
 use Pod::Usage   qw( pod2usage           );
 use Cwd          qw( getcwd              );
 
@@ -222,7 +222,7 @@ sub exe
 
 sub parse_arguments
 {
-    my ($self, @args) = @_;
+    my ($self) = @_;
 
     %{$self} = (%{$self},
         'alternates'          => "",
@@ -237,7 +237,7 @@ sub parse_arguments
         'module-subset'       => "default",
     );
 
-    GetOptionsFromArray(\@args,
+    GetOptions(
         'alternates=s'      =>  \$self->{qw{ alternates        }},
         'branch'            =>  \$self->{qw{ branch            }},
         'codereview-username=s' => \$self->{qw{ codereview-username }},
@@ -563,5 +563,5 @@ sub run
 
 #==============================================================================
 
-Qt::InitRepository->new(@ARGV)->run if (!caller);
+Qt::InitRepository->new()->run if (!caller);
 1;
