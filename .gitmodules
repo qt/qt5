@@ -176,3 +176,8 @@
 	url = ../qtcanvas3d.git
 	branch = 5.6
 	initrepo = true
+[submodule "qtwebview"]
+	path = qtwebview
+	url = ../qtwebview.git
+	branch = 5.6
+	initrepo = true

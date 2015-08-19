@@ -58,6 +58,7 @@ ANDROID_EXTRAS =
 android: ANDROID_EXTRAS = qtandroidextras
 
 addModule(qtbase)
+addModule(qtwebview, qtdeclarative, qtwebengine)
 addModule(qtandroidextras, qtbase)
 addModule(qtmacextras, qtbase)
 addModule(qtx11extras, qtbase)
