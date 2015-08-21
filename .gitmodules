@@ -57,12 +57,10 @@
 	path = qtwebkit
 	url = ../qtwebkit.git
 	branch = 5.6
-	initrepo = true
 [submodule "qtwebkit-examples"]
 	path = qtwebkit-examples
 	url = ../qtwebkit-examples.git
 	branch = 5.6
-	initrepo = true
 [submodule "qtqa"]
 	path = qtqa
 	url = ../qtqa.git
