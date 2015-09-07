@@ -190,3 +190,7 @@
 	url = ../qtquickcontrols2.git
 	branch = 5.6
 	initrepo = true
+[submodule "qtpurchasing"]
+	path = qtpurchasing
+	url = ../qtpurchasing.git
+	branch = 5.6
