@@ -79,12 +79,6 @@ B<Module options:>
 
 =over
 
-=item --no-webkit
-
-Skip webkit and webkit examples submodules.
-It may be desirable to skip these modules due to the large size of the webkit
-git repository.
-
 =item --module-subset=<module1>,<module2>...
 
 Only initialize the specified subset of modules given as the argument. Specified
@@ -239,7 +233,6 @@ sub parse_arguments
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
         'update'              => 1 ,
-        'webkit'              => 1 ,
         'module-subset'       => "default",
     );
 
@@ -254,7 +247,6 @@ sub parse_arguments
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'quiet'             =>  \$self->{qw{ quiet             }},
         'update!'           =>  \$self->{qw{ update            }},
-        'webkit!'           =>  \$self->{qw{ webkit            }},
         'module-subset=s'   =>  \$self->{qw{ module-subset     }},
 
         'help|?'            =>  sub { pod2usage(1);               },
@@ -271,9 +263,6 @@ sub parse_arguments
     $self->{'mirror-url'} =~ s{//+$}{/};
 
     $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
-    if (!$self->{webkit}) {
-        push @{$self->{'module-subset'}}, "-qtwebkit", "-qtwebkit-examples";
-    }
 
     return;
 }

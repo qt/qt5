@@ -57,12 +57,10 @@
 	path = qtwebkit
 	url = ../qtwebkit.git
 	branch = dev
-	initrepo = true
 [submodule "qtwebkit-examples"]
 	path = qtwebkit-examples
 	url = ../qtwebkit-examples.git
 	branch = dev
-	initrepo = true
 [submodule "qtqa"]
 	path = qtqa
 	url = ../qtqa.git
@@ -118,7 +116,6 @@
 	path = qtquick1
 	url = ../qtquick1.git
 	branch = dev
-	initrepo = true
 [submodule "qtgraphicaleffects"]
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
@@ -129,6 +126,10 @@
 	url = ../qtquickcontrols.git
 	branch = dev
 	initrepo = true
+[submodule "qtserialbus"]
+	path = qtserialbus
+	url = ../qtserialbus.git
+	branch = dev
 [submodule "qtserialport"]
 	path = qtserialport
 	url = ../qtserialport.git
@@ -177,5 +178,15 @@
 [submodule "qtcanvas3d"]
 	path = qtcanvas3d
 	url = ../qtcanvas3d.git
+	branch = dev
+	initrepo = true
+[submodule "qtwebview"]
+	path = qtwebview
+	url = ../qtwebview.git
+	branch = dev
+	initrepo = true
+[submodule "qtquickcontrols2"]
+	path = qtquickcontrols2
+	url = ../qtquickcontrols2.git
 	branch = dev
 	initrepo = true
