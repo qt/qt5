@@ -48,7 +48,8 @@ init-repository - initialize the Qt5 repository and all submodules
   ./init-repository [options]
 
 This script may be run after an initial `git clone' of Qt5 in order to check
-out all submodules.
+out all submodules.  It fetches them from canonical URLs inferred from the
+clone's origin.
 
 
 =head1 OPTIONS
