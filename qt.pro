@@ -13,6 +13,12 @@ defineReplace(moduleName) {
 
 # Arguments: module name, [mandatory deps], [optional deps], [project file]
 defineTest(addModule) {
+    for(d, $$list($$2 $$3)): \
+        !contains(MODULES, $$d): \
+            error("'$$1' depends on not (yet) declared '$$d'.")
+    MODULES += $$1
+    export(MODULES)
+
     contains(QT_SKIP_MODULES, $$1): return(false)
     !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$1): return(false)
     mod = $$moduleName($$1)
