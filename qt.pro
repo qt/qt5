@@ -13,7 +13,14 @@ defineReplace(moduleName) {
 
 # Arguments: module name, [mandatory deps], [optional deps], [project file]
 defineTest(addModule) {
+    for(d, $$list($$2 $$3)): \
+        !contains(MODULES, $$d): \
+            error("'$$1' depends on not (yet) declared '$$d'.")
+    MODULES += $$1
+    export(MODULES)
+
     contains(QT_SKIP_MODULES, $$1): return(false)
+    !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$1): return(false)
     mod = $$moduleName($$1)
 
     isEmpty(4) {
@@ -58,41 +65,42 @@ ANDROID_EXTRAS =
 android: ANDROID_EXTRAS = qtandroidextras
 
 addModule(qtbase)
-addModule(qtwebview, qtdeclarative, qtwebengine)
 addModule(qtandroidextras, qtbase)
 addModule(qtmacextras, qtbase)
 addModule(qtx11extras, qtbase)
 addModule(qtsvg, qtbase)
 addModule(qtxmlpatterns, qtbase)
 addModule(qtdeclarative, qtbase, qtsvg qtxmlpatterns)
+addModule(qtgraphicaleffects, qtdeclarative)
 addModule(qtquickcontrols, qtdeclarative, qtgraphicaleffects)
 addModule(qtquickcontrols2, qtquickcontrols)
 addModule(qtmultimedia, qtbase, qtdeclarative)
 addModule(qtwinextras, qtbase, qtdeclarative qtmultimedia)
 addModule(qtactiveqt, qtbase)
 addModule(qtsystems, qtbase, qtdeclarative)
-addModule(qtlocation, qtbase, qtdeclarative qtquickcontrols qtsystems)
 addModule(qtsensors, qtbase, qtdeclarative)
 addModule(qtconnectivity, qtbase $$ANDROID_EXTRAS, qtdeclarative)
 addModule(qtfeedback, qtdeclarative, qtmultimedia)
 addModule(qtpim, qtdeclarative)
 addModule(qtwebsockets, qtbase, qtdeclarative)
 addModule(qtwebchannel, qtbase, qtdeclarative qtwebsockets)
+addModule(qtserialport, qtbase)
+addModule(qtlocation, qtbase, qtdeclarative qtquickcontrols qtserialport qtsystems)
 addModule(qtwebkit, qtbase, qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns, WebKit.pro)
 addModule(qttools, qtbase, qtdeclarative qtactiveqt qtwebkit)
 addModule(qtwebkit-examples, qtwebkit qttools)
 addModule(qtimageformats, qtbase)
 addModule(qt3d, qtdeclarative qtimageformats)
 addModule(qtcanvas3d, qtdeclarative)
-addModule(qtgraphicaleffects, qtdeclarative)
 addModule(qtscript, qtbase, qttools)
 addModule(qtquick1, qtscript, qtsvg qtxmlpatterns)
 addModule(qtdocgallery, qtdeclarative)
 addModule(qtwayland, qtbase, qtdeclarative)
-addModule(qtserialbus, qtbase)
-addModule(qtserialport, qtbase)
+addModule(qtserialbus, qtserialport)
 addModule(qtenginio, qtdeclarative)
 addModule(qtwebengine, qtquickcontrols qtwebchannel, qtlocation)
+addModule(qtwebview, qtdeclarative, qtwebengine)
+addModule(qtpurchasing, qtbase, qtdeclarative)
 addModule(qttranslations, qttools)
 addModule(qtdoc, qtdeclarative)
 addModule(qtqa, qtbase)

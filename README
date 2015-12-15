@@ -39,11 +39,24 @@ HOW TO BUILD QT5
      The "bin" folder of the ICU installation should be appended to the PATH
      environment variable in order to for the DLLs to be found at run-time.
 
+   Licensing:
+   ----------
+
+    Opensource users:
+
+        <source_package> = qt-everywhere-opensource-src-<version>
+        <license>        = -opensource
+
+    Commercial users:
+
+        <source_package> = qt-everywhere-enterprise-src-<version>
+        <license>        = -commercial
+
    Linux, Mac:
    -----------
 
-     cd <path>/qt-everywhere-opensource-src-<version>
-     ./configure -prefix $PWD/qtbase -opensource -nomake tests
+     cd <path>/<source_package>
+     ./configure -prefix $PWD/qtbase <license> -nomake tests
      make -j 4
 
    Windows:
@@ -55,8 +68,8 @@ HOW TO BUILD QT5
      * Python version 2.7 or later  [http://www.activestate.com/activepython/]
      * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
 
-     cd <path>\qt-everywhere-opensource-src-<version>
-     configure -prefix %CD%\qtbase -opensource -nomake tests
+     cd <path>\<source_package>
+     configure -prefix %CD%\qtbase <license> -nomake tests
      nmake // jom // mingw32-make
 
      To accelerate the bootstrap of qmake with MSVC, it may be useful to pass
@@ -81,13 +94,13 @@ HOW TO BUILD QT5
  Example for a release build:
  (adjust the `-jN' parameter as appropriate for your system)
 
-   ./configure -prefix $PWD/qtbase -opensource
+   ./configure -prefix $PWD/qtbase <license>
    make -j4
 
  Example for a developer build:
  (enables more autotests, builds debug version of libraries, ...)
 
-   ./configure -developer-build -opensource
+   ./configure -developer-build <license>
    make -j4
 
  See output of `./configure -help' for documentation on various options to
@@ -100,7 +113,7 @@ HOW TO BUILD QT5
  a `make module-<foo>'.  For example, to build only qtscript and qtwebkit,
  and the modules they depend on:
 
-   ./configure -prefix $PWD/qtbase -opensource
+   ./configure -prefix $PWD/qtbase <license>
    make -j4 module-qtscript module-qtwebkit
 
  This can save a lot of time if you are only interested in a subset of Qt5.
