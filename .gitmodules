@@ -194,3 +194,4 @@
 	path = qtpurchasing
 	url = ../qtpurchasing.git
 	branch = dev
+	initrepo = true
