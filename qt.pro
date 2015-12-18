@@ -7,97 +7,68 @@ CONFIG -= build_pass   # unhack, as it confuses Qt Creator
 
 TEMPLATE      = subdirs
 
-defineReplace(moduleName) {
-    return(module_$$replace(1, -, _))
-}
-
-# Arguments: module name, [mandatory deps], [optional deps], [project file]
-defineTest(addModule) {
-    for(d, $$list($$2 $$3)): \
-        !contains(MODULES, $$d): \
-            error("'$$1' depends on not (yet) declared '$$d'.")
-    MODULES += $$1
-    export(MODULES)
-
-    contains(QT_SKIP_MODULES, $$1): return(false)
-    !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$1): return(false)
-    mod = $$moduleName($$1)
-
-    isEmpty(4) {
-        !exists($$1/$${1}.pro): return(false)
-        $${mod}.subdir = $$1
-        export($${mod}.subdir)
+# Extract submodules from .gitmodules.
+lines = $$cat(.gitmodules, lines)
+for (line, lines) {
+    mod = $$replace(line, "^\\[submodule \"([^\"]+)\"\\]$", \\1)
+    !equals(mod, $$line) {
+        module = $$mod
+        modules += $$mod
     } else {
-        !exists($$1/$${4}): return(false)
-        $${mod}.file = $$1/$$4
+        prop = $$replace(line, "^$$escape_expand(\\t)([^ =]+) *=.*$", \\1)
+        !equals(prop, $$line) {
+            val = $$replace(line, "^[^=]+= *", )
+            module.$${module}.$$prop = $$split(val)
+        } else {
+            error("Malformed line in .gitmodules: $$line")
+        }
+    }
+}
+QMAKE_INTERNAL_INCLUDED_FILES += $$PWD/.gitmodules
+
+modules = $$sort_depends(modules, module., .depends .recommends)
+modules = $$reverse(modules)
+for (mod, modules) {
+    equals(module.$${mod}.qt, false): \
+        next()
+
+    deps = $$eval(module.$${mod}.depends)
+    recs = $$eval(module.$${mod}.recommends)
+    for (d, $$list($$deps $$recs)): \
+        !contains(modules, $$d): \
+            error("'$$mod' depends on undeclared '$$d'.")
+
+    contains(QT_SKIP_MODULES, $$mod): \
+        next()
+    !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$mod): \
+        next()
+
+    project = $$eval(module.$${mod}.project)
+    isEmpty(project) {
+        !exists($$mod/$${mod}.pro): \
+            next()
+        $${mod}.subdir = $$mod
+    } else {
+        !exists($$mod/$$project): \
+            next()
+        $${mod}.file = $$mod/$$project
         $${mod}.makefile = Makefile
-        export($${mod}.file)
-        export($${mod}.makefile)
     }
+    $${mod}.target = module-$$mod
 
-    for(d, 2) {
-        dn = $$moduleName($$d)
-        !contains(SUBDIRS, $$dn): \
-            return(false)
-        $${mod}.depends += $$dn
+    for (d, deps) {
+        !contains(SUBDIRS, $$d) {
+            $${mod}.target =
+            break()
+        }
+        $${mod}.depends += $$d
     }
-    for(d, 3) {
-        dn = $$moduleName($$d)
-        contains(SUBDIRS, $$dn): \
-            $${mod}.depends += $$dn
+    isEmpty($${mod}.target): \
+        next()
+    for (d, recs) {
+        contains(SUBDIRS, $$d): \
+            $${mod}.depends += $$d
     }
-    !isEmpty($${mod}.depends): \
-        export($${mod}.depends)
-
-    $${mod}.target = module-$$1
-    export($${mod}.target)
 
     SUBDIRS += $$mod
-    export(SUBDIRS)
-    return(true)
 }
-
-# only qtbase is required to exist. The others may not - but it is the
-# users responsibility to ensure that all needed dependencies exist, or
-# it may not build.
-
-addModule(qtbase)
-addModule(qtandroidextras, qtbase)
-addModule(qtmacextras, qtbase)
-addModule(qtx11extras, qtbase)
-addModule(qtsvg, qtbase)
-addModule(qtxmlpatterns, qtbase)
-addModule(qtdeclarative, qtbase, qtsvg qtxmlpatterns)
-addModule(qtgraphicaleffects, qtdeclarative)
-addModule(qtquickcontrols, qtdeclarative, qtgraphicaleffects)
-addModule(qtquickcontrols2, qtquickcontrols)
-addModule(qtmultimedia, qtbase, qtdeclarative)
-addModule(qtwinextras, qtbase, qtdeclarative qtmultimedia)
-addModule(qtactiveqt, qtbase)
-addModule(qtsystems, qtbase, qtdeclarative)
-addModule(qtsensors, qtbase, qtdeclarative)
-addModule(qtconnectivity, qtbase, qtdeclarative qtandroidextras)
-addModule(qtfeedback, qtdeclarative, qtmultimedia)
-addModule(qtpim, qtdeclarative)
-addModule(qtwebsockets, qtbase, qtdeclarative)
-addModule(qtwebchannel, qtbase, qtdeclarative qtwebsockets)
-addModule(qtserialport, qtbase)
-addModule(qtlocation, qtbase, qtdeclarative qtquickcontrols qtserialport qtsystems)
-addModule(qtwebkit, qtbase, qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns, WebKit.pro)
-addModule(qttools, qtbase, qtdeclarative qtactiveqt qtwebkit)
-addModule(qtwebkit-examples, qtwebkit qttools)
-addModule(qtimageformats, qtbase)
-addModule(qt3d, qtdeclarative qtimageformats)
-addModule(qtcanvas3d, qtdeclarative)
-addModule(qtscript, qtbase, qttools)
-addModule(qtquick1, qtscript, qtsvg qtxmlpatterns)
-addModule(qtdocgallery, qtdeclarative)
-addModule(qtwayland, qtbase, qtdeclarative)
-addModule(qtserialbus, qtserialport)
-addModule(qtenginio, qtdeclarative)
-addModule(qtwebengine, qtquickcontrols qtwebchannel, qtlocation)
-addModule(qtwebview, qtdeclarative, qtwebengine)
-addModule(qtpurchasing, qtbase, qtdeclarative)
-addModule(qttranslations, qttools)
-addModule(qtdoc, qtdeclarative)
-addModule(qtqa, qtbase)

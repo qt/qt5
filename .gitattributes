@@ -1,7 +1,6 @@
 .tag                    export-subst
 .gitignore              export-ignore
 .gitattributes          export-ignore
-.gitmodules             export-ignore
 .commit-template        export-ignore
 init-repository         export-ignore
 README.git              export-ignore
