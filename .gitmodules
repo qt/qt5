@@ -260,3 +260,24 @@
 	url = ../qtpurchasing.git
 	branch = dev
 	initrepo = true
+[submodule "qtcharts"]
+	depends = qtbase
+	recommends = qtdeclarative qtmultimedia
+	path = qtcharts
+	url = ../qtcharts.git
+	branch = dev
+	initrepo = true
+[submodule "qtdatavis3d"]
+	depends = qtbase
+	recommends = qtdeclarative
+	path = qtdatavis3d
+	url = ../qtdatavis3d.git
+	branch = dev
+	initrepo = true
+[submodule "qtvirtualkeyboard"]
+	depends = qtbase qtdeclarative qtsvg
+	recommends = qtmultimedia qtquickcontrols
+	path = qtvirtualkeyboard
+	url = ../qtvirtualkeyboard.git
+	branch = dev
+	initrepo = true
