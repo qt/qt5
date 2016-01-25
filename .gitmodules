@@ -1,66 +1,66 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtsvg"]
 	depends = qtbase
 	path = qtsvg
 	url = ../qtsvg.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtdeclarative"]
 	depends = qtbase
 	recommends = qtsvg qtxmlpatterns
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtactiveqt"]
 	depends = qtbase
 	path = qtactiveqt
 	url = ../qtactiveqt.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtscript"]
 	depends = qtbase
 	recommends = qttools
 	path = qtscript
 	url = ../qtscript.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
 	path = qtmultimedia
 	url = ../qtmultimedia.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qttools"]
 	depends = qtbase
 	recommends = qtdeclarative qtactiveqt qtwebkit
 	path = qttools
 	url = ../qttools.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtxmlpatterns"]
 	depends = qtbase
 	path = qtxmlpatterns
 	url = ../qtxmlpatterns.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qttranslations"]
 	depends = qttools
 	path = qttranslations
 	url = ../qttranslations.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative
 	path = qtdoc
 	url = ../qtdoc.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 	priority = 40
 [submodule "qtrepotools"]
@@ -94,14 +94,14 @@
 	recommends = qtdeclarative qtquickcontrols qtserialport qtsystems
 	path = qtlocation
 	url = ../qtlocation.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtsensors"]
 	depends = qtbase
 	recommends = qtdeclarative
 	path = qtsensors
 	url = ../qtsensors.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtsystems"]
 	depends = qtbase
@@ -130,26 +130,26 @@
 	recommends = qtdeclarative qtandroidextras
 	path = qtconnectivity
 	url = ../qtconnectivity.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtwayland"]
 	depends = qtbase
 	recommends = qtdeclarative
 	path = qtwayland
 	url = ../qtwayland.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qt3d"]
 	depends = qtdeclarative qtimageformats
 	path = qt3d
 	url = ../qt3d.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtquick1"]
 	depends = qtscript
@@ -161,14 +161,14 @@
 	depends = qtdeclarative
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtquickcontrols"]
 	depends = qtdeclarative
 	recommends = qtgraphicaleffects
 	path = qtquickcontrols
 	url = ../qtquickcontrols.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtserialbus"]
 	depends = qtserialport
@@ -179,79 +179,79 @@
 	depends = qtbase
 	path = qtserialport
 	url = ../qtserialport.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtx11extras"]
 	depends = qtbase
 	path = qtx11extras
 	url = ../qtx11extras.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtmacextras"]
 	depends = qtbase
 	path = qtmacextras
 	url = ../qtmacextras.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtwinextras"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtwinextras
 	url = ../qtwinextras.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtandroidextras"]
 	depends = qtbase
 	path = qtandroidextras
 	url = ../qtandroidextras.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtenginio"]
 	depends = qtdeclarative
 	path = qtenginio
 	url = ../qtenginio.git
-	branch = 5.6
+	branch = 1.6.0
 	initrepo = true
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
 	path = qtwebsockets
 	url = ../qtwebsockets.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtwebchannel"]
 	depends = qtbase
 	recommends = qtdeclarative qtwebsockets
 	path = qtwebchannel
 	url = ../qtwebchannel.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtwebengine"]
 	depends = qtquickcontrols qtwebchannel
 	recommends = qtlocation
 	path = qtwebengine
 	url = ../qtwebengine.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 	priority = 10
 [submodule "qtcanvas3d"]
 	depends = qtdeclarative
 	path = qtcanvas3d
 	url = ../qtcanvas3d.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtwebview"]
 	depends = qtdeclarative
 	recommends = qtwebengine
 	path = qtwebview
 	url = ../qtwebview.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtquickcontrols2"]
 	depends = qtquickcontrols
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
-	branch = 5.6
+	branch = 5.6.0
 	initrepo = true
 [submodule "qtpurchasing"]
 	depends = qtbase
