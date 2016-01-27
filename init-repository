@@ -337,8 +337,12 @@ sub git_clone_all_submodules
         } elsif ($mod eq "obsolete") {
             map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
         } elsif ($mod =~ s/^-//) {
+            print "Warning: excluding non-existent module '$mod'.\n"
+                if (!defined($subdirs{$mod}));
             delete $include{$mod};
         } else {
+            die("Error: module subset names non-existent '$mod'.\n")
+                if (!defined($subdirs{$mod}));
             $include{$mod} = 1;
         }
     }
