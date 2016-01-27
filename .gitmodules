@@ -74,7 +74,7 @@
 	recommends = qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns
 	path = qtwebkit
 	url = ../qtwebkit.git
-	branch = 5.6
+	branch = 5.6.0
 	status = obsolete
 	project = WebKit.pro
 	priority = 20
@@ -82,7 +82,7 @@
 	depends = qtwebkit qttools
 	path = qtwebkit-examples
 	url = ../qtwebkit-examples.git
-	branch = 5.6
+	branch = 5.6.0
 	status = obsolete
 [submodule "qtqa"]
 	depends = qtbase
@@ -162,7 +162,7 @@
 	recommends = qtsvg qtxmlpatterns
 	path = qtquick1
 	url = ../qtquick1.git
-	branch = 5.6
+	branch = 5.6.0
 	status = obsolete
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
@@ -181,7 +181,7 @@
 	depends = qtserialport
 	path = qtserialbus
 	url = ../qtserialbus.git
-	branch = 5.6
+	branch = 5.6.0
 	status = preview
 [submodule "qtserialport"]
 	depends = qtbase
@@ -218,7 +218,7 @@
 	depends = qtdeclarative
 	path = qtenginio
 	url = ../qtenginio.git
-	branch = 1.6.0
+	branch = 5.6.0
 	status = obsolete
 [submodule "qtwebsockets"]
 	depends = qtbase
@@ -266,5 +266,5 @@
 	recommends = qtdeclarative
 	path = qtpurchasing
 	url = ../qtpurchasing.git
-	branch = 5.6
+	branch = dev
 	status = ignore
