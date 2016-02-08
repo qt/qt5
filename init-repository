@@ -156,7 +156,10 @@ EOF
 use Carp         qw( confess             );
 use English      qw( -no_match_vars      );
 use Getopt::Long qw( GetOptions          );
-use Cwd          qw( getcwd              );
+use Cwd          qw( getcwd abs_path     );
+
+my $script_path = abs_path($0);
+$script_path =~ s,[/\\][^/\\]+$,,;
 
 my $GERRIT_SSH_BASE
     = 'ssh://@USER@codereview.qt-project.org@PORT@/';
@@ -516,11 +519,16 @@ sub ensure_link
     return if (!$self->{'force-hooks'} and -f $tgt);
     unlink($tgt); # In case we have a dead symlink or pre-existing hook
     print "Aliasing $src\n      as $tgt ...\n" if (!$self->{quiet});
-    return if eval { symlink($src, $tgt) };
+    if ($^O ne "msys" && $^O ne "MSWin32") {
+        return if eval { symlink($src, $tgt) };
+    }
     # Windows doesn't do (proper) symlinks. As the post_commit script needs
     # them to locate itself, we write a forwarding script instead.
     open SCRIPT, ">".$tgt or die "Cannot create forwarding script $tgt: $!\n";
-    print SCRIPT "#!/bin/sh\nexec `dirname \$0`/$src \"\$\@\"\n";
+    # Make the path palatable for MSYS.
+    $src =~ s,\\,/,g;
+    $src =~ s,^(.):/,/$1/,g;
+    print SCRIPT "#!/bin/sh\nexec $src \"\$\@\"\n";
     close SCRIPT;
 }
 
@@ -528,19 +536,30 @@ sub git_install_hooks
 {
     my ($self) = @_;
 
-    return if (!-d 'qtrepotools/git-hooks');
+    my $hooks = $script_path.'/qtrepotools/git-hooks';
+    return if (!-d $hooks);
 
-    # Force C locale as git submodule returns the localized string "Entering"
-    local $ENV{LC_ALL} = 'C';
-    chomp(my @modules = `git submodule foreach :`);
-    push @modules, "";
-    for my $module (@modules) {
-        $module =~ s,^Entering \'([^\']+)\'$,$1/,;
-        my $rel = $module;
-        $rel =~ s,[^/]+,..,g;
-        $rel .= "../../qtrepotools/git-hooks/";
-        $self->ensure_link($rel.'gerrit_commit_msg_hook', $module.'.git/hooks/commit-msg');
-        $self->ensure_link($rel.'git_post_commit_hook', $module.'.git/hooks/post-commit');
+    my @configresult = qx(git config --list --local);
+    foreach my $line (@configresult) {
+        next if ($line !~ /submodule\.([^.=]+)\.url=/);
+        my $module = $1.'/.git';
+        if (!-d $module) {
+            open GITD, $module or die "Cannot open $module: $!\n";
+            my $gd = <GITD>;
+            close GITD;
+            chomp($gd);
+            $gd =~ s/^gitdir: // or die "Malformed .git file $module\n";
+            $module = $gd;  # We expect it to be always absolute.
+            if (open COMD, $module.'/commondir') {
+                my $cd = <COMD>;
+                chomp($cd);
+                $module .= '/'.$cd;
+                $module = abs_path($module);
+                close COMD;
+            }
+        }
+        $self->ensure_link($hooks.'/gerrit_commit_msg_hook', $module.'/hooks/commit-msg');
+        $self->ensure_link($hooks.'/git_post_commit_hook', $module.'/hooks/post-commit');
     }
 }
 
