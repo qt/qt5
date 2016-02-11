@@ -281,3 +281,21 @@
 	url = ../qtvirtualkeyboard.git
 	branch = dev
 	initrepo = true
+[submodule "qtgamepad"]
+	depends = qtbase
+	recommends = qtdeclarative
+	path = qtgamepad
+	url = ../qtgamepad
+	branch = dev
+	initrepo = true
+[submodule "qtscxml"]
+	depends = qtbase qtdeclarative
+	path = qtscxml
+	url = ../qtscxml
+	branch = dev
+	initrepo = true
+[submodule "qtspeech"]
+	depends = qtbase
+	path = qtspeech
+	url = ../qtspeech
+	branch = dev
