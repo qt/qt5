@@ -71,9 +71,12 @@ Options:
     --module-subset=<module1>,<module2>...
         Only initialize the specified subset of modules given as the
         argument. Specified modules must already exist in .gitmodules. The
-        string "all" results in cloning all known modules. The default is
-        the set of maintained modules. Module names may be prefixed with a
-        dash to exclude them from a bigger set.
+        string "all" results in cloning all known modules. The strings
+        "essential", "addon", "preview", "obsolete", and "ignore" refer to
+        classes of modules; "default" maps to "essential,addon,preview",
+        which corresponds with the set of maintained modules and is also
+        the default set. Module names may be prefixed with a dash to
+        exclude them from a bigger set, e.g. "all,-ignore".
 
     --no-update
         Skip the `git submodule update' command.
@@ -234,6 +237,7 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
+    $self->{'module-subset'} =~ s/\bdefault\b/preview,essential,addon/;
     $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
 
     return;
@@ -272,6 +276,13 @@ sub git_submodule_init
     return;
 }
 
+use constant {
+    STS_PREVIEW => 1,
+    STS_ESSENTIAL => 2,
+    STS_ADDON => 3,
+    STS_OBSOLETE => 4
+};
+
 sub git_clone_all_submodules
 {
     my ($self, $my_repo_base, $co_branch, @subset) = @_;
@@ -296,8 +307,20 @@ sub git_clone_all_submodules
             $subbases{$mod} = $base;
         } elsif ($2 eq "update") {
             push @subset, '-'.$1 if ($3 eq 'none');
-        } elsif ($2 eq "initrepo") {
-            $subinits{$1} = ($3 eq "yes" or $3 eq "true");
+        } elsif ($2 eq "status") {
+            if ($3 eq "preview") {
+                $subinits{$1} = STS_PREVIEW;
+            } elsif ($3 eq "essential") {
+                $subinits{$1} = STS_ESSENTIAL;
+            } elsif ($3 eq "addon") {
+                $subinits{$1} = STS_ADDON;
+            } elsif ($3 eq "obsolete") {
+                $subinits{$1} = STS_OBSOLETE;
+            } elsif ($3 eq "ignore") {
+                delete $subinits{$1};
+            } else {
+                die("Invalid subrepo status '$3' for '$1'.\n");
+            }
         }
     }
 
@@ -305,11 +328,21 @@ sub git_clone_all_submodules
     foreach my $mod (@subset) {
         if ($mod eq "all") {
             map { $include{$_} = 1; } keys %subbases;
-        } elsif ($mod eq "default") {
-            map { $include{$_} = 1; } grep { $subinits{$_} } keys %subbases;
+        } elsif ($mod eq "essential") {
+            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_ESSENTIAL } keys %subbases;
+        } elsif ($mod eq "addon") {
+            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_ADDON } keys %subbases;
+        } elsif ($mod eq "preview") {
+            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_PREVIEW } keys %subbases;
+        } elsif ($mod eq "obsolete") {
+            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
         } elsif ($mod =~ s/^-//) {
+            print "Warning: excluding non-existent module '$mod'.\n"
+                if (!defined($subdirs{$mod}));
             delete $include{$mod};
         } else {
+            die("Error: module subset names non-existent '$mod'.\n")
+                if (!defined($subdirs{$mod}));
             $include{$mod} = 1;
         }
     }
