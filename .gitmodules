@@ -257,7 +257,7 @@
 	branch = 5.7
 	status = addon
 [submodule "qtquickcontrols2"]
-	depends = qtquickcontrols
+	depends = qtgraphicaleffects
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = 5.7
