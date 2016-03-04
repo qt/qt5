@@ -72,11 +72,12 @@ Options:
         Only initialize the specified subset of modules given as the
         argument. Specified modules must already exist in .gitmodules. The
         string "all" results in cloning all known modules. The strings
-        "essential", "addon", "preview", "obsolete", and "ignore" refer to
-        classes of modules; "default" maps to "essential,addon,preview",
-        which corresponds with the set of maintained modules and is also
-        the default set. Module names may be prefixed with a dash to
-        exclude them from a bigger set, e.g. "all,-ignore".
+        "essential", "addon", "preview", "deprecated", "obsolete", and
+        "ignore" refer to classes of modules; "default" maps to
+        "essential,addon,preview,deprecated", which corresponds with the
+        set of maintained modules and is also the default set. Module
+        names may be prefixed with a dash to exclude them from a bigger
+        set, e.g. "all,-ignore".
 
     --no-update
         Skip the `git submodule update' command.
@@ -237,7 +238,7 @@ sub parse_arguments
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};
 
-    $self->{'module-subset'} =~ s/\bdefault\b/preview,essential,addon/;
+    $self->{'module-subset'} =~ s/\bdefault\b/preview,essential,addon,deprecated/;
     $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
 
     return;
@@ -280,7 +281,8 @@ use constant {
     STS_PREVIEW => 1,
     STS_ESSENTIAL => 2,
     STS_ADDON => 3,
-    STS_OBSOLETE => 4
+    STS_DEPRECATED => 4,
+    STS_OBSOLETE => 5
 };
 
 sub git_clone_all_submodules
@@ -314,6 +316,8 @@ sub git_clone_all_submodules
                 $subinits{$1} = STS_ESSENTIAL;
             } elsif ($3 eq "addon") {
                 $subinits{$1} = STS_ADDON;
+            } elsif ($3 eq "deprecated") {
+                $subinits{$1} = STS_DEPRECATED;
             } elsif ($3 eq "obsolete") {
                 $subinits{$1} = STS_OBSOLETE;
             } elsif ($3 eq "ignore") {
@@ -334,6 +338,8 @@ sub git_clone_all_submodules
             map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_ADDON } keys %subbases;
         } elsif ($mod eq "preview") {
             map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_PREVIEW } keys %subbases;
+        } elsif ($mod eq "deprecated") {
+            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_DEPRECATED } keys %subbases;
         } elsif ($mod eq "obsolete") {
             map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
         } elsif ($mod =~ s/^-//) {
