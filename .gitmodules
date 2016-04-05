@@ -28,7 +28,7 @@
 	path = qtscript
 	url = ../qtscript.git
 	branch = 5.7
-	status = addon
+	status = deprecated
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -220,7 +220,7 @@
 	path = qtenginio
 	url = ../qtenginio.git
 	branch = 5.7
-	status = obsolete
+	status = deprecated
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
