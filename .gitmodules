@@ -305,6 +305,7 @@
 	status = preview
 [submodule "qtspeech"]
 	depends = qtbase
+	recommends = qtdeclarative qtmultimedia
 	path = qtspeech
 	url = ../qtspeech
 	branch = dev
