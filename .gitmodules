@@ -151,7 +151,7 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = 5.7
-	status = preview
+	status = addon
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
@@ -220,7 +220,7 @@
 	path = qtenginio
 	url = ../qtenginio.git
 	branch = 5.7
-	status = deprecated
+	status = obsolete
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
