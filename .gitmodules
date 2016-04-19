@@ -261,7 +261,7 @@
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = 5.7
-	status = preview
+	status = addon
 [submodule "qtpurchasing"]
 	depends = qtbase
 	recommends = qtdeclarative
