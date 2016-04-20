@@ -348,6 +348,8 @@ sub git_clone_all_submodules
             @what = grep { ($subinits{$_} || 0) eq STS_DEPRECATED } keys %subbases;
         } elsif ($mod eq "obsolete") {
             @what = grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
+        } elsif ($mod eq "ignore") {
+            @what = grep { ($subinits{$_} || 0) eq 0 } keys %subbases;
         } elsif (defined($subdirs{$mod})) {
             push @what, $mod;
         } else {
