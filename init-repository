@@ -155,9 +155,10 @@ EOF
 }
 
 use Carp         qw( confess             );
-use English      qw( -no_match_vars      );
-use Getopt::Long qw( GetOptions          );
 use Cwd          qw( getcwd abs_path     );
+use English      qw( -no_match_vars      );
+use File::Spec::Functions qw ( rel2abs   );
+use Getopt::Long qw( GetOptions          );
 
 my $script_path = abs_path($0);
 $script_path =~ s,[/\\][^/\\]+$,,;
@@ -558,24 +559,25 @@ sub git_install_hooks
     my @configresult = qx(git config --list --local);
     foreach my $line (@configresult) {
         next if ($line !~ /submodule\.([^.=]+)\.url=/);
-        my $module = $1.'/.git';
-        if (!-d $module) {
-            open GITD, $module or die "Cannot open $module: $!\n";
+        my $module = $1;
+        my $module_gitdir = $module.'/.git';
+        if (!-d $module_gitdir) {
+            open GITD, $module_gitdir or die "Cannot open $module: $!\n";
             my $gd = <GITD>;
             close GITD;
             chomp($gd);
-            $gd =~ s/^gitdir: // or die "Malformed .git file $module\n";
-            $module = $gd;  # We expect it to be always absolute.
-            if (open COMD, $module.'/commondir') {
+            $gd =~ s/^gitdir: // or die "Malformed .git file $module_gitdir\n";
+            $module_gitdir = rel2abs($gd, $module);
+            if (open COMD, $module_gitdir.'/commondir') {
                 my $cd = <COMD>;
                 chomp($cd);
-                $module .= '/'.$cd;
-                $module = abs_path($module);
+                $module_gitdir .= '/'.$cd;
+                $module_gitdir = abs_path($module_gitdir);
                 close COMD;
             }
         }
-        $self->ensure_link($hooks.'/gerrit_commit_msg_hook', $module.'/hooks/commit-msg');
-        $self->ensure_link($hooks.'/git_post_commit_hook', $module.'/hooks/post-commit');
+        $self->ensure_link($hooks.'/gerrit_commit_msg_hook', $module_gitdir.'/hooks/commit-msg');
+        $self->ensure_link($hooks.'/git_post_commit_hook', $module_gitdir.'/hooks/post-commit');
     }
 }
 
