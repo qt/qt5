@@ -333,26 +333,36 @@ sub git_clone_all_submodules
 
     my %include = ();
     foreach my $mod (@subset) {
+        my $del = ($mod =~ s/^-//);
+        my $fail = 0;
+        my @what;
         if ($mod eq "all") {
-            map { $include{$_} = 1; } keys %subbases;
+            @what = keys %subbases;
         } elsif ($mod eq "essential") {
-            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_ESSENTIAL } keys %subbases;
+            @what = grep { ($subinits{$_} || 0) eq STS_ESSENTIAL } keys %subbases;
         } elsif ($mod eq "addon") {
-            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_ADDON } keys %subbases;
+            @what = grep { ($subinits{$_} || 0) eq STS_ADDON } keys %subbases;
         } elsif ($mod eq "preview") {
-            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_PREVIEW } keys %subbases;
+            @what = grep { ($subinits{$_} || 0) eq STS_PREVIEW } keys %subbases;
         } elsif ($mod eq "deprecated") {
-            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_DEPRECATED } keys %subbases;
+            @what = grep { ($subinits{$_} || 0) eq STS_DEPRECATED } keys %subbases;
         } elsif ($mod eq "obsolete") {
-            map { $include{$_} = 1; } grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
-        } elsif ($mod =~ s/^-//) {
+            @what = grep { ($subinits{$_} || 0) eq STS_OBSOLETE } keys %subbases;
+        } elsif ($mod eq "ignore") {
+            @what = grep { ($subinits{$_} || 0) eq 0 } keys %subbases;
+        } elsif (defined($subdirs{$mod})) {
+            push @what, $mod;
+        } else {
+            $fail = 1;
+        }
+        if ($del) {
             print "Warning: excluding non-existent module '$mod'.\n"
-                if (!defined($subdirs{$mod}));
-            delete $include{$mod};
+                if ($fail);
+            map { delete $include{$_} } @what;
         } else {
             die("Error: module subset names non-existent '$mod'.\n")
-                if (!defined($subdirs{$mod}));
-            $include{$mod} = 1;
+                if ($fail);
+            map { $include{$_} = 1; } @what;
         }
     }
 
