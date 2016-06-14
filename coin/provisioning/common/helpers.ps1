@@ -27,5 +27,5 @@ function Extract-Zip
     $shell = new-object -com shell.application
     $zipfile = $shell.Namespace($Source)
     $destinationFolder = $shell.Namespace($Destination)
-    $destinationFolder.CopyHere($zipfile.Items())
+    $destinationFolder.CopyHere($zipfile.Items(), 16)
 }
