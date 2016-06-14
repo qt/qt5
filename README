@@ -10,7 +10,7 @@ HOW TO BUILD QT5
 
     - Perl 5.8 or later
     - Python 2.7 or later
-    - C++ compiler supporting the C++98 standard
+    - C++ compiler supporting the C++11 standard
 
      For other platform specific requirements,
      please see section "Setting up your machine" on:
