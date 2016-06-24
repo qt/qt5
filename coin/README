@@ -1,0 +1,11 @@
+Continuous Integration
+======================
+
+This directory contains files used by Qt's Continuous Integration system (Coin).
+
+provisioning
+------------
+Contains scripts that apply to different test machines in order to run automatic tests on them.
+For Windows scripts, make sure that the machine has "Set-ExecutionPolicy RemoteSigned -Force" set.
+(Run as admin in PowerShell)
+

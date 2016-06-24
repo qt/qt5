@@ -16,29 +16,6 @@ HOW TO BUILD QT5
      please see section "Setting up your machine" on:
      http://wiki.qt.io/Get_The_Source
 
-   Optional requirements
-   ---------------------
-
-   - OpenSSL for SSL sockets or HTTPS
-   - Wayland
-
-   New dependencies in Qt 5
-   ------------------------
-
-     Linux: On systems running X11, the XCB libraries are required for
-     the platform plugin to build. qtbase/src/plugins/platforms/xcb/README
-     lists the required packages.
-
-     Qt 5 can make use of the ICU libraries providing Unicode and Globalization
-     support (see http://site.icu-project.org/). They are required for building
-     QtWebKit.
-     On Linux, they will be auto-detected.
-     On Windows, they need to be manually installed and the "include" and "lib"
-     folders of the ICU installation must be appended to the INCLUDE and LIB
-     environment variables after calling the Windows SDK setup script.
-     The "bin" folder of the ICU installation should be appended to the PATH
-     environment variable in order to for the DLLs to be found at run-time.
-
    Licensing:
    ----------
 
@@ -110,11 +87,11 @@ HOW TO BUILD QT5
  default in the build system.
 
  It is possible to build selected modules with their dependencies by doing
- a `make module-<foo>'.  For example, to build only qtscript and qtwebkit,
- and the modules they depend on:
+ a `make module-<foo>'.  For example, to build only qtdeclarative,
+ and the modules it depends on:
 
    ./configure -prefix $PWD/qtbase <license>
-   make -j4 module-qtscript module-qtwebkit
+   make -j4 module-qtdeclarative
 
  This can save a lot of time if you are only interested in a subset of Qt5.
 
