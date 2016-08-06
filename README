@@ -10,7 +10,7 @@ HOW TO BUILD QT5
 
     - Perl 5.8 or later
     - Python 2.7 or later
-    - C++ compiler supporting the C++98 standard
+    - C++ compiler supporting the C++11 standard
 
      For other platform specific requirements,
      please see section "Setting up your machine" on:
@@ -39,8 +39,10 @@ HOW TO BUILD QT5
    Windows:
    --------
 
-     Open a Windows SDK (7.0, 7.1 or later) command prompt. Ensure that the
-     following tools can be found in the path:
+     Open a command prompt.
+     Ensure that the following tools can be found in the path:
+     * Supported compiler (Visual Studio 2012 or later,
+        MinGW-builds gcc 4.9 or later)
      * Perl version 5.12 or later   [http://www.activestate.com/activeperl/]
      * Python version 2.7 or later  [http://www.activestate.com/activepython/]
      * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
