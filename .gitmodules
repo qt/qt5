@@ -183,7 +183,7 @@
 	path = qtserialbus
 	url = ../qtserialbus.git
 	branch = 5.8
-	status = preview
+	status = addon
 [submodule "qtserialport"]
 	depends = qtbase
 	path = qtserialport
@@ -302,7 +302,7 @@
 	path = qtscxml
 	url = ../qtscxml
 	branch = 5.8
-	status = preview
+	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
