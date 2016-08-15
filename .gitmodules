@@ -310,3 +310,10 @@
 	url = ../qtspeech
 	branch = dev
 	status = preview
+[submodule "qtnetworkauth"]
+	depends = qtbase
+	recommends = qtwebview
+	path = qtnetworkauth
+	url = ../qtnetworkauth
+	branch = dev
+	status = preview
