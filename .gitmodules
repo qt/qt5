@@ -110,7 +110,7 @@
 	recommends = qtdeclarative
 	path = qtsystems
 	url = ../qtsystems.git
-	branch = 5.7
+	branch = dev
 	status = ignore
 [submodule "qtfeedback"]
 	depends = qtdeclarative
@@ -129,7 +129,7 @@
 	depends = qtdeclarative
 	path = qtpim
 	url = ../qtpim.git
-	branch = 5.7
+	branch = dev
 	status = ignore
 [submodule "qtconnectivity"]
 	depends = qtbase
