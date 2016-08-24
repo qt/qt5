@@ -308,5 +308,12 @@
 	recommends = qtdeclarative qtmultimedia
 	path = qtspeech
 	url = ../qtspeech
-	branch = dev
-	status = ignore
+	branch = 5.8
+	status = preview
+[submodule "qtnetworkauth"]
+	depends = qtbase
+	recommends = qtwebview
+	path = qtnetworkauth
+	url = ../qtnetworkauth
+	branch = 5.8
+	status = preview
