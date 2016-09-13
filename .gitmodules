@@ -262,7 +262,7 @@
 	branch = 5.6
 	status = preview
 [submodule "qtpurchasing"]
-	depends = qtbase
+	depends = qtbase qtandroidextras
 	recommends = qtdeclarative
 	path = qtpurchasing
 	url = ../qtpurchasing.git
