@@ -23,7 +23,7 @@ function Run-Conan-Install
         Start-Process `
             "C:\Utils\Conan\conan\conan.exe" `
             -WorkingDirectory $outpwd `
-            -ArgumentList "install -i -f $($_.FullName) -g txt -g qmake -g cmake", `
+            -ArgumentList "install -i -f $($_.FullName)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
                 "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion)" `
             -NoNewWindow -Wait
