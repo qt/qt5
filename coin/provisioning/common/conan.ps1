@@ -6,6 +6,8 @@ Download https://s3-eu-west-1.amazonaws.com/conanio-production/downloads/conan-w
 Verify-Checksum $installer "719F30E6EED03149D75CDB28F80A7B873B43FF51"
 & $installer /DIR=C:\Utils\Conan /VERYSILENT
 
+[Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
+
 function Run-Conan-Install
 {
     Param (
@@ -28,6 +30,4 @@ function Run-Conan-Install
                 "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion)" `
             -NoNewWindow -Wait
     }
-
-    [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", $BuildinfoDir, "Machine")
 }
