@@ -29,3 +29,23 @@ function Extract-Zip
     $destinationFolder = $shell.Namespace($Destination)
     $destinationFolder.CopyHere($zipfile.Items(), 16)
 }
+
+function BadParam
+{
+    Param ([string]$Description)
+    throw("You must specify $Description")
+}
+
+function Download
+{
+    Param (
+        [string] $OfficialUrl = $(BadParam("the official download URL")),
+        [string] $CachedUrl   = $(BadParam("the locally cached URL")),
+        [string] $Destination = $(BadParam("a download target location"))
+    )
+    try {
+        Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
+    } catch {
+        Invoke-WebRequest -UseBasicParsing $OfficialUrl -OutFile $Destination
+    }
+}

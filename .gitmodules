@@ -93,7 +93,7 @@
 	priority = 50
 [submodule "qtlocation"]
 	depends = qtbase
-	recommends = qtdeclarative qtquickcontrols qtserialport qtsystems
+	recommends = qtdeclarative qtquickcontrols qtserialport
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = dev
@@ -183,7 +183,7 @@
 	path = qtserialbus
 	url = ../qtserialbus.git
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtserialport"]
 	depends = qtbase
 	path = qtserialport
@@ -263,7 +263,7 @@
 	branch = dev
 	status = addon
 [submodule "qtpurchasing"]
-	depends = qtbase
+	depends = qtbase qtandroidextras
 	recommends = qtdeclarative
 	path = qtpurchasing
 	url = ../qtpurchasing.git
@@ -302,7 +302,7 @@
 	path = qtscxml
 	url = ../qtscxml
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
