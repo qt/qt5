@@ -1,0 +1,20 @@
+[requires]
+cmake_installer/0.1@lasote/testing
+icu/57.1@Vitallium/stable
+libxml2-qt/2.9.4@Vitallium/stable
+libxslt-qt/1.1.29@Vitallium/stable
+
+[generators]
+cmake
+virtualenv
+
+[options]
+cmake_installer:version=3.5.2
+icu:shared=True
+libxml2-qt:shared=False
+libxslt-qt:shared=False
+
+[imports]
+bin, icudt57.dll -> ./bin
+bin, icuin57.dll -> ./bin
+bin, icuuc57.dll -> ./bin
