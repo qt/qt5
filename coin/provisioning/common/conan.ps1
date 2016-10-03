@@ -8,6 +8,12 @@ Verify-Checksum $installer "719F30E6EED03149D75CDB28F80A7B873B43FF51"
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 
+function Start-Process-Logged
+{
+    Write-Host "Start-Process", $args
+    Start-Process @args
+}
+
 function Run-Conan-Install
 {
     Param (
@@ -27,7 +33,7 @@ function Run-Conan-Install
     ForEach-Object {
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
         New-Item $outpwd -Type directory -Force
-        Start-Process `
+        Start-Process-Logged `
             "C:\Utils\Conan\conan\conan.exe" `
             -WorkingDirectory $outpwd `
             -ArgumentList "install -i -f $($_.FullName)", `
