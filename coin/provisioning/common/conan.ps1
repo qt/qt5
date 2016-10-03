@@ -15,8 +15,13 @@ function Run-Conan-Install
         [string]$BuildinfoDir,
         [string]$Arch,
         [string]$Compiler,
-        [string]$CompilerVersion
+        [string]$CompilerVersion,
+        [string]$CompilerRuntime
     )
+
+    if ($CompilerRuntime) {
+        $runtimeArg = "-s compiler.runtime=$($CompilerRuntime)"
+    }
 
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
@@ -27,7 +32,7 @@ function Run-Conan-Install
             -WorkingDirectory $outpwd `
             -ArgumentList "install -i -f $($_.FullName)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
-                "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion)" `
-            -NoNewWindow -Wait
+                "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion) $($runtimeArg)" `
+            -NoNewWindow -Wait -Verbose
     }
 }
