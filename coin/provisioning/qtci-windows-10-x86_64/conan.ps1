@@ -5,4 +5,5 @@ Run-Conan-Install `
     -BuildinfoDir MSVC2015-x86_64 `
     -Arch x86_64 `
     -Compiler "Visual Studio" `
-    -CompilerVersion 14
+    -CompilerVersion 14 `
+    -CompilerRuntime MD
