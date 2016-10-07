@@ -49,3 +49,12 @@ function Download
         Invoke-WebRequest -UseBasicParsing $OfficialUrl -OutFile $Destination
     }
 }
+
+function Add-Path
+{
+    Param (
+        [string]$Path
+    )
+    echo "Adding $Path to Path"
+    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$Path", [EnvironmentVariableTarget]::Machine)
+}
