@@ -263,7 +263,7 @@
 	branch = 5.7.1
 	status = addon
 [submodule "qtpurchasing"]
-	depends = qtbase
+	depends = qtbase qtandroidextras
 	recommends = qtdeclarative
 	path = qtpurchasing
 	url = ../qtpurchasing.git
