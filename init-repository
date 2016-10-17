@@ -522,7 +522,7 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'remote.origin.url', $url);
     }
 
-    my $template = getcwd()."/../.commit-template";
+    my $template = $orig_cwd."/.commit-template";
     if (-e $template) {
         $self->exe('git', 'config', 'commit.template', $template);
     }
