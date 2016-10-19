@@ -11,7 +11,7 @@
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
-	recommends = qtsvg qtxmlpatterns
+	recommends = qtxmlpatterns
 	path = qtdeclarative
 	url = ../qtdeclarative.git
 	branch = 5.6
@@ -100,7 +100,7 @@
 	status = addon
 [submodule "qtsensors"]
 	depends = qtbase
-	recommends = qtdeclarative
+	recommends = qtdeclarative qtsvg
 	path = qtsensors
 	url = ../qtsensors.git
 	branch = 5.6
@@ -159,7 +159,7 @@
 	status = addon
 [submodule "qtquick1"]
 	depends = qtscript
-	recommends = qtsvg qtxmlpatterns
+	recommends = qtxmlpatterns
 	path = qtquick1
 	url = ../qtquick1.git
 	branch = 5.6
