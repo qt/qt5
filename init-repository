@@ -389,7 +389,8 @@ sub git_clone_all_submodules
     }
 
     foreach my $module (@modules) {
-        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module}, $subbranches{$module});
+        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module},
+                                       $co_branch && $subbranches{$module});
     }
 
     if ($co_branch) {
@@ -482,7 +483,11 @@ sub git_clone_one_submodule
 
     my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
-        push @reference_args, '--branch', $branch if ($branch);
+        if ($branch) {
+            push @reference_args, '--branch', $branch;
+        } else {
+            push @reference_args, '--no-checkout';
+        }
         $self->exe('git', 'clone', @reference_args,
                    ($mirror ? $mirror : $url), $submodule);
     }
