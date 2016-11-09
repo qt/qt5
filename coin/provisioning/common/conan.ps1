@@ -1,9 +1,9 @@
 . "$PSScriptRoot\helpers.ps1"
 
-$installer = "c:\users\qt\downloads\conan-win_0_12_0.exe"
+$installer = "c:\users\qt\downloads\conan-win_0_15_0.exe"
 
-Download https://s3-eu-west-1.amazonaws.com/conanio-production/downloads/conan-win_0_12_0.exe http://ci-files01-hki.ci.local/input/conan/conan-win_0_12_0.exe $installer
-Verify-Checksum $installer "719F30E6EED03149D75CDB28F80A7B873B43FF51"
+Download https://github.com/conan-io/conan/releases/download/0.15.0/conan-win_0_15_0.exe http://ci-files01-hki.ci.local/input/windows/conan/conan-win_0_15_0.exe $installer
+Verify-Checksum $installer "AE8DB31B34A9B88EA227F0FE283FC0F003D2BFDD"
 & $installer /DIR=C:\Utils\Conan /VERYSILENT | Out-Null
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
