@@ -32,11 +32,12 @@ function Run-Conan-Install
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
+        $manifestsDir = "$($_.DirectoryName)\$($_.BaseName).manifests"
         New-Item $outpwd -Type directory -Force
         Start-Process-Logged `
             "C:\Utils\Conan\conan\conan.exe" `
             -WorkingDirectory $outpwd `
-            -ArgumentList "install -i -f $($_.FullName)", `
+            -ArgumentList "install -f $($_.FullName) --verify $($manifestsDir)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
                 "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion) $($runtimeArg)" `
             -NoNewWindow -Wait -Verbose
