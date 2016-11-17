@@ -35,12 +35,19 @@ function Run-Conan-Install
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
         $manifestsDir = "$($_.DirectoryName)\$($_.BaseName).manifests"
         New-Item $outpwd -Type directory -Force
-        Start-Process-Logged `
+
+        $process = Start-Process-Logged `
             conan `
             -WorkingDirectory $outpwd `
             -ArgumentList "install -f $($_.FullName) --verify $($manifestsDir)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
                 "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion) $($extraArgs)" `
-            -NoNewWindow -Wait -Verbose
+            -NoNewWindow -Wait -Verbose `
+            -PassThru # Return process object
+
+        if ($process.ExitCode -ne 0) {
+            Write-Host "conan exited with code $($process.ExitCode)"
+            Exit(1)
+        }
     }
 }
