@@ -1,6 +1,8 @@
 . "$PSScriptRoot\helpers.ps1"
 
-& pip install --upgrade conan==0.15.0
+$scriptsPath = "C:\Python27\Scripts"
+
+& "$scriptsPath\pip.exe" install --upgrade conan==0.15.0
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 
@@ -37,7 +39,7 @@ function Run-Conan-Install
         New-Item $outpwd -Type directory -Force
 
         $process = Start-Process-Logged `
-            conan `
+            "$scriptsPath\conan.exe" `
             -WorkingDirectory $outpwd `
             -ArgumentList "install -f $($_.FullName) --verify $($manifestsDir)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
