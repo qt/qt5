@@ -2,6 +2,7 @@
 icu/57.1@annulen/stable
 libxml2/2.9.4@annulen/stable
 libxslt/1.1.29@annulen/stable
+zlib/1.2.8@annulen/stable
 
 [generators]
 cmake
@@ -10,6 +11,7 @@ cmake
 icu:shared=True
 libxml2:shared=True
 libxslt:shared=True
+zlib:shared=False
 
 [imports]
 lib, icudt57.dll -> ./bin
