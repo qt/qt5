@@ -395,6 +395,14 @@ sub git_clone_all_submodules
         }
     }
 
+    my $any_bad = 0;
+    foreach my $module (@modules) {
+        $any_bad = 1
+            if ($self->git_stat_one_submodule($subdirs{$module}));
+    }
+    die("Dirty submodule(s) present; cannot proceed.\n")
+        if ($any_bad);
+
     foreach my $module (@modules) {
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module},
                                        $co_branch && $subbranches{$module});
@@ -450,6 +458,26 @@ sub git_add_remotes
     $gerrit_repo_url .= $gerrit_repo_basename;
     $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
     $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
+}
+
+sub git_stat_one_submodule
+{
+    my ($self, $submodule) = @_;
+
+    return 0 if (! -e "$submodule/.git");
+
+    my $orig_cwd = getcwd();
+    chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
+
+    my @sts = qx(git status --porcelain --untracked=no);
+
+    chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
+
+    return 0 if (!@sts);
+
+    print STDERR "$submodule is dirty.\n";
+
+    return -1;
 }
 
 sub git_clone_one_submodule
