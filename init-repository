@@ -424,7 +424,7 @@ sub git_clone_all_submodules
         }
     }
     if ($self->{update}) {
-        my @cmd = ('git', 'submodule', 'update', '--no-fetch');
+        my @cmd = ('git', 'submodule', 'update', '--force', '--no-fetch');
         push @cmd, '--remote', '--rebase' if ($co_branch);
         $self->exe(@cmd);
 
@@ -470,6 +470,13 @@ sub git_stat_one_submodule
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
     my @sts = qx(git status --porcelain --untracked=no);
+
+    # After a git clone --no-checkout, git status reports all files as
+    # staged for deletion, but we still want to update the submodule.
+    # It's unlikely that a genuinely dirty index would have _only_ this
+    # type of modifications, and it doesn't seem like a horribly big deal
+    # to lose them anyway, so ignore them.
+    @sts = grep(!/^D  /, @sts);
 
     chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
 
