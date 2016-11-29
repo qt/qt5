@@ -5,6 +5,7 @@ libxslt/1.1.29@vitallium/stable
 
 [generators]
 cmake
+txt
 
 [options]
 icu:shared=True

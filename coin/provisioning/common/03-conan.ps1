@@ -2,7 +2,7 @@
 
 $scriptsPath = "C:\Python27\Scripts"
 
-& "$scriptsPath\pip.exe" install --upgrade conan==0.15.0
+& "$scriptsPath\pip.exe" install --upgrade conan==0.16.0
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 
@@ -41,7 +41,7 @@ function Run-Conan-Install
         $process = Start-Process-Logged `
             "$scriptsPath\conan.exe" `
             -WorkingDirectory $outpwd `
-            -ArgumentList "install -f $($_.FullName) --verify $($manifestsDir)", `
+            -ArgumentList "install -f $($_.FullName) --no-imports --verify $($manifestsDir)", `
                 '-s', ('compiler="' + $Compiler + '"'), `
                 "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion) $($extraArgs)" `
             -NoNewWindow -Wait -Verbose `

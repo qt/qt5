@@ -6,6 +6,7 @@ zlib/1.2.8@annulen/stable
 
 [generators]
 cmake
+txt
 
 [options]
 icu:shared=True
