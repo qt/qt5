@@ -34,6 +34,7 @@ function Run-Conan-Install
 
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
+        $conanfile = $_.FullName
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
         $manifestsDir = "$($_.DirectoryName)\$($_.BaseName).manifests"
         New-Item $outpwd -Type directory -Force
@@ -41,9 +42,9 @@ function Run-Conan-Install
         $process = Start-Process-Logged `
             "$scriptsPath\conan.exe" `
             -WorkingDirectory $outpwd `
-            -ArgumentList "install -f $($_.FullName) --no-imports --verify $($manifestsDir)", `
+            -ArgumentList "install -f $conanfile --no-imports --verify $manifestsDir", `
                 '-s', ('compiler="' + $Compiler + '"'), `
-                "-s os=Windows -s arch=$($Arch) -s compiler.version=$($CompilerVersion) $($extraArgs)" `
+                "-s os=Windows -s arch=$Arch -s compiler.version=$CompilerVersion $extraArgs" `
             -NoNewWindow -Wait -Verbose `
             -PassThru # Return process object
 
@@ -51,5 +52,7 @@ function Run-Conan-Install
             Write-Host "conan exited with code $($process.ExitCode)"
             Exit(1)
         }
+
+        Copy-Item -Path $conanfile -Destination "$outpwd\conanfile.txt"
     }
 }
