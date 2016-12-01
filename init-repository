@@ -395,6 +395,14 @@ sub git_clone_all_submodules
         }
     }
 
+    my $any_bad = 0;
+    foreach my $module (@modules) {
+        $any_bad = 1
+            if ($self->git_stat_one_submodule($subdirs{$module}));
+    }
+    die("Dirty submodule(s) present; cannot proceed.\n")
+        if ($any_bad);
+
     foreach my $module (@modules) {
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module},
                                        $co_branch && $subbranches{$module});
@@ -416,7 +424,7 @@ sub git_clone_all_submodules
         }
     }
     if ($self->{update}) {
-        my @cmd = ('git', 'submodule', 'update', '--no-fetch');
+        my @cmd = ('git', 'submodule', 'update', '--force', '--no-fetch');
         push @cmd, '--remote', '--rebase' if ($co_branch);
         $self->exe(@cmd);
 
@@ -450,6 +458,33 @@ sub git_add_remotes
     $gerrit_repo_url .= $gerrit_repo_basename;
     $self->exe('git', 'config', 'remote.gerrit.url', $gerrit_repo_url);
     $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
+}
+
+sub git_stat_one_submodule
+{
+    my ($self, $submodule) = @_;
+
+    return 0 if (! -e "$submodule/.git");
+
+    my $orig_cwd = getcwd();
+    chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
+
+    my @sts = qx(git status --porcelain --untracked=no);
+
+    # After a git clone --no-checkout, git status reports all files as
+    # staged for deletion, but we still want to update the submodule.
+    # It's unlikely that a genuinely dirty index would have _only_ this
+    # type of modifications, and it doesn't seem like a horribly big deal
+    # to lose them anyway, so ignore them.
+    @sts = grep(!/^D  /, @sts);
+
+    chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
+
+    return 0 if (!@sts);
+
+    print STDERR "$submodule is dirty.\n";
+
+    return -1;
 }
 
 sub git_clone_one_submodule
