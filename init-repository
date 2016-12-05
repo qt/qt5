@@ -82,6 +82,9 @@ Options:
     --no-update
         Skip the `git submodule update' command.
 
+    --no-fetch
+        Skip the `git fetch' commands. Implied by --no-update.
+
     --branch
         Instead of checking out specific SHA1s, check out the submodule
         branches that correspond with the current supermodule commit. By
@@ -213,6 +216,7 @@ sub parse_arguments
         'ignore-submodules'   => 0 ,
         'mirror-url'          => "",
         'update'              => 1 ,
+        'fetch'               => 1 ,
         'module-subset'       => "default",
     );
 
@@ -227,6 +231,7 @@ sub parse_arguments
         'mirror=s'          =>  \$self->{qw{ mirror-url        }},
         'quiet'             =>  \$self->{qw{ quiet             }},
         'update!'           =>  \$self->{qw{ update            }},
+        'fetch!'            =>  \$self->{qw{ fetch             }},
         'module-subset=s'   =>  \$self->{qw{ module-subset     }},
 
         'help|?'            =>  sub { printUsage(1);            },
@@ -244,6 +249,8 @@ sub parse_arguments
 
     $self->{'module-subset'} =~ s/\bdefault\b/preview,essential,addon,deprecated/;
     $self->{'module-subset'} = [ split(/,/, $self->{'module-subset'}) ];
+
+    $self->{'fetch'} = 0 if (!$self->{'update'});
 
     return;
 }
@@ -388,8 +395,17 @@ sub git_clone_all_submodules
         }
     }
 
+    my $any_bad = 0;
     foreach my $module (@modules) {
-        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module}, $subbranches{$module});
+        $any_bad = 1
+            if ($self->git_stat_one_submodule($subdirs{$module}));
+    }
+    die("Dirty submodule(s) present; cannot proceed.\n")
+        if ($any_bad);
+
+    foreach my $module (@modules) {
+        $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module},
+                                       $co_branch && $subbranches{$module});
     }
 
     if ($co_branch) {
@@ -408,7 +424,7 @@ sub git_clone_all_submodules
         }
     }
     if ($self->{update}) {
-        my @cmd = ('git', 'submodule', 'update', '--no-fetch');
+        my @cmd = ('git', 'submodule', 'update', '--force', '--no-fetch');
         push @cmd, '--remote', '--rebase' if ($co_branch);
         $self->exe(@cmd);
 
@@ -444,6 +460,33 @@ sub git_add_remotes
     $self->exe('git', 'config', 'remote.gerrit.fetch', '+refs/heads/*:refs/remotes/gerrit/*', '/heads/');
 }
 
+sub git_stat_one_submodule
+{
+    my ($self, $submodule) = @_;
+
+    return 0 if (! -e "$submodule/.git");
+
+    my $orig_cwd = getcwd();
+    chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
+
+    my @sts = qx(git status --porcelain --untracked=no);
+
+    # After a git clone --no-checkout, git status reports all files as
+    # staged for deletion, but we still want to update the submodule.
+    # It's unlikely that a genuinely dirty index would have _only_ this
+    # type of modifications, and it doesn't seem like a horribly big deal
+    # to lose them anyway, so ignore them.
+    @sts = grep(!/^D  /, @sts);
+
+    chdir($orig_cwd) or confess "cd $orig_cwd: $OS_ERROR";
+
+    return 0 if (!@sts);
+
+    print STDERR "$submodule is dirty.\n";
+
+    return -1;
+}
+
 sub git_clone_one_submodule
 {
     my ($self, $submodule, $repo_basename, $branch) = @_;
@@ -465,9 +508,11 @@ sub git_clone_one_submodule
         }
     }
 
+    my $do_clone = (! -e "$submodule/.git");
+
     my $url = $self->{'base-url'}.$repo_basename;
     my $mirror;
-    if ($mirror_url) {
+    if ($mirror_url && ($do_clone || $self->{fetch})) {
         $mirror = $mirror_url.$repo_basename;
     }
 
@@ -480,9 +525,12 @@ sub git_clone_one_submodule
         }
     }
 
-    my $do_clone = (! -e "$submodule/.git");
     if ($do_clone) {
-        push @reference_args, '--branch', $branch if ($branch);
+        if ($branch) {
+            push @reference_args, '--branch', $branch;
+        } else {
+            push @reference_args, '--no-checkout';
+        }
         $self->exe('git', 'clone', @reference_args,
                    ($mirror ? $mirror : $url), $submodule);
     }
@@ -496,20 +544,20 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'remote.mirror.fetch', '+refs/heads/*:refs/remotes/mirror/*');
     }
 
-    if (!$do_clone && $self->{update}) {
+    if (!$do_clone && $self->{fetch}) {
         # If we didn't clone, fetch from the right location. We always update
         # the origin remote, so that submodule update --remote works.
         $self->exe('git', 'config', 'remote.origin.url', ($mirror ? $mirror : $url));
         $self->exe('git', 'fetch', 'origin');
     }
 
-    if (!($do_clone || $self->{update}) || $mirror) {
+    if (!($do_clone || $self->{fetch}) || $mirror) {
         # Leave the origin configured to the canonical URL. It's already correct
         # if we cloned/fetched without a mirror; otherwise it may be anything.
         $self->exe('git', 'config', 'remote.origin.url', $url);
     }
 
-    my $template = getcwd()."/../.commit-template";
+    my $template = $orig_cwd."/.commit-template";
     if (-e $template) {
         $self->exe('git', 'config', 'commit.template', $template);
     }
