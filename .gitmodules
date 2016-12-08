@@ -68,7 +68,7 @@
 	url = ../qtrepotools.git
 	branch = master
 	status = essential
-	qt = false
+	project = -
 [submodule "qtwebkit"]
 	depends = qtbase
 	recommends = qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns

@@ -29,7 +29,8 @@ QMAKE_INTERNAL_INCLUDED_FILES += $$PWD/.gitmodules
 modules = $$sort_depends(modules, module., .depends .recommends .serialize)
 modules = $$reverse(modules)
 for (mod, modules) {
-    equals(module.$${mod}.qt, false): \
+    project = $$eval(module.$${mod}.project)
+    equals(project, -): \
         next()
 
     deps = $$eval(module.$${mod}.depends)
@@ -43,7 +44,6 @@ for (mod, modules) {
     !isEmpty(QT_BUILD_MODULES):!contains(QT_BUILD_MODULES, $$mod): \
         next()
 
-    project = $$eval(module.$${mod}.project)
     isEmpty(project) {
         !exists($$mod/$${mod}.pro): \
             next()
