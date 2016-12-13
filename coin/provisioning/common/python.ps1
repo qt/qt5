@@ -62,3 +62,7 @@ echo "Chancing allowZip64 value to 'True'..."
 echo "Remove $package..."
 del $package
 Add-Path $path
+
+& python -m ensurepip
+# Install python virtual env
+pip.exe install virtualenv
