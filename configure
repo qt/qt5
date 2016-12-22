@@ -33,7 +33,7 @@
 #############################################################################
 
 srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; /bin/pwd)`
+srcpath=`(cd "$srcpath"; pwd)`
 configure=$srcpath/qtbase/configure
 if [ ! -e "$configure" ]; then
     echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
