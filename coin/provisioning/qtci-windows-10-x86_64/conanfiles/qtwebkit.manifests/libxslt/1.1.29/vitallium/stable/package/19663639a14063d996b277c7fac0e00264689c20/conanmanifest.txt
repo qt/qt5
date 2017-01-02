@@ -1,7 +1,7 @@
-1478437988
-bin/libexslt.dll: bace70c121c29fd8b9e29ce7ea924367
-bin/libxslt.dll: 00022b72c0cacd3c3ca7bc48a0ec4632
-conaninfo.txt: cba36a71cb20255ea805a39e62e79070
+1482494796
+bin/libexslt.dll: acf1f58607eb1a10534cc30ca2bf2c9f
+bin/libxslt.dll: 9edc15648704934221ec3afcedb25451
+conaninfo.txt: 224814c47f7d14968c401d2180974e77
 include/libexslt/exslt.h: f01af3bf058520059ba6d50f42133717
 include/libexslt/exsltconfig.h: a36134fd73a90b0c39ba3eb4fa8833b9
 include/libexslt/exsltexports.h: 079c35b6fa14302aad0764c1dee57809
@@ -32,7 +32,7 @@ include/libxslt/xsltexports.h: 207ffe4e458a8c24635b3eb24bdd8000
 include/libxslt/xsltlocale.h: b934279cc2a6556075638425e5634b07
 include/libxslt/xsltutils.h: c190bd536ce0cffe1ccba74c68f7b0c9
 include/libxslt/xsltwin32config.h: 8a3a4b0359659042a66603eb59cc4001
-lib/libexslt.lib: c78e77d2bc7ce733a9d45f23176f2803
-lib/libexslt_a.lib: 29b31bece1e69641372cadce020326ad
-lib/libxslt.lib: b7d9260d0f7ada29f5d3649820a8e1cb
-lib/libxslt_a.lib: e24f546f9b757fd152de506c2d3af1bf
+lib/libexslt.lib: 0c9f94aeea183a48ec62d6e1a3ac42af
+lib/libexslt_a.lib: 026a42ff0b36660c1bd4890b656c80ee
+lib/libxslt.lib: 084d078777bf34d52af7fc93a425d6b0
+lib/libxslt_a.lib: a07434cb5a40a32a17be58f71fe24976

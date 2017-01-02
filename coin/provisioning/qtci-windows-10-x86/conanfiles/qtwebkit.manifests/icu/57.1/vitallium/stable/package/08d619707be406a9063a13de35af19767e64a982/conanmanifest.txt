@@ -1,8 +1,10 @@
-1478097969
-bin/icudt57.dll: 87bbc24187330408f9d7cb056060e0ad
-bin/icuin57.dll: 10bcbdf7ce17871d7ac0fe560a58493e
-bin/icuuc57.dll: 2f252173e83d958205d83e168af27bd1
-conaninfo.txt: 93a147af5e69ef5fc1628b5f401d2e72
+1482491156
+bin/icudt57.dll: 31229bc6cadb43b991620f7d9e9baa06
+bin/icuin57.dll: 3f0eb9f4e2b0e4012afa16f83e9ff0dc
+bin/icutest57.dll: ff878466aa02fa1bddfb94ba17b246a8
+bin/icutu57.dll: fef065fefce5fc67ef4a43b666d147d0
+bin/icuuc57.dll: cc8db4d8a1ee20f4e8a46041ef06862f
+conaninfo.txt: 13f4fa914f5920b05e5b228be8679454
 include/unicode/alphaindex.h: e74fcba85b76577d32b90bc0056ee5d9
 include/unicode/appendable.h: 5c2d97a96252e2c959d4c226a554575b
 include/unicode/basictz.h: 444077f7dd19bd6dbe24034360356e8a
@@ -171,6 +173,8 @@ include/unicode/utypes.h: 21e5e8cc7dc66bdb83f70971bed1a5e4
 include/unicode/uvernum.h: d878c9e384487c8668c122712134c0f1
 include/unicode/uversion.h: 140b36fa9bffd2cb2b1c7f02691923e6
 include/unicode/vtzone.h: 90e065183436be0a94918465f66be863
-lib/icudt.lib: 375f9aff64352ed211a704156f40b206
-lib/icuin.lib: 752c472eb6f90acde3372894a68e2291
-lib/icuuc.lib: 1f493156171786bf782d85ca6ae017bf
+lib/icudt.lib: 6ca31dc410effd400636e14cbc616324
+lib/icuin.lib: d3a00a713d384bd66094e2270d98ad2d
+lib/icutest.lib: 4ee3e48e551b0f14c992cafd5f5565ba
+lib/icutu.lib: d3b931010519ec185efa3b41837f6a72
+lib/icuuc.lib: 209fc74475de9d7244b0780771a4d8ed

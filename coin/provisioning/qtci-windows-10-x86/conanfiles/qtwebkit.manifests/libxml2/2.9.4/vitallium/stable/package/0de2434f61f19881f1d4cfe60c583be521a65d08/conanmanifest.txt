@@ -1,6 +1,6 @@
-1478189644
-bin/libxml2.dll: 622bde2aec1d514bbf4ffcdcd734dbb7
-conaninfo.txt: a27084d89e21b40687c65926b75cf057
+1482493099
+bin/libxml2.dll: f43264365ba9d2681455ff106303a4e9
+conaninfo.txt: b51d149c110dea2bef2ab37017308696
 include/libxml/DOCBparser.h: 21e6523a86338325c527e1e8847adc1d
 include/libxml/HTMLparser.h: 083a413aedc738e1903735b7f1678087
 include/libxml/HTMLtree.h: 46cf4cefb419e18c40b8d5b6ac982f3f
@@ -44,13 +44,12 @@ include/libxml/xmlschemastypes.h: 160197e01dfa56cd9ad09d201d5bdeb4
 include/libxml/xmlstring.h: 82efb8a055d5fc8eb7d815ed471eca53
 include/libxml/xmlunicode.h: b9f0b8acddfee9b620ea822978a51d29
 include/libxml/xmlversion.h: 0c268947477509833b9edc4ae096da41
-include/libxml/xmlwin32version.h: 0c672b45ad0bbc3285870375ac5e62c9
 include/libxml/xmlwriter.h: 8694436144b1fb0aab2e2d6b725035e3
 include/libxml/xpath.h: 2e60b359a61db15d05409ebef1b140b1
 include/libxml/xpathInternals.h: c18fad3cce22369a75166afed6343bcd
 include/libxml/xpointer.h: 5b8025430888d5b99d03d159ddc78388
 include/win32config.h: 410df263529fb9ec616b22f590dbdd1d
 include/wsockcompat.h: f975f4dc926c27ab755f05a79296bd72
-lib/libxml2.lib: 61e2849cbb7376a17665994d68f7c9b4
-lib/libxml2_a.lib: c4bae1030473a5473ecc77cdf5af397d
-lib/libxml2_a_dll.lib: 98c11a0804ff364feb161bfa1214bc63
+lib/libxml2.lib: ec17f6714da6647f63d2cdc54d005e43
+lib/libxml2_a.lib: abae79bdfded67d5017604b7b7c8dd03
+lib/libxml2_a_dll.lib: f68e18d65520175beb3a8de99cbb7e9b
