@@ -13,6 +13,7 @@ qtci-linux-Ubuntu-14.04-x86_64                                      GCC         
 qtci-linux-Ubuntu-14.04-x86_64                                      GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace
 qtci-linux-openSUSE-42.1-x86_64                                     GCC         DeveloperBuild NoPch
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Release
+qtci-linux-RHEL-7.2-x86_64                                          GCC         Packaging Release NoUseGoldLinker
 qtci-osx-10.10-x86_64                                               Clang       Packaging DebugAndRelease Release
 qtci-osx-10.10-x86_64                                               Clang       DeveloperBuild Release QtNamespace NoPch
 qtci-osx-10.10-x86_64                                               Clang       Release NoFramework
