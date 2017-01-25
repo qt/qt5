@@ -59,3 +59,8 @@ Function Remove-Path {
 Remove C:\Python27
 Remove-Path C:\python27\scripts
 Remove-Path C:\python27
+
+# Remove Android sdk and ndk
+Remove C:\utils\android*
+[Environment]::SetEnvironmentVariable("ANDROID_NDK_HOME",$null,"User")
+[Environment]::SetEnvironmentVariable("ANDROID_SDK_HOME",$null,"User")
