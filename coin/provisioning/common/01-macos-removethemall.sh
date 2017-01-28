@@ -1,3 +1,4 @@
+#!/bin/sh
 #############################################################################
 ##
 ## Copyright (C) 2016 The Qt Company Ltd.
@@ -31,36 +32,18 @@
 ##
 #############################################################################
 
-Function Remove {
-Param (
-        [string]$1
-    )
-        If (Test-Path $1){
-        echo "Remove $1"
-        Remove-Item -Recurse -Force $1
-    }Else{
-        echo "'$1' does not exists or already removed !!"
-    }
+function RemoveDir {
+    param=$1
 
+    if [ ! -d $param ]
+    then
+        echo "'$param' don't exists"
+    else
+        echo "Removing $param..."
+        sudo rm -fr $param
+    fi
 }
 
-Function Remove-Path {
-    Param (
-        [string]$Path
-    )
-    echo "Remove $path from Path"
-    $name = "Path"
-    $value = ([System.Environment]::GetEnvironmentVariable("Path").Split(";") | ? {$_ -ne "$path"}) -join ";"
-    $type = "Machine"
-    [System.Environment]::SetEnvironmentVariable($name,$value,$type)
-}
-
-# Remove Python
-Remove C:\Python27
-Remove-Path C:\python27\scripts
-Remove-Path C:\python27
-
-# Remove Android sdk and ndk
-Remove C:\utils\android*
-[Environment]::SetEnvironmentVariable("ANDROID_NDK_HOME",$null,"User")
-[Environment]::SetEnvironmentVariable("ANDROID_SDK_HOME",$null,"User")
+# Remove Android
+param="/opt/android"
+RemoveDir $param
