@@ -317,3 +317,9 @@
 	url = ../qtnetworkauth
 	branch = 5.9
 	status = preview
+[submodule "qtremoteobjects"]
+	depends = qtbase
+	path = qtremoteobjects
+	url = ../qtremoteobjects
+	branch = 5.9
+	status = preview
