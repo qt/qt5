@@ -9,6 +9,8 @@ qtci-windows-10-x86                                                 MSVC2015    
 qtci-windows-10-x86_64                                              MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-10-x86_64              WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release DisableTests
 qtci-windows-10-x86_64              WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release DisableTests
+qtci-linux-Ubuntu-16.04-x86_64                                      GCC         NoWidgets ForceDebugInfo DisableTests
+qtci-linux-Ubuntu-16.04-x86_64                                      GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace DisableTests
 qtci-linux-Ubuntu-14.04-x86_64                                      GCC         NoWidgets ForceDebugInfo
 qtci-linux-Ubuntu-14.04-x86_64                                      GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace
 qtci-linux-openSUSE-42.1-x86_64                                     GCC         DeveloperBuild NoPch
