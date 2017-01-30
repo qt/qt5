@@ -35,11 +35,11 @@
 
 # This script install Android sdk and ndk.
 
-# It also runs update for SDK API level 18, latest SDK tools, latest platform-tools and - build-tools
+# It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and - build-tools
 
 # Android 16 is the minimum requirement for Qt 5.7 applications, but we need something more recent than that for building Qt itself.
-# E.g The Bluetooth features that require Android 18 will disable themselves dynamically when running on an Android 16 device.
-# That's why we need to use Andoid-18 API version and decision was made to use it also with Qt 5.6.
+# E.g The Bluetooth features that require Android 21 will disable themselves dynamically when running on an Android 16 device.
+# That's why we need to use Andoid-21 API version and decision was made to use it also with Qt 5.6.
 
 set -e
 targetFolder="/opt/android"
@@ -48,7 +48,7 @@ baseUrl="http://ci-files01-hki.ci.local/input/android"
 # SDK
 sdkVersion="android-sdk_r24.4.1-macosx.zip"
 sdkBuildToolsVersion="24.0.2"
-sdkApiLevel="android-18"
+sdkApiLevel="android-21"
 sdkUrl="$baseUrl/$sdkVersion"
 sdkSha1="85a9cccb0b1f9e6f1f616335c5f07107553840cd"
 sdkTargetFile="$targetFolder/$sdkVersion"
@@ -93,10 +93,10 @@ InstallAndroidPackage $targetFolder $sdkVersion $sdkUrl $sdkSha1 $sdkTargetFile 
 echo "Installing Android NDK version $ndkVersion..."
 InstallAndroidPackage $targetFolder $ndkVersion $ndkUrl $ndkSha1 $ndkTargetFile "$ndkExtract" $ndkFolderName $ndkName
 
-# run update for Android SDK and install SDK API version 18, latest SDK tools, platform-tools and build-tools
-echo "Running Android SDK update for API version 18, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
+# run update for Android SDK and install SDK API version 21, latest SDK tools, platform-tools and build-tools
+echo "Running Android SDK update for API version 21, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
 echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
 
-# For Qt 5.6, we by default require API levels 10, 11, 16 and 18, but we can override this by setting ANDROID_API_VERSION=android-18
+# For Qt 5.6, we by default require API levels 10, 11, 16 and 21, but we can override this by setting ANDROID_API_VERSION=android-21
 # From Qt 5.7 forward, if android-16 is not installed, Qt will automatically use more recent one.
-echo 'export ANDROID_API_VERSION=android-18' >> ~/.bashrc
+echo 'export ANDROID_API_VERSION=android-21' >> ~/.bashrc

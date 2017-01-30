@@ -1,10 +1,10 @@
 . "$PSScriptRoot\..\common\helpers.ps1"
 
 # This script installs Android sdk and ndk
-# It also runs update for SDK API level 18, latest SDK tools, latest platform-tools and build-tools version $sdkBuildToolsVersion
+# It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and build-tools version $sdkBuildToolsVersion
 # Android 16 is the minimum requirement for Qt 5.7 applications, but we need something more recent than that for building Qt itself.
-# E.g the bluetooth features that require Android 18 will disable themselves dynamically when running on Android 16 device.
-# That's why we need to use Andoid-18 API version and decision was made to use it also with Qt 5.6.
+# E.g The Bluetooth features that require Android 21 will disable themselves dynamically when running on an Android 16 device.
+# That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
 $ndkVersion = "r10e"
@@ -17,7 +17,7 @@ $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 # SDK
 $sdkVersion = "r24.4.1"
 $sdkApi = "ANDROID_API_VERSION"
-$sdkApiLevel = "android-18"
+$sdkApiLevel = "android-21"
 $sdkBuildToolsVersion = "23.0.3"
 $sdkCachedUrl= "http://ci-files01-hki.ci.local/input/android/android-sdk_$sdkVersion-windows.zip"
 $sdkOfficialUrl = "https://dl.google.com/android/android-sdk_$sdkVersion-windows.zip"

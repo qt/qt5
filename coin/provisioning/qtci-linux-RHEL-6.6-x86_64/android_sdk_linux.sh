@@ -35,7 +35,7 @@
 
 # This script install Android sdk and ndk.
 
-# It also runs update for SDK API level 18, latest SDK tools, latest platform-tools and build-tools version 23.0.3
+# It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and build-tools version 23.0.3
 
 # Build-tools version 23.0.3 is the latest usable version for Red Hat 6. Newer version of build-tools, version 24.x.x, requires GLIBC_2.14, which is not available in Red Hat 6.
 
@@ -95,7 +95,7 @@ InstallAndroidPackage $targetFolder $sdkVersion $sdkUrl $sdkSha1 $sdkTargetFile 
 echo "Installing Android NDK version $ndkVersion..."
 InstallAndroidPackage $targetFolder $ndkVersion $ndkUrl $ndkSha1 $ndkTargetFile "$ndkExtract" $ndkFolderName $ndkName
 
-# run update for Android SDK and install SDK API version 18, latest SDK tools, platform-tools and build-tools
-echo "Running Android SDK update for API version 18, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
+# run update for Android SDK and install SDK API version 21, latest SDK tools, platform-tools and build-tools
+echo "Running Android SDK update for API version 21, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
 echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
 
