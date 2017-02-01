@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/sh
 
 #############################################################################
 ##
@@ -35,33 +35,32 @@
 
 # This script install Android sdk and ndk.
 
-# It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and build-tools version 23.0.3
-
-# Build-tools version 23.0.3 is the latest usable version for Red Hat 6. Newer version of build-tools, version 24.x.x, requires GLIBC_2.14, which is not available in Red Hat 6.
+# It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and - build-tools
 
 # Android 16 is the minimum requirement for Qt 5.7 applications, but we need something more recent than that for building Qt itself.
 # E.g The Bluetooth features that require Android 21 will disable themselves dynamically when running on an Android 16 device.
 # That's why we need to use Andoid-21 API version in Qt 5.9.
+
 
 set -e
 targetFolder="/opt/android"
 baseUrl="http://ci-files01-hki.ci.local/input/android"
 
 # SDK
-sdkVersion="android-sdk_r24.4.1-linux.tgz"
-sdkBuildToolsVersion="23.0.3"
+sdkVersion="android-sdk_r24.4.1-macosx.zip"
+sdkBuildToolsVersion="24.0.2"
 sdkApiLevel="android-21"
 sdkUrl="$baseUrl/$sdkVersion"
-sdkSha1="725bb360f0f7d04eaccff5a2d57abdd49061326d"
+sdkSha1="85a9cccb0b1f9e6f1f616335c5f07107553840cd"
 sdkTargetFile="$targetFolder/$sdkVersion"
-sdkExtract="tar -C $targetFolder -zxf $sdkTargetFile"
-sdkFolderName="android-sdk-linux"
+sdkExtract="unzip $sdkTargetFile -d $targetFolder"
+sdkFolderName="android-sdk-macosx"
 sdkName="sdk"
 
 # NDK
-ndkVersion="android-ndk-r10e-linux-x86_64.zip"
+ndkVersion="android-ndk-r10e-darwin-x86_64.zip"
 ndkUrl="$baseUrl/$ndkVersion"
-ndkSha1="f692681b007071103277f6edc6f91cb5c5494a32"
+ndkSha1="6be8598e4ed3d9dd42998c8cb666f0ee502b1294"
 ndkTargetFile="$targetFolder/$ndkVersion"
 ndkExtract="unzip $ndkTargetFile -d $targetFolder"
 ndkFolderName="android-ndk-r10e"
@@ -77,13 +76,13 @@ function InstallAndroidPackage {
     folderName=$7
     name=$8
 
-    sudo wget --tries=5 --waitretry=5 --output-document=$targetFile $url || echo "Failed to download '$url' multiple times"
-    echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
+    sudo curl --retry 5 --retry-delay 10 --retry-max-time 60 $url -o $targetFile || echo "Failed to download '$url' multiple times"
+    shasum $targetFile |grep $sha1 || echo "shasum check failed !"
     sudo chmod 755 $targetFile
     sudo $extract || echo "Failed to extract $url"
-    sudo chown -R qt:users $targetFolder/$folderName
+    sudo chown -R qt:wheel $targetFolder/$folderName
     sudo mv $targetFolder/$folderName $targetFolder/$name || echo "Failed to rename $name"
-    sudo rm -fr $targetFolder/$version
+    sudo rm -fr $targetFolder/$version || echo "Failed to remove $targetFolder/$version"
 }
 
 sudo mkdir $targetFolder
@@ -99,3 +98,6 @@ InstallAndroidPackage $targetFolder $ndkVersion $ndkUrl $ndkSha1 $ndkTargetFile 
 echo "Running Android SDK update for API version 21, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
 echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
 
+# For Qt 5.6, we by default require API levels 10, 11, 16 and 21, but we can override this by setting ANDROID_API_VERSION=android-21
+# From Qt 5.7 forward, if android-16 is not installed, Qt will automatically use more recent one.
+echo 'export ANDROID_API_VERSION=android-21' >> ~/.bashrc
