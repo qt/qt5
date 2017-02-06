@@ -15,6 +15,29 @@ function Verify-Checksum
     }
 }
 
+function Extract-7Zip
+{
+    Param (
+        [string]$Source,
+        [string]$Destination
+    )
+    echo "Extracting '$Source' to '$Destination'..."
+
+    if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
+        $zipExe = join-path ${env:ProgramFiles(x86)} '7-zip\7z.exe'
+        if (-not (test-path $zipExe)) {
+            $zipExe = join-path ${env:ProgramW6432} '7-zip\7z.exe'
+            if (-not (test-path $zipExe)) {
+                throw "Could not find 7-zip."
+            }
+        }
+    } else {
+        $zipExe = "7z.exe"
+    }
+
+    & $zipExe x $Source "-o$Destination" -y
+}
+
 function Extract-Zip
 {
     Param (
