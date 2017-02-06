@@ -72,6 +72,7 @@
 [submodule "qtwebkit"]
 	depends = qtbase
 	recommends = qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns
+	serialize = qtwebengine
 	path = qtwebkit
 	url = ../qtwebkit.git
 	branch = 5.6
