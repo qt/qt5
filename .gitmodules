@@ -296,7 +296,7 @@
 	path = qtgamepad
 	url = ../qtgamepad
 	branch = 5.9
-	status = preview
+	status = addon
 [submodule "qtscxml"]
 	depends = qtbase qtdeclarative
 	path = qtscxml
