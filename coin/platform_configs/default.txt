@@ -23,6 +23,6 @@ qtci-osx-10.10-x86_64                                               Clang       
 qtci-osx-10.10-x86_64                                               Clang       Release NoFramework
 qtci-osx-10.10-x86_64               IOS_ANY             x86_64      Clang       Release DisableTests Static
 qtci-linux-RHEL-7.2-x86_64          Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-linux-Ubuntu-14.04-x86_64      Boot2Qt_Jethro      armv7       GCC         DisableTests
+qtci-linux-Ubuntu-16.04-x86_64      Boot2Qt_Jethro      x86_64      GCC         DisableTests
 qtci-linux-RHEL-6.6-x86_64          QNX_660             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-14.04-x86_64                                      GCC         TestOnly LicenseCheck
