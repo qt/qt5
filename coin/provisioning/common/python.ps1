@@ -30,39 +30,40 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-
+param([Int32]$archVer=32)
 . "$PSScriptRoot\helpers.ps1"
 
 # This script installs Python $version.
 # Python is required for building Qt 5 from source.
 
-$version = "2.7.10"
+$version = "2.7.13"
 $package = "C:\Windows\temp\python-$version.msi"
 
 # check bit version
-if ([System.Environment]::Is64BitProcess -eq $TRUE) {
+if ( $archVer -eq 64 ) {
+    echo "Running in 64 bit system"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.amd64.msi"
     $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.amd64.msi"
-    $sha1 = "f3a474f6ab191f9b43034c0fb5c98301553775d4"
+    $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
 }
 else {
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.msi"
     $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.msi"
-    $sha1 = "9e62f37407e6964ee0374b32869b7b4ab050d12a"
+    $sha1 = "7e3b54236dbdbea8fe2458db501176578a4d59c0"
 }
 
 echo "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 echo "Installing $package..."
-cmd /c "$package /q"
+cmd /c "msiexec /passive /i $package ALLUSERS=1"
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
 echo "Chancing allowZip64 value to 'True'..."
 (Get-Content C:\Python27\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content C:\Python27\lib\zipfile.py
 echo "Remove $package..."
 del $package
-Add-Path $path
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
 
-& python -m ensurepip
+C:\Python27\python.exe -m ensurepip
 # Install python virtual env
-pip.exe install virtualenv
+C:\Python27\Scripts\pip.exe install virtualenv
