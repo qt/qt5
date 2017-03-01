@@ -60,7 +60,7 @@ try
     # Enable linking to system dbus
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libdbus-1-dev || throw $ExceptionAPT
     # Needed libraries for WebEngine
-    sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libudev-dev libegl1-mesa-dev libfontconfig1-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libudev-dev libegl1-mesa-dev libfontconfig1-dev libxss-dev || throw $ExceptionAPT
     # Common event loop handling
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libglib2.0-dev || throw $ExceptionAPT
     # MySQL support
