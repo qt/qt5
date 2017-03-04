@@ -1,10 +1,9 @@
-#! /bin/sh
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -31,19 +30,4 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
-
-mkdir -p qtbase || exit
-
-echo "+ cd qtbase"
-cd qtbase || exit
-
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+. "$PSScriptRoot\..\common\msvc2015_update.ps1"

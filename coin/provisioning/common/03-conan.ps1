@@ -2,7 +2,7 @@
 
 $scriptsPath = "C:\Python27\Scripts"
 
-& "$scriptsPath\pip.exe" install --upgrade conan==0.16.0
+& "$scriptsPath\pip.exe" install --upgrade conan==0.20.2
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 

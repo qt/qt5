@@ -237,7 +237,7 @@
 	status = addon
 [submodule "qtwebengine"]
 	depends = qtquickcontrols qtwebchannel
-	recommends = qtlocation
+	recommends = qtlocation qttools
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 5.9
