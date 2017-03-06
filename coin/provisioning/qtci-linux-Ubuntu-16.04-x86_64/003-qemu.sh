@@ -1,10 +1,10 @@
-#! /bin/sh
+#!/usr/bin/env bash
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +32,29 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+set -e
+# build latest qemu to usermode
+sudo apt-get -y install automake autoconf libtool
 
-mkdir -p qtbase || exit
+tempDir=$(mktemp -d) || echo "Failed to create temporary directory"
+git clone git://git.qemu.org/qemu.git "$tempDir"
+cd "$tempDir"
 
-echo "+ cd qtbase"
-cd qtbase || exit
+#latest commit from the master proven to work
+git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
+git submodule update --init pixman
+./configure --target-list=arm-linux-user --static
+make
+sudo make install
+rm -rf "$tempDir"
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+# Enable binfmt support
+sudo apt-get -y install binfmt-support
+
+# Install qemu binfmt
+sudo update-binfmts --package qemu-arm --install arm \
+/usr/local/bin/qemu-arm \
+--magic \
+"\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
+--mask \
+"\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"

@@ -1,10 +1,11 @@
-#! /bin/sh
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,23 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+# This script installs MySQL
 
-mkdir -p qtbase || exit
+# MySQL is needed for Qt to be able to support MySQL
 
-echo "+ cd qtbase"
-cd qtbase || exit
+# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/osx_10.11_el_capitan/mysql-5.7.15-osx10.11-x86_64.tar.gz"
+AltUrl="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.15-osx10.11-x86_64.tar.gz"
+SHA1="07949bd42f350b0504a1536b8830b809b4a34fca"
+appPrefix=""
+targetDir="/opt/mysql57/"
+
+sudo mkdir -p "/opt"
+
+InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix" "$targetDir"
+
+echo "export MYSQLBINPATH=/opt/mysql57/bin" >> ~/.bashrc
+echo "MySQL = 5.7.15" >> ~/versions.txt
+

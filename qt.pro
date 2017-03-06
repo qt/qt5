@@ -25,10 +25,6 @@ for (line, lines) {
 QMAKE_INTERNAL_INCLUDED_FILES += $$PWD/.gitmodules
 
 QT_SKIP_MODULES =
-uikit {
-    QT_SKIP_MODULES += qtdoc qtmacextras qtserialport qtwebkit qtwebkit-examples
-    !ios: QT_SKIP_MODULES += qtscript
-}
 
 # This is a bit hacky, but a proper implementation is not worth it.
 args = $$QMAKE_EXTRA_ARGS

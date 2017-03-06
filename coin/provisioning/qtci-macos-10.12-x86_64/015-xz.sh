@@ -1,10 +1,11 @@
-#! /bin/sh
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,18 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+# This script installs XZ-Utils
 
-mkdir -p qtbase || exit
+# XZ-Utils are needed for uncompressing xz-compressed files
 
-echo "+ cd qtbase"
-cd qtbase || exit
+# shellcheck source=../common/try_catch.sh
+source "${BASH_SOURCE%/*}/../common/InstallPKGFromURL.sh"
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/XZ.pkg"
+AltUrl="http://sourceforge.net/projects/macpkg/files/XZ/5.0.7/XZ.pkg"
+SHA1="f0c1f82ebcffe0bd4b8b57b6a77805db56b2de67"
+DestDir="/"
+
+InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
+
+echo "XZ = 5.0.7" >> ~/versions.txt

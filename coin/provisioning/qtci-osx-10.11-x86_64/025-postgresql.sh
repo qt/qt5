@@ -1,10 +1,11 @@
-#! /bin/sh
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,20 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+# This script installs PostgreSQL
 
-mkdir -p qtbase || exit
+# PostgreSQL is needed for Qt to be able to support PostgreSQL
 
-echo "+ cd qtbase"
-cd qtbase || exit
+# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/osx_10.11_el_capitan/Postgres-9.6.0.zip"
+AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/9.6.0/Postgres-9.6.0.zip"
+SHA1="5078e44663787006ca55fa3b5e2be598bed82eb5"
+appPrefix=""
+
+InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
+
+echo "export POSTGRESQLBINPATH=/Applications/Postgres.app/Contents/Versions/9.6/bin" >> ~/.bashrc
+echo "PostgreSQL = 9.6.0" >> ~/versions.txt
+

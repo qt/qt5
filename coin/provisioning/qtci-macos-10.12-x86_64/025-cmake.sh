@@ -1,10 +1,11 @@
-#! /bin/sh
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,18 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+# This script installs CMake
 
-mkdir -p qtbase || exit
+# CMake is needed for autotests that verify that Qt can be built with CMake
 
-echo "+ cd qtbase"
-cd qtbase || exit
+# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/cmake-3.6.2-Darwin-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
+SHA1="13835afa3aea939e07a7ecccedcc041dd8c3a86e"
+appPrefix="cmake-3.6.2-Darwin-x86_64"
+
+InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
+
+echo "CMake = 3.6.2" >> ~/versions.txt

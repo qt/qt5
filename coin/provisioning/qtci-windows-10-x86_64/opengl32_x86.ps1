@@ -1,11 +1,9 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,14 +31,33 @@
 ##
 #############################################################################
 
-sudo apt-get -y build-dep qt5-default
+. "$PSScriptRoot\..\common\helpers.ps1"
 
-# qtbase
-sudo apt-get -y install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev
-sudo apt-get -y install libxcb-xinerama0-dev libdbus-1-dev libatspi2.0-dev
+$version = "11_2_2"
+$package = "C:\Windows\temp\opengl32sw_$version.7z"
+$destinationFolder = "C:\Windows\SysWOW64"
+$openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
 
-# qtmultimedia
-sudo apt-get -y install libasound2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+$mesaOpenglUrl = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
+$mesaOpenglSha1 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
+$openglUrl = "http://ci-files01-hki.ci.local/input/mesa3d/windows/32bit/opengl32.dll"
+$openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
 
-# qtwebengine
-sudo apt-get -y install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
+Invoke-WebRequest -UseBasicParsing $mesaOpenglUrl -OutFile $package
+Verify-Checksum $package $mesaOpenglSha1
+Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$destinationFolder"}
+
+echo "Remove downloaded $package ..."
+Remove-Item $package -recurse
+
+echo "Take ownership of existing opengl32.dll from SysWOW64"
+takeown /f $openglPackage
+icacls $openglPackage /grant Administrators:F
+echo "Remove existing opengl32.dll from SysWOW64"
+Remove-Item -Recurse -Force $openglPackage
+echo "Add new opengl32.dll to SysWOW64"
+Invoke-WebRequest -UseBasicParsing $openglUrl -OutFile $openglPackage
+Verify-Checksum $openglPackage $openglSha1
+
+# Store version information to ~/versions.txt
+echo "OpenGL x86 = $version" >> ~/versions.txt

@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -48,23 +48,24 @@ targetFolder="/opt/android"
 baseUrl="http://ci-files01-hki.ci.local/input/android"
 
 # SDK
-sdkVersion="android-sdk_r24.4.1-linux.tgz"
+sdkPackage="android-sdk_r24.4.1-linux.tgz"
 sdkBuildToolsVersion="23.0.3"
 sdkApiLevel="android-21"
-sdkUrl="$baseUrl/$sdkVersion"
+sdkUrl="$baseUrl/$sdkPackage"
 sdkSha1="725bb360f0f7d04eaccff5a2d57abdd49061326d"
-sdkTargetFile="$targetFolder/$sdkVersion"
+sdkTargetFile="$targetFolder/$sdkPackage"
 sdkExtract="tar -C $targetFolder -zxf $sdkTargetFile"
 sdkFolderName="android-sdk-linux"
 sdkName="sdk"
 
 # NDK
-ndkVersion="android-ndk-r10e-linux-x86_64.zip"
-ndkUrl="$baseUrl/$ndkVersion"
+ndkVersion="r10e"
+ndkPackage="android-ndk-$ndkVersion-linux-x86_64.zip"
+ndkUrl="$baseUrl/$ndkPackage"
 ndkSha1="f692681b007071103277f6edc6f91cb5c5494a32"
-ndkTargetFile="$targetFolder/$ndkVersion"
+ndkTargetFile="$targetFolder/$ndkPackage"
 ndkExtract="unzip $ndkTargetFile -d $targetFolder"
-ndkFolderName="android-ndk-r10e"
+ndkFolderName="android-ndk-$ndkVersion"
 ndkName="ndk"
 
 function InstallAndroidPackage {
@@ -77,25 +78,40 @@ function InstallAndroidPackage {
     folderName=$7
     name=$8
 
-    sudo wget --tries=5 --waitretry=5 --output-document=$targetFile $url || echo "Failed to download '$url' multiple times"
+    sudo wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url" || echo "Failed to download '$url' multiple times"
     echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
-    sudo chmod 755 $targetFile
+    sudo chmod 755 "$targetFile"
     sudo $extract || echo "Failed to extract $url"
-    sudo chown -R qt:users $targetFolder/$folderName
-    sudo mv $targetFolder/$folderName $targetFolder/$name || echo "Failed to rename $name"
-    sudo rm -fr $targetFolder/$version
+    sudo chown -R qt:users "$targetFolder"/"$folderName"
+    sudo mv "$targetFolder"/"$folderName" "$targetFolder"/"$name" || echo "Failed to rename $name"
+    sudo rm -fr "$targetFolder"/"$version"
 }
 
-sudo mkdir $targetFolder
+sudo mkdir "$targetFolder"
+
 # Install Android SDK
-echo "Installing Android SDK version $sdkVersion..."
-InstallAndroidPackage $targetFolder $sdkVersion $sdkUrl $sdkSha1 $sdkTargetFile "$sdkExtract" $sdkFolderName $sdkName
+echo "Installing Android SDK version $sdkPackage..."
+InstallAndroidPackage "$targetFolder" $sdkPackage $sdkUrl $sdkSha1 $sdkTargetFile "$sdkExtract" $sdkFolderName $sdkName
 
 # Install Android NDK
-echo "Installing Android NDK version $ndkVersion..."
-InstallAndroidPackage $targetFolder $ndkVersion $ndkUrl $ndkSha1 $ndkTargetFile "$ndkExtract" $ndkFolderName $ndkName
+echo "Installing Android NDK version $ndkPackage..."
+InstallAndroidPackage "$targetFolder" $ndkPackage $ndkUrl $ndkSha1 $ndkTargetFile "$ndkExtract" $ndkFolderName $ndkName
 
-# run update for Android SDK and install SDK API version 21, latest SDK tools, platform-tools and build-tools
-echo "Running Android SDK update for API version 21, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
-echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
+# run update for Android SDK and install SDK API version 18, latest SDK tools, platform-tools and build-tools
+echo "Running Android SDK update for API version 18, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
+echo "y" |"$targetFolder"/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
 
+# For Qt 5.6, we by default require API levels 10, 11, 16 and 18, but we can override this by setting ANDROID_API_VERSION=android-18
+# From Qt 5.7 forward, if android-16 is not installed, Qt will automatically use more recent one.
+# echo 'export ANDROID_API_VERSION=$sdkApiLevel' >> ~/.bashrc
+
+# Storage version information to ~/versions.txt, which is used to print version information to provision log.
+echo "***** Android SDK *****" >> ~/versions.txt
+echo "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
+echo "Android SDK Build Tools Version = $sdkBuildToolsVersion" >> ~/versions.txt
+platformTools="$(grep Pkg.Revision "$targetFolder"/sdk/platform-tools/source.properties | cut -c14-)"
+echo "Android Platform Tools = $platformTools" >> ~/versions.txt
+sdkTools="$(grep Pkg.Revision "$targetFolder"/sdk/tools/source.properties | cut -c14-)"
+echo "Android SDK Tools = $sdkTools" >> ~/versions.txt
+echo "***** Android NDK *****" >> ~/versions.txt
+echo "Android NDK Version = $ndkVersion" >> ~/versions.txt

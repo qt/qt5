@@ -1,10 +1,11 @@
-#! /bin/sh
+#!/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the build tools of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,17 @@
 ##
 #############################################################################
 
-srcpath=`dirname $0`
-srcpath=`(cd "$srcpath"; pwd)`
-configure=$srcpath/qtbase/configure
-if [ ! -e "$configure" ]; then
-    echo "$configure not found. Did you forget to run \"init-repository\"?" >&2
-    exit 1
-fi
+# This script removes preinstalled sw.
+# NOTE! Make sure that ALL software which are removed here have provision script under platrom folders which calls this script
 
-mkdir -p qtbase || exit
+function RemoveDir {
+    targetFolder=$1
 
-echo "+ cd qtbase"
-cd qtbase || exit
+    if [ -d "$targetFolder" ]; then
+        echo "Removing existing $targetFolder..."
+        sudo rm -fr "$targetFolder"
+    fi
+}
 
-echo "+ $configure -top-level $@"
-exec "$configure" -top-level "$@"
+# Android
+RemoveDir /opt/android
