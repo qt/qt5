@@ -381,7 +381,7 @@ sub git_clone_all_submodules
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
-        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+        # Example line: submodule.qtqa.url=git://code.qt.io/qt/qtqa.git
         next if ($line !~ /submodule\.([^.=]+)\.url=/);
         my $module = $1;
 
