@@ -3,6 +3,11 @@ Continuous Integration
 
 This directory contains files used by Qt's Continuous Integration system (Coin).
 
+pre-provisioning
+----------------
+Contains scripts which are used to install software to tier1 machines manually.
+E.g. Visual studio installation takes too long to be included to automatic provisioning of tier2 templates.
+
 provisioning
 ------------
 Contains scripts that apply to different test machines in order to run automatic tests on them.
