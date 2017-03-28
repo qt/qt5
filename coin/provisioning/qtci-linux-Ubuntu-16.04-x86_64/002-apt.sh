@@ -80,6 +80,8 @@ try
     # Install libraries needed for QtMultimedia to be able to support all plugins
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev || throw $ExceptionAPT
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev || throw $ExceptionAPT
+    # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
+    sudo DEBIAN_FRONTEND=noninteractive apt -q -y install g++-multilib || throw $ExceptionAPT
 )
 catch || {
     case $ex_code in

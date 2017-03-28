@@ -39,7 +39,7 @@
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
 VNCPassword=qt
-NTS_IP=10.212.2.0
+NTS_IP=10.212.2.216
 
 ExceptionDisableScreensaver=100
 ExceptionSetInitialDelay=101

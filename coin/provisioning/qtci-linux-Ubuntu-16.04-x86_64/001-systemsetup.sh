@@ -38,7 +38,7 @@
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
-NTS_IP=10.212.2.0
+NTS_IP=10.212.2.216
 
 ExceptionGsettings1=100
 ExceptionGsettings2=101

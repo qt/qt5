@@ -52,6 +52,7 @@ ExceptionSHA1=101
 ExceptionUnXZ=102
 ExceptionCPIO=103
 ExceptionDelete=104
+ExceptionAcceptLicense=105
 
 
 url=http://ci-files01-hki.ci.local/input/mac/Xcode_8.2.xz
@@ -75,6 +76,9 @@ try
     echo "Deleting '${targetFile%.*}'"
     rm "${targetFile%.*}" || throw $ExceptionDelete
 
+    echo "Accept license"
+    sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
+
     echo "Xcode = 8.2" >> ~/versions.txt
 )
 catch || {
@@ -97,6 +101,10 @@ catch || {
         ;;
         $ExceptionDelete)
             echo "Failed to delete temporary file."
+            exit 1;
+        ;;
+        $ExceptionAcceptLicense)
+            echo "Failed to accept license."
             exit 1;
         ;;
 
