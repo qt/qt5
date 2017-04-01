@@ -68,3 +68,6 @@ sudo cp -a $tempDir/lib/* /usr/lib64
 sudo cp -a $tempDir/* /usr/
 
 sudo /sbin/ldconfig
+
+# Storage version information to ~/versions.txt, which is used to print version information to provision log.
+echo "ICU = $icuVersion" >> ~/versions.txt
