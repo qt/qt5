@@ -316,7 +316,7 @@ sub git_clone_all_submodules
             my ($mod, $base) = ($1, $3);
             next if ($base !~ /^\.\.\//);
             $base = $my_repo_base.'/'.$base;
-            while ($base =~ s,/(?!\.\./)[^/]+/\.\./,/,g) {}
+            while ($base =~ s,(?!\.\./)[^/]+/\.\./,,g) {}
             $subbases{$mod} = $base;
         } elsif ($2 eq "update") {
             push @subset, '-'.$1 if ($3 eq 'none');

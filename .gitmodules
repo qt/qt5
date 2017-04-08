@@ -238,6 +238,7 @@
 [submodule "qtwebengine"]
 	depends = qtquickcontrols qtwebchannel
 	recommends = qtlocation qttools
+	serialize = qtwebkit
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 5.9
