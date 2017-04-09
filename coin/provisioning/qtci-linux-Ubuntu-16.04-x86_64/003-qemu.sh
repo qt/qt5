@@ -58,3 +58,9 @@ sudo update-binfmts --package qemu-arm --install arm \
 "\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
 --mask \
 "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
+
+# First test using QFont fails if fonts-noto-cjk is installed. This happens because
+# running fontcache for that font takes > 5 mins when run on QEMU. Running fc-cache
+# doesn't help since host version creates cache for a wrong architecture and running
+# armv7 fc-cache segfaults on QEMU.
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y remove fonts-noto-cjk

@@ -41,7 +41,7 @@
 source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
 PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/osx_10.11_el_capitan/cmake-3.6.2-Darwin-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Darwin-x86_64.tar.gz"
 SHA1="13835afa3aea939e07a7ecccedcc041dd8c3a86e"
 appPrefix="cmake-3.6.2-Darwin-x86_64"
 

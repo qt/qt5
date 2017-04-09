@@ -43,14 +43,14 @@ for (ever) {
     }
 }
 
-modules = $$sort_depends(modules, module., .depends .recommends)
+modules = $$sort_depends(modules, module., .depends .recommends .serialize)
 modules = $$reverse(modules)
 for (mod, modules) {
     equals(module.$${mod}.qt, false): \
         next()
 
     deps = $$eval(module.$${mod}.depends)
-    recs = $$eval(module.$${mod}.recommends)
+    recs = $$eval(module.$${mod}.recommends) $$eval(module.$${mod}.serialize)
     for (d, $$list($$deps $$recs)): \
         !contains(modules, $$d): \
             error("'$$mod' depends on undeclared '$$d'.")

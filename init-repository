@@ -144,7 +144,7 @@ Options:
 
         For example:
 
-          --mirror user\@machine:/foo/bar/
+          --mirror user\@machine:/foo/bar/qt/
 
         ...will use the following as a mirror for qtbase:
 
@@ -167,13 +167,13 @@ my $script_path = abs_path($0);
 $script_path =~ s,[/\\][^/\\]+$,,;
 
 my $GERRIT_SSH_BASE
-    = 'ssh://@USER@codereview.qt-project.org@PORT@/';
+    = 'ssh://@USER@codereview.qt-project.org@PORT@/qt/';
 
 my $BER_MIRROR_URL_BASE
-    = 'git://hegel/';
+    = 'git://hegel/qt/';
 
 my $OSLO_MIRROR_URL_BASE
-    = 'git://qilin/';
+    = 'git://qilin/qt/';
 
 sub new
 {
@@ -316,7 +316,7 @@ sub git_clone_all_submodules
             my ($mod, $base) = ($1, $3);
             next if ($base !~ /^\.\.\//);
             $base = $my_repo_base.'/'.$base;
-            while ($base =~ s,/(?!\.\./)[^/]+/\.\./,/,g) {}
+            while ($base =~ s,(?!\.\./)[^/]+/\.\./,,g) {}
             $subbases{$mod} = $base;
         } elsif ($2 eq "update") {
             push @subset, '-'.$1 if ($3 eq 'none');
@@ -381,7 +381,7 @@ sub git_clone_all_submodules
     # manually clone each repo here, so we can easily use reference repos, mirrors etc
     my @configresult = qx(git config -l);
     foreach my $line (@configresult) {
-        # Example line: submodule.qtqa.url=git://gitorious.org/qt/qtqa.git
+        # Example line: submodule.qtqa.url=git://code.qt.io/qt/qtqa.git
         next if ($line !~ /submodule\.([^.=]+)\.url=/);
         my $module = $1;
 
@@ -638,12 +638,12 @@ sub run
     chomp(my $url = `git config remote.origin.url`);
     die("Have no origin remote.\n") if (!$url);
     $url =~ s,\.git$,,;
-    $url =~ s,qt/qt5$,,;
+    $url =~ s/qt5$//;
     $self->{'base-url'} = $url;
 
-    $self->git_clone_all_submodules('qt/qt5', $self->{branch}, @{$self->{'module-subset'}});
+    $self->git_clone_all_submodules('qt5', $self->{branch}, @{$self->{'module-subset'}});
 
-    $self->git_add_remotes('qt/qt5');
+    $self->git_add_remotes('qt5');
 
     $self->git_install_hooks;
 

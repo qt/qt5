@@ -24,7 +24,7 @@ function Extract-7Zip
     echo "Extracting '$Source' to '$Destination'..."
 
     if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
-        $zipExe = join-path ${env:ProgramFiles(x86)} '7-zip\7z.exe'
+        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles} -ne $null)[0] '7-zip\7z.exe'
         if (-not (test-path $zipExe)) {
             $zipExe = join-path ${env:ProgramW6432} '7-zip\7z.exe'
             if (-not (test-path $zipExe)) {
