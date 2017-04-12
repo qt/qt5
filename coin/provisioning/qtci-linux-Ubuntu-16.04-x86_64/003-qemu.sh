@@ -64,3 +64,15 @@ sudo update-binfmts --package qemu-arm --install arm \
 # doesn't help since host version creates cache for a wrong architecture and running
 # armv7 fc-cache segfaults on QEMU.
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y remove fonts-noto-cjk
+
+# If normal fontconfig paths are used, qemu parses what ever files it finds from
+# the toolchain sysroot and the rest from the system fonts. Fix by copying the
+# system font configurations to a location which prefix that can't be found from
+# the toolchain sysroot. Links must also be dereferenced or their targets remain
+# pointing to the toolchain sysroot.
+QEMU_FONTCONFPATH=~/qemu_fonts
+QEMU_FONTCONFFILE=$QEMU_FONTCONFPATH/fonts.qemu.conf
+mkdir -p $QEMU_FONTCONFPATH
+cp -Lr /etc/fonts/* $QEMU_FONTCONFPATH
+sed $QEMU_FONTCONFPATH/fonts.conf -e "s:conf.d:$QEMU_FONTCONFPATH/conf.d:" > $QEMU_FONTCONFFILE
+echo "export QEMU_SET_ENV=\"FONTCONFIG_FILE=$QEMU_FONTCONFFILE,FONTCONFIG_PATH=$QEMU_FONTCONFPATH\"" >> ~/.profile
