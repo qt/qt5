@@ -79,6 +79,10 @@ function DownloadURL {
                 echo "Failed downloading PKG from primary and alternative URLs"
                 exit 1;
             ;;
+            $ExceptionSHA1)
+                echo "Failed checksum on $targetFile."
+                exit 1;
+            ;;
         esac
     }
 }
