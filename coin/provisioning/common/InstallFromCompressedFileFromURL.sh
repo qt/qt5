@@ -80,7 +80,7 @@ function InstallFromCompressedFileFromURL {
             ;;
         esac
         echo "Moving app to $installDirectory"
-        sudo mkdir "$installDirectory"
+        sudo mkdir -p "$installDirectory"
         sudo mv "$targetDirectory/$appPrefix/"* "$installDirectory" || throw $ExceptionMoveApp
         echo "Removing file '$targetFile'"
         rm "$targetFile" || throw $ExceptionDeleteTmpFile
