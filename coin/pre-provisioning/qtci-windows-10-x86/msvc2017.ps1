@@ -1,6 +1,4 @@
-#!/bin/bash
-
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -33,19 +31,19 @@
 ##
 #############################################################################
 
-# This script installs CMake
+. "$PSScriptRoot\..\common\helpers.ps1"
 
-# CMake is needed for autotests that verify that Qt can be built with CMake
+# This script will install Visual Studio 2017
 
-# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
+$version = "2017"
+$url_cache = "http://ci-files01-hki.ci.local/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
+$sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
+$msvcPackage = "C:\Windows\Temp\$version.exe"
 
-PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/cmake-3.6.2-Darwin-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Darwin-x86_64.tar.gz"
-SHA1="13835afa3aea939e07a7ecccedcc041dd8c3a86e"
-appPrefix="cmake-3.6.2-Darwin-x86_64"
 
-InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
-
-echo "export PATH=/Applications/CMake.app/Contents/bin:$PATH" >> ~/.bashrc
-echo "CMake = 3.6.2" >> ~/versions.txt
+Download $url_cache $url_cache $msvcPackage
+Verify-Checksum $msvcPackage $sha1
+cmd /c "$msvcPackage --all --norestart --quiet --wait"
+echo "Cleaning $msvcPackage.."
+Remove-Item -Recurse -Force "$msvcPackage"
+echo "Visual Studio = $version" >> ~\versions.txt
