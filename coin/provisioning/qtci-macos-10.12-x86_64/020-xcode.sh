@@ -53,9 +53,9 @@ ExceptionDelete=104
 ExceptionAcceptLicense=105
 
 
-url=http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/Xcode_8.2.1.xz
-targetFile=/tmp/Xcode_8.2.1.xz
-expectedSha1=a68e8a4446f77e781b1ce123125263862f2607a3
+url=http://ci-files01-hki.ci.local/input/mac/Xcode_8.3.1.xz
+targetFile=/tmp/Xcode_8.3.1.xz
+expectedSha1=4ecdba2e563229034802a4ee9a0800b947d05a8e
 
 try
 (
@@ -77,7 +77,7 @@ try
     echo "Accept license"
     sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
 
-    echo "XCode = 8.2.1" >> ~/versions.txt
+    echo "XCode = 8.3.1" >> ~/versions.txt
 )
 catch || {
     case $ex_code in
