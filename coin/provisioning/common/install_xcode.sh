@@ -45,9 +45,39 @@
 
 
 # shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+source "${BASH_SOURCE%/*}/try_catch.sh"
 
-# shellcheck source=../common/install_xcode.sh
-source "${BASH_SOURCE%/*}/../common/install_xcode.sh"
+function InstallXCode()
+{
+    ExceptionCPIO=103
+    ExceptionAcceptLicense=105
 
-InstallXCode /net/ci-files01-hki.ci.local/hdd/www/input/mac/Xcode_8.2.xz 8.2
+    sourceFile=$1
+    version=$2
+
+    try
+    (
+        echo "Uncompressing and installing '$sourceFile'"
+        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -vdmi) || throw $ExceptionCPIO
+
+        echo "Accept license"
+        sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
+
+        echo "Xcode = $version" >> ~/versions.txt
+    )
+    catch || {
+        case $ex_code in
+            $ExceptionCPIO)
+                echo "Failed to unarchive .cpio."
+                exit 1;
+            ;;
+            $ExceptionAcceptLicense)
+                echo "Failed to accept license."
+                exit 1;
+            ;;
+
+        esac
+    }
+
+}
+
