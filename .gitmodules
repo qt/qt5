@@ -295,32 +295,32 @@
 	depends = qtbase
 	recommends = qtdeclarative
 	path = qtgamepad
-	url = ../qtgamepad
+	url = ../qtgamepad.git
 	branch = 5.9
 	status = addon
 [submodule "qtscxml"]
 	depends = qtbase qtdeclarative
 	path = qtscxml
-	url = ../qtscxml
+	url = ../qtscxml.git
 	branch = 5.9
 	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtspeech
-	url = ../qtspeech
+	url = ../qtspeech.git
 	branch = 5.9
 	status = preview
 [submodule "qtnetworkauth"]
 	depends = qtbase
 	recommends = qtwebview
 	path = qtnetworkauth
-	url = ../qtnetworkauth
+	url = ../qtnetworkauth.git
 	branch = 5.9
 	status = preview
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	path = qtremoteobjects
-	url = ../qtremoteobjects
+	url = ../qtremoteobjects.git
 	branch = 5.9
 	status = preview
