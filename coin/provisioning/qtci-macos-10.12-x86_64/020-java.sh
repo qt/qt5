@@ -79,7 +79,8 @@ try
     echo Installing JDK
     (cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /) || throw $ExceptionInstall
 
-    hdiutil detach /dev/disk1s1 || throw $ExceptionDetachImage
+    disk=`hdiutil info | grep '/Volumes/JDK 8 Update 102' | awk '{print $1}'`
+    hdiutil detach $disk || throw $ExceptionDetachImage
 
     echo "Removing temporary file '$targetFile'"
     rm "$targetFile" || throw $ExceptionRemoveTmpFile
