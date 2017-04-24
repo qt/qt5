@@ -43,55 +43,44 @@
 
 set -e
 targetFolder="/opt/android"
-baseUrl="http://ci-files01-hki.ci.local/input/android"
+basePath="/net/ci-files01-hki.ci.local/hdd/www/input/android"
 
 # SDK
 sdkVersion="android-sdk_r24.4.1-macosx.zip"
 sdkBuildToolsVersion="24.0.2"
 sdkApiLevel="android-18"
-sdkUrl="$baseUrl/$sdkVersion"
-sdkSha1="85a9cccb0b1f9e6f1f616335c5f07107553840cd"
-sdkTargetFile="$targetFolder/$sdkVersion"
-sdkExtract="unzip $sdkTargetFile -d $targetFolder"
+sdkSourceFile="$basePath/$sdkVersion"
+sdkExtract="unzip $sdkSourceFile -d $targetFolder"
 sdkFolderName="android-sdk-macosx"
 sdkName="sdk"
 
 # NDK
 ndkVersion="android-ndk-r10e-darwin-x86_64.zip"
-ndkUrl="$baseUrl/$ndkVersion"
-ndkSha1="6be8598e4ed3d9dd42998c8cb666f0ee502b1294"
-ndkTargetFile="$targetFolder/$ndkVersion"
-ndkExtract="unzip $ndkTargetFile -d $targetFolder"
+ndkSourceFile="$basePath/$ndkVersion"
+ndkExtract="unzip $ndkSourceFile -d $targetFolder"
 ndkFolderName="android-ndk-r10e"
 ndkName="ndk"
 
 function InstallAndroidPackage {
     targetFolder=$1
     version=$2
-    url=$3
-    sha1=$4
-    targetFile=$5
-    extract=$6
-    folderName=$7
-    name=$8
+    extract=$3
+    folderName=$4
+    name=$5
 
-    sudo curl --retry 5 --retry-delay 10 --retry-max-time 60 $url -o $targetFile || echo "Failed to download '$url' multiple times"
-    shasum $targetFile |grep $sha1 || echo "shasum check failed !"
-    sudo chmod 755 $targetFile
     sudo $extract || echo "Failed to extract $url"
     sudo chown -R qt:wheel $targetFolder/$folderName
     sudo mv $targetFolder/$folderName $targetFolder/$name || echo "Failed to rename $name"
-    sudo rm -fr $targetFolder/$version || echo "Failed to remove $targetFolder/$version"
 }
 
 sudo mkdir $targetFolder
 # Install Android SDK
 echo "Installing Android SDK version $sdkVersion..."
-InstallAndroidPackage $targetFolder $sdkVersion $sdkUrl $sdkSha1 $sdkTargetFile "$sdkExtract" $sdkFolderName $sdkName
+InstallAndroidPackage $targetFolder $sdkVersion "$sdkExtract" $sdkFolderName $sdkName
 
 # Install Android NDK
 echo "Installing Android NDK version $ndkVersion..."
-InstallAndroidPackage $targetFolder $ndkVersion $ndkUrl $ndkSha1 $ndkTargetFile "$ndkExtract" $ndkFolderName $ndkName
+InstallAndroidPackage $targetFolder $ndkVersion "$ndkExtract" $ndkFolderName $ndkName
 
 # run update for Android SDK and install SDK API version 18, latest SDK tools, platform-tools and build-tools
 echo "Running Android SDK update for API version 18, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
