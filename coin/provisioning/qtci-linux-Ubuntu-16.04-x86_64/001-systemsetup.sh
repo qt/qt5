@@ -44,7 +44,6 @@ ExceptionGsettings1=100
 ExceptionGsettings2=101
 ExceptionGsettings3=102
 ExceptionNTS=103
-ExceptionDISPLAY=104
 
 try
 (
@@ -57,8 +56,6 @@ try
 
     echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
     echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
-    echo "Set DISPLAY"
-    echo 'export DISPLAY=":0"' >> ~/.bashrc || throw $ExceptionDISPLAY
 )
 catch || {
     case $ex_code in
@@ -76,10 +73,6 @@ catch || {
         ;;
         $ExceptionNTS)
             echo "Failed to set network teset server address into /etc/hosts."
-            exit 1;
-        ;;
-        $ExceptionDISPLAY)
-            echo "Failed to set DISPLAY into ~/.bashrc."
             exit 1;
         ;;
     esac
