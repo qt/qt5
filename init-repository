@@ -469,7 +469,7 @@ sub git_stat_one_submodule
     my $orig_cwd = getcwd();
     chdir($submodule) or confess "chdir $submodule: $OS_ERROR";
 
-    my @sts = qx(git status --porcelain --untracked=no);
+    my @sts = qx(git status --porcelain --untracked=no --ignore-submodules=all);
 
     # After a git clone --no-checkout, git status reports all files as
     # staged for deletion, but we still want to update the submodule.
