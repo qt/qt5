@@ -1,4 +1,4 @@
-############################################################################
+#############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -31,19 +31,13 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+# Visual Studios are pre-provisioned to tier1 images
 
-# This script will install Visual Studio 2017
+# MSVC 2015 Update 3
+echo "Visual Studio 2015 = Version 14.0.25421.3 Update 3" >> ~\versions.txt
 
-$version = "2017"
-$url_cache = "http://ci-files01-hki.ci.local/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
-$sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
-$msvcPackage = "C:\Windows\Temp\$version.exe"
+# MSVC 2017
+echo "Visual Studio 2017 = Version 15.1 (26403.7)" >> ~\versions.txt
 
-
-Download $url_cache $url_cache $msvcPackage
-Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --norestart --quiet --wait --add Microsoft.VisualStudio.Component.VC.Tools.ARM"
-echo "Cleaning $msvcPackage.."
-Remove-Item -Recurse -Force "$msvcPackage"
-echo "Visual Studio = $version" >> ~\versions.txt
+# MSVC 2017 Build Tools
+echo "Visual Studio 2017 Build Tools = Version 15.1 (26403.7)" >> ~\versions.txt
