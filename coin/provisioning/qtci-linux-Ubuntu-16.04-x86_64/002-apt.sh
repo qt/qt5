@@ -82,6 +82,8 @@ try
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev || throw $ExceptionAPT
     # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
     sudo DEBIAN_FRONTEND=noninteractive apt -q -y install g++-multilib || throw $ExceptionAPT
+    # python3 development package
+    sudo DEBIAN_FRONTEND=noninteractive apt -q -y install python3-dev python3-pip python3-virtualenv || throw $ExceptionAPT
 )
 catch || {
     case $ex_code in
