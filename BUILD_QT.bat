@@ -6,7 +6,7 @@ rem The script assumed that perl, jom and python are already set in PATH. The ou
 SET OUT_DIR=Qt
 SET SRC_DIR=.
 SET BUILD_ID=x64-msvc2015-static
-SET QMAKESPEC=winrt-x64-msvc2015
+SET QMAKESPEC=x64-msvc2015
 
 call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat" x64
 if !errorlevel! neq 0 exit /b !errorlevel!
