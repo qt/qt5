@@ -19,6 +19,6 @@ xcopy "%static_lib_path%\bin"  "%destination%\bin" /y/s/q/i
 xcopy "%static_lib_path%\plugins"  "%destination%\plugins" /y/s/q/i
 
 REM remove all intermediate files in the original library folder
-rmdir %lib_path% /s /q
+rmdir "%lib_path%" /s /q
 
 exit /b 0
