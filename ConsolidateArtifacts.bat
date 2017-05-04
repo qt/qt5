@@ -20,5 +20,9 @@ xcopy "%static_lib_path%\plugins"  "%destination%\plugins" /y/s/q/i
 
 REM remove all intermediate files in the original library folder
 rmdir "%lib_path%" /s /q
+pushd "%destination%"
+rmdir "lib\cmake" /s /q
+del *.prl /s /q
+del *.pdb /s /q
 
 exit /b 0
