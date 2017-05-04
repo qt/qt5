@@ -25,4 +25,9 @@ rmdir "lib\cmake" /s /q
 del *.prl /s /q
 del *.pdb /s /q
 
+pushd bin
+REM delete all applications except for necessary ones.
+for %i in (*.*) do if not "%i"=="moc.exe" if not "%i"=="rcc.exe" if not "%i"=="uic.exe" del /q "%i"
+
+
 exit /b 0
