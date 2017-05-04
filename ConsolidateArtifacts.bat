@@ -14,11 +14,16 @@ if exist "%destination%" rmdir "%destination%" /s/q
 
 echo "Packaging library"
 xcopy "%static_lib_path%\include"  "%destination%\include" /y/s/q/i
+if !errorlevel! neq 0 exit /b !errorlevel!
 xcopy "%static_lib_path%\lib"  "%destination%\lib" /y/s/q/i
+if !errorlevel! neq 0 exit /b !errorlevel!
 xcopy "%static_lib_path%\bin"  "%destination%\bin" /y/s/q/i
+if !errorlevel! neq 0 exit /b !errorlevel!
 xcopy "%static_lib_path%\plugins"  "%destination%\plugins" /y/s/q/i
+if !errorlevel! neq 0 exit /b !errorlevel!
 
 REM remove all intermediate files in the original library folder
 rmdir "%lib_path%" /s /q
+if !errorlevel! neq 0 exit /b !errorlevel!
 
 exit /b 0
