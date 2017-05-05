@@ -39,14 +39,11 @@
 
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
-# shellcheck source=../common/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
-baseUrl="http://ci-files01-hki.ci.local/input/android"
-baseAltUrl="https://dl.google.com/android/repository/"
+basePath="/net/ci-files01-hki.ci.local/hdd/www/input/android"
 
 toolsVersion="r25.2.5"
 toolsFile="tools_$toolsVersion-macosx.zip"
@@ -58,13 +55,10 @@ sdkApiLevel="android-21"
 toolsSha1="d2168d963ac5b616e3d3ddaf21511d084baf3659"
 ndkSha1="6be8598e4ed3d9dd42998c8cb666f0ee502b1294"
 
-toolsDlUrl="$baseUrl/$toolsFile"
-ndkDlUrl="$baseUrl/$ndkFile"
-toolsAltDlUrl="$baseAltUrl/$toolsFile"
-ndkAltDlUrl="$baseAltUrl/$ndkFile"
-
 toolsTargetFile="/tmp/$toolsFile"
+toolsSourceFile="$basePath/$toolsFile"
 ndkTargetFile="/tmp/$ndkFile"
+ndkSourceFile="$basePath/$ndkFile"
 
 ExceptionUnzipTools=100
 ExceptionUnzipNdk=101
@@ -74,16 +68,10 @@ ExceptionSdkManager=104
 
 try
 (
-    DownloadURL "$toolsDlUrl" "$toolsAltDlUrl" "$toolsSha1" "$toolsTargetFile"
-    DownloadURL "$ndkDlUrl" "$ndkAltDlUrl" "$ndkSha1" "$ndkTargetFile"
     echo "Unzipping Android NDK to '$targetFolder'"
-    sudo unzip -q "$ndkTargetFile" -d "$targetFolder" || throw $ExceptionUnzipNdk
+    sudo unzip -q "$ndkSourceFile" -d "$targetFolder" || throw $ExceptionUnzipNdk
     echo "Unzipping Android Tools to '$sdkTargetFolder'"
-    sudo unzip -q "$toolsTargetFile" -d "$sdkTargetFolder" || throw $ExceptionUnzipTools
-
-    echo "Removing temporary files."
-    rm "$toolsTargetFile" || throw $ExceptionRmTools
-    rm "$ndkTargetFile" || throw $ExceptionRmNdk
+    sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder" || throw $ExceptionUnzipTools
 
     echo "Changing ownership of Android files."
     sudo chown -R qt:wheel "$targetFolder"

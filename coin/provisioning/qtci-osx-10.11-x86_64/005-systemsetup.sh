@@ -46,6 +46,7 @@ ExceptionSetInitialDelay=101
 ExceptionSetDelay=102
 ExceptionVNC=103
 ExceptionNTS=104
+ExceptionDisableScreensaverPassword=105
 
 try
 (
@@ -77,6 +78,8 @@ try
 </plist>
 EOT
     ) || throw $ExceptionDisableScreensaver
+
+    defaults write com.apple.screensaver askForPassword -int 0 || throw $ExceptionDisableScreensaverPassword
 
     echo "Set keyboard type rates and delays"
     # normal minimum is 15 (225 ms)
@@ -111,6 +114,10 @@ catch || {
         ;;
         $ExceptionNTS)
             echo "Failed to set NTS."
+            exit 1;
+        ;;
+        $ExceptionDisableScreensaverPassword)
+            echo "Failed to disable requiring of password after screensaver is enabled."
             exit 1;
         ;;
     esac

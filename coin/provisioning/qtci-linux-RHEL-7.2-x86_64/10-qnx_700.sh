@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 #############################################################################
 ##
@@ -33,48 +33,32 @@
 ##
 #############################################################################
 
-# This script modifies system settings for automated use
+# This script installs QNX 7.
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+set -e
+targetFolder="/opt/"
+sourceFile="http://ci-files01-hki.ci.local/input/qnx/qnx700.tar.xz"
+sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
+folderName="qnx700"
+targetFile="qnx700.tar.xz"
+wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile" || echo "Failed to download '$url' multiple times"
+echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
+if [ ! -d "$targetFolder" ]; then
+  mkdir -p $targetFolder
+fi
+if [ -d "$targetFolder/$folderName" ]; then
+  rm -rf $targetFolder/$folderName
+fi
+sudo tar -C $targetFolder -Jxf $targetFile|| echo "Failed to extract $targetFile"
+sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-NTS_IP=10.212.2.216
+# Verify that we have last file in tar
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    echo "Installation failed!"
+    exit -1
+fi
 
-ExceptionGsettings1=100
-ExceptionGsettings2=101
-ExceptionGsettings3=102
-ExceptionNTS=103
-
-try
-(
-    echo "Timeout for blanking the screen (0 = never)"
-    gsettings set org.gnome.desktop.session idle-delay 0 || throw $ExceptionGsettings1
-    echo "Prevents screen lock when screesaver goes active."
-    gsettings set org.gnome.desktop.screensaver lock-enabled false || throw $ExceptionGsettings2
-    echo "Disable questions on shutdown."
-    gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown true || throw $ExceptionGsettings3
-
-    echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
-    echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
-)
-catch || {
-    case $ex_code in
-        $ExceptionGsettings1)
-            echo "Failed to disable black screen."
-            exit 1;
-        ;;
-        $ExceptionGsettings2)
-            echo "Failed to prevent screen lock."
-            exit 1;
-        ;;
-        $ExceptionGsettings3)
-            echo "Failed to disable questions on shutdown."
-            exit 1;
-        ;;
-        $ExceptionNTS)
-            echo "Failed to set network teset server address into /etc/hosts."
-            exit 1;
-        ;;
-    esac
-}
-
+rm -rf $targetFile
+# Set env variables
+echo 'export QNX_700=$targetFolder/$folderName' >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt

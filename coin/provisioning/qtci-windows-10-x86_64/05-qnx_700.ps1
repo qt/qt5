@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -33,48 +31,16 @@
 ##
 #############################################################################
 
-# This script modifies system settings for automated use
+. "$PSScriptRoot\..\common\helpers.ps1"
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+# This script installs QNX SDP 7.0
 
-NTS_IP=10.212.2.216
+$zip = "c:\users\qt\downloads\qnx700.7z"
 
-ExceptionGsettings1=100
-ExceptionGsettings2=101
-ExceptionGsettings3=102
-ExceptionNTS=103
+Invoke-WebRequest -UseBasicParsing  http://ci-files01-hki.ci.local/input/qnx/qnx700.7z -OutFile $zip
+Verify-Checksum $zip "2eab8bcf993056f79c9e2585c9c05e05658ba8bb"
+Extract-7Zip $zip C:\
 
-try
-(
-    echo "Timeout for blanking the screen (0 = never)"
-    gsettings set org.gnome.desktop.session idle-delay 0 || throw $ExceptionGsettings1
-    echo "Prevents screen lock when screesaver goes active."
-    gsettings set org.gnome.desktop.screensaver lock-enabled false || throw $ExceptionGsettings2
-    echo "Disable questions on shutdown."
-    gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown true || throw $ExceptionGsettings3
-
-    echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
-    echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
-)
-catch || {
-    case $ex_code in
-        $ExceptionGsettings1)
-            echo "Failed to disable black screen."
-            exit 1;
-        ;;
-        $ExceptionGsettings2)
-            echo "Failed to prevent screen lock."
-            exit 1;
-        ;;
-        $ExceptionGsettings3)
-            echo "Failed to disable questions on shutdown."
-            exit 1;
-        ;;
-        $ExceptionNTS)
-            echo "Failed to set network teset server address into /etc/hosts."
-            exit 1;
-        ;;
-    esac
-}
-
+[Environment]::SetEnvironmentVariable("QNX_700", "C:\QNX700", "Machine")
+echo "QNX SDP = 7.0.0" >> ~/versions.txt
+del $zip

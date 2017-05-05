@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -33,48 +31,18 @@
 ##
 #############################################################################
 
-# This script modifies system settings for automated use
+. "$PSScriptRoot\..\common\helpers.ps1"
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+# This script installs MinGW 5.3
 
-NTS_IP=10.212.2.216
 
-ExceptionGsettings1=100
-ExceptionGsettings2=101
-ExceptionGsettings3=102
-ExceptionNTS=103
+$zip = "c:\users\qt\downloads\i686-5.3.0-release-posix-dwarf-rt_v4-rev0.7z"
 
-try
-(
-    echo "Timeout for blanking the screen (0 = never)"
-    gsettings set org.gnome.desktop.session idle-delay 0 || throw $ExceptionGsettings1
-    echo "Prevents screen lock when screesaver goes active."
-    gsettings set org.gnome.desktop.screensaver lock-enabled false || throw $ExceptionGsettings2
-    echo "Disable questions on shutdown."
-    gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown true || throw $ExceptionGsettings3
+Invoke-WebRequest -UseBasicParsing  http://download.qt.io/development_releases/prebuilt/mingw_32/i686-5.3.0-release-posix-dwarf-rt_v4-rev0.7z -OutFile $zip
+Verify-Checksum $zip "d4f21d25f3454f8efdada50e5ad799a0a9e07c6a"
+Extract-7Zip $zip C:\
+Rename-Item -path C:\mingw32 -newName C:\MinGW530
 
-    echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
-    echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
-)
-catch || {
-    case $ex_code in
-        $ExceptionGsettings1)
-            echo "Failed to disable black screen."
-            exit 1;
-        ;;
-        $ExceptionGsettings2)
-            echo "Failed to prevent screen lock."
-            exit 1;
-        ;;
-        $ExceptionGsettings3)
-            echo "Failed to disable questions on shutdown."
-            exit 1;
-        ;;
-        $ExceptionNTS)
-            echo "Failed to set network teset server address into /etc/hosts."
-            exit 1;
-        ;;
-    esac
-}
-
+[Environment]::SetEnvironmentVariable("MINGW530", "C:\MinGW530", "Machine")
+echo "MinGW = 5.3.0" >> ~/versions.txt
+del $zip
