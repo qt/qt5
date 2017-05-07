@@ -43,7 +43,7 @@ $msvcPackage = "C:\Windows\Temp\$version.exe"
 
 Download $url_cache $url_cache $msvcPackage
 Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --norestart --quiet --wait"
+cmd /c "$msvcPackage --all --norestart --quiet --wait --add Microsoft.VisualStudio.Component.VC.Tools.ARM"
 echo "Cleaning $msvcPackage.."
 Remove-Item -Recurse -Force "$msvcPackage"
 echo "Visual Studio = $version" >> ~\versions.txt
