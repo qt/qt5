@@ -35,7 +35,7 @@ if !errorlevel! neq 0 exit /b !errorlevel!
 
 pushd bin
 REM delete all applications except for necessary ones.
-for %i in (*.*) do if not "%i"=="moc.exe" if not "%i"=="rcc.exe" if not "%i"=="uic.exe" del /q "%i"
+for %%i in (*.*) do if not "%%i"=="moc.exe" if not "%%i"=="rcc.exe" if not "%%i"=="uic.exe" del /q "%%i"
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 exit /b 0
