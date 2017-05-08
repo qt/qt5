@@ -28,14 +28,14 @@ if !errorlevel! neq 0 exit /b !errorlevel!
 pushd "%destination%"
 rmdir "lib\cmake" /s /q
 if !errorlevel! neq 0 exit /b !errorlevel!
-del *.prl /s /q
+del *.prl /s /q /f
 if !errorlevel! neq 0 exit /b !errorlevel!
-del *.pdb /s /q
+del *.pdb /s /q /f
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 pushd bin
 REM delete all applications except for necessary ones.
-for %%i in (*.*) do if not "%%i"=="moc.exe" if not "%%i"=="rcc.exe" if not "%%i"=="uic.exe" del /q "%%i"
+for %%i in (*.*) do if not "%%i"=="moc.exe" if not "%%i"=="rcc.exe" if not "%%i"=="uic.exe" del /q /f "%%i"
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 exit /b 0
