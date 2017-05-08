@@ -1,0 +1,19 @@
+{
+  "name": "@sb/qt5",
+  "version": "0.0.0",
+  "description": "fl4re qt5",
+  "repository": "https://github.com/fl4re/qt5",
+  "private": false,
+  "binary": {
+    "file": "{package_name}/{package_version}/qt5-{package_version}-{platform}-{arch}.tar.gz",
+    "host": "https://registry-node.starbreeze.com/-/releases",
+    "os": "win32",
+    "path": [
+      "artifacts",
+      "artifacts/**"
+    ]
+  },
+  "scripts": {
+    "install": "prades install"
+  }
+}
