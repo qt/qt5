@@ -1,3 +1,5 @@
+#!/bin/sh -xe
+
 # make sure we are inside a valid git dir
 git rev-parse --is-inside-work-tree
 
