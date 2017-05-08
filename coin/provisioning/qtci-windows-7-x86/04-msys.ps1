@@ -3,7 +3,7 @@
 # This script will install msys which is needed for configuring openssl for Android
 
 $version = "1.0.11"
-$url = "http://ci-files01-hki.ci.local/input/windows/msys-$version.7z"
+$url = "\\ci-files01-hki.ci.local\provisioning\windows\msys-$version.7z"
 
 $zip = "c:\users\qt\downloads\msys-$version.7z"
 $sha1 = "22cd76f1263db8c72727a9537228c481ff33c285"
