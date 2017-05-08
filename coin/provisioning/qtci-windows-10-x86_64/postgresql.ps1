@@ -42,16 +42,21 @@ $packagex86 = "C:\Windows\temp\postgresql-$version-windows-binaries.zip"
 
 # Install x64 bit versions
 $architecture = "x64"
-$installFolder = "C:\Utils\postgresql"
+$installFolder = "C:\Utils\postgresql\pgsql"
 $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-x64-binaries.zip"
-$internalUrl = "http://ci-files01-hki.ci.local/input/windows/postgresql-$version-windows-x64-binaries.zip"
+$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
 $sha1 = "4da0453cdfda335e064d4437cf5bb9d356054cfd"
+
+# Delete any leftovers
+try {
+    Rename-Item -ErrorAction 'Stop' c:\utils\postgresql c:\utils\postgresql-deleted
+} catch {}
 
 echo "Fetching from URL ..."
 Download $externalUrl $internalUrl $packagex64
 Verify-Checksum $packagex64 $sha1
 echo "Installing $packagex64 ..."
-Extract-Zip $packagex64 $installFolder
+Extract-Dev-Folders-From-Zip $packagex64 "pgsql" $installFolder
 
 echo "Remove downloaded $packagex64 ..."
 Remove-Item $packagex64
@@ -62,16 +67,16 @@ echo "Set $architecture environment variables ..."
 
 # Install x86 bit version
 $architecture = "x86"
-$installFolder = "C:\Utils\postgresql$architecture"
+$installFolder = "C:\Utils\postgresql$architecture\pgsql"
 $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-binaries.zip"
-$internalUrl = "http://ci-files01-hki.ci.local/input/windows/postgresql-$version-windows-binaries.zip"
+$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\postgresql-$version-windows-binaries.zip"
 $sha1 = "eb4f01845e1592800edbb74f60944b6c0aca51a9"
 
 echo "Fetching from URL..."
 Download $externalUrl $internalUrl $packagex86
 Verify-Checksum $packagex86 $sha1
 echo "Installing $packagex86 ..."
-Extract-Zip $packagex86 $installFolder
+Extract-Dev-Folders-From-Zip $packagex86 "pgsql" $installFolder
 
 echo "Remove downloaded $packagex86 ..."
 Remove-Item $packagex86

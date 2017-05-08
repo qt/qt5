@@ -51,22 +51,8 @@ function DownloadAndInstall
     echo "Fetching from URL ..."
     Copy-Item $internalUrl $package
 
-    $shell = new-object -com shell.application
-
-    echo "Extracting contents"
-    foreach ($subDir in "lib", "include", "bin") {
-        $zipDir = $shell.Namespace($package + "\" + [io.path]::GetFileNameWithoutExtension($package) + "\" + $subDir)
-        if ($zipDir) {
-            Write-Host "Extracting $subDir from zip archive"
-        } else {
-            Write-Host "$subDir is missing from zip archive - skipping"
-            continue
-        }
-        $destDir = $installPath + "\" + $subdir
-        New-Item $destDir -type directory
-        $destinationFolder = $shell.Namespace($destDir)
-        $destinationFolder.CopyHere($zipDir.Items(), 16)
-    }
+    $zipDir = [io.path]::GetFileNameWithoutExtension($package)
+    Extract-Dev-Folders-From-Zip $package $zipDir $installPath
 
     Remove-Item $package
 }
