@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\01-windows_removethemall.ps1"
+. "$PSScriptRoot\..\common\windows_removethemall.ps1"

@@ -56,6 +56,6 @@ Function Remove-Path {
 }
 
 # Remove Android sdk and ndk
-Remove C:\utils\android*
+dir c:\utils\android* | ForEach { Rename-Item $_ $_"-deleted" }
 [Environment]::SetEnvironmentVariable("ANDROID_NDK_HOME",$null,"User")
 [Environment]::SetEnvironmentVariable("ANDROID_SDK_HOME",$null,"User")
