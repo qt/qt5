@@ -28,6 +28,8 @@ QT_SKIP_MODULES =
 
 # This is a bit hacky, but a proper implementation is not worth it.
 args = $$QMAKE_EXTRA_ARGS
+contains(args, -redo): \
+    args += $$cat($$OUT_PWD/config.opt, lines)
 for (ever) {
     isEmpty(args): break()
     a = $$take_first(args)
