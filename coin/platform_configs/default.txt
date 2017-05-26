@@ -1,14 +1,14 @@
 Template                            Target OS           Target arch Compiler    Features
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-8-x86_64-2                                             MSVC2013    DeveloperBuild Release BuildExamples
-qtci-windows-10-x86_64-6                                            MSVC2015    DeveloperBuild Release QtNamespace QtLibInfix
+qtci-windows-10-x86_64-7                                            MSVC2015    DeveloperBuild Release QtNamespace QtLibInfix
 qtci-windows-8-x86-2                                                MSVC2013    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
 qtci-windows-8-x86_64-2                                             MSVC2013    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
 qtci-windows-7-x86-2                                                Mingw53     Packaging DebugAndRelease Release OpenGLDynamic
-qtci-windows-10-x86-5                                               MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-6                                            MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-6            WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
-qtci-windows-10-x86_64-6            WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86-6                                               MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-7                                            MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-7            WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-7            WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
 qtci-linux-Ubuntu-16.04-x86_64                                      GCC         NoWidgets ForceDebugInfo
 qtci-linux-Ubuntu-16.04-x86_64                                      GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace
 qtci-linux-openSUSE-42.1-x86_64                                     GCC         DeveloperBuild NoPch
