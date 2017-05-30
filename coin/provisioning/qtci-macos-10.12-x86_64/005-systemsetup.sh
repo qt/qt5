@@ -51,6 +51,10 @@ ExceptionDisableScreensaverPassword=105
 try
 (
     echo "Disable Screensaver"
+    # For current session
+    defaults -currentHost write com.apple.screensaver idleTime 0 || throw $ExceptionDisableScreensaver
+
+    # For session after a reboot
     mkdir -p "$HOME/Library/LaunchAgents" || throw $ExceptionDisableScreensaver
     (
         cat >"$HOME/Library/LaunchAgents/no-screensaver.plist" <<EOT
