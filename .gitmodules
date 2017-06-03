@@ -320,6 +320,7 @@
 	status = preview
 [submodule "qtremoteobjects"]
 	depends = qtbase
+	recommends = qtdeclarative
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = 5.9
