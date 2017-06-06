@@ -15,7 +15,7 @@ qtci-linux-Ubuntu-14.04-x86_64                                      GCC         
 qtci-linux-OpenSuSE-13.01-x86_64                                    GCC         DeveloperBuild NoPch
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Packaging Release NoUseGoldLinker
 qtci-osx-10.11-x86_64                                               Clang       Packaging DebugAndRelease Release
-qtci-osx-10.10-x86_64                                               Clang       DebugAndRelease Release
+qtci-osx-10.10-x86_64                                               Clang       DebugAndRelease Release DisableTests
 qtci-osx-10.9-x86_64                                                Clang       DeveloperBuild Release QtNamespace NoPch
 qtci-osx-10.8-x86_64                                                Clang       Release NoFramework
 qtci-osx-10.11-x86_64               IOS_ANY             x86_64      Clang       Release DisableTests Static
