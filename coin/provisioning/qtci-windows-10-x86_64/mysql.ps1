@@ -70,8 +70,8 @@ $internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-wi
 DownloadAndInstall $internalUrl $packagex64 $installFolder
 
 echo "Set environment variables ..."
-[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\my_sql\include", "Machine")
-[Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\my_sql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\lib", "Machine")
 
 # Install x86 bit version
 $architecture = "x86"
@@ -81,8 +81,8 @@ $internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-wi
 DownloadAndInstall $internalUrl $packagex86 $installFolder
 
 echo "Set environment variables ..."
-[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x86", "$installFolder\my_sql\include", "Machine")
-[Environment]::SetEnvironmentVariable("MYSQL_LIB_x86", "$installFolder\my_sql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x86", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_LIB_x86", "$installFolder\lib", "Machine")
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 echo "MySQL = $version" >> ~/versions.txt

@@ -62,8 +62,8 @@ echo "Remove downloaded $packagex64 ..."
 Remove-Item $packagex64
 
 echo "Set $architecture environment variables ..."
-[Environment]::SetEnvironmentVariable("POSTGRESQL_INCLUDE_x64", "$installFolder\pgsql\include", "Machine")
-[Environment]::SetEnvironmentVariable("POSTGRESQL_LIB_x64", "$installFolder\pgsql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("POSTGRESQL_INCLUDE_x64", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("POSTGRESQL_LIB_x64", "$installFolder\lib", "Machine")
 
 # Install x86 bit version
 $architecture = "x86"
@@ -82,8 +82,8 @@ echo "Remove downloaded $packagex86 ..."
 Remove-Item $packagex86
 
 echo "Set $architecture environment variables ..."
-[Environment]::SetEnvironmentVariable("POSTGRESQL_INCLUDE_x86", "$installFolder\pgsql\include", "Machine")
-[Environment]::SetEnvironmentVariable("POSTGRESQL_LIB_x86", "$installFolder\pgsql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("POSTGRESQL_INCLUDE_x86", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("POSTGRESQL_LIB_x86", "$installFolder\lib", "Machine")
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 echo "PostgreSQL = $version" >> ~/versions.txt
