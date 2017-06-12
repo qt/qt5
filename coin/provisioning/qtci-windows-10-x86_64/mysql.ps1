@@ -37,76 +37,52 @@
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
 $version = "5.6.11"
-$packagex64 = "C:\Windows\temp\mysql-$version-win64.zip"
+$packagex64 = "C:\Windows\temp\mysql-$version-winx64.zip"
 $packagex86 = "C:\Windows\temp\mysql-$version-win32.zip"
-
-function CheckAndRemovePreviousInstallation
-{
-    Param (
-        [string]$InstallFolder
-    )
-    echo "Check for previous installation..."
-    $FolderExists = Test-Path $ExistingInstallation
-    If ($FolderExists -eq $True) {
-        echo "Removing previous installation ($ExistingInstallation)"
-        Remove-Item $ExistingInstallation -recurse
-    }
-}
 
 function DownloadAndInstall
 {
     Param (
-        [string]$arch,
-        [string]$externalUrl,
         [string]$internalUrl,
         [string]$package,
-        [string]$sha1,
         [string]$installPath
     )
 
-   echo "Fetching from URL ..."
-   Download $externalUrl $internalUrl $package
-   Verify-Checksum $package $sha1
-   Extract-Zip $package $installPath
+    echo "Fetching from URL ..."
+    Copy-Item $internalUrl $package
+
+    $zipDir = [io.path]::GetFileNameWithoutExtension($package)
+    Extract-Dev-Folders-From-Zip $package $zipDir $installPath
+
+    Remove-Item $package
 }
+
+# Remove any leftovers
+try {
+    Rename-Item -ErrorAction 'Stop' c:\utils\my_sql c:\utils\mysql_deleted
+} catch {}
 
 # Install x64 bit version
 $architecture = "x64"
-$installFolder = "C:\Utils\my_sql"
-$existingInstallation = "$installFolder\my_sql"
-$internalUrl = "http://ci-files01-hki.ci.local/input/windows/mysql-$version-winx64"
-$sha1 = "f4811512b5f3c8ad877ee4feba2062312a0acc38"
+$installFolder = "C:\Utils\my_sql\my_sql"
+$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-winx64.zip"
 
-echo "Check and remove previous installation ..."
-CheckAndRemovePreviousInstallation $existingInstallation
-DownloadAndInstall $architecture $internalUrl $internalUrl $packagex64 $sha1 $installFolder
-Rename-Item -path $installFolder\mysql-$version-winx64 -newName $installFolder\my_sql
-
-echo "Remove downloaded package ..."
-Remove-Item $packagex64
+DownloadAndInstall $internalUrl $packagex64 $installFolder
 
 echo "Set environment variables ..."
-[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\my_sql\include", "Machine")
-[Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\my_sql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\lib", "Machine")
 
 # Install x86 bit version
 $architecture = "x86"
-$installFolder = "C:\Utils\my_sql$architecture"
-$existingInstallation = "$installFolder\my_sql"
-$internalUrl = "http://ci-files01-hki.ci.local/input/windows/mysql-$version-win32"
-$sha1 = "e0aa62d5c5d6c6ec28906a831752d04336562679"
+$installFolder = "C:\Utils\my_sql\my_sql$architecture"
+$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-win32.zip"
 
-echo "Check and remove previous installation ..."
-CheckAndRemovePreviousInstallation $existingInstallation
-DownloadAndInstall $architecture $internalUrl $internalUrl $packagex86 $sha1 $installFolder
-Rename-Item -path $installFolder\mysql-$version-win32 -newName $installFolder\my_sql
-
-echo "Remove downloaded package ..."
-Remove-Item $packagex86
+DownloadAndInstall $internalUrl $packagex86 $installFolder
 
 echo "Set environment variables ..."
-[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x86", "$installFolder\my_sql\include", "Machine")
-[Environment]::SetEnvironmentVariable("MYSQL_LIB_x86", "$installFolder\my_sql\lib", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x86", "$installFolder\include", "Machine")
+[Environment]::SetEnvironmentVariable("MYSQL_LIB_x86", "$installFolder\lib", "Machine")
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 echo "MySQL = $version" >> ~/versions.txt
