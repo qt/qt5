@@ -310,14 +310,14 @@
 	path = qtspeech
 	url = ../qtspeech
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtnetworkauth"]
 	depends = qtbase
 	recommends = qtwebview
 	path = qtnetworkauth
 	url = ../qtnetworkauth
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	path = qtremoteobjects
