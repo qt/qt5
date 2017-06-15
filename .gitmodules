@@ -324,3 +324,10 @@
 	url = ../qtremoteobjects
 	branch = dev
 	status = preview
+[submodule "qtwebglplugin"]
+	depends = qtbase qtwebsockets
+	recommends = qtdeclarative
+	path = qtwebglplugin
+	url = ../qtwebglplugin.git
+	branch = dev
+	status = preview
