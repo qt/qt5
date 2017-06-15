@@ -30,23 +30,34 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-
 . "$PSScriptRoot\..\common\helpers.ps1"
 
 $version = "11_2_2"
-$openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
+$package = "C:\Windows\temp\opengl32sw.7z"
+$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
+$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
+$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
+$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
 
-$openglUrl = "\\ci-files01-hki.ci.local\provisioning\mesa3d\windows\32bit\opengl32.dll"
-$openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
+function Extract-Mesa
+{
+    Param (
+        [string]$downloadUrl,
+        [string]$sha1,
+        [string]$targetFolder
+    )
+    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
+    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
+    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
+    Verify-Checksum $localArchivePath $sha1
+    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
+    Remove-Item $localArchivePath
+}
 
-echo "Take ownership of existing opengl32.dll from SysWOW64"
-takeown /f $openglPackage
-icacls $openglPackage /grant Administrators:F
-echo "Remove existing opengl32.dll from SysWOW64"
-Remove-Item -Recurse -Force $openglPackage
-echo "Add new opengl32.dll to SysWOW64"
-Invoke-WebRequest -UseBasicParsing $openglUrl -OutFile $openglPackage
-Verify-Checksum $openglPackage $openglSha1
+if ( Test-Path C:\Windows\SysWOW64 ) {
+    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\sysnative"
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+} else {
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
+}
 
-# Store version information to ~/versions.txt
-echo "OpenGL x86 = $version" >> ~/versions.txt
