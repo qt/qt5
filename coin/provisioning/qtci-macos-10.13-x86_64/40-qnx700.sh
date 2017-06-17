@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +33,25 @@
 ##
 #############################################################################
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
+# This script installs QNX 7.
 
+targetFolder="/opt/"
+sourceFile="/net/ci-files01-hki.intra.qt.io/hdd/www/input/qnx/qnx700_mac.zip"
+folderName="qnx700"
 
+sudo mkdir -p "$targetFolder"
 
-function InstallXCode() {
-    sourceFile=$1
-    version=$2
+echo "Extracting QNX 7"
+sudo unzip -q "$sourceFile" -d "$targetFolder"
 
-    echo "Uncompressing and installing '$sourceFile'"
-    if [[ $sourceFile =~ tar ]]; then
-        cd /Applications/ && sudo tar -zxf "$sourceFile"
-    else
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
-    fi
+sudo chown -R qt:wheel "$targetFolder"/"$folderName"
 
-    echo "Accept license"
-    sudo xcodebuild -license accept
+# Verify that we have last file in zip
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    exit 1
+fi
 
-    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
-    sudo /usr/sbin/DevToolsSecurity -enable
+# Set env variables
+echo "export QNX_700=$targetFolder/$folderName" >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt
 
-    echo "Xcode = $version" >> ~/versions.txt
-}

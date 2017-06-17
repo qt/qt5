@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +33,25 @@
 ##
 #############################################################################
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
+# This script installs PostgreSQL
 
+# PostgreSQL is needed for Qt to be able to support PostgreSQL
 
+set -ex
 
-function InstallXCode() {
-    sourceFile=$1
-    version=$2
+# shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-    echo "Uncompressing and installing '$sourceFile'"
-    if [[ $sourceFile =~ tar ]]; then
-        cd /Applications/ && sudo tar -zxf "$sourceFile"
-    else
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
-    fi
+psqlVersion="9.6.0"
 
-    echo "Accept license"
-    sudo xcodebuild -license accept
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/Postgres-$psqlVersion.zip"
+AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/$psqlVersion/Postgres-$psqlVersion.zip"
+SHA1="5078e44663787006ca55fa3b5e2be598bed82eb5"
+appPrefix=""
 
-    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
-    sudo /usr/sbin/DevToolsSecurity -enable
+InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
-    echo "Xcode = $version" >> ~/versions.txt
-}
+SetEnvVar "POSTGRESQLBINPATH" "/Applications/Postgres.app/Contents/Versions/9.6/bin"
+echo "PostgreSQL = $psqlVersion" >> ~/versions.txt

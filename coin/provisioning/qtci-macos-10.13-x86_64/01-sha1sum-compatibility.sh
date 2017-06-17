@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +33,18 @@
 ##
 #############################################################################
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
+# On macOS the sha1 tool is named 'shasum' while on all other unix systems it is called 'sha1sum'.
+# In order to make all unix provioning scripts run on macOS without special case handling
+# a symbolic link is created.
+# The shasum tool is a perl script which does some globbing to determine the perl version. The
+# symbolic link has to point directly to the binary including the perl version.
+# Additionally the CI seems to have multiple parallel perl versions installed which causes
+# multiple shasum tools to be present (shasum5.16, shasum5.18).
+#
+# Currently this is
+#     /usr/local/bin/sha1sum -> /usr/bin/shasum5.18
 
-
-
-function InstallXCode() {
-    sourceFile=$1
-    version=$2
-
-    echo "Uncompressing and installing '$sourceFile'"
-    if [[ $sourceFile =~ tar ]]; then
-        cd /Applications/ && sudo tar -zxf "$sourceFile"
-    else
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
-    fi
-
-    echo "Accept license"
-    sudo xcodebuild -license accept
-
-    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
-    sudo /usr/sbin/DevToolsSecurity -enable
-
-    echo "Xcode = $version" >> ~/versions.txt
-}
+[ -d /usr/local/bin ] || sudo mkdir -p /usr/local/bin
+# shellcheck disable=SC2012
+SHASUM_TOOLNAME=$(ls -r /usr/bin/shasum?.* | head -n1)
+sudo ln -s "${SHASUM_TOOLNAME}" /usr/local/bin/sha1sum

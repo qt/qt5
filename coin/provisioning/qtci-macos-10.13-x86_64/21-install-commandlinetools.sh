@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +33,14 @@
 ##
 #############################################################################
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
+set -ex
 
+source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
 
+version="9.3"
+packageName="Command_Line_Tools_macOS_10.13_for_Xcode_$version.dmg"
+url="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.13_high_sierra/$packageName"
+sha1="3c0306d3faa1131550f1539feeeb5aa6c985763a"
 
-function InstallXCode() {
-    sourceFile=$1
-    version=$2
+InstallCommandLineTools $url $url $sha1 $packageName $version
 
-    echo "Uncompressing and installing '$sourceFile'"
-    if [[ $sourceFile =~ tar ]]; then
-        cd /Applications/ && sudo tar -zxf "$sourceFile"
-    else
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
-    fi
-
-    echo "Accept license"
-    sudo xcodebuild -license accept
-
-    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
-    sudo /usr/sbin/DevToolsSecurity -enable
-
-    echo "Xcode = $version" >> ~/versions.txt
-}
