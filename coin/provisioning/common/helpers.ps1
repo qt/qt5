@@ -53,6 +53,32 @@ function Extract-Zip
     $destinationFolder.CopyHere($zipfile.Items(), 16)
 }
 
+function Extract-Dev-Folders-From-Zip
+{
+    Param (
+        [string]$package,
+        [string]$zipDir,
+        [string]$installPath
+    )
+
+    $shell = new-object -com shell.application
+
+    echo "Extracting contents of $package"
+    foreach ($subDir in "lib", "include", "bin", "share") {
+        $zip = $shell.Namespace($package + "\" + $zipDir + "\" + $subDir)
+        if ($zip) {
+            Write-Host "Extracting $subDir from zip archive"
+        } else {
+            Write-Host "$subDir is missing from zip archive - skipping"
+            continue
+        }
+        $destDir = $installPath + "\" + $subdir
+        New-Item $destDir -type directory
+        $destinationFolder = $shell.Namespace($destDir)
+        $destinationFolder.CopyHere($zip.Items(), 16)
+    }
+}
+
 function BadParam
 {
     Param ([string]$Description)
@@ -67,7 +93,11 @@ function Download
         [string] $Destination = $(BadParam("a download target location"))
     )
     try {
-        Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
+        if ($CachedUrl.StartsWith("http")) {
+            Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
+        } else {
+            Copy-Item $CachedUrl $Destination
+        }
     } catch {
         Invoke-WebRequest -UseBasicParsing $OfficialUrl -OutFile $Destination
     }

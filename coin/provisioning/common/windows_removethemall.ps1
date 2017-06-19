@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #############################################################################
 ##
 ## Copyright (C) 2016 The Qt Company Ltd.
@@ -33,6 +31,31 @@
 ##
 #############################################################################
 
-# hack: it seems that opensuse patched their openssl in a way that
-# disables ssl 2 without allowing configure's compile detection to work
-echo "export OPENSSL_ALLOW_SSL2=1" >>~/.bashrc
+Function Remove {
+Param (
+        [string]$1
+    )
+        If (Test-Path $1){
+        echo "Remove $1"
+        Remove-Item -Recurse -Force $1
+    }Else{
+        echo "'$1' does not exists or already removed !!"
+    }
+
+}
+
+Function Remove-Path {
+    Param (
+        [string]$Path
+    )
+    echo "Remove $path from Path"
+    $name = "Path"
+    $value = ([System.Environment]::GetEnvironmentVariable("Path").Split(";") | ? {$_ -ne "$path"}) -join ";"
+    $type = "Machine"
+    [System.Environment]::SetEnvironmentVariable($name,$value,$type)
+}
+
+# Remove Android sdk and ndk
+dir c:\utils\android* | ForEach { Rename-Item $_ $_"-deleted" }
+[Environment]::SetEnvironmentVariable("ANDROID_NDK_HOME",$null,"User")
+[Environment]::SetEnvironmentVariable("ANDROID_SDK_HOME",$null,"User")
