@@ -225,8 +225,8 @@
 	branch = dev
 	status = ignore
 [submodule "qtquickcontrols2"]
-	depends = qtgraphicaleffects
-	recommends = qtimageformats
+	depends = qtdeclarative
+	recommends = qtimageformats qtgraphicaleffects
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = dev
