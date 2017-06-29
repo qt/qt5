@@ -1,6 +1,6 @@
 Template                    Target OS           Target arch Compiler    Features
 --------------------------- ------------------- ----------- ----------- -----------------------------------------------------------------------------------------------
-qtci-windows-8-x86_64-2     Windows_Phone_8_1   x86         MSVC2013    Packaging DebugAndRelease Release DisableTests
+qtci-windows-8.1-x86_64     Windows_Phone_8_1   x86         MSVC2013    Packaging DebugAndRelease Release DisableTests
 qtci-windows-10-x86_64-7    WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release DisableTests
 qtci-windows-10-x86_64-7    WinRT_10                        MSVC2015    Packaging DebugAndRelease Release DisableTests
 qtci-linux-RHEL-6.6-x86_64  Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker

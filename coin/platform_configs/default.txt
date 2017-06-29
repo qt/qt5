@@ -1,17 +1,17 @@
 Template                            Target OS           Target arch Compiler    Features
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-windows-8-x86_64-2                                             MSVC2013    DeveloperBuild Release BuildExamples
-qtci-windows-8-x86_64-2                                             MSVC2012    DeveloperBuild Release QtNamespace QtLibInfix
+qtci-windows-8.1-x86_64                                             MSVC2013    DeveloperBuild Release BuildExamples
+qtci-windows-8.1-x86_64                                             MSVC2012    DeveloperBuild Release QtNamespace QtLibInfix
 qtci-windows-8-x86-2                                                MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
-qtci-windows-8-x86_64-2                                             MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
+qtci-windows-8.1-x86_64                                             MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-7-x86-2                                                MSVC2010    Release DeveloperBuild QtNamespace QtLibInfix OpenGLDynamic
 qtci-windows-7-x86-2                                                Mingw49     Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-10-x86-6                                               MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-10-x86_64-7                                            MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic
-qtci-windows-8-x86_64-2             Windows_Phone_8_1   armv4       MSVC2013    Packaging DebugAndRelease Release DisableTests
-qtci-windows-8-x86_64-2             WinRT_8_1                       MSVC2013    Packaging DebugAndRelease Release DisableTests
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         NoWidgets ForceDebugInfo
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace Documentation
+qtci-windows-8.1-x86_64             Windows_Phone_8_1   armv4       MSVC2013    Packaging DebugAndRelease Release DisableTests
+qtci-windows-8.1-x86_64             WinRT_8_1                       MSVC2013    Packaging DebugAndRelease Release DisableTests
 qtci-linux-OpenSuSE-13.01-x86_64                                    GCC         DeveloperBuild NoPch
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Packaging Release NoUseGoldLinker
 qtci-osx-10.11-x86_64                                               Clang       Packaging DebugAndRelease Release
