@@ -1,5 +1,5 @@
 [requires]
-icu/57.1@vitallium/stable
+icu/59.1@vitallium/stable
 libxml2/2.9.4@vitallium/stable
 libxslt/1.1.29@vitallium/stable
 

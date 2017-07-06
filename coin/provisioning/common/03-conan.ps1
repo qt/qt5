@@ -4,6 +4,9 @@ $scriptsPath = "C:\Python27\Scripts"
 
 & "$scriptsPath\pip.exe" install --upgrade conan==0.24.0
 
+# Use Qt Project repository by default
+& "$scriptsPath\conan.exe" remote add qtproject https://api.bintray.com/conan/qtproject/conan --insert
+
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 
 function Start-Process-Logged
