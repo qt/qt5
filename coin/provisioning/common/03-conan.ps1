@@ -32,11 +32,12 @@ function Run-Conan-Install
         $extraArgs = "-s compiler.libcxx=$($CompilerLibcxx)"
     }
 
+    $manifestsDir = "$PSScriptRoot\conan_manifests"
+
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
         $conanfile = $_.FullName
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
-        $manifestsDir = "$($_.DirectoryName)\$($_.BaseName).manifests"
         New-Item $outpwd -Type directory -Force
 
         $process = Start-Process-Logged `
