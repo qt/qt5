@@ -2,7 +2,10 @@
 
 $scriptsPath = "C:\Python27\Scripts"
 
-& "$scriptsPath\pip.exe" install --upgrade conan==0.20.2
+& "$scriptsPath\pip.exe" install --upgrade conan==0.24.0
+
+# Use Qt Project repository by default
+& "$scriptsPath\conan.exe" remote add qtproject https://api.bintray.com/conan/qtproject/conan --insert
 
 [Environment]::SetEnvironmentVariable("CI_CONAN_BUILDINFO_DIR", "C:\Utils\conanbuildinfos", "Machine")
 
@@ -32,11 +35,12 @@ function Run-Conan-Install
         $extraArgs = "-s compiler.libcxx=$($CompilerLibcxx)"
     }
 
+    $manifestsDir = "$PSScriptRoot\conan_manifests"
+
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
         $conanfile = $_.FullName
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
-        $manifestsDir = "$($_.DirectoryName)\$($_.BaseName).manifests"
         New-Item $outpwd -Type directory -Force
 
         $process = Start-Process-Logged `

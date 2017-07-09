@@ -43,12 +43,12 @@ $package = "C:\Windows\temp\python-$version.msi"
 if ( $archVer -eq 64 ) {
     echo "Running in 64 bit system"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.amd64.msi"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.amd64.msi"
+    $internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\python-$version.amd64.msi"
     $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
 }
 else {
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.msi"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.msi"
+    $internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\python-$version.msi"
     $sha1 = "7e3b54236dbdbea8fe2458db501176578a4d59c0"
 }
 

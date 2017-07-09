@@ -40,7 +40,7 @@ $openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
 
 $mesaOpenglUrl = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
 $mesaOpenglSha1 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
-$openglUrl = "http://ci-files01-hki.ci.local/input/mesa3d/windows/32bit/opengl32.dll"
+$openglUrl = "\\ci-files01-hki.ci.local\provisioning\mesa3d\windows\32bit\opengl32.dll"
 $openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
 
 Invoke-WebRequest -UseBasicParsing $mesaOpenglUrl -OutFile $package

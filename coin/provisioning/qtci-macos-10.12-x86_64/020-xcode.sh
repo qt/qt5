@@ -45,66 +45,7 @@
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
-ExceptionDownloadUrl=100
-ExceptionSHA1=101
-ExceptionUnXZ=102
-ExceptionCPIO=103
-ExceptionDelete=104
-ExceptionAcceptLicense=105
+# shellcheck source=../common/install_xcode.sh
+source "${BASH_SOURCE%/*}/../common/install_xcode.sh"
 
-
-url=http://ci-files01-hki.ci.local/input/mac/Xcode_8.3.1.xz
-targetFile=/tmp/Xcode_8.3.1.xz
-expectedSha1=4ecdba2e563229034802a4ee9a0800b947d05a8e
-
-try
-(
-    echo "Downloading Xcode from primary URL '$url'"
-    curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url" || throw $ExceptionDownloadUrl
-
-    echo "Checking SHA1 on $targetFile"
-    echo "$expectedSha1 *$targetFile" | shasum --check || throw $ExceptionSHA1
-
-    echo "Uncompressing '$targetFile'"
-    xz -d "$targetFile" || throw $ExceptionUnXZ
-
-    echo "Unarchiving '${targetFile%.*}'"
-    (cd /Applications/ && sudo cpio -dmiI "${targetFile%.*}") || throw $ExceptionCPIO
-
-    echo "Deleting '${targetFile%.*}'"
-    rm "${targetFile%.*}" || throw $ExceptionDelete
-
-    echo "Accept license"
-    sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
-
-    echo "XCode = 8.3.1" >> ~/versions.txt
-)
-catch || {
-    case $ex_code in
-        $ExceptionDownloadUrl)
-            echo "Failed to download Xcode."
-            exit 1;
-        ;;
-        $ExceptionSHA1)
-            echo "Failed to check SHA1."
-            exit 1;
-        ;;
-        $ExceptionUnXZ)
-            echo "Failed to uncompress .xz"
-            exit 1;
-        ;;
-        $ExceptionCPIO)
-            echo "Failed to unarchive .cpio."
-            exit 1;
-        ;;
-        $ExceptionDelete)
-            echo "Failed to delete temporary file."
-            exit 1;
-        ;;
-        $ExceptionAcceptLicense)
-            echo "Failed to accept license."
-            exit 1;
-        ;;
-
-    esac
-}
+InstallXCode /net/ci-files01-hki.ci.local/hdd/www/input/mac/Xcode_8.3.1.xz 8.3.1

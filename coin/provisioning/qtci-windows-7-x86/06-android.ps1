@@ -8,7 +8,7 @@
 
 # NDK
 $ndkVersion = "r10e"
-$ndkCachedUrl = "http://ci-files01-hki.ci.local/input/android/android-ndk-$ndkVersion-windows-x86.zip"
+$ndkCachedUrl = "\\ci-files01-hki.ci.local\provisioning\android\android-ndk-$ndkVersion-windows-x86.zip"
 $ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows-x86.zip"
 $ndkChecksum = "1d0b8f2835be741f3048fb03c0a3e9f71ab7f357"
 $ndkFolder = "c:\utils\android-ndk-$ndkVersion"
@@ -19,7 +19,7 @@ $sdkVersion = "r24.4.1"
 $sdkApi = "ANDROID_API_VERSION"
 $sdkApiLevel = "android-21"
 $sdkBuildToolsVersion = "23.0.3"
-$sdkCachedUrl= "http://ci-files01-hki.ci.local/input/android/android-sdk_$sdkVersion-windows.zip"
+$sdkCachedUrl= "\\ci-files01-hki.ci.local\provisioning\android\android-sdk_$sdkVersion-windows.zip"
 $sdkOfficialUrl = "https://dl.google.com/android/android-sdk_$sdkVersion-windows.zip"
 $sdkChecksum = "66b6a6433053c152b22bf8cab19c0f3fef4eba49"
 $sdkFolder = "c:\utils\android-sdk-windows"

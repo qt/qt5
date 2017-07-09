@@ -1,3 +1,4 @@
 Makefile
 .qmake.cache
 .qmake.super
+*.pro.user*
