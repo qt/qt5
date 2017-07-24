@@ -41,7 +41,7 @@ trap "sudo rm -fr $TEMPDIR" EXIT
 cd $TEMPDIR
 git clone https://github.com/FreeOpcUa/freeopcua.git freeopcua
 cd freeopcua
-git checkout 57b6993d39b6761af773fa4fa37c3fbd39c764f1
+git checkout ca75e05a8e63d88dbfc259e1251f405106411b66
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
