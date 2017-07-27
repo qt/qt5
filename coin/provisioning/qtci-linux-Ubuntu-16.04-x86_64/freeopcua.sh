@@ -47,3 +47,4 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
 make
 sudo make install
+sudo /sbin/ldconfig
