@@ -20,3 +20,4 @@ qtci-linux-RHEL-7.2-x86_64  QNX_700             armv7       GCC         Packagin
 qtci-osx-10.10-x86_64       IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
 qtci-macos-10.12-x86_64-8   TvOS_ANY            multi       Clang       DebugAndRelease DisableTests
 qtci-macos-10.12-x86_64-8   WatchOS_ANY         multi       Clang       DebugAndRelease DisableTests
+qtci-linux-RHEL-7.2-x86_64  INTEGRITY_11_04     armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
