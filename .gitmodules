@@ -146,8 +146,8 @@
 	branch = 5.9
 	status = addon
 [submodule "qt3d"]
-	depends = qtdeclarative
-	recommends = qtimageformats qtgamepad
+	depends = qtbase
+	recommends = qtdeclarative qtimageformats qtgamepad
 	path = qt3d
 	url = ../qt3d.git
 	branch = 5.9
