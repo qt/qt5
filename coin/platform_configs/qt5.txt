@@ -17,6 +17,7 @@ qtci-macos-10.12-x86_64-8   Android_ANY         x86         GCC         Packagin
 qtci-linux-RHEL-6.6-x86_64  QNX_660             x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-RHEL-7.2-x86_64  QNX_700             x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-RHEL-7.2-x86_64  QNX_700             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-macos-10.12-x86_64-8   QNX_700             x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-osx-10.10-x86_64       IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
 qtci-macos-10.12-x86_64-8   TvOS_ANY            multi       Clang       DebugAndRelease DisableTests
 qtci-macos-10.12-x86_64-8   WatchOS_ANY         multi       Clang       DebugAndRelease DisableTests
