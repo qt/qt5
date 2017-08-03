@@ -37,10 +37,10 @@
 
 $version = "2015 update3 (KB3165756)"
 $package = "C:\Windows\Temp\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.ci.local/input/windows/vs14-kb3165756.exe"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
 $url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
 $sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.ci.local\provisioning\windows\vs14-kb3165756-update"
+$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
 
 if (Test-Path $preparedPackage) {
     echo "Using prepared package"

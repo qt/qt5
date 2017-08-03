@@ -44,7 +44,7 @@ $packagex86 = "C:\Windows\temp\postgresql-$version-windows-binaries.zip"
 $architecture = "x64"
 $installFolder = "C:\Utils\postgresql\pgsql"
 $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-x64-binaries.zip"
-$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
+$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
 $sha1 = "4da0453cdfda335e064d4437cf5bb9d356054cfd"
 
 # Delete any leftovers
@@ -69,7 +69,7 @@ echo "Set $architecture environment variables ..."
 $architecture = "x86"
 $installFolder = "C:\Utils\postgresql$architecture\pgsql"
 $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-binaries.zip"
-$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\postgresql-$version-windows-binaries.zip"
+$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\postgresql-$version-windows-binaries.zip"
 $sha1 = "eb4f01845e1592800edbb74f60944b6c0aca51a9"
 
 echo "Fetching from URL..."

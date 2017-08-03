@@ -65,7 +65,7 @@ try {
 # Install x64 bit version
 $architecture = "x64"
 $installFolder = "C:\Utils\my_sql\my_sql"
-$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-winx64.zip"
+$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-winx64.zip"
 
 DownloadAndInstall $internalUrl $packagex64 $installFolder
 
@@ -76,7 +76,7 @@ echo "Set environment variables ..."
 # Install x86 bit version
 $architecture = "x86"
 $installFolder = "C:\Utils\my_sql\my_sql$architecture"
-$internalUrl = "\\ci-files01-hki.ci.local\provisioning\windows\mysql-$version-win32.zip"
+$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-win32.zip"
 
 DownloadAndInstall $internalUrl $packagex86 $installFolder
 

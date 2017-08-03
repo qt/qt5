@@ -45,7 +45,7 @@
 
 set -e
 targetFolder="/opt/android"
-baseUrl="http://ci-files01-hki.ci.local/input/android"
+baseUrl="http://ci-files01-hki.intra.qt.io/input/android"
 
 # SDK
 sdkPackage="android-sdk_r24.4.1-linux.tgz"

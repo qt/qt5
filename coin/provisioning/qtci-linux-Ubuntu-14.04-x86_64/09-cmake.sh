@@ -41,7 +41,7 @@
 source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
 
 version="3.6.2"
-PrimaryUrl="http://ci-files01-hki.ci.local/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
 SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
 targetFolder="/opt/cmake-$version"

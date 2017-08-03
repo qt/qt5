@@ -43,7 +43,7 @@
 
 set -e
 targetFolder="/opt/android"
-basePath="/net/ci-files01-hki.ci.local/hdd/www/input/android"
+basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
 # SDK
 sdkVersion="android-sdk_r24.4.1-macosx.zip"
