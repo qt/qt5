@@ -58,7 +58,7 @@ function InstallXCode()
     try
     (
         echo "Uncompressing and installing '$sourceFile'"
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -vdmi) || throw $ExceptionCPIO
+        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi) || throw $ExceptionCPIO
 
         echo "Accept license"
         sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
