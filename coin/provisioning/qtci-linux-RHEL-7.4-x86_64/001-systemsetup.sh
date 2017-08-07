@@ -33,23 +33,19 @@
 ##
 #############################################################################
 
-# This script installs INTEGRITY
+set -e
 
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+BASEDIR=$(dirname "$0")
+source $BASEDIR/../common/network_test_server_ip.txt
 
-version="11.4.4"
-PrimaryUrl="http://ci-files01-hki.ci.local/input/integrity/ghs_$version.tar.gz"
-AltUrl="$PrimaryUrl" # we lack an external source for this
-SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
-targetFolder="/opt/ghs"
-appPrefix=""
+echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
+echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+echo "Set DISPLAY"
+echo 'export DISPLAY=":0"' >> ~/.bashrc
+# for current session
+export DISPLAY=:0
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
-
-echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
-echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
-echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
-echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
-echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
-
-echo "INTEGRITY = $version" >> ~/versions.txt
+# disable Automatic screen lock
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+# disable blank screen power saving
+gsettings set org.gnome.desktop.session idle-delay 0

@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,38 +33,32 @@
 ##
 #############################################################################
 
-# This script installs the right ICU version
+# This script installs QNX 7.
 
 set -e
-icuVersion="56.1"
-icuLocation="/usr/lib64"
-sha1="6dd9ca6b185681a7ddc4bb94fd7fced27647a21c"
+targetFolder="/opt/"
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.tar.xz"
+sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
+folderName="qnx700"
+targetFile="qnx700.tar.xz"
+wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile" || echo "Failed to download '$url' multiple times"
+echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
+if [ ! -d "$targetFolder" ]; then
+  mkdir -p $targetFolder
+fi
+if [ -d "$targetFolder/$folderName" ]; then
+  rm -rf $targetFolder/$folderName
+fi
+sudo tar -C $targetFolder -Jxf $targetFile|| echo "Failed to extract $targetFile"
+sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-function Install7ZPackageFromURL {
-    url=$1
-    expectedSha1=$2
-    targetDirectory=$3
+# Verify that we have last file in tar
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    echo "Installation failed!"
+    exit -1
+fi
 
-    targetFile=`mktemp` || echo "Failed to create temporary file"
-    wget --tries=5 --waitretry=5 --output-document=$targetFile $url || echo "Failed to download '$url' multiple times"
-    echo "$expectedSha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
-    sudo /usr/local/bin/7z x -yo$targetDirectory $targetFile || echo "Failed to unzip $url archive"
-    rm $targetFile
-}
-
-echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
-
-baseBinaryPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
-Install7ZPackageFromURL $baseBinaryPackageURL $sha1 "/usr/lib64"
-
-echo "Installing custom ICU devel packages on RHEL"
-
-sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
-develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
-tempDir=`mktemp -d` || echo "Failed to create temporary directory"
-trap "sudo rm -fr $tempDir" EXIT
-Install7ZPackageFromURL $develPackageURL $sha1Dev $tempDir
-sudo cp -a $tempDir/lib/* /usr/lib64
-sudo cp -a $tempDir/* /usr/
-
-sudo /sbin/ldconfig
+rm -rf $targetFile
+# Set env variables
+echo "export QNX_700=$targetFolder$folderName" >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt
