@@ -38,7 +38,7 @@
 	status = essential
 [submodule "qttools"]
 	depends = qtbase
-	recommends = qtdeclarative qtactiveqt qtwebkit
+	recommends = qtdeclarative qtactiveqt
 	path = qttools
 	url = ../qttools.git
 	branch = 5.9
@@ -69,21 +69,6 @@
 	branch = master
 	status = essential
 	project = -
-[submodule "qtwebkit"]
-	depends = qtbase
-	recommends = qtdeclarative qtlocation qtmultimedia qtsensors qtwebchannel qtxmlpatterns
-	path = qtwebkit
-	url = ../qtwebkit.git
-	branch = 5.9
-	status = obsolete
-	project = WebKit.pro
-	priority = 20
-[submodule "qtwebkit-examples"]
-	depends = qtwebkit qttools
-	path = qtwebkit-examples
-	url = ../qtwebkit-examples.git
-	branch = 5.9
-	status = obsolete
 [submodule "qtqa"]
 	depends = qtbase
 	path = qtqa
@@ -238,7 +223,6 @@
 [submodule "qtwebengine"]
 	depends = qtquickcontrols qtwebchannel
 	recommends = qtlocation qttools
-	serialize = qtwebkit
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 5.9
