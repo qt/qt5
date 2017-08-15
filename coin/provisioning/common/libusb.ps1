@@ -35,11 +35,11 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$archive = "C:\users\qt\downloads\libusb-1.0.21.7z"
+$archive = "C:\users\qt\downloads\libusb-1.0.21-ife3db79196.7z"
 $libusb_location = "C:\Utils\libusb-1.0"
 
-Download https://vorboss.dl.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.7z http://ci-files01-hki.ci.local/input/libusb-1.0/libusb-1.0.21.7z $archive
-Verify-Checksum $archive "37c8884a0ddca97d492b8ef3e08970ae3ba20653"
+Download https://vorboss.dl.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.7z \\ci-files01-hki.intra.qt.io\provisioning\libusb-1.0\libusb-1.0.21-ife3db79196.7z $archive
+Verify-Checksum $archive "160892df83742639da32acc8dabd4f95a4f448e1"
 
 Extract-7Zip $archive $libusb_location
 
