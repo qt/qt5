@@ -2,11 +2,11 @@ Template                            Target OS           Target arch Compiler    
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-8.1-x86_64                                             MSVC2013    DeveloperBuild Release BuildExamples
 qtci-windows-8.1-x86_64                                             MSVC2012    DeveloperBuild Release QtNamespace QtLibInfix
-qtci-windows-8.1-x86                                                MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
+qtci-windows-8.1-x86_64                                 x86         MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-8.1-x86_64                                             MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-7-x86-2                                                MSVC2010    Release DeveloperBuild QtNamespace QtLibInfix OpenGLDynamic
 qtci-windows-7-x86-2                                                Mingw49     Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
-qtci-windows-10-x86-6                                               MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
+qtci-windows-10-x86_64-8                                x86         MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-10-x86_64-8                                            MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         NoWidgets ForceDebugInfo
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace Documentation
