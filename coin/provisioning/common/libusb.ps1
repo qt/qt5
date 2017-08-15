@@ -31,7 +31,7 @@
 #
 ############################################################################
 
-# lisbusb-1.0 is needed by tqtc-boot2qt/qdb
+# libusb-1.0 is needed by qt-apps/qdb
 
 . "$PSScriptRoot\helpers.ps1"
 
@@ -43,5 +43,5 @@ Verify-Checksum $archive "160892df83742639da32acc8dabd4f95a4f448e1"
 
 Extract-7Zip $archive $libusb_location
 
-# Tell tqtc-boot2qt/qdb build system where to find libusb
+# Tell qt-apps/qdb build system where to find libusb
 [Environment]::SetEnvironmentVariable("LIBUSB_PATH", $libusb_location, "Machine")
