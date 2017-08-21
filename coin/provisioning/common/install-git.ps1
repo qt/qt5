@@ -35,10 +35,17 @@
 # Install Git version 2.13.0
 
 $version = "2.13.0"
-$gitPackage = "C:\Windows\Temp\Git-" + $version + "-64-bit.exe"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + "-64-bit.exe"
-$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + "-64-bit.exe"
-$sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "-64-bit"
+    $sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
+}
+else {
+    $arch = "-32-bit"
+    $sha1 = "03c7df2e4ef61ea6b6f9c0eb7e6d5151d9682aec"
+}
+$gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
+$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
 
 echo "Fetching Git $version..."
 Download $url_official $url_cache $gitPackage

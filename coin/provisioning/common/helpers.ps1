@@ -88,3 +88,13 @@ function Add-Path
     echo "Adding $Path to Path"
     [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$Path", [EnvironmentVariableTarget]::Machine)
 }
+
+function is64bitWinHost
+{
+    if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64")) {
+        return 1
+    }
+    else {
+        return 0
+    }
+}

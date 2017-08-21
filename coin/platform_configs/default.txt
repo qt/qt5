@@ -2,7 +2,7 @@ Template                            Target OS           Target arch Compiler    
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-8.1-x86_64                                             MSVC2013    DeveloperBuild Release BuildExamples
 qtci-windows-8.1-x86_64                                             MSVC2012    DeveloperBuild Release QtNamespace QtLibInfix
-qtci-windows-8-x86-2                                                MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
+qtci-windows-8.1-x86                                                MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-8.1-x86_64                                             MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic
 qtci-windows-7-x86-2                                                MSVC2010    Release DeveloperBuild QtNamespace QtLibInfix OpenGLDynamic
 qtci-windows-7-x86-2                                                Mingw49     Packaging DebugAndRelease Release OpenGLDynamic
