@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,31 +30,22 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-# Install Cumulative Servicing Release Visual Studio 2015 update 3
-# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
+# This script will install Ruby
 
-$version = "2015 update3 (KB3165756)"
-$package = "C:\Windows\Temp\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
-$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
-$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
+$version = "2.2.6"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + "-x64.exe"
+$url_official = "https://bintray.com/oneclick/rubyinstaller/download_file?file_path=rubyinstaller-" + $version + "-x64.exe"
+$rubyPackage = "C:\Windows\Temp\rubyinstaller-$version.exe"
+$sha1 = "4D0E366F0264CDED174E5842B2435E22B81FB57A"
 
-if (Test-Path $preparedPackage) {
-    echo "Using prepared package"
-    pushd $preparedPackage
-    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
-} else {
-    echo "Fetching patch for Visual Studio $version..."
-    Download $url_official $url_cache $package
-    Verify-Checksum $package $sha1
-    $commandLine = $package
-}
-echo "Installing patch for Visual Studio $version..."
-. $commandLine /norestart /passive
+Download $url_official $url_cache $rubyPackage
+Verify-Checksum $rubyPackage $sha1
+cmd /c "$rubyPackage /silent"
 
-if ($commandLine.StartsWith("C:\Windows")) {
-    remove-item $package
-}
+echo "Cleaning $rubyPackage.."
+Remove-Item -Recurse -Force "$rubyPackage"
+
+echo "Ruby = $version" >> ~\versions.txt

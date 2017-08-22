@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,31 +30,22 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-# Install Cumulative Servicing Release Visual Studio 2015 update 3
-# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
+# This script installs Strawberry Perl
 
-$version = "2015 update3 (KB3165756)"
-$package = "C:\Windows\Temp\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
-$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
-$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
+$version = "5.26.0.1"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\strawberry-perl-" + $version + "-64bit.msi"
+$url_official = "http://strawberryperl.com/download/" + $version + "/strawberry-perl-" +$version+ "-64bit.msi"
+$strawberryPackage = "C:\Windows\Temp\strawberry-installer-$version.msi"
+$sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
 
-if (Test-Path $preparedPackage) {
-    echo "Using prepared package"
-    pushd $preparedPackage
-    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
-} else {
-    echo "Fetching patch for Visual Studio $version..."
-    Download $url_official $url_cache $package
-    Verify-Checksum $package $sha1
-    $commandLine = $package
-}
-echo "Installing patch for Visual Studio $version..."
-. $commandLine /norestart /passive
+Download $url_official $url_cache $strawberryPackage
+Verify-Checksum $strawberryPackage $sha1
+cmd /c "$strawberryPackage /QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
 
-if ($commandLine.StartsWith("C:\Windows")) {
-    remove-item $package
-}
+echo "Cleaning $strawberryPackage.."
+Remove-Item -Recurse -Force "$strawberryPackage"
+
+echo "strawberry = $version" >> ~\versions.txt

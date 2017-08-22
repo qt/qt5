@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,31 +30,25 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-# Install Cumulative Servicing Release Visual Studio 2015 update 3
-# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
+# This script will install Notepad++
 
-$version = "2015 update3 (KB3165756)"
-$package = "C:\Windows\Temp\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
-$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
-$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
+$version = "7.3"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\npp." + $version + ".Installer.x64.exe"
+$url_official = "https://notepad-plus-plus.org/repository/7.x/" + $version + "/npp." + $version + ".Installer.x64.exe"
+$sha1 = "E7306DF1D6E81801FB4BE0868610DB70E979B0AA"
+$nppPackage = "C:\Windows\Temp\npp-$version.exe"
 
-if (Test-Path $preparedPackage) {
-    echo "Using prepared package"
-    pushd $preparedPackage
-    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
-} else {
-    echo "Fetching patch for Visual Studio $version..."
-    Download $url_official $url_cache $package
-    Verify-Checksum $package $sha1
-    $commandLine = $package
-}
-echo "Installing patch for Visual Studio $version..."
-. $commandLine /norestart /passive
+Download $url_official $url_cache $nppPackage
+Verify-Checksum $nppPackage $sha1
+cmd /c "$nppPackage /S"
 
-if ($commandLine.StartsWith("C:\Windows")) {
-    remove-item $package
-}
+echo "Cleaning $nppPackage.."
+Remove-Item -Recurse -Force "$nppPackage"
+
+echo "Notepad++ = $version" >> ~\versions.txt
+
+Rename-Item -Path "C:\Program Files (x86)\Notepad++\updater" -NewName "updater_disabled"
+echo "Auto-updating disabled."

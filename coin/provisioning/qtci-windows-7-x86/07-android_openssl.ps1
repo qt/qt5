@@ -9,7 +9,7 @@ $zip = "c:\users\qt\downloads\openssl-$version.tar.gz"
 $sha1 = "bdfbdb416942f666865fa48fe13c2d0e588df54f"
 $destination = "C:\Utils\openssl-android-master"
 
-Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.ci.local\provisioning\openssl\openssl-$version.tar.gz $zip
+Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
 Verify-Checksum $zip $sha1
 
 C:\Utils\sevenzip\7z.exe x $zip -oC:\Utils

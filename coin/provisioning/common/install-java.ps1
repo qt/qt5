@@ -1,11 +1,9 @@
-#!/bin/bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,21 +31,16 @@
 ##
 #############################################################################
 
-# This script installs CMake 3.6.2
+. "$PSScriptRoot\..\common\helpers.ps1"
 
-# CMake is needed for autotests that verify that Qt can be built with CMake
+# This script will install Java
 
-# shellcheck source=../common/InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+$version = "7u7"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jre-" + $version + "-windows-x64.exe"
+$javaPackage = "C:\Windows\Temp\java-$version.exe"
 
-version="3.6.2"
-PrimaryUrl="http://ci-files01-hki.ci.local/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
-SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
-targetFolder="/opt/cmake-$version"
-appPrefix="cmake-$version-Linux-x86_64"
-
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
-
-echo "Adding $targetFolder/bin to PATH"
-echo "export PATH=$targetFolder/bin:$PATH" >> ~/.bashrc
+Copy-Item $url_cache $javaPackage
+cmd /c "$javaPackage /s SPONSORS=0"
+echo "Cleaning $javaPackage.."
+Remove-Item -Recurse -Force "$javaPackage"
+echo "Java = $version" >> ~\versions.txt
