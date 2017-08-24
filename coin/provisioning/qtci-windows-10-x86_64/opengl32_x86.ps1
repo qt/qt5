@@ -36,7 +36,7 @@
 $version = "11_2_2"
 $openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
 
-$openglUrl = "\\ci-files01-hki.ci.local\provisioning\mesa3d\windows\32bit\opengl32.dll"
+$openglUrl = "\\ci-files01-hki.intra.qt.io\provisioning\mesa3d\windows\32bit\opengl32.dll"
 $openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
 
 echo "Take ownership of existing opengl32.dll from SysWOW64"

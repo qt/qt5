@@ -66,13 +66,23 @@ sudo update-binfmts --package qemu-arm --install arm \
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y remove fonts-noto-cjk
 
 # If normal fontconfig paths are used, qemu parses what ever files it finds from
-# the toolchain sysroot and the rest from the system fonts. Fix by copying the
-# system font configurations to a location which prefix that can't be found from
-# the toolchain sysroot. Links must also be dereferenced or their targets remain
-# pointing to the toolchain sysroot.
+# the toolchain sysroot and the rest from the system fonts.
 QEMU_FONTCONFPATH=~/qemu_fonts
 QEMU_FONTCONFFILE=$QEMU_FONTCONFPATH/fonts.qemu.conf
 mkdir -p $QEMU_FONTCONFPATH
+
+# Copy system font configuration files from system to a location with prefix that can't be found from
+# the toolchain sysroot
 cp -Lr /etc/fonts/* $QEMU_FONTCONFPATH
+
+# Create links to the actual system font files
+ln -s /usr/share/fonts $QEMU_FONTCONFPATH/fonts
+ln -s /usr/local/share/fonts $QEMU_FONTCONFPATH/local_fonts
+
+# Change font configuration file to point to files that can't be found from the toolchain sysroot
 sed $QEMU_FONTCONFPATH/fonts.conf -e "s:conf.d:$QEMU_FONTCONFPATH/conf.d:" > $QEMU_FONTCONFFILE
+sed $QEMU_FONTCONFFILE -e "s:/usr/share/fonts:$QEMU_FONTCONFPATH/fonts:" -i
+sed $QEMU_FONTCONFFILE -e "s:/usr/local/share/fonts:$QEMU_FONTCONFPATH/local_fonts:" -i
+
+# Set QEMU font configuration variables
 echo "export QEMU_SET_ENV=\"FONTCONFIG_FILE=$QEMU_FONTCONFFILE,FONTCONFIG_PATH=$QEMU_FONTCONFPATH\"" >> ~/.profile

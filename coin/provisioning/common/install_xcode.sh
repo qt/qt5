@@ -51,6 +51,7 @@ function InstallXCode()
 {
     ExceptionCPIO=103
     ExceptionAcceptLicense=105
+    ExceptionDeveloperMode=113
 
     sourceFile=$1
     version=$2
@@ -58,10 +59,13 @@ function InstallXCode()
     try
     (
         echo "Uncompressing and installing '$sourceFile'"
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -vdmi) || throw $ExceptionCPIO
+        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi) || throw $ExceptionCPIO
 
         echo "Accept license"
         sudo xcodebuild -license accept || throw $ExceptionAcceptLicense
+
+        echo "Enabling developer mode, so that using lldb does not require interactive password entry"
+        sudo /usr/sbin/DevToolsSecurity -enable || throw $ExceptionDeveloperMode
 
         echo "Xcode = $version" >> ~/versions.txt
     )
@@ -69,6 +73,10 @@ function InstallXCode()
         case $ex_code in
             $ExceptionCPIO)
                 echo "Failed to unarchive .cpio."
+                exit 1;
+            ;;
+            $ExceptionDeveloperMode)
+                echo "Failed to enable developer mode."
                 exit 1;
             ;;
             $ExceptionAcceptLicense)

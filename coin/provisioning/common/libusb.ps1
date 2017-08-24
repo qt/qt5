@@ -31,17 +31,17 @@
 #
 ############################################################################
 
-# lisbusb-1.0 is needed by tqtc-boot2qt/qdb
+# libusb-1.0 is needed by qt-apps/qdb
 
 . "$PSScriptRoot\helpers.ps1"
 
-$archive = "C:\users\qt\downloads\libusb-1.0.21.7z"
+$archive = "C:\users\qt\downloads\libusb-1.0.21-ife3db79196-msvc2015.7z"
 $libusb_location = "C:\Utils\libusb-1.0"
 
-Download https://vorboss.dl.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.7z http://ci-files01-hki.ci.local/input/libusb-1.0/libusb-1.0.21.7z $archive
-Verify-Checksum $archive "37c8884a0ddca97d492b8ef3e08970ae3ba20653"
+Copy-Item \\ci-files01-hki.intra.qt.io\provisioning\libusb-1.0\libusb-1.0.21-ife3db79196-msvc2015.7z $archive
+Verify-Checksum $archive "396a3224c306480f24a583850d923d06aa4377c1"
 
 Extract-7Zip $archive $libusb_location
 
-# Tell tqtc-boot2qt/qdb build system where to find libusb
+# Tell qt-apps/qdb build system where to find libusb
 [Environment]::SetEnvironmentVariable("LIBUSB_PATH", $libusb_location, "Machine")
