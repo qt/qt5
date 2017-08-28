@@ -50,4 +50,4 @@ appPrefix="cmake-$version-Linux-x86_64"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
 echo "Adding $targetFolder/bin to PATH"
-echo "export PATH=$targetFolder/bin:$PATH" >> ~/.bashrc
+echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc
