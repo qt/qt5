@@ -243,6 +243,7 @@
 	status = addon
 [submodule "qtquickcontrols2"]
 	depends = qtgraphicaleffects
+	recommends = qtimageformats
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = 5.10
