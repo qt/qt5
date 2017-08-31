@@ -1,6 +1,7 @@
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the test suite of the Qt Toolkit.
@@ -30,42 +31,40 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 param([Int32]$archVer=32)
 . "$PSScriptRoot\helpers.ps1"
 
 # This script installs Python $version.
-# Python is required for building Qt 5 from source.
+# Python3 is required for building some qt modules.
 
-$version = "2.7.13"
-$package = "C:\Windows\temp\python-$version.msi"
+$version = "3.6.1"
+$package = "C:\Windows\temp\python-$version.exe"
+$install_path = "C:\Python36"
 
 # check bit version
 if ( $archVer -eq 64 ) {
     echo "Running in 64 bit system"
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.amd64.msi"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version.amd64.msi"
-    $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
+    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
+    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version-amd64.exe"
+    $sha1 = "bf54252c4065b20f4a111cc39cf5215fb1edccff"
 }
 else {
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.msi"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version.msi"
-    $sha1 = "7e3b54236dbdbea8fe2458db501176578a4d59c0"
+    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
+    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.exe"
+    $sha1 = "76c50b747237a0974126dd8b32ea036dd77b2ad1"
 }
 
 echo "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 echo "Installing $package..."
-cmd /c "msiexec /passive /i $package ALLUSERS=1"
-# We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
-echo "Chancing allowZip64 value to 'True'..."
-(Get-Content C:\Python27\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content C:\Python27\lib\zipfile.py
+cmd /c "$package /q TargetDir=$install_path"
 echo "Remove $package..."
 del $package
 
-$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
-[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PYTHON3_PATH", "$install_path", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("PIP3_PATH", "$install_path\Scripts", [EnvironmentVariableTarget]::Machine)
 
-C:\Python27\python.exe -m ensurepip
 # Install python virtual env
-C:\Python27\Scripts\pip.exe install virtualenv
+cmd /c "$install_path\Scripts\pip3.exe install virtualenv"

@@ -1,6 +1,9 @@
+#!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,27 +34,19 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+# This script installs python3
 
-$majorminorversion = "3.6"
-$version = "3.6.2"
+source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
 
-$zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
-$officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
-$cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
+PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/python-3.6.1-macosx10.6.pkg"
+AltUrl="https://www.python.org/ftp/python/3.6.1/python-3.6.1-macosx10.6.pkg"
+SHA1="ae0c749544c2d573c3cc29c4c2d7d9a595db28f9"
+DestDir="/"
 
-Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
+InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
-Extract-Zip $zip C:
-# TODO: Remove line below after all Windows TIER2 VMs are based on vanilla OS
-if((Test-Path -Path "C:\CMake" )){
-    try {
-        Rename-Item -ErrorAction 'Stop' "C:\CMake" C:\CMake_old
-    } catch {}
-}
-$defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
-Rename-Item $defaultinstallfolder C:\CMake
+/Library/Frameworks/Python.framework/Versions/3.6/bin/pip3 install virtualenv
 
-echo "CMake = $version" >> ~\versions.txt
-
+echo "export PYTHON3_PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin" >> ~/.bashrc
+echo "export PIP3_PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin" >> ~/.bashrc
+echo "python3 = 3.6.1" >> ~/versions.txt
