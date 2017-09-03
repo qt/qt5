@@ -4,8 +4,8 @@ qtci-windows-8.1-x86_64     Windows_Phone_8_1   x86         MSVC2013    Packagin
 qtci-windows-10-x86_64-10   WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
 qtci-windows-10-x86_64-10   WinRT_10                        MSVC2015    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
 qtci-linux-RHEL-6.6-x86_64  Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-windows-7-x86-2        Android_ANY         armv7       Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
-qtci-windows-7-x86-2        Android_ANY         x86         Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
+qtci-windows-7-x86-3        Android_ANY         armv7       Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
+qtci-windows-7-x86-3        Android_ANY         x86         Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
 qtci-osx-10.11-x86_64-3     Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2
 qtci-osx-10.11-x86_64-3     Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2
 qtci-linux-RHEL-6.6-x86_64  QNX_660             x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker

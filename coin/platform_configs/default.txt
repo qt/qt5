@@ -4,8 +4,8 @@ qtci-windows-8.1-x86_64                                             MSVC2013    
 qtci-windows-8.1-x86_64                                             MSVC2012    DeveloperBuild Release QtNamespace QtLibInfix
 qtci-windows-8.1-x86_64                                 x86         MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-8.1-x86_64                                             MSVC2013    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
-qtci-windows-7-x86-2                                                MSVC2010    Release DeveloperBuild QtNamespace QtLibInfix OpenGLDynamic
-qtci-windows-7-x86-2                                                Mingw49     Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
+qtci-windows-7-x86-3                                                MSVC2010    Release DeveloperBuild QtNamespace QtLibInfix OpenGLDynamic
+qtci-windows-7-x86-3                                                Mingw49     Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-10-x86_64-10                               x86         MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-windows-10-x86_64-10                                           MSVC2015    Packaging DebugAndRelease Release OpenGLDynamic UploadConfigureExe
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         NoWidgets ForceDebugInfo
@@ -22,4 +22,4 @@ qtci-linux-RHEL-6.6-x86_64          Android_ANY         armv7       GCC         
 qtci-linux-Ubuntu-14.04-x86_64-1    Boot2Qt_Fido        armv7       GCC         DisableTests
 qtci-linux-RHEL-6.6-x86_64          QNX_660             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-14.04-x86_64-1                                    GCC         TestOnly LicenseCheck
-qtci-windows-7-x86-2                Windows_7_Embedded  armv4       MSVC2008    DeveloperBuild Release DisableTests OpenGLES2
+qtci-windows-7-x86-3                Windows_7_Embedded  armv4       MSVC2008    DeveloperBuild Release DisableTests OpenGLES2
