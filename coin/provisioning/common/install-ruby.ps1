@@ -55,7 +55,6 @@ cmd /c "$rubyPackage /silent"
 echo "Cleaning $rubyPackage.."
 Remove-Item -Recurse -Force "$rubyPackage"
 
-$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
-[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Ruby22-x64\bin", [EnvironmentVariableTarget]::Machine)
+Add-Path "C:\Ruby22-x64\bin"
 
 echo "Ruby = $version" >> ~\versions.txt

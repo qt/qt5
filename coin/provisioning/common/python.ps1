@@ -59,8 +59,7 @@ echo "Chancing allowZip64 value to 'True'..."
 echo "Remove $package..."
 del $package
 
-$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
-[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
+Add-Path "C:\Python27;C:\Python27\Scripts"
 
 C:\Python27\python.exe -m ensurepip
 # Install python virtual env
