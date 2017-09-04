@@ -69,6 +69,7 @@ function Download
         [string] $CachedUrl   = $(BadParam("the locally cached URL")),
         [string] $Destination = $(BadParam("a download target location"))
     )
+    $ProgressPreference = 'SilentlyContinue'
     try {
         if ($CachedUrl.StartsWith("http")) {
             Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
