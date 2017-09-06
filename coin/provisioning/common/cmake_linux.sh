@@ -1,9 +1,11 @@
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -31,27 +33,21 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+# This script installs CMake 3.6.2
 
-$majorminorversion = "3.6"
-$version = "3.6.2"
+# CMake is needed for autotests that verify that Qt can be built with CMake
 
-$zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
-$officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
-$cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
+# shellcheck source=../common/InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
 
-Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
+version="3.6.2"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
+SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
+targetFolder="/opt/cmake-$version"
+appPrefix="cmake-$version-Linux-x86_64"
 
-Extract-Zip $zip C:
-# TODO: Remove line below after all Windows TIER2 VMs are based on vanilla OS
-if((Test-Path -Path "C:\CMake" )){
-    try {
-        Rename-Item -ErrorAction 'Stop' "C:\CMake" C:\CMake_old
-    } catch {}
-}
-$defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
-Rename-Item $defaultinstallfolder C:\CMake
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
-echo "CMake = $version" >> ~\versions.txt
-
+echo "Adding $targetFolder/bin to PATH"
+echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc

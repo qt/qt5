@@ -69,7 +69,8 @@ function InstallPKGFromURL {
             esac
         }
         echo "Checking SHA1 on PKG '$targetFile'"
-        echo "$expectedSha1 *$targetFile" | /usr/bin/shasum --check || throw $ExceptionSHA1
+        echo "$expectedSha1 *$targetFile" > $targetFile.sha1
+        /usr/bin/shasum --check $targetFile.sha1 || throw $ExceptionSHA1
         echo "Run installer on PKG"
         sudo installer -package "$targetFile" -target "$targetDirectory" || throw $ExceptionInstallerPKG
         echo "Removing file '$targetFile'"
