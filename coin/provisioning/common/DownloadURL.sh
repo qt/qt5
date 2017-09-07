@@ -71,7 +71,7 @@ function DownloadURL {
         }
         echo "Checking SHA1 on PKG '$targetFile'"
         echo "$expectedSha1 *$targetFile" > $targetFile.sha1
-        /usr/bin/shasum --check $targetFile.sha1 || throw $ExceptionSHA1
+        shasum --check $targetFile.sha1 || throw $ExceptionSHA1
     )
 
     catch || {
