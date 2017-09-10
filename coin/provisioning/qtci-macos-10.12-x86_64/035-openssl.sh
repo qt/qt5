@@ -73,8 +73,8 @@ try
     sudo mkdir -p "$path"
     sudo ln -s /usr/local/openssl-$opensslVersion $opensslTargetLocation || throw $ExceptionLN
 
-    echo "export PATH=\"$opensslTargetLocation/bin:$PATH\"" >> ~/.bashrc
-    echo "export MANPATH=\"$opensslTargetLocation/share/man:$MANPATH\"" >> ~/.bashrc
+    echo "export PATH=\"$opensslTargetLocation/bin:\$PATH\"" >> ~/.bashrc
+    echo "export MANPATH=\"$opensslTargetLocation/share/man:\$MANPATH\"" >> ~/.bashrc
 
     security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem || throw $ExceptionCertificate
     security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem || throw $ExceptionCertificate

@@ -62,7 +62,9 @@ echo "Chancing allowZip64 value to 'True'..."
 (Get-Content C:\Python27\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content C:\Python27\lib\zipfile.py
 echo "Remove $package..."
 del $package
-[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
+
+$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
+[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
 
 C:\Python27\python.exe -m ensurepip
 # Install python virtual env
