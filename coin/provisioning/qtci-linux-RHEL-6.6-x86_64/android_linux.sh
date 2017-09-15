@@ -87,7 +87,13 @@ function InstallAndroidPackage {
     sudo rm -fr "$targetFolder"/"$version"
 }
 
-sudo mkdir "$targetFolder"
+if [ -d "$targetFolder" ]; then
+    echo "Removing old Android installation"
+    sudo rm -fr "$targetFolder" || ( echo "Can't remove $targetFolder" ; exit 1; )
+fi
+
+sudo mkdir "$targetFolder" || ( echo "Can't create $targetFolder" ; exit 1; )
+
 # Install Android SDK
 echo "Installing Android SDK version $sdkPackage..."
 InstallAndroidPackage "$targetFolder" $sdkPackage $sdkUrl $sdkSha1 $sdkTargetFile "$sdkExtract" $sdkFolderName $sdkName
