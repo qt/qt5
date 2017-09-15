@@ -8,5 +8,4 @@ Verify-Checksum $zip "E01093F6533818425F8EFB0843CED7DCAABEA3B2"
 Extract-Zip $zip C:\Utils\Ninja
 Remove-Item $zip
 
-$machinePath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
-[Environment]::SetEnvironmentVariable("Path", $machinePath + ";C:\Utils\Ninja", [EnvironmentVariableTarget]::Machine)
+Add-Path "C:\Utils\Ninja"
