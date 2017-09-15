@@ -37,8 +37,8 @@
 
 # CMake is needed for autotests that verify that Qt can be built with CMake
 
-# shellcheck source=../common/InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+# shellcheck source=InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
 
 version="3.6.2"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
