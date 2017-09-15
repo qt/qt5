@@ -44,7 +44,7 @@ $parameters = "/OverrideFeedURI http://download.microsoft.com/download/6/B/B/6BB
 
 $msvc_web_installer = "vs" + $version + "_" + $update_version
 $package = "C:\Windows\temp\$msvc_web_installer.exe"
-$url_cache = "http://ci-files01-hki.ci.local/input/windows/$msvc_web_installer.exe"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/$msvc_web_installer.exe"
 $url_official = "https://go.microsoft.com/fwlink/?LinkId=691129"
 $sha1 = "68abf90424aff604a04d6c61fb52adcd2cab2266"
 

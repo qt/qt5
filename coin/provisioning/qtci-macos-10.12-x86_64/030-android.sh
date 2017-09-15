@@ -43,7 +43,7 @@ source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
-basePath="/net/ci-files01-hki.ci.local/hdd/www/input/android"
+basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
 toolsVersion="r25.2.5"
 toolsFile="tools_$toolsVersion-macosx.zip"

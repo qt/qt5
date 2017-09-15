@@ -38,7 +38,7 @@
 
 source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
 
-PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/python-3.6.1-macosx10.6.pkg"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-3.6.1-macosx10.6.pkg"
 AltUrl="https://www.python.org/ftp/python/3.6.1/python-3.6.1-macosx10.6.pkg"
 SHA1="ae0c749544c2d573c3cc29c4c2d7d9a595db28f9"
 DestDir="/"

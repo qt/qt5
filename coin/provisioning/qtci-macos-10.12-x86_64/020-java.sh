@@ -49,7 +49,7 @@ ExceptionRemoveTmpFile=106
 ExceptionDisableAutoUpdate=107
 
 
-url=http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/jdk-8u102-macosx-x64.dmg
+url=http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/jdk-8u102-macosx-x64.dmg
 url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
 targetFile=/tmp/jdk-8u102-macosx-x64.dmg
 expectedSha1=1405af955f14e32aae187b5754a716307db22104
