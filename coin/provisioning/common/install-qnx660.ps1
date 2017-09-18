@@ -1,10 +1,9 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,33 +31,16 @@
 ##
 #############################################################################
 
-param([Int32]$archVer=32)
 . "$PSScriptRoot\helpers.ps1"
 
-# This script installs Visual C++ Redistributable for Visual Studio 2015
-# This is a dependency of the current python3 version
+# This script will install QNX 6.6.0
 
-# check bit version
-if ( $archVer -eq 64 ) {
-    echo "Running in 64 bit system"
-    $arch = "x64"
-    $externalUrl = "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/vc_redist.x64.exe"
-    $sha1 = "3155cb0f146b927fcc30647c1a904cd162548c8c"
-}
-else {
-    $arch = "x86"
-    $externalUrl = "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/vc_redist.x86.exe"
-    $sha1 = "bfb74e498c44d3a103ca3aa2831763fb417134d1"
-}
+$version = "6.6.0"
+$nondottedversion = $version -replace '[.]',''
+$targetFolder = "c:"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\qnx" + $nondottedversion + ".zip"
 
-$package = "C:\Windows\temp\vc_redist.$arch.exe"
+Get-ChildItem $url_cache | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o"C:\"}
 
-echo "Fetching from URL..."
-Download $externalUrl $internalUrl $package
-Verify-Checksum $package $sha1
-echo "Installing $package..."
-Start-Process -FilePath $package -ArgumentList "/q" -Wait
-echo "Remove $package..."
-del $package
+[Environment]::SetEnvironmentVariable("QNX_660", "$targetFolder", "Machine")
+echo "QNX = $version" >> ~\versions.txt
