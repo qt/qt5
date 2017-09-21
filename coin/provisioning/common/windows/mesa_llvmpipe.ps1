@@ -1,4 +1,4 @@
-############################################################################
+#############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,31 +30,34 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+$version = "11_2_2"
+$package = "C:\Windows\temp\opengl32sw.7z"
+$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
+$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
+$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
+$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
 
-# This script installs 7-Zip
-
-$version = "1604"
-
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-x64"
-    $sha1 = "338A5CC5200E98EDD644FC21807FDBE59910C4D0"
+function Extract-Mesa
+{
+    Param (
+        [string]$downloadUrl,
+        [string]$sha1,
+        [string]$targetFolder
+    )
+    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
+    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
+    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
+    Verify-Checksum $localArchivePath $sha1
+    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
+    Remove-Item $localArchivePath
 }
-else {
-    $arch = ""
-    $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
+
+if ( Test-Path C:\Windows\SysWOW64 ) {
+    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\sysnative"
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+} else {
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
 }
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\7z" + $version + $arch + ".exe"
-$url_official = "http://www.7-zip.org/a/7z" + $version + $arch + ".exe"
-$7zPackage = "C:\Windows\Temp\7zip-$version.exe"
-
-Download $url_official $url_cache $7zPackage
-Verify-Checksum $7zPackage $sha1
-cmd /c "$7zPackage /S /D=C:\Utils\sevenzip\"
-
-echo "Cleaning $7zPackage.."
-Remove-Item -Recurse -Force "$7zPackage"
-
-echo "7-Zip = $version" >> ~\versions.txt

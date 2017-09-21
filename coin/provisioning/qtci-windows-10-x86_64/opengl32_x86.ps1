@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 $version = "11_2_2"
 $openglPackage = "C:\Windows\SysWOW64\opengl32.dll"

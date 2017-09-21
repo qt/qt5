@@ -1,1 +1,1 @@
-$(dirname $0)/../common/cmake_linux.sh
+$(dirname $0)/../common/linux/cmake_linux.sh

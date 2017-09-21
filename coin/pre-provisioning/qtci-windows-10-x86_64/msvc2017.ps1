@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\..\provisioning\common\windows\helpers.ps1"
 
 # This script will install Visual Studio 2017
 

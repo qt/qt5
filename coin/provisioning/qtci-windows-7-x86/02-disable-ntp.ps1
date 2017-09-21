@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\disable-ntp.ps1"
+. "$PSScriptRoot\..\common\windows\disable-ntp.ps1"

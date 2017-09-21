@@ -1,9 +1,11 @@
+#!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -30,28 +32,57 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+set -ex
 
-# Install Git version 2.13.0
+# Command line tools is need by Homebrew
 
-$version = "2.13.0"
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-64-bit"
-    $sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
+function InstallCommandLineTools {
+
+    ExceptionMount=101
+    ExceptionInstall=102
+    ExceptionUnmount=103
+
+    url=$1
+    url_alt=$2
+    expectedSha1=$3
+    packageName=$4
+    version=$5
+
+    try
+    (
+        DownloadURL $url $url_alt $expectedSha1 /tmp/$packageName
+        echo "Mounting $packageName"
+        hdiutil attach /tmp/$packageName || throw $ExceptionMount
+        cd "/Volumes/Command Line Developer Tools"
+        echo "Installing"
+        sudo installer -verbose -pkg *.pkg -target / || throw $ExceptionInstall
+        cd /
+        # Let's fait for 5 second before unmounting. Sometimes resource is busy and cant be unmounted
+        sleep 3
+        echo "Unmounting"
+        umount /Volumes/Command\ Line\ Developer\ Tools/ || throw $ExceptionUnmount
+        echo "Removing $packageName"
+        rm /tmp/$packageName
+
+        echo "Command Line Tools = $version" >> ~/versions.txt
+    )
+    catch || {
+        case $ex_code in
+            $ExceptionMount)
+                echo "Failed to mount."
+                exit 1;
+            ;;
+            $ExceptionInstall)
+                echo "Failed to install command line tools."
+                exit 1;
+            ;;
+            $ExceptionUnmount)
+                echo "Failed to unmount."
+                exit 1;
+
+        esac
+    }
+
 }
-else {
-    $arch = "-32-bit"
-    $sha1 = "03c7df2e4ef61ea6b6f9c0eb7e6d5151d9682aec"
-}
-$gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
-$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
-
-echo "Fetching Git $version..."
-Download $url_official $url_cache $gitPackage
-Verify-Checksum $gitPackage $sha1
-echo "Installing Git $version..."
-cmd /c "$gitPackage /SILENT /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh""
-remove-item $gitPackage
-
-echo "Git = $version" >> ~\versions.txt

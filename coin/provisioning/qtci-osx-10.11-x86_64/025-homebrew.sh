@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/homebrew.sh
+$BASEDIR/../common/macos/homebrew.sh

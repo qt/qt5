@@ -37,8 +37,8 @@
 
 # MySQL is needed for Qt to be able to support MySQL
 
-# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/osx_10.11_el_capitan/mysql-5.7.15-osx10.11-x86_64.tar.gz"
 AltUrl="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.15-osx10.11-x86_64.tar.gz"

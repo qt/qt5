@@ -30,7 +30,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\..\provisioning\common\windows\helpers.ps1"
 
 # This script will install Visual Studio 2017 Build Tools
 # https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017

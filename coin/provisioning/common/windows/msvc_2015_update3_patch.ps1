@@ -30,34 +30,31 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-$version = "11_2_2"
-$package = "C:\Windows\temp\opengl32sw.7z"
-$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
-$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
-$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
-$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
+# Install Cumulative Servicing Release Visual Studio 2015 update 3
+# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
 
-function Extract-Mesa
-{
-    Param (
-        [string]$downloadUrl,
-        [string]$sha1,
-        [string]$targetFolder
-    )
-    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
-    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
-    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
-    Verify-Checksum $localArchivePath $sha1
-    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
-    Remove-Item $localArchivePath
-}
+$version = "2015 update3 (KB3165756)"
+$package = "C:\Windows\Temp\vs14-kb3165756.exe"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
+$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
+$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
+$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
 
-if ( Test-Path C:\Windows\SysWOW64 ) {
-    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\sysnative"
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+if (Test-Path $preparedPackage) {
+    echo "Using prepared package"
+    pushd $preparedPackage
+    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
 } else {
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
+    echo "Fetching patch for Visual Studio $version..."
+    Download $url_official $url_cache $package
+    Verify-Checksum $package $sha1
+    $commandLine = $package
 }
+echo "Installing patch for Visual Studio $version..."
+. $commandLine /norestart /passive
 
+if ($commandLine.StartsWith("C:\Windows")) {
+    remove-item $package
+}

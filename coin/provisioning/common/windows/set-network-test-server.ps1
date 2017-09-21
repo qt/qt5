@@ -31,33 +31,12 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Dependency Walker 2.2.6000
+# This script will set the network test server IP in to hosts file
 
-$version = "2.2.6000"
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = "_x64"
-    $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
-}
-else {
-    $arch = "_x86"
-    $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
-}
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22" + $arch + ".zip"
-$url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
-$dependsPackage = "C:\Windows\Temp\depends-$version.zip"
+$n = Get-Content "$PSScriptRoot\network_test_server_ip.txt"
+$n = $n.Split('=')
+New-Variable -Name $n[0] -Value $n[1]
 
-$TARGETDIR = "C:\Utils\dependencywalker"
-if(!(Test-Path -Path $TARGETDIR )){
-    New-Item -ItemType directory -Path $TARGETDIR
-}
-Download $url_official $url_cache $dependsPackage
-Verify-Checksum $dependsPackage $sha1
-
-Get-ChildItem $dependsPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
-
-echo "Cleaning $dependsPackage.."
-Remove-Item -Recurse -Force "$dependsPackage"
-
-echo "Dependency Walker = $version" >> ~\versions.txt
+Add-Content -Path C:\Windows\System32\drivers\etc\hosts. -Value "$network_test_server_ip  qt-test-server  qt-test-server.qt-test-net"

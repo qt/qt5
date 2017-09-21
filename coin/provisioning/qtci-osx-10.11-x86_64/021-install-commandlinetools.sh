@@ -32,7 +32,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-source "${BASH_SOURCE%/*}/../common/install-commandlinetools.sh"
+source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
 
 version="8.2"
 packageName="Command_Line_Tools_macOS_10.11_for_Xcode_$version.dmg"

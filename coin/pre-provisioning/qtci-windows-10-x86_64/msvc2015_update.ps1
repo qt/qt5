@@ -30,7 +30,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\..\provisioning\common\helpers.ps1"
+. "$PSScriptRoot\..\..\provisioning\common\windows\helpers.ps1"
 
 # Install Visual Studio $version with $update_version
 # Original download page: https://www.visualstudio.com/en-us/news/releasenotes/vs2015-update3-vs

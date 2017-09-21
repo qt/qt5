@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\cmake.ps1"
+. "$PSScriptRoot\..\common\windows\cmake.ps1"

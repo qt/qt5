@@ -30,7 +30,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # Install Visual Studio 2013 update 5
 

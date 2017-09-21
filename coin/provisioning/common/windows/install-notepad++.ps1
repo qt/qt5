@@ -31,30 +31,37 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Ruby
+# This script will install Notepad++
 
-$version = "2.2.6"
+$version = "7.3"
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-x64"
-    $sha1 = "4D0E366F0264CDED174E5842B2435E22B81FB57A"
+    $arch = ".x64"
+    $sha1 = "E7306DF1D6E81801FB4BE0868610DB70E979B0AA"
 }
 else {
     $arch = ""
-    $sha1 = "8649309fffe9c746ad5549d3f7b70490806e95df"
+    $sha1 = "d4c403675a21cc381f640b92e596bae3ef958dc6"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + $arch + ".exe"
-$url_official = "https://bintray.com/oneclick/rubyinstaller/download_file?file_path=rubyinstaller-" + $version + $arch + ".exe"
-$rubyPackage = "C:\Windows\Temp\rubyinstaller-$version.exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\npp." + $version + ".Installer" + $arch + ".exe"
+$url_official = "https://notepad-plus-plus.org/repository/7.x/" + $version + "/npp." + $version + ".Installer" + $arch + ".exe"
+$nppPackage = "C:\Windows\Temp\npp-$version.exe"
 
-Download $url_official $url_cache $rubyPackage
-Verify-Checksum $rubyPackage $sha1
-cmd /c "$rubyPackage /silent"
+Download $url_official $url_cache $nppPackage
+Verify-Checksum $nppPackage $sha1
+cmd /c "$nppPackage /S"
 
-echo "Cleaning $rubyPackage.."
-Remove-Item -Recurse -Force "$rubyPackage"
+echo "Cleaning $nppPackage.."
+Remove-Item -Recurse -Force "$nppPackage"
 
-Add-Path "C:\Ruby22-x64\bin"
+echo "Notepad++ = $version" >> ~\versions.txt
 
-echo "Ruby = $version" >> ~\versions.txt
+if( (is64bitWinHost) -eq 1 ) {
+    Rename-Item -Path "C:\Program Files (x86)\Notepad++\updater" -NewName "updater_disabled"
+}
+else {
+    Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
+}
+
+echo "Auto-updating disabled."

@@ -1,2 +1,2 @@
-. "$PSScriptRoot\..\common\postgresql.ps1"
+. "$PSScriptRoot\..\common\windows\postgresql.ps1"
 

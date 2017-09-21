@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-java.ps1"
+. "$PSScriptRoot\..\common\windows\install-java.ps1"

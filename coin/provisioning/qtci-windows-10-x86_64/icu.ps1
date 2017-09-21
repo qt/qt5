@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\icu.ps1"
+. "$PSScriptRoot\..\common\windows\icu.ps1"

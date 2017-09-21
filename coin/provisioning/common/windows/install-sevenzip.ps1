@@ -1,11 +1,9 @@
-#!/bin/bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,21 +31,30 @@
 ##
 #############################################################################
 
-# This script installs CMake 3.6.2
+. "$PSScriptRoot\helpers.ps1"
 
-# CMake is needed for autotests that verify that Qt can be built with CMake
+# This script installs 7-Zip
 
-# shellcheck source=../common/InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+$version = "1604"
 
-version="3.6.2"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
-SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
-targetFolder="/opt/cmake-$version"
-appPrefix="cmake-$version-Linux-x86_64"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "-x64"
+    $sha1 = "338A5CC5200E98EDD644FC21807FDBE59910C4D0"
+}
+else {
+    $arch = ""
+    $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
+}
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\7z" + $version + $arch + ".exe"
+$url_official = "http://www.7-zip.org/a/7z" + $version + $arch + ".exe"
+$7zPackage = "C:\Windows\Temp\7zip-$version.exe"
 
-echo "Adding $targetFolder/bin to PATH"
-echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc
+Download $url_official $url_cache $7zPackage
+Verify-Checksum $7zPackage $sha1
+cmd /c "$7zPackage /S /D=C:\Utils\sevenzip\"
+
+echo "Cleaning $7zPackage.."
+Remove-Item -Recurse -Force "$7zPackage"
+
+echo "7-Zip = $version" >> ~\versions.txt

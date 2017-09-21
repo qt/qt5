@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\openssl.ps1"
+. "$PSScriptRoot\..\common\windows\openssl.ps1"

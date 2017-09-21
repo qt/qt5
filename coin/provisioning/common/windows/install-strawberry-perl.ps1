@@ -31,26 +31,28 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Java RE
-# Official Java RE 7 downloads require Oracle accounts. Using local mirrors only.
+# This script installs Strawberry Perl
 
-$version = "7u7"
+$version = "5.26.0.1"
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = "x64"
-    $sha1 = "9af03460c416931bdee18c2dcebff5db50cb8cb3"
+    $arch = "-64bit"
+    $sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
 }
 else {
-    $arch = "i586"
-    $sha1 = "f76b1be20b144b1ee1d1de3255edb0a6b57d0219"
+    $arch = "-32bit"
+    $sha1 = "b50b688a879f33941433774b2813bfd4b917e4ee"
 }
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\strawberry-perl-" + $version + $arch + ".msi"
+$url_official = "http://strawberryperl.com/download/" + $version + "/strawberry-perl-" + $version + $arch + ".msi"
+$strawberryPackage = "C:\Windows\Temp\strawberry-installer-$version.msi"
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jre-" + $version + "-windows-" + $arch + ".exe"
-$javaPackage = "C:\Windows\Temp\java-$version.exe"
+Download $url_official $url_cache $strawberryPackage
+Verify-Checksum $strawberryPackage $sha1
+cmd /c "$strawberryPackage /QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
 
-Copy-Item $url_cache $javaPackage
-cmd /c "$javaPackage /s SPONSORS=0"
-echo "Cleaning $javaPackage.."
-Remove-Item -Recurse -Force "$javaPackage"
-echo "Java = $version $arch" >> ~\versions.txt
+echo "Cleaning $strawberryPackage.."
+Remove-Item -Recurse -Force "$strawberryPackage"
+
+echo "strawberry = $version" >> ~\versions.txt

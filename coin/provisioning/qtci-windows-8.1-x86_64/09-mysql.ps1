@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\mysql.ps1"
+. "$PSScriptRoot\..\common\windows\mysql.ps1"

@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\mesa_llvmpipe.ps1"
+. "$PSScriptRoot\..\common\windows\mesa_llvmpipe.ps1"
