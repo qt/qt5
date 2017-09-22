@@ -30,27 +30,23 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-param([Int32]$archVer=32)
 . "$PSScriptRoot\helpers.ps1"
 
 # This script installs Python $version.
 # Python is required for building Qt 5 from source.
 
 $version = "2.7.13"
-$package = "C:\Windows\temp\python-$version.msi"
-
-# check bit version
-if ( $archVer -eq 64 ) {
-    echo "Running in 64 bit system"
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.amd64.msi"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version.amd64.msi"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = ".amd64"
     $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
 }
 else {
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.msi"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version.msi"
+    $arch = ""
     $sha1 = "7e3b54236dbdbea8fe2458db501176578a4d59c0"
 }
+$package = "C:\Windows\temp\python-$version.msi"
+$externalUrl = "https://www.python.org/ftp/python/$version/python-$version" + $arch + ".msi"
+$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version" + $arch + ".msi"
 
 echo "Fetching from URL..."
 Download $externalUrl $internalUrl $package
@@ -63,8 +59,7 @@ echo "Chancing allowZip64 value to 'True'..."
 echo "Remove $package..."
 del $package
 
-$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
-[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Python27;C:\Python27\Scripts", [EnvironmentVariableTarget]::Machine)
+Add-Path "C:\Python27;C:\Python27\Scripts"
 
 C:\Python27\python.exe -m ensurepip
 # Install python virtual env

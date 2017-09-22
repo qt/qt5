@@ -36,10 +36,17 @@
 # This script will install Ruby
 
 $version = "2.2.6"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + "-x64.exe"
-$url_official = "https://bintray.com/oneclick/rubyinstaller/download_file?file_path=rubyinstaller-" + $version + "-x64.exe"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "-x64"
+    $sha1 = "4D0E366F0264CDED174E5842B2435E22B81FB57A"
+}
+else {
+    $arch = ""
+    $sha1 = "8649309fffe9c746ad5549d3f7b70490806e95df"
+}
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + $arch + ".exe"
+$url_official = "https://bintray.com/oneclick/rubyinstaller/download_file?file_path=rubyinstaller-" + $version + $arch + ".exe"
 $rubyPackage = "C:\Windows\Temp\rubyinstaller-$version.exe"
-$sha1 = "4D0E366F0264CDED174E5842B2435E22B81FB57A"
 
 Download $url_official $url_cache $rubyPackage
 Verify-Checksum $rubyPackage $sha1
@@ -48,7 +55,6 @@ cmd /c "$rubyPackage /silent"
 echo "Cleaning $rubyPackage.."
 Remove-Item -Recurse -Force "$rubyPackage"
 
-$oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
-[Environment]::SetEnvironmentVariable("Path", $oldPath + ";C:\Ruby22-x64\bin", [EnvironmentVariableTarget]::Machine)
+Add-Path "C:\Ruby22-x64\bin"
 
 echo "Ruby = $version" >> ~\versions.txt

@@ -53,5 +53,7 @@ if((Test-Path -Path "C:\CMake" )){
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
 Rename-Item $defaultinstallfolder C:\CMake
 
+Add-Path "C:\CMake\bin"
+
 echo "CMake = $version" >> ~\versions.txt
 
