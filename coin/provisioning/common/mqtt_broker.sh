@@ -45,7 +45,8 @@ SHA1="532fe145096cdd8d679f425cbfd883289150c968"
 targetFolder="/opt/paho_broker"
 appPrefix="paho.mqtt.testing-$CommitSHA"
 
+sudo rm -fr "$targetFolder"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
 echo "Adding MQTT broker path to environment"
-echo "export MQTT_TEST_BROKER_LOCATION=$targetFolder/interoperability/startbroker.py" >> ~/.bashrc
+sed -i "1iexport MQTT_TEST_BROKER_LOCATION=$targetFolder/interoperability/startbroker.py" ~/.bashrc
