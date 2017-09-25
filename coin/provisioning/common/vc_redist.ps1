@@ -59,6 +59,6 @@ echo "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 echo "Installing $package..."
-cmd /c "$package /q"
+Start-Process -FilePath $package -ArgumentList "/q" -Wait
 echo "Remove $package..."
 del $package

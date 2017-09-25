@@ -33,14 +33,24 @@
 
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-# This script will install Java
+# This script will install Java RE
+# Official Java RE 7 downloads require Oracle accounts. Using local mirrors only.
 
 $version = "7u7"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jre-" + $version + "-windows-x64.exe"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "x64"
+    $sha1 = "9af03460c416931bdee18c2dcebff5db50cb8cb3"
+}
+else {
+    $arch = "i586"
+    $sha1 = "f76b1be20b144b1ee1d1de3255edb0a6b57d0219"
+}
+
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jre-" + $version + "-windows-" + $arch + ".exe"
 $javaPackage = "C:\Windows\Temp\java-$version.exe"
 
 Copy-Item $url_cache $javaPackage
 cmd /c "$javaPackage /s SPONSORS=0"
 echo "Cleaning $javaPackage.."
 Remove-Item -Recurse -Force "$javaPackage"
-echo "Java = $version" >> ~\versions.txt
+echo "Java = $version $arch" >> ~\versions.txt

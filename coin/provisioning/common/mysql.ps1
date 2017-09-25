@@ -62,21 +62,28 @@ try {
     Rename-Item -ErrorAction 'Stop' c:\utils\my_sql c:\utils\mysql_deleted
 } catch {}
 
-# Install x64 bit version
-$architecture = "x64"
-$installFolder = "C:\Utils\my_sql\my_sql"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-winx64.zip"
+if( (is64bitWinHost) -eq 1 ) {
+    # Install x64 bit version
+    $architecture = "x64"
+    $installFolder = "C:\Utils\my_sql\my_sql"
+    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-winx64.zip"
 
-DownloadAndInstall $internalUrl $packagex64 $installFolder
+    DownloadAndInstall $internalUrl $packagex64 $installFolder
 
-echo "Set environment variables ..."
-[Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\include", "Machine")
-[Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\lib", "Machine")
+    echo "Set environment variables ..."
+    [Environment]::SetEnvironmentVariable("MYSQL_INCLUDE_x64", "$installFolder\include", "Machine")
+    [Environment]::SetEnvironmentVariable("MYSQL_LIB_x64", "$installFolder\lib", "Machine")
+}
 
 # Install x86 bit version
 $architecture = "x86"
-$installFolder = "C:\Utils\my_sql\my_sql$architecture"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-win32.zip"
+if( (is64bitWinHost) -eq 1 ) {
+    $installFolder = "C:\Utils\my_sql\my_sql$architecture"
+}
+else {
+    $installFolder = "C:\Utils\my_sql\my_sql"
+}
 
 DownloadAndInstall $internalUrl $packagex86 $installFolder
 
