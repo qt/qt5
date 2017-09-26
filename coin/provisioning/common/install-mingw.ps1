@@ -58,7 +58,7 @@ function InstallMinGW
     Get-ChildItem $mingwPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
 
     echo "Adding MinGW environment variable."
-    [Environment]::SetEnvironmentVariable("$envvar", "$targetdir\mingw32", [EnvironmentVariableTarget]::Machine)
+    [Environment]::SetEnvironmentVariable("$envvar", "$targetdir\mingw" + $win_arch.Substring($win_arch.get_Length()-2), [EnvironmentVariableTarget]::Machine)
 
     echo "Cleaning $mingwPackage.."
     Remove-Item -Recurse -Force "$mingwPackage"

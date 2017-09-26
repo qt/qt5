@@ -1,9 +1,9 @@
 . "$PSScriptRoot\..\common\install-mingw.ps1"
 
-# This script will install MinGW 5.3.0
+# This script will install 64-bit MinGW 5.3.0
 
-$release = "i686-5.3.0-release-posix-dwarf-rt_v4-rev0"
-$sha1 = "D4F21D25F3454F8EFDADA50E5AD799A0A9E07C6A"
+$release = "x86_64-5.3.0-release-posix-seh-rt_v4-rev0"
+$sha1 = "7EB12DD3EDDCF609722C9552F8592BD9948DA1FC"
 
 InstallMinGW $release $sha1
 
