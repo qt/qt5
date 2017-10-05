@@ -40,30 +40,39 @@ $version = "1_0_2j"
 $packagex64 = "C:\Windows\Temp\Win64OpenSSL-$version.exe"
 $packagex86 = "C:\Windows\Temp\Win32OpenSSL-$version.exe"
 
-# Install x64 bit version
-$architecture = "x64"
-$installFolder = "C:\openssl"
-$externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
-$sha1 = "b1660dbdcc77e1b3d81d780c7167be1c75384d44"
+if( (is64bitWinHost) -eq 1 ) {
 
-echo "Fetching from URL ..."
-Download $externalUrl $internalUrl $packagex64
-Verify-Checksum $packagex64 $sha1
-echo "Installing $packagex64 ..."
-cmd /c "$packagex64 /SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
+    # Install x64 bit version
+    $architecture = "x64"
+    $installFolder = "C:\openssl"
+    $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
+    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
+    $sha1 = "b1660dbdcc77e1b3d81d780c7167be1c75384d44"
 
-echo "Remove downloaded $packagex64 ..."
-Remove-Item $packagex64
+    echo "Fetching from URL ..."
+    Download $externalUrl $internalUrl $packagex64
+    Verify-Checksum $packagex64 $sha1
+    echo "Installing $packagex64 ..."
+    cmd /c "$packagex64 /SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
 
-echo "Set $architecture environment variables ..."
-[Environment]::SetEnvironmentVariable("OPENSSL_CONF_x64", "$installFolder\bin\openssl.cfg", "Machine")
-[Environment]::SetEnvironmentVariable("OPENSSL_INCLUDE_x64", "$installFolder\include", "Machine")
-[Environment]::SetEnvironmentVariable("OPENSSL_LIB_x64", "$installFolder\lib", "Machine")
+    echo "Remove downloaded $packagex64 ..."
+    Remove-Item $packagex64
+
+    echo "Set $architecture environment variables ..."
+    [Environment]::SetEnvironmentVariable("OPENSSL_CONF_x64", "$installFolder\bin\openssl.cfg", "Machine")
+    [Environment]::SetEnvironmentVariable("OPENSSL_INCLUDE_x64", "$installFolder\include", "Machine")
+    [Environment]::SetEnvironmentVariable("OPENSSL_LIB_x64", "$installFolder\lib", "Machine")
+}
 
 # Install x86 bit version
 $architecture = "x86"
-$installFolder = "C:\openssl$architecture"
+
+if( (is64bitWinHost) -eq 1 ) {
+    $installFolder = "C:\openssl$architecture"
+} else {
+    $installFolder = "C:\openssl"
+}
+
 $externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
 $sha1 = "29b31d20545214ab4e4c57afb20be2338c317cc3"

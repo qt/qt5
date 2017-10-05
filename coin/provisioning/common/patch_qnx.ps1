@@ -44,7 +44,7 @@ $zip = "c:\users\qt\downloads\patch-660-4367-RS6069_cpp-headers.zip"
 $sha1 = "57A11FFE4434AD567B3C36F7B828DBB468A9E565"
 $tempDir = "C:\temp\qnx_path"
 
-Invoke-WebRequest -UseBasicParsing http://${Env:COIN_WEBSERVER_ADDRESS}/coin/provisioning/qnx/patch-660-4367-RS6069_cpp-headers.zip -OutFile $zip
+Invoke-WebRequest -UseBasicParsing http://ci-files01-hki.intra.qt.io/input/qnx/patch-660-4367-RS6069_cpp-headers.zip -OutFile $zip
 Verify-Checksum $zip $sha1
 Extract-Zip $zip $tempDir
 Copy-Item $tempDir\patches\660-4367\target\* C:\qnx660\target\ -recurse -force

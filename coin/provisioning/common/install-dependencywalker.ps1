@@ -36,10 +36,17 @@
 # This script will install Dependency Walker 2.2.6000
 
 $version = "2.2.6000"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22_x64.zip"
-$url_official = "http://www.dependencywalker.com/depends22_x64.zip"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "_x64"
+    $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
+}
+else {
+    $arch = "_x86"
+    $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
+}
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22" + $arch + ".zip"
+$url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
 $dependsPackage = "C:\Windows\Temp\depends-$version.zip"
-$sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
 
 $TARGETDIR = "C:\Utils\dependencywalker"
 if(!(Test-Path -Path $TARGETDIR )){

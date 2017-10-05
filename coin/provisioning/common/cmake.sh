@@ -47,5 +47,5 @@ appPrefix="cmake-3.6.2-Darwin-x86_64"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
-echo "export PATH=/Applications/CMake.app/Contents/bin:$PATH" >> ~/.bashrc
+echo "export PATH=/Applications/CMake.app/Contents/bin:\$PATH" >> ~/.bashrc
 echo "CMake = 3.6.2" >> ~/versions.txt
