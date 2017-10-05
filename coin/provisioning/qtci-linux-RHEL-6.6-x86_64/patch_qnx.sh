@@ -60,5 +60,5 @@ function InstallZipPackageFromURL {
 
 echo "Patching QNX"
 
-baseBinaryPackageURL="http://${COIN_WEBSERVER_ADDRESS}/coin/provisioning/qnx/patch-660-4367-RS6069_cpp-headers.zip"
+baseBinaryPackageURL="http://ci-files01-hki.intra.qt.io/input/qnx/patch-660-4367-RS6069_cpp-headers.zip"
 InstallZipPackageFromURL $baseBinaryPackageURL $sha1 "/opt/qnx660/target/"

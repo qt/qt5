@@ -74,7 +74,12 @@ function InstallAppFromCompressedFileFromURL {
         echo "Extension for file: $extension"
         echo "Creating temporary file and directory"
         targetFile=$(mktemp "$TMPDIR$(uuidgen).$extension") || throw $ExceptionCreateTmpFile
-        targetDirectory=$(mktemp -d) || throw $ExceptionCreateTmpDirectory
+        # macOS 10.10 mktemp does require prefix
+        if [[ $OSTYPE == "darwin14" ]]; then
+            targetDirectory=$(mktemp -d -t '10.10') || throw $ExceptionCreateTmpDirectory
+        else
+            targetDirectory=$(mktemp -d) || throw $ExceptionCreateTmpDirectory
+        fi
         DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile"
         echo "Uncompress $targetFile"
         case $extension in
