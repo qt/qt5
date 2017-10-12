@@ -84,10 +84,10 @@ try
     echo "export ANDROID_NDK_HOST=darwin-x86_64" >> ~/.bashrc
     echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
 
-    echo "Android SDK tools = $toolsVersion" >> ~/version.txt
-    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/version.txt
-    echo "Android SDK API level = $sdkApiLevel" >> ~/version.txt
-    echo "Android NDK = $ndkVersion" >> ~/version.txt
+    echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
+    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+    echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
+    echo "Android NDK = $ndkVersion" >> ~/versions.txt
 )
 catch || {
         case $ex_code in
