@@ -1,17 +1,2 @@
 Template                    Target OS           Target arch Compiler    Features
 --------------------------- ------------------- ----------- ----------- -----------------------------------------------------------------------------------------------
-qtci-windows-8.1-x86_64     Windows_Phone_8_1   x86         MSVC2013    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
-qtci-windows-10-x86_64-8    WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
-qtci-windows-10-x86_64-8    WinRT_10                        MSVC2015    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
-qtci-linux-RHEL-6.6-x86_64  Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-windows-7-x86-2        Android_ANY         armv7       Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
-qtci-windows-7-x86-2        Android_ANY         x86         Mingw49     Packaging Release DisableTests OpenGLES2 UploadConfigureExe
-qtci-osx-10.11-x86_64       Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2
-qtci-osx-10.11-x86_64       Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2
-qtci-linux-RHEL-6.6-x86_64  QNX_660             x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-windows-10-x86_64-7    QNX_660             armv7       Mingw53     Packaging Release DisableTests OpenGLES2
-qtci-windows-10-x86_64-7    QNX_660             x86         Mingw53     Packaging Release DisableTests OpenGLES2
-# target arch is used here only for documentation the value is ignored
-qtci-windows-10-x86_64-8    WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
-
-qtci-osx-10.11-x86_64       IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
