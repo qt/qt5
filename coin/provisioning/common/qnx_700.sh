@@ -46,9 +46,6 @@ echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
 if [ ! -d "$targetFolder" ]; then
   mkdir -p $targetFolder
 fi
-if [ -d "$targetFolder/$folderName" ]; then
-  rm -rf $targetFolder/$folderName
-fi
 sudo tar -C $targetFolder -Jxf $targetFile|| echo "Failed to extract $targetFile"
 sudo chown -R qt:users "$targetFolder"/"$folderName"
 
