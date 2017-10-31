@@ -41,7 +41,7 @@
 # E.g The Bluetooth features that require Android 18 will disable themselves dynamically when running on an Android 16 device.
 # That's why we need to use Andoid-18 API version and decision was made to use it also with Qt 5.6.
 
-set -e
+set -ex
 targetFolder="/opt/android"
 basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
@@ -50,14 +50,14 @@ sdkVersion="android-sdk_r24.4.1-macosx.zip"
 sdkBuildToolsVersion="24.0.2"
 sdkApiLevel="android-18"
 sdkSourceFile="$basePath/$sdkVersion"
-sdkExtract="unzip $sdkSourceFile -d $targetFolder"
+sdkExtract="unzip -q $sdkSourceFile -d $targetFolder"
 sdkFolderName="android-sdk-macosx"
 sdkName="sdk"
 
 # NDK
 ndkVersion="android-ndk-r10e-darwin-x86_64.zip"
 ndkSourceFile="$basePath/$ndkVersion"
-ndkExtract="unzip $ndkSourceFile -d $targetFolder"
+ndkExtract="unzip -q $ndkSourceFile -d $targetFolder"
 ndkFolderName="android-ndk-r10e"
 ndkName="ndk"
 
@@ -68,9 +68,9 @@ function InstallAndroidPackage {
     folderName=$4
     name=$5
 
-    sudo $extract || echo "Failed to extract $url"
+    sudo $extract
     sudo chown -R qt:wheel $targetFolder/$folderName
-    sudo mv $targetFolder/$folderName $targetFolder/$name || echo "Failed to rename $name"
+    sudo mv $targetFolder/$folderName $targetFolder/$name
 }
 
 sudo mkdir $targetFolder
@@ -84,8 +84,17 @@ InstallAndroidPackage $targetFolder $ndkVersion "$ndkExtract" $ndkFolderName $nd
 
 # run update for Android SDK and install SDK API version 18, latest SDK tools, platform-tools and build-tools
 echo "Running Android SDK update for API version 18, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
-echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
+echo "y" |$targetFolder/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion
 
 # For Qt 5.6, we by default require API levels 10, 11, 16 and 18, but we can override this by setting ANDROID_API_VERSION=android-18
 # From Qt 5.7 forward, if android-16 is not installed, Qt will automatically use more recent one.
-echo 'export ANDROID_API_VERSION=android-18' >> ~/.bashrc
+echo "export ANDROID_SDK_HOME=$targetFolder/$sdkName" >> ~/.bashrc
+echo "export ANDROID_NDK_HOME=$targetFolder/$ndkName" >> ~/.bashrc
+echo "export ANDROID_NDK_HOST=darwin-x86_64" >> ~/.bashrc
+echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
+
+echo "Android SDK tools = r24.4.1" >> ~/versions.txt
+echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
+echo "Android NDK = r10e" >> ~/versions.txt
+

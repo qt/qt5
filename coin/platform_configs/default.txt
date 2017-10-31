@@ -14,11 +14,11 @@ qtci-windows-8.1-x86_64             Windows_Phone_8_1   armv4       MSVC2013    
 qtci-windows-8.1-x86_64             WinRT_8_1                       MSVC2013    Packaging DebugAndRelease Release DisableTests UploadConfigureExe
 qtci-linux-OpenSuSE-13.01-x86_64                                    GCC         DeveloperBuild NoPch
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Packaging Release NoUseGoldLinker
-qtci-osx-10.11-x86_64                                               Clang       Packaging DebugAndRelease Release
+qtci-osx-10.11-x86_64-3                                             Clang       Packaging DebugAndRelease Release
 qtci-osx-10.10-x86_64                                               Clang       DebugAndRelease Release DisableTests
 qtci-osx-10.9-x86_64                                                Clang       DeveloperBuild Release QtNamespace NoPch
 qtci-osx-10.8-x86_64                                                Clang       Release NoFramework
-qtci-osx-10.11-x86_64               IOS_ANY             x86_64      Clang       Release DisableTests Static
+qtci-osx-10.11-x86_64-3             IOS_ANY             x86_64      Clang       Release DisableTests Static
 qtci-linux-RHEL-6.6-x86_64          Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-14.04-x86_64-1    Boot2Qt_Fido        armv7       GCC         DisableTests
 qtci-linux-RHEL-6.6-x86_64          QNX_660             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
