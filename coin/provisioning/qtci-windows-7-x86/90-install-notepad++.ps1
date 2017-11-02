@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-notepad++.ps1"
+. "$PSScriptRoot\..\common\windows\install-notepad++.ps1"

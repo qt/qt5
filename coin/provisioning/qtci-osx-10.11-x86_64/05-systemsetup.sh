@@ -37,8 +37,8 @@
 
 set -ex
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+# shellcheck source=../common/unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 
 VNCPassword=qt
 NTS_IP=10.212.2.216

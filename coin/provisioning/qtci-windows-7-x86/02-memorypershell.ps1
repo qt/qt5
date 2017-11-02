@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\memorypershell.ps1"
+. "$PSScriptRoot\..\common\windows\memorypershell.ps1"

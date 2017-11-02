@@ -39,8 +39,8 @@
 
 set -ex
 
-# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/mysql-5.7.15-osx10.11-x86_64.tar.gz"
 AltUrl="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.15-osx10.11-x86_64.tar.gz"

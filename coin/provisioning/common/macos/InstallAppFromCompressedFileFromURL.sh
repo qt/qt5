@@ -38,9 +38,9 @@
 # to /Applications/. This can be overridden by a target parameter.
 
 # shellcheck source=try_catch.sh
-source "${BASH_SOURCE%/*}/try_catch.sh"
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 # shellcheck source=DownloadURL.sh
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
 ExceptionDownload=99
 ExceptionCreateTmpFile=100

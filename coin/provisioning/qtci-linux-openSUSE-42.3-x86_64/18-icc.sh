@@ -35,7 +35,7 @@
 
 # This script install Intel Parallel Studio XE Composer Edition for C++ Linux
 
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 set -ex
 

@@ -32,7 +32,7 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # Signing tools are needed to sign offline installers when releasing
 

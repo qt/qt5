@@ -44,4 +44,4 @@ echo "***** All installed RPM packages *****" >> ~/versions.txt
 rpm -q -a | sort >> ~/versions.txt
 echo "*********************************************" >> ~/versions.txt
 
-$(dirname $0)/../common/version.sh
+$(dirname $0)/../common/linux/version.sh

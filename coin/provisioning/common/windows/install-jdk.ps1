@@ -31,28 +31,48 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script installs Strawberry Perl
+# This script will install Java SE
 
-$version = "5.26.0.1"
+$installdir = "C:\Program Files\Java\jdk1.8.0_144"
+
+$version = "8u144"
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-64bit"
-    $sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
+    $arch = "x64"
+    $sha1 = "adb03bc3f4b40bcb3227687860798981d58e1858"
 }
 else {
-    $arch = "-32bit"
-    $sha1 = "b50b688a879f33941433774b2813bfd4b917e4ee"
+    $arch = "i586"
+    $sha1 = "3b9ab95914514eaefd72b815c5d9dd84c8e216fc"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\strawberry-perl-" + $version + $arch + ".msi"
-$url_official = "http://strawberryperl.com/download/" + $version + "/strawberry-perl-" + $version + $arch + ".msi"
-$strawberryPackage = "C:\Windows\Temp\strawberry-installer-$version.msi"
 
-Download $url_official $url_cache $strawberryPackage
-Verify-Checksum $strawberryPackage $sha1
-cmd /c "$strawberryPackage /QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
+$official_url = "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-" + $version + "-windows-" + $arch + ".exe"
+$javaPackage = "C:\Windows\Temp\jdk-$version.exe"
 
-echo "Cleaning $strawberryPackage.."
-Remove-Item -Recurse -Force "$strawberryPackage"
+echo "Fetching Java SE $version..."
+$ProgressPreference = 'SilentlyContinue'
+try {
+    echo "...from local cache"
+    Invoke-WebRequest -UseBasicParsing $url_cache -OutFile $javaPackage
+} catch {
+    echo "...from oracle.com"
+    $client = new-object System.Net.WebClient
+    $cookie = "oraclelicense=accept-securebackup-cookie"
+    $client.Headers.Add("Cookie", $cookie)
+    $client.DownloadFile($official_url, $javaPackage)
 
-echo "strawberry = $version" >> ~\versions.txt
+    Invoke-WebRequest -UseBasicParsing $official_url -OutFile $javaPackage
+}
+
+Verify-Checksum $javaPackage $sha1
+
+cmd /c "$javaPackage /s SPONSORS=0"
+echo "Cleaning $javaPackage.."
+Remove-Item -Recurse -Force "$javaPackage"
+
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "$installdir", [EnvironmentVariableTarget]::Machine)
+Add-Path "$installdir\bin"
+
+echo "Java SE = $version $arch" >> ~\versions.txt

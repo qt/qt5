@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\fbx_windows.ps1"
+. "$PSScriptRoot\..\common\windows\fbx_windows.ps1"

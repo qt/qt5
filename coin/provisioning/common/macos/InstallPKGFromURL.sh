@@ -34,7 +34,7 @@
 #############################################################################
 
 # shellcheck source=try_catch.sh
-source "${BASH_SOURCE%/*}/try_catch.sh"
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 
 ExceptionCreateTmpFile=100
 ExceptionDownloadPrimaryUrl=101

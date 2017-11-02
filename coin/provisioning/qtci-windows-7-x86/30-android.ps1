@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # This script installs Android sdk and ndk
 # It also runs update for SDK API level 21, latest SDK tools, latest platform-tools and build-tools version $sdkBuildToolsVersion

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -30,28 +32,44 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
 
-# Install Git version 2.13.0
+# PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
+# The Clang library (C-bindings), version 3.9 or higher is required for building.
 
-$version = "2.13.0"
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-64-bit"
-    $sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
-}
-else {
-    $arch = "-32-bit"
-    $sha1 = "03c7df2e4ef61ea6b6f9c0eb7e6d5151d9682aec"
-}
-$gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
-$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
+# This same script is used to provision libclang to Linux and macOS.
+# In case of Linux, we expect to get the values as args
+set -e
 
-echo "Fetching Git $version..."
-Download $url_official $url_cache $gitPackage
-Verify-Checksum $gitPackage $sha1
-echo "Installing Git $version..."
-cmd /c "$gitPackage /SILENT /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh""
-remove-item $gitPackage
+source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
 
-echo "Git = $version" >> ~\versions.txt
+BASEDIR=$(dirname "$0")
+. $BASEDIR/../sw_versions.txt
+url=$1
+sha1=$2
+version=$3
+if [ $# -eq 0 ]
+  then
+    # The default values are for macOS package
+    echo "Using macOS defaults"
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
+    sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
+fi
+
+zip="libclang.7z"
+destination="/usr/local/libclang-$version"
+
+curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
+_shasum=sha1sum
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "DARWIN"
+    _shasum=/usr/bin/shasum
+fi
+echo "$sha1  $zip" | $_shasum --check
+7z x $zip -o/tmp/
+rm -rf $zip
+
+sudo mv /tmp/libclang $destination
+
+echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
+echo "libClang = $version" >> ~/versions.txt

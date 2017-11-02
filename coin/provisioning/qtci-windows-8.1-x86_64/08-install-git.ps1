@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-git.ps1"
+. "$PSScriptRoot\..\common\windows\install-git.ps1"

@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\libusb.ps1"
+. "$PSScriptRoot\..\common\windows\libusb.ps1"

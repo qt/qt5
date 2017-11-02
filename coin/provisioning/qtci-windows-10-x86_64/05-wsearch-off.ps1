@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\wsearch-off.ps1"
+. "$PSScriptRoot\..\common\windows\wsearch-off.ps1"

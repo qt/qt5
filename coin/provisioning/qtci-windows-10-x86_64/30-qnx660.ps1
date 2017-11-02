@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-qnx660.ps1"
+. "$PSScriptRoot\..\common\windows\install-qnx660.ps1"

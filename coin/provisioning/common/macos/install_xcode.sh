@@ -44,8 +44,8 @@
 
 
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/try_catch.sh"
+# shellcheck source=../common/unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 
 function InstallXCode()
 {

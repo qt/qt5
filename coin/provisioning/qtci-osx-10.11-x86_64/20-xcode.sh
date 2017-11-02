@@ -44,10 +44,10 @@
 
 set -ex
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+# shellcheck source=../common/unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 
-# shellcheck source=../common/install_xcode.sh
-source "${BASH_SOURCE%/*}/../common/install_xcode.sh"
+# shellcheck source=../common/macos/install_xcode.sh
+source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
 InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_8.2.xz 8.2

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -33,47 +34,29 @@
 #############################################################################
 
 # This script installs FBX SDK
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+#s script installs FBX SDK
 
-# shellcheck source=./try_catch.sh
-source "${BASH_SOURCE%/*}/try_catch.sh"
-
-fileName="fbx20161_2_fbxsdk_clang_mac.pkg.tgz"
-targetFolder="/opt/fbx"
-cachedUrl="/net/ci-files01-hki.intra.qt.io/hdd/www/input/fbx/$fileName"
-officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$fileName"
-sha1="f82535423c700c605320c52e13e781c92208ec6b"
-targetFolder="/tmp"
-targetFile="$targetFolder/$fileName"
-installer="$targetFolder/fbx20161_2_fbxsdk_clang_macos.pkg"
-
-ExceptionExtractPrimaryUrl=100
-
-try
-(
-    echo "Extracting '$cachedUrl'"
-    tar -xzf "$cachedUrl" -C "$targetFolder" || throw $ExceptionExtractPrimaryUrl
-)
-catch || {
-    case $ex_code in
-        $ExceptionExtractPrimaryUrl)
-        set -e
-        echo "Failed to uncompress from '$cachedUrl'"
-        echo "Downloading from '$officialUrl'"
-        curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$officialUrl" || exit 1;
-        echo "Checking SHA1 on PKG '$targetFile'"
-        echo "$sha1 *$targetFile" > $targetFile.sha1
-        shasum --check $targetFile.sha1
-        echo "Extracting '$targetFile'"
-        tar -xzf "$targetFile" -C "$targetFolder" || exit 1;
-        ;;
-    esac
-}
 set -e
+tarballName="fbx20161_2_fbxsdk_linux.tar.gz"
+targetFolder="/opt/fbx"
+cachedUrl="http://ci-files01-hki.intra.qt.io/input/fbx/$tarballName"
+officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$tarballName"
+sha1="b0a08778de025e2c6e90d6fbdb6531f74a3da605"
+tmpFolder="/tmp"
+targetFile="$tmpFolder/$tarballName"
+installer="$tmpFolder/fbx20161_2_fbxsdk_linux"
+
+DownloadURL "$cachedUrl" "$officialUrl" "$sha1" "$targetFile"
+
+sudo tar -C $tmpFolder -xf "$targetFile"
+sudo mkdir -p $targetFolder
+(echo "yes"; echo "n") | sudo "$installer" -w "$tmpFolder" "$targetFolder"
+
 rm -rf "$targetFile"
-echo "Running installer for '$installer'"
-sudo installer -pkg "$installer" -target "/"
 
 # Set env variables
-echo "export FBXSDK=/Applications/Autodesk/FBX\ SDK/2016.1.2/" >> ~/.bashrc
+echo "export FBXSDK=$targetFolder" >> ~/.profile
+
 echo "FBX SDK = 2016.1.2" >> ~/versions.txt
 

@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,57 +31,49 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
-source "${BASH_SOURCE%/*}/try_catch.sh"
-set -ex
 
-# Command line tools is need by homebrew
+# This script installs FBX SDK
 
-function InstallCommandLineTools {
+# shellcheck source=./../unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 
-    ExceptionMount=101
-    ExceptionInstall=102
-    ExceptionUnmount=103
+fileName="fbx20161_2_fbxsdk_clang_mac.pkg.tgz"
+targetFolder="/opt/fbx"
+cachedUrl="/net/ci-files01-hki.intra.qt.io/hdd/www/input/fbx/$fileName"
+officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$fileName"
+sha1="f82535423c700c605320c52e13e781c92208ec6b"
+targetFolder="/tmp"
+targetFile="$targetFolder/$fileName"
+installer="$targetFolder/fbx20161_2_fbxsdk_clang_macos.pkg"
 
-    url=$1
-    url_alt=$2
-    expectedSha1=$3
-    packageName=$4
-    version=$5
+ExceptionExtractPrimaryUrl=100
 
-    try
-    (
-        DownloadURL $url $url_alt $expectedSha1 /tmp/$packageName
-        echo "Mounting $packageName"
-        hdiutil attach /tmp/$packageName || throw $ExceptionMount
-        cd "/Volumes/Command Line Developer Tools"
-        echo "Installing"
-        sudo installer -verbose -pkg *.pkg -target / || throw $ExceptionInstall
-        cd /
-        # Let's fait for 5 second before unmounting. Sometimes resource is busy and cant be unmounted
-        sleep 3
-        echo "Unmounting"
-        umount /Volumes/Command\ Line\ Developer\ Tools/ || throw $ExceptionUnmount
-        echo "Removing $packageName"
-        rm /tmp/$packageName
-
-        echo "Command Line Tools = $version" >> ~/versions.txt
-    )
-    catch || {
-        case $ex_code in
-            $ExceptionMount)
-                echo "Failed to mount"
-                exit 1;
-            ;;
-            $ExceptionInstall)
-                echo "Failed to install"
-                exit 1;
-            ;;
-            $ExceptionUnmount)
-                echo "Failed to unmount"
-                exit 1;
-
-        esac
-    }
-
+try
+(
+    echo "Extracting '$cachedUrl'"
+    tar -xzf "$cachedUrl" -C "$targetFolder" || throw $ExceptionExtractPrimaryUrl
+)
+catch || {
+    case $ex_code in
+        $ExceptionExtractPrimaryUrl)
+        set -e
+        echo "Failed to uncompress from '$cachedUrl'"
+        echo "Downloading from '$officialUrl'"
+        curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$officialUrl" || exit 1;
+        echo "Checking SHA1 on PKG '$targetFile'"
+        echo "$sha1 *$targetFile" > $targetFile.sha1
+        shasum --check $targetFile.sha1
+        echo "Extracting '$targetFile'"
+        tar -xzf "$targetFile" -C "$targetFolder" || exit 1;
+        ;;
+    esac
 }
+set -e
+rm -rf "$targetFile"
+echo "Running installer for '$installer'"
+sudo installer -pkg "$installer" -target "/"
+
+# Set env variables
+echo "export FBXSDK=/Applications/Autodesk/FBX\ SDK/2016.1.2/" >> ~/.bashrc
+echo "FBX SDK = 2016.1.2" >> ~/versions.txt
+

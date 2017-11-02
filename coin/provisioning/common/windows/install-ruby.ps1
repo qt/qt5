@@ -31,37 +31,28 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Notepad++
+# This script will install Ruby
 
-$version = "7.3"
+$version = "2.4.2-2"
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = ".x64"
-    $sha1 = "E7306DF1D6E81801FB4BE0868610DB70E979B0AA"
+    $arch = "-x64"
+    $sha1 = "c961c2752a183487bc42ed24beb7e931230fa7d5"
 }
 else {
-    $arch = ""
-    $sha1 = "d4c403675a21cc381f640b92e596bae3ef958dc6"
+    $arch = "-x86"
+    $sha1 = "2639a481c3b5ad11f57d5523cc41ca884286089e"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\npp." + $version + ".Installer" + $arch + ".exe"
-$url_official = "https://notepad-plus-plus.org/repository/7.x/" + $version + "/npp." + $version + ".Installer" + $arch + ".exe"
-$nppPackage = "C:\Windows\Temp\npp-$version.exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + $arch + ".exe"
+$url_official = "https://github.com/oneclick/rubyinstaller2/releases/download/rubyinstaller-" + $version + "/rubyinstaller-" + $version + $arch + ".exe"
+$rubyPackage = "C:\Windows\Temp\rubyinstaller-$version.exe"
 
-Download $url_official $url_cache $nppPackage
-Verify-Checksum $nppPackage $sha1
-cmd /c "$nppPackage /S"
+Download $url_official $url_cache $rubyPackage
+Verify-Checksum $rubyPackage $sha1
+Start-Process -FilePath $rubyPackage -ArgumentList "/dir=C:\Ruby-$version$arch /tasks=modpath /verysilent" -Wait
 
-echo "Cleaning $nppPackage.."
-Remove-Item -Recurse -Force "$nppPackage"
+echo "Cleaning $rubyPackage.."
+Remove-Item -Recurse -Force "$rubyPackage"
 
-echo "Notepad++ = $version" >> ~\versions.txt
-
-if( (is64bitWinHost) -eq 1 ) {
-    Rename-Item -Path "C:\Program Files (x86)\Notepad++\updater" -NewName "updater_disabled"
-}
-else {
-    Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
-}
-
-echo "Auto-updating disabled."
+echo "Ruby = $version" >> ~\versions.txt

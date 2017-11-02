@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\libclang.ps1" 64
+. "$PSScriptRoot\..\common\windows\libclang.ps1" 64

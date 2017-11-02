@@ -1,11 +1,9 @@
-#!/usr/bin/env bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,21 +31,33 @@
 ##
 #############################################################################
 
-# This script installs CMake 3.6.2
+. "$PSScriptRoot\helpers.ps1"
 
-# CMake is needed for autotests that verify that Qt can be built with CMake
+# This script will install Dependency Walker 2.2.6000
 
-# shellcheck source=InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
+$version = "2.2.6000"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "_x64"
+    $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
+}
+else {
+    $arch = "_x86"
+    $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
+}
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22" + $arch + ".zip"
+$url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
+$dependsPackage = "C:\Windows\Temp\depends-$version.zip"
 
-version="3.6.2"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
-SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
-targetFolder="/opt/cmake-$version"
-appPrefix="cmake-$version-Linux-x86_64"
+$TARGETDIR = "C:\Utils\dependencywalker"
+if(!(Test-Path -Path $TARGETDIR )){
+    New-Item -ItemType directory -Path $TARGETDIR
+}
+Download $url_official $url_cache $dependsPackage
+Verify-Checksum $dependsPackage $sha1
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+Get-ChildItem $dependsPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
 
-echo "Adding $targetFolder/bin to PATH"
-echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc
+echo "Cleaning $dependsPackage.."
+Remove-Item -Recurse -Force "$dependsPackage"
+
+echo "Dependency Walker = $version" >> ~\versions.txt

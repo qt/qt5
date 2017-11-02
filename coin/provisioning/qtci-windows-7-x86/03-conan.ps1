@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\common\03-conan.ps1"
+. "$PSScriptRoot\..\common\windows\03-conan.ps1"
 
 Run-Conan-Install `
     -ConanfilesDir "$PSScriptRoot\conanfiles" `

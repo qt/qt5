@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\disable-windows-updates.ps1"
+. "$PSScriptRoot\..\common\windows\disable-windows-updates.ps1"

@@ -37,7 +37,7 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 
 ExceptionAPTUpdate=100
 ExceptionAPT=101

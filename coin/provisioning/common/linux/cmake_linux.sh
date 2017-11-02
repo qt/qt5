@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,23 +33,21 @@
 ##
 #############################################################################
 
-# This script installs INTEGRITY
+# This script installs CMake 3.6.2
 
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+# CMake is needed for autotests that verify that Qt can be built with CMake
 
-version="11.4.4"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/integrity/ghs_$version.tar.gz"
-AltUrl="$PrimaryUrl" # we lack an external source for this
-SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
-targetFolder="/opt/ghs"
-appPrefix=""
+# shellcheck source=InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+
+version="3.6.2"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
+SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
+targetFolder="/opt/cmake-$version"
+appPrefix="cmake-$version-Linux-x86_64"
 
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
-echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
-echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
-echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
-echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
-echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
-
-echo "INTEGRITY = $version" >> ~/versions.txt
+echo "Adding $targetFolder/bin to PATH"
+echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc

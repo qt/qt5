@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -32,54 +30,34 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+$version = "11_2_2"
+$package = "C:\Windows\temp\opengl32sw.7z"
+$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
+$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
+$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
+$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
 
-source "${BASH_SOURCE%/*}/try_catch.sh"
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
-
-version="1.0.2g"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="36af23887402a5ea4ebef91df8e61654906f58f2"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
-
-ExceptionDownload=99
-ExceptionTar=100
-ExceptionConfig=101
-
-try
-(
-    (DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile") || throw $ExceptionDownload
-
-    tar -xzf "$targetFile" -C "$installFolder" || throw $ExceptionTar
-    # This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-    mv "${opensslHome}g" "${opensslHome}"
-    pushd "$opensslHome"
-    perl Configure shared android || throw $ExceptionConfig
-
-    echo "export OPENSSL_ANDROID_HOME=$opensslHome" >> ~/.bashrc
-    echo "OpenSSL for Android = $version" >> ~/versions.txt
-)
-catch || {
-    case $ex_code in
-        $ExceptionDownload)
-            exit 1;
-        ;;
-        $ExceptionTar)
-            echo "Failed to extract $targetFile"
-            exit 1;
-        ;;
-        $ExceptionConfig)
-            echo "Failed to run 'config'."
-            exit 1;
-        ;;
-    esac
-
+function Extract-Mesa
+{
+    Param (
+        [string]$downloadUrl,
+        [string]$sha1,
+        [string]$targetFolder
+    )
+    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
+    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
+    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
+    Verify-Checksum $localArchivePath $sha1
+    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
+    Remove-Item $localArchivePath
 }
+
+if ( Test-Path C:\Windows\SysWOW64 ) {
+    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\System32"
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+} else {
+    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
+}
+

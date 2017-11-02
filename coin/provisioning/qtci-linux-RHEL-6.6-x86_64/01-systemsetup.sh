@@ -35,7 +35,7 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
 if [ "$proxy" != "" ]; then
     echo "proxy=$proxy" | sudo tee -a /etc/yum.conf

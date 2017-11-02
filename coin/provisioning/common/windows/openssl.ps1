@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
 # This script installs OpenSSL $version.
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine

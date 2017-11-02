@@ -35,7 +35,7 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 name="p7zip"
 version="7-11"

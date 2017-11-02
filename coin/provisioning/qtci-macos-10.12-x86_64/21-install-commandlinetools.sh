@@ -35,7 +35,7 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/install-commandlinetools.sh"
+source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
 
 version="8.3.2"
 packageName="CommandLineToolsforXcode$version.dmg"
