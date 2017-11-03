@@ -32,11 +32,11 @@
 ##
 #############################################################################
 
-set -e
+set -ex
 # build latest qemu to usermode
 sudo apt-get -y install automake autoconf libtool
 
-tempDir=$(mktemp -d) || echo "Failed to create temporary directory"
+tempDir=$(mktemp -d)
 git clone git://git.qemu.org/qemu.git "$tempDir"
 cd "$tempDir"
 
