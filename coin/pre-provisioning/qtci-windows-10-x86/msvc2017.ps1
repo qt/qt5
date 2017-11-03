@@ -36,7 +36,7 @@
 # This script will install Visual Studio 2017
 
 $version = "2017"
-$url_cache = "http://ci-files01-hki.ci.local/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
 $sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
 $msvcPackage = "C:\Windows\Temp\$version.exe"
 

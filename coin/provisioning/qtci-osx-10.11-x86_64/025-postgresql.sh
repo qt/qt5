@@ -40,7 +40,7 @@
 # shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
-PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/osx_10.11_el_capitan/Postgres-9.6.0.zip"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/osx_10.11_el_capitan/Postgres-9.6.0.zip"
 AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/9.6.0/Postgres-9.6.0.zip"
 SHA1="5078e44663787006ca55fa3b5e2be598bed82eb5"
 appPrefix=""

@@ -1,4 +1,6 @@
-############################################################################
+#!/bin/bash
+
+#############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,19 +32,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
 
-# This script will install Visual Studio 2017 Build Tools
-# https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017
+# refresh local certificates
+sudo subscription-manager refresh
 
-$version = "2017_version_15.0"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_build_tools_for_visual_studio_" + $version + "_x86_x64_10254482.exe"
-$sha1 = "a31e099e5114fef80a21654689e6864afc544a16"
-$msvcPackage = "C:\Windows\Temp\$version.exe"
-
-Download $url_cache $url_cache $msvcPackage
-Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --passive --wait"
-echo "Cleaning $msvcPackage.."
-Remove-Item -Recurse -Force "$msvcPackage"
-echo "Visual Studio Build Tools = $version" >> ~\versions.txt
