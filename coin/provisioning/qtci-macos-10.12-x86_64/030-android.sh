@@ -79,7 +79,7 @@ try
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
     echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
 
-    echo "export ANDROID_SDK_ROOT=$sdkTargetFolder" >> ~/.bashrc
+    echo "export ANDROID_SDK_HOME=$sdkTargetFolder" >> ~/.bashrc
     echo "export ANDROID_NDK_HOME=$targetFolder/android-ndk-$ndkVersion" >> ~/.bashrc
     echo "export ANDROID_NDK_HOST=darwin-x86_64" >> ~/.bashrc
     echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
