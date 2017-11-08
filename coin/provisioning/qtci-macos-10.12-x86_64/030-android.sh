@@ -43,7 +43,7 @@ source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
-basePath="/net/ci-files01-hki.ci.local/hdd/www/input/android"
+basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
 toolsVersion="r25.2.5"
 toolsFile="tools_$toolsVersion-macosx.zip"
@@ -79,15 +79,15 @@ try
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
     echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
 
-    echo "export ANDROID_SDK_ROOT=$sdkTargetFolder" >> ~/.bashrc
+    echo "export ANDROID_SDK_HOME=$sdkTargetFolder" >> ~/.bashrc
     echo "export ANDROID_NDK_HOME=$targetFolder/android-ndk-$ndkVersion" >> ~/.bashrc
     echo "export ANDROID_NDK_HOST=darwin-x86_64" >> ~/.bashrc
     echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
 
-    echo "Android SDK tools = $toolsVersion" >> ~/version.txt
-    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/version.txt
-    echo "Android SDK API level = $sdkApiLevel" >> ~/version.txt
-    echo "Android NDK = $ndkVersion" >> ~/version.txt
+    echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
+    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+    echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
+    echo "Android NDK = $ndkVersion" >> ~/versions.txt
 )
 catch || {
         case $ex_code in

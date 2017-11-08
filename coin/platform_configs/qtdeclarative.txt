@@ -1,3 +1,4 @@
 Template                          Target OS           Target arch Compiler    Features
 --------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-linux-Ubuntu-16.04-x86_64-1  Boot2Qt_Pyro        armv7       GCC         DeveloperBuild
+qtci-linux-Ubuntu-16.04-x86_64-1  QEMU                armv7       GCC         DeveloperBuild
+qtci-linux-Ubuntu-16.04-x86_64-1  QEMU                arm64       GCC         DeveloperBuild

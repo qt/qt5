@@ -33,17 +33,29 @@
 ##
 #############################################################################
 
-# This script removes preinstalled sw.
-# NOTE! Make sure that ALL software which are removed here have provision script under platrom folders which calls this script
+# This script installs QNX 7.
 
-function RemoveDir {
-    targetFolder=$1
+set -ex
+targetFolder="/opt/"
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.tar.xz"
+sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
+folderName="qnx700"
+targetFile="qnx700.tar.xz"
+wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile"
+echo "$sha1  $targetFile" | sha1sum --check
+if [ ! -d "$targetFolder" ]; then
+  mkdir -p $targetFolder
+fi
+sudo tar -C $targetFolder -Jxf $targetFile
+sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-    if [ -d "$targetFolder" ]; then
-        echo "Removing existing $targetFolder..."
-        sudo rm -fr "$targetFolder"
-    fi
-}
+# Verify that we have last file in tar
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    echo "Installation failed!"
+    exit -1
+fi
 
-# Android
-RemoveDir /opt/android
+rm -rf $targetFile
+# Set env variables
+echo "export QNX_700=$targetFolder$folderName" >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt

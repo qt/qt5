@@ -57,11 +57,6 @@ function DownloadAndInstall
     Remove-Item $package
 }
 
-# Remove any leftovers
-try {
-    Rename-Item -ErrorAction 'Stop' c:\utils\my_sql c:\utils\mysql_deleted
-} catch {}
-
 if( (is64bitWinHost) -eq 1 ) {
     # Install x64 bit version
     $architecture = "x64"

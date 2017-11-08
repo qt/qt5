@@ -33,23 +33,4 @@
 ##
 #############################################################################
 
-# This script installs INTEGRITY
-
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
-
-version="11.4.4"
-PrimaryUrl="http://ci-files01-hki.ci.local/input/integrity/ghs_$version.tar.gz"
-AltUrl="$PrimaryUrl" # we lack an external source for this
-SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
-targetFolder="/opt/ghs"
-appPrefix=""
-
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
-
-echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
-echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
-echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
-echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
-echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
-
-echo "INTEGRITY = $version" >> ~/versions.txt
+source "${BASH_SOURCE%/*}/../common/disable_selinux.sh"

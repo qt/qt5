@@ -36,6 +36,8 @@
 # This script will install Java RE
 # Official Java RE 7 downloads require Oracle accounts. Using local mirrors only.
 
+$installdir = "C:\Program Files\Java\jre7"
+
 $version = "7u7"
 if( (is64bitWinHost) -eq 1 ) {
     $arch = "x64"
@@ -53,4 +55,8 @@ Copy-Item $url_cache $javaPackage
 cmd /c "$javaPackage /s SPONSORS=0"
 echo "Cleaning $javaPackage.."
 Remove-Item -Recurse -Force "$javaPackage"
+
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "$installdir", [EnvironmentVariableTarget]::Machine)
+Add-Path "$installdir\bin"
+
 echo "Java = $version $arch" >> ~\versions.txt

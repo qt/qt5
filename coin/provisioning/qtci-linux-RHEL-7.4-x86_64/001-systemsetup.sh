@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
@@ -33,32 +33,19 @@
 ##
 #############################################################################
 
-# This script installs QNX 7.
-
 set -e
-targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.ci.local/input/qnx/qnx700.tar.xz"
-sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
-folderName="qnx700"
-targetFile="qnx700.tar.xz"
-wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile" || echo "Failed to download '$url' multiple times"
-echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
-if [ ! -d "$targetFolder" ]; then
-  mkdir -p $targetFolder
-fi
-if [ -d "$targetFolder/$folderName" ]; then
-  rm -rf $targetFolder/$folderName
-fi
-sudo tar -C $targetFolder -Jxf $targetFile|| echo "Failed to extract $targetFile"
-sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-# Verify that we have last file in tar
-if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
-    echo "Installation failed!"
-    exit -1
-fi
+BASEDIR=$(dirname "$0")
+source $BASEDIR/../common/network_test_server_ip.txt
 
-rm -rf $targetFile
-# Set env variables
-echo 'export QNX_700=$targetFolder/$folderName' >> ~/.bashrc
-echo "QNX SDP = 7.0.0" >> ~/versions.txt
+echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
+echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+echo "Set DISPLAY"
+echo 'export DISPLAY=":0"' >> ~/.bashrc
+# for current session
+export DISPLAY=:0
+
+# disable Automatic screen lock
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+# disable blank screen power saving
+gsettings set org.gnome.desktop.session idle-delay 0

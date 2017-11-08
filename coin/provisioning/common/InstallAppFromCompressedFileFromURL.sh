@@ -42,6 +42,7 @@ source "${BASH_SOURCE%/*}/try_catch.sh"
 # shellcheck source=DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
+ExceptionDownload=99
 ExceptionCreateTmpFile=100
 ExceptionCreateTmpDirectory=101
 ExceptionUncompress=102
@@ -80,7 +81,7 @@ function InstallAppFromCompressedFileFromURL {
         else
             targetDirectory=$(mktemp -d) || throw $ExceptionCreateTmpDirectory
         fi
-        DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile"
+        (DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile") || throw $ExceptionDownload
         echo "Uncompress $targetFile"
         case $extension in
             "tar.gz")
@@ -103,6 +104,9 @@ function InstallAppFromCompressedFileFromURL {
 
     catch || {
         case $ex_code in
+            $ExceptionDownload)
+                exit 1;
+            ;;
             $ExceptionCreateTmpFile)
                 echo "Failed to create temporary file"
                 exit 1;

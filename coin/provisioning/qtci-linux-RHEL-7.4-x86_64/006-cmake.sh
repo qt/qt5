@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -31,18 +33,8 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+# This script installs CMake 3.6.2
 
-# This script installs MinGW 5.3
+# CMake is needed for autotests that verify that Qt can be built with CMake
 
-
-$zip = "c:\users\qt\downloads\i686-5.3.0-release-posix-dwarf-rt_v4-rev0.7z"
-
-Invoke-WebRequest -UseBasicParsing  http://download.qt.io/development_releases/prebuilt/mingw_32/i686-5.3.0-release-posix-dwarf-rt_v4-rev0.7z -OutFile $zip
-Verify-Checksum $zip "d4f21d25f3454f8efdada50e5ad799a0a9e07c6a"
-Extract-7Zip $zip C:\
-Rename-Item -path C:\mingw32 -newName C:\MinGW530
-
-[Environment]::SetEnvironmentVariable("MINGW530", "C:\MinGW530", "Machine")
-echo "MinGW = 5.3.0" >> ~/versions.txt
-del $zip
+source "${BASH_SOURCE%/*}/../common/cmake_linux.sh"

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -31,22 +33,4 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
-
-$version = "11_2_2"
-$openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
-
-$openglUrl = "\\ci-files01-hki.intra.qt.io\provisioning\mesa3d\windows\32bit\opengl32.dll"
-$openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
-
-echo "Take ownership of existing opengl32.dll from SysWOW64"
-takeown /f $openglPackage
-icacls $openglPackage /grant Administrators:F
-echo "Remove existing opengl32.dll from SysWOW64"
-Remove-Item -Recurse -Force $openglPackage
-echo "Add new opengl32.dll to SysWOW64"
-Invoke-WebRequest -UseBasicParsing $openglUrl -OutFile $openglPackage
-Verify-Checksum $openglPackage $openglSha1
-
-# Store version information to ~/versions.txt
-echo "OpenGL x86 = $version" >> ~/versions.txt
+source "${BASH_SOURCE%/*}/../common/qnx_700.sh"
