@@ -84,6 +84,8 @@ try
     yes | sudo aptdcon --hide-terminal --install g++-multilib || throw $ExceptionAPT
     # python3 development package
     yes | sudo aptdcon --hide-terminal --install python3-dev python3-pip python3-virtualenv || throw $ExceptionAPT
+    # Automates interactive applications (Needed by RTA to automate configure testing)
+    yes | sudo aptdcon --hide-terminal --install expect || throw $ExceptionAPT
 )
 catch || {
     case $ex_code in
