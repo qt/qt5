@@ -43,7 +43,7 @@
 # E.g The Bluetooth features that require Android 21 will disable themselves dynamically when running on an Android 16 device.
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
-set -e
+set -ex
 targetFolder="/opt/android"
 baseUrl="http://ci-files01-hki.intra.qt.io/input/android"
 
@@ -78,8 +78,8 @@ function InstallAndroidPackage {
     folderName=$7
     name=$8
 
-    sudo wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url" || echo "Failed to download '$url' multiple times"
-    echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
+    sudo wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url"
+    echo "$sha1  $targetFile" | sha1sum --check
     sudo chmod 755 "$targetFile"
     sudo $extract || echo "Failed to extract $url"
     sudo chown -R qt:users "$targetFolder"/"$folderName"
@@ -89,10 +89,10 @@ function InstallAndroidPackage {
 
 if [ -d "$targetFolder" ]; then
     echo "Removing old Android installation"
-    sudo rm -fr "$targetFolder" || ( echo "Can't remove $targetFolder" ; exit 1; )
+    sudo rm -fr "$targetFolder"
 fi
 
-sudo mkdir "$targetFolder" || ( echo "Can't create $targetFolder" ; exit 1; )
+sudo mkdir "$targetFolder"
 
 # Install Android SDK
 echo "Installing Android SDK version $sdkPackage..."
@@ -104,7 +104,7 @@ InstallAndroidPackage "$targetFolder" $ndkPackage $ndkUrl $ndkSha1 $ndkTargetFil
 
 # run update for Android SDK and install SDK API version 21, latest SDK tools, platform-tools and build-tools
 echo "Running Android SDK update for API version 21, SDK-tools, platform-tools and build-tools-$sdkBuildToolsVersion..."
-echo "y" |"$targetFolder"/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion || echo "Failed to run update"
+echo "y" |"$targetFolder"/sdk/tools/android update sdk --no-ui --all --filter $sdkApiLevel,tools,platform-tools,build-tools-$sdkBuildToolsVersion
 
 echo 'export ANDROID_API_VERSION=android-21' >> ~/.bashrc
 

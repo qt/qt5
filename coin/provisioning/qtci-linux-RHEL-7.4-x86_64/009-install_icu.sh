@@ -33,7 +33,7 @@
 ##
 #############################################################################
 
-set -e
+set -ex
 
 # This script will install ICU
 
@@ -47,20 +47,20 @@ develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
-targetFile=`mktemp` || echo "Failed to create temporary file"
-wget --tries=5 --waitretry=5 --output-document=$targetFile $baseBinaryPackageURL || echo "Failed to download '$baseBinaryPackageURL' multiple times"
-echo "$sha1  $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
-sudo 7z x -y -o"/usr/lib64" $targetFile || echo "Failed to unzip $baseBinaryPackageURL archive"
+targetFile=`mktemp`
+wget --tries=5 --waitretry=5 --output-document=$targetFile $baseBinaryPackageURL
+echo "$sha1  $targetFile" | sha1sum --check
+sudo 7z x -y -o"/usr/lib64" $targetFile
 sudo rm $targetFile
 
 echo "Installing custom ICU devel packages on RHEL"
 
-tempDir=`mktemp -d` || echo "Failed to create temporary directory"
+tempDir=`mktemp -d`
 
-targetFile=`mktemp` || echo "Failed to create temporary file"
-wget --tries=5 --waitretry=5 --output-document=$targetFile $develPackageURL || echo "Failed to download '$develPackageURL' multiple times"
-echo "$sha1Dev $targetFile" | sha1sum --check || echo "Failed to check sha1sum"
-7z x -y -o$tempDir $targetFile || echo "Failed to unzip $develPackageURL archive"
+targetFile=`mktemp`
+wget --tries=5 --waitretry=5 --output-document=$targetFile $develPackageURL
+echo "$sha1Dev $targetFile" | sha1sum --check
+7z x -y -o$tempDir $targetFile
 
 sudo cp -a $tempDir/lib/* /usr/lib64
 sudo cp -a $tempDir/* /usr/
