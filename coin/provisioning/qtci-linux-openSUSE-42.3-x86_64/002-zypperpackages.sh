@@ -2,9 +2,12 @@
 set -e
 
 sudo zypper -nq install git
-# default compiler, gcc 4.8.5
-sudo zypper -nq install gcc
-sudo zypper -nq install gcc-c++
+sudo zypper -nq install gcc7
+sudo zypper -nq install gcc7-c++
+sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 \
+                                     --slave /usr/bin/g++ g++ /usr/bin/g++-7 \
+                                     --slave /usr/bin/cc cc /usr/bin/gcc-7 \
+                                     --slave /usr/bin/c++ c++ /usr/bin/g++-7
 
 sudo zypper -nq install bison
 sudo zypper -nq install flex
