@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,18 +33,30 @@
 ##
 #############################################################################
 
-function RemoveDir {
-    param=$1
+# This script installs FBX SDK
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
+#s script installs FBX SDK
 
-    if [ ! -d $param ]
-    then
-        echo "'$param' don't exists"
-    else
-        echo "Removing $param..."
-        sudo rm -fr $param
-    fi
-}
+set -e
+tarballName="fbx20161_2_fbxsdk_linux.tar.gz"
+targetFolder="/opt/fbx"
+cachedUrl="http://ci-files01-hki.intra.qt.io/input/fbx/$tarballName"
+officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$tarballName"
+sha1="b0a08778de025e2c6e90d6fbdb6531f74a3da605"
+tmpFolder="/tmp"
+targetFile="$tmpFolder/$tarballName"
+installer="$tmpFolder/fbx20161_2_fbxsdk_linux"
 
-# Remove Android
-param="/opt/android"
-RemoveDir $param
+DownloadURL "$cachedUrl" "$officialUrl" "$sha1" "$targetFile"
+
+sudo tar -C $tmpFolder -xf "$targetFile"
+sudo mkdir -p $targetFolder
+(echo "yes"; echo "n") | sudo "$installer" -w "$tmpFolder" "$targetFolder"
+
+rm -rf "$targetFile"
+
+# Set env variables
+echo "export FBXSDK=$targetFolder" >> ~/.profile
+
+echo "FBX SDK = 2016.1.2" >> ~/versions.txt
+

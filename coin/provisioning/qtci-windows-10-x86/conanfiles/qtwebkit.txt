@@ -13,8 +13,8 @@ libxml2:shared=True
 libxslt:shared=True
 
 [imports]
-bin, icudt57.dll -> ./bin
-bin, icuin57.dll -> ./bin
-bin, icuuc57.dll -> ./bin
+bin, icudt59.dll -> ./bin
+bin, icuin59.dll -> ./bin
+bin, icuuc59.dll -> ./bin
 bin, libxml2.dll -> ./bin
 bin, libxslt.dll -> ./bin

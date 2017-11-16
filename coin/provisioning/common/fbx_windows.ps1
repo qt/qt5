@@ -31,32 +31,38 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Java RE
-# Official Java RE 7 downloads require Oracle accounts. Using local mirrors only.
+# This script will install FBX SDK
 
-$installdir = "C:\Program Files\Java\jre7"
+$version = "2016.1.2"
 
-$version = "7u7"
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = "x64"
-    $sha1 = "9af03460c416931bdee18c2dcebff5db50cb8cb3"
-}
-else {
-    $arch = "i586"
-    $sha1 = "f76b1be20b144b1ee1d1de3255edb0a6b57d0219"
-}
+$name = "fbx20161_2_fbxsdk_vs2015_win"
+$packageName = "$name.7z"
+$installerName = "$name.exe"
+$cacheUrl = "\\ci-files01-hki.intra.qt.io\provisioning\fbx\$packageName"
+$sha1 = "3690400625672bef6369bcf90dcde4d78b493b24"
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jre-" + $version + "-windows-" + $arch + ".exe"
-$javaPackage = "C:\Windows\Temp\java-$version.exe"
+# The executable is an interactive installer only. We can't run it in a script silently.
+# $officialUrl = "http://download.autodesk.com/us/fbx_release_older/2016.1.2/$installerName"
+# This sha is for the executable
+# $sha1 = "54f581c7c19cf5a08cf5e7bc62b8cc7f0617558e"
 
-Copy-Item $url_cache $javaPackage
-cmd /c "$javaPackage /s SPONSORS=0"
-echo "Cleaning $javaPackage.."
-Remove-Item -Recurse -Force "$javaPackage"
+#$targetFile = "C:\Windows\Temp\$packageName"
+$targetFolder = "C:\Program Files\"
 
-[Environment]::SetEnvironmentVariable("JAVA_HOME", "$installdir", [EnvironmentVariableTarget]::Machine)
-Add-Path "$installdir\bin"
+#echo "Downloading '$installerName'"
+#Download $officialUrl $cacheUrl $targetFile
+#Verify-Checksum $targetFile $sha1
 
-echo "Java = $version $arch" >> ~\versions.txt
+echo "Extracting '$cacheUrl'"
+#Extract-7Zip $cacheUrl $targetFolder
+Start-Process -FilePath "C:\Utils\sevenzip\7z.exe" -ArgumentList "x -y `"$cacheUrl`" -o`"$targetFolder`"" -Wait
+
+#Remove-Item -Recurse -Force "$packageName"
+
+echo "Adding environment variables."
+[Environment]::SetEnvironmentVariable("FBXSDK", "$targetFolder\Autodesk\FBX\FBX SDK\2016.1.2", [EnvironmentVariableTarget]::Machine)
+
+echo "FBX SDK = $version" >> ~\versions.txt
+
