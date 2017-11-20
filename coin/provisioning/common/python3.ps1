@@ -46,12 +46,12 @@ $install_path = "C:\Python36"
 if ( $archVer -eq 64 ) {
     echo "Running in 64 bit system"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version-amd64.exe"
+    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version-amd64.exe"
     $sha1 = "bf54252c4065b20f4a111cc39cf5215fb1edccff"
 }
 else {
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/python-$version.exe"
+    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version.exe"
     $sha1 = "76c50b747237a0974126dd8b32ea036dd77b2ad1"
 }
 

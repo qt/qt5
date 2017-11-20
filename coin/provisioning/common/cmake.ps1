@@ -44,12 +44,6 @@ Download $officialurl $cachedurl $zip
 Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
 
 Extract-Zip $zip C:
-# TODO: Remove line below after all Windows TIER2 VMs are based on vanilla OS
-if((Test-Path -Path "C:\CMake" )){
-    try {
-        Rename-Item -ErrorAction 'Stop' "C:\CMake" C:\CMake_old
-    } catch {}
-}
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
 Rename-Item $defaultinstallfolder C:\CMake
 

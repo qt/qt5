@@ -28,7 +28,10 @@ function Extract-7Zip
         if (-not (test-path $zipExe)) {
             $zipExe = join-path ${env:ProgramW6432} '7-zip\7z.exe'
             if (-not (test-path $zipExe)) {
-                throw "Could not find 7-zip."
+                $zipExe = "C:\Utils\sevenzip\7z.exe"
+                if (-not (test-path $zipExe)) {
+                    throw "Could not find 7-zip."
+                }
             }
         }
     } else {

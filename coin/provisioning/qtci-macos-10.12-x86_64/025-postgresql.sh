@@ -42,7 +42,7 @@ source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 
 psqlVersion="9.6.0"
 
-PrimaryUrl="http://ci-files01-hki.ci.local/input/mac/macos_10.12_sierra/Postgres-$psqlVersion.zip"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/Postgres-$psqlVersion.zip"
 AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/$psqlVersion/Postgres-$psqlVersion.zip"
 SHA1="5078e44663787006ca55fa3b5e2be598bed82eb5"
 appPrefix=""

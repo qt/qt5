@@ -43,13 +43,13 @@ if ( $archVer -eq 64 ) {
     echo "Running in 64 bit system"
     $arch = "x64"
     $externalUrl = "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/vc_redist.x64.exe"
+    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/vc_redist.x64.exe"
     $sha1 = "3155cb0f146b927fcc30647c1a904cd162548c8c"
 }
 else {
     $arch = "x86"
     $externalUrl = "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/windows/vc_redist.x86.exe"
+    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/vc_redist.x86.exe"
     $sha1 = "bfb74e498c44d3a103ca3aa2831763fb417134d1"
 }
 
