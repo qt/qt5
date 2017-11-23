@@ -79,8 +79,11 @@ try
     rm "$toolsTargetFile" || throw $ExceptionRmTools
 
     echo "Changing ownership of Android files."
-    sudo chown -R qt:wheel "$targetFolder"
-
+    if uname -a |grep -q "el6\|el7"; then
+        sudo chown -R qt:wheel "$targetFolder"
+    else
+        sudo chown -R qt:users "$targetFolder"
+    fi
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
     echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
 

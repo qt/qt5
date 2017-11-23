@@ -51,47 +51,100 @@ try
         sudo systemctl stop $service
         sudo systemctl disable $service
     done
+    # Git is not needed by builds themselves, but is nice to have
+    # immediately as one starts debugging
+    installPackages+=(git)
+    # 7zip is a needed decompressing tool
+    installPackages+=(p7zip)
+    # libssl-dev provides headers for OpenSSL
+    installPackages+=(libssl-dev)
+    # Needed libraries for X11 support accordingly to https://wiki.qt.io/Building_Qt_5_from_Git
+    installPackages+=("^libxcb.*")
+    installPackages+=(libxkbcommon-dev)
+    installPackages+=(libxkbcommon-x11-dev)
+    installPackages+=(libx11-xcb-dev)
+    installPackages+=(libglu1-mesa-dev)
+    installPackages+=(libxrender-dev)
+    installPackages+=(libxi-dev)
+    # Enable linking to system dbus
+    installPackages+=(libdbus-1-dev)
+    # Needed libraries for WebEngine
+    installPackages+=(libudev-dev)
+    installPackages+=(libegl1-mesa-dev)
+    installPackages+=(libfontconfig1-dev)
+    installPackages+=(libxss-dev)
+    # Common event loop handling
+    installPackages+=(libglib2.0-dev)
+    # MySQL support
+    installPackages+=(libmysqlclient-dev)
+    # PostgreSQL support
+    installPackages+=(libpq-dev)
+    # SQLite support
+    installPackages+=(libsqlite3-dev)
+    # ODBC support
+    installPackages+=(unixodbc-dev)
+    # Support for FreeType font engine
+    installPackages+=(libfreetype6-dev)
+    # Enable the usage of system jpeg libraries
+    installPackages+=(libjpeg-dev)
+    # Enable support for printer driver
+    installPackages+=(libcups2-dev)
+    # Install libraries needed for QtMultimedia to be able to support all plugins
+    installPackages+=(libasound2-dev)
+    installPackages+=(libgstreamer1.0-dev)
+    installPackages+=(libgstreamer-plugins-base1.0-dev)
+    installPackages+=(libgstreamer-plugins-good1.0-dev)
+    installPackages+=(libgstreamer-plugins-bad1.0-dev)
+    # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
+    installPackages+=(g++-multilib)
+    # python3 development package
+    installPackages+=(python3-dev)
+    installPackages+=(python3-pip)
+    installPackages+=(python3-virtualenv)
+    # Automates interactive applications (Needed by RTA to automate configure testing)
+    installPackages+=(expect)
+    installPackages+=(mesa-common-dev)
+    installPackages+=(libgl1-mesa-glx)
+    installPackages+=(libgl1-mesa-dev)
+    installPackages+=(libegl1-mesa-dev)
+    installPackages+=(curl)
+    installPackages+=(libicu-dev)
+    installPackages+=(zlib1g-dev)
+    installPackages+=(zlib1g)
+    installPackages+=(openjdk-8-jdk)
+    installPackages+=(libgtk-3-dev)
+    installPackages+=(ninja-build)
+    installPackages+=(libssl-dev)
+    installPackages+=(libxcursor-dev)
+    installPackages+=(libxcomposite-dev)
+    installPackages+=(libxdamage-dev)
+    installPackages+=(libxrandr-dev)
+    installPackages+=(libfontconfig1-dev)
+    installPackages+=(libxss-dev)
+    installPackages+=(libsrtp0-dev)
+    installPackages+=(libwebp-dev)
+    installPackages+=(libjsoncpp-dev)
+    installPackages+=(libopus-dev)
+    installPackages+=(libminizip-dev)
+    installPackages+=(libavutil-dev)
+    installPackages+=(libavformat-dev)
+    installPackages+=(libavcodec-dev)
+    installPackages+=(libevent-dev)
+    installPackages+=(bison)
+    installPackages+=(flex)
+    installPackages+=(gperf)
+    installPackages+=(libasound2-dev)
+    installPackages+=(libpulse-dev)
+    installPackages+=(libxtst-dev)
+    installPackages+=(libnspr4-dev)
+    installPackages+=(libnss3-dev)
+    installPackages+=(libopenal-dev)
+    installPackages+=(libbluetooth-dev)
+
     echo "Running update for apt"
     sudo apt-get update
     echo "Installing packages"
-    # Git is not needed by builds themselves, but is nice to have
-    # immediately as one starts debugging
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install git || throw $ExceptionAPT
-    # 7zip is a needed decompressing tool
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install p7zip || throw $ExceptionAPT
-    # libssl-dev provides headers for OpenSSL
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libssl-dev || throw $ExceptionAPT
-    # Needed libraries for X11 support accordingly to https://wiki.qt.io/Building_Qt_5_from_Git
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev || throw $ExceptionAPT
-    # Enable linking to system dbus
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libdbus-1-dev || throw $ExceptionAPT
-    # Needed libraries for WebEngine
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libudev-dev libegl1-mesa-dev libfontconfig1-dev libxss-dev || throw $ExceptionAPT
-    # Common event loop handling
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libglib2.0-dev || throw $ExceptionAPT
-    # MySQL support
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libmysqlclient-dev || throw $ExceptionAPT
-    # PostgreSQL support
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libpq-dev || throw $ExceptionAPT
-    # SQLite support
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libsqlite3-dev || throw $ExceptionAPT
-    # ODBC support
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install unixodbc-dev || throw $ExceptionAPT
-    # Support for FreeType font engine
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libfreetype6-dev || throw $ExceptionAPT
-    # Enable the usage of system jpeg libraries
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libjpeg-dev || throw $ExceptionAPT
-    # Enable support for printer driver
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libcups2-dev || throw $ExceptionAPT
-    # Install libraries needed for QtMultimedia to be able to support all plugins
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev || throw $ExceptionAPT
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev || throw $ExceptionAPT
-    # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install g++-multilib || throw $ExceptionAPT
-    # python3 development package
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install python3-dev python3-pip python3-virtualenv || throw $ExceptionAPT
-    # Automates interactive applications (Needed by RTA to automate configure testing)
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install expect || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}" || throw $ExceptionAPT
 )
 catch || {
     case $ex_code in
