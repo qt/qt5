@@ -40,6 +40,9 @@ $zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
 $officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
 $cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
 
+echo "Removing old cmake"
+Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
+
 Download $officialurl $cachedurl $zip
 Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
 

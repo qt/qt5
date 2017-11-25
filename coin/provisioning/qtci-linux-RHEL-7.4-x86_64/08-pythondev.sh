@@ -1,8 +1,8 @@
 #!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,5 +33,31 @@
 ##
 #############################################################################
 
-# refresh local certificates
-sudo subscription-manager refresh
+source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
+
+set -ex
+
+packageEpel="epel-release-latest-7.noarch.rpm"
+OfficialUrl="https://dl.fedoraproject.org/pub/epel/$packageEpel"
+CachedUrl="http://ci-files01-hki.intra.qt.io/input/redhat/$packageEpel"
+SHA1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
+
+DownloadURL $OfficialUrl $CachedUrl $SHA1 ./$packageEpel
+sudo rpm -Uvh $packageEpel
+sudo rm -f $packageEpel
+
+# install python3
+sudo yum install -y python34-devel
+
+# install pip3
+
+packagePip="get-pip.py"
+OfficialUrlPip="https://bootstrap.pypa.io/$packagePip"
+CachedUrlPip="http://ci-files01-hki.intra.qt.io/input/redhat/$packagePip"
+SHA1Pip="3d45cef22b043b2b333baa63abaa99544e9c031d"
+
+DownloadURL $OfficialUrlPip $CachedUrlPip $SHA1Pip ./$packagePip
+sudo python3 $packagePip
+sudo rm -f $packagePip
+sudo pip3 install virtualenv
+
