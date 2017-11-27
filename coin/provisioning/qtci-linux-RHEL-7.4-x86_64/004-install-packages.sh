@@ -96,3 +96,6 @@ sudo yum -y install perl-Digest-SHA
 
 # INTEGRITY requirements
 sudo yum -y install glibc.i686
+
+# Enable Qt Bluetooth
+sudo yum -y install bluez-libs-devel
