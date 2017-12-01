@@ -16,6 +16,7 @@ sudo zypper -nq install glib2-devel
 sudo zypper -nq install libopenssl-devel
 sudo zypper -nq install freetype2-devel
 sudo zypper -nq install fontconfig-devel
+sudo zypper -nq install sqlite3-devel
 
 # EGL support
 sudo zypper -nq install Mesa-libEGL-devel
