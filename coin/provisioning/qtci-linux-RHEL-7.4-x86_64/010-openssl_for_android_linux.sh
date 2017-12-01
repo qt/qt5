@@ -33,5 +33,5 @@
 ##
 #############################################################################
 
-source /opt/rh/devtoolset-6/enable
+source /opt/rh/devtoolset-4/enable
 source "${BASH_SOURCE%/*}/../common/openssl_for_android_linux.sh"
