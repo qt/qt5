@@ -1,8 +1,8 @@
 #!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,5 +33,8 @@
 ##
 #############################################################################
 
-# refresh local certificates
-sudo subscription-manager refresh
+sudo yum-config-manager --enable rhel-server-rhscl7-rpms
+sudo yum -y install devtoolset-4
+
+echo "source /opt/rh/devtoolset-4/enable" >> ~/.bashrc
+

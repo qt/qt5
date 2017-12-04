@@ -87,6 +87,8 @@ sudo yum -y install gperf
 sudo yum -y install alsa-lib-devel
 sudo yum -y install pulseaudio-libs-devel
 sudo yum -y install libXtst-devel
+sudo yum -y install nspr-devel
+sudo yum -y install nss-devel
 
 # For Android builds
 sudo yum -y install java-1.8.0-openjdk-devel
@@ -96,3 +98,6 @@ sudo yum -y install perl-Digest-SHA
 
 # INTEGRITY requirements
 sudo yum -y install glibc.i686
+
+# Enable Qt Bluetooth
+sudo yum -y install bluez-libs-devel

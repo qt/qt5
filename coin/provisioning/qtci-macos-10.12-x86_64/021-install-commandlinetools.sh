@@ -5,7 +5,7 @@
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,6 +32,12 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+source "${BASH_SOURCE%/*}/../common/install-commandlinetools.sh"
 
-source /opt/rh/devtoolset-4/enable
-source "${BASH_SOURCE%/*}/../common/openssl_for_android_linux.sh"
+version="8.3.2"
+packageName="CommandLineToolsforXcode$version.dmg"
+url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
+sha1="da74b2bbf3058a0805c2d9f41ee5cf381d0e0ebe"
+
+InstallCommandLineTools $url $url $sha1 $packageName $version
+
