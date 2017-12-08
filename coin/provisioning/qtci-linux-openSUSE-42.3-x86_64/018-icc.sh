@@ -42,12 +42,12 @@ set -e
 mainStorage="ci-files01-hki.intra.qt.io:/hdd/www/input"
 localMount="/mnt/storage/"
 
-iccPackage="parallel_studio_xe_2018_composer_edition_for_cpp.tgz"
+iccPackage="parallel_studio_xe_2018_update1_composer_edition_for_cpp.tgz"
 iccPackageSource="$localMount/intel/$iccPackage"
 iccInstallPath="/opt/intel"
 iccTmpPath="/tmp/icc"
 
-iccLicense="l_icc.lic"
+iccLicense="l_icc_2018.lic"
 iccLicenseSource="$localMount/semisecure/$iccLicense"
 iccLicenseTarget="/home/qt/$iccLicense"
 
@@ -79,7 +79,7 @@ EOT
 
 # Export LD_LIBRARY_PATH to Coin
 echo "export ICC64_18_LDLP=$iccInstallPath/lib/intel64" >>~/.bashrc
-echo "export ICC64_18_PATH=$iccInstallPath/compilers_and_libraries_2018.0.128/linux/bin/intel64:$iccInstallPath/bin" >>~/.bashrc
-echo "ICC = 18.0.0 20170811" >> ~/versions.txt
+echo "export ICC64_18_PATH=$iccInstallPath/compilers_and_libraries_2018.1.163/linux/bin/intel64:$iccInstallPath/bin" >>~/.bashrc
+echo "ICC = 18.0.1 20171018" >> ~/versions.txt
 
 rm -rf "$iccTmpPath"
