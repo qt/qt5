@@ -35,69 +35,54 @@
 
 set -e
 
-sudo yum -y update
-
-sudo yum -y install git
-sudo yum -y install zlib-devel
-sudo yum -y install glib2-devel
-sudo yum -y install openssl-devel
-sudo yum -y install freetype-devel
-sudo yum -y install fontconfig-devel
-
+installPackages=()
+installPackages+=(git)
+installPackages+=(zlib-devel)
+installPackages+=(glib2-devel)
+installPackages+=(openssl-devel)
+installPackages+=(freetype-devel)
+installPackages+=(fontconfig-devel)
 # EGL support
-sudo yum -y install mesa-libEGL-devel
-sudo yum -y install mesa-libGL-devel
-
-sudo yum -y install libxkbfile-devel
-
+installPackages+=(mesa-libEGL-devel)
+installPackages+=(mesa-libGL-devel)
+installPackages+=(libxkbfile-devel)
 # Xinput2
-sudo yum -y install libXi-devel
-
-sudo yum -y install python-devel
-sudo yum -y install mysql-server mysql
-sudo yum -y install mysql-devel
-sudo yum -y install postgresql-devel
-sudo yum -y install cups-devel
-sudo yum -y install dbus-devel
-
-# We have to downgrade to an older version of graphite2
-# to avoid a dependency version mismatch with gtk3-devel package.
-
-sudo yum -y downgrade graphite2-1.3.6-1.el7_2
-
+installPackages+=(libXi-devel)
+installPackages+=(python-devel)
+installPackages+=(mysql-server)
+installPackages+=(mysql)
+installPackages+=(mysql-devel)
+installPackages+=(postgresql-devel)
+installPackages+=(cups-devel)
+installPackages+=(dbus-devel)
 # gstreamer 1 for QtMultimedia
-sudo yum -y install gstreamer1-devel gstreamer1-plugins-base-devel
-
+installPackages+=(gstreamer1-devel)
+installPackages+=(gstreamer1-plugins-base-devel)
 # gtk3 style for QtGui/QStyle
-sudo yum -y install gtk3-devel
-
+installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb
-sudo yum -y install libusb-devel
-
+installPackages+=(libusb-devel)
 # speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
-sudo yum -y install speech-dispatcher-devel
-
+installPackages+=(speech-dispatcher-devel)
 # Python
-sudo yum -y install python-devel python-virtualenv
-
+installPackages+=(python-devel python-virtualenv)
 # WebEngine
-sudo yum -y install bison
-sudo yum -y install flex
-sudo yum -y install gperf
-sudo yum -y install alsa-lib-devel
-sudo yum -y install pulseaudio-libs-devel
-sudo yum -y install libXtst-devel
-sudo yum -y install nspr-devel
-sudo yum -y install nss-devel
-
+installPackages+=(bison)
+installPackages+=(flex)
+installPackages+=(gperf)
+installPackages+=(alsa-lib-devel)
+installPackages+=(pulseaudio-libs-devel)
+installPackages+=(libXtst-devel)
+installPackages+=(nspr-devel)
+installPackages+=(nss-devel)
 # For Android builds
-sudo yum -y install java-1.8.0-openjdk-devel
-
+installPackages+=(java-1.8.0-openjdk-devel)
 # For receiving shasum
-sudo yum -y install perl-Digest-SHA
-
+installPackages+=(perl-Digest-SHA)
 # INTEGRITY requirements
-sudo yum -y install glibc.i686
-
+installPackages+=(glibc.i686)
 # Enable Qt Bluetooth
-sudo yum -y install bluez-libs-devel
+installPackages+=(bluez-libs-devel)
+
+sudo yum -y update
+sudo yum -y install "${installPackages[@]}"

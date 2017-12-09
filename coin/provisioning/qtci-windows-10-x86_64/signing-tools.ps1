@@ -1,9 +1,10 @@
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -30,34 +31,14 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-$version = "11_2_2"
-$package = "C:\Windows\temp\opengl32sw.7z"
-$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
-$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
-$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
-$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
+# Signing tools are needed to sign offline installers when releasing
 
-function Extract-Mesa
-{
-    Param (
-        [string]$downloadUrl,
-        [string]$sha1,
-        [string]$targetFolder
-    )
-    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
-    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
-    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
-    Verify-Checksum $localArchivePath $sha1
-    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
-    Remove-Item $localArchivePath
-}
+$url = "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/sign.zip"
+$destination = "C:\Windows\temp\sign.zip"
 
-if ( Test-Path C:\Windows\SysWOW64 ) {
-    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\System32"
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
-} else {
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
-}
-
+Download $url $url $destination
+Extract-Zip "$destination" "C:\Utils"
+Remove-Item "$destination"

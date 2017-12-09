@@ -1,12 +1,12 @@
 Template                            Target OS           Target arch Compiler    Features
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-8.1-x86_64                                             MSVC2013    DeveloperBuild Release DisableTests
-qtci-windows-10-x86_64-10                                            MSVC2015    DeveloperBuild Release QtNamespace QtLibInfix BuildExamples
+qtci-windows-10-x86_64-10                                           MSVC2015    DeveloperBuild Release QtNamespace QtLibInfix BuildExamples
 qtci-windows-7-x86-3                                                Mingw53     DeveloperBuild Release OpenGLDynamic
-qtci-windows-10-x86_64-10                                x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-10                                            MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-10            WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
-qtci-windows-10-x86_64-10            WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10                               x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-10                                           MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-10           WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10           WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
 qtci-linux-Ubuntu-16.04-x86_64-1                                    GCC         NoWidgets ForceDebugInfo
 qtci-linux-Ubuntu-16.04-x86_64-1                                    GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace BuildExamples Documentation
 qtci-linux-openSUSE-42.3-x86_64                                     GCC         DeveloperBuild NoPch
@@ -22,3 +22,4 @@ qtci-linux-Ubuntu-16.04-x86_64-1    QEMU                armv7       GCC         
 qtci-linux-Ubuntu-16.04-x86_64-1    QEMU                arm64       GCC         Release
 qtci-linux-Ubuntu-16.04-x86_64-1                                    GCC         TestOnly LicenseCheck
 qtci-linux-RHEL-6.6-x86_64          QNX_660             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
