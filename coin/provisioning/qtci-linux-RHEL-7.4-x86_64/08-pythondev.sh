@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -31,26 +33,31 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 
-$majorminorversion = "3.6"
-$version = "3.6.2"
+set -ex
 
-$zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
-$officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
-$cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
+packageEpel="epel-release-latest-7.noarch.rpm"
+OfficialUrl="https://dl.fedoraproject.org/pub/epel/$packageEpel"
+CachedUrl="http://ci-files01-hki.intra.qt.io/input/redhat/$packageEpel"
+SHA1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
 
-echo "Removing old cmake"
-Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
+DownloadURL $OfficialUrl $CachedUrl $SHA1 ./$packageEpel
+sudo rpm -Uvh $packageEpel
+sudo rm -f $packageEpel
 
-Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
+# install python3
+sudo yum install -y python34-devel
 
-Extract-Zip $zip C:
-$defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
-Rename-Item $defaultinstallfolder C:\CMake
+# install pip3
 
-Add-Path "C:\CMake\bin"
+packagePip="get-pip.py"
+OfficialUrlPip="https://bootstrap.pypa.io/$packagePip"
+CachedUrlPip="http://ci-files01-hki.intra.qt.io/input/redhat/$packagePip"
+SHA1Pip="3d45cef22b043b2b333baa63abaa99544e9c031d"
 
-echo "CMake = $version" >> ~\versions.txt
+DownloadURL $OfficialUrlPip $CachedUrlPip $SHA1Pip ./$packagePip
+sudo python3 $packagePip
+sudo rm -f $packagePip
+sudo pip3 install virtualenv
 
