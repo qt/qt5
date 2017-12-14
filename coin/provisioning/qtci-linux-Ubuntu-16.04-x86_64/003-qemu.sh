@@ -32,18 +32,18 @@
 ##
 #############################################################################
 
-set -e
+set -ex
 # build latest qemu to usermode
 sudo apt-get -y install automake autoconf libtool
 
-tempDir=$(mktemp -d) || echo "Failed to create temporary directory"
+tempDir=$(mktemp -d)
 git clone git://git.qemu.org/qemu.git "$tempDir"
 cd "$tempDir"
 
 #latest commit from the master proven to work
 git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
 git submodule update --init pixman
-./configure --target-list=arm-linux-user --static
+./configure --target-list=arm-linux-user,aarch64-linux-user --static
 make
 sudo make install
 rm -rf "$tempDir"
@@ -51,11 +51,17 @@ rm -rf "$tempDir"
 # Enable binfmt support
 sudo apt-get -y install binfmt-support
 
-# Install qemu binfmt
+# Install qemu binfmt for 32bit and 64bit arm architectures
 sudo update-binfmts --package qemu-arm --install arm \
 /usr/local/bin/qemu-arm \
 --magic \
 "\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
+--mask \
+"\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
+sudo update-binfmts --package qemu-aarch64 --install aarch64 \
+/usr/local/bin/qemu-aarch64 \
+--magic \
+"\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00" \
 --mask \
 "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
 

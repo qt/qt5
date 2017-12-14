@@ -75,11 +75,11 @@ function InstallCommandLineTools {
                 exit 1;
             ;;
             $ExceptionInstall)
-                echo "Failed to mount"
+                echo "Failed to install"
                 exit 1;
             ;;
             $ExceptionUnmount)
-                echo "Failed to mount"
+                echo "Failed to unmount"
                 exit 1;
 
         esac

@@ -42,7 +42,7 @@ source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
 
 opensslVersion="1.0.2k"
 opensslFile="openssl-$opensslVersion.tar.gz"
-opensslDlUrl="http://ci-files01-hki.ci.local/input/openssl/$opensslFile"
+opensslDlUrl="http://ci-files01-hki.intra.qt.io/input/openssl/$opensslFile"
 opensslAltDlUrl="https://www.openssl.org/source/$opensslFile"
 opensslSha1="5f26a624479c51847ebd2f22bb9f84b3b44dcb44"
 

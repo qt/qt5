@@ -48,11 +48,6 @@ if( (is64bitWinHost) -eq 1 ) {
     $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
     $sha1 = "4da0453cdfda335e064d4437cf5bb9d356054cfd"
 
-    # Delete any leftovers
-    try {
-        Rename-Item -ErrorAction 'Stop' c:\utils\postgresql c:\utils\postgresql-deleted
-    } catch {}
-
     echo "Fetching from URL ..."
     Download $externalUrl $internalUrl $packagex64
     Verify-Checksum $packagex64 $sha1

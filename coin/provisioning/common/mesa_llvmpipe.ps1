@@ -55,7 +55,7 @@ function Extract-Mesa
 }
 
 if ( Test-Path C:\Windows\SysWOW64 ) {
-    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\sysnative"
+    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\System32"
     Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
 } else {
     Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"

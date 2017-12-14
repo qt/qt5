@@ -48,4 +48,4 @@ source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 # shellcheck source=../common/install_xcode.sh
 source "${BASH_SOURCE%/*}/../common/install_xcode.sh"
 
-InstallXCode /net/ci-files01-hki.ci.local/hdd/www/input/mac/Xcode_8.3.3.xz 8.3.3
+InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_8.3.3.xz 8.3.3
