@@ -46,3 +46,6 @@ sudo zypper -nq install libXrandr-devel
 sudo zypper -nq install libXtst-devel
 sudo zypper -nq install mozilla-nspr-devel
 sudo zypper -nq install mozilla-nss-devel
+
+# cups
+sudo zypper -nq install cups-devel
