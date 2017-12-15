@@ -54,3 +54,7 @@ sudo zypper -nq install mozilla-nss-devel
 # qtwebkit
 sudo zypper -nq install libxml2-devel
 sudo zypper -nq install libxslt-devel
+
+# GStreamer (qtwebkit and qtmultimedia)
+sudo zypper -nq install gstreamer-devel
+sudo zypper -nq install gstreamer-plugins-base-devel
