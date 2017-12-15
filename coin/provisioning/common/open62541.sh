@@ -37,7 +37,7 @@ TEMPDIR=$(mktemp --directory) || echo "Failed to create temporary directory"
 trap "sudo rm -fr $TEMPDIR" EXIT
 cd $TEMPDIR
 
-sudo pip install six
+pip install six
 
 git clone https://github.com/open62541/open62541.git open62541
 cd open62541
