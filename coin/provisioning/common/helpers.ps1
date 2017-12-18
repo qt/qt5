@@ -116,6 +116,7 @@ function Add-Path
 
     $oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
     [Environment]::SetEnvironmentVariable("Path", $oldPath + ";$Path", [EnvironmentVariableTarget]::Machine)
+    $Env:PATH = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 }
 
 function is64bitWinHost
