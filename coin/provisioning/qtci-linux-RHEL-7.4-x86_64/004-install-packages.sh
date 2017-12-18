@@ -83,6 +83,9 @@ installPackages+=(perl-Digest-SHA)
 installPackages+=(glibc.i686)
 # Enable Qt Bluetooth
 installPackages+=(bluez-libs-devel)
+# QtWebKit
+installPackages+=(libxml2-devel)
+installPackages+=(libxslt-devel)
 
 sudo yum -y update
 sudo yum -y install "${installPackages[@]}"
