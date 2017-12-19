@@ -35,6 +35,8 @@
 
 # This script installs CMake 3.6.2
 
+set -ex
+
 # CMake is needed for autotests that verify that Qt can be built with CMake
 
 source "${BASH_SOURCE%/*}/../common/cmake_linux.sh"

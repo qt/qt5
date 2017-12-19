@@ -33,6 +33,8 @@
 ##
 #############################################################################
 
+set -ex
+
 # refresh local certificates
 sudo subscription-manager refresh
 

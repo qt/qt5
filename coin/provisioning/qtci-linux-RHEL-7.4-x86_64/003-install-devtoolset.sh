@@ -33,6 +33,8 @@
 ##
 #############################################################################
 
+set -ex
+
 sudo yum-config-manager --enable rhel-server-rhscl7-rpms
 sudo yum -y install devtoolset-4
 
