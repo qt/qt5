@@ -140,6 +140,9 @@ try
     installPackages+=(libnss3-dev)
     installPackages+=(libopenal-dev)
     installPackages+=(libbluetooth-dev)
+    #VirtualBox for RTA
+    installPackages+=(virtualbox)
+    installPackages+=(dkms)
 
     echo "Running update for apt"
     sudo apt-get update
