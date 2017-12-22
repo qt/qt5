@@ -45,47 +45,51 @@ try
 (
     echo "Disabling auto update"
     sudo sed -i 's/APT::Periodic::Update-Package-Lists "1";/APT::Periodic::Update-Package-Lists "0";/' /etc/apt/apt.conf.d/10periodic || throw $ExceptionSED
+    for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-daily-upgrade.service; do
+        sudo systemctl stop $service
+        sudo systemctl disable $service
+    done
     echo "Running update for apt"
     sudo apt-get update
     echo "Installing packages"
     # Git is not needed by builds themselves, but is nice to have
     # immediately as one starts debugging
-    yes | sudo aptdcon --hide-terminal --install git || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install git || throw $ExceptionAPT
     # 7zip is a needed decompressing tool
-    yes | sudo aptdcon --hide-terminal --install p7zip || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install p7zip || throw $ExceptionAPT
     # libssl-dev provides headers for OpenSSL
-    yes | sudo aptdcon --hide-terminal --install libssl-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libssl-dev || throw $ExceptionAPT
     # Needed libraries for X11 support accordingly to https://wiki.qt.io/Building_Qt_5_from_Git
-    yes | sudo aptdcon --hide-terminal --install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev || throw $ExceptionAPT
     # Enable linking to system dbus
-    yes | sudo aptdcon --hide-terminal --install libdbus-1-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libdbus-1-dev || throw $ExceptionAPT
     # Needed libraries for WebEngine
-    yes | sudo aptdcon --hide-terminal --install libudev-dev libegl1-mesa-dev libfontconfig1-dev libxss-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libudev-dev libegl1-mesa-dev libfontconfig1-dev libxss-dev || throw $ExceptionAPT
     # Common event loop handling
-    yes | sudo aptdcon --hide-terminal --install libglib2.0-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libglib2.0-dev || throw $ExceptionAPT
     # MySQL support
-    yes | sudo aptdcon --hide-terminal --install libmysqlclient-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libmysqlclient-dev || throw $ExceptionAPT
     # PostgreSQL support
-    yes | sudo aptdcon --hide-terminal --install libpq-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libpq-dev || throw $ExceptionAPT
     # SQLite support
-    yes | sudo aptdcon --hide-terminal --install libsqlite3-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libsqlite3-dev || throw $ExceptionAPT
     # ODBC support
-    yes | sudo aptdcon --hide-terminal --install unixodbc-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install unixodbc-dev || throw $ExceptionAPT
     # Support for FreeType font engine
-    yes | sudo aptdcon --hide-terminal --install libfreetype6-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libfreetype6-dev || throw $ExceptionAPT
     # Enable the usage of system jpeg libraries
-    yes | sudo aptdcon --hide-terminal --install libjpeg-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libjpeg-dev || throw $ExceptionAPT
     # Enable support for printer driver
-    yes | sudo aptdcon --hide-terminal --install libcups2-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libcups2-dev || throw $ExceptionAPT
     # Install libraries needed for QtMultimedia to be able to support all plugins
-    yes | sudo aptdcon --hide-terminal --install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev || throw $ExceptionAPT
-    yes | sudo aptdcon --hide-terminal --install libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev || throw $ExceptionAPT
     # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
-    yes | sudo aptdcon --hide-terminal --install g++-multilib || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install g++-multilib || throw $ExceptionAPT
     # python3 development package
-    yes | sudo aptdcon --hide-terminal --install python3-dev python3-pip python3-virtualenv || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install python3-dev python3-pip python3-virtualenv || throw $ExceptionAPT
     # Automates interactive applications (Needed by RTA to automate configure testing)
-    yes | sudo aptdcon --hide-terminal --install expect || throw $ExceptionAPT
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install expect || throw $ExceptionAPT
 )
 catch || {
     case $ex_code in

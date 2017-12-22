@@ -58,3 +58,6 @@ sudo zypper -nq install libxslt-devel
 # GStreamer (qtwebkit and qtmultimedia)
 sudo zypper -nq install gstreamer-devel
 sudo zypper -nq install gstreamer-plugins-base-devel
+
+# cups
+sudo zypper -nq install cups-devel

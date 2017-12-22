@@ -22,4 +22,4 @@ qtci-linux-Ubuntu-16.04-x86_64-1    QEMU                armv7       GCC         
 qtci-linux-Ubuntu-16.04-x86_64-1    QEMU                arm64       GCC         Release
 qtci-linux-Ubuntu-16.04-x86_64-1                                    GCC         TestOnly LicenseCheck
 qtci-linux-RHEL-6.6-x86_64          QNX_660             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC         Release DisableTests OpenGLES2 NoUseGoldLinker
