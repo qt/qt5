@@ -35,7 +35,7 @@
 
 # This script installs the Yocto toolchain
 
-set -e
+set -ex
 
 source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 

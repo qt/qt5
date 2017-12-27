@@ -35,6 +35,8 @@
 
 # Install required packages with APT
 
+set -ex
+
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
 ExceptionAPTUpdate=100

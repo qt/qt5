@@ -36,6 +36,9 @@
 # This script modifies system settings for automated use
 
 # shellcheck source=../common/try_catch.sh
+
+set -ex
+
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
 NTS_IP=10.212.2.216
