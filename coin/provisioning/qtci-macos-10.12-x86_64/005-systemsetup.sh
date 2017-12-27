@@ -33,6 +33,8 @@
 ##
 #############################################################################
 
+set -ex
+
 # This script modified system settings for automated use
 
 # shellcheck source=../common/try_catch.sh

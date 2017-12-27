@@ -37,6 +37,8 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
+set -ex
+
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 

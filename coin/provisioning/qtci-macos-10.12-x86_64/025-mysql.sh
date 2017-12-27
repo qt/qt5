@@ -37,6 +37,8 @@
 
 # MySQL is needed for Qt to be able to support MySQL
 
+set -ex
+
 # shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
 

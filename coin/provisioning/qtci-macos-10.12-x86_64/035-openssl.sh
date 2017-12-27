@@ -35,6 +35,8 @@
 
 # This script install OpenSSL
 
+set -ex
+
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 # shellcheck source=../common/InstallFromCompressedFileFromURL.sh

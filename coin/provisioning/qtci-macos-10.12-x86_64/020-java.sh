@@ -34,6 +34,9 @@
 #############################################################################
 
 # This script installs JDK
+
+set -ex
+
 echo "Installing Java Development Kit"
 
 # shellcheck source=../common/try_catch.sh

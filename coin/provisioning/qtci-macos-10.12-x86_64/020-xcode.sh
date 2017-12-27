@@ -42,6 +42,8 @@
 # This will give you a file called "Content.part00.cpio.xz" that
 # can be renamed to Xcode_8.xz for this script.
 
+set -ex
+
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 
