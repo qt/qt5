@@ -35,6 +35,8 @@
 
 # This script modified system settings for automated use
 
+set -ex
+
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 

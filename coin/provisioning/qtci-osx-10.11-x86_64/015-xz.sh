@@ -37,6 +37,8 @@
 
 # XZ-Utils are needed for uncompressing xz-compressed files
 
+set -ex
+
 # shellcheck source=../common/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/InstallPKGFromURL.sh"
 
