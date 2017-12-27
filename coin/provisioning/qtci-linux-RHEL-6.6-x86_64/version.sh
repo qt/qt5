@@ -36,6 +36,9 @@
 # This script needs to be called last during provisioning so that the software information will show up last in provision log.
 
 # Storage installed RPM packages information
+
+set -ex
+
 echo "*********************************************" >> ~/versions.txt
 echo "***** All installed RPM packages *****" >> ~/versions.txt
 rpm -q -a | sort >> ~/versions.txt
