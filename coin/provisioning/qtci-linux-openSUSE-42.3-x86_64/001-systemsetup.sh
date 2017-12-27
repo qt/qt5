@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 BASEDIR=$(dirname "$0")
 source $BASEDIR/../common/network_test_server_ip.txt

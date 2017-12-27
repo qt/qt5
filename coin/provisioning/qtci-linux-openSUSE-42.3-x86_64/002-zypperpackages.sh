@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 sudo zypper -nq install git
 # default compiler, gcc 4.8.5

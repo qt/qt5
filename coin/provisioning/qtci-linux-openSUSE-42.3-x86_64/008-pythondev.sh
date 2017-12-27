@@ -2,6 +2,8 @@
 # provides: python development libraries
 # version: provided by default Linux distribution repository
 # needed to build pyside
+set -ex
+
 sudo zypper -nq install python-devel python-virtualenv
 
 # install python3

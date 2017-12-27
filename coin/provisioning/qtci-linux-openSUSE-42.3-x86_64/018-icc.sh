@@ -37,7 +37,7 @@
 
 source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 
-set -e
+set -ex
 
 mainStorage="ci-files01-hki.intra.qt.io:/hdd/www/input"
 localMount="/mnt/storage/"
