@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 mkdir -p $HOME/Library/LaunchAgents
 cat >$HOME/Library/LaunchAgents/no-screensaver.plist <<EOT
 <?xml version="1.0" encoding="UTF-8"?>
