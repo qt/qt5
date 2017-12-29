@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # provides: fix for possible bug in the subscription manager
 # version: provided by RedHat
 # needed for yum to work properly in case there is incorrect data in
