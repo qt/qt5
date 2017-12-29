@@ -40,6 +40,7 @@
 set -ex
 
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
 
 NTS_IP=10.212.2.216
 
@@ -47,6 +48,7 @@ ExceptionGsettings1=100
 ExceptionGsettings2=101
 ExceptionGsettings3=102
 ExceptionNTS=103
+ExceptionProxy=104
 
 try
 (
@@ -59,6 +61,10 @@ try
 
     echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
     echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
+
+    if [ "$proxy" != "" ]; then
+        echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf || throw $ExceptionProxy
+    fi
 )
 catch || {
     case $ex_code in
@@ -76,6 +82,10 @@ catch || {
         ;;
         $ExceptionNTS)
             echo "Failed to set network teset server address into /etc/hosts."
+            exit 1;
+        ;;
+        $ExceptionProxy)
+            echo "Failed to set proxy /etc/apt/apt.conf."
             exit 1;
         ;;
     esac

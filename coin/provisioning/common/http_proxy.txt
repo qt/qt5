@@ -1,0 +1,2 @@
+proxy="http://proxy.intra.qt.io:3128"
+

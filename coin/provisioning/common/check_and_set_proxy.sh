@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,24 +32,19 @@
 ##
 #############################################################################
 
-set -ex
+source "${BASH_SOURCE%/*}/try_catch.sh"
+source "${BASH_SOURCE%/*}/http_proxy.txt"
 
-BASEDIR=$(dirname "$0")
-source $BASEDIR/../common/network_test_server_ip.txt
-source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+try
+(
+  wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io
+)
 
-echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
-echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
-echo "Set DISPLAY"
-echo 'export DISPLAY=":0"' >> ~/.bashrc
-# for current session
-export DISPLAY=:0
+if [ $? -eq 0 ]; then
+    echo "Setting http_proxy to $proxy"
+    export http_proxy=$proxy
 
-# disable Automatic screen lock
-gsettings set org.gnome.desktop.screensaver lock-enabled false
-# disable blank screen power saving
-gsettings set org.gnome.desktop.session idle-delay 0
-
-if [ "$proxy" != "" ]; then
-    echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
+else
+    echo "Proxy not detected at $proxy"
 fi
+

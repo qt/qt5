@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -35,22 +34,6 @@
 
 set -ex
 
-BASEDIR=$(dirname "$0")
-source $BASEDIR/../common/network_test_server_ip.txt
-source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+# Having proxy set while running autotests makes them fail
+sudo sed -i 's/PROXY_ENABLED=\"yes\"/PROXY_ENABLED=\"no\"/' /etc/sysconfig/proxy
 
-echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
-echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
-echo "Set DISPLAY"
-echo 'export DISPLAY=":0"' >> ~/.bashrc
-# for current session
-export DISPLAY=:0
-
-# disable Automatic screen lock
-gsettings set org.gnome.desktop.screensaver lock-enabled false
-# disable blank screen power saving
-gsettings set org.gnome.desktop.session idle-delay 0
-
-if [ "$proxy" != "" ]; then
-    echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
-fi
