@@ -32,6 +32,9 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
+set -ex
+
 source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 
 name="p7zip"
