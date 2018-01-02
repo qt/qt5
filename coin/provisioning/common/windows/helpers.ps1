@@ -144,3 +144,11 @@ Function Execute-Command
         exit 1
     }
 }
+
+function isProxyEnabled {
+    return (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').proxyEnable
+}
+
+function getProxy {
+    return (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').proxyServer
+}

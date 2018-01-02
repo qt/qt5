@@ -1,10 +1,9 @@
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -32,43 +31,34 @@
 ##
 #############################################################################
 
-param([Int32]$archVer=32)
-. "$PSScriptRoot\helpers.ps1"
+$n = Get-Content "$PSScriptRoot\..\http_proxy.txt"
+$n = $n.Split('=')
+New-Variable -Name $n[0] -Value $n[1]
 
-# This script installs Python $version.
-# Python3 is required for building some qt modules.
-
-$version = "3.6.1"
-$package = "C:\Windows\temp\python-$version.exe"
-$install_path = "C:\Python36"
-
-# check bit version
-if ( $archVer -eq 64 ) {
-    echo "Running in 64 bit system"
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
-    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version-amd64.exe"
-    $sha1 = "bf54252c4065b20f4a111cc39cf5215fb1edccff"
+if (([string]::IsNullOrEmpty($proxy)) -or ($proxy -eq '""')) {
+    echo "No proxy is defined."
 }
 else {
-    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
-    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version.exe"
-    $sha1 = "76c50b747237a0974126dd8b32ea036dd77b2ad1"
+    echo "Checking proxy @ $proxy"
+    $proxy = $proxy -replace '"', ""
+    $webclient = New-Object System.Net.WebClient
+    $proxy_obj = New-Object System.Net.WebProxy($proxy)
+    $webclient.proxy = $proxy_obj
+    try {
+        $webpage = $webclient.DownloadData("http://proxy.intra.qt.io")
+    }
+    catch {
+        $ErrorMessage = $_.Exception.Message
+        $FailedItem = $_.Exception.ItemName
+        $iserror = $true
+    }
+    if ($iserror -eq $true) {
+        echo "Testing download with proxy does not work: $ErrorMessage, $FailedItem. Not setting proxy."
+    }
+    else {
+        echo "Setting proxy to: $proxy"
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyServer -Value "$proxy"
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyEnable -Value 1
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyOverride -Value 10.215
+    }
 }
-
-echo "Fetching from URL..."
-Download $externalUrl $internalUrl $package
-Verify-Checksum $package $sha1
-echo "Installing $package..."
-cmd /c "$package /q TargetDir=$install_path"
-echo "Remove $package..."
-del $package
-
-[Environment]::SetEnvironmentVariable("PYTHON3_PATH", "$install_path", [EnvironmentVariableTarget]::Machine)
-[Environment]::SetEnvironmentVariable("PIP3_PATH", "$install_path\Scripts", [EnvironmentVariableTarget]::Machine)
-
-# Install python virtual env
-#if ( isProxyEnabled ) {
-#    echo "Using proxy with pip"
-#    $pip_args = "--proxy=" + (getProxy)
-#}
-cmd /c "$install_path\Scripts\pip3.exe install virtualenv"
