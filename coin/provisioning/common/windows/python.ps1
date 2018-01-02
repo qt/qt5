@@ -63,4 +63,8 @@ Add-Path "C:\Python27;C:\Python27\Scripts"
 
 C:\Python27\python.exe -m ensurepip
 # Install python virtual env
+#if ( isProxyEnabled ) {
+#    echo "Using proxy with pip"
+#    $pip_args = "--proxy=" + (getProxy)
+#}
 C:\Python27\Scripts\pip.exe install virtualenv
