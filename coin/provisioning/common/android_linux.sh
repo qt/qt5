@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
@@ -39,6 +39,7 @@
 
 source "${BASH_SOURCE%/*}/../common/try_catch.sh"
 source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
 
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
@@ -79,10 +80,20 @@ try
     rm "$toolsTargetFile" || throw $ExceptionRmTools
 
     echo "Changing ownership of Android files."
-    sudo chown -R qt:wheel "$targetFolder"
+    if uname -a |grep -q "el6\|el7"; then
+        sudo chown -R qt:wheel "$targetFolder"
+    else
+        sudo chown -R qt:users "$targetFolder"
+    fi
 
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
+    if [ "$proxy" != "" ]; then
+        proxy_host=$(echo $proxy | cut -d'/' -f3 | cut -d':' -f1)
+        proxy_port=$(echo $proxy | cut -d':' -f3)
+        echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host=$proxy_host --proxy_port=$proxy_port "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
+    else
+        echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
+    fi
 
     echo "export ANDROID_SDK_HOME=$sdkTargetFolder" >> ~/.bashrc
     echo "export ANDROID_NDK_HOME=$targetFolder/android-ndk-$ndkVersion" >> ~/.bashrc
