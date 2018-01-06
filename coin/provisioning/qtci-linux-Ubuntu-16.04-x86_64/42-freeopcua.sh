@@ -44,6 +44,7 @@ cd freeopcua
 git checkout ca75e05a8e63d88dbfc259e1251f405106411b66
 mkdir build
 cd build
+source ~/.profile
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
 make
 sudo make install
