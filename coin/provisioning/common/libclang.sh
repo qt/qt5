@@ -40,6 +40,8 @@
 # In case of Linux, we expect to get the values as args
 set -e
 
+source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+
 BASEDIR=$(dirname "$0")
 . $BASEDIR/sw_versions.txt
 url=$1

@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
 # provides: python development libraries
 # version: provided by default Linux distribution repository
 # needed to build pyside
+
+set -ex
+
 sudo yum install -y python-devel python-virtualenv
 
 # install the EPEL repository which provides python3

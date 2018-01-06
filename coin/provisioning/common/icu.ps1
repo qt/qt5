@@ -39,28 +39,11 @@ $version = "53_1"
 
 if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64")) {
 
-   $url_official_2012 = "http://download.qt.io/development_releases/prebuilt/icu/prebuilt/msvc2012/icu_" + $version + "_msvc_2012_64_devel.7z"
-   $url_cache_2012 = "\\ci-files01-hki.intra.qt.io\provisioning\windows\icu_" + $version + "_msvc_2012_64_devel.7z"
-   $sha1_2012 = "8A8C371F3ED58E81BBCF58CF5F8388CEF51FA9AC"
-
    $url_official_2013 = "http://download.qt.io/development_releases/prebuilt/icu/prebuilt/msvc2013/icu_" + $version + "_msvc_2013_64_devel.7z"
    $url_cache_2013 = "\\ci-files01-hki.intra.qt.io/provisioning/windows/icu_" + $version + "_msvc_2013_64_devel.7z"
    $sha1_2013 = "7267CF8C5BD39C4218F2CCFE31ECA81B7644ED6F"
 
-   $icuPackage_msvc2012_64 = "C:\Windows\Temp\icu-$version-msvc2012_64.7z"
    $icuPackage_msvc2013_64 = "C:\Windows\Temp\icu-$version-msvc2013_64.7z"
-
-   if (!(Test-Path C:\Utils\icu_"$version"_msvc_2012_64_devel\)) {
-      echo "Fetching from URL ..."
-      Download $url_official_2012 $url_cache_2012 $icuPackage_msvc2012_64
-      Verify-Checksum $icuPackage_msvc2012_64 $sha1_2012
-      Get-ChildItem $icuPackage_msvc2012_64 | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o""C:\Utils\icu_"$version"_msvc_2012_64_devel\""}
-
-      echo "Cleaning $icuPackage_msvc2012_64..."
-      Remove-Item -Recurse -Force $icuPackage_msvc2012_64
-
-      echo "ICU MSVC2012 = $version" >> ~\versions.txt
-   }
 
    if (!(Test-Path C:\Utils\icu_"$version"_msvc_2013_64_devel\)) {
       echo "Fetching from URL ..."
@@ -75,7 +58,6 @@ if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -e
    }
 
 # FIXME: do we really want to have it per MSVC version? What about MSVC2015?
-[Environment]::SetEnvironmentVariable("CI_ICU_PATH_MSVC2012", "C:\\Utils\\icu_53_1_msvc_2012_64_devel\\icu53_1", "Machine")
 [Environment]::SetEnvironmentVariable("CI_ICU_PATH_MSVC2013", "C:\\Utils\\icu_53_1_msvc_2013_64_devel\\icu53_1", "Machine")
 
 # FIXME: do we really want to use the 4.8.2 ICU build?
@@ -83,28 +65,11 @@ if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -e
 
 } else {
 
-   $url_official_2012_32 = "http://download.qt.io/development_releases/prebuilt/icu/prebuilt/msvc2012/icu_" + $version + "_msvc_2012_32_devel.7z"
-   $url_cache_2012_32 = "\\ci-files01-hki.intra.qt.io\provisioning\windows\icu_" + $version + "_msvc_2012_32_devel.7z"
-   $sha1_2012_32 = "F2FF287EEB0163B015D37AE08871165FBA87BCF0"
-
    $url_official_2013_32 = "http://download.qt.io/development_releases/prebuilt/icu/prebuilt/msvc2013/icu_" + $version + "_msvc_2013_32_devel.7z"
    $url_cache_2013_32 = "\\ci-files01-hki.intra.qt.io/provisioning/windows/icu_" + $version + "_msvc_2013_32_devel.7z"
    $sha1_2013_32 = "D745A5F0F6A3817AE989501A01A5A0BA53FDB800"
 
-   $icuPackage_msvc2012_32 = "C:\Windows\Temp\icu-$version-msvc2012_32.7z"
    $icuPackage_msvc2013_32 = "C:\Windows\Temp\icu-$version-msvc2013_32.7z"
-
-   if (!(Test-Path C:\Utils\icu_"$version"_msvc_2012_32_devel\)) {
-      echo "Fetching from URL ..."
-      Download $url_official_2012_32 $url_cache_2012_32 $icuPackage_msvc2012_32
-      Verify-Checksum $icuPackage_msvc2012_32 $sha1_2012_32
-      Get-ChildItem $icuPackage_msvc2012_32 | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o""C:\Utils\icu_"$version"_msvc_2012_32_devel\""}
-
-      echo "Cleaning $icuPackage_msvc2012_32..."
-      Remove-Item -Recurse -Force $icuPackage_msvc2012_32
-
-      echo "ICU MSVC2012 = $version" >> ~\versions.txt
-   }
 
    if (!(Test-Path C:\Utils\icu_"$version"_msvc_2013_32_devel\)) {
       echo "Fetching from URL ..."
@@ -119,7 +84,6 @@ if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -e
    }
 
 # FIXME: do we really want to have it per MSVC version? What about MSVC2015?
-[Environment]::SetEnvironmentVariable("CI_ICU_PATH_MSVC2012", "C:\\Utils\\icu_53_1_msvc_2012_32_devel\\icu53_1", "Machine")
 [Environment]::SetEnvironmentVariable("CI_ICU_PATH_MSVC2013", "C:\\Utils\\icu_53_1_msvc_2013_32_devel\\icu53_1", "Machine")
 
 }

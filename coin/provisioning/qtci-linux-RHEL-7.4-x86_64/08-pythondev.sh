@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
@@ -33,9 +33,9 @@
 ##
 #############################################################################
 
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
-
 set -ex
+
+source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
 
 packageEpel="epel-release-latest-7.noarch.rpm"
 OfficialUrl="https://dl.fedoraproject.org/pub/epel/$packageEpel"
