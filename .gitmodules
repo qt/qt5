@@ -129,7 +129,7 @@
 	path = qtwayland
 	url = ../qtwayland.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qt3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtimageformats qtgamepad
