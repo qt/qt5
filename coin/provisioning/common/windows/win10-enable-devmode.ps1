@@ -2,4 +2,15 @@
 #
 # In order to run auto tests for UWP, we have to enable developer mode on Windows 10 machines.
 # https://docs.microsoft.com/en-us/windows/uwp/get-started/enable-your-device-for-development
-REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /V AllowDevelopmentWithoutDevLicense /T REG_DWORD /D 1 /F
+
+if ([environment]::Is64BitOperatingSystem) {
+    $bitness = "/reg:64"
+} else {
+    $bitness = "/reg:32"
+}
+
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /V  AllowDevelopmentWithoutDevLicense /T REG_DWORD /D 1 /F $bitness
+if ($LastExitCode -ne 0) {
+    Write-Host "Could not enable Developer Mode."
+    exit 1
+}
