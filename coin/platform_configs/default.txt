@@ -19,7 +19,7 @@ qtci-osx-10.11-x86_64-3                                             Clang       
 qtci-macos-10.12-x86_64-8           IOS_ANY             multi       Clang       Release DisableTests Static
 qtci-macos-10.12-x86_64-8           TvOS_ANY            multi       Clang       Release DisableTests
 qtci-macos-10.12-x86_64-8           WatchOS_ANY         multi       Clang       Release DisableTests
-qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       Clang       Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-16.04-x86_64-2    QEMU                armv7       GCC         Release
 qtci-linux-Ubuntu-16.04-x86_64-2    QEMU                arm64       GCC         Release
 qtci-linux-Ubuntu-16.04-x86_64-2                                    GCC         TestOnly LicenseCheck

@@ -53,9 +53,9 @@ Rename-Item C:\Utils\openssl-$version $destination
 Remove-Item -Path $zip
 Remove-Item C:\Utils\openssl-$version.tar
 
-Set-EnvironmentVariable "CC" "C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-gcc"
-Set-EnvironmentVariable "AR" "C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-ar"
-Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\android-ndk-r10e\platforms\android-18\arch-arm\usr"
+Set-EnvironmentVariable "CC" "C:\utils\android-ndk-r16b\toolchains\llvm\prebuilt\linux-x86_64\bin\clang"
+Set-EnvironmentVariable "AR" "C:\utils\android-ndk-r16b\toolchains\llvm\prebuilt\linux-x86_64\bin\llvm-ar"
+Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\android-ndk-r16b\platforms\android-18\arch-arm\usr"
 
 # Make sure configure for openssl has a "make" and "perl" available
 $env:PATH = $env:PATH + ";C:\msys\1.0\bin;C:\strawberry\perl\bin"

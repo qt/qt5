@@ -40,10 +40,10 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersion = "r10e"
+$ndkVersion = "r16b"
 $ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows-x86.zip"
 $ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows-x86.zip"
-$ndkChecksum = "1d0b8f2835be741f3048fb03c0a3e9f71ab7f357"
+$ndkChecksum = "becaf3d445a4877ca1a9300a62f0934a4838c7fa"
 $ndkFolder = "c:\utils\android-ndk-$ndkVersion"
 $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 
