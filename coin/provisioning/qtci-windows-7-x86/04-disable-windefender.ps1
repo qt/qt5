@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\disable-windefender.ps1"
+. "$PSScriptRoot\..\common\windows\disable-windefender.ps1"

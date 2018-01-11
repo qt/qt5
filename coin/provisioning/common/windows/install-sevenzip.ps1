@@ -31,28 +31,34 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script installs Strawberry Perl
+# This script installs 7-Zip
 
-$version = "5.26.0.1"
+$version = "16.04"
+$nonDottedVersion = "1604"
+
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-64bit"
-    $sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
+    $arch = "-x64"
+    $sha1 = "338A5CC5200E98EDD644FC21807FDBE59910C4D0"
 }
 else {
-    $arch = "-32bit"
-    $sha1 = "b50b688a879f33941433774b2813bfd4b917e4ee"
+    $arch = ""
+    $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\strawberry-perl-" + $version + $arch + ".msi"
-$url_official = "http://strawberryperl.com/download/" + $version + "/strawberry-perl-" + $version + $arch + ".msi"
-$strawberryPackage = "C:\Windows\Temp\strawberry-installer-$version.msi"
 
-Download $url_official $url_cache $strawberryPackage
-Verify-Checksum $strawberryPackage $sha1
-cmd /c "$strawberryPackage /QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\7z" + $nonDottedVersion + $arch + ".exe"
+$url_official = "http://www.7-zip.org/a/7z" + $nonDottedVersion + $arch + ".exe"
+$7zPackage = "C:\Windows\Temp\7zip-$nonDottedVersion.exe"
+$7zTargetLocation = "C:\Utils\sevenzip\"
 
-echo "Cleaning $strawberryPackage.."
-Remove-Item -Recurse -Force "$strawberryPackage"
+Download $url_official $url_cache $7zPackage
+Verify-Checksum $7zPackage $sha1
+Start-Process -FilePath $7zPackage -ArgumentList "/S","/D=$7zTargetLocation" -Wait
 
-echo "strawberry = $version" >> ~\versions.txt
+echo "Cleaning $7zPackage.."
+Remove-Item -Recurse -Force "$7zPackage"
+
+Add-Path $7zTargetLocation
+
+echo "7-Zip = $version" >> ~\versions.txt

@@ -31,18 +31,48 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install Vulkan SDK
+# This script will install Java SE
 
-$version = "1.0.51.0"
-$url_cache = "\\ci-files01-hki.ci.local\provisioning\windows\VulkanSDK-" +$version+ "-Installer.exe"
-$vulkanPackage = "C:\Windows\Temp\vulkan-installer-$version.exe"
+$installdir = "C:\Program Files\Java\jdk1.8.0_144"
 
-Copy-Item $url_cache $vulkanPackage
-cmd /c "$vulkanPackage /S"
+$version = "8u144"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "x64"
+    $sha1 = "adb03bc3f4b40bcb3227687860798981d58e1858"
+}
+else {
+    $arch = "i586"
+    $sha1 = "3b9ab95914514eaefd72b815c5d9dd84c8e216fc"
+}
 
-echo "Cleaning $vulkanPackage.."
-Remove-Item -Recurse -Force "$vulkanPackage"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
+$official_url = "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-" + $version + "-windows-" + $arch + ".exe"
+$javaPackage = "C:\Windows\Temp\jdk-$version.exe"
 
-echo "Vulkan SDK = $version" >> ~\versions.txt
+echo "Fetching Java SE $version..."
+$ProgressPreference = 'SilentlyContinue'
+try {
+    echo "...from local cache"
+    Invoke-WebRequest -UseBasicParsing $url_cache -OutFile $javaPackage
+} catch {
+    echo "...from oracle.com"
+    $client = new-object System.Net.WebClient
+    $cookie = "oraclelicense=accept-securebackup-cookie"
+    $client.Headers.Add("Cookie", $cookie)
+    $client.DownloadFile($official_url, $javaPackage)
+
+    Invoke-WebRequest -UseBasicParsing $official_url -OutFile $javaPackage
+}
+
+Verify-Checksum $javaPackage $sha1
+
+cmd /c "$javaPackage /s SPONSORS=0"
+echo "Cleaning $javaPackage.."
+Remove-Item -Recurse -Force "$javaPackage"
+
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "$installdir", [EnvironmentVariableTarget]::Machine)
+Add-Path "$installdir\bin"
+
+echo "Java SE = $version $arch" >> ~\versions.txt

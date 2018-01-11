@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\disable-sleep.ps1"
+. "$PSScriptRoot\..\common\windows\disable-sleep.ps1"

@@ -33,43 +33,53 @@
 ##
 #############################################################################
 
-# PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
-# The Clang library (C-bindings), version 3.9 or higher is required for building.
+# This script install OpenSSL from sources.
+# Requires GCC and Perl to be in PATH.
 
-# This same script is used to provision libclang to Linux and macOS.
-# In case of Linux, we expect to get the values as args
-set -e
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
-source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+version="1.0.2g"
+officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
+cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
+targetFile="/tmp/openssl-$version.tar.gz"
+installFolder="/home/qt/"
+sha="36af23887402a5ea4ebef91df8e61654906f58f2"
+# Until every VM doing Linux Android builds have provisioned the env variable
+# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
+# QTQAINFRA-1436
+opensslHome="${installFolder}openssl-1.0.2"
 
-BASEDIR=$(dirname "$0")
-. $BASEDIR/sw_versions.txt
-url=$1
-sha1=$2
-version=$3
-if [ $# -eq 0 ]
-  then
-    # The default values are for macOS package
-    echo "Using macOS defaults"
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
-    sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
-fi
+ExceptionDownload=99
+ExceptionTar=100
+ExceptionConfig=101
 
-zip="libclang.7z"
-destination="/usr/local/libclang-$version"
+try
+(
+    (DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile") || throw $ExceptionDownload
 
-curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
-_shasum=sha1sum
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "DARWIN"
-    _shasum=/usr/bin/shasum
-fi
-echo "$sha1  $zip" | $_shasum --check
-7z x $zip -o/tmp/
-rm -rf $zip
+    tar -xzf "$targetFile" -C "$installFolder" || throw $ExceptionTar
+    # This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
+    mv "${opensslHome}g" "${opensslHome}"
+    pushd "$opensslHome"
+    perl Configure shared android || throw $ExceptionConfig
 
-sudo mv /tmp/libclang $destination
+    echo "export OPENSSL_ANDROID_HOME=$opensslHome" >> ~/.bashrc
+    echo "OpenSSL for Android = $version" >> ~/versions.txt
+)
+catch || {
+    case $ex_code in
+        $ExceptionDownload)
+            exit 1;
+        ;;
+        $ExceptionTar)
+            echo "Failed to extract $targetFile"
+            exit 1;
+        ;;
+        $ExceptionConfig)
+            echo "Failed to run 'config'."
+            exit 1;
+        ;;
+    esac
 
-echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
-echo "libClang = $version" >> ~/versions.txt
+}

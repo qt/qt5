@@ -35,4 +35,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/disable_selinux.sh"
+source "${BASH_SOURCE%/*}/../common/linux/disable_selinux.sh"

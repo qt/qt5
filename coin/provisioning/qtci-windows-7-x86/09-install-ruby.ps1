@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-ruby.ps1"
+. "$PSScriptRoot\..\common\windows\install-ruby.ps1"

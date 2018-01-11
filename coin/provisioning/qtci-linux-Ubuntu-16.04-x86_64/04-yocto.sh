@@ -37,7 +37,7 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 echo "Installing Yocto toolchain for 32-bit b2qt..."
 

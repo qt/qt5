@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,34 +30,29 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
 
-$version = "11_2_2"
-$package = "C:\Windows\temp\opengl32sw.7z"
-$mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
-$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
-$mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
-$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
+. "$PSScriptRoot\helpers.ps1"
 
-function Extract-Mesa
-{
-    Param (
-        [string]$downloadUrl,
-        [string]$sha1,
-        [string]$targetFolder
-    )
-    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
-    $localArchivePath = "C:\Windows\temp\opengl32sw.7z"
-    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $localArchivePath
-    Verify-Checksum $localArchivePath $sha1
-    Get-ChildItem $package | % {& "C:\Utils\sevenzip\7z.exe" "x" "-y" $_.fullname "-o$targetFolder"}
-    Remove-Item $localArchivePath
+# This script installs Strawberry Perl
+
+$version = "5.26.0.1"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "-64bit"
+    $sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
 }
-
-if ( Test-Path C:\Windows\SysWOW64 ) {
-    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\System32"
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
-} else {
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
+else {
+    $arch = "-32bit"
+    $sha1 = "b50b688a879f33941433774b2813bfd4b917e4ee"
 }
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\strawberry-perl-" + $version + $arch + ".msi"
+$url_official = "http://strawberryperl.com/download/" + $version + "/strawberry-perl-" + $version + $arch + ".msi"
+$strawberryPackage = "C:\Windows\Temp\strawberry-installer-$version.msi"
 
+Download $url_official $url_cache $strawberryPackage
+Verify-Checksum $strawberryPackage $sha1
+cmd /c "$strawberryPackage /QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
+
+echo "Cleaning $strawberryPackage.."
+Remove-Item -Recurse -Force "$strawberryPackage"
+
+echo "strawberry = $version" >> ~\versions.txt

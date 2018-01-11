@@ -1,9 +1,11 @@
-############################################################################
+#!/usr/bin/env bash
+
+#############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -31,37 +33,25 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+# This script installs CMake 3.6.2
 
-# This script will install Notepad++
+# CMake is needed for autotests that verify that Qt can be built with CMake
 
-$version = "7.3"
-if( (is64bitWinHost) -eq 1 ) {
-    $arch = ".x64"
-    $sha1 = "E7306DF1D6E81801FB4BE0868610DB70E979B0AA"
-}
-else {
-    $arch = ""
-    $sha1 = "d4c403675a21cc381f640b92e596bae3ef958dc6"
-}
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\npp." + $version + ".Installer" + $arch + ".exe"
-$url_official = "https://notepad-plus-plus.org/repository/7.x/" + $version + "/npp." + $version + ".Installer" + $arch + ".exe"
-$nppPackage = "C:\Windows\Temp\npp-$version.exe"
+# shellcheck source=InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 
-Download $url_official $url_cache $nppPackage
-Verify-Checksum $nppPackage $sha1
-cmd /c "$nppPackage /S"
+version="3.6.2"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
+SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
+targetFolder="/opt/cmake-$version"
+appPrefix="cmake-$version-Linux-x86_64"
 
-echo "Cleaning $nppPackage.."
-Remove-Item -Recurse -Force "$nppPackage"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
-echo "Notepad++ = $version" >> ~\versions.txt
-
-if( (is64bitWinHost) -eq 1 ) {
-    Rename-Item -Path "C:\Program Files (x86)\Notepad++\updater" -NewName "updater_disabled"
-}
-else {
-    Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
-}
-
-echo "Auto-updating disabled."
+echo "Adding $targetFolder/bin to PATH"
+if uname -a |grep -q "Ubuntu"; then
+    echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.profile
+else
+    echo "export PATH=$targetFolder/bin:\$PATH" >> ~/.bashrc
+fi

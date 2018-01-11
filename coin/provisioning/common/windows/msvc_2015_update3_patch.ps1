@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -32,31 +30,31 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
-# This script installs FBX SDK
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
-#s script installs FBX SDK
+# Install Cumulative Servicing Release Visual Studio 2015 update 3
+# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
 
-set -e
-tarballName="fbx20161_2_fbxsdk_linux.tar.gz"
-targetFolder="/opt/fbx"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/fbx/$tarballName"
-officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$tarballName"
-sha1="b0a08778de025e2c6e90d6fbdb6531f74a3da605"
-tmpFolder="/tmp"
-targetFile="$tmpFolder/$tarballName"
-installer="$tmpFolder/fbx20161_2_fbxsdk_linux"
+$version = "2015 update3 (KB3165756)"
+$package = "C:\Windows\Temp\vs14-kb3165756.exe"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
+$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
+$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
+$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
 
-DownloadURL "$cachedUrl" "$officialUrl" "$sha1" "$targetFile"
+if (Test-Path $preparedPackage) {
+    echo "Using prepared package"
+    pushd $preparedPackage
+    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
+} else {
+    echo "Fetching patch for Visual Studio $version..."
+    Download $url_official $url_cache $package
+    Verify-Checksum $package $sha1
+    $commandLine = $package
+}
+echo "Installing patch for Visual Studio $version..."
+. $commandLine /norestart /passive
 
-sudo tar -C $tmpFolder -xf "$targetFile"
-sudo mkdir -p $targetFolder
-(echo "yes"; echo "n") | sudo "$installer" -w "$tmpFolder" "$targetFolder"
-
-rm -rf "$targetFile"
-
-# Set env variables
-echo "export FBXSDK=$targetFolder" >> ~/.profile
-
-echo "FBX SDK = 2016.1.2" >> ~/versions.txt
-
+if ($commandLine.StartsWith("C:\Windows")) {
+    remove-item $package
+}

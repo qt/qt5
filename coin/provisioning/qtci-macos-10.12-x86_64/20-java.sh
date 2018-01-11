@@ -39,8 +39,8 @@ set -ex
 
 echo "Installing Java Development Kit"
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
+# shellcheck source=../common/unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 
 ExceptionDownloadPrimaryUrl=100
 ExceptionDownloadAltUrl=101

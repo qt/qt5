@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\vc_redist.ps1" 64
+. "$PSScriptRoot\..\common\windows\vc_redist.ps1" 64

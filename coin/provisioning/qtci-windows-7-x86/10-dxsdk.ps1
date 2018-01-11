@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # This script installs DirectX SDK
 

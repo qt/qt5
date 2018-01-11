@@ -35,8 +35,8 @@
 
 # This script installs paho testing broker
 
-# shellcheck source=../common/InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+# shellcheck source=./InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
 
 CommitSHA="c342c09dadc7a664d0a8befad1ca031f5a0b0bc0"
 PrimaryUrl="https://github.com/eclipse/paho.mqtt.testing/archive/$CommitSHA.zip"

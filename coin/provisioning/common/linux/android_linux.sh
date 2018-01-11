@@ -37,9 +37,9 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
-source "${BASH_SOURCE%/*}/../common/try_catch.sh"
-source "${BASH_SOURCE%/*}/../common/DownloadURL.sh"
-source "${BASH_SOURCE%/*}/../common/check_and_set_proxy.sh"
+source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
 
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"

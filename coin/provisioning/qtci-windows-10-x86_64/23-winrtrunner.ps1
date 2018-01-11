@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\winrtrunner.ps1"
+. "$PSScriptRoot\..\common\windows\winrtrunner.ps1"

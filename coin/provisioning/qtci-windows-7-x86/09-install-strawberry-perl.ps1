@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-strawberry-perl.ps1"
+. "$PSScriptRoot\..\common\windows\install-strawberry-perl.ps1"

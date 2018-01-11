@@ -33,23 +33,43 @@
 ##
 #############################################################################
 
-# This script installs INTEGRITY
+# PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
+# The Clang library (C-bindings), version 3.9 or higher is required for building.
 
-source "${BASH_SOURCE%/*}/../common/InstallFromCompressedFileFromURL.sh"
+# This same script is used to provision libclang to Linux and macOS.
+# In case of Linux, we expect to get the values as args
+set -e
 
-version="11.4.4"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/integrity/ghs_$version.tar.gz"
-AltUrl="$PrimaryUrl" # we lack an external source for this
-SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
-targetFolder="/opt/ghs"
-appPrefix=""
+source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+BASEDIR=$(dirname "$0")
+. $BASEDIR/../sw_versions.txt
+url=$1
+sha1=$2
+version=$3
+if [ $# -eq 0 ]
+  then
+    # The default values are for macOS package
+    echo "Using macOS defaults"
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
+    sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
+fi
 
-echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
-echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
-echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
-echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
-echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
+zip="libclang.7z"
+destination="/usr/local/libclang-$version"
 
-echo "INTEGRITY = $version" >> ~/versions.txt
+curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
+_shasum=sha1sum
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "DARWIN"
+    _shasum=/usr/bin/shasum
+fi
+echo "$sha1  $zip" | $_shasum --check
+7z x $zip -o/tmp/
+rm -rf $zip
+
+sudo mv /tmp/libclang $destination
+
+echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
+echo "libClang = $version" >> ~/versions.txt

@@ -31,34 +31,33 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script installs 7-Zip
+# This script will install Dependency Walker 2.2.6000
 
-$version = "16.04"
-$nonDottedVersion = "1604"
-
+$version = "2.2.6000"
 if( (is64bitWinHost) -eq 1 ) {
-    $arch = "-x64"
-    $sha1 = "338A5CC5200E98EDD644FC21807FDBE59910C4D0"
+    $arch = "_x64"
+    $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
 }
 else {
-    $arch = ""
-    $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
+    $arch = "_x86"
+    $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
 }
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22" + $arch + ".zip"
+$url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
+$dependsPackage = "C:\Windows\Temp\depends-$version.zip"
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\7z" + $nonDottedVersion + $arch + ".exe"
-$url_official = "http://www.7-zip.org/a/7z" + $nonDottedVersion + $arch + ".exe"
-$7zPackage = "C:\Windows\Temp\7zip-$nonDottedVersion.exe"
-$7zTargetLocation = "C:\Utils\sevenzip\"
+$TARGETDIR = "C:\Utils\dependencywalker"
+if(!(Test-Path -Path $TARGETDIR )){
+    New-Item -ItemType directory -Path $TARGETDIR
+}
+Download $url_official $url_cache $dependsPackage
+Verify-Checksum $dependsPackage $sha1
 
-Download $url_official $url_cache $7zPackage
-Verify-Checksum $7zPackage $sha1
-Start-Process -FilePath $7zPackage -ArgumentList "/S","/D=$7zTargetLocation" -Wait
+Get-ChildItem $dependsPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
 
-echo "Cleaning $7zPackage.."
-Remove-Item -Recurse -Force "$7zPackage"
+echo "Cleaning $dependsPackage.."
+Remove-Item -Recurse -Force "$dependsPackage"
 
-Add-Path $7zTargetLocation
-
-echo "7-Zip = $version" >> ~\versions.txt
+echo "Dependency Walker = $version" >> ~\versions.txt

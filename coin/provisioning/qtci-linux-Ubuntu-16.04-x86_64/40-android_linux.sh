@@ -35,4 +35,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/android_linux.sh"
+source "${BASH_SOURCE%/*}/../common/linux/android_linux.sh"

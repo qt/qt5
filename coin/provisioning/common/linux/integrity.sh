@@ -1,4 +1,6 @@
-############################################################################
+#!/usr/bin/env bash
+
+#############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -31,12 +33,23 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+# This script installs INTEGRITY
 
-# This script will set the network test server IP in to hosts file
+source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 
-$n = Get-Content "$PSScriptRoot\network_test_server_ip.txt"
-$n = $n.Split('=')
-New-Variable -Name $n[0] -Value $n[1]
+version="11.4.4"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/integrity/ghs_$version.tar.gz"
+AltUrl="$PrimaryUrl" # we lack an external source for this
+SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
+targetFolder="/opt/ghs"
+appPrefix=""
 
-Add-Content -Path C:\Windows\System32\drivers\etc\hosts. -Value "$network_test_server_ip  qt-test-server  qt-test-server.qt-test-net"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+
+echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
+echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
+echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
+echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
+echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
+
+echo "INTEGRITY = $version" >> ~/versions.txt

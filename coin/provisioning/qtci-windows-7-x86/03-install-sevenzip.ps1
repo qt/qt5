@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-sevenzip.ps1"
+. "$PSScriptRoot\..\common\windows\install-sevenzip.ps1"

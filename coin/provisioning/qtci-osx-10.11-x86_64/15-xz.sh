@@ -39,8 +39,8 @@
 
 set -ex
 
-# shellcheck source=../common/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/InstallPKGFromURL.sh"
+# shellcheck source=../common/unix/try_catch.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/osx_10.11_el_capitan/XZ.pkg"
 AltUrl="http://sourceforge.net/projects/macpkg/files/XZ/5.0.7/XZ.pkg"

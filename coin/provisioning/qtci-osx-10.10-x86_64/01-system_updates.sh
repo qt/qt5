@@ -3,4 +3,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/system_updates.sh
+$BASEDIR/../common/macos/system_updates.sh

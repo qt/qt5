@@ -31,7 +31,7 @@
 ##
 ############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
 function InstallMinGW
 {

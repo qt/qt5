@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\patch_qnx.ps1"
+. "$PSScriptRoot\..\common\windows\patch_qnx.ps1"

@@ -30,5 +30,5 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\msvc_2015_update3_patch.ps1"
+. "$PSScriptRoot\..\common\windows\msvc_2015_update3_patch.ps1"
 

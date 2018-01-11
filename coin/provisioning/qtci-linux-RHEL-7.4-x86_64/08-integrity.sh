@@ -35,4 +35,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/integrity.sh"
+source "${BASH_SOURCE%/*}/../common/linux/integrity.sh"

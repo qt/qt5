@@ -33,7 +33,7 @@
 
 # Requires: 7z, perl and msys
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # OpenSSL need to be configured from sources for Android build in windows 7
 # Msys need to be installed to target machine

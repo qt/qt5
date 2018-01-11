@@ -30,31 +30,28 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# Install Cumulative Servicing Release Visual Studio 2015 update 3
-# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
+# Install Git version 2.13.0
 
-$version = "2015 update3 (KB3165756)"
-$package = "C:\Windows\Temp\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
-$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
-$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
-
-if (Test-Path $preparedPackage) {
-    echo "Using prepared package"
-    pushd $preparedPackage
-    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
-} else {
-    echo "Fetching patch for Visual Studio $version..."
-    Download $url_official $url_cache $package
-    Verify-Checksum $package $sha1
-    $commandLine = $package
+$version = "2.13.0"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "-64-bit"
+    $sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
 }
-echo "Installing patch for Visual Studio $version..."
-. $commandLine /norestart /passive
-
-if ($commandLine.StartsWith("C:\Windows")) {
-    remove-item $package
+else {
+    $arch = "-32-bit"
+    $sha1 = "03c7df2e4ef61ea6b6f9c0eb7e6d5151d9682aec"
 }
+$gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
+$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
+
+echo "Fetching Git $version..."
+Download $url_official $url_cache $gitPackage
+Verify-Checksum $gitPackage $sha1
+echo "Installing Git $version..."
+cmd /c "$gitPackage /SILENT /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh""
+remove-item $gitPackage
+
+echo "Git = $version" >> ~\versions.txt

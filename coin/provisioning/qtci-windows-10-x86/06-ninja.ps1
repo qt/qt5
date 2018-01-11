@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\ninja.ps1"
+. "$PSScriptRoot\..\common\windows\ninja.ps1"

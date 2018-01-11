@@ -39,8 +39,8 @@
 
 set -ex
 
-# shellcheck source=../common/InstallAppFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../common/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
 
 psqlVersion="9.6.0"
 

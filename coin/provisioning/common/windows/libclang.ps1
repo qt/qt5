@@ -1,10 +1,10 @@
 param([Int32]$archVer=32)
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
 # The Clang library (C-bindings), version 3.9 or higher is required for building.
 
-Get-Content "$PSScriptRoot\..\common\sw_versions.txt" | Foreach-Object {
+Get-Content "$PSScriptRoot\..\sw_versions.txt" | Foreach-Object {
     $var = $_.Split('=')
     New-Variable -Name $var[0] -Value $var[1]
     $libclang_version = $libclang_version -replace '["."]'

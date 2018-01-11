@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\disable-uac.ps1"
+. "$PSScriptRoot\..\common\windows\disable-uac.ps1"

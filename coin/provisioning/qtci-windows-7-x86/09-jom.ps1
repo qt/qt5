@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\jom.ps1"
+. "$PSScriptRoot\..\common\windows\jom.ps1"
