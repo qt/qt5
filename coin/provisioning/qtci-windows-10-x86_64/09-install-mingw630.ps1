@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\common\install-mingw.ps1"
+. "$PSScriptRoot\..\common\windows\install-mingw.ps1"
 
 # This script will install 64-bit MinGW 6.3.0
 

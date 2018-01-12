@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\vulkansdk.ps1"
+. "$PSScriptRoot\..\common\windows\vulkansdk.ps1"

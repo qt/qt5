@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\set-network-test-server.ps1"
+. "$PSScriptRoot\..\common\windows\set-network-test-server.ps1"

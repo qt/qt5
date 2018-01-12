@@ -35,4 +35,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/qnx_700.sh"
+source "${BASH_SOURCE%/*}/../common/linux/qnx_700.sh"

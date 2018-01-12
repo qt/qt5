@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\common\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
 # This script will install msys which is needed for configuring openssl for Android
 

@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\install-dependencywalker.ps1"
+. "$PSScriptRoot\..\common\windows\install-dependencywalker.ps1"

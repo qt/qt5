@@ -1,1 +1,1 @@
-. "$PSScriptRoot\..\common\python.ps1" 64
+. "$PSScriptRoot\..\common\windows\python.ps1" 64
