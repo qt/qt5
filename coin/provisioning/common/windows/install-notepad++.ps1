@@ -57,11 +57,6 @@ Remove-Item -Recurse -Force "$nppPackage"
 
 echo "Notepad++ = $version" >> ~\versions.txt
 
-if( (is64bitWinHost) -eq 1 ) {
-    Rename-Item -Path "C:\Program Files (x86)\Notepad++\updater" -NewName "updater_disabled"
-}
-else {
-    Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
-}
+Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
 
 echo "Auto-updating disabled."
