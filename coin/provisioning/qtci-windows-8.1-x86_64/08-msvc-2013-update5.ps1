@@ -40,10 +40,9 @@ $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\VS2013.5.exe"
 
 echo "Fetching patch for Visual Studio $version..."
 Copy-Item $url_cache $package
-$commandLine = $package
 
 echo "Installing Update 5 for Visual Studio $version..."
-. $commandLine /norestart /passive
+Start-Process -FilePath $package -ArgumentList "/norestart /passive" -Wait
 
 echo "Removing $package ..."
 remove-item $package
