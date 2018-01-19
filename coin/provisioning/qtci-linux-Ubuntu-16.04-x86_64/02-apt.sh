@@ -103,6 +103,10 @@ try
     installPackages+=(python3-dev)
     installPackages+=(python3-pip)
     installPackages+=(python3-virtualenv)
+    # Needed to be able to build Yocto
+    installPackages+=(chrpath)
+    installPackages+=(gawk)
+    installPackages+=(texinfo)
     # Automates interactive applications (Needed by RTA to automate configure testing)
     installPackages+=(expect)
     installPackages+=(mesa-common-dev)
