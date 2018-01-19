@@ -3,7 +3,7 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-source $BASEDIR/../common/network_test_server_ip.txt
+source $BASEDIR/../common/shared/network_test_server_ip.txt
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
 sed -i '$ a\[Daemon\]\nAutolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc

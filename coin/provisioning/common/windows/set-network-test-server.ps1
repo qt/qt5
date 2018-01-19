@@ -35,7 +35,7 @@
 
 # This script will set the network test server IP in to hosts file
 
-$n = Get-Content "$PSScriptRoot\..\network_test_server_ip.txt"
+$n = Get-Content "$PSScriptRoot\..\shared\network_test_server_ip.txt"
 $n = $n.Split('=')
 New-Variable -Name $n[0] -Value $n[1]
 
