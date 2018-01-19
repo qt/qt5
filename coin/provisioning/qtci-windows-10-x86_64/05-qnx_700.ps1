@@ -38,7 +38,7 @@
 $zip = "c:\users\qt\downloads\qnx700.7z"
 
 Invoke-WebRequest -UseBasicParsing  http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.7z -OutFile $zip
-Verify-Checksum $zip "2eab8bcf993056f79c9e2585c9c05e05658ba8bb"
+Verify-Checksum $zip "DD3346A3429C06B59BF4D45CE0782F737D2424C7"
 Extract-7Zip $zip C:\
 
 [Environment]::SetEnvironmentVariable("QNX_700", "C:\QNX700", "Machine")

@@ -33,5 +33,22 @@
 
 # This script disables the automatic Windows updates
 
-stop-service wuauserv
-set-service wuauserv –startup disabled
+$service = get-service wuauserv
+if (-not $service) {
+    Write-Host "Windows Update service not found."
+    exit 0
+}
+
+if ($service.Status -eq "Stopped") {
+    Write-Host "Windows Update service already stopped."
+} else {
+    Write-Host "Stopping Windows Update service."
+    stop-service wuauserv
+}
+
+$startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"
+if ($startup -ne "Disabled") {
+    set-service wuauserv -startup disabled
+} else {
+    Write-Host "Windows Update service startup already disabled."
+}

@@ -12,7 +12,7 @@ qtci-linux-Ubuntu-16.04-x86_64-2                                    GCC         
 qtci-linux-openSUSE-42.3-x86_64                                     GCC         DeveloperBuild NoPch
 qtci-linux-openSUSE-42.3-x86_64                                     ICC_18      DeveloperBuild NoPch DisableTests SystemSQLite
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Release ForceDebugInfo
-qtci-linux-RHEL-7.4-x86_64                                          GCC         Packaging Release NoUseGoldLinker ForceDebugInfo
+qtci-linux-RHEL-7.4-x86_64                                          GCC         Packaging Release NoUseGoldLinker
 qtci-macos-10.12-x86_64-8                                           Clang       Packaging DebugAndRelease Release
 qtci-osx-10.11-x86_64-3                                             Clang       DeveloperBuild Release QtNamespace NoPch
 qtci-osx-10.10-x86_64                                               Clang       Release NoFramework DisableTests
