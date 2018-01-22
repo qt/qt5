@@ -52,8 +52,8 @@ ExceptionProxy=104
 
 try
 (
-    echo "Set timezone to UTC"  || throw $ExceptionTimezone
-    sudo timedatectl set-timezone Etc/UTC
+    echo "Set timezone to UTC."
+    sudo timedatectl set-timezone Etc/UTC  || throw $ExceptionTimezone
     echo "Timeout for blanking the screen (0 = never)"
     gsettings set org.gnome.desktop.session idle-delay 0 || throw $ExceptionGsettings1
     echo "Prevents screen lock when screesaver goes active."
