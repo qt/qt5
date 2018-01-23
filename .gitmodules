@@ -162,7 +162,7 @@
 	path = qtquickcontrols
 	url = ../qtquickcontrols.git
 	branch = dev
-	status = essential
+	status = addon
 [submodule "qtserialbus"]
 	depends = qtserialport
 	path = qtserialbus
@@ -247,7 +247,7 @@
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = dev
-	status = addon
+	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase qtandroidextras
 	recommends = qtdeclarative
