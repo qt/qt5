@@ -29,40 +29,50 @@
 ##
 ## $QT_END_LICENSE$
 ##
-############################################################################
+#############################################################################
 
 . "$PSScriptRoot\helpers.ps1"
 
-function InstallMinGW
-{
-    Param (
-        [string] $release = $(BadParam("release file name")),
-        [string] $sha1    = $(BadParam("SHA1 checksum of the file"))
-    )
+# This script will install Java SE
 
-    $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
+$installdir = "C:\Program Files\Java\jdk1.8.0_144"
 
-    if ($arch -eq "i686") { $win_arch = "Win32" }
-    elseif ($arch -eq "x86_64") { $win_arch = "Win64" }
-
-    $envvar = "MINGW$version"
-    $envvar = $envvar -replace '["."]'
-    $targetdir = "C:\$envvar"
-    $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\" + $release + ".7z"
-    $url_official = "https://netcologne.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20" + $win_arch + "/Personal%20Builds/mingw-builds/" + $version + "/threads-" + $threading + "/" + $ex_handling + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $build_ver + "-" + $revision + ".7z"
-
-    $mingwPackage = "C:\Windows\Temp\MinGW-$version.zip"
-    Download $url_official $url_cache $mingwPackage
-    Verify-Checksum $mingwPackage $sha1
-
-    Get-ChildItem $mingwPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
-
-    echo "Adding MinGW environment variable."
-    [Environment]::SetEnvironmentVariable("$envvar", "$targetdir\mingw32", [EnvironmentVariableTarget]::Machine)
-
-    echo "Cleaning $mingwPackage.."
-    Remove-Item -Recurse -Force "$mingwPackage"
-
-    echo "MinGW = $version $release" >> ~\versions.txt
-
+$version = "8u144"
+if( (is64bitWinHost) -eq 1 ) {
+    $arch = "x64"
+    $sha1 = "adb03bc3f4b40bcb3227687860798981d58e1858"
 }
+else {
+    $arch = "i586"
+    $sha1 = "3b9ab95914514eaefd72b815c5d9dd84c8e216fc"
+}
+
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
+$official_url = "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-" + $version + "-windows-" + $arch + ".exe"
+$javaPackage = "C:\Windows\Temp\jdk-$version.exe"
+
+echo "Fetching Java SE $version..."
+$ProgressPreference = 'SilentlyContinue'
+try {
+    echo "...from local cache"
+    Invoke-WebRequest -UseBasicParsing $url_cache -OutFile $javaPackage
+} catch {
+    echo "...from oracle.com"
+    $client = new-object System.Net.WebClient
+    $cookie = "oraclelicense=accept-securebackup-cookie"
+    $client.Headers.Add("Cookie", $cookie)
+    $client.DownloadFile($official_url, $javaPackage)
+
+    Invoke-WebRequest -UseBasicParsing $official_url -OutFile $javaPackage
+}
+
+Verify-Checksum $javaPackage $sha1
+
+cmd /c "$javaPackage /s SPONSORS=0"
+echo "Cleaning $javaPackage.."
+Remove-Item -Recurse -Force "$javaPackage"
+
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "$installdir", [EnvironmentVariableTarget]::Machine)
+Add-Path "$installdir\bin"
+
+echo "Java SE = $version $arch" >> ~\versions.txt

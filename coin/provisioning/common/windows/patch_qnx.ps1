@@ -1,9 +1,9 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -31,22 +31,21 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\windows\helpers.ps1"
+# Patch QNX SDK due to issues in the standard library.
+# The patches are available here:
+# http://www.qnx.com/download/feature.html?programid=27555
+# A copy of the patch must be in the root of the Coin path in
+# provisioning/qnx/patch-660-4367-RS6069_cpp-headers.zip
 
-$version = "11_2_2"
-$openglPackage = "C:\Windows\SysWOW64\opengl32.dll"
 
-$openglUrl = "\\ci-files01-hki.intra.qt.io\provisioning\mesa3d\windows\32bit\opengl32.dll"
-$openglSha1 = "690730f973aa39bd80648e026248394fde07a753"
+. "$PSScriptRoot\helpers.ps1"
 
-echo "Take ownership of existing opengl32.dll from SysWOW64"
-takeown /f $openglPackage
-icacls $openglPackage /grant Administrators:F
-echo "Remove existing opengl32.dll from SysWOW64"
-Remove-Item -Recurse -Force $openglPackage
-echo "Add new opengl32.dll to SysWOW64"
-Invoke-WebRequest -UseBasicParsing $openglUrl -OutFile $openglPackage
-Verify-Checksum $openglPackage $openglSha1
+$zip = "c:\users\qt\downloads\patch-660-4367-RS6069_cpp-headers.zip"
+$sha1 = "57A11FFE4434AD567B3C36F7B828DBB468A9E565"
+$tempDir = "C:\temp\qnx_path"
 
-# Store version information to ~/versions.txt
-echo "OpenGL x86 = $version" >> ~/versions.txt
+Invoke-WebRequest -UseBasicParsing http://ci-files01-hki.intra.qt.io/input/qnx/patch-660-4367-RS6069_cpp-headers.zip -OutFile $zip
+Verify-Checksum $zip $sha1
+Extract-Zip $zip $tempDir
+Copy-Item $tempDir\patches\660-4367\target\* C:\qnx660\target\ -recurse -force
+Remove-Item $tempDir -recurse
