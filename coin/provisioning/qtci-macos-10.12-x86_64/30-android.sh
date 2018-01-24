@@ -41,6 +41,8 @@ set -ex
 
 # shellcheck source=../common/unix/try_catch.sh
 source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
@@ -81,10 +83,10 @@ try
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
     (echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
 
-    echo "export ANDROID_SDK_HOME=$sdkTargetFolder" >> ~/.bashrc
-    echo "export ANDROID_NDK_HOME=$targetFolder/android-ndk-$ndkVersion" >> ~/.bashrc
-    echo "export ANDROID_NDK_HOST=darwin-x86_64" >> ~/.bashrc
-    echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
+    SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
+    SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+    SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
+    SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
     echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
     echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt

@@ -38,6 +38,7 @@
 
 source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="1.0.2g"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
@@ -64,7 +65,8 @@ try
     pushd "$opensslHome"
     perl Configure shared android || throw $ExceptionConfig
 
-    echo "export OPENSSL_ANDROID_HOME=$opensslHome" >> ~/.bashrc
+    SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
+
     echo "OpenSSL for Android = $version" >> ~/versions.txt
 )
 catch || {

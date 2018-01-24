@@ -36,6 +36,9 @@
 # This script installs QNX 7.
 
 set -ex
+
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+
 targetFolder="/opt/"
 sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.tar.xz"
 sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
@@ -44,7 +47,7 @@ targetFile="qnx700.tar.xz"
 wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile"
 echo "$sha1  $targetFile" | sha1sum --check
 if [ ! -d "$targetFolder" ]; then
-  mkdir -p $targetFolder
+    mkdir -p $targetFolder
 fi
 sudo tar -C $targetFolder -Jxf $targetFile
 sudo chown -R qt:users "$targetFolder"/"$folderName"
@@ -57,5 +60,6 @@ fi
 
 rm -rf $targetFile
 # Set env variables
-echo "export QNX_700=$targetFolder$folderName" >> ~/.bashrc
+SetEnvVar "QNX_700" "$targetFolder$folderName"
+
 echo "QNX SDP = 7.0.0" >> ~/versions.txt

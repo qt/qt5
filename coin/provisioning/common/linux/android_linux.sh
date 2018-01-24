@@ -40,6 +40,7 @@
 source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
@@ -95,10 +96,10 @@ try
         echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
     fi
 
-    echo "export ANDROID_SDK_HOME=$sdkTargetFolder" >> ~/.bashrc
-    echo "export ANDROID_NDK_HOME=$targetFolder/android-ndk-$ndkVersion" >> ~/.bashrc
-    echo "export ANDROID_NDK_HOST=linux-x86_64" >> ~/.bashrc
-    echo "export ANDROID_API_VERSION=$sdkApiLevel" >> ~/.bashrc
+    SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
+    SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+    SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
+    SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
     echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
     echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt

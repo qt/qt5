@@ -36,6 +36,8 @@
 
 # shellcheck source=./../unix/try_catch.sh
 source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+# shellcheck source=../unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 fileName="fbx20161_2_fbxsdk_clang_mac.pkg.tgz"
 targetFolder="/opt/fbx"
@@ -74,6 +76,7 @@ echo "Running installer for '$installer'"
 sudo installer -pkg "$installer" -target "/"
 
 # Set env variables
-echo "export FBXSDK=/Applications/Autodesk/FBX\ SDK/2016.1.2/" >> ~/.bashrc
+SetEnvVar "FBXSDK" "/Applications/Autodesk/FBX\ SDK/2016.1.2/"
+
 echo "FBX SDK = 2016.1.2" >> ~/versions.txt
 
