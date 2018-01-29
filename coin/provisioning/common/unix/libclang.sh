@@ -43,7 +43,7 @@ set -e
 source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
 
 BASEDIR=$(dirname "$0")
-. $BASEDIR/../sw_versions.txt
+. $BASEDIR/../shared/sw_versions.txt
 url=$1
 sha1=$2
 version=$3

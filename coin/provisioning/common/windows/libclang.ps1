@@ -6,7 +6,7 @@ param([Int32]$archVer=32)
 
 # Starting from Qt 5.11 QDoc requires Clang to parse C++
 
-Get-Content "$PSScriptRoot\..\sw_versions.txt" | Foreach-Object {
+Get-Content "$PSScriptRoot\..\shared\sw_versions.txt" | Foreach-Object {
     $var = $_.Split('=')
     New-Variable -Name $var[0] -Value $var[1]
     $libclang_version = $libclang_version -replace '["."]'

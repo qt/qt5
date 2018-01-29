@@ -128,3 +128,19 @@ function is64bitWinHost
         return 0
     }
 }
+
+Function Execute-Command
+{
+    Param (
+       [string]$command
+    )
+    Try {
+        echo "Executing command '$command'..."
+        $process = Start-Process -FilePath "cmd" -ArgumentList "/c $command" -PassThru -Wait -WindowStyle Hidden
+        if ($process.ExitCode) {throw "Error running command: '$command'"}
+    }
+    Catch {
+        $_.Exception.Message
+        exit 1
+    }
+}

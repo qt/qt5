@@ -39,6 +39,8 @@
 
 # shellcheck source=./InstallAppFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/osx_10.11_el_capitan/cmake-3.6.2-Darwin-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Darwin-x86_64.tar.gz"
@@ -47,5 +49,6 @@ appPrefix="cmake-3.6.2-Darwin-x86_64"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
-echo "export PATH=/Applications/CMake.app/Contents/bin:\$PATH" >> ~/.bashrc
+SetEnvVar "PATH" "/Applications/CMake.app/Contents/bin:\$PATH"
+
 echo "CMake = 3.6.2" >> ~/versions.txt

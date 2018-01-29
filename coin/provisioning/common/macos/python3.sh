@@ -37,6 +37,7 @@
 # This script installs python3
 
 source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-3.6.1-macosx10.6.pkg"
 AltUrl="https://www.python.org/ftp/python/3.6.1/python-3.6.1-macosx10.6.pkg"
@@ -47,6 +48,7 @@ InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
 /Library/Frameworks/Python.framework/Versions/3.6/bin/pip3 install virtualenv
 
-echo "export PYTHON3_PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin" >> ~/.bashrc
-echo "export PIP3_PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin" >> ~/.bashrc
+SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.6/bin"
+SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.6/bin"
+
 echo "python3 = 3.6.1" >> ~/versions.txt
