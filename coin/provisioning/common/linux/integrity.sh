@@ -36,6 +36,7 @@
 # This script installs INTEGRITY
 
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="11.4.4"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/integrity/ghs_$version.tar.gz"
@@ -46,10 +47,10 @@ appPrefix=""
 
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
-echo "export INTEGRITY_BSP=platform-cortex-a9" >> ~/.bashrc
-echo "export INTEGRITY_PATH=$targetFolder/comp_201654" >> ~/.bashrc
-echo "export INTEGRITY_DIR=$targetFolder/int1144" >> ~/.bashrc
-echo "export INTEGRITY_GL_INC_DIR=\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc" >> ~/.bashrc
-echo "export INTEGRITY_GL_LIB_DIR=\$INTEGRITY_DIR/libs/Vivante" >> ~/.bashrc
+SetEnvVar "INTEGRITY_BSP" "platform-cortex-a9"
+SetEnvVar "INTEGRITY_PATH" "$targetFolder/comp_201654"
+SetEnvVar "INTEGRITY_DIR" "$targetFolder/int1144"
+SetEnvVar "INTEGRITY_GL_INC_DIR" "\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc"
+SetEnvVar "INTEGRITY_GL_LIB_DIR" "\$INTEGRITY_DIR/libs/Vivante"
 
 echo "INTEGRITY = $version" >> ~/versions.txt

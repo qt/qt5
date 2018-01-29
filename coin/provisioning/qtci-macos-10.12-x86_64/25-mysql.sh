@@ -41,6 +41,8 @@ set -ex
 
 # shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/mysql-5.7.15-osx10.11-x86_64.tar.gz"
 AltUrl="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.15-osx10.11-x86_64.tar.gz"
@@ -52,5 +54,5 @@ sudo mkdir -p "/opt"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix" "$targetDir"
 
-echo "export MYSQLBINPATH=/opt/mysql57/bin" >> ~/.bashrc
+SetEnvVar "MYSQLBINPATH" "/opt/mysql57/bin"
 echo "MySQL = 5.7.15" >> ~/versions.txt

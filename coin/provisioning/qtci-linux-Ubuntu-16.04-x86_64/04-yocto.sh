@@ -38,6 +38,7 @@
 set -ex
 
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 echo "Installing Yocto toolchain for 32-bit b2qt..."
 
@@ -76,10 +77,10 @@ chmod +x "$yoctoInstaller"
 rm -rf "$yoctoInstaller"
 
 if [ -e "$yoctoLocationARMv7/$sysrootARMv7" -a -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" -a -e "$yoctoLocationARM64/$sysrootARM64" -a -e "$yoctoLocationARM64/${crosscompileARM64}g++" ]; then
-    echo "export QEMUARMV7_TOOLCHAIN_SYSROOT=$yoctoLocationARMv7/$sysrootARMv7" >> ~/.profile
-    echo "export QEMUARMV7_TOOLCHAIN_CROSS_COMPILE=$yoctoLocationARMv7/$crosscompileARMv7" >> ~/.profile
-    echo "export QEMUARM64_TOOLCHAIN_SYSROOT=$yoctoLocationARM64/$sysrootARM64" >> ~/.profile
-    echo "export QEMUARM64_TOOLCHAIN_CROSS_COMPILE=$yoctoLocationARM64/$crosscompileARM64" >> ~/.profile
+    SetEnvVar "QEMUARMV7_TOOLCHAIN_SYSROOT" "$yoctoLocationARMv7/$sysrootARMv7"
+    SetEnvVar "QEMUARMV7_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationARMv7/$crosscompileARMv7"
+    SetEnvVar "QEMUARM64_TOOLCHAIN_SYSROOT" "$yoctoLocationARM64/$sysrootARM64"
+    SetEnvVar "QEMUARM64_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationARM64/$crosscompileARM64"
 else
     echo "Error! Couldn't find installation paths for Yocto toolchain. Aborting provisioning." 1>&2
     exit 1

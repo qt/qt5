@@ -41,6 +41,8 @@ set -ex
 
 # shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 psqlVersion="9.6.0"
 
@@ -51,5 +53,5 @@ appPrefix=""
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
-echo "export POSTGRESQLBINPATH=/Applications/Postgres.app/Contents/Versions/9.6/bin" >> ~/.bashrc
+SetEnvVar "POSTGRESQLBINPATH" "/Applications/Postgres.app/Contents/Versions/9.6/bin"
 echo "PostgreSQL = $psqlVersion" >> ~/versions.txt
