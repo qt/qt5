@@ -56,6 +56,8 @@ try
     installPackages+=(git)
     # 7zip is a needed decompressing tool
     installPackages+=(p7zip-full)
+    # To be able to mount yocto-cache during builds
+    installPackages+=(nfs-common)
     # libssl-dev provides headers for OpenSSL
     installPackages+=(libssl-dev)
     # Needed libraries for X11 support accordingly to https://wiki.qt.io/Building_Qt_5_from_Git

@@ -35,7 +35,7 @@
 
 # This script installs FBX SDK
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-#s script installs FBX SDK
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 set -e
 tarballName="fbx20161_2_fbxsdk_linux.tar.gz"
@@ -56,7 +56,7 @@ sudo mkdir -p $targetFolder
 rm -rf "$targetFile"
 
 # Set env variables
-echo "export FBXSDK=$targetFolder" >> ~/.profile
+SetEnvVar "FBXSDK" "$targetFolder"
 
 echo "FBX SDK = 2016.1.2" >> ~/versions.txt
 
