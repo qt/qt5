@@ -37,6 +37,7 @@
 
 # shellcheck source=./InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 CommitSHA="c342c09dadc7a664d0a8befad1ca031f5a0b0bc0"
 PrimaryUrl="https://github.com/eclipse/paho.mqtt.testing/archive/$CommitSHA.zip"
@@ -49,4 +50,6 @@ sudo rm -fr "$targetFolder"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
 echo "Adding MQTT broker path to environment"
-sed -i "1iexport MQTT_TEST_BROKER_LOCATION=$targetFolder/interoperability/startbroker.py" ~/.bashrc
+SetEnvVar "MQTT_TEST_BROKER_LOCATION" "$targetFolder/interoperability/startbroker.py"
+
+echo "MQTT_BROKER = $CommitSHA" >> ~/versions.txt
