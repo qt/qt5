@@ -35,8 +35,8 @@
 
 echo "MQTT: Downloading Paho test broker..."
 $zip = "c:\users\qt\downloads\pahotest.zip"
-$externalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
-$internalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
+$externalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
+$internalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
 $sha1 = "532fe145096cdd8d679f425cbfd883289150c968"
 
 Download $externalUrl $internalUrl $zip
