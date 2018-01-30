@@ -51,6 +51,6 @@ gsettings set org.gnome.desktop.screensaver lock-enabled false
 # disable blank screen power saving
 gsettings set org.gnome.desktop.session idle-delay 0
 
-if [ "$proxy" != "" ]; then
+if [ "$http_proxy" != "" ]; then
     echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
 fi

@@ -66,7 +66,7 @@ try
     echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
     echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
 
-    if [ "$proxy" != "" ]; then
+    if [ "$http_proxy" != "" ]; then
         echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf || throw $ExceptionProxy
     fi
 )

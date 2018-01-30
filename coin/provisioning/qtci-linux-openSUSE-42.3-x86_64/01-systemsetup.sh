@@ -18,7 +18,7 @@ echo 'export DISPLAY=":0"' >> ~/.bashrc
 echo "Disabling file indexing."
 sudo balooctl disable
 
-if [ "$proxy" != "" ]; then
+if [ "$http_proxy" != "" ]; then
     sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy
     sudo sed -i "s|HTTP_PROXY=\".*\"|HTTP_PROXY=\"$proxy\"|" /etc/sysconfig/proxy
 fi
