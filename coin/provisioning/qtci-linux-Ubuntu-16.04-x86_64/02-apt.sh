@@ -163,6 +163,7 @@ catch || {
         ;;
         $ExceptionAPT)
             echo "Failed to install package."
+            sudo lsof /var/lib/dpkg/lock
             exit 1;
         ;;
         $ExceptionSED)
