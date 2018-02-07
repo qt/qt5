@@ -316,9 +316,3 @@
 	url = ../qtwebglplugin.git
 	branch = dev
 	status = preview
-[submodule "qtopcua"]
-	depends = qtbase
-	path = qtopcua
-	url = ../qtopcua.git
-	branch = dev
-	status = preview
