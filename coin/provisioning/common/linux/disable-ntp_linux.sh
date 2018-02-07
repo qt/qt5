@@ -1,9 +1,11 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -31,20 +33,12 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+set -ex
 
-echo "MQTT: Downloading Paho test broker..."
-$zip = "c:\users\qt\downloads\pahotest.zip"
-$externalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
-$internalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
-$sha1 = "532fe145096cdd8d679f425cbfd883289150c968"
+echo "Disable Network Time Protocol (NTP)"
 
-Download $externalUrl $internalUrl $zip
-Verify-Checksum $zip $sha1
-
-echo "MQTT: Installing $zip..."
-Extract-Zip $zip C:\Utils
-Remove-Item $zip
-
-echo "MQTT: Updating environment..."
-[Environment]::SetEnvironmentVariable("MQTT_TEST_BROKER_LOCATION", "C:\Utils\paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0\interoperability\startbroker.py", "Machine")
+if uname -a |grep -q "Ubuntu"; then
+    sudo timedatectl set-ntp false
+else
+    systemctl &>/dev/null && sudo systemctl disable ntpd || sudo /sbin/chkconfig ntpd off
+fi
