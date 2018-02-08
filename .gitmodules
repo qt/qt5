@@ -271,7 +271,7 @@
 	status = addon
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
-	recommends = qtmultimedia qtquickcontrols
+	recommends = qtmultimedia qtquickcontrols2
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = 5.10
