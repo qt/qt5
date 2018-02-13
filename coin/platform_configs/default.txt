@@ -15,7 +15,7 @@ qtci-linux-RHEL-6.6-x86_64                                          GCC         
 qtci-linux-RHEL-7.4-x86_64                                          GCC         Packaging Release NoUseGoldLinker
 qtci-macos-10.12-x86_64-8                                           Clang       Packaging DebugAndRelease Release
 qtci-osx-10.11-x86_64-3                                             Clang       DeveloperBuild Release QtNamespace NoPch
-qtci-osx-10.10-x86_64                                               Clang       Release NoFramework DisableTests
+qtci-osx-10.11-x86_64-3                                             Clang       Release NoFramework DisableTests
 qtci-macos-10.12-x86_64-8           IOS_ANY             multi       Clang       Release DisableTests Static
 qtci-macos-10.12-x86_64-8           TvOS_ANY            multi       Clang       Release DisableTests
 qtci-macos-10.12-x86_64-8           WatchOS_ANY         multi       Clang       Release DisableTests
