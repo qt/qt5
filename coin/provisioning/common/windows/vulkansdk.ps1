@@ -40,9 +40,9 @@ $url_cache = "\\ci-files01-hki.ci.local\provisioning\windows\VulkanSDK-" +$versi
 $vulkanPackage = "C:\Windows\Temp\vulkan-installer-$version.exe"
 
 Copy-Item $url_cache $vulkanPackage
-cmd /c "$vulkanPackage /S"
+Run-Executable $vulkanPackage "/S"
 
-echo "Cleaning $vulkanPackage.."
-Remove-Item -Recurse -Force "$vulkanPackage"
+Write-Host "Cleaning $vulkanPackage.."
+Remove-Item -Recurse -Force -Path "$vulkanPackage"
 
-echo "Vulkan SDK = $version" >> ~\versions.txt
+Write-Output "Vulkan SDK = $version" >> ~\versions.txt

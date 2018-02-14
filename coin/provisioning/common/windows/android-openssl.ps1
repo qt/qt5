@@ -47,23 +47,23 @@ $destination = "C:\Utils\openssl-android-master"
 Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
 Verify-Checksum $zip $sha1
 
-C:\Utils\sevenzip\7z.exe x $zip -oC:\Utils
-C:\Utils\sevenzip\7z.exe x C:\Utils\openssl-$version.tar -oC:\Utils
+Extract-7Zip $zip C:\Utils
+Extract-7Zip C:\Utils\openssl-$version.tar C:\Utils
 Rename-Item C:\Utils\openssl-$version $destination
-Remove-Item $zip
+Remove-Item -Path $zip
 Remove-Item C:\Utils\openssl-$version.tar
 
-set CC=C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-gcc
-set AR=C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-ar
-set ANDROID_DEV=C:\utils\android-ndk-r10e\platforms\android-18\arch-arm\usr
+Set-EnvironmentVariable "CC" "C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-gcc"
+Set-EnvironmentVariable "AR" "C:\utils\android-ndk-r10e\toolchains\arm-linux-androideabi-4.9\prebuilt\windows\bin\arm-linux-androideabi-ar"
+Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\android-ndk-r10e\platforms\android-18\arch-arm\usr"
 
 # Make sure configure for openssl has a "make" and "perl" available
 $env:PATH = $env:PATH + ";C:\msys\1.0\bin;C:\strawberry\perl\bin"
 
-echo "Configuring OpenSSL $version for Android..."
-pushd $destination
-C:\msys\1.0\bin\bash.exe -c "c:/strawberry/perl/bin/perl Configure shared android"
-popd
+Write-Host "Configuring OpenSSL $version for Android..."
+Push-Location $destination
+Run-Executable "C:\msys\1.0\bin\bash.exe" "-c `"c:/strawberry/perl/bin/perl Configure shared android`""
+Pop-Location
 
 # Following command is needed when using version 1.1.0. With version 1.1.0 msys is not needed.
 # C:\mingw530\bin\mingw32-make.exe include\openssl\opensslconf.h

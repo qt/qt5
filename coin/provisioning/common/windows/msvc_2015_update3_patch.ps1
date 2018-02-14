@@ -36,25 +36,31 @@
 # Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
 
 $version = "2015 update3 (KB3165756)"
-$package = "C:\Windows\Temp\vs14-kb3165756.exe"
+$packagePath = "C:\Windows\Temp"
+$package = $packagePath + "\vs14-kb3165756.exe"
 $url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
 $url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
 $sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage="\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
+$preparedPackage = "\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
 
 if (Test-Path $preparedPackage) {
-    echo "Using prepared package"
-    pushd $preparedPackage
-    $commandLine = "$preparedPackage\vs14-kb3165756.exe"
+    # The prepared package contains updated packages so that not everything has to be downloaded
+    Write-Host "Using prepared package"
+    Copy-Item -Recurse $preparedPackage $packagePath
+    exit 0
+    # Remove the whole downloaded folder
+    $toRemove = $packagePath + "\vs14-kb3165756-update"
+    $executable = "$toRemove\vs14-kb3165756.exe"
 } else {
-    echo "Fetching patch for Visual Studio $version..."
+    Write-Host "Fetching patch for Visual Studio $version..."
     Download $url_official $url_cache $package
-    Verify-Checksum $package $sha1
-    $commandLine = $package
+    $executable = $package
+    # Remove the downloaded executable
+    $toRemove = $executable
 }
-echo "Installing patch for Visual Studio $version..."
-. $commandLine /norestart /passive
 
-if ($commandLine.StartsWith("C:\Windows")) {
-    remove-item $package
-}
+Verify-Checksum $executable $sha1
+Write-Host "Installing patch for Visual Studio $version..."
+Run-Executable $executable "/norestart /passive"
+
+Remove-Item -Force -Recurse -Path $toRemove

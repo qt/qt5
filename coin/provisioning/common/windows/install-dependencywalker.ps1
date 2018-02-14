@@ -36,11 +36,10 @@
 # This script will install Dependency Walker 2.2.6000
 
 $version = "2.2.6000"
-if( (is64bitWinHost) -eq 1 ) {
+if (Is64BitWinHost) {
     $arch = "_x64"
     $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
-}
-else {
+} else {
     $arch = "_x86"
     $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
 }
@@ -49,15 +48,15 @@ $url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
 $dependsPackage = "C:\Windows\Temp\depends-$version.zip"
 
 $TARGETDIR = "C:\Utils\dependencywalker"
-if(!(Test-Path -Path $TARGETDIR )){
+if (!(Test-Path -Path $TARGETDIR )) {
     New-Item -ItemType directory -Path $TARGETDIR
 }
 Download $url_official $url_cache $dependsPackage
 Verify-Checksum $dependsPackage $sha1
 
-Get-ChildItem $dependsPackage | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname "-o$TARGETDIR"}
+Extract-7Zip $dependsPackage $TARGETDIR
 
-echo "Cleaning $dependsPackage.."
-Remove-Item -Recurse -Force "$dependsPackage"
+Write-Host "Cleaning $dependsPackage.."
+Remove-Item -Recurse -Force -Path "$dependsPackage"
 
-echo "Dependency Walker = $version" >> ~\versions.txt
+Write-Output "Dependency Walker = $version" >> ~\versions.txt

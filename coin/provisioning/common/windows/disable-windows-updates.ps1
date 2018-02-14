@@ -43,7 +43,7 @@ if ($service.Status -eq "Stopped") {
     Write-Host "Windows Update service already stopped."
 } else {
     Write-Host "Stopping Windows Update service."
-    stop-service wuauserv
+    Stop-Service -Name "wuauserv" -Force
 }
 
 $startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"

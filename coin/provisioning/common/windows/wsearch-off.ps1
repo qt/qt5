@@ -1,3 +1,4 @@
+. "$PSScriptRoot\helpers.ps1"
 
 # Disable the windows search indexing service
-sc.exe config WSearch start= disabled
+Run-Executable "sc.exe" "config WSearch start= disabled"

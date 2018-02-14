@@ -36,11 +36,10 @@
 # Python is required for building Qt 5 from source.
 
 $version = "2.7.13"
-if( (is64bitWinHost) -eq 1 ) {
+if (Is64BitWinHost) {
     $arch = ".amd64"
     $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
-}
-else {
+} else {
     $arch = ""
     $sha1 = "7e3b54236dbdbea8fe2458db501176578a4d59c0"
 }
@@ -48,23 +47,25 @@ $package = "C:\Windows\temp\python-$version.msi"
 $externalUrl = "https://www.python.org/ftp/python/$version/python-$version" + $arch + ".msi"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version" + $arch + ".msi"
 
-echo "Fetching from URL..."
+Write-Host "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
-echo "Installing $package..."
-cmd /c "msiexec /passive /i $package ALLUSERS=1"
+Write-Host "Installing $package..."
+Run-Executable "msiexec" "/passive /i $package ALLUSERS=1"
+
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
-echo "Chancing allowZip64 value to 'True'..."
+Write-Host "Changing allowZip64 value to 'True'..."
 (Get-Content C:\Python27\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content C:\Python27\lib\zipfile.py
-echo "Remove $package..."
-del $package
+Write-Host "Remove $package..."
+Remove-Item -Path $package
 
 Add-Path "C:\Python27;C:\Python27\Scripts"
 
-C:\Python27\python.exe -m ensurepip
+Run-Executable "C:\Python27\python.exe" "-m ensurepip"
+
 # Install python virtual env
-#if ( isProxyEnabled ) {
-#    echo "Using proxy with pip"
+#if (isProxyEnabled) {
+#    Write-Host "Using proxy with pip"
 #    $pip_args = "--proxy=" + (getProxy)
 #}
-C:\Python27\Scripts\pip.exe install virtualenv
+Run-Executable "C:\Python27\Scripts\pip.exe" "install virtualenv"
