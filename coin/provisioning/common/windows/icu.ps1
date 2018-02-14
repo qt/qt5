@@ -37,7 +37,7 @@
 
 $version = "53_1"
 
-if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64")) {
+if (Is64BitWinHost) {
 
    $url_official_2013 = "http://download.qt.io/development_releases/prebuilt/icu/prebuilt/msvc2013/icu_" + $version + "_msvc_2013_64_devel.7z"
    $url_cache_2013 = "\\ci-files01-hki.intra.qt.io/provisioning/windows/icu_" + $version + "_msvc_2013_64_devel.7z"
@@ -46,22 +46,22 @@ if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -e
    $icuPackage_msvc2013_64 = "C:\Windows\Temp\icu-$version-msvc2013_64.7z"
 
    if (!(Test-Path C:\Utils\icu_"$version"_msvc_2013_64_devel\)) {
-      echo "Fetching from URL ..."
+      Write-Host "Fetching from URL ..."
       Download $url_official_2013 $url_cache_2013 $icuPackage_msvc2013_64
       Verify-Checksum $icuPackage_msvc2013_64 $sha1_2013
       Get-ChildItem $icuPackage_msvc2013_64 | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o""C:\Utils\icu_"$version"_msvc_2013_64_devel\""}
 
-      echo "Cleaning $icuPackage_msvc2013_64..."
+      Write-Host "Cleaning $icuPackage_msvc2013_64..."
       Remove-Item -Recurse -Force $icuPackage_msvc2013_64
 
-      echo "ICU MSVC2013 = $version" >> ~\versions.txt
+      Write-Output "ICU MSVC2013 = $version" >> ~\versions.txt
    }
 
 # FIXME: do we really want to have it per MSVC version? What about MSVC2015?
 [Environment]::SetEnvironmentVariable("CI_ICU_PATH_MSVC2013", "C:\\Utils\\icu_53_1_msvc_2013_64_devel\\icu53_1", "Machine")
 
 # FIXME: do we really want to use the 4.8.2 ICU build?
-[Environment]::SetEnvironmentVariable("CI_ICU_PATH_Mingw49", "C:\Utils\icu_53_1_Mingw_builds_4_8_2_posix_seh_64_devel\icu53_1", "Machine")
+Set-EnvironmentVariable "CI_ICU_PATH_Mingw49" "C:\Utils\icu_53_1_Mingw_builds_4_8_2_posix_seh_64_devel\icu53_1"
 
 } else {
 
@@ -72,15 +72,15 @@ if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -e
    $icuPackage_msvc2013_32 = "C:\Windows\Temp\icu-$version-msvc2013_32.7z"
 
    if (!(Test-Path C:\Utils\icu_"$version"_msvc_2013_32_devel\)) {
-      echo "Fetching from URL ..."
+      Write-Host "Fetching from URL ..."
       Download $url_official_2013_32 $url_cache_2013_32 $icuPackage_msvc2013_32
       Verify-Checksum $icuPackage_msvc2013_32 $sha1_2013_32
       Get-ChildItem $icuPackage_msvc2013_32 | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o""C:\Utils\icu_"$version"_msvc_2013_32_devel\""}
 
-      echo "Cleaning $icuPackage_msvc2013_32..."
+      Write-Host "Cleaning $icuPackage_msvc2013_32..."
       Remove-Item -Recurse -Force $icuPackage_msvc2013_32
 
-      echo "ICU MSVC2013 = $version" >> ~\versions.txt
+      Write-Output "ICU MSVC2013 = $version" >> ~\versions.txt
    }
 
 # FIXME: do we really want to have it per MSVC version? What about MSVC2015?

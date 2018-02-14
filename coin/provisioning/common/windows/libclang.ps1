@@ -24,9 +24,10 @@ $destination = "C:\Utils\libclang-" + $libclang_version
 Download $url $url $zip
 Verify-Checksum $zip $sha1
 
-C:\Utils\sevenzip\7z.exe x $zip -oC:\Utils\
+Extract-7Zip $zip C:\Utils\
 Rename-Item C:\Utils\libclang $destination
+Remove-Item -Force -Path $zip
 
-[Environment]::SetEnvironmentVariable("LLVM_INSTALL_DIR", $destination, [EnvironmentVariableTarget]::Machine)
-del $zip
-echo "libClang = $libclang_version" >> ~/versions.txt
+Set-EnvironmentVariable "LLVM_INSTALL_DIR" $destination
+
+Write-Output "libClang = $libclang_version" >> ~/versions.txt

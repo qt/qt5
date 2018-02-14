@@ -36,11 +36,10 @@
 # This script will install Notepad++
 
 $version = "7.3"
-if( (is64bitWinHost) -eq 1 ) {
+if (Is64BitWinHost) {
     $arch = ".x64"
     $sha1 = "E7306DF1D6E81801FB4BE0868610DB70E979B0AA"
-}
-else {
+} else {
     $arch = ""
     $sha1 = "d4c403675a21cc381f640b92e596bae3ef958dc6"
 }
@@ -50,13 +49,12 @@ $nppPackage = "C:\Windows\Temp\npp-$version.exe"
 
 Download $url_official $url_cache $nppPackage
 Verify-Checksum $nppPackage $sha1
-cmd /c "$nppPackage /S"
+Run-Executable "$nppPackage" "/S"
 
-echo "Cleaning $nppPackage.."
-Remove-Item -Recurse -Force "$nppPackage"
+Write-Host "Cleaning $nppPackage.."
+Remove-Item -Recurse -Force -Path "$nppPackage"
 
-echo "Notepad++ = $version" >> ~\versions.txt
+Write-Output "Notepad++ = $version" >> ~\versions.txt
 
+Write-Host "Disabling auto updates."
 Rename-Item -Path "C:\Program Files\Notepad++\updater" -NewName "updater_disabled"
-
-echo "Auto-updating disabled."

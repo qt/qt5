@@ -41,6 +41,6 @@ Invoke-WebRequest -UseBasicParsing  http://ci-files01-hki.intra.qt.io/input/qnx/
 Verify-Checksum $zip "DD3346A3429C06B59BF4D45CE0782F737D2424C7"
 Extract-7Zip $zip C:\
 
-[Environment]::SetEnvironmentVariable("QNX_700", "C:\QNX700", "Machine")
-echo "QNX SDP = 7.0.0" >> ~/versions.txt
-del $zip
+Set-EnvironmentVariable "QNX_700" "C:\QNX700"
+Write-Output "QNX SDP = 7.0.0" >> ~/versions.txt
+Remove-Item -Path $zip

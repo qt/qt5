@@ -34,10 +34,10 @@
 # Visual Studios are pre-provisioned to tier1 images
 
 # MSVC 2015 Update 3
-echo "Visual Studio 2015 = Version 14.0.25421.3 Update 3" >> ~\versions.txt
+Write-Output "Visual Studio 2015 = Version 14.0.25421.3 Update 3" >> ~\versions.txt
 
 # MSVC 2017
-echo "Visual Studio 2017 = Version 15.1 (26403.7)" >> ~\versions.txt
+Write-Output "Visual Studio 2017 = Version 15.1 (26403.7)" >> ~\versions.txt
 
 # MSVC 2017 Build Tools
-echo "Visual Studio 2017 Build Tools = Version 15.1 (26403.7)" >> ~\versions.txt
+Write-Output "Visual Studio 2017 Build Tools = Version 15.1 (26403.7)" >> ~\versions.txt

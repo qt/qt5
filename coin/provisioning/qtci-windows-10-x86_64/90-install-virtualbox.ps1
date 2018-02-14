@@ -43,9 +43,9 @@ $virtualboxPackage = "C:\Windows\Temp\virtualbox-$version.exe"
 
 Download $url_official $url_cache $virtualboxPackage
 Verify-Checksum $virtualboxPackage $sha1
-Start-Process $virtualboxPackage -ArgumentList "--silent" -Wait
+Run-Executable $virtualboxPackage "--silent"
 
-echo "Cleaning $virtualboxPackage.."
-Remove-Item -Recurse -Force "$virtualboxPackage"
+Write-Output "Cleaning $virtualboxPackage.."
+Remove-Item -Recurse -Force -Path "$virtualboxPackage"
 
-echo "VirtualBox = $version" >> ~\versions.txt
+Write-Output "VirtualBox = $version" >> ~\versions.txt
