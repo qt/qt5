@@ -158,6 +158,9 @@ if($OSVersion -eq "Windows 7")
     $squishPackage = "msvc14"
     $squishPackage64bit = "msvc14_64"
 
+    echo "Installing $squishPackage"
+    DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackage
+
     if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64"))
     {
         echo "Installing $squishPackage64bit"
