@@ -107,6 +107,12 @@ DownloadSquishLicence $licensePackage $squishUrl $targetDir
 
 if(($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 8.1 Enterprise"))
 {
+    # Squish for MinGW
+    $squishPackageMingw = "mingw_gcc53_posix_dwarf"
+    echo "Installing $squishPackageMingw"
+    DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackageMingw
+    mv $targetDir\$squishPackageMingw $targetDir\mingw
+
     # Squish for Visual Studio 2015
     $squishPackage = "msvc14"
     $squishPackage64bit = "msvc14_64"
