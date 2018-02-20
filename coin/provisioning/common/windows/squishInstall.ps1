@@ -138,7 +138,7 @@ if($OSVersion -eq "Windows 8.1 Enterprise")
         attrib -h C:\Users\qt\.squish-3-license
     }
 }
-else
+if($OSVersion -eq "Windows 7")
 {
     # Windows 7
 
