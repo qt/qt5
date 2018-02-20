@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,20 +33,20 @@
 ##
 #############################################################################
 
-# This script installs CMake 3.6.2
+# This script installs python2
 
-# CMake is needed for autotests that verify that Qt can be built with CMake
-
-source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="3.6.2"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-3.6.2-Linux-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz"
-SHA1="dd9d8d57b66109d4bac6eef9209beb94608a185c"
-targetFolder="/opt/cmake-$version"
-appPrefix="cmake-$version-Linux-x86_64"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-2.7.14-macosx10.6.pkg"
+AltUrl="https://www.python.org/ftp/python/2.7.14/python-2.7.14-macosx10.6.pkg"
+SHA1="fa2bb77243ad0cb611aa3295204fab403bb0fa09"
+DestDir="/"
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
-SetEnvVar "PATH" "$targetFolder/bin:\$PATH"
+/Library/Frameworks/Python.framework/Versions/2.7/bin/pip install virtualenv
+
+SetEnvVar "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin/:\$PATH"
+
+echo "python2 = 2.7.14" >> ~/versions.txt

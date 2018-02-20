@@ -33,11 +33,23 @@
 ##
 #############################################################################
 
+set +e
+
+# We need to source to be able to use cmake in the shell
+if uname -a |grep -q "Ubuntu"; then
+    source ~/.profile
+else
+    source ~/.bashrc
+fi
+
+set -ex
+
 TEMPDIR=$(mktemp --directory) || echo "Failed to create temporary directory"
 trap "sudo rm -fr $TEMPDIR" EXIT
 cd $TEMPDIR
 
-pip install six
+sudo pip install --upgrade pip
+sudo pip install six
 
 git clone https://github.com/open62541/open62541.git open62541
 cd open62541

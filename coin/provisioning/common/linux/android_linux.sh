@@ -88,7 +88,7 @@ try
     fi
 
     echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
-    if [ "$proxy" != "" ]; then
+    if [ "$http_proxy" != "" ]; then
         proxy_host=$(echo $proxy | cut -d'/' -f3 | cut -d':' -f1)
         proxy_port=$(echo $proxy | cut -d':' -f3)
         echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host=$proxy_host --proxy_port=$proxy_port "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager

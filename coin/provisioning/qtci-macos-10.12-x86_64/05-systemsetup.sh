@@ -49,12 +49,16 @@ ExceptionSetDelay=102
 ExceptionVNC=103
 ExceptionNTS=104
 ExceptionDisableScreensaverPassword=105
+ExceptionDisableSleep=106
 
 try
 (
     echo "Disable Screensaver"
     # For current session
     defaults -currentHost write com.apple.screensaver idleTime 0 || throw $ExceptionDisableScreensaver
+
+    echo "Disable sleep"
+    sudo pmset sleep 0 displaysleep 0 || throw $ExceptionDisableSleep
 
     # For session after a reboot
     mkdir -p "$HOME/Library/LaunchAgents" || throw $ExceptionDisableScreensaver
@@ -126,5 +130,10 @@ catch || {
             echo "Failed to disable requiring of password after screensaver is enabled."
             exit 1;
         ;;
+        $ExceptionDisableSleep)
+            echo "Failed to disable sleep."
+            exit 1;
+        ;;
+
     esac
 }
