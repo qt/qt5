@@ -47,6 +47,7 @@ ExceptionGsettings2=101
 ExceptionGsettings3=102
 ExceptionNTS=103
 ExceptionProxy=104
+ExceptionGrub=105
 
 try
 (
@@ -58,11 +59,14 @@ try
     gsettings set org.gnome.desktop.screensaver lock-enabled false || throw $ExceptionGsettings2
     echo "Disable questions on shutdown."
     gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown true || throw $ExceptionGsettings3
+    echo "Set grub timeout to 0"
+    sudo sed -i 's|GRUB_TIMEOUT=10|GRUB_TIMEOUT=0|g' /etc/default/grub || throw $ExceptionGrub
+    sudo update-grub || throw $ExceptionGrub
 
     echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
     echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
 
-    if [ "$proxy" != "" ]; then
+    if [ "$http_proxy" != "" ]; then
         echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf || throw $ExceptionProxy
     fi
 )
@@ -82,6 +86,10 @@ catch || {
         ;;
         $ExceptionGsettings3)
             echo "Failed to disable questions on shutdown."
+            exit 1;
+        ;;
+        $ExceptionGrub)
+            echo "Failed to set grub timeout."
             exit 1;
         ;;
         $ExceptionNTS)

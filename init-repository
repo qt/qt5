@@ -243,6 +243,7 @@ sub parse_arguments
             $self->{'mirror-url'}        = $OSLO_MIRROR_URL_BASE;
         },
     ) || printUsage(2);
+    @ARGV && printUsage(2);
 
     # Replace any double trailing slashes from end of mirror
     $self->{'mirror-url'} =~ s{//+$}{/};

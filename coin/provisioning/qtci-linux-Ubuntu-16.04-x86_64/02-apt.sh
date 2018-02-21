@@ -99,6 +99,8 @@ try
     installPackages+=(libgstreamer-plugins-bad1.0-dev)
     # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
     installPackages+=(g++-multilib)
+    # python2 development package
+    installPackages+=(python-pip)
     # python3 development package
     installPackages+=(python3-dev)
     installPackages+=(python3-pip)
