@@ -51,6 +51,19 @@ try
         sudo systemctl stop $service
         sudo systemctl disable $service
     done
+
+    # aptdaemon is used by update notifiers and similar and there is no point in having those (the symptom is aptd holding a lock)
+    for i in `seq 10`; do
+        echo attempting to remove aptdaemon
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y remove aptdaemon || true
+        # check that aptdaemon is no longer installed
+        which aptd > /dev/null || break
+        if [[ $i -eq 10 ]]; then
+            throw $ExceptionAPT
+        fi
+        sleep 10
+    done
+
     # Git is not needed by builds themselves, but is nice to have
     # immediately as one starts debugging
     installPackages+=(git)
