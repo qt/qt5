@@ -53,7 +53,7 @@ sudo pip install six
 
 git clone https://github.com/open62541/open62541.git open62541
 cd open62541
-git checkout 302003d2448946fa4d8a02cc209b8931d31e975b
+git checkout ba3b55ab4afafe6bc9d2cb922eafd51c6cee4629
 mkdir build
 cd build
 cmake -DUA_ENABLE_AMALGAMATION=ON -DUA_ENABLE_METHODCALLS=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DLIB_INSTALL_DIR:PATH=/usr/local/lib ..
