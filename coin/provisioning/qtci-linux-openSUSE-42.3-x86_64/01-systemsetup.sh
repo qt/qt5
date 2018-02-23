@@ -17,6 +17,8 @@ echo "Set DISPLAY"
 echo 'export DISPLAY=":0"' >> ~/.bashrc
 echo "Disabling file indexing."
 sudo balooctl disable
+echo "Disable update notifications"
+sudo zypper -nq remove plasma5-pk-updates
 
 if [ "$http_proxy" != "" ]; then
     sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy

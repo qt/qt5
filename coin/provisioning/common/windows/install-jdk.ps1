@@ -55,7 +55,7 @@ echo "Fetching Java SE $version..."
 $ProgressPreference = 'SilentlyContinue'
 try {
     echo "...from local cache"
-    Invoke-WebRequest -UseBasicParsing $url_cache -OutFile $javaPackage
+    Download $url_cache $url_cache $javaPackage
 } catch {
     echo "...from oracle.com"
     $client = new-object System.Net.WebClient
@@ -63,7 +63,7 @@ try {
     $client.Headers.Add("Cookie", $cookie)
     $client.DownloadFile($official_url, $javaPackage)
 
-    Invoke-WebRequest -UseBasicParsing $official_url -OutFile $javaPackage
+    Download $official_url $official_url $javaPackage
 }
 
 Verify-Checksum $javaPackage $sha1
