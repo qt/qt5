@@ -35,7 +35,7 @@ $n = Get-Content "$PSScriptRoot\..\shared\http_proxy.txt"
 $n = $n.Split('=')
 New-Variable -Name $n[0] -Value $n[1]
 
-if (([string]::IsNullOrEmpty($proxy)) -or ($proxy -eq '""')) {
+if ([string]::IsNullOrEmpty($proxy)) {
     Write-Host "No proxy is defined."
 } else {
     Write-Host "Checking proxy @ $proxy"
