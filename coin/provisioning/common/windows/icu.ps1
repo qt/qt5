@@ -37,9 +37,9 @@
 
 $version = "53_1"
 
-if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64")) {
+if (Is64BitWinHost) {
 
 # FIXME: do we really want to use the 4.8.2 ICU build?
-[Environment]::SetEnvironmentVariable("CI_ICU_PATH_Mingw49", "C:\Utils\icu_53_1_Mingw_builds_4_8_2_posix_seh_64_devel\icu53_1", "Machine")
+Set-EnvironmentVariable "CI_ICU_PATH_Mingw49" "C:\Utils\icu_53_1_Mingw_builds_4_8_2_posix_seh_64_devel\icu53_1"
 
 }

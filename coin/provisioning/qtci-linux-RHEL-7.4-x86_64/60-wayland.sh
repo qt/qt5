@@ -1,6 +1,8 @@
-############################################################################
+#!/usr/bin/env bash
+
+#############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,18 +33,31 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+set -ex
 
-# This script will install Vulkan SDK
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-$version = "1.0.51.0"
-$url_cache = "\\ci-files01-hki.ci.local\provisioning\windows\VulkanSDK-" +$version+ "-Installer.exe"
-$vulkanPackage = "C:\Windows\Temp\vulkan-installer-$version.exe"
+version=1.12.0
+sha1="9a0dd96f53fff3e227035ed76caaa209b632ea8d"
+archive="wayland-$version.tar.xz"
+primaryUrl="https://wayland.freedesktop.org/releases/$archive"
+cacheUrl="http://ci-files01-hki.intra.qt.io/input/wayland/$archive"
 
-Copy-Item $url_cache $vulkanPackage
-Run-Executable $vulkanPackage "/S"
+echo "Installing Wayland $version $sha1 on RHEL"
 
-Write-Host "Cleaning $vulkanPackage.."
-Remove-Item -Recurse -Force -Path "$vulkanPackage"
+targetFile="/tmp/$archive"
+DownloadURL $primaryUrl $cacheUrl $sha1 $targetFile
+tar xf $targetFile --directory /tmp/
+rm $targetFile
 
-Write-Output "Vulkan SDK = $version" >> ~\versions.txt
+cd /tmp/wayland-$version
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib64 \
+    --disable-static \
+    --disable-documentation
+make
+sudo make install
+rm -rf /tmp/wayland-$version
+
+echo "wayland = $version" >> ~/versions.txt

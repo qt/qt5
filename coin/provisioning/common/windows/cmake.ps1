@@ -40,7 +40,7 @@ $zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
 $officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
 $cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
 
-echo "Removing old cmake"
+Write-Host "Removing old cmake"
 Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
 
 Download $officialurl $cachedurl $zip
@@ -52,5 +52,5 @@ Rename-Item $defaultinstallfolder C:\CMake
 
 Add-Path "C:\CMake\bin"
 
-echo "CMake = $version" >> ~\versions.txt
+Write-Output "CMake = $version" >> ~\versions.txt
 

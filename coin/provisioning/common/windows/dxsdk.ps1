@@ -11,9 +11,9 @@ $exe = "C:\Windows\Temp\$package"
 
 Download $officialUrl $cachedUrl $exe
 
-echo "Installing DirectX SDK"
-cmd /c "$exe /u"
+Write-Host "Installing DirectX SDK"
+Run-Executable $exe "/u"
 
-Remove-Item $exe
+Remove-Item -Path $exe
 
-echo "DirectX SDK = 9.29.1962 (Jun 10)" >> ~\versions.txt
+Write-Output "DirectX SDK = 9.29.1962 (Jun 10)" >> ~\versions.txt

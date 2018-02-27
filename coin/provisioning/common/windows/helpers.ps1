@@ -5,13 +5,32 @@ function Verify-Checksum
         [string]$Expected=$(throw("Checksum required")),
         [ValidateSet("sha1","md5")][string]$Algorithm="sha1"
     )
+    Write-Host "Verifying checksum of $File"
     $fs = new-object System.IO.FileStream $File, "Open"
     $algo = [type]"System.Security.Cryptography.$Algorithm"
     $crypto = $algo::Create()
     $hash = [BitConverter]::ToString($crypto.ComputeHash($fs)).Replace("-", "")
     $fs.Close()
     if ($hash -ne $Expected) {
-        Write-Error "Checksum verification failed, got: '$hash' expected: '$Expected'"
+        throw "Checksum verification failed, got: '$hash' expected: '$Expected'"
+    }
+}
+
+function Run-Executable
+{
+    Param (
+        [string]$Executable=$(throw("You must specify a program to run.")),
+        [string[]]$Arguments
+    )
+    if ([string]::IsNullOrEmpty($Arguments)) {
+        Write-Host "Running `"$Executable`""
+        $p = Start-Process -FilePath "$Executable" -Wait -PassThru
+    } else {
+        Write-Host "Running `"$Executable`" with arguments `"$Arguments`""
+        $p = Start-Process -FilePath "$Executable" -ArgumentList $Arguments -Wait -PassThru
+    }
+    if ($p.ExitCode -ne 0) {
+        throw "Process $($Executable) exited with exit code $($p.ExitCode)"
     }
 }
 
@@ -21,24 +40,21 @@ function Extract-7Zip
         [string]$Source,
         [string]$Destination
     )
-    echo "Extracting '$Source' to '$Destination'..."
+    Write-Host "Extracting '$Source' to '$Destination'..."
 
     if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
-        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles} -ne $null)[0] '7-zip\7z.exe'
+        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles}, ${env:ProgramW6432} -ne $null)[0] '7-zip\7z.exe'
         if (-not (test-path $zipExe)) {
-            $zipExe = join-path ${env:ProgramW6432} '7-zip\7z.exe'
+            $zipExe = "C:\Utils\sevenzip\7z.exe"
             if (-not (test-path $zipExe)) {
-                $zipExe = "C:\Utils\sevenzip\7z.exe"
-                if (-not (test-path $zipExe)) {
-                    throw "Could not find 7-zip."
-                }
+                throw "Could not find 7-zip."
             }
         }
     } else {
         $zipExe = "7z.exe"
     }
 
-    & $zipExe x $Source "-o$Destination" -y
+    Run-Executable "$zipExe" "x -y `"-o$Destination`" `"$Source`""
 }
 
 function Extract-Zip
@@ -47,7 +63,7 @@ function Extract-Zip
         [string]$Source,
         [string]$Destination
     )
-    echo "Extracting '$Source' to '$Destination'..."
+    Write-Host "Extracting '$Source' to '$Destination'..."
 
     New-Item -ItemType Directory -Force -Path $Destination
     $shell = new-object -com shell.application
@@ -66,7 +82,7 @@ function Extract-Dev-Folders-From-Zip
 
     $shell = new-object -com shell.application
 
-    echo "Extracting contents of $package"
+    Write-Host "Extracting contents of $package"
     foreach ($subDir in "lib", "include", "bin", "share") {
         $zip = $shell.Namespace($package + "\" + $zipDir + "\" + $subDir)
         if ($zip) {
@@ -97,12 +113,14 @@ function Download
     )
     $ProgressPreference = 'SilentlyContinue'
     try {
+        Write-Host "Downloading from cached location ($CachedUrl) to $Destination"
         if ($CachedUrl.StartsWith("http")) {
             Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
         } else {
             Copy-Item $CachedUrl $Destination
         }
     } catch {
+        Write-Host "Cached download failed: Downloading from official location: $OfficialUrl"
         Invoke-WebRequest -UseBasicParsing $OfficialUrl -OutFile $Destination
     }
 }
@@ -112,37 +130,27 @@ function Add-Path
     Param (
         [string]$Path
     )
-    echo "Adding $Path to Path"
+    Write-Host "Adding $Path to Path"
 
     $oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
     [Environment]::SetEnvironmentVariable("Path", $oldPath + ";$Path", [EnvironmentVariableTarget]::Machine)
     $Env:PATH = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 }
 
-function is64bitWinHost
-{
-    if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64")) {
-        return 1
-    }
-    else {
-        return 0
-    }
-}
-
-Function Execute-Command
+function Set-EnvironmentVariable
 {
     Param (
-       [string]$command
+        [string]$Key = $(BadParam("a key")),
+        [string]$Value = $(BadParam("a value."))
     )
-    Try {
-        echo "Executing command '$command'..."
-        $process = Start-Process -FilePath "cmd" -ArgumentList "/c $command" -PassThru -Wait -WindowStyle Hidden
-        if ($process.ExitCode) {throw "Error running command: '$command'"}
-    }
-    Catch {
-        $_.Exception.Message
-        exit 1
-    }
+    Write-Host "Setting environment variable `"$($Key)`" to `"$($Value)`""
+
+    [Environment]::SetEnvironmentVariable($Key, $Value, [EnvironmentVariableTarget]::Machine)
+}
+
+function Is64BitWinHost
+{
+    return [environment]::Is64BitOperatingSystem
 }
 
 function isProxyEnabled {

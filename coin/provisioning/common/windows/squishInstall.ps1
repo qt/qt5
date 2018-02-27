@@ -50,10 +50,10 @@ $licensePackage = ".squish-3-license"
 $OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 
 # This can be removed when using vanilla os
-if((Test-Path -Path "$targetDir" )){
+if ((Test-Path -Path "$targetDir" )) {
     try {
-        echo "Renaming old Squish"
-        echo "Rename-Item -ErrorAction 'Stop' $targetDir $targetDir_deleted"
+        Write-Host "Renaming old Squish"
+        Write-Host "Rename-Item -ErrorAction 'Stop' $targetDir $targetDir_deleted"
         Rename-Item -ErrorAction 'Stop' "$targetDir" squish_deleted
     } catch {}
 }
@@ -72,13 +72,12 @@ Function DownloadAndInstallSquish {
     $SquishUrl = $squishBranchUrl + "\squish-" + $version + "-qt" + $qtBranch + "-" + $bit + "-" + $squishPackage + ".exe"
     $SquishInstaller = "$targetDir\$squishPackage.exe"
     $SquishParameters = "unattended=1 targetdir=$targetDir\$squishPackage"
-    $Command = "$SquishInstaller $SquishParameters"
 
-    echo "Fetching from URL ..."
+    Write-Host "Fetching from URL $squishUrl"
     Copy-Item "$SquishUrl" "$SquishInstaller"
-    echo "Installing Squish"
-    Execute-Command $Command
-    remove-item $SquishInstaller
+    Write-Host "Installing Squish"
+    Run-Executable "$SquishInstaller" "$SquishParameters"
+    Remove-Item -Path $SquishInstaller
 }
 
 Function DownloadSquishLicence {
@@ -90,26 +89,24 @@ Function DownloadSquishLicence {
     )
 
     # This can be removed when using vanilla os
-    if ($Env:SQUISH_LICENSEKEY_DIR)
-    {
-        echo "Removing SQUISH_LICENSEKEY_DIR env variable"
+    if ($Env:SQUISH_LICENSEKEY_DIR) {
+        Write-Host "Removing SQUISH_LICENSEKEY_DIR env variable"
         Remove-Item Env:\SQUISH_LICENSEKEY_DIR
     }
 
-    echo "Installing Squish license to home directory"
+    Write-Host "Installing Squish license to home directory"
     Copy-Item $squishUrl\$licensePackage ~\$licensePackage
 }
 
-echo "Creating $targetDir"
+Write-Host "Creating $targetDir"
 New-Item -ErrorAction Ignore -ItemType directory -Path "$targetDir"
 
 DownloadSquishLicence $licensePackage $squishUrl $targetDir
 
-if(($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 8.1 Enterprise"))
-{
+if (($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 8.1 Enterprise")) {
     # Squish for MinGW
     $squishPackageMingw = "mingw_gcc53_posix_dwarf"
-    echo "Installing $squishPackageMingw"
+    Write-Host "Installing $squishPackageMingw"
     DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackageMingw
     mv $targetDir\$squishPackageMingw $targetDir\mingw
 
@@ -117,56 +114,45 @@ if(($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 8.1 Ent
     $squishPackage = "msvc14"
     $squishPackage64bit = "msvc14_64"
 
-    if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64"))
-    {
-        echo "Installing $squishPackage_64"
+    if (Is64BitWinHost) {
+        Write-Host "Installing $squishPackage64bit"
         DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win64 $targetDir $squishPackage
-        mv $targetDir\$squishPackage $targetDir\$squishPackage64bit
+        Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
     }
 
-    echo "Installing $squishPackage"
+    Write-Host "Installing $squishPackage"
     DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackage
 }
-if($OSVersion -eq "Windows 8.1 Enterprise")
-{
+if ($OSVersion -eq "Windows 8.1 Enterprise") {
     # Squish for Visual Studio 2013
     $squishPackage64bit = "msvc12_64"
 
-    if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64"))
-    {
-        echo "Installing $squishPackage_64"
+    if (Is64BitWinHost) {
+        Write-Host "Installing $squishPackage_64"
         DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win64 $targetDir $squishPackage
-        mv $targetDir\$squishPackage $targetDir\$squishPackage64bit
-    }
-    else
-    {
-        echo "Change secret file to normal one"
-        attrib -h C:\Users\qt\.squish-3-license
+        Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
+    } else {
+        Write-Host "Change secret file to normal one"
+        Run-Executable "attrib.exe" "-h C:\Users\qt\.squish-3-license"
     }
 }
-if($OSVersion -eq "Windows 7")
-{
-    # Windows 7
-
+if  ($OSVersion -eq "Windows 7 Enterprise") {
     # Squish for MinGW
     $squishPackageMingw = "mingw_gcc53_posix_dwarf"
-    echo "Installing $squishPackageMingw"
+    Write-Host "Installing $squishPackageMingw"
     DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackageMingw
-    mv $targetDir\$squishPackageMingw $targetDir\mingw
+    Rename-Item $targetDir\$squishPackageMingw $targetDir\mingw
 
     # Squish for Visual Studio 2015
     $squishPackage = "msvc14"
     $squishPackage64bit = "msvc14_64"
 
-    echo "Installing $squishPackage"
+    Write-Host "Installing $squishPackage"
     DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackage
 
-    if(($env:PROCESSOR_ARCHITECTURE -eq "AMD64") -or ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64"))
-    {
-        echo "Installing $squishPackage64bit"
+    if (Is64BitWinHost) {
+        Write-Host "Installing $squishPackage64bit"
         DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win64 $targetDir $squishPackage
-        mv $targetDir\$squishPackage $targetDir\$squishPackage64bit
+        Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
     }
-
-
 }

@@ -44,4 +44,4 @@ Verify-Checksum $archive "396a3224c306480f24a583850d923d06aa4377c1"
 Extract-7Zip $archive $libusb_location
 
 # Tell qt-apps/qdb build system where to find libusb
-[Environment]::SetEnvironmentVariable("LIBUSB_PATH", $libusb_location, "Machine")
+Set-EnvironmentVariable "LIBUSB_PATH" $libusb_location

@@ -22,9 +22,9 @@ if ( $archVer -eq 64 ) {
     Download $url $url $zip
     Verify-Checksum $zip $sha1
 
-    C:\Utils\sevenzip\7z.exe x $zip -oC:\Utils\
+    Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
-    del $zip
+    Remove-Item -Force -Path $zip
 }
 
 $sha1 = "64e826c00ae632fbb28655e6e1fa9194980e1205"
@@ -34,9 +34,9 @@ $destination = $baseDestination + "-32"
 Download $url $url $zip
 Verify-Checksum $zip $sha1
 
-C:\Utils\sevenzip\7z.exe x $zip -oC:\Utils\
+Extract-7Zip $zip C:\Utils\
 Rename-Item C:\Utils\libclang $destination
-del $zip
+Remove-Item -Force -Path $zip
 
-[Environment]::SetEnvironmentVariable("LLVM_INSTALL_DIR", $baseDestination + "-_ARCH_", [EnvironmentVariableTarget]::Machine)
-echo "libClang = $libclang_version" >> ~/versions.txt
+Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+Write-Output "libClang = $libclang_version" >> ~/versions.txt

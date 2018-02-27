@@ -30,7 +30,8 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
 # This script allows the Windows Remote Desktop Access
 
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+Run-Executable "reg.exe" "add `"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server`" /v fDenyTSConnections /t REG_DWORD /d 0 /f"

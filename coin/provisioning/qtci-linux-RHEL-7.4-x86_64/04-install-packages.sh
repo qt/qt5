@@ -86,6 +86,8 @@ installPackages+=(bluez-libs-devel)
 # QtWebKit
 installPackages+=(libxml2-devel)
 installPackages+=(libxslt-devel)
+# For building Wayland from source
+installPackages+=(libffi-devel)
 
 sudo yum -y update
 sudo yum -y install "${installPackages[@]}"

@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-echo "Disabling proxy"
+Write-Host "Disabling proxy"
 $dcs = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections").DefaultConnectionSettings
 $dcs[8] = $_ -band 0xF7
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections" -Name DefaultConnectionSettings -Value $dcs

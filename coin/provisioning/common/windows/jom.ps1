@@ -6,4 +6,4 @@ Invoke-WebRequest -UseBasicParsing http://download.qt.io/official_releases/jom/j
 Verify-Checksum $zip "80EE5678E714DE99DDAF5F7593AB04DB1C7928E4"
 Extract-Zip $zip C:\Utils\Jom
 
-[Environment]::SetEnvironmentVariable("CI_JOM_PATH", "C:\Utils\Jom", "Machine")
+Set-EnvironmentVariable "CI_JOM_PATH" "C:\Utils\Jom"
