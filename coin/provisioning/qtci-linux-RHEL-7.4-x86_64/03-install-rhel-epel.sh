@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,12 +35,16 @@
 
 set -ex
 
-name="p7zip"
-version="7-11"
-sudo yum -y install "$name"
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-# Link 7za to 7z so we can use existing installation scripts
-sudo ln -s /usr/bin/7za /usr/bin/7z
+package="epel-release-7-11.noarch.rpm"
+primaryUrl="https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/$package"
+cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel7/$package"
+sha1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
+targetFile="/tmp/$package"
 
-echo "$name = $version" >> ~/versions.txt
+DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
+
+sudo rpm -ivh "$targetFile"
+rm "$targetFile"
 
