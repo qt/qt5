@@ -44,6 +44,8 @@ fi
 
 set -ex
 
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+
 TEMPDIR=$(mktemp --directory) || echo "Failed to create temporary directory"
 trap "sudo rm -fr $TEMPDIR" EXIT
 cd $TEMPDIR
@@ -56,8 +58,12 @@ cd open62541
 git checkout ba3b55ab4afafe6bc9d2cb922eafd51c6cee4629
 mkdir build
 cd build
-cmake -DUA_ENABLE_AMALGAMATION=ON -DUA_ENABLE_METHODCALLS=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DLIB_INSTALL_DIR:PATH=/usr/local/lib ..
+cmake -DUA_ENABLE_AMALGAMATION=ON -DUA_ENABLE_METHODCALLS=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DLIB_INSTALL_DIR:PATH=/usr/local/lib/open62541 ..
 make
 
 sudo make install
 sudo /sbin/ldconfig
+
+SetEnvVar "QTOPCUA_OPEN62541_LIB_PATH" "/usr/local/lib/open62541"
+SetEnvVar "QTOPCUA_OPEN62541_INCLUDE_PATH" "/usr/local/include/open62541"
+
