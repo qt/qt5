@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,38 +33,17 @@
 ##
 #############################################################################
 
-# PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
-# The Clang library (C-bindings), version 3.9 or higher is required for building.
+# On macOS the sha1 tool is named 'shasum' while on all other unix systems it is called 'sha1sum'.
+# In order to make all unix provioning scripts run on macOS without special case handling
+# a symbolic link is created.
+# The shasum tool is a perl script which does some globbing to determine the perl version. The
+# symbolic link has to point directly to the binary including the perl version.
+# Additionally the CI seems to have multiple parallel perl versions installed which causes
+# multiple shasum tools to be present (shasum5.16, shasum5.18).
+#
+# Currently this is
+#     /usr/local/bin/sha1sum -> /usr/bin/shasum5.18
 
-# This same script is used to provision libclang to Linux and macOS.
-# In case of Linux, we expect to get the values as args
-set -e
-
-source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
-
-BASEDIR=$(dirname "$0")
-. $BASEDIR/../shared/sw_versions.txt
-url=$1
-sha1=$2
-version=$3
-if [ $# -eq 0 ]
-  then
-    # The default values are for macOS package
-    echo "Using macOS defaults"
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
-    sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
-fi
-
-zip="libclang.7z"
-destination="/usr/local/libclang-$version"
-
-curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
-echo "$sha1  $zip" | sha1sum --check
-7z x $zip -o/tmp/
-rm -rf $zip
-
-sudo mv /tmp/libclang $destination
-
-echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
-echo "libClang = $version" >> ~/versions.txt
+[ -d /usr/local/bin ] || sudo mkdir -p /usr/local/bin
+SHASUM_TOOLNAME=$(ls -r /usr/bin/shasum?.* | head -n1)
+sudo ln -s "${SHASUM_TOOLNAME}" /usr/local/bin/sha1sum
