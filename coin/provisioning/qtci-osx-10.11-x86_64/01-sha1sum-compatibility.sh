@@ -1,0 +1,1 @@
+../common/macos/sha1sum-compatibility.sh
