@@ -37,7 +37,6 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
-source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
@@ -62,75 +61,37 @@ toolsSourceFile="$basePath/$toolsFile"
 ndkTargetFile="/tmp/$ndkFile"
 ndkSourceFile="$basePath/$ndkFile"
 
-ExceptionDownload=99
-ExceptionUnzipTools=100
-ExceptionUnzipNdk=101
-ExceptionRmTools=102
-ExceptionRmNdk=103
-ExceptionSdkManager=104
+DownloadURL "$toolsSourceFile" "$toolsSourceFile" "$toolsSha1" "$toolsTargetFile"
+DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
+echo "Unzipping Android NDK to '$targetFolder'"
+sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
+echo "Unzipping Android Tools to '$sdkTargetFolder'"
+sudo unzip -q "$toolsTargetFile" -d "$sdkTargetFolder"
+rm "$ndkTargetFile"
+rm "$toolsTargetFile"
 
-try
-(
-    (DownloadURL "$toolsSourceFile" "$toolsSourceFile" "$toolsSha1" "$toolsTargetFile") || throw $ExceptionDownload
-    (DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile") || throw $ExceptionDownload
-    echo "Unzipping Android NDK to '$targetFolder'"
-    sudo unzip -q "$ndkTargetFile" -d "$targetFolder" || throw $ExceptionUnzipNdk
-    echo "Unzipping Android Tools to '$sdkTargetFolder'"
-    sudo unzip -q "$toolsTargetFile" -d "$sdkTargetFolder" || throw $ExceptionUnzipTools
-    rm "$ndkTargetFile" || throw $ExceptionRmNdk
-    rm "$toolsTargetFile" || throw $ExceptionRmTools
+echo "Changing ownership of Android files."
+if uname -a |grep -q "el6\|el7"; then
+    sudo chown -R qt:wheel "$targetFolder"
+else
+    sudo chown -R qt:users "$targetFolder"
+fi
 
-    echo "Changing ownership of Android files."
-    if uname -a |grep -q "el6\|el7"; then
-        sudo chown -R qt:wheel "$targetFolder"
-    else
-        sudo chown -R qt:users "$targetFolder"
-    fi
+echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
+if [ "$http_proxy" != "" ]; then
+    proxy_host=$(echo $proxy | cut -d'/' -f3 | cut -d':' -f1)
+    proxy_port=$(echo $proxy | cut -d':' -f3)
+    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host=$proxy_host --proxy_port=$proxy_port "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+else
+    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+fi
 
-    echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
-    if [ "$http_proxy" != "" ]; then
-        proxy_host=$(echo $proxy | cut -d'/' -f3 | cut -d':' -f1)
-        proxy_port=$(echo $proxy | cut -d':' -f3)
-        echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host=$proxy_host --proxy_port=$proxy_port "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
-    else
-        echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
-    fi
+SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
+SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
+SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
-    SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
-    SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
-    SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
-    SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
-
-    echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
-    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
-    echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
-    echo "Android NDK = $ndkVersion" >> ~/versions.txt
-)
-catch || {
-        case $ex_code in
-            $ExceptionDownload)
-                exit 1;
-            ;;
-            $ExceptionUnzipTools)
-                echo "Failed to unzip Android SDK Tools."
-                exit 1;
-            ;;
-            $ExceptionUnzipNdk)
-                echo "Failed to unzip Android NDK."
-                exit 1;
-            ;;
-            $ExceptionRmTools)
-                echo "Failed to remove temporary tools package '$toolsTargetFile'."
-                exit 1;
-            ;;
-            $ExceptionRmNdk)
-                echo "Failed to remove temporary NDK package '$ndkTargetFile'."
-                exit 1;
-            ;;
-            $ExceptionSdkManager)
-                echo "Failed to run sdkmanager."
-                exit 1;
-            ;;
-        esac
-}
-
+echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
+echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
+echo "Android NDK = $ndkVersion" >> ~/versions.txt
