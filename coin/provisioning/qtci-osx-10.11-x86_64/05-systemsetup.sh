@@ -37,33 +37,19 @@
 
 set -ex
 
-# shellcheck source=../common/unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
-
 VNCPassword=qt
 NTS_IP=10.212.2.216
 
-ExceptionDisableScreensaver=100
-ExceptionSetInitialDelay=101
-ExceptionSetDelay=102
-ExceptionVNC=103
-ExceptionNTS=104
-ExceptionDisableScreensaverPassword=105
-ExceptionDisableSleep=106
+echo "Disable Screensaver"
+# For current session
+defaults -currentHost write com.apple.screensaver idleTime 0
 
-try
-(
-    echo "Disable Screensaver"
-    # For current session
-    defaults -currentHost write com.apple.screensaver idleTime 0 || throw $ExceptionDisableScreensaver
+echo "Disable sleep"
+sudo pmset sleep 0 displaysleep 0
 
-    echo "Disable sleep"
-    sudo pmset sleep 0 displaysleep 0 || throw $ExceptionDisableSleep
-
-    # For session after a reboot
-    mkdir -p "$HOME/Library/LaunchAgents" || throw $ExceptionDisableScreensaver
-    (
-        cat >"$HOME/Library/LaunchAgents/no-screensaver.plist" <<EOT
+# For session after a reboot
+mkdir -p "$HOME/Library/LaunchAgents"
+cat >"$HOME/Library/LaunchAgents/no-screensaver.plist" <<EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 
@@ -87,54 +73,18 @@ try
     </dict>
 </plist>
 EOT
-    ) || throw $ExceptionDisableScreensaver
 
-    defaults write com.apple.screensaver askForPassword -int 0 || throw $ExceptionDisableScreensaverPassword
+defaults write com.apple.screensaver askForPassword -int 0
 
-    echo "Set keyboard type rates and delays"
-    # normal minimum is 15 (225 ms)
-    defaults write -g InitialKeyRepeat -int 15 || throw $ExceptionSetInitialDelay
-    # normal minimum is 2 (30 ms)
-    defaults write -g KeyRepeat -int 2 || throw $ExceptionSetDelay
+echo "Set keyboard type rates and delays"
+# normal minimum is 15 (225 ms)
+defaults write -g InitialKeyRepeat -int 15
+# normal minimum is 2 (30 ms)
+defaults write -g KeyRepeat -int 2
 
-    echo "Enable remote desktop sharing"
-    sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw $VNCPassword -restart -agent -privs -all || throw $ExceptionVNC
+echo "Enable remote desktop sharing"
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw $VNCPassword -restart -agent -privs -all
 
-    echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
-    echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts || throw $ExceptionNTS
-
-)
-catch || {
-    case $ex_code in
-        $ExceptionDisableScreensaver)
-            echo "Failed to disable screensaver."
-            exit 1;
-        ;;
-        $ExceptionSetInitialDelay)
-            echo "Failed to set initial delay of keyboard."
-            exit 1;
-        ;;
-        $ExceptionSetDelay)
-            echo "Failed to set delay of keyboard."
-            exit 1;
-        ;;
-        $ExceptionVNC)
-            echo "Failed to enable VNC."
-            exit 1;
-        ;;
-        $ExceptionNTS)
-            echo "Failed to set NTS."
-            exit 1;
-        ;;
-        $ExceptionDisableScreensaverPassword)
-            echo "Failed to disable requiring of password after screensaver is enabled."
-            exit 1;
-        ;;
-        $ExceptionDisableSleep)
-            echo "Failed to disable sleep."
-            exit 1;
-        ;;
-
-    esac
-}
+echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
+echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
 
