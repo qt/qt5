@@ -34,8 +34,8 @@
 
 # This script installs FBX SDK
 
-# shellcheck source=./../unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+set -ex
+
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
@@ -50,27 +50,18 @@ installer="$targetFolder/fbx20161_2_fbxsdk_clang_macos.pkg"
 
 ExceptionExtractPrimaryUrl=100
 
-try
-(
-    echo "Extracting '$cachedUrl'"
-    tar -xzf "$cachedUrl" -C "$targetFolder" || throw $ExceptionExtractPrimaryUrl
+echo "Extracting '$cachedUrl'"
+tar -xzf "$cachedUrl" -C "$targetFolder" || (
+    echo "Failed to uncompress from '$cachedUrl'"
+    echo "Downloading from '$officialUrl'"
+    curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$officialUrl"
+    echo "Checking SHA1 on PKG '$targetFile'"
+    echo "$sha1 *$targetFile" > $targetFile.sha1
+    shasum --check $targetFile.sha1
+    echo "Extracting '$targetFile'"
+    tar -xzf "$targetFile" -C "$targetFolder"
 )
-catch || {
-    case $ex_code in
-        $ExceptionExtractPrimaryUrl)
-        set -e
-        echo "Failed to uncompress from '$cachedUrl'"
-        echo "Downloading from '$officialUrl'"
-        curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$officialUrl" || exit 1;
-        echo "Checking SHA1 on PKG '$targetFile'"
-        echo "$sha1 *$targetFile" > $targetFile.sha1
-        shasum --check $targetFile.sha1
-        echo "Extracting '$targetFile'"
-        tar -xzf "$targetFile" -C "$targetFolder" || exit 1;
-        ;;
-    esac
-}
-set -e
+
 rm -rf "$targetFile"
 echo "Running installer for '$installer'"
 sudo installer -pkg "$installer" -target "/"
