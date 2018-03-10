@@ -60,12 +60,7 @@ zip="libclang.7z"
 destination="/usr/local/libclang-$version"
 
 curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
-_shasum=sha1sum
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "DARWIN"
-    _shasum=/usr/bin/shasum
-fi
-echo "$sha1  $zip" | $_shasum --check
+echo "$sha1  $zip" | sha1sum --check
 7z x $zip -o/tmp/
 rm -rf $zip
 

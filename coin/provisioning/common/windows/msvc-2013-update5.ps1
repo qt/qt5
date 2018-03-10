@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
@@ -32,34 +30,21 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+# Install Visual Studio 2013 update 5
 
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+$version = "2013 Update 5 (KB2829760)"
+$package = "C:\Windows\Temp\vs12-kb2829760.exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\VS2013.5.exe"
 
-version="1.0.2g"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="36af23887402a5ea4ebef91df8e61654906f58f2"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
+Write-Output "Fetching patch for Visual Studio $version..."
+Copy-Item $url_cache $package
 
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
+Write-Output "Installing Update 5 for Visual Studio $version..."
+Start-Process -FilePath $package -ArgumentList "/norestart /passive" -Wait
 
-tar -xzf "$targetFile" -C "$installFolder"
-# This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}g" "${opensslHome}"
-pushd "$opensslHome"
+Write-Output "Removing $package ..."
+Remove-Item $package
 
-echo "Running configure"
-perl Configure shared android
-
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
-
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+Write-Output "Visual Studio = $version" >> ~\versions.txt

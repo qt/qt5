@@ -147,12 +147,12 @@ if  ($OSVersion -eq "Windows 7 Enterprise") {
     $squishPackage = "msvc14"
     $squishPackage64bit = "msvc14_64"
 
-    Write-Host "Installing $squishPackage"
-    DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackage
-
     if (Is64BitWinHost) {
         Write-Host "Installing $squishPackage64bit"
         DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win64 $targetDir $squishPackage
         Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
     }
+
+    Write-Host "Installing $squishPackage"
+    DownloadAndInstallSquish $version $squishBranchUrl $qtBranch win32 $targetDir $squishPackage
 }

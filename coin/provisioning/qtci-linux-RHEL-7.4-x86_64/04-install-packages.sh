@@ -61,7 +61,7 @@ installPackages+=(gstreamer1-plugins-base-devel)
 # gtk3 style for QtGui/QStyle
 installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb
-installPackages+=(libusb-devel)
+installPackages+=(libusbx-devel)
 # speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
 installPackages+=(speech-dispatcher-devel)
 # Python

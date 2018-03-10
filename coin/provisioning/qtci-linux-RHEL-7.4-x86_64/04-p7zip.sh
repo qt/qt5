@@ -35,21 +35,9 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
-
 name="p7zip"
 version="7-11"
-package="epel-release-$version.noarch.rpm"
-primaryUrl="https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/$package"
-cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel7/$package"
-sha1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
-targetFile="/tmp/$package"
-
-DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
-
-sudo rpm -ivh "$targetFile"
 sudo yum -y install "$name"
-sudo rm "$targetFile"
 
 # Link 7za to 7z so we can use existing installation scripts
 sudo ln -s /usr/bin/7za /usr/bin/7z

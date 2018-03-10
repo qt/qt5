@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +33,17 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+# On macOS the sha1 tool is named 'shasum' while on all other unix systems it is called 'sha1sum'.
+# In order to make all unix provioning scripts run on macOS without special case handling
+# a symbolic link is created.
+# The shasum tool is a perl script which does some globbing to determine the perl version. The
+# symbolic link has to point directly to the binary including the perl version.
+# Additionally the CI seems to have multiple parallel perl versions installed which causes
+# multiple shasum tools to be present (shasum5.16, shasum5.18).
+#
+# Currently this is
+#     /usr/local/bin/sha1sum -> /usr/bin/shasum5.18
 
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-
-version="1.0.2g"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="36af23887402a5ea4ebef91df8e61654906f58f2"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
-
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
-
-tar -xzf "$targetFile" -C "$installFolder"
-# This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}g" "${opensslHome}"
-pushd "$opensslHome"
-
-echo "Running configure"
-perl Configure shared android
-
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
-
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+[ -d /usr/local/bin ] || sudo mkdir -p /usr/local/bin
+SHASUM_TOOLNAME=$(ls -r /usr/bin/shasum?.* | head -n1)
+sudo ln -s "${SHASUM_TOOLNAME}" /usr/local/bin/sha1sum
