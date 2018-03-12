@@ -33,7 +33,7 @@
 #############################################################################
 
 source "${BASH_SOURCE%/*}/try_catch.sh"
-source "${BASH_SOURCE%/*}/../http_proxy.txt"
+source "${BASH_SOURCE%/*}/../shared/http_proxy.txt"
 
 try
 (
