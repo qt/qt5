@@ -31,7 +31,7 @@
 ##
 #############################################################################
 
-$n = Get-Content "$PSScriptRoot\..\http_proxy.txt"
+$n = Get-Content "$PSScriptRoot\..\shared\http_proxy.txt"
 $n = $n.Split('=')
 New-Variable -Name $n[0] -Value $n[1]
 
