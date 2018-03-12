@@ -162,3 +162,10 @@ echo "Running update for apt"
 sudo apt-get update
 echo "Installing packages"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
+
+sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
+EOC
