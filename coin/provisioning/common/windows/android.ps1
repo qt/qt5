@@ -91,7 +91,7 @@ SdkUpdate $sdkFolder platform-tools
 SdkUpdate $sdkFolder build-tools-$sdkBuildToolsVersion
 
 # kill adb. This process prevents provisioning to continue
-$p = Get-Process -Name "adb.exe" -ErrorAction:SilentlyContinue
+$p = Get-Process -Name "adb" -ErrorAction:SilentlyContinue
 if ($p -ne $null) {
     Write-Host "Stopping adb.exe"
     Stop-Process -Force $p
