@@ -66,3 +66,7 @@ gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 enabled = 1
 gpgcheck = 1
 EOC
+
+sudo yum clean all
+# As well as this fetching the repository data, we also get a printout of the used repos
+sudo yum repolist
