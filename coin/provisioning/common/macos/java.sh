@@ -39,32 +39,23 @@ set -ex
 
 echo "Installing Java Development Kit"
 
-url=http://ci-files01-hki.intra.qt.io/input/mac/jdk-8u102-macosx-x64.dmg
-url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
-targetFile=/tmp/jdk-8u102-macosx-x64.dmg
-expectedSha1=1405af955f14e32aae187b5754a716307db22104
+targetFile=jdk-8u102-macosx-x64.dmg
 
-echo "Downloading from primary URL '$url'"
-curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url" || (
-    echo "Failed to download '$url' multiple times"
-    echo "Downloading file from alternative URL '$url_alt'"
-    curl --fail -L --retry 5 --retry-delay 5 -j -k -H "Cookie: oraclelicense=accept-securebackup-cookie" -o "$targetFile" "$url_alt"
-)
+url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
+# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
 
-echo "Checking SHA1 on '$targetFile'"
-echo "$expectedSha1 *$targetFile" | shasum --check
+echo "Mounting $targetFile"
+sudo mount "$url" /Volumes
 
-echo Mounting DMG
-hdiutil attach "$targetFile"
+sudo cp "/Volumes/$targetFile" /tmp
+sudo umount /Volumes
+sudo hdiutil attach "/tmp/$targetFile"
 
 echo Installing JDK
 cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
 
-disk=`hdiutil info | grep '/Volumes/JDK 8 Update 102' | awk '{print $1}'`
-hdiutil detach $disk
-
-echo "Removing temporary file '$targetFile'"
-rm "$targetFile"
+echo "Unmounting $targetFile"
+sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
 
 echo "Disable auto update"
 sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
