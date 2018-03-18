@@ -47,7 +47,7 @@ OfficialUrlPip="https://bootstrap.pypa.io/$packagePip"
 CachedUrlPip="http://ci-files01-hki.intra.qt.io/input/redhat/$packagePip"
 SHA1Pip="3d45cef22b043b2b333baa63abaa99544e9c031d"
 
-DownloadURL $OfficialUrlPip $CachedUrlPip $SHA1Pip ./$packagePip
+DownloadURL $CachedUrlPip $OfficialUrlPip $SHA1Pip ./$packagePip
 sudo python3 $packagePip
 sudo rm -f $packagePip
 sudo pip3 install virtualenv
