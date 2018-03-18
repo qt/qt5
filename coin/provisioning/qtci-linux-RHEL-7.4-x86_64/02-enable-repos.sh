@@ -35,6 +35,10 @@
 
 set -ex
 
+echo "set WritePreparedUpdates=false" | sudo tee -a /etc/PackageKit/PackageKit.conf
+sudo systemctl stop packagekit
+sudo systemctl disable packagekit
+
 sudo subscription-manager config --rhsm.manage_repos=0
 sudo subscription-manager refresh
 
