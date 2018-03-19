@@ -37,8 +37,11 @@
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
 $version = "5.6.11"
-$packagex64 = "C:\Windows\temp\mysql-$version-winx64.zip"
-$packagex86 = "C:\Windows\temp\mysql-$version-win32.zip"
+$baseNameX64 = "mysql-$version-winx64"
+$packagex64 = "C:\Windows\temp\$baseNameX64.zip"
+$baseNameX86 = "mysql-$version-win32"
+$packagex86 = "C:\Windows\temp\$baseNameX86.zip"
+$installFolder = "C:\Utils\my_sql"
 
 function DownloadAndInstall
 {
@@ -52,7 +55,7 @@ function DownloadAndInstall
     Copy-Item $internalUrl $package
 
     $zipDir = [io.path]::GetFileNameWithoutExtension($package)
-    Extract-Dev-Folders-From-Zip $package $zipDir $installPath
+    Extract-7Zip $package $installPath "$zipDir\lib $zipDir\bin $zipDir\share $zipDir\include"
 
     Remove-Item -Path $package
 }
@@ -60,28 +63,21 @@ function DownloadAndInstall
 if (Is64BitWinHost) {
     # Install x64 bit version
     $architecture = "x64"
-    $installFolder = "C:\Utils\my_sql\my_sql"
     $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-winx64.zip"
 
     DownloadAndInstall $internalUrl $packagex64 $installFolder
 
-    Set-EnvironmentVariable "MYSQL_INCLUDE_x64" "$installFolder\include"
-    Set-EnvironmentVariable "MYSQL_LIB_x64" "$installFolder\lib"
+    Set-EnvironmentVariable "MYSQL_INCLUDE_x64" "$installFolder\$baseNameX64\include"
+    Set-EnvironmentVariable "MYSQL_LIB_x64" "$installFolder\$baseNameX64\lib"
 }
 
 # Install x86 bit version
 $architecture = "x86"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\mysql-$version-win32.zip"
-if (Is64BitWinHost) {
-    $installFolder = "C:\Utils\my_sql\my_sql$architecture"
-} else {
-    $installFolder = "C:\Utils\my_sql\my_sql"
-}
-
 DownloadAndInstall $internalUrl $packagex86 $installFolder
 
-Set-EnvironmentVariable "MYSQL_INCLUDE_x86" "$installFolder\include"
-Set-EnvironmentVariable "MYSQL_LIB_x86" "$installFolder\lib"
+Set-EnvironmentVariable "MYSQL_INCLUDE_x86" "$installFolder\$baseNameX86\include"
+Set-EnvironmentVariable "MYSQL_LIB_x86" "$installFolder\$baseNameX86\lib"
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 Write-Output "MySQL = $version" >> ~/versions.txt

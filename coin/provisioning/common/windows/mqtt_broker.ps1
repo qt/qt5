@@ -43,7 +43,7 @@ Download $externalUrl $internalUrl $zip
 Verify-Checksum $zip $sha1
 
 Write-Host "MQTT: Installing $zip..."
-Extract-Zip $zip C:\Utils
+Extract-7Zip $zip C:\Utils
 Remove-Item -Path $zip
 
 Set-EnvironmentVariable "MQTT_TEST_BROKER_LOCATION" "C:\Utils\paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0\interoperability\startbroker.py"

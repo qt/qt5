@@ -40,5 +40,5 @@ $url = "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/sign.zip"
 $destination = "C:\Windows\temp\sign.zip"
 
 Download $url $url $destination
-Extract-Zip "$destination" "C:\Utils"
+Extract-7Zip "$destination" "C:\Utils"
 Remove-Item -Path "$destination"

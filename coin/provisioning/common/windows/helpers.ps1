@@ -38,7 +38,8 @@ function Extract-7Zip
 {
     Param (
         [string]$Source,
-        [string]$Destination
+        [string]$Destination,
+        [string]$Filter
     )
     Write-Host "Extracting '$Source' to '$Destination'..."
 
@@ -54,47 +55,10 @@ function Extract-7Zip
         $zipExe = "7z.exe"
     }
 
-    Run-Executable "$zipExe" "x -y `"-o$Destination`" `"$Source`""
-}
-
-function Extract-Zip
-{
-    Param (
-        [string]$Source,
-        [string]$Destination
-    )
-    Write-Host "Extracting '$Source' to '$Destination'..."
-
-    New-Item -ItemType Directory -Force -Path $Destination
-    $shell = new-object -com shell.application
-    $zipfile = $shell.Namespace($Source)
-    $destinationFolder = $shell.Namespace($Destination)
-    $destinationFolder.CopyHere($zipfile.Items(), 16)
-}
-
-function Extract-Dev-Folders-From-Zip
-{
-    Param (
-        [string]$package,
-        [string]$zipDir,
-        [string]$installPath
-    )
-
-    $shell = new-object -com shell.application
-
-    Write-Host "Extracting contents of $package"
-    foreach ($subDir in "lib", "include", "bin", "share") {
-        $zip = $shell.Namespace($package + "\" + $zipDir + "\" + $subDir)
-        if ($zip) {
-            Write-Host "Extracting $subDir from zip archive"
-        } else {
-            Write-Host "$subDir is missing from zip archive - skipping"
-            continue
-        }
-        $destDir = $installPath + "\" + $subdir
-        New-Item $destDir -type directory
-        $destinationFolder = $shell.Namespace($destDir)
-        $destinationFolder.CopyHere($zip.Items(), 16)
+    if ([string]::IsNullOrEmpty($Filter)) {
+        Run-Executable "$zipExe" "x -y `"-o$Destination`" `"$Source`""
+    } else {
+        Run-Executable "$zipExe" "x -y -aoa `"-o$Destination`" `"$Source`" $Filter"
     }
 }
 

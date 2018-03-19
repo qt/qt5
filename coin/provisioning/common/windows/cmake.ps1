@@ -46,7 +46,7 @@ Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
 Download $officialurl $cachedurl $zip
 Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
 
-Extract-Zip $zip C:
+Extract-7Zip $zip C:
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
 Rename-Item $defaultinstallfolder C:\CMake
 

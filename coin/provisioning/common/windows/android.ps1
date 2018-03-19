@@ -66,7 +66,7 @@ function Install($1, $2, $3, $4) {
 
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
-    Extract-Zip $zip C:\Utils
+    Extract-7Zip $zip C:\Utils
 }
 
 function SdkUpdate ($1, $2) {
