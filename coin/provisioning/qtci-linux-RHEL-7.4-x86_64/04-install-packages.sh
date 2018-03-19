@@ -66,6 +66,8 @@ installPackages+=(libusbx-devel)
 installPackages+=(speech-dispatcher-devel)
 # Python
 installPackages+=(python-devel python-virtualenv)
+# Python 3 with python-devel, pip and virtualenv
+installPackages+=(rh-python36)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
@@ -86,3 +88,6 @@ installPackages+=(bluez-libs-devel)
 
 sudo yum -y update
 sudo yum -y install "${installPackages[@]}"
+
+sudo ln -s /opt/rh/rh-python36/root/usr/bin/python3 /usr/local/bin/python3
+sudo ln -s /opt/rh/rh-python36/root/usr/bin/pip3 /usr/local/bin/pip3
