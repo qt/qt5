@@ -35,4 +35,38 @@
 
 set -ex
 
-sudo subscription-manager repos --enable rhel-workstation-rhscl-7-rpms
+sudo subscription-manager config --rhsm.manage_repos=0
+sudo subscription-manager refresh
+
+sudo tee "/etc/yum.repos.d/local.repo" > /dev/null <<EOC
+[rhel-7-workstation-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/rhel-7-workstation-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Enterprise Linux 7 Workstation (RPMs)
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+
+[rhel-7-workstation-optional-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/rhel-7-workstation-optional-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Enterprise Linux 7 Workstation - Optional (RPMs)
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+
+[rhel-workstation-rhscl-7-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/rhel-workstation-rhscl-7-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Workstation
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+EOC
+
+sudo yum clean all
+# As well as this fetching the repository data, we also get a printout of the used repos
+sudo yum repolist
