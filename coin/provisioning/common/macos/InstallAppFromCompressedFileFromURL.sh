@@ -37,20 +37,10 @@
 # uncompresses it and installs it by default
 # to /Applications/. This can be overridden by a target parameter.
 
-# shellcheck source=try_catch.sh
-source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+set -ex
+
 # shellcheck source=DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-
-ExceptionDownload=99
-ExceptionCreateTmpFile=100
-ExceptionCreateTmpDirectory=101
-ExceptionUncompress=102
-ExceptionMoveApp=103
-ExceptionDeleteTmpFile=104
-ExceptionRemoveTmpDirectory=105
-ExceptionUnknownFormat=106
-
 
 function InstallAppFromCompressedFileFromURL {
     url=$1
@@ -63,74 +53,39 @@ function InstallAppFromCompressedFileFromURL {
         target="/Applications/"
     fi
 
-    try
-    (
-        basefilename=${url##*/}
-        extension=${basefilename##*.}
-        filename=${basefilename%.*}
-        if [ "$extension" == "gz" ] && [ "${filename##*.}" == "tar" ]; then
-            extension="tar.gz"
-        fi
+    basefilename=${url##*/}
+    extension=${basefilename##*.}
+    filename=${basefilename%.*}
+    if [ "$extension" == "gz" ] && [ "${filename##*.}" == "tar" ]; then
+        extension="tar.gz"
+    fi
 
-        echo "Extension for file: $extension"
-        echo "Creating temporary file and directory"
-        targetFile=$(mktemp "$TMPDIR$(uuidgen).$extension") || throw $ExceptionCreateTmpFile
-        # macOS 10.10 mktemp does require prefix
-        if [[ $OSTYPE == "darwin14" ]]; then
-            targetDirectory=$(mktemp -d -t '10.10') || throw $ExceptionCreateTmpDirectory
-        else
-            targetDirectory=$(mktemp -d) || throw $ExceptionCreateTmpDirectory
-        fi
-        (DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile") || throw $ExceptionDownload
-        echo "Uncompress $targetFile"
-        case $extension in
-            "tar.gz")
-                tar -xzf "$targetFile" --directory "$targetDirectory" || throw $ExceptionUncompress
-            ;;
-            "zip")
-                unzip "$targetFile" -d "$targetDirectory" || throw $ExceptionUncompress
-            ;;
-            *)
-                throw $ExceptionUnknownFormat
-            ;;
-        esac
-        echo "Moving app to '$target'"
-        sudo mv "$targetDirectory/$appPrefix/"* "$target" || throw $ExceptionMoveApp
-        echo "Removing file '$targetFile'"
-        rm "$targetFile" || throw $ExceptionDeleteTmpFile
-        echo "Removing directory '$targetDirectory'"
-        rm -rf "$targetDirectory" || throw $ExceptionRemoveTmpDirectory
-    )
-
-    catch || {
-        case $ex_code in
-            $ExceptionDownload)
-                exit 1;
-            ;;
-            $ExceptionCreateTmpFile)
-                echo "Failed to create temporary file"
-                exit 1;
-            ;;
-            $ExceptionUncompress)
-                echo "Failed extracting compressed file."
-                exit 1;
-            ;;
-            $ExceptionMoveApp)
-                echo "Failed moving app to '$target'."
-                exit 1;
-            ;;
-            $ExceptionDeleteTmpFile)
-                echo "Failed deleting temporary file."
-                exit 1;
-            ;;
-            $ExceptionRemoveTmpDirectory)
-                echo "Failed deleting temporary file."
-                exit 1;
-            ;;
-            $ExceptionUnknownFormat)
-                echo "Unknown file format."
-                exit 1;
-            ;;
-        esac
-    }
+    echo "Extension for file: $extension"
+    echo "Creating temporary file and directory"
+    targetFile=$(mktemp "$TMPDIR$(uuidgen).$extension")
+    # macOS 10.10 mktemp does require prefix
+    if [[ $OSTYPE == "darwin14" ]]; then
+        targetDirectory=$(mktemp -d -t '10.10')
+    else
+        targetDirectory=$(mktemp -d)
+    fi
+    (DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile")
+    echo "Uncompress $targetFile"
+    case $extension in
+        "tar.gz")
+            tar -xzf "$targetFile" --directory "$targetDirectory"
+        ;;
+        "zip")
+            unzip "$targetFile" -d "$targetDirectory"
+        ;;
+        *)
+            exit 1
+        ;;
+    esac
+    echo "Moving app to '$target'"
+    sudo mv "$targetDirectory/$appPrefix/"* "$target"
+    echo "Removing file '$targetFile'"
+    rm "$targetFile"
+    echo "Removing directory '$targetDirectory'"
+    rm -rf "$targetDirectory"
 }

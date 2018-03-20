@@ -39,8 +39,6 @@
 
 set -ex
 
-# shellcheck source=../common/unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
@@ -64,57 +62,23 @@ toolsSourceFile="$basePath/$toolsFile"
 ndkTargetFile="/tmp/$ndkFile"
 ndkSourceFile="$basePath/$ndkFile"
 
-ExceptionUnzipTools=100
-ExceptionUnzipNdk=101
-ExceptionRmTools=102
-ExceptionRmNdk=103
-ExceptionSdkManager=104
+echo "Unzipping Android NDK to '$targetFolder'"
+sudo unzip -q "$ndkSourceFile" -d "$targetFolder"
+echo "Unzipping Android Tools to '$sdkTargetFolder'"
+sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder"
 
-try
-(
-    echo "Unzipping Android NDK to '$targetFolder'"
-    sudo unzip -q "$ndkSourceFile" -d "$targetFolder" || throw $ExceptionUnzipNdk
-    echo "Unzipping Android Tools to '$sdkTargetFolder'"
-    sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder" || throw $ExceptionUnzipTools
+echo "Changing ownership of Android files."
+sudo chown -R qt:wheel "$targetFolder"
 
-    echo "Changing ownership of Android files."
-    sudo chown -R qt:wheel "$targetFolder"
+echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
+(echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 
-    echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
-    (echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion" || throw $ExceptionSdkManager
+SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
+SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
+SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
-    SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
-    SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
-    SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
-    SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
-
-    echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
-    echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
-    echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
-    echo "Android NDK = $ndkVersion" >> ~/versions.txt
-)
-catch || {
-        case $ex_code in
-            $ExceptionUnzipTools)
-                echo "Failed to unzip Android SDK Tools."
-                exit 1;
-            ;;
-            $ExceptionUnzipNdk)
-                echo "Failed to unzip Android NDK."
-                exit 1;
-            ;;
-            $ExceptionRmTools)
-                echo "Failed to remove temporary tools package '$toolsTargetFile'."
-                exit 1;
-            ;;
-            $ExceptionRmNdk)
-                echo "Failed to remove temporary NDK package '$ndkTargetFile'."
-                exit 1;
-            ;;
-            $ExceptionSdkManager)
-                echo "Failed to run sdkmanager."
-                exit 1;
-            ;;
-        esac
-}
-
+echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
+echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
+echo "Android NDK = $ndkVersion" >> ~/versions.txt

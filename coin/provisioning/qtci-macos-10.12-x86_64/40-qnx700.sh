@@ -35,45 +35,23 @@
 
 # This script installs QNX 7.
 
-# shellcheck source=../common/unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
-
 targetFolder="/opt/"
 sourceFile="/net/ci-files01-hki.intra.qt.io/hdd/www/input/qnx/qnx700_mac.zip"
 folderName="qnx700"
 
-ExceptionExtract=100
-ExceptionExtract2=101
+sudo mkdir -p "$targetFolder"
 
+echo "Extracting QNX 7"
+sudo unzip -q "$sourceFile" -d "$targetFolder"
 
-try
-(
-    sudo mkdir -p "$targetFolder"
+sudo chown -R qt:wheel "$targetFolder"/"$folderName"
 
-    echo "Extracting QNX 7"
-    sudo unzip -q "$sourceFile" -d "$targetFolder" || throw $ExceptionExtract
+# Verify that we have last file in zip
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    exit 1
+fi
 
-    sudo chown -R qt:wheel "$targetFolder"/"$folderName"
-
-    # Verify that we have last file in zip
-    if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
-        throw $ExceptionExtract2
-    fi
-
-    # Set env variables
-    echo "export QNX_700=$targetFolder/$folderName" >> ~/.bashrc
-    echo "QNX SDP = 7.0.0" >> ~/versions.txt
-)
-catch || {
-        case $ex_code in
-            $ExceptionExtract)
-                echo "Failed to unzip QNX 7."
-                exit 1;
-            ;;
-            $ExceptionExtract2)
-                echo "The last file in the zip did not get extracted."
-                exit 1;
-            ;;
-        esac
-}
+# Set env variables
+echo "export QNX_700=$targetFolder/$folderName" >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt
 

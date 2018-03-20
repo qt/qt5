@@ -37,8 +37,6 @@
 
 set -ex
 
-# shellcheck source=../common/unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../common/unix/try_catch.sh"
 # shellcheck source=../common/unix/InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
@@ -54,68 +52,25 @@ opensslSha1="5f26a624479c51847ebd2f22bb9f84b3b44dcb44"
 # QTQAINFRA-1195
 opensslTargetLocation="/usr/local/opt/openssl"
 
-ExceptionCD=100
-ExceptionConfig=101
-ExceptionMake=102
-ExceptionInstall=103
-ExceptionLN=104
-ExceptionCertificate=105
-ExceptionCleanup=106
+InstallFromCompressedFileFromURL "$opensslDlUrl" "$opensslAltDlUrl" "$opensslSha1" "/tmp/openssl-$opensslVersion" "openssl-$opensslVersion"
+cd "/tmp/openssl-$opensslVersion"
+pwd
+sudo ./config --prefix=/usr/local/openssl-$opensslVersion
+echo "Running 'make' for OpenSSL"
+sudo make --silent > /tmp/openssl_make.log 2>&1
+echo "Running 'make install' for OpenSSL"
+sudo make --silent install > /tmp/openssl_make_install.log 2>&1
 
-try
-(
-    InstallFromCompressedFileFromURL "$opensslDlUrl" "$opensslAltDlUrl" "$opensslSha1" "/tmp/openssl-$opensslVersion" "openssl-$opensslVersion"
-    cd "/tmp/openssl-$opensslVersion" || throw $ExceptionCD
-    pwd
-    sudo ./config --prefix=/usr/local/openssl-$opensslVersion || throw $ExceptionConfig
-    echo "Running 'make' for OpenSSL"
-    sudo make --silent > /tmp/openssl_make.log 2>&1 || throw $ExceptionMake
-    echo "Running 'make install' for OpenSSL"
-    sudo make --silent install > /tmp/openssl_make_install.log 2>&1 || throw $ExceptionInstall
+path=$(echo "$opensslTargetLocation" | sed -E 's/(.*)\/.*$/\1/')
+sudo mkdir -p "$path"
+sudo ln -s /usr/local/openssl-$opensslVersion $opensslTargetLocation
 
-    path=$(echo "$opensslTargetLocation" | sed -E 's/(.*)\/.*$/\1/')
-    sudo mkdir -p "$path"
-    sudo ln -s /usr/local/openssl-$opensslVersion $opensslTargetLocation || throw $ExceptionLN
+SetEnvVar "PATH" "\"$opensslTargetLocation/bin:\$PATH\""
+SetEnvVar "MANPATH" "\"$opensslTargetLocation/share/man:\$MANPATH\""
 
-    SetEnvVar "PATH" "\"$opensslTargetLocation/bin:\$PATH\""
-    SetEnvVar "MANPATH" "\"$opensslTargetLocation/share/man:\$MANPATH\""
+security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem
+security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem
 
-    security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem || throw $ExceptionCertificate
-    security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem || throw $ExceptionCertificate
+sudo rm -rf /tmp/openssl-$opensslVersion
 
-    sudo rm -rf /tmp/openssl-$opensslVersion || throw $ExceptionCleanup
-
-    echo "OpenSSL = $opensslVersion" >> ~/versions.txt
-)
-catch || {
-    case $ex_code in
-        $ExceptionCD)
-            echo "Failed to change directory to /tmp/openssl-$opensslVersion."
-            exit 1;
-        ;;
-        $ExceptionConfig)
-            echo "Failed to run config for OpenSSL."
-            exit 1;
-        ;;
-        $ExceptionMake)
-            echo "Failed to run 'make' for OpenSSL."
-            exit 1;
-        ;;
-        $ExceptionInstall)
-            echo "Failed to run 'make install' for OpenSSL."
-            exit 1;
-        ;;
-        $ExceptionLN)
-            echo "Failed to create a soft link for OpenSSL."
-            exit 1;
-        ;;
-        $ExceptionCertificate)
-            echo "Failed to install Certificate for OpenSSL."
-            exit 1;
-        ;;
-        $ExceptionCleanup)
-            echo "Failed to clean up /tmp/openssl-$opensslVersion."
-            exit 1;
-        ;;
-    esac
-}
+echo "OpenSSL = $opensslVersion" >> ~/versions.txt

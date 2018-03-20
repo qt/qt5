@@ -39,94 +39,25 @@ set -ex
 
 echo "Installing Java Development Kit"
 
-# shellcheck source=../unix/try_catch.sh
-source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
+targetFile=jdk-8u102-macosx-x64.dmg
 
-ExceptionDownloadPrimaryUrl=100
-ExceptionDownloadAltUrl=101
-ExceptionSHA1=102
-ExceptionAttachImage=103
-ExceptionInstall=104
-ExceptionDetachImage=105
-ExceptionRemoveTmpFile=106
-ExceptionDisableAutoUpdate=107
+url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
+# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
 
+echo "Mounting $targetFile"
+sudo mount "$url" /Volumes
 
-url=http://ci-files01-hki.intra.qt.io/input/mac/jdk-8u102-macosx-x64.dmg
-url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
-targetFile=/tmp/jdk-8u102-macosx-x64.dmg
-expectedSha1=1405af955f14e32aae187b5754a716307db22104
+sudo cp "/Volumes/$targetFile" /tmp
+sudo umount /Volumes
+sudo hdiutil attach "/tmp/$targetFile"
 
-try
-(
-    try
-    (
-        echo "Downloading from primary URL '$url'"
-        curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url" || throw $ExceptionDownloadPrimaryUrl
-    )
-    catch || {
-        case $ex_code in
-            $ExceptionDownloadPrimaryUrl)
-                echo "Failed to download '$url' multiple times"
-                echo "Downloading tar.gz from alternative URL '$url_alt'"
-                curl --fail -L --retry 5 --retry-delay 5 -j -k -H "Cookie: oraclelicense=accept-securebackup-cookie" -o "$targetFile" "$url_alt" || throw $ExceptionDownloadAltUrl
-            ;;
-        esac
-    }
-    echo "Checking SHA1 on '$targetFile'"
-    echo "$expectedSha1 *$targetFile" | shasum --check || throw $ExceptionSHA1
+echo Installing JDK
+cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
 
-    echo Mounting DMG
-    hdiutil attach "$targetFile" || throw $ExceptionAttachImage
+echo "Unmounting $targetFile"
+sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
 
-    echo Installing JDK
-    (cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /) || throw $ExceptionInstall
+echo "Disable auto update"
+sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
 
-    disk=`hdiutil info | grep '/Volumes/JDK 8 Update 102' | awk '{print $1}'`
-    hdiutil detach $disk || throw $ExceptionDetachImage
-
-    echo "Removing temporary file '$targetFile'"
-    rm "$targetFile" || throw $ExceptionRemoveTmpFile
-
-    echo "Disable auto update"
-    sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false || throw $ExceptionDisableAutoUpdate
-
-    echo "JDK Version = 8 update 102" >> ~/versions.txt
-)
-catch || {
-    case $ex_code in
-        $ExceptionDownloadPrimaryUrl)
-            echo "Failed to download JDK from primary URL."
-            exit 1;
-        ;;
-        $ExceptionDownloadAltUrl)
-            echo "Failed to download JDK from alternative URL."
-            exit 1;
-        ;;
-        $ExceptionSHA1)
-            echo "Failed to check SHA1."
-            exit 1;
-        ;;
-        $ExceptionAttachImage)
-            echo "Failed to attach image."
-            exit 1;
-        ;;
-        $ExceptionInstall)
-            echo "Failed to install JDK."
-            exit 1;
-        ;;
-        $ExceptionDetachImage)
-            echo "Failed to detach image."
-            exit 1;
-        ;;
-        $ExceptionRemoveTmpFile)
-            echo "Failed to remove temporary file."
-            exit 1;
-        ;;
-        $ExceptionDisableAutoUpdate)
-            echo "Failed to disable auto update."
-            exit 1;
-        ;;
-
-    esac
-}
+echo "JDK Version = 8 update 102" >> ~/versions.txt
