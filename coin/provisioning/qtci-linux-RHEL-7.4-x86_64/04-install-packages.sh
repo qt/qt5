@@ -35,6 +35,9 @@
 
 set -ex
 
+# Remove update notifications and packagekit running in the background
+sudo yum -y remove PackageKit gnome-software
+
 installPackages=()
 installPackages+=(git)
 installPackages+=(zlib-devel)
