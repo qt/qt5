@@ -48,7 +48,6 @@ installPackages+=(mesa-libGL-devel)
 installPackages+=(libxkbfile-devel)
 # Xinput2
 installPackages+=(libXi-devel)
-installPackages+=(python-devel)
 installPackages+=(mysql-server)
 installPackages+=(mysql)
 installPackages+=(mysql-devel)
