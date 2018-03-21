@@ -85,7 +85,6 @@ installPackages+=(glibc.i686)
 # Enable Qt Bluetooth
 installPackages+=(bluez-libs-devel)
 
-sudo yum -y update
 sudo yum -y install "${installPackages[@]}"
 
 # Make python 2.7 and its pip default
