@@ -33,16 +33,7 @@
 ##
 #############################################################################
 
-# shellcheck source=try_catch.sh
-source "${BASH_SOURCE%/*}/../unix/try_catch.sh"
-
-ExceptionCreateTmpFile=100
-ExceptionDownloadPrimaryUrl=101
-ExceptionDownloadAltUrl=102
-ExceptionSHA1=103
-ExceptionInstallerPKG=104
-ExceptionDeleteTmpFile=105
-
+set -ex
 
 function InstallPKGFromURL {
     url=$1
@@ -50,55 +41,19 @@ function InstallPKGFromURL {
     expectedSha1=$3
     targetDirectory=$4
 
-    try
-    (
-        echo "Creating temporary file"
-        targetFile=$(mktemp "$TMPDIR$(uuidgen).pkg") || trow $ExceptionCreateTmpFile
-        try
-        (
-            echo "Downloading PKG from primary URL '$url'"
-            curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url" || throw $ExceptionDownloadPrimaryUrl
-        )
-        catch || {
-            case $ex_code in
-                $ExceptionDownloadPrimaryUrl)
-                    echo "Failed to download '$url' multiple times"
-                    echo "Downloading PKG from alternative URL '$url_alt'"
-                    curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url_alt" || throw $ExceptionDownloadAltUrl
-                ;;
-            esac
-        }
-        echo "Checking SHA1 on PKG '$targetFile'"
-        echo "$expectedSha1 *$targetFile" > $targetFile.sha1
-        /usr/bin/shasum --check $targetFile.sha1 || throw $ExceptionSHA1
-        echo "Run installer on PKG"
-        sudo installer -package "$targetFile" -target "$targetDirectory" || throw $ExceptionInstallerPKG
-        echo "Removing file '$targetFile'"
-        rm "$targetFile" || throw $ExceptionDeleteTmpFile
+    echo "Creating temporary file"
+    targetFile=$(mktemp "$TMPDIR$(uuidgen).pkg")
+    echo "Downloading PKG from primary URL '$url'"
+    curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url" || (
+        echo "Failed to download '$url' multiple times"
+        echo "Downloading PKG from alternative URL '$url_alt'"
+        curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url_alt"
     )
-
-    catch || {
-        case $ex_code in
-            $ExceptionCreateTmpFile)
-                echo "Failed to create temporary file"
-                exit 1;
-            ;;
-            $ExceptionDownloadAltUrl)
-                echo "Failed downloading PKG from primary and alternative URLs"
-                exit 1;
-            ;;
-            $ExceptionSHA1)
-                echo "Failed to check sha1sum."
-                exit 1;
-            ;;
-            $ExceptionInstallerPKG)
-                echo "Failed running installer on PKG."
-                exit 1;
-            ;;
-            $ExceptionDeleteTmpFile)
-                echo "Failed deleting temporary file."
-                exit 1;
-            ;;
-        esac
-    }
+    echo "Checking SHA1 on PKG '$targetFile'"
+    echo "$expectedSha1 *$targetFile" > $targetFile.sha1
+    /usr/bin/shasum --check $targetFile.sha1
+    echo "Run installer on PKG"
+    sudo installer -package "$targetFile" -target "$targetDirectory"
+    echo "Removing file '$targetFile'"
+    rm "$targetFile"
 }

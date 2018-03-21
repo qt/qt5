@@ -33,8 +33,6 @@
 ##
 #############################################################################
 
-source "${BASH_SOURCE%/*}/try_catch.sh"
-
 set -ex
 
 # This script will install squish package for Linux and Mac.
@@ -65,18 +63,7 @@ if [ -f "/etc/profile.d/squish_env.sh" ]; then
     export SQUISH_LICENSEKEY_DIR=$HOME
 fi
 
-ExceptionMount=100
-ExceptionCreateFolder=101
-ExceptionUncompress=102
-ExceptionUnknownFormat=103
-ExceptionCopy=104
-ExceptionUmount=105
-ExceptionHdiutilAttach=106
-ExceptionInstallSquish=107
-ExceptionChangeOwnership=108
-
 function MountAndInstall {
-
     url=$1
     targetDirectory=$2
     targetFile=$3
@@ -102,96 +89,51 @@ function MountAndInstall {
 
     targetFileMount="$mountFolder"/"$targetFile"
 
-    try
-    (
-        echo "Mounting $url to $mountFolder"
-        sudo mount "$url" $mountFolder || throw $ExceptionMount
-        echo "Create $targetDirectory if needed"
-        if [ !  -d "/opt" ]; then
-            sudo mkdir "/opt" || throw $ExceptionCreateFolder
-        fi
-        if [ !  -d "$targetDirectory" ]; then
-            sudo mkdir "$targetDirectory" || throw $ExceptionCreateFolder
-        fi
-        echo "Uncompress $targetFile"
-        if [[ $targetFile == *.tar.gz ]]; then
-            if [[ $targetFile == .squish-3-license.* ]]; then
-                target="$squishLicenseDir"
-                # Squish license need to be exists also in users home directory, because squish check it before it starts running tests
-                sudo tar -xzf "$targetFileMount" --directory "$HOME" || throw $ExceptionUncompress
-            else
-                target="$targetDirectory"
-            fi
-            sudo tar -xzf "$targetFileMount" --directory "$target" || throw $ExceptionUncompress
-            echo "Unmounting $mountFolder"
-            sudo umount $mountFolder || throw $ExceptionUmount
-        elif [[ $targetFile == *.dmg ]]; then
-            echo "'dmg-file', no need to uncompress"
-            sudo cp $targetFileMount /tmp || throw $ExceptionCopy
-            sudo umount $mountFolder || throw $ExceptionUmount
-            sudo hdiutil attach "/tmp/$targetFile" || throw $ExceptionHdiutilAttach
-            sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" || throw $ExceptionInstallSquish
-            sudo hdiutil unmount /Volumes/froglogic\ Squish/
-        elif [[ $targetFile == *.run ]]; then
-            echo "'run-file', no need to uncompress"
-            sudo cp $targetFileMount $targetDirectory || throw $ExceptionCopy
-            sudo umount $mountFolder || throw $ExceptionUmount
-            sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1 || throw $ExceptionInstallSquish
-            sudo rm -fr "$targetDirectory/$targetFile"
-            if uname -a |grep -q "Ubuntu"; then
-                sudo mkdir /usr/lib/tcl8.6 || throw $ExceptionCreateFolder
-                sudo cp "$targetDirectory/package/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/ || throw $ExceptionCopy
-            fi
+    echo "Mounting $url to $mountFolder"
+    sudo mount "$url" $mountFolder
+    echo "Create $targetDirectory if needed"
+    if [ !  -d "/opt" ]; then
+        sudo mkdir "/opt"
+    fi
+    if [ !  -d "$targetDirectory" ]; then
+        sudo mkdir "$targetDirectory"
+    fi
+    echo "Uncompress $targetFile"
+    if [[ $targetFile == *.tar.gz ]]; then
+        if [[ $targetFile == .squish-3-license.* ]]; then
+            target="$squishLicenseDir"
+            # Squish license need to be exists also in users home directory, because squish check it before it starts running tests
+            sudo tar -xzf "$targetFileMount" --directory "$HOME"
         else
-            throw $ExceptionUnknownFormat
+            target="$targetDirectory"
         fi
+        sudo tar -xzf "$targetFileMount" --directory "$target"
+        echo "Unmounting $mountFolder"
+        sudo umount $mountFolder
+    elif [[ $targetFile == *.dmg ]]; then
+        echo "'dmg-file', no need to uncompress"
+        sudo cp $targetFileMount /tmp
+        sudo umount $mountFolder
+        sudo hdiutil attach "/tmp/$targetFile"
+        sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory"
+        sudo hdiutil unmount /Volumes/froglogic\ Squish/
+    elif [[ $targetFile == *.run ]]; then
+        echo "'run-file', no need to uncompress"
+        sudo cp $targetFileMount $targetDirectory
+        sudo umount $mountFolder
+        sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
+        sudo rm -fr "$targetDirectory/$targetFile"
+        if uname -a |grep -q "Ubuntu"; then
+            sudo mkdir /usr/lib/tcl8.6
+            sudo cp "$targetDirectory/package/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
+        fi
+    else
+        exit 1
+    fi
 
-        echo "Changing ownerships"
-        sudo chown -R qt:$usersGroup "$targetDirectory" || throw $ExceptionChangeOwnership
-        sudo chown qt:$usersGroup "$HOME/.squish-3-license"
-
-    )
-
-    catch || {
-        case $ex_code in
-            $ExceptionMount)
-                echo "Failed to mount $url to $mountFolder."
-                exit 1;
-            ;;
-            $ExceptionCreateFolder)
-                echo "Failed to create folder"
-                exit 1;
-            ;;
-            $ExceptionUncompress)
-                echo "Failed extracting compressed file."
-                exit 1;
-            ;;
-            $ExceptionUnknownFormat)
-                echo "Unknown file format."
-                exit 1;
-            ;;
-            $ExceptionCopy)
-                echo "Failed to copy"
-                exit 1;
-            ;;
-            $ExceptionUmount)
-                echo "Failed to unmount $mountFolder."
-                exit 1;
-            ;;
-            $ExceptionHdiutilAttach)
-                echo "Failed to hdituli attach $mountFolder/$targetFile."
-                exit 1;
-            ;;
-            $ExceptionInstallSquish)
-                echo "Failed to install squish"
-                exit 1;
-            ;;
-            $ExceptionChangeOwnership)
-                echo "Failed to change ownership of $targetDirectory."
-                exit 1;
-            ;;
-        esac
-    }
+    echo "Changing ownerships"
+    sudo chown -R qt:$usersGroup "$targetDirectory"
+    sudo chown qt:$usersGroup "$HOME/.squish-3-license"
 }
 
 echo "Set commands for environment variables in .bashrc"

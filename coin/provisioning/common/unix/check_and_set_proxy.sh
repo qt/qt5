@@ -32,19 +32,8 @@
 ##
 #############################################################################
 
-source "${BASH_SOURCE%/*}/try_catch.sh"
+set -ex
+
 source "${BASH_SOURCE%/*}/../shared/http_proxy.txt"
 
-try
-(
-  wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io
-)
-
-if [ $? -eq 0 ]; then
-    echo "Setting http_proxy to $proxy"
-    export http_proxy=$proxy
-
-else
-    echo "Proxy not detected at $proxy"
-fi
-
+(wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io && echo "Setting http_proxy to $proxy" && export http_proxy=$proxy) || echo "Proxy not detected at $proxy"
