@@ -90,7 +90,6 @@ installPackages+=(libxslt-devel)
 # For building Wayland from source
 installPackages+=(libffi-devel)
 
-sudo yum -y update
 sudo yum -y install "${installPackages[@]}"
 
 # Make python 2.7 and its pip default
