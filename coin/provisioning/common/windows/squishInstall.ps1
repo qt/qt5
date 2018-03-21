@@ -118,6 +118,7 @@ if ($OSVersion -eq "Windows 10 Enterprise") {
 } elseif ($OSVersion -eq "Windows 7 Enterprise") {
 
     if (Is64BitWinHost) {
+        DownloadAndInstallSquish $version win64 "msvc12"
         DownloadAndInstallSquish $version win64 "msvc14"
     }
     DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
