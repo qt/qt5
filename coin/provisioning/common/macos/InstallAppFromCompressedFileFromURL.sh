@@ -76,7 +76,7 @@ function InstallAppFromCompressedFileFromURL {
             tar -xzf "$targetFile" --directory "$targetDirectory"
         ;;
         "zip")
-            unzip "$targetFile" -d "$targetDirectory"
+            unzip -q "$targetFile" -d "$targetDirectory"
         ;;
         *)
             exit 1

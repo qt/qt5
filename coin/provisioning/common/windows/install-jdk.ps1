@@ -71,6 +71,9 @@ Run-Executable "$javaPackage" "/s SPONSORS=0"
 Write-Host "Cleaning $javaPackage.."
 Remove-Item -Recurse -Force -Path "$javaPackage"
 
+Write-Host "Remove Java update from startup"
+reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v SunJavaUpdateSched /f
+
 Set-EnvironmentVariable "JAVA_HOME" "$installdir"
 Add-Path "$installdir\bin"
 
