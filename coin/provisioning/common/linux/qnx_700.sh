@@ -44,7 +44,7 @@ sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.tar.xz"
 sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
 folderName="qnx700"
 targetFile="qnx700.tar.xz"
-wget --tries=5 --waitretry=5 --output-document="$targetFile" "$sourceFile"
+wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
 echo "$sha1  $targetFile" | sha1sum --check
 if [ ! -d "$targetFolder" ]; then
     mkdir -p $targetFolder
