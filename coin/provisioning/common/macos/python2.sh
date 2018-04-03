@@ -35,8 +35,12 @@
 
 # This script installs python2
 
+# shellcheck source=./InstallPKGFromURL.sh
 source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
+# shellcheck source=./../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck source=./pip.sh
+source "${BASH_SOURCE%/*}/pip.sh"
 
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-2.7.14-macosx10.6.pkg"
 AltUrl="https://www.python.org/ftp/python/2.7.14/python-2.7.14-macosx10.6.pkg"
@@ -45,8 +49,11 @@ DestDir="/"
 
 InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
+InstallPip python2.7
+
 /Library/Frameworks/Python.framework/Versions/2.7/bin/pip install virtualenv
 
 SetEnvVar "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin/:\$PATH"
 
 echo "python2 = 2.7.14" >> ~/versions.txt
+
