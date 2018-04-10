@@ -47,7 +47,6 @@ if (Test-Path $preparedPackage) {
     # The prepared package contains updated packages so that not everything has to be downloaded
     Write-Host "Using prepared package"
     Copy-Item -Recurse $preparedPackage $packagePath
-    exit 0
     # Remove the whole downloaded folder
     $toRemove = $packagePath + "\vs14-kb3165756-update"
     $executable = "$toRemove\vs14-kb3165756.exe"

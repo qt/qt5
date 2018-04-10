@@ -95,3 +95,9 @@ echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
 echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
 echo "Android NDK = $ndkVersion" >> ~/versions.txt
+
+cd $sdkTargetFolder/tools/bin
+echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"
+echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-21;google_apis;x86" -c 2048M -f
+# Purely informative, show the list of avd devices
+./avdmanager list avd
