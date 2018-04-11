@@ -50,8 +50,8 @@ function InstallPKGFromURL {
         curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url_alt"
     )
     echo "Checking SHA1 on PKG '$targetFile'"
-    echo "$expectedSha1 *$targetFile" > $targetFile.sha1
-    /usr/bin/shasum --check $targetFile.sha1
+    echo "$expectedSha1 *$targetFile" > "$targetFile.sha1"
+    /usr/bin/shasum --check "$targetFile.sha1"
     echo "Run installer on PKG"
     sudo installer -package "$targetFile" -target "$targetDirectory"
     echo "Removing file '$targetFile'"

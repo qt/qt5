@@ -45,5 +45,6 @@
 #     /usr/local/bin/sha1sum -> /usr/bin/shasum5.18
 
 [ -d /usr/local/bin ] || sudo mkdir -p /usr/local/bin
+# shellcheck disable=SC2012
 SHASUM_TOOLNAME=$(ls -r /usr/bin/shasum?.* | head -n1)
 sudo ln -s "${SHASUM_TOOLNAME}" /usr/local/bin/sha1sum
