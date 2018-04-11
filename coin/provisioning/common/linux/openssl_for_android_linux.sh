@@ -36,7 +36,9 @@
 # This script install OpenSSL from sources.
 # Requires GCC and Perl to be in PATH.
 
+# shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="1.0.2g"

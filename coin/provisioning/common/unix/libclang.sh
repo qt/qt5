@@ -40,10 +40,12 @@
 # In case of Linux, we expect to get the values as args
 set -e
 
+# shellcheck source=./check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
 
 BASEDIR=$(dirname "$0")
-. $BASEDIR/../shared/sw_versions.txt
+# shellcheck source=../shared/sw_versions.txt
+. "$BASEDIR/../shared/sw_versions.txt"
 url=$1
 sha1=$2
 version=$3
@@ -61,10 +63,10 @@ destination="/usr/local/libclang-$version"
 
 curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
 echo "$sha1  $zip" | sha1sum --check
-7z x $zip -o/tmp/
-rm -rf $zip
+7z x "$zip" -o/tmp/
+rm -rf "$zip"
 
-sudo mv /tmp/libclang $destination
+sudo mv /tmp/libclang "$destination"
 
 echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
 echo "libClang = $version" >> ~/versions.txt

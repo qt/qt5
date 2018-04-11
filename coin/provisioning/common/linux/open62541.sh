@@ -35,6 +35,8 @@
 
 set +e
 
+# shellcheck disable=SC1090
+
 # We need to source to be able to use cmake in the shell
 if uname -a |grep -q "Ubuntu"; then
     source ~/.profile
@@ -44,11 +46,13 @@ fi
 
 set -ex
 
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 TEMPDIR=$(mktemp --directory) || echo "Failed to create temporary directory"
+# shellcheck disable=SC2064
 trap "sudo rm -fr $TEMPDIR" EXIT
-cd $TEMPDIR
+cd "$TEMPDIR"
 
 sudo pip install --upgrade pip
 sudo pip install six
