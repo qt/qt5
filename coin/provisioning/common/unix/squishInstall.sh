@@ -140,10 +140,10 @@ echo "Set commands for environment variables in .bashrc"
 
 if uname -a |grep -q "Ubuntu"; then
     echo "export SQUISH_PATH=$squishFolder/package" >> ~/.profile
-    echo "export PATH=\$PATH:$quishFolder/squish-$version/bin" >> ~/.profile
+    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.profile
 else
     echo "export SQUISH_PATH=$squishFolder/package" >> ~/.bashrc
-    echo "export PATH=\$PATH:$quishFolder/squish-$version/bin" >> ~/.bashrc
+    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.bashrc
 fi
 
 echo "Installing squish license to home directory.."
