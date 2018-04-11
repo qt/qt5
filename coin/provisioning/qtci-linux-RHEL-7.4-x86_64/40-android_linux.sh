@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/android_linux.sh
 source "${BASH_SOURCE%/*}/../common/linux/android_linux.sh"

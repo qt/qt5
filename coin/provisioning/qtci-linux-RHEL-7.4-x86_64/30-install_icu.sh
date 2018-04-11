@@ -47,26 +47,26 @@ develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
-targetFile=`mktemp`
-wget --tries=5 --waitretry=5 --output-document=$targetFile $baseBinaryPackageURL
+targetFile=$(mktemp)
+wget --tries=5 --waitretry=5 --output-document="$targetFile" "$baseBinaryPackageURL"
 echo "$sha1  $targetFile" | sha1sum --check
-sudo 7z x -y -o"/usr/lib64" $targetFile
-sudo rm $targetFile
+sudo 7z x -y -o/usr/lib64 "$targetFile"
+sudo rm "$targetFile"
 
 echo "Installing custom ICU devel packages on RHEL"
 
-tempDir=`mktemp -d`
+tempDir=$(mktemp -d)
 
-targetFile=`mktemp`
-wget --tries=5 --waitretry=5 --output-document=$targetFile $develPackageURL
+targetFile=$(mktemp)
+wget --tries=5 --waitretry=5 --output-document="$targetFile" "$develPackageURL"
 echo "$sha1Dev $targetFile" | sha1sum --check
-7z x -y -o$tempDir $targetFile
+7z x -y -o"$tempDir" "$targetFile"
 
-sudo cp -a $tempDir/lib/* /usr/lib64
-sudo cp -a $tempDir/* /usr/
+sudo cp -a "$tempDir"/lib/* /usr/lib64
+sudo cp -a "$tempDir"/* /usr/
 
-sudo rm $targetFile
-sudo rm -fr $tempDir
+sudo rm "$targetFile"
+sudo rm -fr "$tempDir"
 
 sudo /sbin/ldconfig
 

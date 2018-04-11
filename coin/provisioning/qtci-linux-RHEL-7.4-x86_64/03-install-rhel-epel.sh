@@ -35,6 +35,7 @@
 
 set -ex
 
+# shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 package="epel-release-7-11.noarch.rpm"

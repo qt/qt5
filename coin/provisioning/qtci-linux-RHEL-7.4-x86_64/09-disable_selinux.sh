@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/disable_selinux.sh
 source "${BASH_SOURCE%/*}/../common/linux/disable_selinux.sh"

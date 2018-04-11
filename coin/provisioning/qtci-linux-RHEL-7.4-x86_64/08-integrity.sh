@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/integrity.sh
 source "${BASH_SOURCE%/*}/../common/linux/integrity.sh"
