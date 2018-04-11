@@ -39,9 +39,10 @@
 
 set -ex
 
+# shellcheck disable=SC2129
 echo "*********************************************" >> ~/versions.txt
 echo "***** All installed RPM packages *****" >> ~/versions.txt
 rpm -q -a | sort >> ~/versions.txt
 echo "*********************************************" >> ~/versions.txt
 
-$(dirname $0)/../common/linux/version.sh
+"$(dirname "$0")/../common/linux/version.sh"

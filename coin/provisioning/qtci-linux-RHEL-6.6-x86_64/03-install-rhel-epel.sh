@@ -33,6 +33,7 @@
 ##
 #############################################################################
 
+# shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 package="epel-release-6-8.noarch.rpm"
