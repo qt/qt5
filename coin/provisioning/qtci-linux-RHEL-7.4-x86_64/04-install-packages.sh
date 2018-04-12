@@ -89,6 +89,12 @@ installPackages+=(libxml2-devel)
 installPackages+=(libxslt-devel)
 # For building Wayland from source
 installPackages+=(libffi-devel)
+# QtWayland
+installPackages+=(mesa-libwayland-egl)
+installPackages+=(mesa-libwayland-egl-devel)
+installPackages+=(libwayland-client)
+installPackages+=(libwayland-cursor)
+installPackages+=(libwayland-server)
 
 sudo yum -y install "${installPackages[@]}"
 
