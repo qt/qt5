@@ -200,12 +200,6 @@
 	url = ../qtandroidextras.git
 	branch = dev
 	status = addon
-[submodule "qtenginio"]
-	depends = qtdeclarative
-	path = qtenginio
-	url = ../qtenginio.git
-	branch = dev
-	status = ignore
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
