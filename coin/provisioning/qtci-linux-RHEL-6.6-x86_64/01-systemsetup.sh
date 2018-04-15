@@ -35,8 +35,10 @@
 
 set -ex
 
+# shellcheck source=../common/unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
+# shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
     echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
 fi

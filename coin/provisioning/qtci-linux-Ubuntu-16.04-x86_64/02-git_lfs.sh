@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,16 +33,11 @@
 ##
 #############################################################################
 
-# This script needs to be called last during provisioning so that the software information will show up last in provision log.
-
-# Storage installed RPM packages information
+# Install Git Large File Storage
 
 set -ex
 
-# shellcheck disable=SC2129
-echo "*********************************************" >> ~/versions.txt
-echo "***** All installed RPM packages *****" >> ~/versions.txt
-rpm -q -a | sort >> ~/versions.txt
-echo "*********************************************" >> ~/versions.txt
-
-"$(dirname "$0")/../common/linux/version.sh"
+sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main'
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 37BBEE3F7AD95B3F
+sudo apt update
+sudo apt install git-lfs

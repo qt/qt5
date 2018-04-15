@@ -1,11 +1,9 @@
-#!/usr/bin/env bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,16 +31,20 @@
 ##
 #############################################################################
 
-# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+. "$PSScriptRoot\helpers.ps1"
 
-# Storage installed RPM packages information
+# This script will install Windows 10 SDK
 
-set -ex
+$url_cache = "\\ci-files01-hki.ci.local\provisioning\windows\winsdksetup.exe"
+$url_official = "https://download.microsoft.com/download/8/C/3/8C37C5CE-C6B9-4CC8-8B5F-149A9C976035/windowssdk/winsdksetup.exe"
+$package = "C:\Windows\Temp\winsdksetup.exe"
+$sha1 = "db237323f1779fb143e7cdc558e4345e7004489e"
 
-# shellcheck disable=SC2129
-echo "*********************************************" >> ~/versions.txt
-echo "***** All installed RPM packages *****" >> ~/versions.txt
-rpm -q -a | sort >> ~/versions.txt
-echo "*********************************************" >> ~/versions.txt
+Copy-Item $url_cache $package
+Verify-Checksum $package $sha1
+Run-Executable $package "/features + /q"
 
-"$(dirname "$0")/../common/linux/version.sh"
+Write-Host "Cleaning $package.."
+Remove-Item -Recurse -Force -Path "$package"
+
+Write-Output "Windows 10 SDK = 10.0.16229.91" >> ~\versions.txt
