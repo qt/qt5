@@ -63,8 +63,8 @@ installPackages+=(gtk3-devel)
 installPackages+=(libusbx-devel)
 # speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
 installPackages+=(speech-dispatcher-devel)
-# Python 2.7 with python-devel, pip and virtualenv
-installPackages+=(python27)
+# Python 2 devel and pip. python-pip requires the EPEL repository to be added
+installPackages+=(python-devel python-pip)
 # Python 3 with python-devel, pip and virtualenv
 installPackages+=(rh-python36)
 # WebEngine
@@ -98,8 +98,9 @@ installPackages+=(libwayland-server)
 
 sudo yum -y install "${installPackages[@]}"
 
-# Make python 2.7 and its pip default
-echo "source scl_source enable python27" >> ~/.bashrc
-
 sudo ln -s /opt/rh/rh-python36/root/usr/bin/python3 /usr/local/bin/python3
 sudo ln -s /opt/rh/rh-python36/root/usr/bin/pip3 /usr/local/bin/pip3
+# We shouldn't use yum to install virtualenv. The one found from package repo is not
+# working, but we can use installed pip
+sudo pip install --upgrade pip
+sudo pip install virtualenv
