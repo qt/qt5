@@ -45,3 +45,5 @@ Extract-7Zip $archive $libusb_location
 
 # Tell qt-apps/qdb build system where to find libusb
 Set-EnvironmentVariable "LIBUSB_PATH" $libusb_location
+
+Write-Output "libusb = libusb-1.0.21" >> ~/versions.txt

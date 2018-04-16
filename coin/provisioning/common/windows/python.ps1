@@ -69,3 +69,5 @@ Run-Executable "C:\Python27\python.exe" "-m ensurepip"
 #    $pip_args = "--proxy=" + (getProxy)
 #}
 Run-Executable "C:\Python27\Scripts\pip.exe" "install virtualenv"
+
+Write-Output "Python = $version" >> ~/versions.txt

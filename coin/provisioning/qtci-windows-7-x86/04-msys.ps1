@@ -12,3 +12,5 @@ $destination = "C:\msys"
 Download $url $url $zip
 Verify-Checksum $zip $sha1
 C:\Utils\sevenzip\7z.exe x $zip -oC:\
+
+Write-Output "Msys = $version" >> ~/versions.txt

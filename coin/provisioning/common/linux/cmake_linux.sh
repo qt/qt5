@@ -52,3 +52,6 @@ appPrefix="cmake-$version-Linux-x86_64"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
 SetEnvVar "PATH" "$targetFolder/bin:\$PATH"
+
+echo "CMake = $version" >> ~/versions.txt
+

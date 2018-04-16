@@ -98,3 +98,9 @@ if ($p -ne $null) {
 } else {
     Write-Host "adb.exe not running"
 }
+
+Write-Output "Android SDK tools= $sdkVersion" >> ~/versions.txt
+Write-Output "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+Write-Output "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
+Write-Output "Android NDK = $ndkVersion" >> ~/versions.txt
+

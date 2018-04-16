@@ -9,3 +9,5 @@ Extract-Zip $zip C:\Utils\Ninja
 Remove-Item -Path $zip
 
 Add-Path "C:\Utils\Ninja"
+
+Write-Output "Ninja = 1.6.0" >> ~/versions.txt

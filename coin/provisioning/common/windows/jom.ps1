@@ -7,3 +7,5 @@ Verify-Checksum $zip "80EE5678E714DE99DDAF5F7593AB04DB1C7928E4"
 Extract-Zip $zip C:\Utils\Jom
 
 Set-EnvironmentVariable "CI_JOM_PATH" "C:\Utils\Jom"
+
+Write-Output "Jom = 1.1.2" >> ~/versions.txt

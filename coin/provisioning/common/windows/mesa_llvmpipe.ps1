@@ -62,3 +62,4 @@ if (Is64BitWinHost) {
     Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
 }
 
+Write-Output "Mesa llvmpipe = $version" >> ~/versions.txt
