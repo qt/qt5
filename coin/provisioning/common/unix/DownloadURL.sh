@@ -56,5 +56,6 @@ function DownloadURL {
     echo "Checking SHA1 on PKG '$targetFile'"
     echo "$expectedSha1 *$targetFile" > $targetFile.sha1
     sha1sum --check $targetFile.sha1
+    rm -f $targetFile.sha1
 }
 

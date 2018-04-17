@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
 #############################################################################
 ##
 ## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -35,29 +35,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
-
-version=1.12.0
-sha1="9a0dd96f53fff3e227035ed76caaa209b632ea8d"
-archive="wayland-$version.tar.xz"
-primaryUrl="https://wayland.freedesktop.org/releases/$archive"
-cacheUrl="http://ci-files01-hki.intra.qt.io/input/wayland/$archive"
-
-echo "Installing Wayland $version $sha1 on RHEL"
-
-targetFile="/tmp/$archive"
-DownloadURL $primaryUrl $cacheUrl $sha1 $targetFile
-tar xf $targetFile --directory /tmp/
-rm $targetFile
-
-cd /tmp/wayland-$version
-./configure \
-    --prefix=/usr \
-    --libdir=/usr/lib64 \
-    --disable-static \
-    --disable-documentation
-make
-sudo make install
-rm -rf /tmp/wayland-$version
-
-echo "wayland = $version" >> ~/versions.txt
+source "${BASH_SOURCE%/*}/../common/linux/qnx_660.sh"

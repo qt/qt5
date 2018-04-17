@@ -51,6 +51,9 @@ fi
 squishLicenseUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/"
 squishLicenseFile=".squish-3-license.tar.gz"
 
+testSuite="suite_test_squish"
+testSuiteUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/"
+
 # These checks can be removed when Vanilla OS for all linux and Mac are in
 if [ -d "$squishFolder" ]; then
     echo "Move old squish to /tmp"
@@ -140,10 +143,10 @@ echo "Set commands for environment variables in .bashrc"
 
 if uname -a |grep -q "Ubuntu"; then
     echo "export SQUISH_PATH=$squishFolder/package" >> ~/.profile
-    echo "export PATH=\$PATH:$quishFolder/squish-$version/bin" >> ~/.profile
+    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.profile
 else
     echo "export SQUISH_PATH=$squishFolder/package" >> ~/.bashrc
-    echo "export PATH=\$PATH:$quishFolder/squish-$version/bin" >> ~/.bashrc
+    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.bashrc
 fi
 
 echo "Installing squish license to home directory.."
@@ -151,3 +154,14 @@ MountAndInstall "$squishLicenseUrl" "$squishFolder" "$squishLicenseFile"
 
 echo "Installing squish $version.."
 MountAndInstall "$squishUrl" "$squishFolder" "$squishFile"
+
+echo "Installing test suite for squish"
+MountAndInstall "$testSuiteUrl" "$squishFolder" "$testSuite.tar.gz"
+
+echo "Verifying Squish Installation"
+if "$squishFolder/package/bin/squishrunner" --testsuite "$squishFolder/$testSuite" | grep "Squish test run successfully" ; then
+    echo "Squish installation tested successfully"
+else
+    echo "Squish test failed! Package wasn't installed correctly."
+    exit 1
+fi

@@ -45,27 +45,28 @@ function Install7ZPackageFromURL {
     expectedSha1=$2
     targetDirectory=$3
 
-    targetFile=`mktemp`
-    wget --tries=5 --waitretry=5 --output-document=$targetFile $url
+    targetFile=$(mktemp)
+    wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url"
     echo "$expectedSha1  $targetFile" | sha1sum --check
-    sudo /usr/local/bin/7z x -yo$targetDirectory $targetFile
-    rm $targetFile
+    sudo /usr/local/bin/7z x -yo"$targetDirectory" "$targetFile"
+    rm "$targetFile"
 }
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
 baseBinaryPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64.7z"
-Install7ZPackageFromURL $baseBinaryPackageURL $sha1 "/usr/lib64"
+Install7ZPackageFromURL "$baseBinaryPackageURL" "$sha1" "/usr/lib64"
 
 echo "Installing custom ICU devel packages on RHEL"
 
 sha1Dev="82f8b216371b848b8d36ecec7fe7b6e9b0dba0df"
 develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64-devel.7z"
-tempDir=`mktemp -d`
+tempDir=$(mktemp -d)
+# shellcheck disable=SC2064
 trap "sudo rm -fr $tempDir" EXIT
-Install7ZPackageFromURL $develPackageURL $sha1Dev $tempDir
-sudo cp -a $tempDir/lib/* /usr/lib64
-sudo cp -a $tempDir/* /usr/
+Install7ZPackageFromURL "$develPackageURL" "$sha1Dev" "$tempDir"
+sudo cp -a "$tempDir/lib"/* /usr/lib64
+sudo cp -a "$tempDir"/* /usr/
 
 sudo /sbin/ldconfig
 

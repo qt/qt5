@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,16 +33,34 @@
 ##
 #############################################################################
 
-# This script needs to be called last during provisioning so that the software information will show up last in provision log.
-
-# Storage installed RPM packages information
+# This script installs QNX 6.6.0.
 
 set -ex
 
-# shellcheck disable=SC2129
-echo "*********************************************" >> ~/versions.txt
-echo "***** All installed RPM packages *****" >> ~/versions.txt
-rpm -q -a | sort >> ~/versions.txt
-echo "*********************************************" >> ~/versions.txt
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-"$(dirname "$0")/../common/linux/version.sh"
+targetFolder="/opt/"
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/linux/qnx660.tar.gz"
+sha1="E292CCAEF447AC1AA4DAD7802D604A5531ACD8D0"
+folderName="qnx660"
+targetFile="qnx660.tar.gz"
+wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
+echo "$sha1  $targetFile" | sha1sum --check
+if [ ! -d "$targetFolder" ]; then
+    mkdir -p $targetFolder
+fi
+sudo tar -C $targetFolder -xvzf $targetFile
+sudo chown -R qt:users "$targetFolder"/"$folderName"
+
+# Verify that we have last file in tar
+if [ ! -f $targetFolder/$folderName/qnx660-env.sh ]; then
+    echo "Installation failed!"
+    exit -1
+fi
+
+rm -rf $targetFile
+
+# Set env variables
+SetEnvVar "QNX_660" "$targetFolder$folderName"
+
+echo "QNX SDP = 6.6.0" >> ~/versions.txt

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -48,6 +48,8 @@ $qtBranch = "59x"
 $targetDir = "C:\Utils\squish"
 $squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin"
 $squishBranchUrl = "$squishUrl\$qtBranch"
+$testSuite = "suite_test_squish"
+$testSuiteUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin\$testSuite.7z"
 
 # Squish license
 $licensePackage = ".squish-3-license"
@@ -77,9 +79,13 @@ Function DownloadAndInstallSquish {
             $squishPackage64bit = "$squishPackage`_64"
         }
         Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
+        TestSquish $squishPackage64bit
     } else {
         if ($squishPackage.StartsWith("mingw")) {
             Rename-Item $targetDir\$squishPackage $targetDir\mingw
+            TestSquish mingw
+        } else {
+            TestSquish $squishPackage
         }
     }
 }
@@ -93,9 +99,26 @@ Function DownloadSquishLicence {
     Copy-Item $squishUrl\$licensePackage ~\$licensePackage
 }
 
+Function TestSquish {
+    Param (
+        [string]$squishPackage
+    )
+
+    echo "Verifying Squish Installation"
+    if (cmd /c "$targetDir\$squishPackage\bin\squishrunner.exe --testsuite $targetDir\$testSuite" |Select-String -Pattern "Squish test run successfully") {
+        echo "Squish installation tested successfully!"
+    } else {
+        echo "Squish test failed! $squishPackage wasn't installed correctly."
+        [Environment]::Exit(1)
+    }
+}
 
 Write-Host "Creating $targetDir"
 New-Item -ErrorAction Ignore -ItemType directory -Path "$targetDir"
+
+Write-Host "Download and install Test Suite for squish"
+Copy-Item $testSuiteUrl $targetDir/$testSuite.7z
+Extract-7Zip $targetDir/$testSuite.7z $targetDir
 
 DownloadSquishLicence $squishUrl
 
