@@ -59,3 +59,6 @@ echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/h
 if [ "$http_proxy" != "" ]; then
     echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf
 fi
+
+# This won't be needed for Ubuntu 17 and above, see QTBUG-67757.
+sudo sed -i '/-UnityDecoration-extents/c\    -UnityDecoration-extents: 0 0 0 0;' /usr/share/themes/Ambiance/gtk-3.0/apps/unity.css
