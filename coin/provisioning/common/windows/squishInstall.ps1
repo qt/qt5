@@ -104,11 +104,11 @@ Function TestSquish {
         [string]$squishPackage
     )
 
-    echo "Verifying Squish Installation"
+    Write-Host "Verifying Squish Installation"
     if (cmd /c "$targetDir\$squishPackage\bin\squishrunner.exe --testsuite $targetDir\$testSuite" |Select-String -Pattern "Squish test run successfully") {
-        echo "Squish installation tested successfully!"
+        Write-Host "Squish installation tested successfully!"
     } else {
-        echo "Squish test failed! $squishPackage wasn't installed correctly."
+        Write-Host "Squish test failed! $squishPackage wasn't installed correctly."
         [Environment]::Exit(1)
     }
 }
