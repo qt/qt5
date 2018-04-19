@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
-set -e
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -32,19 +30,12 @@ set -e
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-# macOS 10.11 template doesn't have working virtualenv installation.
-# To fix that, we first have to install pip to install virtualenv
-# Install pip
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo python get-pip.py
-rm get-pip.py
 
-# remove possible link pointing to broken virtualenv
-sudo rm -f /opt/local/bin/virtualenv
-sudo pip install virtualenv
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
-# make sure it is now in PATH
-which virtualenv
-if [[ $? -ne 0 ]]; then
-    exit 1
-fi
+# This script just sets required env variables to make sure
+# Coin finds required SLL libs and headers.
+
+Set-EnvironmentVariable "MYSQL_INCLUDE_x86" "C:\utils\my_sql\my_sql\include"
+Set-EnvironmentVariable "MYSQL_LIB_x86" "C:\utils\my_sql\my_sql\lib"
+

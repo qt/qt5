@@ -81,6 +81,17 @@ function Download
     }
 }
 
+function Set-EnvironmentVariable
+{
+    Param (
+        [string]$Key = $(BadParam("a key")),
+        [string]$Value = $(BadParam("a value."))
+    )
+    Write-Host "Setting environment variable `"$($Key)`" to `"$($Value)`""
+
+    [Environment]::SetEnvironmentVariable($Key, $Value, [EnvironmentVariableTarget]::Machine)
+}
+
 function Add-Path
 {
     Param (
