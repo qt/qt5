@@ -60,5 +60,8 @@ sudo zypper -nq install libxslt-devel
 sudo zypper -nq install gstreamer-devel
 sudo zypper -nq install gstreamer-plugins-base-devel
 
+# pulseaudio (qtmultimedia)
+sudo zypper -nq install libpulse-devel
+
 # cups
 sudo zypper -nq install cups-devel
