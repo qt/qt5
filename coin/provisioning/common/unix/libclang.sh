@@ -53,7 +53,7 @@ if [ $# -eq 0 ]
     echo "Using macOS defaults"
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
-    sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
+    sha1="10e48167b61726b20517172f8aff80fa1d9a379b"
 fi
 
 zip="libclang.7z"
