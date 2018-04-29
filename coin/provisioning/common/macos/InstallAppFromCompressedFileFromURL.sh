@@ -39,7 +39,7 @@
 
 set -ex
 
-# shellcheck source=DownloadURL.sh
+# shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
 function InstallAppFromCompressedFileFromURL {

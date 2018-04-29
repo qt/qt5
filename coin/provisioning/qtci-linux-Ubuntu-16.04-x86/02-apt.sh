@@ -1,11 +1,11 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,5 +33,23 @@
 ##
 #############################################################################
 
-# shellcheck source=../common/linux/open62541.sh
-source "${BASH_SOURCE%/*}/../common/linux/open62541.sh"
+# Install required packages with APT
+
+set -ex
+
+echo "Disabling auto update"
+sudo sed -i 's/APT::Periodic::Update-Package-Lists "1";/APT::Periodic::Update-Package-Lists "0";/' /etc/apt/apt.conf.d/10periodic
+for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-daily-upgrade.service; do
+    sudo systemctl stop $service
+    sudo systemctl disable $service
+done
+
+installPackages+=(git)
+installPackages+=(p7zip-full)
+installPackages+=(expect)
+
+echo "Running update for apt"
+sudo apt-get update
+echo "Installing packages"
+sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
+

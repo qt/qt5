@@ -63,3 +63,5 @@ Write-Host "Installing patch for Visual Studio $version..."
 Run-Executable $executable "/norestart /passive"
 
 Remove-Item -Force -Recurse -Path $toRemove
+
+Write-Output "Visual Studio = $version" >> ~\versions.txt

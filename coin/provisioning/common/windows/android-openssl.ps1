@@ -67,3 +67,5 @@ Pop-Location
 
 # Following command is needed when using version 1.1.0. With version 1.1.0 msys is not needed.
 # C:\mingw530\bin\mingw32-make.exe include\openssl\opensslconf.h
+
+Write-Output "Android OpenSSL = $version" >> ~/versions.txt

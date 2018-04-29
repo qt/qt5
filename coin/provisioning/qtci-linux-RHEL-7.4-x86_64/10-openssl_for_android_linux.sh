@@ -34,8 +34,10 @@
 #############################################################################
 set +e
 
+# shellcheck disable=SC1091
 source /opt/rh/devtoolset-4/enable
 
 set -ex
 
+# shellcheck source=../common/linux/openssl_for_android_linux.sh
 source "${BASH_SOURCE%/*}/../common/linux/openssl_for_android_linux.sh"

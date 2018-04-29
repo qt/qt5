@@ -43,3 +43,5 @@ if (Is64BitWinHost) {
 Set-EnvironmentVariable "CI_ICU_PATH_Mingw49" "C:\Utils\icu_53_1_Mingw_builds_4_8_2_posix_seh_64_devel\icu53_1"
 
 }
+
+Write-Output "ICU = $version" >> ~\versions.txt

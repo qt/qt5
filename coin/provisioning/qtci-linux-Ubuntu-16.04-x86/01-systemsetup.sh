@@ -1,11 +1,11 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,5 +33,27 @@
 ##
 #############################################################################
 
-# shellcheck source=../common/linux/open62541.sh
-source "${BASH_SOURCE%/*}/../common/linux/open62541.sh"
+# This script modifies system settings for automated use
+
+set -ex
+
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
+
+NTS_IP=10.212.2.216
+
+echo "Set timezone to UTC."
+sudo timedatectl set-timezone Etc/UTC
+echo "Timeout for blanking the screen (0 = never)"
+gsettings set org.gnome.desktop.session idle-delay 0
+echo "Prevents screen lock when screesaver goes active."
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+echo "Disable questions on shutdown."
+gsettings set com.canonical.indicator.session suppress-logout-restart-shutdown true
+
+echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
+echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+
+if [ "$proxy" != "" ]; then
+    echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf
+fi

@@ -39,4 +39,5 @@ set -ex
 
 # CMake is needed for autotests that verify that Qt can be built with CMake
 
+# shellcheck source=../common/linux/cmake_linux.sh
 source "${BASH_SOURCE%/*}/../common/linux/cmake_linux.sh"

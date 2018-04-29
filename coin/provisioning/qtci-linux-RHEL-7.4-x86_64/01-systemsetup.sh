@@ -36,7 +36,8 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-source $BASEDIR/../common/shared/network_test_server_ip.txt
+# shellcheck source=../common/shared/network_test_server_ip.txt
+source "$BASEDIR/../common/shared/network_test_server_ip.txt"
 
 echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
 echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts

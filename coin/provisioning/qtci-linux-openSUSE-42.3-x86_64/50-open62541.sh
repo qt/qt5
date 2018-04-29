@@ -33,4 +33,5 @@
 ##
 #############################################################################
 
+# shellcheck source=../common/linux/open62541.sh
 source "${BASH_SOURCE%/*}/../common/linux/open62541.sh"

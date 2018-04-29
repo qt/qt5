@@ -40,5 +40,5 @@ echo "Disable Network Time Protocol (NTP)"
 if uname -a |grep -q "Ubuntu"; then
     sudo timedatectl set-ntp false
 else
-    systemctl &>/dev/null && sudo systemctl disable ntpd || sudo /sbin/chkconfig ntpd off
+    (systemctl &>/dev/null && sudo systemctl disable ntpd) || sudo /sbin/chkconfig ntpd off
 fi

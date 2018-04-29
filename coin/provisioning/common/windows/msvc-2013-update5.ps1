@@ -38,13 +38,13 @@ $version = "2013 Update 5 (KB2829760)"
 $package = "C:\Windows\Temp\vs12-kb2829760.exe"
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\VS2013.5.exe"
 
-Write-Output "Fetching patch for Visual Studio $version..."
+Write-Host "Fetching patch for Visual Studio $version..."
 Copy-Item $url_cache $package
 
-Write-Output "Installing Update 5 for Visual Studio $version..."
-Start-Process -FilePath $package -ArgumentList "/norestart /passive" -Wait
+Write-Host "Installing Update 5 for Visual Studio $version..."
+Run-Executable "$package" "/norestart /passive"
 
-Write-Output "Removing $package ..."
+Write-Host "Removing $package ..."
 Remove-Item $package
 
 Write-Output "Visual Studio = $version" >> ~\versions.txt

@@ -56,3 +56,5 @@ function Run-Conan-Install
         Copy-Item -Path $conanfile -Destination "$outpwd\conanfile.txt"
     }
 }
+
+Write-Output "Conan = 0.24.0" >> ~\versions.txt

@@ -37,7 +37,7 @@
 
 # shellcheck source=./InstallPKGFromURL.sh
 source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
-# shellcheck source=./../unix/SetEnvVar.sh
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # shellcheck source=./pip.sh
 source "${BASH_SOURCE%/*}/pip.sh"

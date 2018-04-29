@@ -37,7 +37,9 @@
 
 # CMake is needed for autotests that verify that Qt can be built with CMake
 
+# shellcheck source=../unix/InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="3.6.2"
@@ -50,3 +52,6 @@ appPrefix="cmake-$version-Linux-x86_64"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
 
 SetEnvVar "PATH" "$targetFolder/bin:\$PATH"
+
+echo "CMake = $version" >> ~/versions.txt
+

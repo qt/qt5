@@ -37,8 +37,11 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
+# shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# shellcheck source=../unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 targetFolder="/opt/android"
@@ -78,10 +81,11 @@ else
 fi
 
 echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
+# shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
-    proxy_host=$(echo $proxy | cut -d'/' -f3 | cut -d':' -f1)
-    proxy_port=$(echo $proxy | cut -d':' -f3)
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host=$proxy_host --proxy_port=$proxy_port "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+    proxy_host=$(echo "$proxy" | cut -d'/' -f3 | cut -d':' -f1)
+    proxy_port=$(echo "$proxy" | cut -d':' -f3)
+    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 else
     echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 fi
@@ -91,12 +95,13 @@ SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
+# shellcheck disable=SC2129
 echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
 echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
 echo "Android NDK = $ndkVersion" >> ~/versions.txt
 
-cd $sdkTargetFolder/tools/bin
+cd "$sdkTargetFolder/tools/bin"
 echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"
 echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-21;google_apis;x86" -c 2048M -f
 # Purely informative, show the list of avd devices

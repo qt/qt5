@@ -3,7 +3,9 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-source $BASEDIR/../common/shared/network_test_server_ip.txt
+# shellcheck source=../common/shared/network_test_server_ip.txt
+source "$BASEDIR/../common/shared/network_test_server_ip.txt"
+# shellcheck source=../common/unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
 sed -i '$ a\[Daemon\]\nAutolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
@@ -17,6 +19,7 @@ sudo balooctl disable
 echo "Disable update notifications"
 sudo zypper -nq remove plasma5-pk-updates
 
+# shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
     sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy
     sudo sed -i "s|HTTP_PROXY=\".*\"|HTTP_PROXY=\"$proxy\"|" /etc/sysconfig/proxy

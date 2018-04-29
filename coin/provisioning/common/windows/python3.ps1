@@ -70,3 +70,6 @@ Set-EnvironmentVariable "PIP3_PATH" "$install_path\Scripts"
 #    $pip_args = "--proxy=" + (getProxy)
 #}
 Run-Executable "$install_path\Scripts\pip3.exe" "install virtualenv"
+
+Write-Output "Python3 = $version" >> ~/versions.txt
+

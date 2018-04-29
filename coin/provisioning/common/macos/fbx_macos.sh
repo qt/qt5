@@ -48,8 +48,6 @@ targetFolder="/tmp"
 targetFile="$targetFolder/$fileName"
 installer="$targetFolder/fbx20161_2_fbxsdk_clang_macos.pkg"
 
-ExceptionExtractPrimaryUrl=100
-
 echo "Extracting '$cachedUrl'"
 tar -xzf "$cachedUrl" -C "$targetFolder" || (
     echo "Failed to uncompress from '$cachedUrl'"

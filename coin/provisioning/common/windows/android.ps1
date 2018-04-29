@@ -66,7 +66,7 @@ function Install($1, $2, $3, $4) {
 
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
-    Extract-Zip $zip C:\Utils
+    Extract-7Zip $zip C:\Utils
 }
 
 function SdkUpdate ($1, $2) {
@@ -98,3 +98,9 @@ if ($p -ne $null) {
 } else {
     Write-Host "adb.exe not running"
 }
+
+Write-Output "Android SDK tools= $sdkVersion" >> ~/versions.txt
+Write-Output "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
+Write-Output "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
+Write-Output "Android NDK = $ndkVersion" >> ~/versions.txt
+

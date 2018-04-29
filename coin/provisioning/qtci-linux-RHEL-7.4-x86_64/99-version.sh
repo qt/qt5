@@ -1,11 +1,11 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the test suite of the Qt Toolkit.
+## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,5 +33,16 @@
 ##
 #############################################################################
 
-# shellcheck source=../common/linux/open62541.sh
-source "${BASH_SOURCE%/*}/../common/linux/open62541.sh"
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+
+# Storage installed RPM packages information
+
+set -ex
+
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed RPM packages *****" >> ~/versions.txt
+rpm -q -a | sort >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
+
+"$(dirname "$0")/../common/linux/version.sh"
