@@ -1,6 +1,7 @@
 param(
     [Int32]$archVer=32,
-    [string]$toolchain="vs2015"
+    [string]$toolchain="vs2015",
+    [bool]$setDefault=$true
 )
 . "$PSScriptRoot\helpers.ps1"
 
@@ -11,16 +12,18 @@ param(
 
 Get-Content "$PSScriptRoot\..\shared\sw_versions.txt" | Foreach-Object {
     $var = $_.Split('=')
-    New-Variable -Name $var[0] -Value $var[1]
+    New-Variable -Name $var[0] -Value $var[1] -Force
     $libclang_version = $libclang_version -replace '["."]'
 }
 
 $zip = "c:\users\qt\downloads\libclang.7z"
-$baseDestination = "C:\Utils\libclang-" + $libclang_version
+$baseDestination = "C:\Utils\libclang-" + $libclang_version + "-" + $toolchain
 
 function setURL() {
     $script:url = "https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
 }
+
+$toolchainSuffix = ""
 
 if ( $toolchain -eq "vs2015" ) {
     if ( $archVer -eq 64 ) {
@@ -47,6 +50,7 @@ if ( $toolchain -eq "vs2015" ) {
     Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
     Remove-Item -Force -Path $zip
+    $toolchainSuffix = "msvc"
 }
 
 if ( $toolchain -eq "mingw" ) {
@@ -74,7 +78,11 @@ if ( $toolchain -eq "mingw" ) {
     Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
     Remove-Item -Force -Path $zip
+    $toolchainSuffix = "mingw"
 }
 
-Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+if ( $setDefault ) {
+    Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+}
+Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
