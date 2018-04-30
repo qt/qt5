@@ -3,5 +3,6 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-# There is only one mac package and common script uses it as a default
-$BASEDIR/../common/unix/libclang.sh
+# There is only one mac package
+# shellcheck source=../common/unix/libclang.sh
+"$BASEDIR/../common/unix/libclang.sh"

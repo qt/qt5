@@ -35,9 +35,5 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-# With RHEL 6.6 we are using different lib clang than others
-VERSION=4.0
-URL="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${VERSION//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
-SHA1="c7466109628418a6aa3db8b3f5825f847f1c4952"
-
+# shellcheck source=../common/unix/libclang.sh
 "$BASEDIR/../common/unix/libclang.sh" "$URL" "$SHA1" "$VERSION"
