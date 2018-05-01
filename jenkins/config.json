@@ -1,0 +1,11 @@
+{
+  "publish": {
+    "npmPackageJsons": [
+      "package.json"
+    ]
+  },
+  "buildSteps": "BUILD_JENKINS.bat",
+  "copyToJobArtifacts": [
+    "artifacts/**"
+  ]
+}
