@@ -1,5 +1,7 @@
 # Create the super cache so modules will add themselves to it.
-cache(, super)
+# Also suppress the license check on subsequent "visits". The first
+# visit will skip it anyway due to not having a compiler set up yet.
+cache(CONFIG, add super, $$list(QTDIR_build))
 
 TEMPLATE      = subdirs
 
