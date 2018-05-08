@@ -4,6 +4,7 @@ qtci-windows-10-x86_64-10   WinRT_10                        MSVC2015    Packagin
 qtci-windows-10-x86_64-10                       x86         MSVC2017    DebugAndRelease Release ForceDebugInfo OpenGLDynamic
 qtci-windows-10-x86_64-10   WinRT_10            x86         MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
 qtci-windows-7-x86-3                                        Mingw53     Packaging DebugAndRelease Release OpenGLDynamic DisableTests
+qtci-windows-10-x86_64-10                                   Mingw73     Packaging DebugAndRelease Release OpenGLDynamic DisableTests
 qtci-windows-10-x86_64-10   WinRT_10            armv7       MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
 qtci-windows-10-x86_64-10   WinRT_10                        MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
 qtci-linux-RHEL-7.4-x86_64  Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
