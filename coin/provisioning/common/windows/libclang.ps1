@@ -1,6 +1,7 @@
 param(
     [Int32]$archVer=32,
-    [string]$toolchain="vs2015"
+    [string]$toolchain="vs2015",
+    [bool]$setDefault=$true
 )
 . "$PSScriptRoot\helpers.ps1"
 
@@ -11,20 +12,22 @@ param(
 
 Get-Content "$PSScriptRoot\..\shared\sw_versions.txt" | Foreach-Object {
     $var = $_.Split('=')
-    New-Variable -Name $var[0] -Value $var[1]
+    New-Variable -Name $var[0] -Value $var[1] -Force
     $libclang_version = $libclang_version -replace '["."]'
 }
 
 $zip = "c:\users\qt\downloads\libclang.7z"
-$baseDestination = "C:\Utils\libclang-" + $libclang_version
+$baseDestination = "C:\Utils\libclang-" + $libclang_version + "-" + $toolchain
 
 function setURL() {
     $script:url = "https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
 }
 
+$toolchainSuffix = ""
+
 if ( $toolchain -eq "vs2015" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "dc42beb0efff130c4d7dfef3c97adf26f1ab04e0"
+        $sha1 = "37afa18d243a50c05bee5c6e16b409ed526ec17a"
         $destination = $baseDestination + "-64"
 
         setURL
@@ -37,7 +40,7 @@ if ( $toolchain -eq "vs2015" ) {
     }
 
     $archVer=32
-    $sha1 = "64e826c00ae632fbb28655e6e1fa9194980e1205"
+    $sha1 = "812b6089c6da99ced9ebebbd42923bd96590519d"
     $destination = $baseDestination + "-32"
 
     setURL
@@ -47,11 +50,12 @@ if ( $toolchain -eq "vs2015" ) {
     Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
     Remove-Item -Force -Path $zip
+    $toolchainSuffix = "msvc"
 }
 
 if ( $toolchain -eq "mingw" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "3e318f70a1e76c14365ced65f4fa7031bb730818"
+        $sha1 = "1233e6c008b90d89483df0291a597a0bac426d29"
         $destination = $baseDestination + "-64"
 
         setURL
@@ -64,7 +68,7 @@ if ( $toolchain -eq "mingw" ) {
     }
 
     $archVer=32
-    $sha1 = "a9973192a01a9c16976ed0cc6ef6dac3dbc4a2d3"
+    $sha1 = "2d6ceab0e1a05e2b19fe615c57b64d36977b4933"
     $destination = $baseDestination + "-32"
 
     setURL
@@ -74,7 +78,11 @@ if ( $toolchain -eq "mingw" ) {
     Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
     Remove-Item -Force -Path $zip
+    $toolchainSuffix = "mingw"
 }
 
-Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+if ( $setDefault ) {
+    Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+}
+Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
