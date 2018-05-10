@@ -41,12 +41,12 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="1.0.2g"
+version="1.0.2o"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
 installFolder="/home/qt/"
-sha="36af23887402a5ea4ebef91df8e61654906f58f2"
+sha="a47faaca57b47a0d9d5fb085545857cc92062691"
 # Until every VM doing Linux Android builds have provisioned the env variable
 # OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
 # QTQAINFRA-1436
@@ -56,7 +56,7 @@ DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 
 tar -xzf "$targetFile" -C "$installFolder"
 # This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}g" "${opensslHome}"
+mv "${opensslHome}o" "${opensslHome}"
 pushd "$opensslHome"
 
 echo "Running configure"

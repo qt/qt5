@@ -64,10 +64,11 @@ Add-Path "C:\Python27;C:\Python27\Scripts"
 Run-Executable "C:\Python27\python.exe" "-m ensurepip"
 
 # Install python virtual env
-#if (isProxyEnabled) {
-#    Write-Host "Using proxy with pip"
-#    $pip_args = "--proxy=" + (getProxy)
-#}
-Run-Executable "C:\Python27\Scripts\pip.exe" "install virtualenv"
+if (IsProxyEnabled) {
+    $proxy = Get-Proxy
+    Write-Host "Using proxy ($proxy) with pip"
+    $pip_args = "--proxy=$proxy"
+}
+Run-Executable "C:\Python27\Scripts\pip.exe" "$pip_args install virtualenv"
 
 Write-Output "Python = $version" >> ~/versions.txt

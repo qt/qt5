@@ -65,11 +65,12 @@ Set-EnvironmentVariable "PYTHON3_PATH" "$install_path"
 Set-EnvironmentVariable "PIP3_PATH" "$install_path\Scripts"
 
 # Install python virtual env
-#if (isProxyEnabled) {
-#    Write-Host "Using proxy with pip"
-#    $pip_args = "--proxy=" + (getProxy)
-#}
-Run-Executable "$install_path\Scripts\pip3.exe" "install virtualenv"
+if (IsProxyEnabled) {
+    $proxy = Get-Proxy
+    Write-Host "Using proxy ($proxy) with pip"
+    $pip_args = "--proxy=$proxy"
+}
+Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv"
 
 Write-Output "Python3 = $version" >> ~/versions.txt
 

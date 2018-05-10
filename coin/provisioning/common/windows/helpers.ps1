@@ -117,10 +117,10 @@ function Is64BitWinHost
     return [environment]::Is64BitOperatingSystem
 }
 
-function isProxyEnabled {
+function IsProxyEnabled {
     return (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').proxyEnable
 }
 
-function getProxy {
+function Get-Proxy {
     return (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').proxyServer
 }
