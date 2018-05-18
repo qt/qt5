@@ -86,3 +86,9 @@ if ( $setDefault ) {
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
+
+if ( $libclang_version -eq "60" ) {
+    # This is a hacked static build of libclang which requires special
+    # handling on the qdoc side.
+    Set-EnvironmentVariable "QDOC_USE_STATIC_LIBCLANG" "1"
+}
