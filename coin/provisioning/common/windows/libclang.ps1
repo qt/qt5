@@ -16,7 +16,7 @@ Get-Content "$PSScriptRoot\..\shared\sw_versions.txt" | Foreach-Object {
     $libclang_version = $libclang_version -replace '["."]'
 }
 
-$zip = "c:\users\qt\downloads\libclang.7z"
+$zip = Get-DownloadLocation "libclang.7z"
 $baseDestination = "C:\Utils\libclang-" + $libclang_version + "-" + $toolchain
 
 function setURL() {

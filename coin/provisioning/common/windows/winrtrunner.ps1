@@ -1,6 +1,6 @@
 . "$PSScriptRoot\helpers.ps1"
 
-$zip = "c:\users\qt\downloads\winrtrunner.zip"
+$zip = Get-DownloadLocation "winrtrunner.zip"
 $url = "http://download.qt.io/development_releases/prebuilt/winrtrunner/winrtrunner.zip"
 
 Download $url $url $zip

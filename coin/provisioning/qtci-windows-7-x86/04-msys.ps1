@@ -5,7 +5,7 @@
 $version = "1.0.11"
 $url = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msys-$version.7z"
 
-$zip = "c:\users\qt\downloads\msys-$version.7z"
+$zip = Get-DownloadLocation ("msys-$version.7z")
 $sha1 = "22cd76f1263db8c72727a9537228c481ff33c285"
 $destination = "C:\msys"
 

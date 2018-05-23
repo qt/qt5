@@ -1,6 +1,7 @@
 . "$PSScriptRoot\helpers.ps1"
 
-$zip = "c:\users\qt\downloads\Qt3DStudio-3rdparty-win64-CI.zip"
+$zip = Get-DownloadLocation "Qt3DStudio-3rdparty-win64-CI.zip"
+
 $url = "http://ci-files01-hki.intra.qt.io/input/3rdparty/Qt3DStudio-3rdparty-win64-CI.zip"
 
 Download $url $url $zip
