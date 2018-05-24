@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,6 +33,9 @@
 ##
 #############################################################################
 
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
+
 set -ex
 
 # This script will install ICU
@@ -40,16 +43,17 @@ set -ex
 icuVersion="56.1"
 icuLocation="/usr/lib64"
 sha1="6dd9ca6b185681a7ddc4bb94fd7fced27647a21c"
-baseBinaryPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+baseBinaryPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
 
 sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
-develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+develPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
 targetFile=$(mktemp)
-wget --tries=5 --waitretry=5 --output-document="$targetFile" "$baseBinaryPackageURL"
-echo "$sha1  $targetFile" | sha1sum --check
+DownloadURL "$baseBinaryPackageURL" "$baseBinaryPackageExternalURL" "$sha1" "$targetFile"
 sudo 7z x -y -o/usr/lib64 "$targetFile"
 sudo rm "$targetFile"
 
@@ -58,8 +62,7 @@ echo "Installing custom ICU devel packages on RHEL"
 tempDir=$(mktemp -d)
 
 targetFile=$(mktemp)
-wget --tries=5 --waitretry=5 --output-document="$targetFile" "$develPackageURL"
-echo "$sha1Dev $targetFile" | sha1sum --check
+DownloadURL "$develPackageURL" "$develPackageExternalURL" "$sha1Dev" "$targetFile"
 7z x -y -o"$tempDir" "$targetFile"
 
 sudo cp -a "$tempDir"/lib/* /usr/lib64
