@@ -68,6 +68,17 @@ function BadParam
     throw("You must specify $Description")
 }
 
+function Get-DefaultDownloadLocation
+{
+    return $env:USERPROFILE + "\downloads\"
+}
+
+function Get-DownloadLocation
+{
+    Param ([string]$TargetName = $(BadParam("a target filename")))
+    return (Get-DefaultDownloadLocation) + $TargetName
+}
+
 function Download
 {
     Param (

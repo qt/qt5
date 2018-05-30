@@ -42,6 +42,7 @@ set -e
 
 # shellcheck source=./check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
+source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
 BASEDIR=$(dirname "$0")
 # shellcheck source=../shared/sw_versions.txt
@@ -70,3 +71,9 @@ sudo mv /tmp/libclang "$destination"
 
 echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
 echo "libClang = $version" >> ~/versions.txt
+
+if [ "$version" == "6.0" ]; then
+    # This is a hacked static build of libclang which requires special
+    # handling on the qdoc side.
+    SetEnvVar "QDOC_USE_STATIC_LIBCLANG" "1"
+fi
