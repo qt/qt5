@@ -36,7 +36,7 @@
 $majorminorversion = "3.6"
 $version = "3.6.2"
 
-$zip = "c:\users\qt\downloads\cmake-" + $version + "-win32-x86.zip"
+$zip = Get-DownloadLocation ("cmake-" + $version + "-win32-x86.zip")
 $officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
 $cachedurl = "\\ci-files01-hki.intra.qt.io\provisioning\cmake\cmake-" + $version + "-win32-x86.zip"
 

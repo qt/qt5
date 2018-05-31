@@ -1,9 +1,11 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -30,18 +32,12 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+set -ex
 
-. "$PSScriptRoot\..\common\windows\helpers.ps1"
+BASEDIR=$(dirname "$0")
+# With RHEL 6.6 we are using different lib clang than others
+VERSION=4.0
+URL="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${VERSION//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
+SHA1="c7466109628418a6aa3db8b3f5825f847f1c4952"
 
-# This script installs QNX SDP 7.0
-
-$zip = Get-DownloadLocation "qnx700.7z"
-$url = "http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.7z"
-
-Download $url $url $zip
-Verify-Checksum $zip "DD3346A3429C06B59BF4D45CE0782F737D2424C7"
-Extract-7Zip $zip C:\
-
-Set-EnvironmentVariable "QNX_700" "C:\QNX700"
-Write-Output "QNX SDP = 7.0.0" >> ~/versions.txt
-Remove-Item -Path $zip
+"$BASEDIR/../common/unix/libclang.sh" "$URL" "$SHA1" "$VERSION"
