@@ -32,18 +32,20 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
-
 # This script installs Python $version.
 # Python3 is required for building some qt modules.
+param(
+    [Int32]$archVer=32,
+    [string]$install_path = "C:\Python36"
+)
+. "$PSScriptRoot\helpers.ps1"
 
 $version = "3.6.1"
 $package = "C:\Windows\temp\python-$version.exe"
-$install_path = "C:\Python36"
 
 # check bit version
-if (Is64BitWinHost) {
-    Write-Host "Running in 64 bit system"
+if ( $archVer -eq 64 ) {
+    Write-Host "Installing 64 bit Python"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
     $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version-amd64.exe"
     $sha1 = "bf54252c4065b20f4a111cc39cf5215fb1edccff"
@@ -61,8 +63,15 @@ Run-Executable "$package" "/q TargetDir=$install_path"
 Write-Host "Remove $package..."
 Remove-Item -Path $package
 
-Set-EnvironmentVariable "PYTHON3_PATH" "$install_path"
-Set-EnvironmentVariable "PIP3_PATH" "$install_path\Scripts"
+# For cross-compilation we export some helper env variable
+if (($archVer -eq 32) -And (Is64BitWinHost)) {
+    Set-EnvironmentVariable "PYTHON3_32_PATH" "$install_path"
+    Set-EnvironmentVariable "PIP3_32_PATH" "$install_path\Scripts"
+} else {
+    Set-EnvironmentVariable "PYTHON3_PATH" "$install_path"
+    Set-EnvironmentVariable "PIP3_PATH" "$install_path\Scripts"
+}
+
 
 # Install python virtual env
 if (IsProxyEnabled) {
@@ -72,5 +81,5 @@ if (IsProxyEnabled) {
 }
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv"
 
-Write-Output "Python3 = $version" >> ~/versions.txt
+Write-Output "Python3-$archVer = $version" >> ~/versions.txt
 

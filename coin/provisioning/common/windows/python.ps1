@@ -30,13 +30,17 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\helpers.ps1"
 
 # This script installs Python $version.
 # Python is required for building Qt 5 from source.
+param(
+    [Int32]$archVer=32,
+    [string]$targetDir="C:\Python27"
+)
+. "$PSScriptRoot\helpers.ps1"
 
 $version = "2.7.13"
-if (Is64BitWinHost) {
+if ( $archVer -eq 64 ) {
     $arch = ".amd64"
     $sha1 = "d9113142bae8829365c595735e1ad1f9f5e2894c"
 } else {
@@ -51,17 +55,25 @@ Write-Host "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 Write-Host "Installing $package..."
-Run-Executable "msiexec" "/passive /i $package ALLUSERS=1"
+Run-Executable "msiexec" "/passive /i $package TARGETDIR=$targetDir ALLUSERS=1"
 
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
 Write-Host "Changing allowZip64 value to 'True'..."
-(Get-Content C:\Python27\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content C:\Python27\lib\zipfile.py
+(Get-Content $targetDir\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content $targetDir\lib\zipfile.py
 Write-Host "Remove $package..."
 Remove-Item -Path $package
 
-Add-Path "C:\Python27;C:\Python27\Scripts"
+# When installing 32 bit python to 64 bit host, we want to keep only default python in path
+# For cross-compilation we export some helper env variable
+if (($archVer -eq 32) -And (Is64BitWinHost)) {
+    Set-EnvironmentVariable "PYTHON2_32_PATH" "$targetDir"
+    Set-EnvironmentVariable "PIP2_32_PATH" "$targetDir\Scripts"
+} else {
+    Add-Path "$targetDir;$targetDir\Scripts"
+}
 
-Run-Executable "C:\Python27\python.exe" "-m ensurepip"
+
+Run-Executable "$targetDir\python.exe" "-m ensurepip"
 
 # Install python virtual env
 if (IsProxyEnabled) {
@@ -69,6 +81,6 @@ if (IsProxyEnabled) {
     Write-Host "Using proxy ($proxy) with pip"
     $pip_args = "--proxy=$proxy"
 }
-Run-Executable "C:\Python27\Scripts\pip.exe" "$pip_args install virtualenv"
+Run-Executable "$targetDir\Scripts\pip.exe" "$pip_args install virtualenv"
 
-Write-Output "Python = $version" >> ~/versions.txt
+Write-Output "Python-$archVer = $version" >> ~/versions.txt
