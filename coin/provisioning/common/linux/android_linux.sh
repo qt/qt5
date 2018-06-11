@@ -74,7 +74,7 @@ rm "$ndkTargetFile"
 rm "$toolsTargetFile"
 
 echo "Changing ownership of Android files."
-if uname -a |grep -q "el6\|el7"; then
+if uname -a |grep -q "el7"; then
     sudo chown -R qt:wheel "$targetFolder"
 else
     sudo chown -R qt:users "$targetFolder"

@@ -48,18 +48,12 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
 libclang_version=6.0
-libclang_version_Rhel6=4.0
 
 if uname -a |grep -q Darwin; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-mac.7z"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-mac.7z"
     sha1="0af8ab8c1174faf4b721d079587190fc32ea8364"
-elif uname -a |grep -q "el6"; then
-    version=$libclang_version_Rhel6
-    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
-    sha1="c7466109628418a6aa3db8b3f5825f847f1c4952"
 else
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-linux-Rhel7.2-gcc5.3-x86_64.7z"
@@ -79,8 +73,6 @@ sudo mv /tmp/libclang "$destination"
 echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
 echo "libClang = $version" >> ~/versions.txt
 
-if [ "$version" == "6.0" ]; then
-    # This is a hacked static build of libclang which requires special
-    # handling on the qdoc side.
-    SetEnvVar "QDOC_USE_STATIC_LIBCLANG" "1"
-fi
+# This is a hacked static build of libclang which requires special
+# handling on the qdoc side.
+SetEnvVar "QDOC_USE_STATIC_LIBCLANG" "1"
