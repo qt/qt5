@@ -160,7 +160,7 @@ MountAndInstall "$squishLicenseUrl" "$squishFolder" "$squishLicenseFile"
 echo "Installing squish $version.."
 MountAndInstall "$squishUrl" "$squishFolder" "$squishFile"
 
-echo "Installing test suite for squish"
+echo "Installing provisioning scripts for squish"
 MountAndInstall "$testSuiteUrl" "$squishFolder" "$testSuite.tar.gz"
 
 echo "Verifying Squish Installation"
