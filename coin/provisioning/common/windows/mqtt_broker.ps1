@@ -35,9 +35,11 @@
 
 Write-Host "MQTT: Downloading Paho test broker..."
 $zip = Get-DownloadLocation "pahotest.zip"
-$externalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
-$internalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/c342c09dadc7a664d0a8befad1ca031f5a0b0bc0.zip"
-$sha1 = "532fe145096cdd8d679f425cbfd883289150c968"
+$commitSHA = "ef4dbc182ddd06247e4b2618d5ad0a57df12ab25"
+$sha1 = "ba2b7d05afe4e13446d40cd4e753dda7f325a587"
+
+$externalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-$commitSHA.zip"
+$internalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/$commitSHA.zip"
 
 Download $externalUrl $internalUrl $zip
 Verify-Checksum $zip $sha1
@@ -46,4 +48,4 @@ Write-Host "MQTT: Installing $zip..."
 Extract-7Zip $zip C:\Utils
 Remove-Item -Path $zip
 
-Set-EnvironmentVariable "MQTT_TEST_BROKER_LOCATION" "C:\Utils\paho.mqtt.testing-c342c09dadc7a664d0a8befad1ca031f5a0b0bc0\interoperability\startbroker.py"
+Set-EnvironmentVariable "MQTT_TEST_BROKER_LOCATION" "C:\Utils\paho.mqtt.testing-$commitSHA\interoperability\startbroker.py"
