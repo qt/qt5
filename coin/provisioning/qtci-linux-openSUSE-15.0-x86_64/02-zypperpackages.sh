@@ -31,7 +31,7 @@ sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-dev
          xcb-util-wm-devel xcb-util-renderutil-devel
 
 # ICU
-sudo zypper -nq install libicu-devel libicu52_1
+sudo zypper -nq install libicu-devel libicu60_2
 
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel \
@@ -46,3 +46,6 @@ sudo zypper -nq install gstreamer-devel gstreamer-plugins-base-devel libpulse-de
 
 # cups
 sudo zypper -nq install cups-devel
+
+#speech-dispatcher
+sudo zypper -nq install libspeechd-devel

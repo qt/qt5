@@ -8,6 +8,9 @@ source "$BASEDIR/../common/shared/network_test_server_ip.txt"
 # shellcheck source=../common/unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
+# https://bugzilla.opensuse.org/show_bug.cgi?id=1032027
+sudo btrfs quota disable /
+
 sed -i '$ a\[Daemon\]\nAutolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
 
 sudo sed -i 's|GRUB_TIMEOUT=8|GRUB_TIMEOUT=0|g' /etc/default/grub
@@ -33,4 +36,3 @@ if [ "$http_proxy" != "" ]; then
     sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy
     sudo sed -i "s|HTTP_PROXY=\".*\"|HTTP_PROXY=\"$proxy\"|" /etc/sysconfig/proxy
 fi
-
