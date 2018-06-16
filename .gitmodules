@@ -11,7 +11,7 @@
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
-	recommends = qtsvg qtxmlpatterns
+	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
 	branch = 5.12
@@ -45,6 +45,7 @@
 	status = essential
 [submodule "qtxmlpatterns"]
 	depends = qtbase
+	recommends = qtdeclarative
 	path = qtxmlpatterns
 	url = ../qtxmlpatterns.git
 	branch = 5.12
