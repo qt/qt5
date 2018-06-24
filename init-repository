@@ -627,6 +627,7 @@ sub git_install_hooks
         }
         $self->ensure_link($hooks.'/gerrit_commit_msg_hook', $module_gitdir.'/hooks/commit-msg');
         $self->ensure_link($hooks.'/git_post_commit_hook', $module_gitdir.'/hooks/post-commit');
+        $self->ensure_link($hooks.'/clang-format-pre-commit', $module_gitdir.'/hooks/pre-commit');
     }
 }
 
