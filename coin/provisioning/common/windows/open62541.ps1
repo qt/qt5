@@ -146,7 +146,7 @@ function BuildAndInstallOpen62541
     Write-Host "### Open62541: Installation ###"
     Run-Executable $MakeCommand install
 
-    $platformVariable = "CI_OPEN62541_" + $Type + "_" + $Platform
+    $platformVariable = "CI_OPEN62541_" + $Type + "_" + $Platform + "_PREFIX"
     Set-EnvironmentVariable $platformVariable $installTarget
 
     ## Packaging
