@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-RUN apt-get update && apt-get install -y apache2 libcgi-session-perl wget
+RUN apt-get update && apt-get install -y apache2 libcgi-session-perl wget avahi-daemon
 EXPOSE 80 443
 
 # install configurations and test data

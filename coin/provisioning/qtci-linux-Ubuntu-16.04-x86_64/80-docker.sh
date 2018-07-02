@@ -48,15 +48,5 @@ sudo docker info
 sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# Append address and hostname of test servers to CI environment.
-cat <<EOF | sudo tee -a /etc/hosts
-# Docker-based network test servers
-172.18.0.2 apache2.test-net.qt
-172.18.0.3 squid.test-net.qt
-172.18.0.4 vsftpd.test-net.qt
-172.18.0.5 ftp-proxy.test-net.qt
-172.18.0.6 danted.test-net.qt
-EOF
-
 # Start testserver provisioning
 source "${BASH_SOURCE%/*}/../common/linux/testserver/docker_testserver.sh"
