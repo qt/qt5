@@ -42,30 +42,37 @@ set -e
 
 # shellcheck source=./check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/check_and_set_proxy.sh"
+# shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-BASEDIR=$(dirname "$0")
-# shellcheck source=../shared/sw_versions.txt
-. "$BASEDIR/../shared/sw_versions.txt"
-url=$1
-sha1=$2
-version=$3
-if [ $# -eq 0 ]
-  then
-    # The default values are for macOS package
-    echo "Using macOS defaults"
+libclang_version=6.0
+libclang_version_Rhel6=4.0
+
+if uname -a |grep -q Darwin; then
     version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
-    sha1="10e48167b61726b20517172f8aff80fa1d9a379b"
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-mac.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-mac.7z"
+    sha1="0af8ab8c1174faf4b721d079587190fc32ea8364"
+elif uname -a |grep -q "el6"; then
+    version=$libclang_version_Rhel6
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-linux-Rhel6.6-gcc4.9-x86_64.7z"
+    sha1="c7466109628418a6aa3db8b3f5825f847f1c4952"
+else
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-linux-Rhel7.2-gcc5.3-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-linux-Rhel7.2-gcc5.3-x86_64.7z"
+    sha1="ef59b699f4fcce2e45108b3ff04cc7471c1c4abe"
 fi
 
-zip="libclang.7z"
+zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-$version"
 
-curl --fail -L --retry 5 --retry-delay 5 -o "$zip" "$url"
-echo "$sha1  $zip" | sha1sum --check
-7z x "$zip" -o/tmp/
-rm -rf "$zip"
+DownloadURL $url_cached $url $sha1 $zip
+7z x $zip -o/tmp/
+rm -rf $zip
 
 sudo mv /tmp/libclang "$destination"
 

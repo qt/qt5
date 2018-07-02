@@ -90,6 +90,11 @@ function MountAndInstall {
         squishLicenseDir="/root"
     fi
 
+    function UnMount {
+        echo "Unmounting $mountFolder"
+        sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
+    }
+
     targetFileMount="$mountFolder"/"$targetFile"
 
     echo "Mounting $url to $mountFolder"
@@ -111,20 +116,20 @@ function MountAndInstall {
             target="$targetDirectory"
         fi
         sudo tar -xzf "$targetFileMount" --directory "$target"
-        echo "Unmounting $mountFolder"
-        sudo umount "$mountFolder"
+        UnMount
     elif [[ $targetFile == *.dmg ]]; then
         echo "'dmg-file', no need to uncompress"
-        sudo cp "$targetFileMount" /tmp
-        sudo umount "$mountFolder"
+        sudo cp $targetFileMount /tmp
+        UnMount
         sudo hdiutil attach "/tmp/$targetFile"
         sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory"
-        sudo hdiutil unmount /Volumes/froglogic\ Squish/
+        mountFolder="/Volumes/froglogic Squish"
+        UnMount
     elif [[ $targetFile == *.run ]]; then
         echo "'run-file', no need to uncompress"
-        sudo cp "$targetFileMount" "$targetDirectory"
-        sudo umount "$mountFolder"
-        sudo "$targetDirectory/$targetFile" unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
+        sudo cp $targetFileMount $targetDirectory
+        UnMount
+        sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
         sudo rm -fr "$targetDirectory/$targetFile"
         if uname -a |grep -q "Ubuntu"; then
             sudo mkdir /usr/lib/tcl8.6

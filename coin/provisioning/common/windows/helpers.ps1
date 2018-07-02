@@ -87,6 +87,7 @@ function Download
         [string] $Destination = $(BadParam("a download target location"))
     )
     $ProgressPreference = 'SilentlyContinue'
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     try {
         Write-Host "Downloading from cached location ($CachedUrl) to $Destination"
         if ($CachedUrl.StartsWith("http")) {

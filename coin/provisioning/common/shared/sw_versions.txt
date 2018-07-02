@@ -1,1 +1,0 @@
-libclang_version="6.0"
