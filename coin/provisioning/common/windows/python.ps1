@@ -83,4 +83,7 @@ if (IsProxyEnabled) {
 }
 Run-Executable "$targetDir\Scripts\pip.exe" "$pip_args install virtualenv"
 
+# Install PyPDF2 for QSR documentation
+Run-Executable "$targetDir\Scripts\pip.exe" "$pip_args install PyPDF2"
+
 Write-Output "Python-$archVer = $version" >> ~/versions.txt

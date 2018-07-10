@@ -86,5 +86,8 @@ $python3_wheel_dir="$install_path\python3-wheels"
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args wheel --wheel-dir $python3_wheel_dir -r $PSScriptRoot\..\shared\requirements.txt"
 Set-EnvironmentVariable "PYTHON3_WHEEL_CACHE" "$python3_wheel_dir"
 
+# Install PyPDF2 for QSR documentation
+Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install PyPDF2"
+
 Write-Output "Python3-$archVer = $version" >> ~/versions.txt
 

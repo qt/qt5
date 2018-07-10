@@ -158,6 +158,8 @@ installPackages+=(libbluetooth-dev)
 #VirtualBox for RTA
 installPackages+=(virtualbox)
 installPackages+=(dkms)
+#Pypdf for QSR documentation
+installPackages+=(python-pypdf2)
 
 echo "Running update for apt"
 sudo apt-get update
