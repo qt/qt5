@@ -110,6 +110,7 @@ installPackages+=(python-pip)
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(python3-virtualenv)
+installPackages+=(python3-wheel)
 # Needed to be able to build Yocto
 installPackages+=(chrpath)
 installPackages+=(gawk)
@@ -162,3 +163,9 @@ echo "Running update for apt"
 sudo apt-get update
 echo "Installing packages"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
+
+# Install all needed packages in a special wheel cache directory
+pip wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
+
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"

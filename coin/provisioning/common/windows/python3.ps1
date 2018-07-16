@@ -79,7 +79,12 @@ if (IsProxyEnabled) {
     Write-Host "Using proxy ($proxy) with pip"
     $pip_args = "--proxy=$proxy"
 }
-Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv"
+Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel"
+
+# Install all needed packages in a special wheel cache directory
+$python3_wheel_dir="$install_path\python3-wheels"
+Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args wheel --wheel-dir $python3_wheel_dir -r $PSScriptRoot\..\shared\requirements.txt"
+Set-EnvironmentVariable "PYTHON3_WHEEL_CACHE" "$python3_wheel_dir"
 
 Write-Output "Python3-$archVer = $version" >> ~/versions.txt
 

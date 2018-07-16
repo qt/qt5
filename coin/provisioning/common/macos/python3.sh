@@ -52,10 +52,14 @@ InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
 InstallPip python3.6
 
-/Library/Frameworks/Python.framework/Versions/3.6/bin/pip3 install virtualenv
+/Library/Frameworks/Python.framework/Versions/3.6/bin/pip3 install virtualenv wheel
 
 SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.6/bin"
 SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.6/bin"
+
+# Install all needed packages in a special wheel cache directory
+/Library/Frameworks/Python.framework/Versions/3.6/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../shared/requirements.txt
+SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
 
 echo "python3 = 3.6.1" >> ~/versions.txt
 
