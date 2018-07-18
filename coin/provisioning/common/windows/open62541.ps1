@@ -86,6 +86,7 @@ function PushDevEnvironment
     $adaptedPath = $env:PATH
     $jomLocation = [Environment]::GetEnvironmentVariable("CI_JOM_PATH", "Machine")
     $adaptedPath = $adaptedPath + ";" + $jomLocation
+    $adaptedPath = $adaptedPath + ";" + "C:\Python27"
     $adaptedPath = $adaptedPath + ";" + "C:\CMake\bin"
     [Environment]::SetEnvironmentVariable("PATH", $adaptedPath, "Process")
 }
