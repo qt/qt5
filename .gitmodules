@@ -57,7 +57,7 @@
 	status = essential
 	priority = 30
 [submodule "qtdoc"]
-	depends = qtdeclarative
+	depends = qtdeclarative qttools
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = dev
