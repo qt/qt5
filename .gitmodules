@@ -143,13 +143,6 @@
 	url = ../qtimageformats.git
 	branch = 5.11
 	status = addon
-[submodule "qtquick1"]
-	depends = qtscript
-	recommends = qtsvg qtxmlpatterns
-	path = qtquick1
-	url = ../qtquick1.git
-	branch = dev
-	status = ignore
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
