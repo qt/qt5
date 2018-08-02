@@ -38,7 +38,7 @@
 $version = "6.6.0"
 $nondottedversion = $version -replace '[.]',''
 $targetFolder = "c:"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\qnx" + $nondottedversion + ".zip"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\qnx" + $nondottedversion + "-patch4687-windows.zip"
 
 Get-ChildItem $url_cache | % {& "C:\Utils\sevenzip\7z.exe" "x" $_.fullname -o"C:\"}
 
