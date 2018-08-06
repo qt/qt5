@@ -414,7 +414,8 @@ sub git_clone_all_submodules
             my $branch = $subbranches{$module};
             die("No branch defined for submodule $module.\n") if (!defined($branch));
             my $orig_cwd = getcwd();
-            chdir($module) or confess "chdir $module: $OS_ERROR";
+            my $module_dir = $subdirs{$module};
+            chdir($module_dir) or confess "chdir $module_dir: $OS_ERROR";
             my $br = qx(git rev-parse -q --verify $branch);
             if (!$br) {
                 $self->exe('git', 'checkout', '-b', $branch, "origin/$branch");

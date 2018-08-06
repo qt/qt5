@@ -21,12 +21,10 @@ HOW TO BUILD QT5
 
     Opensource users:
 
-        <source_package> = qt-everywhere-opensource-src-<version>
         <license>        = -opensource
 
     Commercial users:
 
-        <source_package> = qt-everywhere-enterprise-src-<version>
         <license>        = -commercial
 
    Linux, Mac:

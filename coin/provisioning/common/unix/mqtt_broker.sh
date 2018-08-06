@@ -39,10 +39,10 @@
 source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-CommitSHA="ef4dbc182ddd06247e4b2618d5ad0a57df12ab25"
+CommitSHA="5e14a65bbf602fe5d58afdd1394ce76d41ed5c65"
 PrimaryUrl="http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-$CommitSHA.zip"
 AltUrl="https://github.com/eclipse/paho.mqtt.testing/archive/$CommitSHA.zip"
-SHA1="ba2b7d05afe4e13446d40cd4e753dda7f325a587"
+SHA1="6afc375c2702eb36a960f38dd4912a3422d679fd"
 targetFolder="/opt/paho_broker"
 appPrefix="paho.mqtt.testing-$CommitSHA"
 
