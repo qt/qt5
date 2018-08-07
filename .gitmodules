@@ -58,6 +58,7 @@
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
+	recommends = qtmultimedia
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = dev
