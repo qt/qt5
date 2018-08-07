@@ -6,6 +6,7 @@ param(
 . "$PSScriptRoot\helpers.ps1"
 
 $libclang_version="6.0"
+Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
 # The Clang library (C-bindings), version 3.9 or higher is required for building.
@@ -13,6 +14,7 @@ $libclang_version="6.0"
 # Starting from Qt 5.11 QDoc requires Clang to parse C++
 
 $baseDestination = "C:\Utils\libclang-" + $libclang_version + "-" + $toolchain
+$libclang_version = $libclang_version -replace '["."]'
 
 function install() {
 
@@ -23,7 +25,6 @@ function install() {
 
     $zip = "c:\users\qt\downloads\libclang.7z"
 
-    $libclang_version = $libclang_version -replace '["."]'
     $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
     $script:CachedUrl = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
 
@@ -72,7 +73,6 @@ if ( $setDefault ) {
     Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
-Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 if ( $libclang_version -eq "60" ) {
     # This is a hacked static build of libclang which requires special
