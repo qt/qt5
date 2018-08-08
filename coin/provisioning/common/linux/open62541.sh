@@ -59,7 +59,7 @@ sudo pip install six
 
 git clone https://github.com/open62541/open62541.git open62541
 cd open62541
-git checkout 8845e493d7751fd4eee3917b540e5346646b9cf7
+git checkout 215651ab8db94e5eacdd10ec26a5a9fb96b9301f
 mkdir build
 cd build
 TARGETPATH=/opt/open62541

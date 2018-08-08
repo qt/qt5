@@ -38,8 +38,8 @@ Param (
 . "$PSScriptRoot\helpers.ps1"
 
 ## Variables for builds
-$commitSHA = "8845e493d7751fd4eee3917b540e5346646b9cf7"
-$sha1 = "6845899f5fd0346472fc0d848ce9d9c814c802e0"
+$commitSHA = "215651ab8db94e5eacdd10ec26a5a9fb96b9301f"
+$sha1 = "8d899f986071525be73e1ee8565b28ea10536d7d"
 $extractTarget = "C:\open62541_build"
 
 function CreateArchive
