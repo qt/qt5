@@ -19,8 +19,14 @@ echo "Set DISPLAY"
 echo 'export DISPLAY=":0"' >> ~/.bashrc
 echo "Disabling file indexing."
 sudo balooctl disable
-echo "Disable update notifications"
+
+while sudo fuser /usr/lib/packagekitd >/dev/null 2>&1 ; do
+    echo "Waiting for PackageKit to finish..."
+    sleep 0.5
+done
+echo "Disabling update notifications"
 sudo zypper -nq remove plasma5-pk-updates
+
 
 # shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
