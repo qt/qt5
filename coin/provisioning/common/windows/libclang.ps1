@@ -12,10 +12,10 @@ Get-Content "$PSScriptRoot\..\shared\sw_versions.txt" | Foreach-Object {
 
 if ( $archVer -eq 64 ) {
     $sha1 = "dc42beb0efff130c4d7dfef3c97adf26f1ab04e0"
-    $url = "https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_$libclang_version-windows-vs2015_64.7z"
+    $url = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-windows-vs2015_64.7z"
 } else {
     $sha1 = "64e826c00ae632fbb28655e6e1fa9194980e1205"
-    $url = "https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_$libclang_version-windows-vs2015_32.7z"
+    $url = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-windows-vs2015_32.7z"
 }
 
 $zip = "c:\users\qt\downloads\libclang.7z"

@@ -52,7 +52,7 @@ if [ $# -eq 0 ]
     # The default values are for macOS package
     echo "Using macOS defaults"
     version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-mac.7z"
+    url="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-mac.7z"
     sha1="4781d154b274b2aec99b878c364f0ea80ff00a80"
 fi
 
