@@ -35,8 +35,8 @@
 
 Write-Host "MQTT: Downloading Paho test broker..."
 $zip = Get-DownloadLocation "pahotest.zip"
-$commitSHA = "5e14a65bbf602fe5d58afdd1394ce76d41ed5c65"
-$sha1 = "6afc375c2702eb36a960f38dd4912a3422d679fd"
+$commitSHA = "20bad2475c27a6e1d24a56d90a9fceb40963261e"
+$sha1 = "a0ac88715c2aebb9573a113dc13925a90da19233"
 
 $internalUrl = "http://ci-files01-hki.ci.local/input/mqtt_broker/paho.mqtt.testing-$commitSHA.zip"
 $externalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/$commitSHA.zip"
