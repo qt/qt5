@@ -16,8 +16,8 @@ qtci-macos-10.12-x86_64-8   QNX_700             x86         GCC         Release 
 qtci-macos-10.12-x86_64-8   IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
 qtci-macos-10.12-x86_64-8   TvOS_ANY            multi       Clang       DebugAndRelease DisableTests
 qtci-macos-10.12-x86_64-8   WatchOS_ANY         multi       Clang       DebugAndRelease DisableTests
-qtci-windows-10-x86_64-10   QNX_700             armv7       Mingw53     Packaging Release DisableTests OpenGLES2
-qtci-windows-10-x86_64-10   QNX_700             armv8       Mingw53     Packaging Release DisableTests OpenGLES2
-qtci-windows-10-x86_64-10   QNX_700             x86_64      Mingw53     Packaging Release DisableTests OpenGLES2
+qtci-windows-10-x86_64-10   QNX_700             armv7       Mingw73     Packaging Release DisableTests OpenGLES2
+qtci-windows-10-x86_64-10   QNX_700             armv8       Mingw73     Packaging Release DisableTests OpenGLES2
+qtci-windows-10-x86_64-10   QNX_700             x86_64      Mingw73     Packaging Release DisableTests OpenGLES2
 qtci-linux-RHEL-7.4-x86_64  QNX_700             armv8       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-RHEL-7.4-x86_64  QNX_700             x86_64      GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
