@@ -35,20 +35,21 @@
 $version = "11_2_2"
 $package = "C:\Windows\temp\opengl32sw.7z"
 $mesaOpenglSha1_64 = "b2ffa5f230a0caa2c2e0bb9a5398bcfb81a0e5d1"
-$mesaOpenglUrl_64 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
+$mesaOpenglUrl_64_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-64-mesa_$version.7z"
+$mesaOpenglUrl_64_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version.7z"
 $mesaOpenglSha1_32 = "e742e9d4e16b9c69b6d844940861d3ef1748356b"
-$mesaOpenglUrl_32 = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
+$mesaOpenglUrl_32_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-32-mesa_$version.7z"
+$mesaOpenglUrl_32_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version.7z"
 
 function Extract-Mesa
 {
     Param (
-        [string]$downloadUrl,
+        [string]$downloadUrlCache,
+        [string]$downloadUrlAlt,
         [string]$sha1,
         [string]$targetFolder
     )
-    Write-Host "Installing Mesa from $downloadUrl to $targetFolder"
-    Write-Host "Downloading $downloadUrl to $package"
-    Invoke-WebRequest -UseBasicParsing $downloadUrl -OutFile $package
+    Download $downloadUrlAlt $downloadUrlCache $package
     Verify-Checksum $package $sha1
     Extract-7Zip $package $targetFolder
     Write-Host "Removing $package"
@@ -56,10 +57,10 @@ function Extract-Mesa
 }
 
 if (Is64BitWinHost) {
-    Extract-Mesa $mesaOpenglUrl_64 $mesaOpenglSha1_64 "C:\Windows\System32"
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+    Extract-Mesa $mesaOpenglUrl_64_cache $mesaOpenglUrl_64_alt $mesaOpenglSha1_64 "C:\Windows\System32"
+    Extract-Mesa $mesaOpenglUrl_32_cache $mesaOpenglUrl_32_alt $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
 } else {
-    Extract-Mesa $mesaOpenglUrl_32 $mesaOpenglSha1_32 "C:\Windows\system32"
+    Extract-Mesa $mesaOpenglUrl_32_cache $mesaOpenglUrl_32_alt $mesaOpenglSha1_32 "C:\Windows\system32"
 }
 
 Write-Output "Mesa llvmpipe = $version" >> ~/versions.txt
