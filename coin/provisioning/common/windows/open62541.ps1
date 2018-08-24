@@ -206,12 +206,12 @@ if ($targetCommand.StartsWith("mingw")) {
     BuildAndInstallOpen62541 $targetCommand x86 "mingw32-make"
 } elseif ($targetCommand -eq "msvc2015_x86") {
     Write-Host "### Creating Open62541 for MSVC2015 x86"
-    MSVCEnvironment "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC" "vcvarsall.bat x86"
+    MSVCEnvironment "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC" "vcvarsall.bat x86"
     PushDevEnvironment
     BuildAndInstallOpen62541 msvc2015 x86 jom
 } elseif ($targetCommand -eq "msvc2015_x64") {
     Write-Host "### Creating Open62541 for MSVC2015 x64"
-    MSVCEnvironment "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC" "vcvarsall.bat amd64"
+    MSVCEnvironment "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC" "vcvarsall.bat amd64"
     PushDevEnvironment
     BuildAndInstallOpen62541 msvc2015 x64 jom
 } elseif ($targetCommand -eq "msvc2017_x86") {
