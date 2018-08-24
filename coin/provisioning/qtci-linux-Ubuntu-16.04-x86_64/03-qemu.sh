@@ -46,6 +46,78 @@ cd "$tempDir"
 #latest commit from the master proven to work
 git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
 git submodule update --init pixman
+
+patch -p1 <<EOT
+From aad6a8f17dc7ad3681d2d98a01e474a8904a129b Mon Sep 17 00:00:00 2001
+From: Simon Hausmann <simon.hausmann@qt.io>
+Date: Fri, 24 Aug 2018 10:38:29 +0200
+Subject: [PATCH] linux-user: add support for MADV_DONTNEED
+
+Most flags to madvise() are just hints, so typically ignoring the
+syscall and returning okay is fine. However applications exist that do
+rely on MADV_DONTNEED behavior to guarantee that upon subsequent access
+the mapping is refreshed from the backing file or zero for anonymous
+mappings.
+---
+ linux-user/mmap.c    | 18 ++++++++++++++++++
+ linux-user/qemu.h    |  1 +
+ linux-user/syscall.c |  6 +-----
+ 3 files changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 61685bf79e..cb3069f27e 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -764,3 +764,16 @@ int target_msync(abi_ulong start, abi_ulong len, int flags)
+     start &= qemu_host_page_mask;
+     return msync(g2h(start), end - start, flags);
+ }
++
++int target_madvise(abi_ulong start, abi_ulong len, int flags)
++{
++    /* A straight passthrough may not be safe because qemu sometimes
++       turns private file-backed mappings into anonymous mappings.
++       Most flags are hints, except for MADV_DONTNEED that applications
++       may rely on to zero out pages, so we pass that through.
++       Otherwise returning success is ok. */
++    if (flags & MADV_DONTNEED) {
++        return madvise(g2h(start), len, MADV_DONTNEED);
++    }
++    return 0;
++}
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 4edd7d0c08..3c975909a1 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -429,6 +429,7 @@ int target_munmap(abi_ulong start, abi_ulong len);
+ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+                        abi_ulong new_size, unsigned long flags,
+                        abi_ulong new_addr);
++int target_madvise(abi_ulong start, abi_ulong len, int flags);
+ int target_msync(abi_ulong start, abi_ulong len, int flags);
+ extern unsigned long last_brk;
+ extern abi_ulong mmap_next_start;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 11a311f9db..94d8abc745 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -11148,11 +11148,7 @@ abi_long do_syscall(void *cpu_env, int num, abi_long arg1,
+
+ #ifdef TARGET_NR_madvise
+     case TARGET_NR_madvise:
+-        /* A straight passthrough may not be safe because qemu sometimes
+-           turns private file-backed mappings into anonymous mappings.
+-           This will break MADV_DONTNEED.
+-           This is a hint, so ignoring and returning success is ok.  */
+-        ret = get_errno(0);
++        ret = get_errno(target_madvise(arg1, arg2, arg3));
+         break;
+ #endif
+ #if TARGET_ABI_BITS == 32
+--
+2.17.1
+EOT
+
 ./configure --target-list=arm-linux-user,aarch64-linux-user --static
 make
 sudo make install
