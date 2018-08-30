@@ -36,7 +36,7 @@
 # This script installs QNX 7.
 
 targetFolder="/opt/"
-sourceFile="/net/ci-files01-hki.intra.qt.io/hdd/www/input/qnx/qnx700_mac.zip"
+sourceFile="/net/ci-files01-hki.intra.qt.io/hdd/www/input/qnx/qnx700-20180801-macos.zip"
 folderName="qnx700"
 
 sudo mkdir -p "$targetFolder"

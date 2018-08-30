@@ -40,8 +40,8 @@ set -ex
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/linux/qnx660.tar.gz"
-sha1="E292CCAEF447AC1AA4DAD7802D604A5531ACD8D0"
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/linux/qnx660-patch4687-linux.tar.gz"
+sha1="ffcf91489699c42ce9c1d74941f1829531752bbe"
 folderName="qnx660"
 targetFile="qnx660.tar.gz"
 wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
