@@ -33,34 +33,38 @@
 ##
 #############################################################################
 
-# This script installs QNX 6.6.0.
+# This script modifies system settings for automated use
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
-targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/linux/qnx660-patch4687-linux.tar.gz"
-sha1="ffcf91489699c42ce9c1d74941f1829531752bbe"
-folderName="qnx660"
-targetFile="qnx660.tar.gz"
-wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
-echo "$sha1  $targetFile" | sha1sum --check
-if [ ! -d "$targetFolder" ]; then
-    mkdir -p $targetFolder
+NTS_IP=10.212.2.216
+
+echo "Set timezone to UTC."
+sudo timedatectl set-timezone Etc/UTC
+echo "Timeout for blanking the screen (0 = never)"
+gsettings set org.gnome.desktop.session idle-delay 0
+echo "Prevents screen lock when screesaver goes active."
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+echo "Set grub timeout to 0"
+sudo sed -i 's|GRUB_TIMEOUT=10|GRUB_TIMEOUT=0|g' /etc/default/grub
+sudo update-grub
+
+# https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1624320
+echo "Setting up workaround for Ubuntu systemd resolve bug"
+sudo rm -f /etc/resolv.conf
+sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
+echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+
+echo 'LC_ALL=en_US.UTF8' | sudo tee /etc/default/locale
+
+if [ "$http_proxy" != "" ]; then
+    echo "Acquire::http::Proxy \"$proxy\";" | sudo tee -a /etc/apt/apt.conf
 fi
-sudo tar -C $targetFolder -xvzf $targetFile
-sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-# Verify that we have last file in tar
-if [ ! -f $targetFolder/$folderName/qnx660-env.sh ]; then
-    echo "Installation failed!"
-    exit -1
-fi
-
-rm -rf $targetFile
-
-# Set env variables
-SetEnvVar "QNX_660" "$targetFolder$folderName"
-
-echo "QNX SDP = 6.6.0" >> ~/versions.txt
+# This script diverts qtlogging.ini file so we don't get debugging related auto-test failures.
+sudo dpkg-divert --divert /etc/xdg/QtProject/qtlogging.ini.foo --rename /etc/xdg/QtProject/qtlogging.ini

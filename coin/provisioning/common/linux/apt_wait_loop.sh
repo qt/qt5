@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,34 +33,12 @@
 ##
 #############################################################################
 
-# This script installs QNX 6.6.0.
-
 set -ex
 
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+function waitLoop {
 
-targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/linux/qnx660-patch4687-linux.tar.gz"
-sha1="ffcf91489699c42ce9c1d74941f1829531752bbe"
-folderName="qnx660"
-targetFile="qnx660.tar.gz"
-wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
-echo "$sha1  $targetFile" | sha1sum --check
-if [ ! -d "$targetFolder" ]; then
-    mkdir -p $targetFolder
-fi
-sudo tar -C $targetFolder -xvzf $targetFile
-sudo chown -R qt:users "$targetFolder"/"$folderName"
-
-# Verify that we have last file in tar
-if [ ! -f $targetFolder/$folderName/qnx660-env.sh ]; then
-    echo "Installation failed!"
-    exit -1
-fi
-
-rm -rf $targetFile
-
-# Set env variables
-SetEnvVar "QNX_660" "$targetFolder$folderName"
-
-echo "QNX SDP = 6.6.0" >> ~/versions.txt
+while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+    echo "Waiting for other software managers to finish..."
+    sleep 0.5
+done
+}

@@ -41,8 +41,8 @@ set -ex
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700.tar.xz"
-sha1="949a87c5f00d0756956cb4b1b3b213ecaeee9113"
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700-20180801-linux.tar.xz"
+sha1="5d2c8f531823b1f7a2e20968dc698c187c7de94c"
 folderName="qnx700"
 targetFile="qnx700.tar.xz"
 wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"

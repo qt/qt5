@@ -111,7 +111,7 @@ function MSVCEnvironment
 function BuildAndInstallOpen62541
 {
     Param (
-        [string]$Type=$(throw("You must specify the dev type [mingw530, mingw630, msvc2015, msvc2017]")),
+        [string]$Type=$(throw("You must specify the dev type [mingw530, mingw630, mingw730, msvc2015, msvc2017]")),
         [string]$Platform=$(throw("You must specify the target platform [x86, x64]")),
         [string]$MakeCommand=$(throw("You must specify a make command [mingw32-make, nmake]"))
     )
@@ -165,7 +165,7 @@ function BuildAndInstallOpen62541
 function DownloadAndInstall
 {
     Param (
-        [string]$Type=$(throw("You must specify the dev type [mingw530, mingw630, msvc2015, msvc2017]")),
+        [string]$Type=$(throw("You must specify the dev type [mingw530, mingw630, mingw730, msvc2015, msvc2017]")),
         [string]$Platform=$(throw("You must specify the target platform [x86, x64]"))
     )
     $baseLocation = "http://ci-files01-hki.intra.qt.io/input/open62541/"
@@ -233,6 +233,8 @@ if ($targetCommand.StartsWith("mingw")) {
     PowerShell -ExecutionPolicy Bypass -File "$PSScriptRoot\open62541.ps1" -targetCommand mingw530
     Write-Host "### Invoking MinGW630 build"
     PowerShell -ExecutionPolicy Bypass -File "$PSScriptRoot\open62541.ps1" -targetCommand mingw630
+    Write-Host "### Invoking MinGW730 build"
+    PowerShell -ExecutionPolicy Bypass -File "$PSScriptRoot\open62541.ps1" -targetCommand mingw730
     Write-Host "### Invoking MSVC2015 build"
     PowerShell -ExecutionPolicy Bypass -File "$PSScriptRoot\open62541.ps1" -targetCommand msvc2015_x86
     PowerShell -ExecutionPolicy Bypass -File "$PSScriptRoot\open62541.ps1" -targetCommand msvc2015_x64
@@ -246,6 +248,8 @@ if ($targetCommand.StartsWith("mingw")) {
     DownloadAndInstall mingw530 x86
     Write-Host "### MinGW630 x64"
     DownloadAndInstall mingw630 x86
+    Write-Host "### MinGW730 x64"
+    DownloadAndInstall mingw730 x64
     Write-Host "### MSVC2015 x86"
     DownloadAndInstall msvc2015 x86
     Write-Host "### MSVC2015 x64"

@@ -1,4 +1,4 @@
 Template                    Target OS           Target arch Compiler    Features
 --------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-10-x86_64-10                       x86         MSVC2017    DebugAndRelease Release ForceDebugInfo OpenGLDynamic DisableTests
-qtci-windows-7-x86-3                                        Mingw53     Packaging DebugAndRelease Release OpenGLDynamic DisableTests
+qtci-windows-7-x86-3                                        Mingw73     Packaging DebugAndRelease Release OpenGLDynamic DisableTests

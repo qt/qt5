@@ -45,6 +45,8 @@ cd "$tempDir"
 
 #latest commit from the master proven to work
 git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
+git cherry-pick 75e5b70e6b5dcc4f2219992d7cffa462aa406af0
+git cherry-pick 04b33e21866412689f18b7ad6daf0a54d8f959a7
 git submodule update --init pixman
 
 patch -p1 <<EOT
@@ -118,7 +120,7 @@ index 11a311f9db..94d8abc745 100644
 2.17.1
 EOT
 
-./configure --target-list=arm-linux-user,aarch64-linux-user --static
+./configure --target-list=arm-linux-user,aarch64-linux-user --static --disable-werror
 make
 sudo make install
 rm -rf "$tempDir"

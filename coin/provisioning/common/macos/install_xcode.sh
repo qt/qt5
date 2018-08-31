@@ -58,6 +58,10 @@ function InstallXCode() {
     echo "Accept license"
     sudo xcodebuild -license accept
 
+    echo "Install packages"
+    # -runFirstLaunch is valid in 9.x
+    sudo xcodebuild -runFirstLaunch || true
+
     echo "Enabling developer mode, so that using lldb does not require interactive password entry"
     sudo /usr/sbin/DevToolsSecurity -enable
 
