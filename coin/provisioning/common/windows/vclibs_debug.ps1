@@ -1,3 +1,5 @@
+. "$PSScriptRoot\helpers.ps1"
+
 function Install-VCLibsDebug
 {
     Param (
@@ -10,7 +12,12 @@ function Install-VCLibsDebug
         return
     }
 
-    Add-AppxPackage "C:\Program Files (x86)\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\Appx\Debug\$Arch\Microsoft.VCLibs.$Arch.Debug.14.00.appx"
+    if (Is64BitWinHost) {
+        $ProgramFiles = "Program Files (x86)"
+    } else {
+        $ProgramFiles = "Program Files"
+    }
+    Add-AppxPackage "C:\$ProgramFiles\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\Appx\Debug\$Arch\Microsoft.VCLibs.$Arch.Debug.14.00.appx"
 
     Write-Host "Debug VCLibs successfully installed for $Arch."
 }
