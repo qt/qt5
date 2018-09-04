@@ -143,6 +143,11 @@ installPackages+=(virtualbox)
 installPackages+=(dkms)
 # Needed for qtspeech
 installPackages+=(libspeechd-dev)
+# Needed for b2qt
+installPackages+=(git-lfs)
+installPackages+=(chrpath)
+installPackages+=(gawk)
+installPackages+=(texinfo)
 
 echo "Installing packages"
 waitLoop
