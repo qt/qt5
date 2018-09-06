@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
 #############################################################################
 ##
@@ -32,8 +32,7 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 set -ex
 
-BASEDIR=$(dirname "$0")
-# shellcheck source=../common/unix/libclang.sh
-"$BASEDIR/../common/unix/libclang.sh" "$URL" "$SHA1" "$VERSION"
+source "${BASH_SOURCE%/*}/../common/linux/qnx_660.sh"

@@ -10,8 +10,8 @@ qtci-windows-10-x86_64-10   WinRT_10                        MSVC2017    Packagin
 qtci-linux-RHEL-7.4-x86_64  Android_ANY         x86         Clang       Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-windows-7-x86-3        Android_ANY         armv7       Mingw73     Packaging Release DisableTests OpenGLES2
 qtci-windows-7-x86-3        Android_ANY         x86         Mingw73     Packaging Release DisableTests OpenGLES2
-qtci-macos-10.12-x86_64-8   Android_ANY         armv7       Clang       Packaging Release DisableTests OpenGLES2
-qtci-macos-10.12-x86_64-8   Android_ANY         x86         Clang       Packaging Release DisableTests OpenGLES2
+qtci-macos-10.13-x86_64     Android_ANY         armv7       Clang       Packaging Release DisableTests OpenGLES2
+qtci-macos-10.13-x86_64     Android_ANY         x86         Clang       Packaging Release DisableTests OpenGLES2
 qtci-macos-10.12-x86_64-8   QNX_700             x86         GCC         Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-windows-10-x86_64-10   QNX_700             armv7       Mingw73     Packaging Release DisableTests OpenGLES2
 qtci-windows-10-x86_64-10   QNX_700             armv8       Mingw73     Packaging Release DisableTests OpenGLES2

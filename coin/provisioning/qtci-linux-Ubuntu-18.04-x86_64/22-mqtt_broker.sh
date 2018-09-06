@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,47 +33,4 @@
 ##
 #############################################################################
 
-set -ex
-
-# shellcheck source=DownloadURL.sh
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
-
-function InstallFromCompressedFileFromURL {
-    url=$1
-    url_alt=$2
-    expectedSha1=$3
-    installDirectory=$4
-    appPrefix=$5
-
-    basefilename=${url##*/}
-    extension=${basefilename##*.}
-    filename=${basefilename%.*}
-    if [ "$extension" == "gz" ] && [ "${filename##*.}" == "tar" ]; then
-        extension="tar.gz"
-    fi
-    echo "Extension for file: $extension"
-    echo "Creating temporary file and directory"
-    targetFile=$(mktemp "$TMPDIR$(uuidgen)XXXXX.$extension")
-    targetDirectory=$(mktemp -d)
-    DownloadURL "$url" "$url_alt" "$expectedSha1" "$targetFile"
-    echo "Uncompress $targetFile"
-    case $extension in
-        "tar.gz")
-            tar -xzf "$targetFile" --directory "$targetDirectory"
-        ;;
-        "zip")
-            unzip "$targetFile" -d "$targetDirectory"
-        ;;
-        *)
-            exit 1
-        ;;
-    esac
-    echo "Moving app to $installDirectory"
-    sudo mkdir -p "$installDirectory"
-    sudo mv "$targetDirectory/$appPrefix/"* "$installDirectory"
-    echo "Removing file '$targetFile'"
-    rm "$targetFile"
-    echo "Removing directory '$targetDirectory'"
-    rm -rf "$targetDirectory"
-}
-
+source "${BASH_SOURCE%/*}/../common/unix/mqtt_broker.sh"

@@ -76,7 +76,7 @@ function MountAndInstall {
         usersGroup="staff"
         mountFolder="/Volumes"
         squishLicenseDir="/Users/qt"
-    elif uname -a |grep -q "el6\|el7"; then
+    elif uname -a |grep -q "el7"; then
         usersGroup="qt"
         mountFolder="/tmp"
         squishLicenseDir="/root"
@@ -160,7 +160,7 @@ MountAndInstall "$squishLicenseUrl" "$squishFolder" "$squishLicenseFile"
 echo "Installing squish $version.."
 MountAndInstall "$squishUrl" "$squishFolder" "$squishFile"
 
-echo "Installing test suite for squish"
+echo "Installing provisioning scripts for squish"
 MountAndInstall "$testSuiteUrl" "$squishFolder" "$testSuite.tar.gz"
 
 echo "Verifying Squish Installation"
