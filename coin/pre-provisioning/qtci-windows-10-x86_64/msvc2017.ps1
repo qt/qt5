@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,19 +31,57 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
-
-# This script will install Visual Studio 2017
+# Visual Studio $version version $version_number was installed manually using $installer.
 
 $version = "2017"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
-$sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
-$msvcPackage = "C:\Windows\Temp\$version.exe"
+$version_number = "15.8.5"
+$installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312218103.1526017942.exe"
 
+# Following components were selected from installer:
+# Microsoft.Net.Component.4.5.TargetingPack (.NET Framework 4.5 targeting pack)
+# Microsoft.Net.Component.4.6.1.SDK (.NET Framework 4.6.1 SDK)
+# Microsoft.Component.NetFX.Native (.NET Native)
+# Microsoft.VisualStudio.Component.PortableLibrary (.NET Portable Library targeting pack)
+# Microsoft.VisualStudio.Component.SQL.CLR (CLR data types for SQL Server)
+# Microsoft.VisualStudio.Component.VisualStudioData (Data sources and service references)
+# Microsoft.Component.ClickOnce (ClickOnce Publishing)
+# Microsoft.VisualStudio.Component.AppInsights.Tools (Developer Analytics tools)
+# Microsoft.VisualStudio.Component.NuGet (NuGet package manager)
+# Microsoft.VisualStudio.Component.Static.Analysis.Tools (Static analysis tools)
+# Microsoft.VisualStudio.Component.TextTemplating (Text Template Transformation)
+# Microsoft.VisualStudio.Component.Roslyn.Compiler (C# and Visual Basic Roslyn compilers)
+# Microsoft.Component.MSBuild (MSBuild)
+# Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (VC++ 2017 version 15.8 v14.15 latest v141 tools)
+# Microsoft.VisualStudio.Component.VC.Redist.14.Latest (Visual C++ 2017 Redistributable Update)
+# Microsoft.VisualStudio.Component.VC.Tools.ARM (Visual C++ compilers and libraries for ARM)
+# Microsoft.VisualStudio.Component.VC.Tools.ARM64 (Visual C++ compilers and libraries for ARM64)
+# Microsoft.VisualStudio.Component.VC.CMake.Project (Visual C++ tools for CMake)
+# Microsoft.VisualStudio.Component.DiagnosticTools (.NET profiling tools)
+# Microsoft.VisualStudio.Component.VC.DiagnosticTools (C++ profiling tools)
+# Microsoft.VisualStudio.Component.JavaScript.Diagnostics (JavaScript diagnostics)
+# Microsoft.VisualStudio.Component.Debugger.JustInTime (Just-In-Time debugger)
+# Microsoft.VisualStudio.Component.Roslyn.LanguageServices (C# and Visual Basic)
+# Microsoft.VisualStudio.Component.JavaScript.TypeScript (JavaScript and TypeScript language support)
+# Component.Microsoft.VisualStudio.RazorExtension (Razor Language Services)
+# Component.Linux.CMake (Visual C++ tools for CMake and Linux)
+# Microsoft.VisualStudio.Component.VC.CoreIde (Visual Studio C++ core features)
+# Microsoft.VisualStudio.Component.Graphics.Tools (Graphics debugger and GPU profiler for DirectX)
+# Microsoft.VisualStudio.Component.Graphics (Image and 3D model editors)
+# Microsoft.VisualStudio.Component.Graphics.Win81 (Graphics Tools Windows 8.1 SDK)
+# Microsoft.VisualStudio.Component.TypeScript.2.3 (TypeScript 2.3 SDK)
+# Microsoft.VisualStudio.Component.TypeScript.3.0 (TypeScript 3.0 SDK)
+# Microsoft.VisualStudio.Component.VC.ATL (Visual C++ ATL for x86 and x64)
+# Microsoft.VisualStudio.Component.Windows10SDK.10240 (Windows 10 SDK (10.0.10240.0))
+# Microsoft.VisualStudio.Component.Windows10SDK.10586 (Windows 10 SDK (10.0.10586.0))
+# Microsoft.VisualStudio.Component.Windows10SDK.14393 (Windows 10 SDK (10.0.14393.0))
+# Microsoft.VisualStudio.Component.Windows10SDK.15063.Desktop (Windows 10 SDK (10.0.15063.0) for Desktop C++ [x86 and x64])
+# Microsoft.VisualStudio.Component.Windows10SDK.15063.UWP (Windows 10 SDK (10.0.15063.0) for UWP: C#, VB, JS)
+# Microsoft.VisualStudio.Component.Windows10SDK.15063.UWP.Native (Windows 10 SDK (10.0.15063.0) for UWP: C++)
+# Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop (Windows 10 SDK (10.0.16299.0) for Desktop C++ [x86 and x64])
+# Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP (Windows 10 SDK (10.0.16299.0) for UWP: C#, VB, JS)
+# Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP.Native (Windows 10 SDK (10.0.16299.0) for UWP: C++)
+# Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop.arm (Windows 10 SDK (10.0.16299.0) for Desktop C++ [ARM and ARM64])
+# Microsoft.VisualStudio.Component.Windows10SDK.17134 (Windows 10 SDK (10.0.17134.0))
+# Microsoft.VisualStudio.Component.Windows10SDK.17763 (Windows 10 SDK (10.0.17763.0))
 
-Download $url_cache $url_cache $msvcPackage
-Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --norestart --quiet --wait --add Microsoft.VisualStudio.Component.VC.Tools.ARM"
-echo "Cleaning $msvcPackage.."
-Remove-Item -Recurse -Force "$msvcPackage"
-echo "Visual Studio = $version" >> ~\versions.txt
+echo "Visual Studio = $version version version_number" >> ~\versions.txt
