@@ -129,6 +129,7 @@ function MountAndInstall {
         echo "'run-file', no need to uncompress"
         sudo cp $targetFileMount $targetDirectory
         UnMount
+        sudo chmod +x $targetDirectory/$targetFile
         sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
         sudo rm -fr "$targetDirectory/$targetFile"
         if uname -a |grep -q "Ubuntu"; then
