@@ -33,4 +33,14 @@
 ##
 #############################################################################
 
-source "${BASH_SOURCE%/*}/../common/unix/mqtt_broker.sh"
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+
+set -ex
+
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed packages *****" >> ~/versions.txt
+apt list --installed >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
+
+"$(dirname "$0")/version.sh"

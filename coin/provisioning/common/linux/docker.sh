@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,14 +33,20 @@
 ##
 #############################################################################
 
-# This script needs to be called last during provisioning so that the software information will show up last in provision log.
-
 set -ex
 
-# shellcheck disable=SC2129
-echo "*********************************************" >> ~/versions.txt
-echo "***** All installed packages *****" >> ~/versions.txt
-apt list --installed >> ~/versions.txt
-echo "*********************************************" >> ~/versions.txt
+# Download and install the docker engine.
+sudo apt-get install curl -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install docker-ce -y
+sudo usermod -a -G docker $USER
+sudo docker info
 
-"$(dirname "$0")/../common/linux/version.sh"
+# Download and install the docker-compose extension.
+sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Start testserver provisioning
+source "${BASH_SOURCE%/*}/testserver/docker_testserver.sh"
