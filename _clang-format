@@ -49,8 +49,8 @@ BraceWrapping:
 
 # When constructor initializers do not fit on one line, put them each on a new line.
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
-# Indent initializers by 8 spaces
-ConstructorInitializerIndentWidth: 8
+# Indent initializers by 4 spaces
+ConstructorInitializerIndentWidth: 4
 
 # Indent width for line continuations.
 ContinuationIndentWidth: 8
