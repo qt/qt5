@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# shellcheck source=../common/linux/remove_update-manager.sh
-source "${BASH_SOURCE%/*}/../common/linux/remove_update-manager.sh"
