@@ -44,6 +44,19 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
     sudo systemctl stop $service
     sudo systemctl disable $service
 done
+
+function set_internal_repo {
+    sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic-updates main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic-backports main restricted universe
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic-security main restricted universe multiverse
+EOC
+}
+
+(ping -c 3 repo-clones.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
+
 # Git is not needed by builds themselves, but is nice to have
 # immediately as one starts debugging
 installPackages+=(git)
@@ -145,12 +158,12 @@ installPackages+=(dkms)
 # Needed for qtspeech
 installPackages+=(libspeechd-dev)
 
-echo "Installing packages"
-waitLoop
-sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 echo "Running update for apt"
 waitLoop
 sudo apt-get update
+echo "Installing packages"
+waitLoop
+sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 
 # Install all needed packages in a special wheel cache directory
 pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
