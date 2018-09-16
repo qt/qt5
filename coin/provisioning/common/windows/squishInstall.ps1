@@ -38,11 +38,11 @@
 # NOTE! Make sure 64bit versions are always installed before 32bit,
 # because they use same folder name before a rename
 
-$version = "6.3.0"
+$version = "6.3.2"
 
 # Qt branch without dot (*.*)
-$qtBranch = "59x"
-# So far Squish built with Qt5.9 works also with 5.10 and 5.11, but we have to be prepared that on some point
+$qtBranch = "510x"
+# So far Squish built with Qt5.10 works also with 5.11, but we have to be prepared that on some point
 # the compatibility breaks, and we may need to have separate Squish packages for different Qt versions.
 
 $targetDir = "C:\Utils\squish"

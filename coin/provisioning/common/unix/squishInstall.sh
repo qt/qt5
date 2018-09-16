@@ -38,9 +38,9 @@ set -ex
 # This script will install squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.3.0"
+version="6.3.2"
 # Branch version without dot
-qtBranch="59x"
+qtBranch="510x"
 squishFolder="/opt/squish"
 squishUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/$qtBranch/"
 squishFile="squish-$version-qt$qtBranch-linux64.run"
@@ -129,6 +129,7 @@ function MountAndInstall {
         echo "'run-file', no need to uncompress"
         sudo cp $targetFileMount $targetDirectory
         UnMount
+        sudo chmod +x $targetDirectory/$targetFile
         sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
         sudo rm -fr "$targetDirectory/$targetFile"
         if uname -a |grep -q "Ubuntu"; then

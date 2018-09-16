@@ -96,6 +96,7 @@ installPackages+=(g++-multilib)
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(python3-virtualenv)
+installPackages+=(python3-wheel)
 # python2 development package
 installPackages+=(python-dev)
 # Automates interactive applications (Needed by RTA to automate configure testing)
@@ -155,3 +156,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}
 echo "Running update for apt"
 waitLoop
 sudo apt-get update
+
+# Install all needed packages in a special wheel cache directory
+pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
+
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"

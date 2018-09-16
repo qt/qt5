@@ -1,0 +1,19 @@
+Template                    Target OS           Target arch Compiler    Features
+--------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
+qtci-windows-10-x86_64-10   WinRT_10                        MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10   WinRT_10            x86         MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-7-x86-3                                        Mingw53     Packaging DebugAndRelease Release OpenGLDynamic DisableTests
+qtci-windows-10-x86_64-10                                   Mingw73     Packaging DebugAndRelease Release OpenGLDynamic DisableTests
+qtci-windows-10-x86_64-10   WinRT_10            armv7       MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10   WinRT_10                        MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-linux-RHEL-7.4-x86_64  Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-windows-7-x86-3        Android_ANY         armv7       Mingw53     Packaging Release DisableTests OpenGLES2
+qtci-windows-7-x86-3        Android_ANY         x86         Mingw53     Packaging Release DisableTests OpenGLES2
+qtci-macos-10.12-x86_64-8   Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2
+qtci-macos-10.12-x86_64-8   Android_ANY         x86         GCC         Packaging Release DisableTests OpenGLES2
+qtci-macos-10.12-x86_64-8   IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
+qtci-windows-10-x86_64-10   QNX_700             armv7       Mingw73     Packaging Release DisableTests OpenGLES2
+qtci-windows-10-x86_64-10   QNX_700             armv8       Mingw73     Packaging Release DisableTests OpenGLES2
+qtci-windows-10-x86_64-10   QNX_700             x86_64      Mingw73     Packaging Release DisableTests OpenGLES2
+qtci-linux-RHEL-7.4-x86_64  QNX_700             armv8       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-RHEL-7.4-x86_64  QNX_700             x86_64      GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
