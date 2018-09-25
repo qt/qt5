@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -53,9 +53,9 @@ Rename-Item C:\Utils\openssl-$version $destination
 Remove-Item -Path $zip
 Remove-Item C:\Utils\openssl-$version.tar
 
-Set-EnvironmentVariable "CC" "C:\utils\android-ndk-r16b\toolchains\llvm\prebuilt\linux-x86_64\bin\clang"
-Set-EnvironmentVariable "AR" "C:\utils\android-ndk-r16b\toolchains\llvm\prebuilt\linux-x86_64\bin\llvm-ar"
-Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\android-ndk-r16b\platforms\android-18\arch-arm\usr"
+Set-EnvironmentVariable "CC" "C:\utils\Android\android-ndk-r18b\toolchains\llvm\prebuilt\windows\bin\clang"
+Set-EnvironmentVariable "AR" "C:\utils\Android\android-ndk-r18b\toolchains\llvm\prebuilt\windows\bin\llvm-ar"
+Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\Android\android-ndk-r18b\platforms\android-21\arch-arm\usr"
 
 # Make sure configure for openssl has a "make" and "perl" available
 $env:PATH = $env:PATH + ";C:\msys\1.0\bin;C:\strawberry\perl\bin"
