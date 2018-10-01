@@ -35,18 +35,33 @@
 
 set -ex
 
-# Download and install the docker engine.
-sudo apt-get install curl -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install docker-ce -y
-sudo usermod -a -G docker $USER
-sudo docker info
+case ${BASH_SOURCE[0]} in
+    */linux/*) SERVER_PATH="${BASH_SOURCE[0]%/linux/*}/shared/testserver" ;;
+    */*) SERVER_PATH="${BASH_SOURCE[0]%/*}/../shared/testserver" ;;
+    *) SERVER_PATH="../shared/testserver" ;;
+esac
 
-# Download and install the docker-compose extension.
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+# testserver shared scripts
+source "$SERVER_PATH/testserver_util.sh"
 
-# Start testserver provisioning
-source "${BASH_SOURCE%/*}/docker_testserver.sh"
+# Using SHA-1 of each server context as the tag of docker images. A tag labels a
+# specific image version. It is used by docker compose file (docker-compose.yml)
+# to launch the corresponding docker containers. If one of the server contexts
+# (./apache2, ./danted, ...) gets changes, all the related compose files in
+# qtbase should be updated as well.
+
+source "$SERVER_PATH/settings.sh"
+
+for server in $testserver
+do
+    context="$SERVER_PATH/$server"
+    # obsolete - This one is still needed for CI. It will be removed later.
+    sha1=$(find $context -type f -print0 | sort -z | xargs -r0 sha1sum | awk '{ print $1 }' | \
+           sha1sum | awk '{ print $1 }')
+    sudo docker build -t qt-test-server-$server:$sha1 $context
+
+    # Sort files by their SHA-1 and use the accumulated result as the TAG
+    sudo docker build -t qt-test-server-$server:$(sha1tree $context) $context
+done
+
+sudo docker images

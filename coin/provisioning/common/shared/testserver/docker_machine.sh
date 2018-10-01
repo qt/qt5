@@ -35,18 +35,16 @@
 
 set -ex
 
-# Download and install the docker engine.
-sudo apt-get install curl -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install docker-ce -y
-sudo usermod -a -G docker $USER
-sudo docker info
+TestMachine='qt-test-server'
 
-# Download and install the docker-compose extension.
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+# Deploy docker virtual machine (Boot2Docker) into VirtualBox only if it doesn't exist
+if [ -z $(docker-machine ls -q --filter "name=$TestMachine") ]
+then
+    docker-machine create -d virtualbox $TestMachine
+    docker-machine ip $TestMachine
+fi
 
-# Start testserver provisioning
-source "${BASH_SOURCE%/*}/docker_testserver.sh"
+# Switch the docker engine to $TestMachine
+eval $(docker-machine env $TestMachine)
+
+docker-machine ls

@@ -35,18 +35,29 @@
 
 set -ex
 
-# Download and install the docker engine.
-sudo apt-get install curl -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install docker-ce -y
-sudo usermod -a -G docker $USER
-sudo docker info
+# Download and install the Docker Toolbox for macOS (Docker Compose and Docker Machine).
+url="https://download.docker.com/mac/stable/DockerToolbox.pkg"
+target_file="DockerToolbox.pkg"
 
-# Download and install the docker-compose extension.
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+if [ -x "$(command -v sha1sum)" ]
+then
+    # This part shall be used in CI environment only. The DownloadURL script needs sha1sum
+    # which is not included in the default macOS system. In addition, the cached pkg can't
+    # be downloaded out of the Qt internal network.
+    case ${BASH_SOURCE[0]} in
+        */macos/*) UNIX_PATH="${BASH_SOURCE[0]%/macos/*}/unix" ;;
+        */*) UNIX_PATH="${BASH_SOURCE[0]%/*}/../unix" ;;
+        *) UNIX_PATH="../unix" ;;
+    esac
+
+    source "$UNIX_PATH/DownloadURL.sh"
+    url_cached="http://ci-files01-hki.ci.local/input/windows/DockerToolbox.pkg"
+    sha1="7196d2d30648d486978d29adb5837ff7876517c1"
+    DownloadURL $url_cached $url $sha1 $target_file
+else
+    curl $url -o $target_file
+fi
+sudo installer -pkg $target_file -target /
 
 # Start testserver provisioning
 source "${BASH_SOURCE%/*}/docker_testserver.sh"

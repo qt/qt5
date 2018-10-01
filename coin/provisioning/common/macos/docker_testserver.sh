@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,24 +35,30 @@
 
 set -ex
 
+case ${BASH_SOURCE[0]} in
+    */macos/*) SERVER_PATH="${BASH_SOURCE[0]%/macos/*}/shared/testserver" ;;
+    */*) SERVER_PATH="${BASH_SOURCE[0]%/*}/../shared/testserver" ;;
+    *) SERVER_PATH="../shared/testserver" ;;
+esac
+
+# testserver shared scripts
+source "$SERVER_PATH/testserver_util.sh"
+
+# Create docker virtual machine (Boot2docker)
+source "$SERVER_PATH/docker_machine.sh"
+
 # Using SHA-1 of each server context as the tag of docker images. A tag labels a
 # specific image version. It is used by docker compose file (docker-compose.yml)
 # to launch the corresponding docker containers. If one of the server contexts
 # (./apache2, ./danted, ...) gets changes, all the related compose files in
 # qtbase should be updated as well.
-#
-# For example, here's how to get the SHA-1 of apache test server.
-# find ./apache2 -type f -print0 | sort -z | xargs -r0 sha1sum | \
-# awk '{ print $1 }' | sha1sum | awk '{ print $1 }'
 
-testserver='apache2 squid vsftpd ftp-proxy danted'
+source "$SERVER_PATH/settings.sh"
 
 for server in $testserver
 do
-    context="${BASH_SOURCE%/*}/$server"
-    sha1=$(find $context -type f -print0 | sort -z | xargs -r0 sha1sum | awk '{ print $1 }' | \
-           sha1sum | awk '{ print $1 }')
-    sudo docker build -t qt-test-server-$server:$sha1 $context
+    context="$SERVER_PATH/$server"
+    docker build -t qt-test-server-$server:$(sha1tree $context) $context
 done
 
-sudo docker images
+docker images
