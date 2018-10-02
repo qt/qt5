@@ -161,6 +161,17 @@ installPackages+=(dkms)
 #Pypdf for QSR documentation
 installPackages+=(python-pypdf2)
 
+sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
+EOC
+
 echo "Running update for apt"
 sudo apt-get update
 echo "Installing packages"
@@ -171,10 +182,3 @@ pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/share
 
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
-
-sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
-EOC
