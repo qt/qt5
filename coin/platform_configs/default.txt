@@ -1,27 +1,25 @@
-Template                            Target OS           Target arch Compiler    Features
------------------------------------ ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-windows-10-x86_64-10                                           MSVC2015    DeveloperBuild Release QtNamespace QtLibInfix BuildExamples
-qtci-windows-7-x86-3                                                Mingw73     DeveloperBuild Release OpenGLDynamic
-qtci-windows-10-x86_64-10                               x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-10                                           MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-windows-10-x86_64-10           WinRT_10            x86         MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
-qtci-windows-10-x86_64-10           WinRT_10            armv7       MSVC2015    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
-qtci-windows-10-x86_64-10                                           MSVC2017    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
-qtci-linux-Ubuntu-18.04-x86_64                                      GCC         NoWidgets ForceDebugInfo
-qtci-linux-Ubuntu-18.04-x86_64                                      GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace BuildExamples Documentation
-qtci-linux-openSUSE-42.3-x86_64                                     GCC         DeveloperBuild NoPch
-qtci-linux-openSUSE-42.3-x86_64                                     ICC_18      DeveloperBuild NoPch DisableTests SystemSQLite
-qtci-linux-RHEL-7.4-x86_64                                          GCC         Packaging Release NoUseGoldLinker ForceDebugInfo SeparateDebugInfo
-qtci-macos-10.12-x86_64-8                                           Clang       Packaging DebugAndRelease Release
-qtci-macos-10.13-x86_64                                             Clang       DebugAndRelease Release
-qtci-macos-10.12-x86_64-8                                           Clang       DeveloperBuild Release QtNamespace NoPch
-qtci-macos-10.12-x86_64-8                                           Clang       Release NoFramework DisableTests
-qtci-macos-10.13-x86_64             IOS_ANY             multi       Clang       Packaging DebugAndRelease DisableTests Static
-qtci-macos-10.13-x86_64             TvOS_ANY            multi       Clang       DebugAndRelease DisableTests
-qtci-macos-10.13-x86_64             WatchOS_ANY         multi       Clang       DebugAndRelease DisableTests
-qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       Clang       Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-linux-Ubuntu-18.04-x86_64      QEMU                armv7       GCC         Release
-qtci-linux-Ubuntu-18.04-x86_64      QEMU                arm64       GCC         Release
-qtci-linux-Ubuntu-18.04-x86_64                                      GCC         TestOnly LicenseCheck
-qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC         Release DisableTests OpenGLES2 NoUseGoldLinker
-qtci-linux-RHEL-7.4-x86_64          QNX_700             armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+Template                            Target OS           Target arch Compiler    Target Compiler Features
+----------------------------------- ------------------- ----------- ----------- --------------- -------------------------------------------------------------------------------------
+qtci-windows-10-x86_64-10                                           MSVC2015                    DeveloperBuild Release QtNamespace QtLibInfix BuildExamples
+qtci-windows-7-x86-3                                                Mingw73                     DeveloperBuild Release OpenGLDynamic
+qtci-windows-10-x86_64-10                               x86         MSVC2015                    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-10                                           MSVC2015                    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-windows-10-x86_64-10           WinRT_10            x86         MSVC2015                    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10           WinRT_10            armv7       MSVC2015                    Packaging DebugAndRelease Release ForceDebugInfo DisableTests
+qtci-windows-10-x86_64-10                                           MSVC2017                    Packaging DebugAndRelease Release ForceDebugInfo OpenGLDynamic
+qtci-linux-Ubuntu-18.04-x86_64                                      GCC                         NoWidgets ForceDebugInfo
+qtci-linux-Ubuntu-18.04-x86_64                                      GCC                         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace BuildExamples Documentation
+qtci-linux-openSUSE-42.3-x86_64                                     GCC                         DeveloperBuild NoPch
+qtci-linux-openSUSE-42.3-x86_64                                     ICC_18                      DeveloperBuild NoPch DisableTests SystemSQLite
+qtci-linux-RHEL-7.4-x86_64                                          GCC                         Packaging Release NoUseGoldLinker ForceDebugInfo SeparateDebugInfo
+qtci-macos-10.13-x86_64                                             Clang                       Packaging DebugAndRelease Release
+qtci-macos-10.12-x86_64-8                                           Clang                       DeveloperBuild NoFramework Release QtNamespace NoPch
+qtci-macos-10.13-x86_64             IOS_ANY             multi       Clang                       Packaging DebugAndRelease DisableTests Static
+qtci-macos-10.13-x86_64             TvOS_ANY            multi       Clang                       DebugAndRelease DisableTests
+qtci-macos-10.13-x86_64             WatchOS_ANY         multi       Clang                       DebugAndRelease DisableTests
+qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       Clang       Clang           Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-Ubuntu-18.04-x86_64      QEMU                armv7       GCC                         Release
+qtci-linux-Ubuntu-18.04-x86_64      QEMU                arm64       GCC                         Release
+qtci-linux-Ubuntu-18.04-x86_64                                      GCC                         TestOnly LicenseCheck
+qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC                         Release DisableTests OpenGLES2 NoUseGoldLinker
+qtci-linux-RHEL-7.4-x86_64          QNX_700             armv7       GCC                         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
