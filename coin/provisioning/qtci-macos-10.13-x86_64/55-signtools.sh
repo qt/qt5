@@ -62,13 +62,13 @@ Install "$cache/semisecure/.qt-license" "$targetFolder/.qt-license" $sha1QtLicen
 # Login keychain
 sha1LoginKeychainPassword="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
 Install "$cacheSigningTools/login_keychain_password.txt" "$targetFolder/login_keychain_password.txt" "$sha1LoginKeychainPassword"
-loginKeychainPassword=$(<"$targetFolder/login_keychain_password.txt")
+{ loginKeychainPassword=$(<"$targetFolder/login_keychain_password.txt"); } 2> /dev/null
 loginKeychain=$keychains/login.keychain
 
 echo "Setting login.keychain as default keychain.."
 security default-keychain -s $loginKeychain*
 echo "Unlocking Login keychain with password.."
-security unlock-keychain -p "$loginKeychainPassword" $loginKeychain*
+{ security unlock-keychain -p "$loginKeychainPassword" $loginKeychain*; } 2> /dev/null
 
 echo "remove the "Lock after X minutes of inactivity" from login.keychain"
 security set-keychain-settings $loginKeychain
@@ -86,7 +86,7 @@ sudo security add-certificates -k $loginKeychain* "$targetFolder/DeveloperIDCA.c
 # Create script to unlock keychain 'security unlock-keychain -p 'password' Developer_ID_TheQtCompany.keychain'
 sha1UnLockKeychain="4398870e3f558ad28c80566b5f70e24dc29ea724"
 unlockKeychain=$targetFolder/unlock-keychain.sh
-Install "$cacheSigningTools/unlock-keychain.sh" "$unlockKeychain" $sha1UnLockKeychain
+{ Install "$cacheSigningTools/unlock-keychain.sh" "$unlockKeychain" $sha1UnLockKeychain; } 2> /dev/null
 sudo chmod 755 "$unlockKeychain"
 
 # Codesigning requirements file. The bundle identifier in the requirements file should match the identifier of the application that is signed.
@@ -104,27 +104,27 @@ open "$keychains/$devIDKeychain"
 
 sha1DeveloperIDTheQtCompanyKeychainPassword="d758e067736bbda7a91ffaec66cd38afdaf68ea6"
 Install "$cacheSigningTools/Developer_ID_TheQtCompany_keychain_password.txt" "$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt" "$sha1DeveloperIDTheQtCompanyKeychainPassword"
-DeveloperIDTheQtCompanyKeychainPassword=$(<"$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt")
+{ DeveloperIDTheQtCompanyKeychainPassword=$(<"$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt"); } 2> /dev/null
 
 echo "Unlocking $devIDKeychain with password.."
-security unlock-keychain -p "$DeveloperIDTheQtCompanyKeychainPassword" $keychains/Developer_ID_TheQtCompany.keychain
+{ security unlock-keychain -p "$DeveloperIDTheQtCompanyKeychainPassword" $keychains/Developer_ID_TheQtCompany.keychain; } 2> /dev/null
 security set-keychain-settings $keychains/Developer_ID_TheQtCompany.keychain
 
 sha1Ios="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
-Install "$cacheSigningTools/ios_password.txt" "$targetFolder/ios_password.txt" $sha1Ios
-iosPassword=$(<"$targetFolder/ios_password.txt")
+{ Install "$cacheSigningTools/ios_password.txt" "$targetFolder/ios_password.txt" $sha1Ios; } 2> /dev/null
+{ iosPassword=$(<"$targetFolder/ios_password.txt"); } 2> /dev/null
 
 iPhoneDeveloper="iosdevelopment.p12"
 shaIPhoneDeveloper="f48f6827e8d0ccdc764cb987e401b9a6f7d3f10c"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDeveloper" "$targetFolder/$iPhoneDeveloper" $shaIPhoneDeveloper
 echo "Importing $iPhoneDeveloper.."
-security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign
+{ security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign; } 2> /dev/null
 
 iPhoneDistribution="iosdistribution.p12"
 shaIPhoneDistribution="64b1174fc3ce0eca044fbc9fa144f6a2d4330171"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDistribution" "$targetFolder/$iPhoneDistribution" $shaIPhoneDistribution
 echo "Importing $iPhoneDistribution.."
-security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign
+{ security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign; } 2> /dev/null
 
 # Mobileprovision
 echo "Creating directory $targetFolder/Library/MobileDevice/Provisioning Profiles.."
