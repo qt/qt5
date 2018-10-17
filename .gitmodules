@@ -159,7 +159,8 @@
 	branch = dev
 	status = addon
 [submodule "qtserialbus"]
-	depends = qtserialport
+	depends = qtbase
+	recommends = qtserialport
 	path = qtserialbus
 	url = ../qtserialbus.git
 	branch = dev
