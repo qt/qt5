@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -51,6 +51,8 @@ Download $url_official $url_cache $gitPackage
 Verify-Checksum $gitPackage $sha1
 Write-Host "Installing Git $version..."
 Run-Executable "$gitPackage" "/SILENT /COMPONENTS=`"icons,ext\reg\shellhere,assoc,assoc_sh`""
-Remove-Item -Path $gitPackage
+Write-Host "Adding SSH and SCP to environment variables for RTA"
+Set-EnvironmentVariable "SSH" "C:\Program Files\Git\usr\bin\ssh.exe"
+Set-EnvironmentVariable "SCP" "C:\Program Files\Git\usr\bin\scp.exe"
 
 Write-Output "Git = $version" >> ~\versions.txt
