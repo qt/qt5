@@ -1,7 +1,13 @@
 # Create the super cache so modules will add themselves to it.
-# Also suppress the license check on subsequent "visits". The first
-# visit will skip it anyway due to not having a compiler set up yet.
-cache(CONFIG, add super, $$list(QTDIR_build))
+cache(, super)
+
+# Suppress the license check on subsequent "visits". The first
+# visit will skip it anyway due to not having a compiler set up
+# yet. This cannot be added to the super cache, because that is
+# read before spec_pre.prf, which flushes CONFIG. This does not
+# affect submodules, as they come with a .qmake.conf. But that
+# one sets the flag via qt_build_config.prf anyway.
+!QTDIR_build: cache(CONFIG, add, $$list(QTDIR_build))
 
 TEMPLATE      = subdirs
 

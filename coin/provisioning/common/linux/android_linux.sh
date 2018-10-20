@@ -49,15 +49,15 @@ sdkTargetFolder="$targetFolder/sdk"
 
 basePath="http://ci-files01-hki.intra.qt.io/input/android"
 
-toolsVersion="r25.2.5"
-toolsFile="tools_$toolsVersion-linux.zip"
-ndkVersion="r16b"
+toolsVersion="r26.1.1"
+toolsFile="sdk-tools-linux-4333796.zip"
+ndkVersion="r18b"
 ndkFile="android-ndk-$ndkVersion-linux-x86_64.zip"
-sdkBuildToolsVersion="25.0.2"
+sdkBuildToolsVersion="28.0.3"
 sdkApiLevel="android-21"
 
-toolsSha1="72df3aa1988c0a9003ccdfd7a13a7b8bd0f47fc1"
-ndkSha1="42aa43aae89a50d1c66c3f9fdecd676936da6128"
+toolsSha1="8c7c28554a32318461802c1291d76fccfafde054"
+ndkSha1="500679655da3a86aecf67007e8ab230ea9b4dd7b"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
@@ -90,6 +90,9 @@ else
     echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 fi
 
+echo "Checking the contents of Android SDK..."
+ls -l "$sdkTargetFolder"
+
 SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
 SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
@@ -102,7 +105,12 @@ echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
 echo "Android NDK = $ndkVersion" >> ~/versions.txt
 
 cd "$sdkTargetFolder/tools/bin"
+./sdkmanager --install "emulator"
 echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"
+
+echo "Checking the contents of Android SDK again..."
+ls -l "$sdkTargetFolder"
+
 echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-21;google_apis;x86" -c 2048M -f
 # Purely informative, show the list of avd devices
 ./avdmanager list avd

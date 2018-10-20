@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -40,23 +40,24 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersion = "r16b"
+$ndkVersion = "r18b"
 $ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows-x86.zip"
 $ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows-x86.zip"
-$ndkChecksum = "becaf3d445a4877ca1a9300a62f0934a4838c7fa"
-$ndkFolder = "c:\utils\android-ndk-$ndkVersion"
+$ndkChecksum = "4b8b6a4edc0fa967b429c1d6d25adf69acc28803"
+$ndkFolder = "c:\Utils\Android\android-ndk-$ndkVersion"
 $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 
 # SDK
-$sdkVersion = "r24.4.1"
+$toolsVersion = "26.1.1"
+$toolsFile = "sdk-tools-windows-4333796.zip"
 $sdkApi = "ANDROID_API_VERSION"
 $sdkApiLevel = "android-21"
-$sdkBuildToolsVersion = "23.0.3"
-$sdkCachedUrl= "\\ci-files01-hki.intra.qt.io\provisioning\android\android-sdk_$sdkVersion-windows.zip"
-$sdkOfficialUrl = "https://dl.google.com/android/android-sdk_$sdkVersion-windows.zip"
-$sdkChecksum = "66b6a6433053c152b22bf8cab19c0f3fef4eba49"
-$sdkFolder = "c:\utils\android-sdk-windows"
-$sdkZip = "c:\Windows\Temp\android_sdk_$sdkVersion.zip"
+$sdkBuildToolsVersion = "28.0.3"
+$toolsCachedUrl= "\\ci-files01-hki.intra.qt.io\provisioning\android\$toolsFile"
+$toolsOfficialUrl = "https://dl.google.com/android/repository/$toolsFile"
+$toolsChecksum = "aa298b5346ee0d63940d13609fe6bec621384510"
+$toolsFolder = "c:\Utils\Android\tools"
+$sdkZip = "c:\Windows\Temp\$toolsFile"
 
 function Install($1, $2, $3, $4) {
     $cacheUrl = $1
@@ -66,41 +67,42 @@ function Install($1, $2, $3, $4) {
 
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
-    Extract-7Zip $zip C:\Utils
+    Extract-7Zip $zip C:\Utils\Android
 }
 
-function SdkUpdate ($1, $2) {
-    Write-Host "Running Android SDK update for $1..."
-    cmd /c "echo y |$1\tools\android update sdk --no-ui --all --filter $2"
-}
-
-Write-Host "Installing Android ndk $nkdVersion"
+Write-Host "Installing Android NDK $nkdVersion"
 Install $ndkCachedUrl $ndkZip $ndkChecksum $ndkOfficialUrl
 Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolder
 Set-EnvironmentVariable "ANDROID_NDK_ROOT" $ndkFolder
 
-#Write-Host "Installing Android sdk $sdkVersion"
-Install $sdkCachedUrl $sdkZip $sdkChecksum $sdkOfficialUrl
-Set-EnvironmentVariable "ANDROID_SDK_HOME" $sdkFolder
+Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
+Set-EnvironmentVariable "ANDROID_SDK_HOME" C:\Utils\Android
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
-# SDK update
-SdkUpdate $sdkFolder $sdkApiLevel
-SdkUpdate $sdkFolder tools
-SdkUpdate $sdkFolder platform-tools
-SdkUpdate $sdkFolder build-tools-$sdkBuildToolsVersion
-
-# kill adb. This process prevents provisioning to continue
-$p = Get-Process -Name "adb" -ErrorAction:SilentlyContinue
-if ($p -ne $null) {
-    Write-Host "Stopping adb.exe"
-    Stop-Process -Force $p
-} else {
-    Write-Host "adb.exe not running"
+if (IsProxyEnabled) {
+    $proxy = Get-Proxy
+    Write-Host "Using proxy ($proxy) with sdkmanager"
+    # Remove "http://" from the beginning
+    $proxy = $proxy.Remove(0,7)
+    $proxyhost,$proxyport = $proxy.split(':')
+    $sdkmanager_args = "--no_https --proxy=http --proxy_host=`"$proxyhost`" --proxy_port=`"$proxyport`" "
 }
 
-Write-Output "Android SDK tools= $sdkVersion" >> ~/versions.txt
+New-Item -ItemType Directory -Force -Path C:\Utils\Android\licenses
+$licenseString = "`nd56f5187479451eabf01fb78af6dfcb131a6481e"
+Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 -InputObject $licenseString
+
+# Get a PATH where Java's path is defined from previous provisioning
+[Environment]::SetEnvironmentVariable("PATH", [Environment]::GetEnvironmentVariable("PATH", "Machine"), "Process")
+
+$sdkmanager_args += " platforms;$sdkApiLevel tools platform-tools build-tools;$sdkBuildToolsVersion"
+Run-Executable "$toolsFolder\bin\sdkmanager.bat" "$sdkmanager_args"
+cd $toolsFolder\bin\
+$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'
+iex $command
+cmd /c "dir C:\Utils\android"
+
+Write-Output "Android SDK tools= $toolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
 Write-Output "Android NDK = $ndkVersion" >> ~/versions.txt
-

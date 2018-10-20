@@ -210,8 +210,8 @@
 	branch = dev
 	status = addon
 [submodule "qtwebengine"]
-	depends = qtquickcontrols qtwebchannel
-	recommends = qtlocation qttools
+	depends = qtdeclarative
+	recommends = qtquickcontrols qtquickcontrols2 qtlocation qtwebchannel
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = dev
