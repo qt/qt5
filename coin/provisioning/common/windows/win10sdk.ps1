@@ -35,7 +35,7 @@
 
 # This script will install Windows 10 SDK
 
-$url_cache = "\\ci-files01-hki.ci.local\provisioning\windows\winsdksetup.exe"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\winsdksetup.exe"
 $url_official = "https://download.microsoft.com/download/8/C/3/8C37C5CE-C6B9-4CC8-8B5F-149A9C976035/windowssdk/winsdksetup.exe"
 $package = "C:\Windows\Temp\winsdksetup.exe"
 $sha1 = "db237323f1779fb143e7cdc558e4345e7004489e"
