@@ -13,7 +13,7 @@
 # Use Fixes to automatically close an issue, and Task-number to
 # reference it without further action.
 # You do not need both for the same issue.
-#Fixes:
+#Fixes: 
 #Task-number: 
 #Coverity-Id: 
 #
