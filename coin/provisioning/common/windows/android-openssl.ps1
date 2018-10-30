@@ -39,9 +39,9 @@
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$version = "1.0.2o"
+$version = "1.0.2p"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$sha1 = "a47faaca57b47a0d9d5fb085545857cc92062691"
+$sha1 = "f34b5322e92415755c7d58bf5d0d5cf37666382c"
 $destination = "C:\Utils\openssl-android-master"
 
 Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
