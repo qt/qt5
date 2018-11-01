@@ -297,11 +297,11 @@
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = 5.12.0
-	status = preview
+	status = addon
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
 	recommends = qtdeclarative
 	path = qtwebglplugin
 	url = ../qtwebglplugin.git
 	branch = 5.12.0
-	status = preview
+	status = addon
