@@ -98,6 +98,8 @@ installPackages+=(mesa-libwayland-egl-devel)
 installPackages+=(libwayland-client)
 installPackages+=(libwayland-cursor)
 installPackages+=(libwayland-server)
+# Jenkins
+installPackages+=(chrpath)
 
 sudo yum -y install "${installPackages[@]}"
 
