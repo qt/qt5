@@ -1,0 +1,4 @@
+Template                    Target OS           Target arch Compiler    Features
+--------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
+qtci-windows-10-x86-3                                       MSVC2017    Release ForceDebugInfo OpenGLDynamic
+qtci-linux-RHEL-6.6-x86_64                                  GCC         Release ForceDebugInfo
