@@ -33,14 +33,19 @@
 ##
 #############################################################################
 
+# provides: python development libraries
+# version: provided by default Linux distribution repository
+# needed to build pyside
+
 set -ex
 
-installPackages=()
+sudo yum install -y python-devel python-virtualenv
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
+# install python3
+sudo yum install -y python34-devel
 
-sudo yum -y install "${installPackages[@]}"
-
+# install pip3
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3 get-pip.py
+sudo rm -f get-pip.py
+sudo pip3 install virtualenv

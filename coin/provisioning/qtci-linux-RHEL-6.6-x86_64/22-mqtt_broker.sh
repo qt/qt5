@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,14 +33,5 @@
 ##
 #############################################################################
 
-set -ex
-
-installPackages=()
-
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
-
-sudo yum -y install "${installPackages[@]}"
-
+# shellcheck source=../common/unix/mqtt_broker.sh
+source "${BASH_SOURCE%/*}/../common/unix/mqtt_broker.sh"

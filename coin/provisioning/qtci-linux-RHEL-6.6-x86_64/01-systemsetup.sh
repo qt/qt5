@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,12 +35,10 @@
 
 set -ex
 
-installPackages=()
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
-
-sudo yum -y install "${installPackages[@]}"
-
+# shellcheck disable=SC2031
+if [ "$http_proxy" != "" ]; then
+    echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
+fi

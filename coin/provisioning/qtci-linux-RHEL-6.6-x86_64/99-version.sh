@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,14 +33,16 @@
 ##
 #############################################################################
 
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+
+# Storage installed RPM packages information
+
 set -ex
 
-installPackages=()
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed RPM packages *****" >> ~/versions.txt
+rpm -q -a | sort >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
-
-sudo yum -y install "${installPackages[@]}"
-
+"$(dirname "$0")/../common/linux/version.sh"

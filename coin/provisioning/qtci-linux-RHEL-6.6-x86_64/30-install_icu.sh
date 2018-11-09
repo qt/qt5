@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,14 +33,42 @@
 ##
 #############################################################################
 
+# This script installs the right ICU version
+
 set -ex
+icuVersion="56.1"
+icuLocation="/usr/lib64"
+sha1="f2eab775c04ce5f3bdae6c47d06b62158b5d6753"
 
-installPackages=()
+function Install7ZPackageFromURL {
+    url=$1
+    expectedSha1=$2
+    targetDirectory=$3
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
+    targetFile=$(mktemp)
+    wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url"
+    echo "$expectedSha1  $targetFile" | sha1sum --check
+    sudo /usr/local/bin/7z x -yo"$targetDirectory" "$targetFile"
+    rm "$targetFile"
+}
 
-sudo yum -y install "${installPackages[@]}"
+echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
+baseBinaryPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64.7z"
+Install7ZPackageFromURL "$baseBinaryPackageURL" "$sha1" "/usr/lib64"
+
+echo "Installing custom ICU devel packages on RHEL"
+
+sha1Dev="82f8b216371b848b8d36ecec7fe7b6e9b0dba0df"
+develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64-devel.7z"
+tempDir=$(mktemp -d)
+# shellcheck disable=SC2064
+trap "sudo rm -fr $tempDir" EXIT
+Install7ZPackageFromURL "$develPackageURL" "$sha1Dev" "$tempDir"
+sudo cp -a "$tempDir/lib"/* /usr/lib64
+sudo cp -a "$tempDir"/* /usr/
+
+sudo /sbin/ldconfig
+
+# Storage version information to ~/versions.txt, which is used to print version information to provision log.
+echo "ICU = $icuVersion" >> ~/versions.txt

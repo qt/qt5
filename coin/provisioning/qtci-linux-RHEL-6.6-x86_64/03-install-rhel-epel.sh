@@ -33,14 +33,17 @@
 ##
 #############################################################################
 
-set -ex
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-installPackages=()
+package="epel-release-6-8.noarch.rpm"
+primaryUrl="https://dl.fedoraproject.org/pub/epel/6/x86_64/Packages/e/$package"
+cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel6/$package"
+sha1="2b2767a5ae0de30b9c7b840f2e34f5dd9deaf19a"
+targetFile="/tmp/$package"
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
+DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
 
-sudo yum -y install "${installPackages[@]}"
+sudo rpm -ivh "$targetFile"
+rm "$targetFile"
 

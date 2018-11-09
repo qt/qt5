@@ -35,12 +35,9 @@
 
 set -ex
 
-installPackages=()
+# refresh local certificates
+sudo subscription-manager refresh
 
-# For Jenkins
-installPackages+=(java-1.8.0-openjdk-devel)
-# For Qt Creator
-installPackages+=(openssl-devel)
-
-sudo yum -y install "${installPackages[@]}"
+# Attach available subscriptions to system. This is needed when subscriptions are renewed.
+sudo subscription-manager attach --auto
 
