@@ -53,6 +53,17 @@ do
     sha1=$(find $context -type f -print0 | sort -z | xargs -r0 sha1sum | awk '{ print $1 }' | \
            sha1sum | awk '{ print $1 }')
     sudo docker build -t qt-test-server-$server:$sha1 $context
+
+    # transition - The fixed tag is temporarily used by CI to pass the qtbase testing.
+    case $server in
+        apache2) fixed_tag="cc9ea678b92bdda33acb9fa0159bb4ad0f3cd947" ;;
+        squid) fixed_tag="577d99307eea9a8cccfec944d25be2bce2fe99cc" ;;
+        vsftpd) fixed_tag="18896604c7e90b543e56d80c8a8aabdb65a590d0" ;;
+        ftp-proxy) fixed_tag="2c6c8f1ab6a364b540c43d705fb6f15a585cb2af" ;;
+        danted) fixed_tag="327dd56c3c35db85b26fac93213a5a1918475bc7" ;;
+    esac
+    [ -z "$fixed_tag" ] || \
+        sudo docker tag qt-test-server-$server:$sha1 qt-test-server-$server:$fixed_tag
 done
 
 sudo docker images
