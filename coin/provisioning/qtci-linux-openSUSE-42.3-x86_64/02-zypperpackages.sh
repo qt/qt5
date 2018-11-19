@@ -26,7 +26,9 @@ sudo zypper -nq install sqlite3-devel
 sudo zypper -nq install Mesa-libEGL-devel
 sudo zypper -nq install Mesa-libGL-devel
 
+# libxkbcommon
 sudo zypper -nq install libxkbcommon-devel
+sudo zypper -nq install libxkbcommon-x11-devel
 
 # Xinput2
 sudo zypper -nq install libXi-devel

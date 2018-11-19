@@ -100,6 +100,9 @@ installPackages+=(libwayland-cursor)
 installPackages+=(libwayland-server)
 # Jenkins
 installPackages+=(chrpath)
+# libxkbcommon
+installPackages+=(libxkbcommon-devel)
+installPackages+=(libxkbcommon-x11-devel)
 
 sudo yum -y install "${installPackages[@]}"
 
