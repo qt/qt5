@@ -44,6 +44,13 @@ esac
 # testserver shared scripts
 source "$SERVER_PATH/testserver_util.sh"
 
+# Nested virtualization - Print CPU features to verify that CI has enabled VT-X/AMD-v support
+cpu_features=$(sysctl -a | grep machdep.cpu.features)
+case $cpu_features in
+    *VMX*) ;;
+    *) echo "VMX not found error! Please make sure Coin has enabled VT-X/AMD-v." >&2; exit 1 ;;
+esac
+
 # Create docker virtual machine (Boot2docker)
 source "$SERVER_PATH/docker_machine.sh"
 
