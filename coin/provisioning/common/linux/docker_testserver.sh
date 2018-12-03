@@ -55,11 +55,6 @@ source "$SERVER_PATH/settings.sh"
 for server in $testserver
 do
     context="$SERVER_PATH/$server"
-    # obsolete - This one is still needed for CI. It will be removed later.
-    sha1=$(find $context -type f -print0 | sort -z | xargs -r0 sha1sum | awk '{ print $1 }' | \
-           sha1sum | awk '{ print $1 }')
-    sudo docker build -t qt-test-server-$server:$sha1 $context
-
     # Sort files by their SHA-1 and use the accumulated result as the TAG
     sudo docker build -t qt-test-server-$server:$(sha1tree $context) $context
 done
