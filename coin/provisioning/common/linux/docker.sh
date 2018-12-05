@@ -48,5 +48,8 @@ sudo docker info
 sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# Install Avahi to discover Docker containers in the test network
+sudo apt-get install avahi-daemon -y
+
 # Start testserver provisioning
 source "${BASH_SOURCE%/*}/docker_testserver.sh"
