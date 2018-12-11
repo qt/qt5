@@ -70,7 +70,7 @@ function PrepareRepository
     $zip = "c:\users\$username\downloads\open62541.zip"
 
     $externalUrl = "https://github.com/open62541/open62541/archive/$commitSHA.zip"
-    $internalUrl = "http://ci-files01-hki.ci.local/input/open62541/$commitSHA.zip"
+    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/open62541/$commitSHA.zip"
 
     Download $externalUrl $internalUrl $zip
     Verify-Checksum $zip $sha1
