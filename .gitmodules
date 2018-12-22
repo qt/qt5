@@ -211,7 +211,7 @@
 	status = addon
 [submodule "qtwebengine"]
 	depends = qtdeclarative
-	recommends = qtquickcontrols qtquickcontrols2 qtlocation qtwebchannel
+	recommends = qtquickcontrols qtquickcontrols2 qtlocation qtwebchannel qttools
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 5.12
@@ -297,11 +297,11 @@
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = 5.12
-	status = preview
+	status = addon
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
 	recommends = qtdeclarative
 	path = qtwebglplugin
 	url = ../qtwebglplugin.git
 	branch = 5.12
-	status = preview
+	status = addon
