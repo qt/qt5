@@ -27,7 +27,8 @@ function Run-Executable
         $p = Start-Process -FilePath "$Executable" -Wait -PassThru
     } else {
         Write-Host "Running `"$Executable`" with arguments `"$Arguments`""
-        $p = Start-Process -FilePath "$Executable" -ArgumentList $Arguments -Wait -PassThru
+        $p = Start-Process -FilePath "$Executable" -ArgumentList $Arguments -PassThru
+        Wait-Process -InputObject $p
     }
     if ($p.ExitCode -ne 0) {
         throw "Process $($Executable) exited with exit code $($p.ExitCode)"

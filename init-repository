@@ -299,7 +299,7 @@ use constant {
 
 sub git_clone_all_submodules
 {
-    my ($self, $my_repo_base, $co_branch, @subset) = @_;
+    my ($self, $my_repo_base, $co_branch, $alternates, @subset) = @_;
 
     my %subdirs = ();
     my %subbranches = ();
@@ -406,7 +406,7 @@ sub git_clone_all_submodules
 
     foreach my $module (@modules) {
         $self->git_clone_one_submodule($subdirs{$module}, $subbases{$module},
-                                       $co_branch && $subbranches{$module});
+                                       $co_branch && $subbranches{$module}, $alternates);
     }
 
     if ($co_branch) {
@@ -434,7 +434,7 @@ sub git_clone_all_submodules
             if (-f $module.'/.gitmodules') {
                 my $orig_cwd = getcwd();
                 chdir($module) or confess "chdir $module: $OS_ERROR";
-                $self->git_clone_all_submodules($subbases{$module}, 0, "all");
+                $self->git_clone_all_submodules($subbases{$module}, 0, "$alternates/$module", "all");
                 chdir("$orig_cwd") or confess "chdir $orig_cwd: $OS_ERROR";
             }
         }
@@ -491,9 +491,8 @@ sub git_stat_one_submodule
 
 sub git_clone_one_submodule
 {
-    my ($self, $submodule, $repo_basename, $branch) = @_;
+    my ($self, $submodule, $repo_basename, $branch, $alternates) = @_;
 
-    my $alternates            = $self->{ 'alternates'        };
     my $mirror_url            = $self->{ 'mirror-url'        };
     my $protocol              = $self->{ 'protocol'          };
 
@@ -643,7 +642,7 @@ sub run
     $url =~ s/qt5$//;
     $self->{'base-url'} = $url;
 
-    $self->git_clone_all_submodules('qt5', $self->{branch}, @{$self->{'module-subset'}});
+    $self->git_clone_all_submodules('qt5', $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
 
     $self->git_add_remotes('qt5');
 

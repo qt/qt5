@@ -33,35 +33,14 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+set -ex
 
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
-version="1.0.2p"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="f34b5322e92415755c7d58bf5d0d5cf37666382c"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
+# shellcheck disable=SC2031
+if [ "$http_proxy" != "" ]; then
+    echo "proxy=$proxy" | sudo tee -a /etc/yum.conf
+fi
 
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
-
-tar -xzf "$targetFile" -C "$installFolder"
-# This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}p" "${opensslHome}"
-pushd "$opensslHome"
-
-echo "Running configure"
-perl Configure shared android
-
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
-
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+sudo yum update -y nss curl

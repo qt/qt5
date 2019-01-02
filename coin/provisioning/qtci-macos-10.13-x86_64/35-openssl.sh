@@ -42,11 +42,11 @@ source "${BASH_SOURCE%/*}/../common/unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-opensslVersion="1.0.2o"
+opensslVersion="1.0.2p"
 opensslFile="openssl-$opensslVersion.tar.gz"
 opensslDlUrl="http://ci-files01-hki.intra.qt.io/input/openssl/$opensslFile"
 opensslAltDlUrl="https://www.openssl.org/source/$opensslFile"
-opensslSha1="a47faaca57b47a0d9d5fb085545857cc92062691"
+opensslSha1="f34b5322e92415755c7d58bf5d0d5cf37666382c"
 
 # Below target location has been hard coded into Coin.
 # QTQAINFRA-1195

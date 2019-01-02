@@ -98,6 +98,17 @@ installPackages+=(mesa-libwayland-egl-devel)
 installPackages+=(libwayland-client)
 installPackages+=(libwayland-cursor)
 installPackages+=(libwayland-server)
+# Jenkins
+installPackages+=(chrpath)
+# libxkbcommon
+installPackages+=(libxkbcommon-devel)
+installPackages+=(libxkbcommon-x11-devel)
+# xcb-util-* libraries
+installPackages+=(xcb-util-devel)
+installPackages+=(xcb-util-image-devel)
+installPackages+=(xcb-util-keysyms-devel)
+installPackages+=(xcb-util-wm-devel)
+installPackages+=(xcb-util-renderutil-devel)
 
 sudo yum -y install "${installPackages[@]}"
 

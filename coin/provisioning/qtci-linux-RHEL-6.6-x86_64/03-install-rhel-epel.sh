@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,35 +33,17 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+package="epel-release-6-8.noarch.rpm"
+primaryUrl="https://dl.fedoraproject.org/pub/epel/6/x86_64/Packages/e/$package"
+cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel6/$package"
+sha1="2b2767a5ae0de30b9c7b840f2e34f5dd9deaf19a"
+targetFile="/tmp/$package"
 
-version="1.0.2p"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="f34b5322e92415755c7d58bf5d0d5cf37666382c"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
+DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
 
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
+sudo rpm -ivh "$targetFile"
+rm "$targetFile"
 
-tar -xzf "$targetFile" -C "$installFolder"
-# This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}p" "${opensslHome}"
-pushd "$opensslHome"
-
-echo "Running configure"
-perl Configure shared android
-
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
-
-echo "OpenSSL for Android = $version" >> ~/versions.txt

@@ -38,7 +38,7 @@ $sha1 = "e1927dbd5d8bb459b468fa70a70b1de51a4ce022"
 $installLocation = "C:\Utils\uacpp"
 
 Write-Host "UACPPSDK: Downloading Unified Automation CPP installer..."
-$internalUrl = "http://ci-files01-hki.ci.local/input/opcua_uacpp/uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.5.6-361.zip"
+$internalUrl = "http://ci-files01-hki.intra.qt.io/input/opcua_uacpp/uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.5.6-361.zip"
 # No public download link exists
 $externalUrl = $internalUrl
 

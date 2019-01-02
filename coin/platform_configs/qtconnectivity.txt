@@ -1,0 +1,3 @@
+Template                          Target OS           Target arch Compiler    Features
+--------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
+qtci-windows-10-x86_64-10         WinRT_10            x86_64      MSVC2015    DeveloperBuild Static Release ForceDebugInfo

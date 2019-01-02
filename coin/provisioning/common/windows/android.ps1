@@ -51,7 +51,7 @@ $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 $toolsVersion = "26.1.1"
 $toolsFile = "sdk-tools-windows-4333796.zip"
 $sdkApi = "ANDROID_API_VERSION"
-$sdkApiLevel = "android-21"
+$sdkApiLevel = "android-28"
 $sdkBuildToolsVersion = "28.0.3"
 $toolsCachedUrl= "\\ci-files01-hki.intra.qt.io\provisioning\android\$toolsFile"
 $toolsOfficialUrl = "https://dl.google.com/android/repository/$toolsFile"
@@ -95,7 +95,7 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 # Get a PATH where Java's path is defined from previous provisioning
 [Environment]::SetEnvironmentVariable("PATH", [Environment]::GetEnvironmentVariable("PATH", "Machine"), "Process")
 
-$sdkmanager_args += " platforms;$sdkApiLevel tools platform-tools build-tools;$sdkBuildToolsVersion"
+$sdkmanager_args += " platforms;$sdkApiLevel platform-tools build-tools;$sdkBuildToolsVersion"
 Run-Executable "$toolsFolder\bin\sdkmanager.bat" "$sdkmanager_args"
 cd $toolsFolder\bin\
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'

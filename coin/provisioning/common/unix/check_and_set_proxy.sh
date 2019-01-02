@@ -37,4 +37,4 @@ set -ex
 # shellcheck source=../shared/http_proxy.txt
 source "${BASH_SOURCE%/*}/../shared/http_proxy.txt"
 
-(wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io && echo "Setting http_proxy to $proxy" && export http_proxy=$proxy) || echo "Proxy not detected at $proxy"
+{ wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io && echo "Setting http_proxy to $proxy" && export http_proxy=$proxy; } || echo "Proxy not detected at $proxy"

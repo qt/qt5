@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2016 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -33,35 +33,42 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+# This script installs the right ICU version
 
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+set -ex
+icuVersion="56.1"
+icuLocation="/usr/lib64"
+sha1="f2eab775c04ce5f3bdae6c47d06b62158b5d6753"
 
-version="1.0.2p"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-installFolder="/home/qt/"
-sha="f34b5322e92415755c7d58bf5d0d5cf37666382c"
-# Until every VM doing Linux Android builds have provisioned the env variable
-# OPENSSL_ANDROID_HOME, we can't change the hard coded path that's currently in Coin.
-# QTQAINFRA-1436
-opensslHome="${installFolder}openssl-1.0.2"
+function Install7ZPackageFromURL {
+    url=$1
+    expectedSha1=$2
+    targetDirectory=$3
 
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
+    targetFile=$(mktemp)
+    wget --tries=5 --waitretry=5 --output-document="$targetFile" "$url"
+    echo "$expectedSha1  $targetFile" | sha1sum --check
+    sudo /usr/local/bin/7z x -yo"$targetDirectory" "$targetFile"
+    rm "$targetFile"
+}
 
-tar -xzf "$targetFile" -C "$installFolder"
-# This rename should be removed once hard coded path from Coin is fixed. (QTQAINFRA-1436)
-mv "${opensslHome}p" "${opensslHome}"
-pushd "$opensslHome"
+echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
-echo "Running configure"
-perl Configure shared android
+baseBinaryPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64.7z"
+Install7ZPackageFromURL "$baseBinaryPackageURL" "$sha1" "/usr/lib64"
 
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
+echo "Installing custom ICU devel packages on RHEL"
 
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+sha1Dev="82f8b216371b848b8d36ecec7fe7b6e9b0dba0df"
+develPackageURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel6.6-x64-devel.7z"
+tempDir=$(mktemp -d)
+# shellcheck disable=SC2064
+trap "sudo rm -fr $tempDir" EXIT
+Install7ZPackageFromURL "$develPackageURL" "$sha1Dev" "$tempDir"
+sudo cp -a "$tempDir/lib"/* /usr/lib64
+sudo cp -a "$tempDir"/* /usr/
+
+sudo /sbin/ldconfig
+
+# Storage version information to ~/versions.txt, which is used to print version information to provision log.
+echo "ICU = $icuVersion" >> ~/versions.txt

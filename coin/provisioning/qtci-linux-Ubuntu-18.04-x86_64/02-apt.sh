@@ -157,6 +157,8 @@ installPackages+=(virtualbox)
 installPackages+=(dkms)
 # Needed for qtspeech
 installPackages+=(libspeechd-dev)
+#Pypdf for PDF reading in RTA tests
+installPackages+=(python-pypdf2)
 # Needed for b2qt
 installPackages+=(git-lfs)
 installPackages+=(chrpath)
