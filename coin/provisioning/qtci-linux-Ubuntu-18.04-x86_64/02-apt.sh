@@ -97,6 +97,8 @@ installPackages+=(libfreetype6-dev)
 installPackages+=(libjpeg-dev)
 # Enable support for printer driver
 installPackages+=(libcups2-dev)
+# Enable support for printer test
+installPackages+=(cups-pdf)
 # Install libraries needed for QtMultimedia to be able to support all plugins
 installPackages+=(libasound2-dev)
 installPackages+=(libgstreamer1.0-dev)
