@@ -51,7 +51,7 @@ then
     esac
 
     source "$UNIX_PATH/DownloadURL.sh"
-    url_cached="http://ci-files01-hki.ci.local/input/windows/DockerToolbox.pkg"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/windows/DockerToolbox.pkg"
     sha1="7196d2d30648d486978d29adb5837ff7876517c1"
     DownloadURL $url_cached $url $sha1 $target_file
 else
