@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -34,11 +34,11 @@
 . "$PSScriptRoot\helpers.ps1"
 
 $zip = Get-DownloadLocation "uasdkcpp.zip"
-$sha1 = "e1927dbd5d8bb459b468fa70a70b1de51a4ce022"
+$sha1 = "C73278B4C10DF0E3D60ABAA159ABA9185095124C"
 $installLocation = "C:\Utils\uacpp"
 
 Write-Host "UACPPSDK: Downloading Unified Automation CPP installer..."
-$internalUrl = "http://ci-files01-hki.intra.qt.io/input/opcua_uacpp/uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.5.6-361.zip"
+$internalUrl = "http://ci-files01-hki.intra.qt.io/input/opcua_uacpp/uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.6.3-406.zip"
 # No public download link exists
 $externalUrl = $internalUrl
 
@@ -49,7 +49,7 @@ Write-Host "UACPPSDK: Installing $zip..."
 Extract-7Zip $zip (Get-DefaultDownloadLocation)
 Remove-Item -Path $zip
 
-$executable = (Get-DefaultDownloadLocation) + "uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.5.6-361.exe"
+$executable = (Get-DefaultDownloadLocation) + "uasdkcppbundle-bin-EVAL-win32-x86-vs2015-v1.6.3-406.exe"
 $arguments = "/S /D=$installLocation"
 Run-Executable $executable $arguments
 Write-Host "UACPPSDK: Installer done."
