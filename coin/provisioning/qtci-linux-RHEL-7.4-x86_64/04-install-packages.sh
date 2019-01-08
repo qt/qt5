@@ -109,6 +109,9 @@ installPackages+=(xcb-util-image-devel)
 installPackages+=(xcb-util-keysyms-devel)
 installPackages+=(xcb-util-wm-devel)
 installPackages+=(xcb-util-renderutil-devel)
+# ODBC support
+installPackages+=(unixODBC-devel)
+installPackages+=(unixODBC)
 
 sudo yum -y install "${installPackages[@]}"
 
