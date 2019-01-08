@@ -54,7 +54,7 @@ toolsFile="sdk-tools-linux-4333796.zip"
 ndkVersion="r18b"
 ndkFile="android-ndk-$ndkVersion-linux-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
-sdkApiLevel="android-21"
+sdkApiLevel="android-28"
 
 toolsSha1="8c7c28554a32318461802c1291d76fccfafde054"
 ndkSha1="500679655da3a86aecf67007e8ab230ea9b4dd7b"
@@ -80,14 +80,14 @@ else
     sudo chown -R qt:users "$targetFolder"
 fi
 
-echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
+echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 # shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
     proxy_host=$(echo "$proxy" | cut -d'/' -f3 | cut -d':' -f1)
     proxy_port=$(echo "$proxy" | cut -d':' -f3)
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 else
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 fi
 
 echo "Checking the contents of Android SDK..."

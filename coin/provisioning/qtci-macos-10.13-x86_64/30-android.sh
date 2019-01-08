@@ -48,11 +48,14 @@ sdkTargetFolder="$targetFolder/sdk"
 basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
 toolsVersion="r26.1.1"
+# toolsFile dertermines tools version
 toolsFile="sdk-tools-darwin-4333796.zip"
+
 ndkVersion="r18b"
 ndkFile="android-ndk-$ndkVersion-darwin-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
-sdkApiLevel="android-21"
+# this is compile sdk version
+sdkApiLevel="android-28"
 
 toolsSha1="ed85ea7b59bc3483ce0af4c198523ba044e083ad"
 ndkSha1="98cb9909aa8c2dab32db188bbdc3ac6207e09440"
@@ -70,8 +73,8 @@ sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder"
 echo "Changing ownership of Android files."
 sudo chown -R qt:wheel "$targetFolder"
 
-echo "Running SDK manager for platforms;$sdkApiLevel, tools, platform-tools and build-tools;$sdkBuildToolsVersion."
-(echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "tools" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
+(echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
 
 echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
