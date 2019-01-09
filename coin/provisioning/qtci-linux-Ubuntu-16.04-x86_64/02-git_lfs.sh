@@ -37,7 +37,7 @@
 
 set -ex
 
+curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
 sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main'
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 37BBEE3F7AD95B3F
 sudo apt update
 sudo apt install git-lfs
