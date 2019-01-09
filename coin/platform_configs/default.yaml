@@ -55,7 +55,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -force-debug-info -nomake tests -no-widgets -nomake examples -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -force-debug-info -nomake tests -no-widgets -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
