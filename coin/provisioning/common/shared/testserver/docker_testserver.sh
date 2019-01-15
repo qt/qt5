@@ -35,14 +35,18 @@
 
 set -ex
 
-case ${BASH_SOURCE[0]} in
-    */*) SERVER_PATH="${BASH_SOURCE[0]%/*}" ;;
+[ -x "$(command -v realpath)" ] && FILE=$(realpath ${BASH_SOURCE[0]}) || FILE=${BASH_SOURCE[0]}
+case $FILE in
+    */*) SERVER_PATH="${FILE%/*}" ;;
     *) SERVER_PATH="." ;;
 esac
 
 # Create docker virtual machine (Boot2docker)
 case $1 in
-    VMX) source "$SERVER_PATH/docker_machine.sh" ;;
+    VMX) source "$SERVER_PATH/docker_machine.sh" "-d virtualbox" ;;
+    Hyper-V)
+        # The Hyper-v has been enabled in Windows 10. Disable checking the hardware virtualization.
+        source "$SERVER_PATH/docker_machine.sh" "-d virtualbox --virtualbox-no-vtx-check" ;;
     *) ;;
 esac
 

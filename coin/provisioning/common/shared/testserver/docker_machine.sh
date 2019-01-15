@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -40,7 +40,7 @@ TestMachine='qt-test-server'
 # Deploy docker virtual machine (Boot2Docker) into VirtualBox only if it doesn't exist
 if [ -z $(docker-machine ls -q --filter "name=$TestMachine") ]
 then
-    docker-machine create -d virtualbox $TestMachine
+    docker-machine create $@ $TestMachine
     docker-machine ip $TestMachine
 fi
 
