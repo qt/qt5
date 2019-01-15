@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -60,4 +60,14 @@ fi
 sudo installer -pkg $target_file -target /
 
 # Start testserver provisioning
-source "${BASH_SOURCE%/*}/docker_testserver.sh"
+case ${BASH_SOURCE[0]} in
+    */macos/*) SERVER_PATH="${BASH_SOURCE[0]%/macos/*}/shared/testserver" ;;
+    */*) SERVER_PATH="${BASH_SOURCE[0]%/*}/../shared/testserver" ;;
+    *) SERVER_PATH="../shared/testserver" ;;
+esac
+
+# Nested virtualization - Print CPU features to verify that CI has enabled VT-X/AMD-v support
+case $(sysctl machdep.cpu.features) in
+    *VMX*) "$SERVER_PATH/docker_testserver.sh" VMX ;;
+    *) echo "VMX not found error! Please make sure Coin has enabled VT-X/AMD-v." >&2; exit 1 ;;
+esac

@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -52,4 +52,4 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo apt-get install avahi-daemon -y
 
 # Start testserver provisioning
-source "${BASH_SOURCE%/*}/docker_testserver.sh"
+sudo "$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../shared/testserver/docker_testserver.sh"
