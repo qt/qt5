@@ -3,5 +3,5 @@ Template                          Target OS           Target arch Compiler    Fe
 qtci-linux-Ubuntu-18.04-x86_64    QEMU                armv7       GCC         DeveloperBuild DisableTests
 qtci-linux-Ubuntu-18.04-x86_64    QEMU                arm64       GCC         DeveloperBuild DisableTests
 qtci-windows-10-x86_64-10         WinRT_10            x86_64      MSVC2015    DeveloperBuild Static Release ForceDebugInfo
-qtci-linux-openSUSE-42.3-x86_64   WebAssembly                     GCC         DeveloperBuild NoPch DisableTests
+qtci-linux-openSUSE-15.0-x86_64   WebAssembly                     GCC         DeveloperBuild NoPch DisableTests
 
