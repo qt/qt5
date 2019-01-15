@@ -46,6 +46,9 @@ case $1 in
     *) ;;
 esac
 
+# Display system-wide information of docker-engine
+docker info
+
 # Sort files by their SHA-1, and then return the accumulated result
 sha1tree () {
     # For example, macOS doesn't install sha1sum by default. In such case, it uses shasum instead.

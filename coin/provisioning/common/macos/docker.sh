@@ -58,6 +58,8 @@ else
     curl $url -o $target_file
 fi
 sudo installer -pkg $target_file -target /
+docker --version
+docker-compose --version
 
 # Start testserver provisioning
 case ${BASH_SOURCE[0]} in
