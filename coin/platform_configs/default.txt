@@ -22,6 +22,7 @@ qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       Clang       
 qtci-linux-RHEL-7.4-x86_64          Android_ANY         arm64       Clang       Clang           Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-18.04-x86_64      QEMU                armv7       GCC                         Release
 qtci-linux-Ubuntu-18.04-x86_64      QEMU                arm64       GCC                         Release
+qtci-linux-Ubuntu-18.04-x86_64      QEMU                mips64      GCC                         Release DisableTests
 qtci-linux-Ubuntu-18.04-x86_64                                      GCC                         TestOnly LicenseCheck
 qtci-linux-RHEL-7.4-x86_64          INTEGRITY_11_04     armv7       GCC                         Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-RHEL-7.4-x86_64          QNX_700             armv7       GCC                         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
