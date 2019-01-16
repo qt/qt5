@@ -223,7 +223,7 @@
 	path = qtcanvas3d
 	url = ../qtcanvas3d.git
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtwebview"]
 	depends = qtdeclarative
 	recommends = qtwebengine
