@@ -306,3 +306,9 @@
 	url = ../qtwebglplugin.git
 	branch = dev
 	status = addon
+[submodule "qtlottie"]
+	depends = qtbase qtdeclarative
+	path = qtlottie
+	url = ../qtlottie.git
+	branch = dev
+	status = preview
