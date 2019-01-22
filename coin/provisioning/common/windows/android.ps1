@@ -85,7 +85,7 @@ if (IsProxyEnabled) {
     # Remove "http://" from the beginning
     $proxy = $proxy.Remove(0,7)
     $proxyhost,$proxyport = $proxy.split(':')
-    $sdkmanager_args = "--no_https --proxy=http --proxy_host=`"$proxyhost`" --proxy_port=`"$proxyport`" "
+    $sdkmanager_args = "--no_https", "--proxy=http", "--proxy_host=`"$proxyhost`"", "--proxy_port=`"$proxyport`""
 }
 
 New-Item -ItemType Directory -Force -Path C:\Utils\Android\licenses
@@ -95,9 +95,10 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 # Get a PATH where Java's path is defined from previous provisioning
 [Environment]::SetEnvironmentVariable("PATH", [Environment]::GetEnvironmentVariable("PATH", "Machine"), "Process")
 
-$sdkmanager_args += " platforms;$sdkApiLevel platform-tools build-tools;$sdkBuildToolsVersion"
-Run-Executable "$toolsFolder\bin\sdkmanager.bat" "$sdkmanager_args"
 cd $toolsFolder\bin\
+$sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion"
+$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args'
+iex $command
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'
 iex $command
 cmd /c "dir C:\Utils\android"
