@@ -1,8 +1,8 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,41 +33,11 @@
 ##
 #############################################################################
 
-set +e
-
-# shellcheck disable=SC1090
-
-# We need to source to be able to use cmake in the shell
-if uname -a |grep -q "Ubuntu"; then
-    source ~/.profile
-else
-    source ~/.bashrc
-fi
+# Install Git Large File Storage
 
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-
-TEMPDIR=$(mktemp --directory) || echo "Failed to create temporary directory"
-# shellcheck disable=SC2064
-trap "sudo rm -fr $TEMPDIR" EXIT
-cd "$TEMPDIR"
-
-sudo pip install --upgrade pip
-sudo pip install six
-
-git clone https://github.com/open62541/open62541.git open62541
-cd open62541
-git checkout 215651ab8db94e5eacdd10ec26a5a9fb96b9301f
-mkdir build
-cd build
-TARGETPATH=/opt/open62541
-cmake -DUA_ENABLE_AMALGAMATION=ON -DUA_ENABLE_METHODCALLS=ON -DCMAKE_INSTALL_PREFIX:PATH="$TARGETPATH" ..
-make
-
-sudo make install
-sudo /sbin/ldconfig
-
-SetEnvVar "CI_OPEN62541_GCC_X64_PREFIX" "$TARGETPATH"
-
+curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
+sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main'
+sudo apt update
+sudo apt install git-lfs

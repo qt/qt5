@@ -48,7 +48,7 @@ brew install libiodbc
 read -r -a arr <<< $(brew list --versions libiodbc)
 version=${arr[1]}
 
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include:$CPLUS_INCLUDE_PATH"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib:$LIBRARY_PATH"
+SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
+SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
 
 echo "libiodbc = $version" >> ~/versions.txt

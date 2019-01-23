@@ -35,6 +35,28 @@ function Run-Executable
     }
 }
 
+function Extract-tar_gz
+{
+    Param (
+        [string]$Source,
+        [string]$Destination
+    )
+    Write-Host "Extracting '$Source' to '$Destination'..."
+
+    if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
+        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles}, ${env:ProgramW6432} -ne $null)[0] '7-zip\7z.exe'
+        if (-not (test-path $zipExe)) {
+            $zipExe = "C:\Utils\sevenzip\7z.exe"
+            if (-not (test-path $zipExe)) {
+                throw "Could not find 7-zip."
+            }
+        }
+    } else {
+        $zipExe = "7z.exe"
+    }
+    Run-Executable "cmd.exe"  "/C $zipExe x -y `"$Source`" -so | $zipExe x -y -aoa -si -ttar `"-o$Destination`""
+}
+
 function Extract-7Zip
 {
     Param (

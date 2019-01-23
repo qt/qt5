@@ -11,9 +11,10 @@ qtci-linux-Ubuntu-18.04-x86_64                                      GCC         
 qtci-linux-Ubuntu-18.04-x86_64                                      GCC                         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace BuildExamples Documentation
 qtci-linux-openSUSE-15.0-x86_64                                     GCC                         DeveloperBuild NoPch
 qtci-linux-openSUSE-15.0-x86_64                                     ICC_18                      DeveloperBuild NoPch DisableTests SystemSQLite
+qtci-linux-openSUSE-15.0-x86_64     WebAssembly                     GCC                         Packaging DeveloperBuild NoPch DisableTests
 qtci-linux-RHEL-7.4-x86_64                                          GCC                         Packaging Release NoUseGoldLinker ForceDebugInfo SeparateDebugInfo
 qtci-macos-10.13-x86_64-2                                           Clang                       Packaging DebugAndRelease Release
-qtci-macos-10.12-x86_64-8                                           Clang                       DeveloperBuild NoFramework Release QtNamespace NoPch
+qtci-macos-10.12-x86_64-9                                           Clang                       DeveloperBuild NoFramework Release QtNamespace NoPch
 qtci-macos-10.13-x86_64-2           IOS_ANY             multi       Clang                       Packaging DebugAndRelease DisableTests Static
 qtci-macos-10.13-x86_64-2           TvOS_ANY            multi       Clang                       DebugAndRelease DisableTests
 qtci-macos-10.13-x86_64-2           WatchOS_ANY         multi       Clang                       DebugAndRelease DisableTests

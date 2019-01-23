@@ -54,7 +54,7 @@ Remove-Item -Path $zip
 Remove-Item C:\Utils\openssl-$version.tar
 
 # Set-EnvironmentVariable "CC" "C:\utils\Android\android-ndk-r18b\toolchains\llvm\prebuilt\windows\bin\clang"
-# Set-EnvironmentVariable "AR" "C:\utils\Android\android-ndk-r18b\toolchains\llvm\prebuilt\windows\bin\llvm-ar"
+# Set-EnvironmentVariable "ANDROID_AR" "C:\utils\Android\android-ndk-r18b\toolchains\llvm\prebuilt\windows\bin\llvm-ar"
 # Set-EnvironmentVariable "ANDROID_DEV" "C:\utils\Android\android-ndk-r18b\platforms\android-21\arch-arm\usr"
 
 # Make sure configure for openssl has a "make" and "perl" available

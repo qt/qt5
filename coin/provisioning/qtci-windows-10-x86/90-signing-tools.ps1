@@ -1,8 +1,7 @@
-#!/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,5 +32,13 @@
 ##
 #############################################################################
 
-# shellcheck source=../common/linux/open62541.sh
-source "${BASH_SOURCE%/*}/../common/linux/open62541.sh"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
+
+# Signing tools are needed to sign offline installers when releasing
+
+$url = "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/sign.zip"
+$destination = "C:\Windows\temp\sign.zip"
+
+Download $url $url $destination
+Extract-7Zip "$destination" "C:\Utils"
+Remove-Item -Path "$destination"

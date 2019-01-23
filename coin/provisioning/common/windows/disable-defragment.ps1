@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,18 +31,4 @@
 ##
 #############################################################################
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
-
-set -ex
-
-# shellcheck source=../common/macos/install_xcode.sh
-source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
-
-InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_9.2.tar.gz 9.2
+schtasks /Delete /TN "\Microsoft\Windows\Defrag\ScheduledDefrag" /F
