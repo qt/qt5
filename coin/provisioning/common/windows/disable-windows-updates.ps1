@@ -33,6 +33,8 @@
 
 # This script disables the automatic Windows updates
 
+. "$PSScriptRoot\helpers.ps1"
+
 $service = get-service wuauserv
 if (-not $service) {
     Write-Host "Windows Update service not found."
@@ -43,7 +45,7 @@ if ($service.Status -eq "Stopped") {
     Write-Host "Windows Update service already stopped."
 } else {
     Write-Host "Stopping Windows Update service."
-    Stop-Service -Name "wuauserv" -Force
+    Retry {Stop-Service -Name "wuauserv" -Force} 20 5
 }
 
 $startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"
