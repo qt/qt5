@@ -42,6 +42,9 @@ if [ -z $(docker-machine ls -q --filter "name=$TestMachine") ]
 then
     docker-machine create $@ $TestMachine
     docker-machine ip $TestMachine
+else
+    # Otherwise, start the docker machine and update with new TLS certificates.
+    docker-machine start $TestMachine && docker-machine regenerate-certs -f $TestMachine
 fi
 
 # Switch the docker engine to $TestMachine
