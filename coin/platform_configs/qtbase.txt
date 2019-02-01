@@ -1,5 +1,4 @@
-Template                          Target OS           Target arch Compiler    Features
---------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-windows-10-x86_64-10         WinRT_10            x86_64      MSVC2015    DeveloperBuild Static Release ForceDebugInfo
-qtci-linux-openSUSE-42.3-x86_64   WebAssembly                     GCC         DeveloperBuild NoPch DisableTests
-
+Template                          Target OS           Target arch Compiler    Features       Configure arguments
+--------------------------------- ------------------- ----------- ----------- -------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+qtci-windows-10-x86_64-10         WinRT_10            x86_64      MSVC2015                   -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -static -nomake tests -nomake examples -no-icu -force-debug-info -platform win32-msvc2015 -xplatform winrt-x64-msvc2015
+qtci-linux-openSUSE-42.3-x86_64   WebAssembly                     GCC         DisableTests   -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -developer-build -static -nomake tests -nomake examples -no-pch -no-feature-thread -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -xplatform wasm-emscripten
