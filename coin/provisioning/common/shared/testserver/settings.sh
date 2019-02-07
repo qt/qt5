@@ -34,5 +34,5 @@
 set -ex
 
 # A list of test servers to be provisioned
-testserver='apache2 squid vsftpd ftp-proxy danted'
-testserver="$testserver apache2_18.04 squid_18.04 vsftpd_18.04 ftp-proxy_18.04 danted_18.04"
+testserver='apache2 squid vsftpd ftp-proxy danted echo'
+testserver="$testserver apache2_18.04 squid_18.04 vsftpd_18.04 ftp-proxy_18.04 danted_18.04 echo_18.04"
