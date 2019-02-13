@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -36,7 +36,7 @@
 # This script installs MySQL $version.
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
-$version = "5.6.11"
+$version = "5.7.25"
 $baseNameX64 = "mysql-$version-winx64"
 $packagex64 = "C:\Windows\temp\$baseNameX64.zip"
 $baseNameX86 = "mysql-$version-win32"
