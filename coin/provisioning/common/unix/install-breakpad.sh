@@ -75,7 +75,7 @@ breakpadHome="$HOME/breakpad"
     )
 
 
-SetEnvVar "BREAKPAD_SOURCE_DIR" "$breakpadHome/src"
+SetEnvVar "BREAKPAD_SOURCE_DIR" "$breakpadHome"
 
 echo "breakpad = $breakpad_commit_sha" >> ~/versions.txt
 echo "linux_syscall_support = $linux_syscall_support_commit_sha1" >> ~/versions.txt
