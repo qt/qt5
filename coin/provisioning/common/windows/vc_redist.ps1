@@ -57,5 +57,4 @@ Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 Write-Host "Installing $package..."
 Run-Executable $package "/q"
-Write-Host "Remove $package..."
-Remove-Item -Force -Path $package
+Remove $package
