@@ -1,4 +1,0 @@
-Template                            Target OS           Target arch Compiler    Features
------------------------------------ ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-linux-Ubuntu-16.04-x86_64-2                                    GCC         DeveloperBuild OutOfSourceBuild QtLibInfix QtNamespace BuildExamples Documentation
-qtci-linux-RHEL-7.4-x86_64          QNX_700             armv7       GCC         Release DisableTests OpenGLES2 NoUseGoldLinker

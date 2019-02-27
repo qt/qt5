@@ -1,4 +1,6 @@
-############################################################################
+#!/usr/bin/env bash
+
+#############################################################################
 ##
 ## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -31,37 +33,43 @@
 ##
 #############################################################################
 
-# Requires: 7z, perl and msys
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
+# shellcheck source=./SetEnvVar.sh
+source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
-. "$PSScriptRoot\helpers.ps1"
+# This script will install Google's Protocal Buffers which is needed by Automotive Suite
 
-# OpenSSL need to be configured from sources for Android build in windows 7
-# Msys need to be installed to target machine
-# More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
+version="3.6.1"
+sha1="44b8ba225f3b4dc45fb56d5881ec6a91329802b6"
+internalUrl="http://ci-files01-hki.intra.qt.io/input/automotive_suite/protobuf-all-$version.zip"
+externalUrl="https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
 
-$version = "1.0.2p"
-$zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$sha1 = "f34b5322e92415755c7d58bf5d0d5cf37666382c"
-$destination = "C:\Utils\openssl-android-master"
+targetDir="$HOME/protobuf-$version"
+targetFile="$targetDir.zip"
+DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
+unzip "$targetFile" -d "$HOME"
+sudo rm "$targetFile"
 
-Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
-Verify-Checksum $zip $sha1
+# devtoolset is needed when running configuration
+if uname -a |grep -qv "Darwin"; then
+    export PATH="/opt/rh/devtoolset-4/root/usr/bin:$PATH"
+fi
 
-Extract-7Zip $zip C:\Utils
-Extract-7Zip C:\Utils\openssl-$version.tar C:\Utils
-Rename-Item C:\Utils\openssl-$version $destination
-Remove-Item -Path $zip
-Remove-Item C:\Utils\openssl-$version.tar
+echo "Configuring and building protobuf"
+cd "$targetDir"
+if uname -a |grep -q Darwin; then
+    ./configure --prefix "$(xcrun --sdk macosx --show-sdk-path)/usr/local"
+    SetEnvVar PATH "\$PATH:$(xcrun --sdk macosx --show-sdk-path)/usr/local/bin"
+else
+    ./configure
+fi
+make
+sudo make install
 
-# Make sure configure for openssl has a "make" and "perl" available
-$env:PATH = $env:PATH + ";C:\msys\1.0\bin;C:\strawberry\perl\bin"
+# Refresh shared library cache if OS isn't macOS
+if uname -a |grep -qv "Darwin"; then
+    sudo ldconfig
+fi
 
-Write-Host "Configuring OpenSSL $version for Android..."
-Push-Location $destination
-Run-Executable "C:\msys\1.0\bin\bash.exe" "-c `"c:/strawberry/perl/bin/perl Configure shared android`""
-Pop-Location
-
-# Following command is needed when using version 1.1.0. With version 1.1.0 msys is not needed.
-# C:\mingw530\bin\mingw32-make.exe include\openssl\opensslconf.h
-
-Write-Output "Android OpenSSL = $version" >> ~/versions.txt
+sudo rm -r "$targetDir"

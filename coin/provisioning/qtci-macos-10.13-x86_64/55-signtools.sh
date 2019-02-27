@@ -114,14 +114,14 @@ sha1Ios="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
 { Install "$cacheSigningTools/ios_password.txt" "$targetFolder/ios_password.txt" $sha1Ios; } 2> /dev/null
 { iosPassword=$(<"$targetFolder/ios_password.txt"); } 2> /dev/null
 
-iPhoneDeveloper="iosdevelopment.p12"
-shaIPhoneDeveloper="f48f6827e8d0ccdc764cb987e401b9a6f7d3f10c"
+iPhoneDeveloper="iosdevelopment_2019.p12"
+shaIPhoneDeveloper="fbc89661c5295b4105f3890989a94c559ea4a61c"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDeveloper" "$targetFolder/$iPhoneDeveloper" $shaIPhoneDeveloper
 echo "Importing $iPhoneDeveloper.."
 { security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign; } 2> /dev/null
 
-iPhoneDistribution="iosdistribution.p12"
-shaIPhoneDistribution="64b1174fc3ce0eca044fbc9fa144f6a2d4330171"
+iPhoneDistribution="iosdistribution_2019.p12"
+shaIPhoneDistribution="f306102f9e18e2074a7b655a9b151ce69c95baac"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDistribution" "$targetFolder/$iPhoneDistribution" $shaIPhoneDistribution
 echo "Importing $iPhoneDistribution.."
 { security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign; } 2> /dev/null
