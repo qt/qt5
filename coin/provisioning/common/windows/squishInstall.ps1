@@ -129,6 +129,7 @@ if ($OSVersion -eq "Windows 10 Enterprise") {
 
     if (Is64BitWinHost) {
         DownloadAndInstallSquish $version win64 "msvc14"
+        DownloadAndInstallSquish $version win64 "msvc141"
         DownloadAndInstallSquish $version win64 "mingw_gcc73_posix_seh"
     } else {
         DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
@@ -146,6 +147,8 @@ if ($OSVersion -eq "Windows 10 Enterprise") {
 
     if (Is64BitWinHost) {
         DownloadAndInstallSquish $version win64 "msvc14"
+    } else {
+        DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
     }
     DownloadAndInstallSquish $version win32 "msvc141"
 }
