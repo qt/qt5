@@ -166,6 +166,8 @@ installPackages+=(git-lfs)
 installPackages+=(chrpath)
 installPackages+=(gawk)
 installPackages+=(texinfo)
+# Needed for QtCore
+installPackages+=(libdouble-conversion-dev)
 
 echo "Running update for apt"
 waitLoop
