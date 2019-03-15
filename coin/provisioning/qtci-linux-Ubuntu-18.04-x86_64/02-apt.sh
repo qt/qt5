@@ -168,6 +168,7 @@ installPackages+=(gawk)
 installPackages+=(texinfo)
 # Needed for QtCore
 installPackages+=(libdouble-conversion-dev)
+installPackages+=(libpcre2-dev)
 
 echo "Running update for apt"
 waitLoop
