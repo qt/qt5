@@ -57,14 +57,16 @@ sudo rm "$targetFile"
 
 echo "Configuring and building cmake"
 cd "$targetDir"
-if uname -a |grep -qv Darwin; then
+if uname -a |grep -q Darwin; then
+    ./bootstrap --prefix="$(xcrun --sdk macosx --show-sdk-path)/usr/local"
+    SetEnvVar PATH "\$PATH:$(xcrun --sdk macosx --show-sdk-path)/usr/local/bin"
+else
     ./bootstrap --prefix="$cmakeHome"
-    make
-    make install
+    SetEnvVar "PATH" "$cmakeHome/bin:\$PATH"
 fi
+make
+sudo make install
 
 sudo rm -r "$targetDir"
-
-SetEnvVar "PATH" "$cmakeHome/bin:\$PATH"
 
 echo "CMake = $version" >> ~/versions.txt
