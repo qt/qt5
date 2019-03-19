@@ -49,7 +49,7 @@
 	path = qtxmlpatterns
 	url = ../qtxmlpatterns.git
 	branch = 5.13
-	status = addon
+	status = deprecated
 [submodule "qttranslations"]
 	depends = qttools
 	path = qttranslations
