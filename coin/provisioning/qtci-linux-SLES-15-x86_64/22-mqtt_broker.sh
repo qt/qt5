@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,14 +33,5 @@
 ##
 #############################################################################
 
-set -ex
-
-echo "Disable Network Time Protocol (NTP)"
-
-if uname -a |grep -q "Ubuntu"; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    (systemctl &>/dev/null && sudo systemctl disable ntpd) || sudo /sbin/chkconfig ntpd off
-fi
+# shellcheck source=../common/unix/mqtt_broker.sh
+source "${BASH_SOURCE%/*}/../common/unix/mqtt_broker.sh"
