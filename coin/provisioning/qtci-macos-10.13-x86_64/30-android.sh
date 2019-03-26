@@ -57,12 +57,7 @@ sdkBuildToolsVersion="28.0.3"
 # this is compile sdk version
 sdkApiLevel="android-28"
 
-toolsSha1="ed85ea7b59bc3483ce0af4c198523ba044e083ad"
-ndkSha1="98cb9909aa8c2dab32db188bbdc3ac6207e09440"
-
-toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
-ndkTargetFile="/tmp/$ndkFile"
 ndkSourceFile="$basePath/$ndkFile"
 
 echo "Unzipping Android NDK to '$targetFolder'"

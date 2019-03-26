@@ -45,7 +45,7 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
 done
 
 # aptdaemon is used by update notifiers and similar and there is no point in having those (the symptom is aptd holding a lock)
-for i in `seq 10`; do
+for i in $(seq 10); do
     echo attempting to remove aptdaemon
     sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y remove aptdaemon || true
     # check that aptdaemon is no longer installed
@@ -178,7 +178,8 @@ echo "Installing packages"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 
 # Install all needed packages in a special wheel cache directory
-pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
+pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
+# shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"

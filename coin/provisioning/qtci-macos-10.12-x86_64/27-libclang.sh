@@ -4,4 +4,4 @@ set -ex
 
 BASEDIR=$(dirname "$0")
 # There is only one mac package
-$BASEDIR/../common/unix/libclang.sh
+"$BASEDIR/../common/unix/libclang.sh"

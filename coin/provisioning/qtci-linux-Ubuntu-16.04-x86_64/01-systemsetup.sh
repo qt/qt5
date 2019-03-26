@@ -37,6 +37,7 @@
 
 set -ex
 
+# shellcheck source=../common/unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
 NTS_IP=10.212.2.216

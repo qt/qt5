@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/emsdk.sh
 source "${BASH_SOURCE%/*}/../common/linux/emsdk.sh"
