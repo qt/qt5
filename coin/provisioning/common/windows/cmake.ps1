@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,8 +33,8 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$majorminorversion = "3.6"
-$version = "3.6.2"
+$majorminorversion = "3.14"
+$version = "3.14.1"
 
 $zip = Get-DownloadLocation ("cmake-" + $version + "-win32-x86.zip")
 $officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
@@ -44,7 +44,7 @@ Write-Host "Removing old cmake"
 Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
 
 Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "541F6E7EFD228E46770B8631FFE57097576E4D4E"
+Verify-Checksum $zip "C1626FD07B09C76736F5AC9DA7B4374919EB9964"
 
 Extract-7Zip $zip C:
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
