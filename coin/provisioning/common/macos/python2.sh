@@ -42,9 +42,9 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # shellcheck source=./pip.sh
 source "${BASH_SOURCE%/*}/pip.sh"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-2.7.14-macosx10.6.pkg"
-AltUrl="https://www.python.org/ftp/python/2.7.14/python-2.7.14-macosx10.6.pkg"
-SHA1="fa2bb77243ad0cb611aa3295204fab403bb0fa09"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-2.7.16-macosx10.6.pkg"
+AltUrl="https://www.python.org/ftp/python/2.7.16/python-2.7.16-macosx10.6.pkg"
+SHA1="895a8327a58e7c0e58852638ab3d84843643535b"
 DestDir="/"
 
 InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
@@ -55,5 +55,5 @@ InstallPip python2.7
 
 SetEnvVar "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin/:\$PATH"
 
-echo "python2 = 2.7.14" >> ~/versions.txt
+echo "python2 = 2.7.16" >> ~/versions.txt
 
