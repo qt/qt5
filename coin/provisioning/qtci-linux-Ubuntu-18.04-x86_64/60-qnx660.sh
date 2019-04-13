@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/qnx_660.sh
 source "${BASH_SOURCE%/*}/../common/linux/qnx_660.sh"

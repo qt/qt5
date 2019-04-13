@@ -3,5 +3,5 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/macos/fbx_macos.sh
+"$BASEDIR/../common/macos/fbx_macos.sh"
 

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -ex
+
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/unix/squishInstall.sh
+"$BASEDIR/../common/unix/squishInstall.sh"
 

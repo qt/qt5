@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-$(dirname "$0")/../common/macos/disable_spotlight.sh
+set -ex
+
+# shellcheck source=../common/macos/disable_spotlight.sh
+source "${BASH_SOURCE%/*}/../common/macos/disable_spotlight.sh"

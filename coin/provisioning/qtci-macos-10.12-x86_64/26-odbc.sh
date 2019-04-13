@@ -4,4 +4,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/macos/libiodbc.sh
+"$BASEDIR/../common/macos/libiodbc.sh"

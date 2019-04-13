@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-$(dirname $0)/../common/unix/disable-ntp_macos.sh
+# shellcheck source=../common/unix/disable-ntp_macos.sh
+source "${BASH_SOURCE%/*}/../common/unix/disable-ntp_macos.sh"

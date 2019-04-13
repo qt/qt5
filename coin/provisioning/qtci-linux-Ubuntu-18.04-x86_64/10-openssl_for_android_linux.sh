@@ -35,4 +35,5 @@
 
 set -ex
 
+# shellcheck source=../common/linux/openssl_for_android_linux.sh
 source "${BASH_SOURCE%/*}/../common/linux/openssl_for_android_linux.sh"
