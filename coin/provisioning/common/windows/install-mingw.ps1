@@ -37,7 +37,8 @@ function InstallMinGW
 {
     Param (
         [string] $release = $(BadParam("release file name")),
-        [string] $sha1    = $(BadParam("SHA1 checksum of the file"))
+        [string] $sha1    = $(BadParam("SHA1 checksum of the file")),
+        [string] $suffix  = ""
     )
 
     $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
@@ -45,7 +46,7 @@ function InstallMinGW
     if ($arch -eq "i686") { $win_arch = "Win32" }
     elseif ($arch -eq "x86_64") { $win_arch = "Win64" }
 
-    $envvar = "MINGW$version"
+    $envvar = "MINGW$version$suffix"
     $envvar = $envvar -replace '["."]'
     $targetdir = "C:\$envvar"
     $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\" + $release + ".7z"

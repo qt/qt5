@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -76,3 +76,6 @@ EOM
 SetEnvVar "PATH" "\"$targetFolder/emscripten-llvm-e$version/:$targetFolder/node-v$version_node-linux-x64/bin:$targetFolder/emscripten-$version:\$PATH\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
 SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
+
+echo "Emsdk = $version" >> ~/versions.txt
+echo "Emsdk node = $version_node" >> ~/versions.txt

@@ -33,4 +33,7 @@
 ##
 #############################################################################
 
+set -ex
+
+# shellcheck source=../common/unix/mqtt_broker.sh
 source "${BASH_SOURCE%/*}/../common/unix/mqtt_broker.sh"

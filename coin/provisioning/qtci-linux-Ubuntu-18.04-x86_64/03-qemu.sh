@@ -34,6 +34,7 @@
 
 set -ex
 
+# shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 # build latest qemu to usermode
