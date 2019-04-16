@@ -32,25 +32,41 @@
 ##
 #############################################################################
 
-# shellcheck source=../unix/InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# shellcheck source=./InstallFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
+# shellcheck source=./SetEnvVar.sh
+source "${BASH_SOURCE%/*}/SetEnvVar.sh"
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
 version="1.38.27"
 version_node="8.9.1"
-urlEmscriptenCache="http://ci-files01-hki.intra.qt.io/input/emsdk/emscripten-$version.tar.gz"
-urlEmscriptenExternal="https://github.com/kripken/emscripten/archive/$version.tar.gz"
-urlEmscriptenLlvmCache="http://ci-files01-hki.intra.qt.io/input/emsdk/emscripten-llvm-e$version.tar.gz"
-urlEmscriptenLlvmExternal="https://s3.amazonaws.com/mozilla-games/emscripten/packages/llvm/tag/linux_64bit/emscripten-llvm-e$version.tar.gz"
-urlNodeCache="http://ci-files01-hki.intra.qt.io/input/emsdk/node-v$version_node-linux-x64.tar.xz"
-urlNodeExternal="https://s3.amazonaws.com/mozilla-games/emscripten/packages/node-v$version_node-linux-x64.tar.xz"
-sha1Emscripten="ff9748a8f6b8eaa8192cce9fe2befc801443a161"
-sha1EmscriptenLlvm="8f5cd026c98cd40e53e6d11fbc32b116280ef9bb"
-sha1Node="eaec5de2af934f7ebc7f9597983e71c5d5a9a726"
+urlOfficial="https://s3.amazonaws.com/mozilla-games/emscripten/packages"
+urlCache="http://ci-files01-hki.intra.qt.io/input/emsdk"
 targetFolder="/opt/emsdk"
+
+urlEmscriptenCache="$urlCache/emscripten-$version.tar.gz"
+urlEmscriptenExternal="https://github.com/kripken/emscripten/archive/$version.tar.gz"
+sha1Emscripten="ff9748a8f6b8eaa8192cce9fe2befc801443a161"
+
+if uname -a |grep -q Darwin; then
+    urlEmscriptenLlvmCache="$urlCache/macos/emscripten-llvm-e$version.tar.gz"
+    urlEmscriptenLlvmExternal="$urlOfficial/llvm/tag/osx_64bit/emscripten-llvm-e$version.tar.gz"
+    urlNodeCache="$urlCache/macos/node-v$version_node-darwin-x64.tar.gz"
+    urlNodeExternal="$urlOfficial/node-v$version_node-darwin-x64.tar.gz"
+    sha1EmscriptenLlvm="66dffbc44cfcb7bcb1ed0d2658b519276c3077fa"
+    sha1Node="b9ec6fe9701d385e385886a4b171ba02bb6aead7"
+    node_js="$targetFolder/node-v$version_node-darwin-x64/bin"
+else
+    urlEmscriptenLlvmCache="$urlCache/linux/emscripten-llvm-e$version.tar.gz"
+    urlEmscriptenLlvmExternal="$urlOfficial/llvm/tag/linux_64bit/emscripten-llvm-e$version.tar.gz"
+    urlNodeCache="$urlCache/linux/node-v$version_node-linux-x64.tar.xz"
+    urlNodeExternal="$urlOfficial/node-v$version_node-linux-x64.tar.xz"
+    sha1EmscriptenLlvm="8f5cd026c98cd40e53e6d11fbc32b116280ef9bb"
+    sha1Node="eaec5de2af934f7ebc7f9597983e71c5d5a9a726"
+    node_js="$targetFolder/node-v$version_node-linux-x64/bin"
+fi
+
 sudo mkdir "$targetFolder"
 
 InstallFromCompressedFileFromURL "$urlEmscriptenCache" "$urlEmscriptenExternal" "$sha1Emscripten" "$targetFolder" ""
@@ -64,7 +80,7 @@ cat <<EOM >"$targetFolder/.emscripten"
 LLVM_ROOT='$targetFolder/emscripten-llvm-e$version/'
 EMSCRIPTEN_NATIVE_OPTIMIZER='$targetFolder/emscripten-llvm-e$version/optimizer'
 BINARYEN_ROOT='$targetFolder/emscripten-llvm-e$version/binaryen'
-NODE_JS='$targetFolder/node-v$version_node-linux-x64/bin/node'
+NODE_JS='$node_js/node'
 EMSCRIPTEN_ROOT='$targetFolder/emscripten-$version'
 SPIDERMONKEY_ENGINE = ''
 V8_ENGINE = ''
@@ -73,7 +89,7 @@ COMPILER_ENGINE = NODE_JS
 JS_ENGINES = [NODE_JS]
 EOM
 
-SetEnvVar "PATH" "\"$targetFolder/emscripten-llvm-e$version/:$targetFolder/node-v$version_node-linux-x64/bin:$targetFolder/emscripten-$version:\$PATH\""
+SetEnvVar "PATH" "\"$targetFolder/emscripten-llvm-e$version/:$node_js:$targetFolder/emscripten-$version:\$PATH\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
 SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
 
