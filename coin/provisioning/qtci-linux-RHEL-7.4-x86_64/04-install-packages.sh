@@ -112,6 +112,8 @@ installPackages+=(xcb-util-renderutil-devel)
 # ODBC support
 installPackages+=(unixODBC-devel)
 installPackages+=(unixODBC)
+# Vulkan support
+installPackages+=(vulkan-devel)
 
 sudo yum -y install "${installPackages[@]}"
 
