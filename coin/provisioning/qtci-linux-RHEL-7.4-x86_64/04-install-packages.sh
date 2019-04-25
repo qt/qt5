@@ -70,6 +70,7 @@ installPackages+=(speech-dispatcher-devel)
 installPackages+=(python-devel python-pip)
 # Python 3 with python-devel, pip and virtualenv
 installPackages+=(rh-python36)
+installPackages+=(python36-devel)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
