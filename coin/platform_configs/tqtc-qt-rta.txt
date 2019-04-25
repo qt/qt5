@@ -1,6 +1,0 @@
-Template                    Target OS           Target arch Compiler    Features
---------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-windows-7-x86_64-4                                     MSVC2013    Release ForceDebugInfo OpenGLDynamic DisableTests
-qtci-windows-8.1-x86_64                                     MSVC2013    Release ForceDebugInfo OpenGLDynamic DisableTests
-qtci-windows-10-x86-3                                       MSVC2017    Release ForceDebugInfo OpenGLDynamic
-

@@ -1,4 +1,0 @@
-Template                          Target OS           Target arch Compiler    Features
---------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
-qtci-linux-Ubuntu-18.04-x86_64    QEMU                armv7       GCC         DeveloperBuild
-qtci-linux-Ubuntu-18.04-x86_64    QEMU                arm64       GCC         DeveloperBuild
