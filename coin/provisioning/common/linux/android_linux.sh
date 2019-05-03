@@ -51,13 +51,13 @@ basePath="http://ci-files01-hki.intra.qt.io/input/android"
 
 toolsVersion="r26.1.1"
 toolsFile="sdk-tools-linux-4333796.zip"
-ndkVersion="r18b"
+ndkVersion="r19c"
 ndkFile="android-ndk-$ndkVersion-linux-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
 sdkApiLevel="android-28"
 
 toolsSha1="8c7c28554a32318461802c1291d76fccfafde054"
-ndkSha1="500679655da3a86aecf67007e8ab230ea9b4dd7b"
+ndkSha1="fd94d0be6017c6acbd193eb95e09cf4b6f61b834"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"

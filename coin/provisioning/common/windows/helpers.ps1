@@ -191,3 +191,22 @@ function Retry{
         Throw("Failed to run command successfully in $retry_count tries")
     }
 }
+
+function Remove {
+
+    Param (
+        [string]$Path = $(BadParam("a path"))
+    )
+    Write-Host "Removing $Path"
+    $i = 0
+    While ( Test-Path($Path) ){
+        Try{
+            remove-item -Force -Recurse -Path $Path -ErrorAction Stop
+        }catch{
+            $i +=1
+            if ($i -eq 5) {exit 1}
+            Write-Verbose "$Path locked, trying again in 5"
+            Start-Sleep -seconds 5
+        }
+    }
+}

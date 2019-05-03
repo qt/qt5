@@ -35,6 +35,7 @@
 
 set -ex
 
+# shellcheck source=../common/macos/install-commandlinetools.sh
 source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
 
 version="10.1"

@@ -73,8 +73,8 @@ SetEnvVar "OPENSSL_DIR" "\"$openssl_install_dir\""
 SetEnvVar "OPENSSL_INCLUDE" "\"$openssl_install_dir/include\""
 SetEnvVar "OPENSSL_LIB" "\"$openssl_install_dir/lib\""
 
-security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem
-security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem
+security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem > /dev/null
+security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a $opensslTargetLocation/ssl/cert.pem > /dev/null
 
 sudo rm -rf /tmp/openssl-$opensslVersion
 

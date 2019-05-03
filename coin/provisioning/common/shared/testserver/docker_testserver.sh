@@ -53,28 +53,5 @@ esac
 # Display system-wide information of docker-engine
 docker info
 
-# Sort files by their SHA-1, and then return the accumulated result
-sha1tree () {
-    # For example, macOS doesn't install sha1sum by default. In such case, it uses shasum instead.
-    [ -x "$(command -v sha1sum)" ] || SHASUM=shasum
-
-    find "$@" -type f -print0 | \
-        xargs -0 ${SHASUM-sha1sum} | cut -d ' ' -f 1 | \
-        sort | ${SHASUM-sha1sum} | cut -d ' ' -f 1
-}
-
-# Using SHA-1 of each server context as the tag of docker images. A tag labels a
-# specific image version. It is used by docker compose file (docker-compose.yml)
-# to launch the corresponding docker containers. If one of the server contexts
-# (./apache2, ./danted, ...) gets changes, all the related compose files in
-# qtbase should be updated as well.
-
-source "$SERVER_PATH/settings.sh"
-
-for server in $testserver
-do
-    context="$SERVER_PATH/$server"
-    docker build -t qt-test-server-$server:$(sha1tree $context) $context
-done
-
-docker images
+# Create images
+$SERVER_PATH/docker_images.sh

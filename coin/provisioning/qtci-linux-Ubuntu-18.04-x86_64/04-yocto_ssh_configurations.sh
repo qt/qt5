@@ -35,6 +35,7 @@
 
 set -ex
 
+# shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 url="http://ci-files01-hki.intra.qt.io/input/semisecure/test_farm_id_rsa"

@@ -37,16 +37,18 @@
 
 set -ex
 
+# shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 echo "Installing Yocto toolchain for 32-bit b2qt ARMV7..."
 
-versionARM="2.3.4"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarmv7-7608ebe.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/pyro/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/pyro/$package"
-SHA1="db7a0f4f9ddd5992a563d5348889021a7ceb1c56"
+versionARM="2.5.2"
+package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarmv7-409ebc3.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/sumo/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/sumo/$package"
+SHA1="a03b4eb492b16c6e60cf83c0718c27e9cfa6d522"
 yoctoInstaller="/tmp/yocto-toolchain-ARMv7.sh"
 yoctoLocationARMv7="/opt/yocto-armv7"
 sysrootARMv7="sysroots/armv7ahf-neon-poky-linux-gnueabi"
@@ -60,11 +62,11 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt ARM64..."
 
-versionARM64="2.3.4"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarm64-7608ebe.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/pyro/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/pyro/$package"
-SHA1="5dcae7c6cbc266798ba49a9e51fff1f06790729d"
+versionARM64="2.5.2"
+package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarm64-409ebc3.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/sumo/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/sumo/$package"
+SHA1="3dadf1135d00f7cb5586b605b1f7344ae828c9cd"
 yoctoInstaller="/tmp/yocto-toolchain-ARM64.sh"
 yoctoLocationARM64="/opt/yocto-arm64"
 sysrootARM64="sysroots/aarch64-poky-linux"
@@ -96,7 +98,7 @@ rm -rf "$yoctoInstaller"
 
 
 
-if [ -e "$yoctoLocationARMv7/$sysrootARMv7" -a -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" -a -e "$yoctoLocationARM64/$sysrootARM64" -a -e "$yoctoLocationARM64/${crosscompileARM64}g++" -a -e "$yoctoLocationMIPS64/$sysrootMIPS64" -a -e "$yoctoLocationMIPS64/${crosscompileMIPS64}g++" ]; then
+if [ -e "$yoctoLocationARMv7/$sysrootARMv7" ] && [ -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" ] && [ -e "$yoctoLocationARM64/$sysrootARM64" ] && [ -e "$yoctoLocationARM64/${crosscompileARM64}g++" ] && [ -e "$yoctoLocationMIPS64/$sysrootMIPS64" ] && [ -e "$yoctoLocationMIPS64/${crosscompileMIPS64}g++" ]; then
     SetEnvVar "QEMUARMV7_TOOLCHAIN_SYSROOT" "$yoctoLocationARMv7/$sysrootARMv7"
     SetEnvVar "QEMUARMV7_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationARMv7/$crosscompileARMv7"
     SetEnvVar "QEMUARM64_TOOLCHAIN_SYSROOT" "$yoctoLocationARM64/$sysrootARM64"

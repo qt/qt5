@@ -35,41 +35,34 @@
 
 set -ex
 
-# Download and install the Docker Toolbox for macOS (Docker Compose and Docker Machine).
-url="https://download.docker.com/mac/stable/DockerToolbox.pkg"
-target_file="DockerToolbox.pkg"
-
-if [ -x "$(command -v sha1sum)" ]
-then
-    # This part shall be used in CI environment only. The DownloadURL script needs sha1sum
-    # which is not included in the default macOS system. In addition, the cached pkg can't
-    # be downloaded out of the Qt internal network.
-    case ${BASH_SOURCE[0]} in
-        */macos/*) UNIX_PATH="${BASH_SOURCE[0]%/macos/*}/unix" ;;
-        */*) UNIX_PATH="${BASH_SOURCE[0]%/*}/../unix" ;;
-        *) UNIX_PATH="../unix" ;;
-    esac
-
-    source "$UNIX_PATH/DownloadURL.sh"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/windows/DockerToolbox.pkg"
-    sha1="7196d2d30648d486978d29adb5837ff7876517c1"
-    DownloadURL $url_cached $url $sha1 $target_file
-else
-    curl $url -o $target_file
-fi
-sudo installer -pkg $target_file -target /
-docker --version
-docker-compose --version
-
-# Start testserver provisioning
-case ${BASH_SOURCE[0]} in
-    */macos/*) SERVER_PATH="${BASH_SOURCE[0]%/macos/*}/shared/testserver" ;;
-    */*) SERVER_PATH="${BASH_SOURCE[0]%/*}/../shared/testserver" ;;
-    *) SERVER_PATH="../shared/testserver" ;;
+[ -x "$(command -v realpath)" ] && FILE=$(realpath ${BASH_SOURCE[0]}) || FILE=${BASH_SOURCE[0]}
+case $FILE in
+    */*) SERVER_PATH="${FILE%/*}" ;;
+    *) SERVER_PATH="." ;;
 esac
 
-# Nested virtualization - Print CPU features to verify that CI has enabled VT-X/AMD-v support
-case $(sysctl machdep.cpu.features) in
-    *VMX*) "$SERVER_PATH/docker_testserver.sh" VMX ;;
-    *) echo "VMX not found error! Please make sure Coin has enabled VT-X/AMD-v." >&2; exit 1 ;;
-esac
+# Sort files by their SHA-1, and then return the accumulated result
+sha1tree () {
+    # For example, macOS doesn't install sha1sum by default. In such case, it uses shasum instead.
+    [ -x "$(command -v sha1sum)" ] || SHASUM=shasum
+
+    find "$@" -type f -print0 | \
+        xargs -0 ${SHASUM-sha1sum} | cut -d ' ' -f 1 | \
+        sort | ${SHASUM-sha1sum} | cut -d ' ' -f 1
+}
+
+# Using SHA-1 of each server context as the tag of docker images. A tag labels a
+# specific image version. It is used by docker compose file (docker-compose.yml)
+# to launch the corresponding docker containers. If one of the server contexts
+# (./apache2, ./danted, ...) gets changes, all the related compose files in
+# qtbase should be updated as well.
+
+source "$SERVER_PATH/settings.sh"
+
+for server in $testserver
+do
+    context="$SERVER_PATH/$server"
+    docker build -t qt-test-server-$server:$(sha1tree $context) $context
+done
+
+docker images

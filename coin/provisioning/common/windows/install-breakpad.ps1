@@ -87,7 +87,7 @@ catch {
     git checkout $linux_syscall_support_commit_sha1
 }
 
-Set-EnvironmentVariable "BREAKPAD_SOURCE_DIR" "$installFolder\breakpad\src"
+Set-EnvironmentVariable "BREAKPAD_SOURCE_DIR" "$installFolder\breakpad"
 
 # Write HEAD commit sha to versions txt, so build can be repeated at later date
 Write-Output "breakpad = $breakpad_commit_sha" >> ~/versions.txt

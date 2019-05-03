@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -30,5 +32,9 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\common\windows\msvc_2015_update3_patch.ps1"
+
+set -ex
+
+# shellcheck source=../common/unix/install_protobuff.sh
+source "${BASH_SOURCE%/*}/../common/unix/install_protobuff.sh"
 

@@ -38,9 +38,9 @@ set -ex
 # This script will install squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.3.2"
+version="6.4.3"
 # Branch version without dot
-qtBranch="510x"
+qtBranch="512x"
 squishFolder="/opt/squish"
 squishUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/$qtBranch/"
 squishFile="squish-$version-qt$qtBranch-linux64.run"

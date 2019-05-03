@@ -38,18 +38,18 @@
 # NOTE! Make sure 64bit versions are always installed before 32bit,
 # because they use same folder name before a rename
 
-$version = "6.3.2"
+$version = "6.4.3"
 
 # Qt branch without dot (*.*)
-$qtBranch = "510x"
-# So far Squish built with Qt5.10 works also with 5.11, but we have to be prepared that on some point
+$qtBranch = "512x"
+# So far Squish built with Qt5.12 works also with 5.13, but we have to be prepared that on some point
 # the compatibility breaks, and we may need to have separate Squish packages for different Qt versions.
 
 $targetDir = "C:\Utils\squish"
 $squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin"
 $squishBranchUrl = "$squishUrl\$qtBranch"
 $testSuite = "suite_test_squish"
-$testSuiteUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin\$testSuite.7z"
+$testSuiteUrl = "$squishUrl\$testSuite.7z"
 
 # Squish license
 $licensePackage = ".squish-3-license"
@@ -62,7 +62,10 @@ Function DownloadAndInstallSquish {
         [string]$bit,
         [string]$squishPackage
     )
-
+    # MinGW x86 available only with Qt5.11, to be updated when Squish is supporting 5.13
+    if ("$bit" -eq "win32" -and $squishPackage.StartsWith("mingw")) {
+        $qtBranch = "511x"
+    }
     $SquishUrl = $squishBranchUrl + "\squish-" + $version + "-qt" + $qtBranch + "-" + $bit + "-" + $squishPackage + ".exe"
     $SquishInstaller = "$targetDir\$squishPackage.exe"
     $SquishParameters = "unattended=1 targetdir=$targetDir\$squishPackage"
@@ -125,25 +128,27 @@ DownloadSquishLicence $squishUrl
 if ($OSVersion -eq "Windows 10 Enterprise") {
 
     if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 msvc14
+        DownloadAndInstallSquish $version win64 "msvc14"
+        DownloadAndInstallSquish $version win64 "msvc141"
+        DownloadAndInstallSquish $version win64 "mingw_gcc73_posix_seh"
+    } else {
+        DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
     }
-    DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
-    DownloadAndInstallSquish $version win32 "msvc14"
+    DownloadAndInstallSquish $version win32 "msvc141"
 
 } elseif ($OSVersion -eq "Windows 8.1 Enterprise") {
 
     if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 "msvc12"
         DownloadAndInstallSquish $version win64 "msvc14"
     }
-    DownloadAndInstallSquish $version win32 "msvc14"
+    DownloadAndInstallSquish $version win32 "msvc141"
 
 } elseif ($OSVersion -eq "Windows 7 Enterprise") {
 
     if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 "msvc12"
         DownloadAndInstallSquish $version win64 "msvc14"
+    } else {
+        DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
     }
-    DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
-    DownloadAndInstallSquish $version win32 "msvc14"
+    DownloadAndInstallSquish $version win32 "msvc141"
 }

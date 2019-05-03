@@ -62,7 +62,7 @@ Install "$cache/semisecure/.qt-license" "$targetFolder/.qt-license" $sha1QtLicen
 # Login keychain
 sha1LoginKeychainPassword="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
 Install "$cacheSigningTools/login_keychain_password.txt" "$targetFolder/login_keychain_password.txt" "$sha1LoginKeychainPassword"
-loginKeychainPassword=$(<"$targetFolder/login_keychain_password.txt")
+loginKeychainPassword=$(cat "$targetFolder/login_keychain_password.txt")
 loginKeychain=$keychains/login.keychain
 
 echo "Setting login.keychain as default keychain.."
@@ -104,7 +104,7 @@ open "$keychains/$devIDKeychain"
 
 sha1DeveloperIDTheQtCompanyKeychainPassword="d758e067736bbda7a91ffaec66cd38afdaf68ea6"
 Install "$cacheSigningTools/Developer_ID_TheQtCompany_keychain_password.txt" "$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt" "$sha1DeveloperIDTheQtCompanyKeychainPassword"
-DeveloperIDTheQtCompanyKeychainPassword=$(<"$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt")
+DeveloperIDTheQtCompanyKeychainPassword=$(cat "$targetFolder/Developer_ID_TheQtCompany_keychain_password.txt")
 
 echo "Unlocking $devIDKeychain with password.."
 security unlock-keychain -p "$DeveloperIDTheQtCompanyKeychainPassword" $keychains/Developer_ID_TheQtCompany.keychain
@@ -112,19 +112,19 @@ security set-keychain-settings $keychains/Developer_ID_TheQtCompany.keychain
 
 sha1Ios="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
 Install "$cacheSigningTools/ios_password.txt" "$targetFolder/ios_password.txt" $sha1Ios
-iosPassword=$(<"$targetFolder/ios_password.txt")
+iosPassword=$(cat "$targetFolder/ios_password.txt")
 
 iPhoneDeveloper="iosdevelopment.p12"
 shaIPhoneDeveloper="f48f6827e8d0ccdc764cb987e401b9a6f7d3f10c"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDeveloper" "$targetFolder/$iPhoneDeveloper" $shaIPhoneDeveloper
 echo "Importing $iPhoneDeveloper.."
-security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign
+security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P "$iosPassword" -T /usr/bin/codesign
 
 iPhoneDistribution="iosdistribution.p12"
 shaIPhoneDistribution="64b1174fc3ce0eca044fbc9fa144f6a2d4330171"
 Install "$cacheSigningTools/latest_ios_cert/$iPhoneDistribution" "$targetFolder/$iPhoneDistribution" $shaIPhoneDistribution
 echo "Importing $iPhoneDistribution.."
-security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P $iosPassword -T /usr/bin/codesign
+security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P "$iosPassword" -T /usr/bin/codesign
 
 # Mobileprovision
 echo "Creating directory $targetFolder/Library/MobileDevice/Provisioning Profiles.."

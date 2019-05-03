@@ -3,4 +3,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/macos/homebrew.sh
+"$BASEDIR/../common/macos/homebrew.sh"
