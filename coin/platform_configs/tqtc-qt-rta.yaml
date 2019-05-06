@@ -1,0 +1,14 @@
+-
+    Template: 'qtci-windows-7-x86_64-4'
+    Compiler: 'MSVC2013'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
+-
+    Template: 'qtci-windows-8.1-x86_64'
+    Compiler: 'MSVC2013'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
+-
+    Template: 'qtci-windows-10-x86-3'
+    Compiler: 'MSVC2017'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'

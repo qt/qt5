@@ -1,0 +1,11 @@
+-
+    Template: 'qtci-windows-10-x86_64-10'
+    Target arch: 'x86'
+    Compiler: 'MSVC2017'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -nomake tests -debug-and-release -release -force-debug-info -opengl dynamic'
+-
+    Template: 'qtci-windows-7-x86-3'
+    Compiler: 'Mingw73'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -nomake tests -debug-and-release -release -opengl dynamic'
