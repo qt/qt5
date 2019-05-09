@@ -70,6 +70,7 @@ installPackages+=(speech-dispatcher-devel)
 installPackages+=(python-devel python-pip)
 # Python 3 with python-devel, pip and virtualenv
 installPackages+=(rh-python36)
+installPackages+=(python36-devel)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
@@ -112,6 +113,8 @@ installPackages+=(xcb-util-renderutil-devel)
 # ODBC support
 installPackages+=(unixODBC-devel)
 installPackages+=(unixODBC)
+# Vulkan support
+installPackages+=(vulkan-devel)
 
 sudo yum -y install "${installPackages[@]}"
 

@@ -95,6 +95,7 @@ ls -l "$sdkTargetFolder"
 
 SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
 SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+SetEnvVar "ANDROID_NDK_ROOT" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
