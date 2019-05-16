@@ -83,7 +83,7 @@ function InstallGCC() {
         sudo make install
 
         rm -rf "$targetFile"
-        rm -rf "$tmpFolder/gcc-$version"
+        sudo rm -rf "$tmpFolder/gcc-$version"
     fi
 
     # openSUSE has update-alternatives under /usr/sbin and it has grouped the commands by means of master and slave links
