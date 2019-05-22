@@ -33,62 +33,31 @@
 
 . "$PSScriptRoot\..\common\windows\helpers.ps1"
 
-# This script installs OpenSSL $version.
-# Both x86 and x64 versions needed when x86 integrations are done on x64 machine
+# This script will install OpenSSL prebuild version. Currently this pre-build version is only needed for Windows 7.
+# Version was build using Windows 7 x86 and MSVC2010
 
-$version = "1_0_2p"
-$packagex64 = "C:\Windows\Temp\Win64OpenSSL-$version.exe"
-$packagex86 = "C:\Windows\Temp\Win32OpenSSL-$version.exe"
+# Used build commands below:
+# call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
+# perl Configure no-asm VC-WIN32 --prefix=C:\openssl\ --openssldir=C:\openssl\
+# nmake
+# nmake install
 
-if (Is64BitWinHost) {
 
-    # Install x64 bit version
-    $architecture = "x64"
-    $installFolder = "C:\openssl"
-    $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
-    $sha1 = "ec8b4111afb86ffc81837a30667aa076afe9d1e6"
+$version = "1.1.1b"
+$zip = Get-DownloadLocation ("openssl-$version.7z")
+$sha1 = "7afba53ab984cecb54a1915c135cbb2a20c6b576"
+$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86.7z"
 
-    Write-Host "Fetching from URL ..."
-    Download $externalUrl $internalUrl $packagex64
-    Verify-Checksum $packagex64 $sha1
-    Write-Host "Installing $packagex64 ..."
-    Run-Executable "$packagex64" "/SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
+Download $url $url $zip
+Verify-Checksum $zip $sha1
+$installFolder = "C:\openssl"
 
-    Write-Host "Remove downloaded $packagex64 ..."
-    Remove-Item -Path $packagex64
+Extract-7Zip $zip "C:\"
+Remove-Item -Path $zip
 
-    Set-EnvironmentVariable "OPENSSL_CONF_x64" "$installFolder\bin\openssl.cfg"
-    Set-EnvironmentVariable "OPENSSL_INCLUDE_x64" "$installFolder\include"
-    Set-EnvironmentVariable "OPENSSL_LIB_x64" "$installFolder\lib"
-}
-
-# Install x86 bit version
-$architecture = "x86"
-
-if (Is64BitWinHost) {
-    $installFolder = "C:\openssl$architecture"
-} else {
-    $installFolder = "C:\openssl"
-}
-
-$externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
-$sha1 = "753d6b2cb8b6c808f6212bd21b6e6e7822a4e236"
-
-Write-Host "Fetching from URL ..."
-Download $externalUrl $internalUrl $packagex86
-Verify-Checksum $packagex86 $sha1
-Write-Host "Installing $packagex86 ..."
-Run-Executable "$packagex86" "/SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
-
-Write-Host "Remove downloaded $packagex86 ..."
-Remove-Item -Path $packagex86
-
-Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\bin\openssl.cfg"
+Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\openssl.cnf"
 Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"
 Set-EnvironmentVariable "OPENSSL_LIB_x86" "$installFolder\lib"
+Prepend-Path "$installFolder\bin"
 
-# Store version information to ~/versions.txt, which is used to print version information to provision log.
 Write-Output "OpenSSL = $version" >> ~/versions.txt
-
