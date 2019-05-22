@@ -1,13 +1,13 @@
 -   Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
     Features: ['DisableTests']
-    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX:PATH={{.InstallDir}} {{.SourceDir}}'
+    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF'
 # Disabled for now
 # -   Template: 'qtci-macos-10.13-x86_64-2'
 #     Compiler: 'Clang'
 #     Features: ['DisableTests']
-#     Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX:PATH={{.InstallDir}} -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.12 {{.SourceDir}}'
+#     Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.12'
 # -   Template: 'qtci-windows-10-x86_64-14'
 #     Compiler: 'MSVC2017'
 #     Features: ['DisableTests']
-#     Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX:PATH=c:{{.InstallDir}} -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_CMAKE_TOOLCHAIN_FILE}} -G NMake Makefiles JOM {{.SourceDir}}'
+#     Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_CMAKE_TOOLCHAIN_FILE}} -G NMake Makefiles JOM'
