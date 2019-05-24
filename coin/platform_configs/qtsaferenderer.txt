@@ -1,5 +1,5 @@
 Template                            Target OS           Target arch Compiler    Features
 ----------------------------------- ------------------- ----------- ----------- -------------------------------------------------------------------------------------
 qtci-windows-10-x86_64-10                                           Mingw73     DeveloperBuild Release OpenGLDynamic BuildExamples
-qtci-windows-10-x86_64-10                                           Mingw73     DeveloperBuild Release OpenGLDynamic Static
-qtci-linux-RHEL-7.4-x86_64                                          GCC         Release NoUseGoldLinker Static
+qtci-windows-10-x86_64-10                                           Mingw73     DeveloperBuild Release OpenGLDynamic DisableTests Static
+qtci-linux-RHEL-7.4-x86_64                                          GCC         Release NoUseGoldLinker DisableTests Static
