@@ -136,6 +136,18 @@ function Add-Path
     $Env:PATH = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 }
 
+function Prepend-Path
+{
+    Param (
+        [string]$Path
+    )
+    Write-Host "Adding $Path to Path"
+
+    $oldPath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
+    [Environment]::SetEnvironmentVariable("Path", "$Path;" + $oldPath, [EnvironmentVariableTarget]::Machine)
+    $Env:PATH = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
+}
+
 function Set-EnvironmentVariable
 {
     Param (
