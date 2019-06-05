@@ -42,10 +42,10 @@ source "${BASH_SOURCE%/*}/InstallAppFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.13_high_sierra/cmake-3.11.3-Darwin-x86_64.tar.gz"
-AltUrl="https://cmake.org/files/v3.11/cmake-3.11.3-Darwin-x86_64.tar.gz"
-SHA1="3d13de8020ce560159fa5cecb669498c48552d96"
-appPrefix="cmake-3.11.3-Darwin-x86_64"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.13_high_sierra/cmake-3.15.0-rc1-Darwin-x86_64.tar.gz"
+AltUrl="https://cmake.org/files/v3.15/cmake-3.15.0-rc1-Darwin-x86_64.tar.gz"
+SHA1="94b6aa5f36fd20811eb6c5c036bb2ec154f2d652"
+appPrefix="cmake-3.15.0-rc1-Darwin-x86_64"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
