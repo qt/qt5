@@ -51,4 +51,4 @@ InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
 
 SetEnvVar "PATH" "/Applications/CMake.app/Contents/bin:\$PATH"
 
-echo "CMake = 3.11.3" >> ~/versions.txt
+echo "CMake = 3.15.0-rc1" >> ~/versions.txt
