@@ -1,5 +1,5 @@
 #!/bin/bash
 
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/linux/install_cmake.sh"
+"$BASEDIR/../common/linux/cmake_linux.sh"
 
