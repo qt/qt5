@@ -44,7 +44,7 @@ Write-Host "Removing old cmake"
 Remove-Item "C:\CMake" -Force -Recurse -ErrorAction SilentlyContinue
 
 Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "F196900509D7CA1947F04084DB8BEAA1DB1F7B59"
+Verify-Checksum $zip "3739F2FF0CAD6EC15475A32D419EBEB0864C4800"
 
 Extract-7Zip $zip C:
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
