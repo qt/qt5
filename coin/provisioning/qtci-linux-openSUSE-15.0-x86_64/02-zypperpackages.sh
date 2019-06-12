@@ -2,7 +2,7 @@
 
 set -ex
 
-sudo zypper -nq install git gcc7 gcc7-c++
+sudo zypper -nq install git gcc7 gcc7-c++ ninja
 sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 \
                                      --slave /usr/bin/g++ g++ /usr/bin/g++-7 \
                                      --slave /usr/bin/cc cc /usr/bin/gcc-7 \
@@ -17,7 +17,8 @@ sudo zypper -nq install bison flex gperf \
         fontconfig-devel \
         sqlite3-devel \
         libxkbcommon-devel \
-        libxkbcommon-x11-devel
+        libxkbcommon-x11-devel \
+        pcre2-devel libpng16-devel
 
 # EGL support
 sudo zypper -nq install Mesa-libEGL-devel Mesa-libGL-devel
