@@ -34,32 +34,33 @@
 
 # This script will install vcpkg
 
-$version = "08ad9d88ecabf9f8111bd4df0ca74723550503cd"
-$sha1 = "43b471aebc2f46bee00c86710d0311ef6fb7bb19"
-$officialUrl = "https://codeload.github.com/liangqi/vcpkg/zip/qt"
-$cachedUrl = "http://ci-files01-hki.ci.local/input/vcpkg/vcpkg-$version.zip"
-$zip = "C:\Utils\vcpkg-$version.zip"
-$installationFolder = "C:\Utils\vcpkg"
-
 Write-Host "Installing vcpkg"
-Download "$officialUrl" "$cachedUrl" "$zip"
-Verify-Checksum "$zip" "$sha1"
-Extract-7Zip "$zip" C:\Utils
-cmd /c mklink /d "$installationFolder" "C:\Utils\vcpkg-qt"
-cd "C:\Utils\vcpkg-qt\"
-cmd /c "`"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\VC\\Auxiliary\\Build\\vcvars64.bat`" && bootstrap-vcpkg.bat"
+
+$version = "qt-snapshot-2019-06-20"
+$officialUrl = "https://codeload.github.com/tronical/vcpkg/zip/$version"
+$zip = "C:\Utils\vcpkg.zip"
+
+Download "$officialUrl" "" "$zip"
+Extract-7Zip "$zip" c:\utils
+Remove-Item $zip
+
+$installationFolder = "c:\utils\vcpkg-$version"
+
+cd $installationFolder
+
+cmd /c bootstrap-vcpkg.bat
 
 if(![System.IO.File]::Exists("$installationFolder\vcpkg.exe")){
     Write-Host "Can't find $installationFolder\vcpkg.exe. Installation probably failed!"
     exit 1
 }
 
-Set-EnvironmentVariable VCPKG_DEFAULT_TRIPLET "x64-windows"
-Set-EnvironmentVariable VCPKG_CMAKE_TOOLCHAIN_FILE "$installationFolder\scripts\buildsystems\vcpkg.cmake"
+Set-EnvironmentVariable VCPKG_DEFAULT_TRIPLET "qt-x64-windows-static"
+Set-EnvironmentVariable VCPKG_ROOT "$installationFolder"
 
-# pcre2-16.dll was used when generating qvulkanfunctions.h
-Add-Path "C:\Utils\vcpkg\installed\x64-windows\bin"
+cmd /c $installationFolder\vcpkg.exe install --triplet qt-x64-windows-static @qt-packages-windows.txt
+cmd /c $installationFolder\vcpkg.exe install --triplet qt-x86-windows-static @qt-packages-windows.txt
 
-cmd /c "`"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\VC\\Auxiliary\\Build\\vcvars64.bat`" && $installationFolder\vcpkg.exe --triplet x64-windows install zlib pcre2 double-conversion harfbuzz openssl"
-
-Remove-Item "$zip"
+Remove-Item -Recurse -Force packages
+Remove-Item -Recurse -Force buildtrees
+Remove-Item -Recurse -Force downloads
