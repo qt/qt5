@@ -5,7 +5,7 @@
 -   Template: 'qtci-linux-openSUSE-15.0-x86_64'
     Compiler: 'ICC_18'
     Features: ['DisableTests']
-    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_C_COMPILER=icc -DCMAKE_CXX_COMPILER=icpc'
+    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DBUILD_SHARED_LIBS=OFF'
 -   Template: 'qtci-macos-10.13-x86_64-2'
     Compiler: 'Clang'
     Features: ['DisableTests']
