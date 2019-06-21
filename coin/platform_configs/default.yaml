@@ -13,4 +13,4 @@
 -   Template: 'qtci-windows-10-x86_64-14'
     Compiler: 'MSVC2017'
     Features: ['DisableTests']
-    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_freetype=OFF'
+    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe'
