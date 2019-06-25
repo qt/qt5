@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -31,33 +31,40 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\windows\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install OpenSSL prebuild version. Currently this pre-build version is only needed for Windows 7.
-# Version was build using Windows 7 x86 and MSVC2010
+# This script installs 7-Zip
 
-# Used build commands below:
-# call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
-# perl Configure no-asm VC-WIN32 --prefix=C:\openssl\ --openssldir=C:\openssl\
-# nmake
-# nmake install
+$version = "20181211"
+$prog = "msys2"
+if (Is64BitWinHost) {
+    $arch = "x86_64"
+    $sha1 = "d689ff74fd060934bd7aaf458a11db67833463c2"
+    $folder = "msys64"
+} else {
+    $arch = "i686"
+    $sha1 = "928f9d1537d1a77dc7f2adab74fb438e7d11a98e"
+    $folder = "msys32"
+}
+$package = $prog + "-base-" + $arch + "-" + $version + ".tar.xz"
 
 
-$version = "1.1.1b"
-$zip = Get-DownloadLocation ("openssl-$version.7z")
-$sha1 = "7afba53ab984cecb54a1915c135cbb2a20c6b576"
-$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86.7z"
+$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package"
+$url_official = "http://repo.msys2.org/distrib/$arch/$package"
+$PackagePath = "C:\Windows\Temp\$package"
+$TargetLocation = "C:\Utils"
 
-Download $url $url $zip
-Verify-Checksum $zip $sha1
-$installFolder = "C:\openssl"
 
-Extract-7Zip $zip "C:\"
-Remove-Item -Path $zip
+Download $url_official $url_cache $PackagePath
+Verify-Checksum $PackagePath $sha1
+Extract-tar_gz $PackagePath $TargetLocation
+$msys = "$TargetLocation\$folder\msys2_shell.cmd"
 
-Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\openssl.cnf"
-Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"
-Set-EnvironmentVariable "OPENSSL_LIB_x86" "$installFolder\lib"
-Prepend-Path "$installFolder\bin"
+# install perl
+Run-Executable "$msys" "`"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
+Run-Executable "$msys" "`"-l`" `"-c`" `"cpan -i Text::Template Test::More`""
 
-Write-Output "OpenSSL = $version" >> ~/versions.txt
+Write-Host "Cleaning $PackagePath.."
+Remove-Item -Recurse -Force -Path "$PackagePath"
+
+Write-Output "7-Zip = $version" >> ~\versions.txt

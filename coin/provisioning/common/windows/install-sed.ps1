@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -31,33 +31,30 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\windows\helpers.ps1"
+. "$PSScriptRoot\helpers.ps1"
 
-# This script will install OpenSSL prebuild version. Currently this pre-build version is only needed for Windows 7.
-# Version was build using Windows 7 x86 and MSVC2010
+# This script installs sed and it's dependencies
 
-# Used build commands below:
-# call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
-# perl Configure no-asm VC-WIN32 --prefix=C:\openssl\ --openssldir=C:\openssl\
-# nmake
-# nmake install
+$prog = "sed"
+$version = "4.2.1"
+$sha1 = "dfd3d1dae27a24784d7ab40eb074196509fa48fe"
+$dep_sha1 = "f7edbd7152d8720c95d46dd128b87b8ba48a5d6f"
+$pkg = "$prog-$version-bin.zip"
+$dep_pkg = "$prog-$version-dep.zip"
+$cached_url = "http://ci-files01-hki.intra.qt.io/input/windows/gnuwin32/$pkg"
+$dep_cached_url = "http://ci-files01-hki.intra.qt.io/input/windows/gnuwin32/$dep_pkg"
+$install_location = "c:\Utils\$prog"
 
+$tmp_location = "c:\users\qt\downloads"
+Download $cached_url $cached_url "$tmp_location\$pkg"
+Verify-Checksum "$tmp_location\$pkg" $sha1 sha1
+Download $dep_cached_url $dep_cached_url "$tmp_location\$dep_pkg"
+Verify-Checksum "$tmp_location\$dep_pkg" $dep_sha1 sha1
 
-$version = "1.1.1b"
-$zip = Get-DownloadLocation ("openssl-$version.7z")
-$sha1 = "7afba53ab984cecb54a1915c135cbb2a20c6b576"
-$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86.7z"
+Extract-7Zip "$tmp_location\$pkg" $install_location
+Extract-7Zip "$tmp_location\$dep_pkg" $install_location
+Remove "$tmp_location\$pkg"
+Remove "$tmp_location\$dep_pkg"
 
-Download $url $url $zip
-Verify-Checksum $zip $sha1
-$installFolder = "C:\openssl"
-
-Extract-7Zip $zip "C:\"
-Remove-Item -Path $zip
-
-Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\openssl.cnf"
-Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"
-Set-EnvironmentVariable "OPENSSL_LIB_x86" "$installFolder\lib"
-Prepend-Path "$installFolder\bin"
-
-Write-Output "OpenSSL = $version" >> ~/versions.txt
+Prepend-Path "$install_location\bin"
+Write-Output "sed = $version" >> ~/versions.txt
