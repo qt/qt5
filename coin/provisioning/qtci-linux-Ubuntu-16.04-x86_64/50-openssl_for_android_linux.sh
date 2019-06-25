@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
@@ -33,41 +33,7 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
 set -ex
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-exports_file="/tmp/export.sh"
-# source previously made environmental variables.
-if uname -a |grep -q "Ubuntu"; then
-    # shellcheck disable=SC1090
-    grep -e "^export" "$HOME/.profile" > $exports_file && source $exports_file
-    rm -rf "$exports_file"
-else
-    # shellcheck disable=SC1090
-    grep -e "^export" "$HOME/.bashrc" > $exports_file && source $exports_file
-    rm -rf "$exports_file"
-fi
-
-version="1.1.1b"
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
-sha="e9710abf5e95c48ebf47991b10cbb48c09dae102"
-opensslHome="${HOME}/openssl/android/openssl-${version}"
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
-mkdir -p "${HOME}/openssl/android/"
-tar -xzf "$targetFile" -C "${HOME}/openssl/android/"
-
-TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
-cd "$opensslHome"
-PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
-PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
-
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
-
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+# shellcheck source=../common/linux/openssl_for_android_linux.sh
+source "${BASH_SOURCE%/*}/../common/linux/openssl_for_android_linux.sh"
