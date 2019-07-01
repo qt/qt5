@@ -9,4 +9,4 @@
     Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.12'
 -   Template: 'qtci-windows-10-x86_64-14'
     Compiler: 'MSVC2017'
-    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe'
+    Configure arguments: '-DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake'
