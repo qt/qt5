@@ -264,7 +264,7 @@
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = 5.12
-	status = ignore
+	status = addon
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
