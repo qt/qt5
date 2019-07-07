@@ -312,3 +312,9 @@
 	url = ../qtlottie.git
 	branch = dev
 	status = preview
+[submodule "qtquicktimeline"]
+	depends = qtbase qtdeclarative
+	path = qtquicktimeline
+	url = ../qtquicktimeline
+	branch = dev
+	status = preview
