@@ -216,7 +216,7 @@
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = dev
-	status = addon
+	status = ignore
 	priority = 10
 [submodule "qtcanvas3d"]
 	depends = qtdeclarative
@@ -230,7 +230,7 @@
 	path = qtwebview
 	url = ../qtwebview.git
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtquickcontrols2"]
 	depends = qtgraphicaleffects
 	recommends = qtimageformats
