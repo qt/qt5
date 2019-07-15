@@ -18,15 +18,25 @@ function Run-Conan-Install
         [string]$Compiler,
         [string]$CompilerVersion,
         [string]$CompilerRuntime,
-        [string]$CompilerLibcxx
+        [string]$CompilerLibcxx,
+        [string]$CompilerException,
+        [string]$CompilerThreads
     )
 
     if ($CompilerRuntime) {
-        $extraArgs = "-s compiler.runtime=$($CompilerRuntime)"
+        $extraArgs += " -s compiler.runtime=$CompilerRuntime"
     }
 
     if ($CompilerLibcxx) {
-        $extraArgs = "-s compiler.libcxx=$($CompilerLibcxx)"
+        $extraArgs += " -s compiler.libcxx=$CompilerLibcxx"
+    }
+
+    if ($CompilerException) {
+        $extraArgs += " -s compiler.exception=$CompilerException"
+    }
+
+    if ($CompilerThreads) {
+        $extraArgs += " -s compiler.threads=$CompilerThreads"
     }
 
     $manifestsDir = "$PSScriptRoot\conan_manifests"
