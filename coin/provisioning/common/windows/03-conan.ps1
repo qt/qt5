@@ -35,7 +35,7 @@ function Run-Conan-Install
     ForEach-Object {
         $conanfile = $_.FullName
         $outpwd = "C:\Utils\conanbuildinfos\$($BuildinfoDir)\$($_.BaseName)"
-        New-Item $outpwd -Type directory -Force
+        New-Item $outpwd -Type directory -Force | Out-Null
 
         for ($i = 1; $i -le 5; $i++) {
             try {
