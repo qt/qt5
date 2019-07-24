@@ -33,8 +33,6 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-# This script installs 7-Zip
-
 $version = "20181211"
 $prog = "msys2"
 if (Is64BitWinHost) {
@@ -58,13 +56,17 @@ $TargetLocation = "C:\Utils"
 Download $url_official $url_cache $PackagePath
 Verify-Checksum $PackagePath $sha1
 Extract-tar_gz $PackagePath $TargetLocation
-$msys = "$TargetLocation\$folder\msys2_shell.cmd"
+$bash = "$TargetLocation\$folder\usr\bin\bash"
 
 # install perl
-Run-Executable "$msys" "`"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
-Run-Executable "$msys" "`"-l`" `"-c`" `"cpan -i Text::Template Test::More`""
+Run-Executable "$bash" "`"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
+Run-Executable "$bash" "`"-l`" `"-c`" `"yes | cpan -i Text::Template Test::More`""
 
 Write-Host "Cleaning $PackagePath.."
 Remove-Item -Recurse -Force -Path "$PackagePath"
 
-Write-Output "7-Zip = $version" >> ~\versions.txt
+# pacman-key launches gpg-agent and dirmngr in the background, see https://github.com/Alexpux/MSYS2-pacman/issues/56
+Stop-Process -Name "gpg-agent" -ErrorAction Ignore
+Stop-Process -Name "dirmngr" -ErrorAction Ignore
+
+Write-Output "MSYS2 = $version" >> ~\versions.txt
