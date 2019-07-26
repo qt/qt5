@@ -1,6 +1,6 @@
 -   Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
-    Configure arguments: '-DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON'
+    Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON'
 -   Template: 'qtci-linux-openSUSE-15.0-x86_64'
     Compiler: 'ICC_18'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF'
