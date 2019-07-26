@@ -1,0 +1,7 @@
+1563296424
+FindZLIB.cmake: 0ec128c2f97a3a6d7e800d3204e5c94f
+LICENSE: 1ac8330e79e050867144e174d80880f7
+conanfile.py: c7aba1a732c28bb9851cb50acf3f7a4d
+export_source/CMakeLists.txt: b45a8f19ed120e922c1cb720c0e4a7c7
+export_source/CMakeLists_minizip.txt: 7b2c2a9ab51d0ba37b5ca35da21579b7
+export_source/minizip.patch: dc8ffe80d334f8e5b1bb967593fe2d4a
