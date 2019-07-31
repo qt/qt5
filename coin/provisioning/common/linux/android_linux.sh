@@ -80,14 +80,22 @@ else
     sudo chown -R qt:users "$targetFolder"
 fi
 
+# Run the following command under `eval` or `sh -c` so that the shell properly splits it
+sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
+
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 # shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
     proxy_host=$(echo "$proxy" | cut -d'/' -f3 | cut -d':' -f1)
     proxy_port=$(echo "$proxy" | cut -d':' -f3)
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+    echo "y" | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+                   --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port"  \
+                   "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
+        | eval $sdkmanager_no_progress_bar_cmd
 else
-    echo "y" |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+    echo "y" | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+                   "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
+        | eval $sdkmanager_no_progress_bar_cmd
 fi
 
 echo "Checking the contents of Android SDK..."
@@ -106,8 +114,11 @@ echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
 echo "Android NDK = $ndkVersion" >> ~/versions.txt
 
 cd "$sdkTargetFolder/tools/bin"
-./sdkmanager --install "emulator"
-echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"
+./sdkmanager --install "emulator"  \
+    | eval $sdkmanager_no_progress_bar_cmd
+echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"  \
+    | eval $sdkmanager_no_progress_bar_cmd
+
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
