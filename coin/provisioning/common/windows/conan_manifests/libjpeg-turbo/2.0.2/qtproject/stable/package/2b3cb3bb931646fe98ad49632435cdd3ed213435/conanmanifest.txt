@@ -1,0 +1,12 @@
+1563319076
+conaninfo.txt: f7407f0b37a177dbd8da281e911fae13
+include/jconfig.h: 4afbe7884ea1911cce5eb488828a2441
+include/jerror.h: 9b7898fe417de269b8be88b10df908b0
+include/jmorecfg.h: 7873b0a4457d21a746e23c16fc16127d
+include/jpeglib.h: 49b0829e2b84fcd4a0cee359199499cb
+include/turbojpeg.h: b5b3a4a233ea12d2041ad1d1c971e6a0
+lib/libjpeg.a: 76c0df72f772b8437d4cbae90033e9e1
+lib/libturbojpeg.a: 5c6f3ef0620d46137252e6c3a74bd235
+lib/pkgconfig/libjpeg.pc: e8374a56760f12ee4e809879b1675b88
+lib/pkgconfig/libturbojpeg.pc: e9877f5ec875796a6063943cc96cfb3a
+licenses/LICENSE.md: 2a423a921d0f68082c80ccc7ad808ef2
