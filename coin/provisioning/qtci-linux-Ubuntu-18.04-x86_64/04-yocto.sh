@@ -113,3 +113,9 @@ fi
 echo "Yocto ARMv7 toolchain = $versionARM" >> ~/versions.txt
 echo "Yocto ARM64 toolchain = $versionARM64" >> ~/versions.txt
 echo "Yocto MIPS64 toolchain = $versionMIPS64" >> ~/versions.txt
+
+# List qt user in qemu toolchain sysroots
+sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/etc/passwd"
+sudo sh -c "grep ^qt /etc/group >> /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/etc/group"
+sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/passwd"
+sudo sh -c "grep ^qt /etc/group >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/group"

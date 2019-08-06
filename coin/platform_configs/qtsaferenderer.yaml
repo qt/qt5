@@ -1,0 +1,13 @@
+-
+    Template: 'qtci-windows-10-x86_64-14'
+    Compiler: 'Mingw73'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -nomake tests -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++'
+-
+    Template: 'qtci-windows-10-x86_64-14'
+    Compiler: 'Mingw73'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -static -nomake tests -nomake examples -no-icu -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -platform win32-g++'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Compiler: 'GCC'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -developer-build -static -nomake tests -nomake examples -no-use-gold-linker'

@@ -1,3 +1,0 @@
-Template                          Target OS           Target arch Compiler    Features       Configure arguments
---------------------------------- ------------------- ----------- ----------- -------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-qtci-windows-10-x86_64-14         WinRT_10            x86_64      MSVC2015                   -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -developer-build -static -no-icu -release -force-debug-info -nomake examples -nomake tests -platform win32-msvc2015 -xplatform winrt-x64-msvc2015
