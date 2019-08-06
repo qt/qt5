@@ -35,5 +35,5 @@
 
 set -ex
 
-# shellcheck source=../common/linux/emsdk.sh
-source "${BASH_SOURCE%/*}/../common/linux/emsdk.sh"
+# shellcheck source=../common/unix/emsdk.sh
+source "${BASH_SOURCE%/*}/../common/unix/emsdk.sh"

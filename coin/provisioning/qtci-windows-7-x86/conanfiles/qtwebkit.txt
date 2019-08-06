@@ -1,8 +1,9 @@
 [requires]
-icu/57.1@annulen/stable
-libxml2/2.9.4@annulen/stable
-libxslt/1.1.29@annulen/stable
-zlib/1.2.8@annulen/stable
+icu/64.2@qtproject/stable
+libxml2/2.9.9@qtproject/stable
+libxslt/1.1.33@qtproject/stable
+libjpeg-turbo/2.0.2@qtproject/stable
+zlib/1.2.11@qtproject/stable
 
 [generators]
 cmake
@@ -10,13 +11,22 @@ txt
 
 [options]
 icu:shared=True
+icu:data_packaging=library
+
 libxml2:shared=True
+libxml2:iconv=False
+libxml2:icu=True
+libxml2:zlib=False
+
 libxslt:shared=True
+
+libjpeg-turbo:shared=False
+
 zlib:shared=False
 
 [imports]
-lib, icudt57.dll -> ./bin
-lib, icuin57.dll -> ./bin
-lib, icuuc57.dll -> ./bin
+lib, icudt64.dll -> ./bin
+lib, icuin64.dll -> ./bin
+lib, icuuc64.dll -> ./bin
 bin, libxml2-2.dll -> ./bin
 bin, libxslt-1.dll -> ./bin
