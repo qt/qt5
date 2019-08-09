@@ -216,7 +216,7 @@
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 5.13
-	status = ignore
+	status = addon
 	priority = 10
 [submodule "qtcanvas3d"]
 	depends = qtdeclarative
@@ -265,7 +265,7 @@
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = 5.13
-	status = ignore
+	status = addon
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
