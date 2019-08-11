@@ -138,7 +138,7 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = wip/qt6
-	status = ignore
+	status = addon
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
