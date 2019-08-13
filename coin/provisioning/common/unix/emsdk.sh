@@ -89,7 +89,7 @@ COMPILER_ENGINE = NODE_JS
 JS_ENGINES = [NODE_JS]
 EOM
 
-SetEnvVar "PATH" "\"$targetFolder/emscripten-llvm-e$version/:$node_js:$targetFolder/emscripten-$version:\$PATH\""
+SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-llvm-e$version/:$node_js:$targetFolder/emscripten-$version\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
 SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
 
