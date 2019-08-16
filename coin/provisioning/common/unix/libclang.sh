@@ -47,18 +47,23 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-libclang_version=6.0
+libclang_version=10.0
 
 if uname -a |grep -q Darwin; then
     version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-mac.7z"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-mac.7z"
-    sha1="0af8ab8c1174faf4b721d079587190fc32ea8364"
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-mac.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-mac.7z"
+    sha1="6e019c428511e74c5d46d0ddca79d8e804b67f8a"
+elif test -f /etc/redhat-release; then
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
+    sha1="16fcb99c139ee613ccc46683fa842a5187457f35"
 else
     version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-linux-Rhel7.2-gcc5.3-x86_64.7z"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-linux-Rhel7.2-gcc5.3-x86_64.7z"
-    sha1="ef59b699f4fcce2e45108b3ff04cc7471c1c4abe"
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
+    sha1="08f352d411e4b47c2a259c3b120d7cb2db01e41d"
 fi
 
 zip="/tmp/libclang.7z"

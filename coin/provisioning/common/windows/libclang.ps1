@@ -1,11 +1,11 @@
 param(
     [Int32]$archVer=32,
-    [string]$toolchain="vs2015",
+    [string]$toolchain="vs2019",
     [bool]$setDefault=$true
 )
 . "$PSScriptRoot\helpers.ps1"
 
-$libclang_version="6.0"
+$libclang_version="10.0"
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
@@ -25,8 +25,8 @@ function install() {
 
     $zip = "c:\users\qt\downloads\libclang.7z"
 
-    $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
-    $script:CachedUrl = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-windows-$toolchain`_$archVer.7z"
+    $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_$libclang_version-based-windows-$toolchain`_$archVer.7z"
+    $script:CachedUrl = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-based-windows-$toolchain`_$archVer.7z"
 
     Download $OfficialUrl $CachedUrl $zip
     Verify-Checksum $zip $sha1
@@ -37,44 +37,34 @@ function install() {
 
 $toolchainSuffix = ""
 
-if ( $toolchain -eq "vs2015" ) {
+if ( $toolchain -eq "vs2019" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "a399af949271e6d3bfc578ea2c17ff1d6c6318b9"
-        $destination = $baseDestination + "-64"
-
-        install $sha1 $destination
+        $sha1 = "6e1b3e6d38803a3bf088e521f4f4feb1ca44bac3"
     }
-
-    $archVer=32
-    $sha1 = "aa3f68f1cfa87780a4631a98ce883d3d9cb94330"
-    $destination = $baseDestination + "-32"
-
-    install $sha1 $destination
+    else {
+        $sha1 = "36fcdc3155eef3636d99ed591f12e73d7a9a2e0c"
+    }
     $toolchainSuffix = "msvc"
 }
 
 if ( $toolchain -eq "mingw" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "b382502f82d1cfa7d3cc3016d909d37edc19c22c"
-        $destination = $baseDestination + "-64"
-
-        install $sha1 $destination
+        $sha1 = "34daf2324d190de49f8e4005afeb39a7d70c5842"
     }
-
-    $archVer=32
-    $sha1 = "cbc68e0f93f4cb0ed7084a045b7c07a1980a2a44"
-    $destination = $baseDestination + "-32"
-
-    install $sha1 $destination
+    else {
+        $sha1 = "3d7c809ab12c9293df8ffd9343cee68f184c8612"
+    }
     $toolchainSuffix = "mingw"
 }
+
+install $sha1 $baseDestination-$archVer
 
 if ( $setDefault ) {
     Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
 
-if ( $libclang_version -eq "60" ) {
+if ( $libclang_version -eq "100" ) {
     # This is a hacked static build of libclang which requires special
     # handling on the qdoc side.
     Set-EnvironmentVariable "QDOC_USE_STATIC_LIBCLANG" "1"
