@@ -318,3 +318,9 @@
 	url = ../qtquicktimeline
 	branch = dev
 	status = preview
+[submodule "qtquick3d"]
+	depends = qtbase qtdeclarative
+	path = qtquick3d
+	url = ../qtquick3d.git
+	branch = dev
+	status = preview
