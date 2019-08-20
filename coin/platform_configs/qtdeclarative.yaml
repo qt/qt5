@@ -1,0 +1,24 @@
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Target os: 'QEMU'
+    Target arch: 'armv7'
+    Compiler: 'GCC'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -sysroot /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/usr/bin/mysql_config -psql_config /dev/null -tslib'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Target os: 'QEMU'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Target os: 'QEMU'
+    Target arch: 'armv7'
+    Compiler: 'GCC'
+    Configure arguments: '-opensource -confirm-license -R . -developer-build -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/usr/bin/mysql_config -no-xcb -nomake examples -nomake tests -openssl -prefix /home/qt/work/install -psql_config /dev/null -sysroot /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi -tslib -verbose'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Target os: 'QEMU'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake examples -nomake tests -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-xcb'
