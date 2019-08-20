@@ -51,7 +51,7 @@ $sha1 = "e9710abf5e95c48ebf47991b10cbb48c09dae102"
 $destination = "C:\Utils\openssl-android-master"
 
 # msys unix style paths
-$ndkPath = "/c/Utils/Android/android-ndk-r19c"
+$ndkPath = "/c/Utils/Android/android-ndk-r20"
 $openssl_path = "/c/Utils/openssl-android-master"
 $cc_path = "$ndkPath/toolchains/llvm/prebuilt/windows-x86_64/bin"
 Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
