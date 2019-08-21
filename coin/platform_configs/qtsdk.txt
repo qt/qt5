@@ -1,4 +1,0 @@
-Template                    Target OS           Target arch Compiler    Features        Configure arguments
---------------------------- ------------------- ----------- ----------- --------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------
-qtci-windows-10-x86-3                                       MSVC2017                    -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests
-qtci-linux-RHEL-6.6-x86_64                                  GCC                         -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -force-debug-info -nomake examples -nomake tests
