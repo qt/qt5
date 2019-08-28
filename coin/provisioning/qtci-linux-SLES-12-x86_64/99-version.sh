@@ -33,16 +33,16 @@
 ##
 #############################################################################
 
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+
+# Storage installed RPM packages information
+
 set -ex
 
-echo "Disable Network Time Protocol (NTP)"
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed RPM packages *****" >> ~/versions.txt
+rpm -q -a | sort >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
 
-if uname -a |grep -q "Ubuntu"; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release | grep "PRETTY_NAME" | grep -q "Leap 15"; then
-    (sudo systemctl stop chronyd && sudo systemctl disable chronyd)
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    (systemctl &>/dev/null && sudo systemctl disable ntpd) || sudo /sbin/chkconfig ntpd off
-fi
+"$(dirname "$0")/../common/linux/version.sh"

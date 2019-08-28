@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,14 +35,37 @@
 
 set -ex
 
-echo "Disable Network Time Protocol (NTP)"
+BASEDIR=$(dirname "$0")
+# shellcheck source=../common/shared/network_test_server_ip.txt
+source "$BASEDIR/../common/shared/network_test_server_ip.txt"
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
-if uname -a |grep -q "Ubuntu"; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release | grep "PRETTY_NAME" | grep -q "Leap 15"; then
-    (sudo systemctl stop chronyd && sudo systemctl disable chronyd)
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    (systemctl &>/dev/null && sudo systemctl disable ntpd) || sudo /sbin/chkconfig ntpd off
+echo "Set timezone to UTC."
+sudo timedatectl set-timezone Etc/UTC
+echo "Timeout for blanking the screen (0 = never)"
+gsettings set org.gnome.desktop.session idle-delay 0
+echo "Prevents screen lock when screesaver goes active."
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+
+sudo sed -i 's|GRUB_TIMEOUT=8|GRUB_TIMEOUT=0|g' /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
+echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+echo "Set DISPLAY"
+echo 'export DISPLAY=":0"' >> ~/.bashrc
+
+sudo systemctl stop packagekit
+sudo systemctl disable packagekit
+while sudo fuser /usr/lib/packagekitd >/dev/null 2>&1 ; do
+    echo "Waiting for PackageKit to finish..."
+    sleep 5
+done
+
+# shellcheck disable=SC2031
+if [ "$http_proxy" != "" ]; then
+    sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy
+    sudo sed -i "s|HTTP_PROXY=\".*\"|HTTP_PROXY=\"$proxy\"|" /etc/sysconfig/proxy
 fi

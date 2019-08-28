@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,16 +33,27 @@
 ##
 #############################################################################
 
+# provides: python development libraries
+# version: provided by default Linux distribution repository
+# needed to build pyside
+
 set -ex
 
-echo "Disable Network Time Protocol (NTP)"
+sudo zypper -nq install python-devel
 
-if uname -a |grep -q "Ubuntu"; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release | grep "PRETTY_NAME" | grep -q "Leap 15"; then
-    (sudo systemctl stop chronyd && sudo systemctl disable chronyd)
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    (systemctl &>/dev/null && sudo systemctl disable ntpd) || sudo /sbin/chkconfig ntpd off
-fi
+wget -q https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
+sed -i 's/12.3/12.4/g' build_python3.sh
+bash build_python3.sh
+
+export
+python3 --version
+
+pip3 install --user wheel
+pip3 install --user virtualenv
+
+# Install all needed packages in a special wheel cache directory
+pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
+
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
