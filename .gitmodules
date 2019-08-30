@@ -7,8 +7,8 @@
 	depends = qtbase
 	path = qtsvg
 	url = ../qtsvg.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
 	recommends = qtsvg
