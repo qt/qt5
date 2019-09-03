@@ -94,16 +94,16 @@
     Template: 'qtci-macos-10.13-x86_64-2'
     Compiler: 'Clang'
     Features: ['Packaging']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -xplatform macx-clang -separate-debug-info -sdk macosx -device-option QMAKE_APPLE_DEVICE_ARCHS=x86_64 -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -separate-debug-info -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
     Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -xplatform macx-clang -separate-debug-info -sdk macosx -device-option QMAKE_APPLE_DEVICE_ARCHS=x86_64 -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -separate-debug-info -nomake tests -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.12-x86_64-9'
     Compiler: 'Clang'
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -qtnamespace TestNamespace -nomake tests -nomake examples -no-pch -no-framework -xplatform macx-clang -sdk macosx -device-option QMAKE_APPLE_DEVICE_ARCHS=x86_64 -I/usr/local/opt/openssl/include'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'IOS_ANY'
