@@ -222,3 +222,23 @@ function Remove {
         }
     }
 }
+
+function DisableSchedulerTask {
+
+    Param (
+        [string]$Task = $(BadParam("a task"))
+    )
+
+    Write-Host "Disabling $Task from Task Scheduler"
+    SCHTASKS /Change /TN "Microsoft\Windows\$Task" /DISABLE
+}
+
+function DeleteSchedulerTask {
+
+   Param (
+        [string]$Task = $(BadParam("a task"))
+    )
+
+    Write-Host "Disabling $Task from Task Scheduler"
+    SCHTASKS /DELETE /TN "Microsoft\Windows\$Task" /F
+}
