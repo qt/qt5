@@ -14,8 +14,8 @@
 	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
 	path = qtactiveqt
