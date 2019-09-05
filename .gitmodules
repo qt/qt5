@@ -143,8 +143,8 @@
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
@@ -290,8 +290,8 @@
 	depends = qtbase
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	recommends = qtdeclarative
