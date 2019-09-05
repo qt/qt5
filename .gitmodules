@@ -149,8 +149,8 @@
 	depends = qtdeclarative
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtquickcontrols"]
 	depends = qtdeclarative
 	recommends = qtgraphicaleffects
