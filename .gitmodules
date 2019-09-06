@@ -27,8 +27,8 @@
 	recommends = qttools
 	path = qtscript
 	url = ../qtscript.git
-	branch = wip/cmake
-	status = essential
+	branch = dev
+	status = ignore
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
