@@ -41,8 +41,8 @@
 	recommends = qtdeclarative qtactiveqt
 	path = qttools
 	url = ../qttools.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = essential
 [submodule "qtxmlpatterns"]
 	depends = qtbase
 	recommends = qtdeclarative
