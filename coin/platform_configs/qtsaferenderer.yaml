@@ -11,4 +11,4 @@
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-fontconfig -qt-freetype -qt-libpng'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-icu -no-fontconfig -qt-freetype -no-opengl -qpa offscreen -no-xcb -qt-libpng -no-vulkan'
