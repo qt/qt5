@@ -39,22 +39,20 @@
 # and they sometimes create problems to the build process and telegraf.
 
 
-# Must have this variable set in the environment
-[ x"$PROVISION_DIR" = x ]  &&  exit 38
+set -e
+
+PROVISIONING_DIR="$(dirname "$0")/../../"
+. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
 
 echo "Current limits are:"
 ulimit -a
 launchctl limit
 
-sudo cp $PROVISION_DIR/common/macos/limit.maxfiles.plist /Library/LaunchDaemons/
-sudo cp $PROVISION_DIR/common/macos/limit.maxproc.plist  /Library/LaunchDaemons/
-
-sudo chown root:wheel /Library/LaunchDaemons/limit.maxfiles.plist
-sudo chown root:wheel /Library/LaunchDaemons/limit.maxproc.plist
-
-sudo chmod 644 /Library/LaunchDaemons/limit.maxfiles.plist
-sudo chmod 644 /Library/LaunchDaemons/limit.maxproc.plist
+$CMD_INSTALL -m 644 -o root -g wheel  \
+    $PROVISIONING_DIR/common/macos/limit.maxfiles.plist  \
+    $PROVISIONING_DIR/common/macos/limit.maxproc.plist   \
+    /Library/LaunchDaemons/
 
 # Activate the new limits immediately (not for the current session though)
 sudo launchctl load -w /Library/LaunchDaemons/limit.maxfiles.plist
