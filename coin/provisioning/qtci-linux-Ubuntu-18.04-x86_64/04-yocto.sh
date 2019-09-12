@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -44,14 +44,14 @@ source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 echo "Installing Yocto toolchain for 32-bit b2qt ARMV7..."
 
-versionARM="2.5.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarmv7-409ebc3.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/sumo/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/sumo/$package"
-SHA1="a03b4eb492b16c6e60cf83c0718c27e9cfa6d522"
+versionARM="2.6.1"
+package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarmv7-9e1a27d.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/thud/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/thud/$package"
+SHA1="7c76230ef1bb58bf907daa81117d81b48534802c"
 yoctoInstaller="/tmp/yocto-toolchain-ARMv7.sh"
 yoctoLocationARMv7="/opt/yocto-armv7"
-sysrootARMv7="sysroots/armv7ahf-neon-poky-linux-gnueabi"
+sysrootARMv7="sysroots/armv7at2hf-neon-poky-linux-gnueabi"
 crosscompileARMv7="sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-"
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$yoctoInstaller"
@@ -62,11 +62,11 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt ARM64..."
 
-versionARM64="2.5.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarm64-409ebc3.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/sumo/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/sumo/$package"
-SHA1="3dadf1135d00f7cb5586b605b1f7344ae828c9cd"
+versionARM64="2.6.1"
+package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarm64-9e1a27d.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/thud/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/thud/$package"
+SHA1="598c24b8bcf289bb67a14aea51567c0d00bf5187"
 yoctoInstaller="/tmp/yocto-toolchain-ARM64.sh"
 yoctoLocationARM64="/opt/yocto-arm64"
 sysrootARM64="sysroots/aarch64-poky-linux"
@@ -80,11 +80,11 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt MIPS64..."
 
-versionMIPS64="2.5.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemumips64-409ebc3.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/sumo/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/sumo/$package"
-SHA1="dd03b496707ca8888b339a667e021722a8c2fdb4"
+versionMIPS64="2.6.1"
+package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemumips64-9e1a27d.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/thud/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/thud/$package"
+SHA1="8cea8504463ab96322e92f3c6e9e922f394ae3c7"
 yoctoInstaller="/tmp/yocto-toolchain-mips64.sh"
 yoctoLocationMIPS64="/opt/yocto-mips64"
 sysrootMIPS64="sysroots/mips64-poky-linux"
@@ -115,7 +115,7 @@ echo "Yocto ARM64 toolchain = $versionARM64" >> ~/versions.txt
 echo "Yocto MIPS64 toolchain = $versionMIPS64" >> ~/versions.txt
 
 # List qt user in qemu toolchain sysroots
-sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/etc/passwd"
-sudo sh -c "grep ^qt /etc/group >> /opt/yocto-armv7/sysroots/armv7ahf-neon-poky-linux-gnueabi/etc/group"
+sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/etc/passwd"
+sudo sh -c "grep ^qt /etc/group >> /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/etc/group"
 sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/passwd"
 sudo sh -c "grep ^qt /etc/group >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/group"

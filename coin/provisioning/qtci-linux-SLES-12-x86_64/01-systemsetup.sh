@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,22 +33,37 @@
 ##
 #############################################################################
 
-# Install libiodbc
-
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+BASEDIR=$(dirname "$0")
+# shellcheck source=../common/shared/network_test_server_ip.txt
+source "$BASEDIR/../common/shared/network_test_server_ip.txt"
+# shellcheck source=../common/unix/check_and_set_proxy.sh
+source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 
-brew update
-brew install ${BASH_SOURCE%/*}/libiodbc.rb
+echo "Set timezone to UTC."
+sudo timedatectl set-timezone Etc/UTC
+echo "Timeout for blanking the screen (0 = never)"
+gsettings set org.gnome.desktop.session idle-delay 0
+echo "Prevents screen lock when screesaver goes active."
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
 
-# CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
+sudo sed -i 's|GRUB_TIMEOUT=8|GRUB_TIMEOUT=0|g' /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
-read -r -a arr <<< $(brew list --versions libiodbc)
-version=${arr[1]}
+echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
+echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
+echo "Set DISPLAY"
+echo 'export DISPLAY=":0"' >> ~/.bashrc
 
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
+while sudo fuser /usr/lib/packagekitd >/dev/null 2>&1 ; do
+    echo "Waiting for PackageKit to finish..."
+    sleep 0.5
+done
 
-echo "libiodbc = $version" >> ~/versions.txt
+# shellcheck disable=SC2031
+if [ "$http_proxy" != "" ]; then
+    sudo sed -i 's/PROXY_ENABLED=\"no\"/PROXY_ENABLED=\"yes\"/' /etc/sysconfig/proxy
+    sudo sed -i "s|HTTP_PROXY=\".*\"|HTTP_PROXY=\"$proxy\"|" /etc/sysconfig/proxy
+fi
