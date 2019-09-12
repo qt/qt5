@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,22 +33,27 @@
 ##
 #############################################################################
 
-# Install libiodbc
+# provides: python development libraries
+# version: provided by default Linux distribution repository
+# needed to build pyside
 
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+sudo zypper -nq install python-devel
 
-brew update
-brew install ${BASH_SOURCE%/*}/libiodbc.rb
+wget -q https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
+sed -i 's/12.3/12.4/g' build_python3.sh
+bash build_python3.sh
 
-# CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
+export
+python3 --version
 
-read -r -a arr <<< $(brew list --versions libiodbc)
-version=${arr[1]}
+pip3 install --user wheel
+pip3 install --user virtualenv
 
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
+# Install all needed packages in a special wheel cache directory
+pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
-echo "libiodbc = $version" >> ~/versions.txt
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"

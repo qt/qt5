@@ -33,22 +33,16 @@
 ##
 #############################################################################
 
-# Install libiodbc
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
+
+# Storage installed RPM packages information
 
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed RPM packages *****" >> ~/versions.txt
+rpm -q -a | sort >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
 
-brew update
-brew install ${BASH_SOURCE%/*}/libiodbc.rb
-
-# CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
-
-read -r -a arr <<< $(brew list --versions libiodbc)
-version=${arr[1]}
-
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
-
-echo "libiodbc = $version" >> ~/versions.txt
+"$(dirname "$0")/../common/linux/version.sh"

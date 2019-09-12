@@ -33,22 +33,7 @@
 ##
 #############################################################################
 
-# Install libiodbc
-
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-
-brew update
-brew install ${BASH_SOURCE%/*}/libiodbc.rb
-
-# CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
-
-read -r -a arr <<< $(brew list --versions libiodbc)
-version=${arr[1]}
-
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
-
-echo "libiodbc = $version" >> ~/versions.txt
+# shellcheck source=../common/unix/emsdk.sh
+source "${BASH_SOURCE%/*}/../common/unix/emsdk.sh"

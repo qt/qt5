@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,22 +32,8 @@
 ##
 #############################################################################
 
-# Install libiodbc
-
 set -ex
 
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# Having proxy set while running autotests makes them fail
+sudo sed -i 's/PROXY_ENABLED=\"yes\"/PROXY_ENABLED=\"no\"/' /etc/sysconfig/proxy
 
-brew update
-brew install ${BASH_SOURCE%/*}/libiodbc.rb
-
-# CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
-
-read -r -a arr <<< $(brew list --versions libiodbc)
-version=${arr[1]}
-
-SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"
-SetEnvVar "LIBRARY_PATH" "/usr/local/Cellar/libiodbc/$version/lib${LIBRARY_PATH:+:}${LIBRARY_PATH}"
-
-echo "libiodbc = $version" >> ~/versions.txt
