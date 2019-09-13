@@ -50,7 +50,7 @@ $strawberryPackage = "C:\Windows\Temp\" + $installer_name
 
 Download $url_official $url_cache $strawberryPackage
 Verify-Checksum $strawberryPackage $sha1
-Run-Executable "$strawberryPackage" "/QB INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
+Run-Executable "msiexec" "/quiet /i $strawberryPackage INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
 
 Write-Host "Cleaning $strawberryPackage.."
 Remove-Item -Recurse -Force -Path "$strawberryPackage"

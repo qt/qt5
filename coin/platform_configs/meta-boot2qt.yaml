@@ -1,0 +1,40 @@
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET1'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET2'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET3'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET4'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET5'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET6'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET7'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET8'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET9'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'Yocto'
+    Target arch: 'TARGET10'

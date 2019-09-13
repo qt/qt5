@@ -110,7 +110,7 @@ installPackages+=(g++-multilib)
 # python3 development package
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
-installPackages+=(python3-virtualenv)
+installPackages+=(virtualenv)
 installPackages+=(python3-wheel)
 # python2 development package
 installPackages+=(python-dev)
