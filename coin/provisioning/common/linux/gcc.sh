@@ -37,6 +37,8 @@
 
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# shellcheck source=../unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 set -ex
 
@@ -81,7 +83,7 @@ function InstallGCC() {
         sudo make install
 
         rm -rf "$targetFile"
-        rm -rf "$tmpFolder/gcc-$version"
+        sudo rm -rf "$tmpFolder/gcc-$version"
     fi
 
     # openSUSE has update-alternatives under /usr/sbin and it has grouped the commands by means of master and slave links
@@ -97,6 +99,9 @@ function InstallGCC() {
         sudo /usr/bin/update-alternatives --install /usr/bin/c++ c++ "$installPrefix/bin/g++-$suffixVersion" "$priority"
     fi
 
+    echo "/usr/local/lib64" | sudo tee /etc/ld.so.conf.d/gcc-libraries.conf
+    echo "/usr/local/lib32" | sudo tee -a /etc/ld.so.conf.d/gcc-libraries.conf
+    sudo ldconfig -v
 
     echo "GCC = $version" >> ~/versions.txt
 }

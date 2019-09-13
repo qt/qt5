@@ -1,7 +1,8 @@
 [requires]
-icu/59.1@vitallium/stable
-libxml2/2.9.4@vitallium/stable
-libxslt/1.1.29@vitallium/stable
+icu/64.2@qtproject/stable
+libxml2/2.9.9@qtproject/stable
+libxslt/1.1.33@qtproject/stable
+libjpeg-turbo/2.0.2@qtproject/stable
 
 [generators]
 cmake
@@ -9,12 +10,22 @@ txt
 
 [options]
 icu:shared=True
+icu:data_packaging=library
+
 libxml2:shared=True
+libxml2:iconv=False
+libxml2:icu=True
+libxml2:zlib=False
+
 libxslt:shared=True
 
+libjpeg-turbo:shared=False
+
 [imports]
-bin, icudt59.dll -> ./bin
-bin, icuin59.dll -> ./bin
-bin, icuuc59.dll -> ./bin
+lib, icudt64.dll -> ./bin
+lib, icuin64.dll -> ./bin
+lib, icuuc64.dll -> ./bin
 bin, libxml2.dll -> ./bin
 bin, libxslt.dll -> ./bin
+bin, libxml2-2.dll -> ./bin
+bin, libxslt-1.dll -> ./bin

@@ -1,0 +1,6 @@
+-
+    Template: 'qtci-windows-10-x86_64-14'
+    Target os: 'WinRT_10'
+    Target arch: 'x86_64'
+    Compiler: 'MSVC2015'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -static -nomake tests -nomake examples -no-icu -force-debug-info -platform win32-msvc2015 -xplatform winrt-x64-msvc2015'
