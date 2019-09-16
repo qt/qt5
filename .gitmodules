@@ -201,8 +201,8 @@
 	recommends = qtdeclarative
 	path = qtwebsockets
 	url = ../qtwebsockets.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtwebchannel"]
 	depends = qtbase
 	recommends = qtdeclarative qtwebsockets
