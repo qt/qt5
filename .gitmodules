@@ -169,8 +169,8 @@
 	depends = qtbase
 	path = qtserialport
 	url = ../qtserialport.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtx11extras"]
 	depends = qtbase
 	path = qtx11extras
