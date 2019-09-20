@@ -43,12 +43,12 @@ set -ex
 mainStorage="ci-files01-hki.intra.qt.io:/hdd/www/input"
 localMount="/mnt/storage/"
 
-iccPackage="parallel_studio_xe_2018_update1_composer_edition_for_cpp.tgz"
+iccPackage="parallel_studio_xe_2020_update1_composer_edition_for_cpp.tgz"
 iccPackageSource="$localMount/intel/$iccPackage"
 iccInstallPath="/opt/intel"
 iccTmpPath="/tmp/icc"
 
-iccLicense="l_icc_2018.lic"
+iccLicense="l_icc_2020.lic"
 iccLicenseSource="$localMount/semisecure/$iccLicense"
 iccLicenseTarget="/home/qt/$iccLicense"
 
@@ -63,24 +63,26 @@ cp "$iccLicenseSource" "$iccLicenseTarget"
 
 sudo umount "$localMount"
 
+{ serialNumber=$(cat $iccLicenseTarget | grep -e "SerialNumber" | awk -F '[=]' '{print $2}'); } 2>/dev/null
+
 cat >"$iccInstallInstructions" <<EOT
 ACCEPT_EULA=accept
 CONTINUE_WITH_OPTIONAL_ERROR=yes
 PSET_INSTALL_DIR=$iccInstallPath
 CONTINUE_WITH_INSTALLDIR_OVERWRITE=yes
 PSET_MODE=install
-ACTIVATION_LICENSE_FILE=$iccLicenseTarget
-ACTIVATION_TYPE=license_file
-PHONEHOME_SEND_USAGE_DATA=no
-ARCH_SELECTED=ALL
-COMPONENTS=;intel-comp__x86_64;intel-comp-32bit__x86_64;intel-comp-doc__noarch;intel-comp-l-all-common__noarch;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-comp-ps-32bit__x86_64;intel-comp-ps__x86_64;intel-comp-ps-ss__x86_64;intel-comp-ps-ss-bec__x86_64;intel-comp-ps-ss-bec-32bit__x86_64;intel-openmp__x86_64;intel-openmp-32bit__x86_64;intel-openmp-common__noarch;intel-openmp-common-icc__noarch;intel-tbb-libs-32bit__x86_64;intel-tbb-libs__x86_64;intel-idesupport-icc-common-ps__noarch;intel-icc__x86_64;intel-icc-32bit__x86_64;intel-c-comp-common__noarch;intel-icc-common__noarch;intel-icc-common-ps__noarch;intel-icc-common-ps-ss-bec__noarch;intel-icc-doc__noarch;intel-icc-doc-ps__noarch;intel-icc-ps__x86_64;intel-icc-ps-ss__x86_64;intel-icc-ps-ss-bec__x86_64;intel-icc-ps-ss-bec-32bit__x86_64;intel-tbb-devel-32bit__x86_64;intel-tbb-devel__x86_64;intel-tbb-common__noarch;intel-tbb-doc__noarch;intel-ism__noarch;intel-ccompxe__noarch;intel-psxe-common__noarch;intel-psxe-doc__noarch;intel-psxe-common-doc__noarch;intel-ccompxe-doc__noarch;intel-psxe-licensing__noarch;intel-psxe-licensing-doc__noarch;intel-icsxe-pset
+ACTIVATION_SERIAL_NUMBER=$serialNumber
+ACTIVATION_TYPE=serial_number
+INTEL_SW_IMPROVEMENT_PROGRAM_CONSENT=no
+ARCH_SELECTED=INTEL64
+COMPONENTS=;intel-conda-index-tool__x86_64;intel-comp__x86_64;intel-comp-doc__noarch;intel-comp-l-all-common__noarch;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-comp-ps__x86_64;intel-comp-ps-ss-bec__x86_64;intel-openmp__x86_64;intel-openmp-common__noarch;intel-openmp-common-icc__noarch;intel-tbb-libs__x86_64;intel-idesupport-icc-common-ps__noarch;intel-conda-icc_rt-linux-64-shadow-package__x86_64;intel-icc__x86_64;intel-c-comp-common__noarch;intel-icc-common__noarch;intel-icc-common-ps__noarch;intel-icc-doc__noarch;intel-icc-ps__x86_64;intel-icc-ps-ss-bec__x86_64;intel-icx__x86_64;intel-icx-common__noarch;intel-tbb-devel__x86_64;intel-tbb-common__noarch;intel-tbb-doc__noarch;intel-conda-tbb-linux-64-shadow-package__x86_64;intel-conda-tbb-devel-linux-64-shadow-package__x86_64;intel-ccompxe__noarch;intel-psxe-common__noarch;intel-psxe-doc__noarch;intel-psxe-common-doc__noarch;intel-compxe-doc__noarch;intel-psxe-licensing__noarch;intel-psxe-licensing-doc__noarch;intel-icsxe-pset
 EOT
 
-(cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu)
+( cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu )
 
 # Export LD_LIBRARY_PATH to Coin
-echo "export ICC64_18_LDLP=$iccInstallPath/lib/intel64" >>~/.bashrc
-echo "export ICC64_18_PATH=$iccInstallPath/compilers_and_libraries_2018.1.163/linux/bin/intel64:$iccInstallPath/bin" >>~/.bashrc
-echo "ICC = 18.0.1 20171018" >> ~/versions.txt
+echo "export ICC64_19_LDLP=$iccInstallPath/lib/intel64" >>~/.bashrc
+echo "export ICC64_19_PATH=$iccInstallPath/compilers_and_libraries_2020.1.217/linux/bin/intel64:$iccInstallPath/bin" >>~/.bashrc
+echo "ICC = 19.1.1.217 20200306" >> ~/versions.txt
 
 rm -rf "$iccTmpPath"
