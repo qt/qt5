@@ -46,6 +46,15 @@ command -v sha512sum >/dev/null ||  alias sha512sum='shasum -a 512'
 ########################################################################
 
 
+Download () {
+    url="$1"
+    targetFile="$2"
+
+    command -v curl >/dev/null  \
+        && curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url"  \
+        || wget --tries 5 -O "$targetFile" "$url"
+}
+
 VerifyHash () {
     file=$1
     expectedHash=$2
@@ -87,10 +96,10 @@ DownloadURL () {
         echo "Skipping download, found and validated existing file:  $targetFile"
     else
         echo "Downloading from primary URL:  $url"
-        if  ! curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url"
+        if  ! Download "$url" "$targetFile"
         then
             echo "FAIL! to download, trying alternative URL:  $url2"  1>&2
-            if  ! curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url2"
+            if  ! Download "$url" "$targetFile"
             then
                 echo 'FAIL! to download even from alternative url'  1>&2
                 return 1
