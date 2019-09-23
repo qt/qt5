@@ -35,33 +35,40 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
+if (Is64BitWinHost) {
+    $msys_bash = "C:\Utils\msys64\usr\bin\bash"
+} else {
+    $msys_bash = "C:\Utils\msys32\usr\bin\bash"
+}
+
 # OpenSSL need to be configured from sources for Android build in windows 7
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$version = "1.0.2p"
+$version = "1.1.1b"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$sha1 = "f34b5322e92415755c7d58bf5d0d5cf37666382c"
+$sha1 = "e9710abf5e95c48ebf47991b10cbb48c09dae102"
 $destination = "C:\Utils\openssl-android-master"
 
+# msys unix style paths
+$ndkPath = "/c/Utils/Android/android-ndk-r20"
+$openssl_path = "/c/Utils/openssl-android-master"
+$cc_path = "$ndkPath/toolchains/llvm/prebuilt/windows-x86_64/bin"
 Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
 Verify-Checksum $zip $sha1
 
-Extract-7Zip $zip C:\Utils
-Extract-7Zip C:\Utils\openssl-$version.tar C:\Utils
-Rename-Item C:\Utils\openssl-$version $destination
+Extract-7Zip $zip C:\Utils\tmp
+Extract-7Zip C:\Utils\tmp\openssl-$version.tar C:\Utils\tmp
+Move-Item C:\Utils\tmp\openssl-${version} $destination
 Remove-Item -Path $zip
-Remove-Item C:\Utils\openssl-$version.tar
-
-# Make sure configure for openssl has a "make" and "perl" available
-$env:PATH = $env:PATH + ";C:\msys\1.0\bin;C:\strawberry\perl\bin"
 
 Write-Host "Configuring OpenSSL $version for Android..."
 Push-Location $destination
-Run-Executable "C:\msys\1.0\bin\bash.exe" "-c `"c:/strawberry/perl/bin/perl Configure shared android`""
+# $ must be escaped in powershell...
+Start-Process -NoNewWindow -Wait -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang $openssl_path/Configure shared android-arm`"")
+Start-Process -NoNewWindow -Wait -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang make -f $openssl_path/Makefile build_generated`"")
 Pop-Location
 
-# Following command is needed when using version 1.1.0. With version 1.1.0 msys is not needed.
-# C:\mingw530\bin\mingw32-make.exe include\openssl\opensslconf.h
-
+Set-EnvironmentVariable "OPENSSL_ANDROID_HOME" "$destination"
+Remove-item C:\Utils\tmp -Recurse -Confirm:$false
 Write-Output "Android OpenSSL = $version" >> ~/versions.txt
