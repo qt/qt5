@@ -312,3 +312,15 @@
 	url = ../qtlottie.git
 	branch = dev
 	status = ignore
+[submodule "qtquicktimeline"]
+	depends = qtbase qtdeclarative
+	path = qtquicktimeline
+	url = ../qtquicktimeline
+	branch = dev
+	status = ignore
+[submodule "qtquick3d"]
+	depends = qtbase qtdeclarative
+	path = qtquick3d
+	url = ../qtquick3d.git
+	branch = dev
+	status = ignore
