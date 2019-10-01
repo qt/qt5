@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2016 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -74,6 +74,9 @@ if (($archVer -eq 32) -And (Is64BitWinHost)) {
 
 
 Run-Executable "$targetDir\python.exe" "-m ensurepip"
+
+Write-Host "Upgrade pip to the latest version available."
+Run-Executable "$targetDir\python.exe" "-m pip install --upgrade pip"
 
 # Install python virtual env
 if (IsProxyEnabled) {

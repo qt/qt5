@@ -38,6 +38,7 @@ set -ex
 echo "set WritePreparedUpdates=false" | sudo tee -a /etc/PackageKit/PackageKit.conf
 sudo systemctl stop packagekit
 sudo systemctl disable packagekit
+sudo yum -y remove PackageKit gnome-software
 
 sudo subscription-manager config --rhsm.manage_repos=0
 sudo subscription-manager refresh

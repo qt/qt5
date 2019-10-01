@@ -50,7 +50,7 @@ function InstallCommandLineTools {
     hdiutil attach "/tmp/$packageName"
     cd "/Volumes/Command Line Developer Tools"
     echo "Installing"
-    sudo installer -verbose -pkg ./*.pkg -target /
+    sudo installer -pkg ./*.pkg -target /
     cd /
     # Let's fait for 5 second before unmounting. Sometimes resource is busy and cant be unmounted
     sleep 3
