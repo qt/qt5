@@ -1,0 +1,6 @@
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1_windows_i386.zip            d2dea67a28fd7a9e21395d14f0b7ce1b6413e85cc9ffd89cc7ff8f35e8af5837
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1_windows_amd64.zip           88d8c8146b561f43726e61688b42d0b5ab88fc22607b94df5a2c8245bbb27e29
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1_darwin_amd64.tar.gz         58a2b294c1b6408c396b5526719cf7cad557f7075fed10ff0b2a74141ea2d629
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1_linux_amd64.tar.gz          070a76800d1a5f33413b8948286f75caa55ebd924f6fb6996a753b9979799ef5
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1_linux_i386.tar.gz           964077b6846708f579a100d7ea6090e2d8350ace75ec735d539bc452bc551038
+https://dl.influxdata.com/telegraf/releases/telegraf-1.12.1-static_linux_amd64.tar.gz   bb03814c99c037ce0758e3884660910f2f6fd78f3d49a8e1ef531693b3cfe25d

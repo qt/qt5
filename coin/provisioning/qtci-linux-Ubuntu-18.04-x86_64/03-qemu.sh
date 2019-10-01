@@ -48,6 +48,7 @@ cd "$tempDir"
 git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
 git cherry-pick 75e5b70e6b5dcc4f2219992d7cffa462aa406af0
 git cherry-pick 04b33e21866412689f18b7ad6daf0a54d8f959a7
+git cherry-pick cd8133679f7e0e2c292f631f1c78b2452d2435c7
 git submodule update --init pixman
 
 patch -p1 <<EOT

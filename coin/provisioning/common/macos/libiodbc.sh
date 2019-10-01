@@ -40,7 +40,6 @@ set -ex
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-brew update
 brew install ${BASH_SOURCE%/*}/libiodbc.rb
 
 # CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
