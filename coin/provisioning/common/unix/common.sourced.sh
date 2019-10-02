@@ -65,8 +65,10 @@ fatal () {
     fi
 }
 
+# Takes one argument which should be the filename of this script. Returns true
+# if the script is being sourced, false if the script is being executed.
 is_script_executed () {
-   [ x"$(basename "$0")" = x"$1" ]
+    [ x"$(basename $(echo "$0" | sed s/^-//))" = x"$1" ]
 }
 
 
