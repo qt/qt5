@@ -169,6 +169,9 @@ installPackages+=(texinfo)
 # Needed for QtCore
 installPackages+=(libdouble-conversion-dev)
 installPackages+=(libpcre2-dev)
+# Needed for qtgampepad
+installPackages+=(libsdl2-2.0)
+installPackages+=(libsdl2-dev)
 
 echo "Running update for apt"
 waitLoop
