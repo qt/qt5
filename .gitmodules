@@ -271,14 +271,14 @@
 	recommends = qtdeclarative
 	path = qtgamepad
 	url = ../qtgamepad.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtscxml"]
 	depends = qtbase qtdeclarative
 	path = qtscxml
 	url = ../qtscxml.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
