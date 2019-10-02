@@ -74,6 +74,25 @@ is_script_executed  common.sourced.sh  \
     && fatal "Script common.sourced.sh should always be sourced, not executed"
 
 
+_detect_linux_OS_ID () {
+    if [ -f /etc/os-release ]
+    then
+        . /etc/os-release
+        PROVISIONING_OS_ID="$ID"
+    elif [ -f /etc/redhat-release ]
+    then
+         case "$(cat /etc/redhat-release)" in
+             "Red Hat Enterprise Linux"*)
+                 PROVISIONING_OS_ID="rhel"
+                 ;;
+             "CentOS Linux"*)
+                 PROVISIONING_OS_ID="centos"
+                 ;;
+             *) fatal "Unknown string in /etc/redhat-release" ;;
+         esac
+    fi
+}
+
 set_common_environment () {
     # Unfortunately we can't find the provisioning directory from a sourced
     # script in a portable way
@@ -86,8 +105,7 @@ set_common_environment () {
     case "$uname_s" in
         Linux)
             PROVISIONING_OS=linux
-            . /etc/os-release
-            PROVISIONING_OS_ID="$ID"
+            _detect_linux_OS_ID
             case "$PROVISIONING_OS_ID" in
                 suse|sles|opensuse*)
                     CMD_PKG_INSTALL="sudo zypper -nq install"
