@@ -38,7 +38,7 @@
 # NOTE! Make sure 64bit versions are always installed before 32bit,
 # because they use same folder name before a rename
 
-$version = "6.3.0"
+$version = "6.5.1"
 
 # Qt branch without dot (*.*)
 $qtBranch = "59x"
