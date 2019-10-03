@@ -49,7 +49,7 @@ echo "$sha1  $targetFile" | sha1sum --check
 if [ ! -d "$targetFolder" ]; then
     mkdir -p $targetFolder
 fi
-sudo tar -C $targetFolder -xvzf $targetFile
+sudo tar -C $targetFolder -xzf $targetFile
 sudo chown -R qt:users "$targetFolder"/"$folderName"
 
 # Verify that we have last file in tar

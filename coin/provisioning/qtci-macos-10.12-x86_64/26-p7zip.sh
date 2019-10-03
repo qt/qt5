@@ -3,5 +3,5 @@
 
 set -ex
 
-brew update
+
 brew install p7zip
