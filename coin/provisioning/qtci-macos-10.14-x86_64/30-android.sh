@@ -51,7 +51,7 @@ toolsVersion="r26.1.1"
 # toolsFile dertermines tools version
 toolsFile="sdk-tools-darwin-4333796.zip"
 
-ndkVersion="r18b"
+ndkVersion="r19c"
 ndkFile="android-ndk-$ndkVersion-darwin-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
 # this is compile sdk version
@@ -76,6 +76,7 @@ ls -l "$sdkTargetFolder"
 
 SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
 SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+SetEnvVar "ANDROID_NDK_ROOT" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 

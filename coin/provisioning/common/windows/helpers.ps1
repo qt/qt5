@@ -3,7 +3,7 @@ function Verify-Checksum
     Param (
         [string]$File=$(throw("You must specify a filename to get the checksum of.")),
         [string]$Expected=$(throw("Checksum required")),
-        [ValidateSet("sha1","md5")][string]$Algorithm="sha1"
+        [ValidateSet("sha256","sha1","md5")][string]$Algorithm="sha1"
     )
     Write-Host "Verifying checksum of $File"
     $fs = new-object System.IO.FileStream $File, "Open"
@@ -253,4 +253,24 @@ function Remove {
             Start-Sleep -seconds 5
         }
     }
+}
+
+function DisableSchedulerTask {
+
+    Param (
+        [string]$Task = $(BadParam("a task"))
+    )
+
+    Write-Host "Disabling $Task from Task Scheduler"
+    SCHTASKS /Change /TN "Microsoft\Windows\$Task" /DISABLE
+}
+
+function DeleteSchedulerTask {
+
+   Param (
+        [string]$Task = $(BadParam("a task"))
+    )
+
+    Write-Host "Disabling $Task from Task Scheduler"
+    SCHTASKS /DELETE /TN "Microsoft\Windows\$Task" /F
 }

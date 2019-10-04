@@ -122,7 +122,7 @@ function MountAndInstall {
         sudo cp $targetFileMount /tmp
         UnMount
         sudo hdiutil attach "/tmp/$targetFile"
-        sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
+        sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null
         mountFolder="/Volumes/froglogic Squish"
         UnMount
     elif [[ $targetFile == *.run ]]; then
@@ -130,7 +130,7 @@ function MountAndInstall {
         sudo cp $targetFileMount $targetDirectory
         UnMount
         sudo chmod +x $targetDirectory/$targetFile
-        sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null 2>&1
+        sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null
         sudo rm -fr "$targetDirectory/$targetFile"
         if uname -a |grep -q "Ubuntu"; then
             sudo mkdir /usr/lib/tcl8.6
