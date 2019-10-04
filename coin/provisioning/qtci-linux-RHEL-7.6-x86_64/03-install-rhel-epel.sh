@@ -46,6 +46,5 @@ targetFile="/tmp/$package"
 
 DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
 
-sudo rpm -ivh "$targetFile"
+sudo yum -y install "$targetFile"
 rm "$targetFile"
-

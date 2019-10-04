@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
@@ -79,6 +79,10 @@ if (IsProxyEnabled) {
     Write-Host "Using proxy ($proxy) with pip"
     $pip_args = "--proxy=$proxy"
 }
+
+Write-Host "Upgrade pip3 to the latest version available."
+Run-Executable "$install_path\python.exe" "-m pip install --upgrade pip"
+
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel"
 
 # Install all needed packages in a special wheel cache directory

@@ -37,11 +37,35 @@
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'Android_ANY'
-    Target arch: 'x86'
+    Target arch: 'armv7'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -no-use-gold-linker -sysconfdir /etc/xdg -opengl es2 -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64 -android-arch armeabi-v7a -xplatform android-clang'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'Android_ANY'
+    Target arch: 'x86_64'
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64 -android-arch x86'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64 -android-arch x86_64'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'Android_ANY'
+    Target arch: 'arm64'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -no-use-gold-linker -sysconfdir /etc/xdg -opengl es2 -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64 -android-arch arm64-v8a -xplatform android-clang'
+-
+    Template: 'qtci-windows-10-x86_64-14'
+    Target os: 'Android_ANY'
+    Target arch: 'multi'
+    Compiler: 'Mingw73'
+    Target compiler: 'Clang'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20'
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'Android_ANY'
@@ -61,11 +85,11 @@
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'Android_ANY'
-    Target arch: 'x86'
+    Target arch: 'x86_64'
     Compiler: 'Mingw73'
     Target compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20 -android-arch x86'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20 -android-arch x86_64'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'Android_ANY'
@@ -77,6 +101,14 @@
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'Android_ANY'
+    Target arch: 'multi'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host darwin-x86_64'
+-
+    Template: 'qtci-macos-10.13-x86_64-2'
+    Target os: 'Android_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
@@ -85,11 +117,11 @@
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'Android_ANY'
-    Target arch: 'x86'
+    Target arch: 'x86_64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host darwin-x86_64 -android-arch x86'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host darwin-x86_64 -android-arch x86_64'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'QNX_700'
@@ -132,6 +164,12 @@
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-64-qcc'
+-
+    Template: 'qtci-windows-10-x86_64-14'
+    Target os: 'WebAssembly'
+    Compiler: 'Mingw73'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake examples -nomake tests -no-feature-thread -static -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-pch -platform win32-g++ -xplatform wasm-emscripten'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'WebAssembly'
