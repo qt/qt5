@@ -20,3 +20,11 @@ Configurations:
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=OFF'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'Android_ANY'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Target compiler: 'Clang'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF'
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_HOME}} -DANDROID_ABI=arm64-v8a -DVCPKG_TARGET_TRIPLET=arm64-android']
