@@ -1,12 +1,22 @@
--   Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+Version: 2
+Configurations:
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON'
--   Template: 'qtci-linux-openSUSE-15.0-x86_64'
+-
+    Template: 'qtci-linux-openSUSE-15.0-x86_64'
     Compiler: 'ICC_18'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF'
--   Template: 'qtci-macos-10.13-x86_64-2'
+-
+    Template: 'qtci-macos-10.13-x86_64-2'
     Compiler: 'Clang'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.12'
--   Template: 'qtci-windows-10-x86_64-14'
+-
+    Template: 'qtci-windows-10-x86_64-14'
     Compiler: 'MSVC2017'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Compiler: 'GCC'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF'

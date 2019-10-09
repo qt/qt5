@@ -38,13 +38,20 @@ set -ex
 # Remove update notifications and packagekit running in the background
 sudo yum -y remove PackageKit gnome-software
 
+sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
+
 installPackages=()
-installPackages+=(git)
+installPackages+=(rh-git29)
 installPackages+=(zlib-devel)
 installPackages+=(glib2-devel)
 installPackages+=(openssl-devel)
 installPackages+=(freetype-devel)
 installPackages+=(fontconfig-devel)
+# cmake build
+installPackages+=(ninja-build)
+installPackages+=(pcre2-devel)
+installPackages+=(double-conversion-devel)
+installPackages+=(zstd)
 # EGL support
 installPackages+=(mesa-libEGL-devel)
 installPackages+=(mesa-libGL-devel)
@@ -117,6 +124,9 @@ installPackages+=(unixODBC)
 installPackages+=(vulkan-devel)
 
 sudo yum -y install "${installPackages[@]}"
+
+scl enable rh-git29 bash
+sudo ln -s /opt/rh/rh-git29/root/usr/bin/git /usr/local/bin/git
 
 sudo ln -s /opt/rh/rh-python36/root/usr/bin/python3 /usr/local/bin/python3
 sudo ln -s /opt/rh/rh-python36/root/usr/bin/pip3 /usr/local/bin/pip3

@@ -35,7 +35,7 @@
 
 set -ex
 
-sudo yum -y install devtoolset-4
+sudo yum -y install devtoolset-7
 
-echo "source /opt/rh/devtoolset-4/enable" >> ~/.bashrc
+echo "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc
 
