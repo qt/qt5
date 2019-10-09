@@ -163,8 +163,8 @@
 	recommends = qtserialport
 	path = qtserialbus
 	url = ../qtserialbus.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtserialport"]
 	depends = qtbase
 	path = qtserialport
