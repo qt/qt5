@@ -43,8 +43,9 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # Refresh to make sure we have the EMSCRIPTEN environment variable, needed for the vcpkg wasm build.
 source ~/.bashrc
 
-version="qt-snapshot-2019-10-09"
-officialUrl="https://codeload.github.com/tronical/vcpkg/tar.gz/$version"
+source "${BASH_SOURCE%/*}/../shared/vcpkg_version.txt"
+
+officialUrl="https://codeload.github.com/tronical/vcpkg/tar.gz/$vcpkg_version"
 targetFile="vcpkg.tar.gz"
 targetFolder="$HOME/vcpkg"
 
@@ -69,4 +70,4 @@ cd $targetFolder
 
 rm -rf packages buildtrees downloads
 
-echo "VCPKG = $version" >> ~/versions.txt
+echo "VCPKG = $vcpkg_version" >> ~/versions.txt

@@ -36,15 +36,18 @@
 
 Write-Host "Installing vcpkg"
 
-$version = "qt-snapshot-2019-06-20"
-$officialUrl = "https://codeload.github.com/tronical/vcpkg/zip/$version"
+$n = Get-Content "$PSScriptRoot\..\shared\vcpkg_version.txt"
+$n = $n.Split('=')
+New-Variable -Name $n[0] -Value $n[1]
+
+$officialUrl = "https://codeload.github.com/tronical/vcpkg/zip/$vcpkg_version"
 $zip = "C:\Utils\vcpkg.zip"
 
 Download "$officialUrl" "" "$zip"
 Extract-7Zip "$zip" c:\utils
 Remove-Item $zip
 
-$installationFolder = "c:\utils\vcpkg-$version"
+$installationFolder = "c:\utils\vcpkg-$vcpkg_version"
 
 cd $installationFolder
 
