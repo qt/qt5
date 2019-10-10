@@ -112,42 +112,42 @@
     Target arch: 'x86'
     Compiler: 'GCC'
     Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /Users/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-qcc'
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'QNX_700'
     Target arch: 'armv7'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-armle-v7-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-armle-v7-qcc'
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'QNX_700'
     Target arch: 'armv8'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -opengl es2 -nomake tests -nomake examples -no-sql-mysql -xplatform qnx-aarch64le-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -opengl es2 -nomake tests -nomake examples -no-sql-mysql -xplatform qnx-aarch64le-qcc'
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'QNX_700'
     Target arch: 'x86_64'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-x86-64-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-x86-64-qcc'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'QNX_700'
     Target arch: 'armv8'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-aarch64le-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-aarch64le-qcc'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'QNX_700'
     Target arch: 'x86_64'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-64-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-64-qcc'
 -
     Template: 'qtci-windows-10-x86_64-14'
     Target os: 'WebAssembly'
