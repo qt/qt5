@@ -44,7 +44,7 @@ cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel7/$package"
 sha1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
 targetFile="/tmp/$package"
 
-DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
+DownloadURL "$cacheUrl" "$primaryUrl" "$sha1" "$targetFile"
 
 sudo yum -y install "$targetFile"
 rm "$targetFile"
