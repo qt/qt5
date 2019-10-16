@@ -38,10 +38,10 @@
 # NOTE! Make sure 64bit versions are always installed before 32bit,
 # because they use same folder name before a rename
 
-$version = "6.4.3"
+$version = "6.5"
 
 # Qt branch without dot (*.*)
-$qtBranch = "512x"
+$qtBranch = "513x"
 # So far Squish built with Qt5.12 works also with 5.13, but we have to be prepared that on some point
 # the compatibility breaks, and we may need to have separate Squish packages for different Qt versions.
 
@@ -62,11 +62,7 @@ Function DownloadAndInstallSquish {
         [string]$bit,
         [string]$squishPackage
     )
-    # MinGW x86 available only with Qt5.11, to be updated when Squish is supporting 5.13
-    if ("$bit" -eq "win32" -and $squishPackage.StartsWith("mingw")) {
-        $qtBranch = "511x"
-    }
-    $SquishUrl = $squishBranchUrl + "\squish-" + $version + "-qt" + $qtBranch + "-" + $bit + "-" + $squishPackage + ".exe"
+    $SquishUrl = $squishBranchUrl + "\squish-nosignalhandler-" + $version + "-qt" + $qtBranch + "-" + $bit + "-" + $squishPackage + ".exe"
     $SquishInstaller = "$targetDir\$squishPackage.exe"
     $SquishParameters = "unattended=1 targetdir=$targetDir\$squishPackage"
 
