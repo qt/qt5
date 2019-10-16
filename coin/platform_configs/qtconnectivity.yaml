@@ -1,5 +1,5 @@
 -
-    Template: 'qtci-windows-10-x86_64-14'
+    Template: 'qtci-windows-10-x86_64-15'
     Target os: 'WinRT_10'
     Target arch: 'x86_64'
     Compiler: 'MSVC2015'
