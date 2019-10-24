@@ -123,8 +123,8 @@
 	recommends = qtdeclarative qtandroidextras
 	path = qtconnectivity
 	url = ../qtconnectivity.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtwayland"]
 	depends = qtbase
 	recommends = qtdeclarative
