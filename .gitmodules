@@ -175,8 +175,8 @@
 	depends = qtbase
 	path = qtx11extras
 	url = ../qtx11extras.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtmacextras"]
 	depends = qtbase
 	path = qtmacextras
