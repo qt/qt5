@@ -162,14 +162,14 @@ installPackages+=(dkms)
 installPackages+=(python-pypdf2)
 
 sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
-deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
-deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial main restricted universe multiverse
-deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-updates main restricted universe multiverse
-deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-backports main restricted universe
-deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ xenial-security main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-updates main restricted universe multiverse
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-backports main restricted universe
+deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-security main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-updates main restricted universe multiverse
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-backports main restricted universe
+deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ xenial-security main restricted universe multiverse
 EOC
 
 echo "Running update for apt"
