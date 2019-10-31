@@ -6,3 +6,8 @@
     Template: 'qtci-linux-RHEL-6.6-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -force-debug-info -nomake examples -nomake tests'
+-
+    Template: 'qtci-windows-8.1-x86'
+    Compiler: 'MSVC2015'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
