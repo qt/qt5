@@ -13,10 +13,10 @@ qtci-linux-openSUSE-42.3-x86_64                                     GCC         
 qtci-linux-openSUSE-42.3-x86_64                                     ICC_18      DeveloperBuild NoPch DisableTests
 qtci-linux-RHEL-6.6-x86_64                                          GCC         Release ForceDebugInfo
 qtci-linux-RHEL-7.4-x86_64                                          GCC         Packaging Release NoUseGoldLinker
-qtci-macos-10.12-x86_64-8                                           Clang       Packaging DebugAndRelease Release
+qtci-macos-10.12-x86_64-9                                           Clang       Packaging DebugAndRelease Release
 qtci-osx-10.11-x86_64-3                                             Clang       DeveloperBuild Release QtNamespace NoPch
 qtci-osx-10.10-x86_64                                               Clang       Release NoFramework DisableTests
-qtci-macos-10.12-x86_64-8           IOS_ANY             x86_64      Clang       Release DisableTests Static
+qtci-macos-10.12-x86_64-9           IOS_ANY             x86_64      Clang       Release DisableTests Static
 qtci-linux-RHEL-7.4-x86_64          Android_ANY         armv7       GCC         Packaging Release DisableTests OpenGLES2 NoUseGoldLinker
 qtci-linux-Ubuntu-16.04-x86_64-2    QEMU                armv7       GCC         Release
 qtci-linux-Ubuntu-16.04-x86_64-2    QEMU                arm64       GCC         Release

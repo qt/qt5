@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -42,9 +42,36 @@
 # This will give you a file called "Content.part00.cpio.xz" that
 # can be renamed to Xcode_8.xz for this script.
 
-set -ex
 
-# shellcheck source=../common/macos/install_xcode.sh
-source "${BASH_SOURCE%/*}/../common/macos/install_xcode_9_orHigher.sh"
 
-InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_9.2_updated.tar.gz 9.2
+function InstallXCode() {
+    sourceFile=$1
+    version=$2
+
+    echo "Uncompressing and installing '$sourceFile'"
+    if [[ $sourceFile =~ tar ]]; then
+        cd /Applications/ && sudo tar -zxf "$sourceFile"
+    else
+        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
+    fi
+
+    echo "Versioning application bundle"
+    majorVersion=$(echo $version | cut -d '.' -f 1)
+    versionedAppBundle="/Applications/Xcode${majorVersion}.app"
+    sudo mv /Applications/Xcode.app ${versionedAppBundle}
+
+    echo "Selecting Xcode"
+    sudo xcode-select --switch ${versionedAppBundle}
+
+    echo "Accept license"
+    sudo xcodebuild -license accept
+
+    echo "Install packages"
+    # -runFirstLaunch is valid in 9.x
+    sudo xcodebuild -runFirstLaunch || true
+
+    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
+    sudo /usr/sbin/DevToolsSecurity -enable
+
+    echo "Xcode = $version" >> ~/versions.txt
+}
