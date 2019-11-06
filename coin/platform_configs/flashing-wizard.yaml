@@ -1,0 +1,23 @@
+Version: 2
+Module only: True
+Configurations:
+    -
+        Template: 'qtci-windows-10-x86_64-14'
+        Compiler: 'MSVC2017'
+        Features: ['Packaging']
+        Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -static -no-icu'
+    -
+        Template: 'qtci-windows-10-x86_64-14'
+        Compiler: 'MSVC2017'
+        Target arch: 'x86'
+        Features: ['Packaging']
+        Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -static -no-icu'
+    -
+        Template: 'qtci-linux-RHEL-7.6-x86_64'
+        Compiler: 'GCC'
+        Features: ['Packaging']
+        Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -qt-harfbuzz -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib QMAKE_LFLAGS_APP+=-s -static -no-icu'
+    -
+        Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+        Compiler: 'GCC'
+        Features: ['TestOnly', 'LicenseCheck']

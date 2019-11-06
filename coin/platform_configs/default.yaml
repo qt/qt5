@@ -161,4 +161,4 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -no-sql-mysql -qpa qnx -xplatform qnx-armle-v7-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -no-sql-mysql -qpa qnx -xplatform qnx-armle-v7-qcc'

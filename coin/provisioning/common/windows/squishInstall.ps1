@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -73,7 +73,9 @@ Function DownloadAndInstallSquish {
     Write-Host "Fetching from URL $squishUrl"
     Copy-Item "$SquishUrl" "$SquishInstaller"
     Write-Host "Installing Squish"
-    Run-Executable "$SquishInstaller" "$SquishParameters"
+    $stdoutFile = [System.IO.Path]::GetTempFileName()
+    $stderrFile = [System.IO.Path]::GetTempFileName()
+    Start-Process -FilePath "$SquishInstaller" -Wait -ArgumentList $SquishParameters -PassThru -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile | Out-Null
     Remove-Item -Path $SquishInstaller
     if ("$bit" -eq "win64") {
         if ($squishPackage.StartsWith("mingw")) {

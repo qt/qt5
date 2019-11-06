@@ -42,11 +42,11 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="1.1.1b"
+version="1.1.1d"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="e9710abf5e95c48ebf47991b10cbb48c09dae102"
+sha="056057782325134b76d1931c48f2c7e6595d7ef4"
 opensslHome="${HOME}/openssl-${version}"
 opensslSource="${opensslHome}-src"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
