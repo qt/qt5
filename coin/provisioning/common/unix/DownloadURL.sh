@@ -99,9 +99,9 @@ DownloadURL () {
         if  ! Download "$url" "$targetFile"
         then
             echo "FAIL! to download, trying alternative URL:  $url2"  1>&2
-            if  ! Download "$url" "$targetFile"
+            if  ! Download "$url2" "$targetFile"
             then
-                echo 'FAIL! to download even from alternative url'  1>&2
+                echo 'FAIL! to download even from alternative URL'  1>&2
                 return 1
             fi
         fi
