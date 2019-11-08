@@ -38,13 +38,13 @@ set -ex
 # shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-package="epel-release-7-11.noarch.rpm"
+package="epel-release-7-12.noarch.rpm"
 primaryUrl="https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/$package"
 cacheUrl="http://ci-files01-hki.intra.qt.io/input/rhel7/$package"
-sha1="5512b80e5b71f2370d8419fa16a0bc14c5edf854"
+sha256="d6bb83c00ab3af26ded56459e7d6fceabfef66efbe0780b4dedbe81d62c07cd5"
 targetFile="/tmp/$package"
 
-DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
+DownloadURL "$cacheUrl" "$primaryUrl" "$sha256" "$targetFile"
 
 sudo yum -y install "$targetFile"
 rm "$targetFile"

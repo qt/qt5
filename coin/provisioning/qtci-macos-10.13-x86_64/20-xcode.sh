@@ -50,4 +50,4 @@ set -ex
 # shellcheck source=../common/macos/install_xcode.sh
 source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
-InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_10.1.tar.gz 10.1
+InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_10.1_updated.tar.gz 10.1
