@@ -48,6 +48,7 @@ cd "$tempDir"
 git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
 git cherry-pick 75e5b70e6b5dcc4f2219992d7cffa462aa406af0
 git cherry-pick 04b33e21866412689f18b7ad6daf0a54d8f959a7
+git cherry-pick cd8133679f7e0e2c292f631f1c78b2452d2435c7
 git submodule update --init pixman
 
 patch -p1 <<EOT
@@ -117,6 +118,43 @@ index 11a311f9db..94d8abc745 100644
          break;
  #endif
  #if TARGET_ABI_BITS == 32
+--
+2.17.1
+EOT
+
+patch -p1 <<EOT
+From fb4f0fa319e757c083f0b3674f575a09c323f5aa Mon Sep 17 00:00:00 2001
+From: Assam Boudjelthia <assam.boudjelthia@qt.io>
+Date: Tue, 20 Aug 2019 09:46:46 +0300
+Subject: [PATCH] Suppress unsupported syscall and ioctl debug messages
+
+Those messages were spamming the CI tests output, thus they can
+only be shown by defining environment variable QEMU_SYSCALL_DEBUG=true
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 94d8abc745..e72cfb0cb5 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -5479,7 +5479,8 @@ static abi_long do_ioctl(int fd, int cmd, abi_long arg)
+     ie = ioctl_entries;
+     for(;;) {
+         if (ie->target_cmd == 0) {
+-            gemu_log("Unsupported ioctl: cmd=0x%04lx\n", (long)cmd);
++            if (getenv("QEMU_SYSCALL_DEBUG"))
++                gemu_log("Unsupported ioctl: cmd=0x%04lx\n", (long)cmd);
+             return -TARGET_ENOSYS;
+         }
+         if (ie->target_cmd == cmd)
+@@ -12172,7 +12173,8 @@ abi_long do_syscall(void *cpu_env, int num, abi_long arg1,
+
+     default:
+     unimplemented:
+-        gemu_log("qemu: Unsupported syscall: %d\n", num);
++        if (getenv("QEMU_SYSCALL_DEBUG"))
++            gemu_log("qemu: Unsupported syscall: %d\n", num);
+ #if defined(TARGET_NR_setxattr) || defined(TARGET_NR_get_thread_area) || defined(TARGET_NR_getdomainname) || defined(TARGET_NR_set_robust_list)
+     unimplemented_nowarn:
+ #endif
 --
 2.17.1
 EOT

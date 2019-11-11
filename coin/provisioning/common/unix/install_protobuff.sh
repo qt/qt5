@@ -64,7 +64,7 @@ if uname -a |grep -q Darwin; then
 else
     ./configure
 fi
-make
+make -j5
 sudo make install
 
 # Refresh shared library cache if OS isn't macOS

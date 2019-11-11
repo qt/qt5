@@ -33,7 +33,7 @@
 ##
 #############################################################################
 
-# This script installs CMake
+# This script installs CMake 3.15.0-rc1
 
 # CMake is needed for autotests that verify that Qt can be built with CMake
 

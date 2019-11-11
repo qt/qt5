@@ -44,3 +44,4 @@ Verify-Checksum "$temp\$zipPackage" "d7a34a385ccde2374b8a2ca3369e5b8a1452c5a5"
 Extract-7Zip "$temp\$zipPackage" C:\Utils
 
 Write-Output "$prog qt5 commit sha = 98c4f1bbebfb3cc6d8e031d36fd1da3c19e634fb" >> ~\versions.txt
+Prepend-Path "C:\Utils\gnuwin32\bin"

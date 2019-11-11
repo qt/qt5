@@ -2,5 +2,6 @@
 
 set -ex
 
-# shellcheck source=../common/macos/install_openssl_111a.sh
-source "${BASH_SOURCE%/*}/../common/macos/install_openssl_111a.sh"
+# shellcheck source=../common/macos/install_openssl.sh
+source "${BASH_SOURCE%/*}/../common/unix/install-openssl.sh" "macos"
+

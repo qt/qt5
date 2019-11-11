@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -37,7 +37,13 @@ set -ex
 
 # This script modified system settings for automated use
 
-VNCPassword=qt
+targetFile="$HOME/vncpw.txt"
+
+# Fetch password
+curl --retry 5 --retry-delay 10 --retry-max-time 60 "http://ci-files01-hki.intra.qt.io/input/semisecure/vncpw.txt" -o "$targetFile"
+shasum "$targetFile" |grep "a795fccaa8f277e62ec08e6056c544b8b63924a0"
+
+{ VNCPassword=$(cat "$targetFile"); } 2> /dev/null
 NTS_IP=10.212.2.216
 
 echo "Disable Screensaver"
@@ -82,11 +88,14 @@ defaults write -g InitialKeyRepeat -int 15
 # normal minimum is 2 (30 ms)
 defaults write -g KeyRepeat -int 2
 
+set +x
 echo "Enable remote desktop sharing"
 sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw $VNCPassword -restart -agent -privs -all
+set -x
 
 echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
 echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
 
 sudo systemsetup settimezone GMT
 sudo systemsetup setusingnetworktime off
+sudo rm -f "$targetFile"
