@@ -46,6 +46,10 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
 done
 
 function set_internal_repo {
+
+    # Stop fetching the dep-11 metadata, since our mirrors do not handle them well
+    sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
+
     sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
     deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic main restricted universe multiverse
     deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu.trumpetti.atm.tut.fi/ubuntu/ bionic main restricted universe multiverse
