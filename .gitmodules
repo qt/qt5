@@ -189,7 +189,7 @@
 	path = qtwinextras
 	url = ../qtwinextras.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtandroidextras"]
 	depends = qtbase
 	path = qtandroidextras
@@ -237,7 +237,7 @@
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = dev
-	status = ignore
+	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase
 	recommends = qtdeclarative qtandroidextras
@@ -298,7 +298,7 @@
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
 	recommends = qtdeclarative
