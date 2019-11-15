@@ -150,7 +150,7 @@
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
 	branch = 5.14
-	status = addon
+	status = essential
 [submodule "qtquickcontrols"]
 	depends = qtdeclarative
 	recommends = qtgraphicaleffects
