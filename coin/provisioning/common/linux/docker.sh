@@ -52,8 +52,8 @@ do
     DownloadURL  $localRepo/$f  $upstreamRepo/$f  $sha
 done
 
-sudo apt-get -y install  ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
-rm -f                    ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
+sudo apt-get -y install  ./containerd.io_*.deb ./docker-ce_*.deb ./docker-ce-cli_*.deb
+rm -f                    ./containerd.io_*.deb ./docker-ce_*.deb ./docker-ce-cli_*.deb
 
 sudo usermod -a -G docker $USER
 sudo docker --version
