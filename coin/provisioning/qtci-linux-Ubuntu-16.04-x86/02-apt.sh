@@ -44,6 +44,9 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
     sudo systemctl disable $service
 done
 
+# Stop fetching the dep-11 metadata, since our mirrors do not handle them well
+sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
+
 installPackages+=(git)
 installPackages+=(p7zip-full)
 installPackages+=(expect)
