@@ -44,6 +44,9 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
     sudo systemctl disable $service
 done
 
+# Stop fetching the dep-11 metadata, since our mirrors do not handle them well
+sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
+
 # aptdaemon is used by update notifiers and similar and there is no point in having those (the symptom is aptd holding a lock)
 for i in $(seq 10); do
     echo attempting to remove aptdaemon
