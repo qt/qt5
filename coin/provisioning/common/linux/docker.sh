@@ -33,21 +33,40 @@
 ##
 #############################################################################
 
-set -ex
+set -e
 
-# Download and install the docker engine.
-sudo apt-get install curl -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install docker-ce -y
+
+. $(dirname "$0")/../../common/unix/DownloadURL.sh
+
+
+localRepo=http://ci-files01-hki.intra.qt.io/input/docker
+upstreamRepo=https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64
+
+echo '
+    f4c941807310e3fa470dddfb068d599174a3daec containerd.io_1.2.10-3_amd64.deb
+    ee640d9258fd4d3f4c7017ab2a71da63cbbead55 docker-ce_19.03.4~3-0~ubuntu-bionic_amd64.deb
+    09402bf5dac40f0c50f1071b17f38f6584a42ad1 docker-ce-cli_19.03.4~3-0~ubuntu-bionic_amd64.deb
+' \
+    | xargs -n2 | while read  sha f
+do
+    DownloadURL  $localRepo/$f  $upstreamRepo/$f  $sha
+done
+
+sudo apt-get -y install  ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
+rm -f                    ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
+
 sudo usermod -a -G docker $USER
 sudo docker --version
 
-# Download and install the docker-compose extension.
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+# Download and install the docker-compose extension from https://github.com/docker/compose/releases
+f=docker-compose-$(uname -s)-$(uname -m)
+DownloadURL  \
+    $localRepo/$f  \
+    https://github.com/docker/compose/releases/download/1.24.1/$f \
+    cfb3439956216b1248308141f7193776fcf4b9c9b49cbbe2fb07885678e2bb8a
+sudo install -m 755 ./docker-compose* /usr/local/bin/docker-compose
 sudo docker-compose --version
+rm ./docker-compose*
 
 # Install Avahi to discover Docker containers in the test network
 sudo apt-get install avahi-daemon -y
