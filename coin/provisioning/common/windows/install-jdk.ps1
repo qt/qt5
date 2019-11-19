@@ -68,8 +68,7 @@ try {
 Verify-Checksum $javaPackage $sha1
 
 Run-Executable "$javaPackage" "/s SPONSORS=0"
-Write-Host "Cleaning $javaPackage.."
-Remove-Item -Recurse -Force -Path "$javaPackage"
+Remove "$javaPackage"
 
 Set-EnvironmentVariable "JAVA_HOME" "$installdir"
 Add-Path "$installdir\bin"
