@@ -14,6 +14,6 @@ Verify-Checksum $package_path $sdkChecksumSha1 sha1
 Write-Host "Installing DirectX SDK"
 Run-Executable $package_path "/u"
 
-Remove-Item -Path $package_path
+Remove "$package_path"
 
 Write-Output "DirectX SDK = 9.29.1962 (Jun 10)" >> ~\versions.txt

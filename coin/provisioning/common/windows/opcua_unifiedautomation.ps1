@@ -53,7 +53,7 @@ function DownloadAndInstallUA
 
     Write-Host "UACPPSDK: Extracting $zip..."
     Extract-7Zip $zip (Get-DefaultDownloadLocation)
-    Remove-Item -Path $zip
+    Remove "$zip"
 
     $executable = (Get-DefaultDownloadLocation) + "$InstallerFileName.exe"
     # We cannot call the installer as the x86 and x64 versions of the installer are not
@@ -65,7 +65,7 @@ function DownloadAndInstallUA
     #Remove-Item $executable
 
     Extract-7Zip $executable $Destination
-    Remove-Item $executable
+    Remove "$executable"
 }
 
 #x86 version

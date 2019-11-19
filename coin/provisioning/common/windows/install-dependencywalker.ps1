@@ -57,6 +57,6 @@ Verify-Checksum $dependsPackage $sha1
 Extract-7Zip $dependsPackage $TARGETDIR
 
 Write-Host "Cleaning $dependsPackage.."
-Remove-Item -Recurse -Force -Path "$dependsPackage"
+Remove "$dependsPackage"
 
 Write-Output "Dependency Walker = $version" >> ~\versions.txt

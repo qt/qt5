@@ -44,4 +44,4 @@ Extract-7Zip $zip C:\
 
 Set-EnvironmentVariable "QNX_700" "C:\QNX700"
 Write-Output "QNX SDP = 7.0.0" >> ~/versions.txt
-Remove-Item -Path $zip
+Remove "$zip"

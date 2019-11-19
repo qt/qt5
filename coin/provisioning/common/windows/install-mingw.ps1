@@ -61,7 +61,7 @@ function InstallMinGW
     Set-EnvironmentVariable "$envvar" ("$targetdir\mingw" + $win_arch.Substring($win_arch.get_Length()-2))
 
     Write-Host "Cleaning $mingwPackage.."
-    Remove-Item -Recurse -Force -Path "$mingwPackage"
+    Remove "$mingwPackage"
 
     Write-Output "MinGW = $version $release" >> ~\versions.txt
 

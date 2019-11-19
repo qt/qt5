@@ -31,13 +31,15 @@
 ##
 #############################################################################
 
+. "$PSScriptRoot\helpers.ps1"
+
 $auth_file = "C:\Users\qt\work\influxdb\coin_vms_writer.auth"
 
 # Provisioning should run even without the secrets repository
 if (Test-Path $auth_file) {
     $auth_content = Get-Content $auth_file
     $influxdb_password = $auth_content.Substring($auth_content.LastIndexOf(':') + 1)
-    Remove-Item $auth_file
+    Remove "$auth_file"
 } else {
     $influxdb_password = "no_password_provided"
 }

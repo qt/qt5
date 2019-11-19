@@ -45,4 +45,4 @@ Download $url $url $installer
 Verify-Checksum $installer $sha1
 Run-Executable $installer "/S"
 Run-Executable "C:\Program Files\squishcoco\cocolic.exe" "--license-server=Qt-SRV-33.intra.qt.io:49344"
-Remove-Item -Force -Path $installer
+Remove "$installer"

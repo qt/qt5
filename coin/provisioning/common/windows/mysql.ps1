@@ -57,7 +57,7 @@ function DownloadAndInstall
     $zipDir = [io.path]::GetFileNameWithoutExtension($package)
     Extract-7Zip $package $installPath "$zipDir\lib $zipDir\bin $zipDir\share $zipDir\include"
 
-    Remove-Item -Path $package
+    Remove "$package"
 }
 
 if (Is64BitWinHost) {

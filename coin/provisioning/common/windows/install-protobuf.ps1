@@ -57,7 +57,7 @@ if(![System.IO.File]::Exists("$installationFolder\bin\protoc.exe")){
     exit 1
 }
 
-Remove-Item "$zip"
+Remove "$zip"
 
 Add-Path "$installationFolder\bin"
 Set-EnvironmentVariable PROTOBUF_INCLUDE "$installationFolder\include"

@@ -45,6 +45,6 @@ Write-Host "Installing Update 5 for Visual Studio $version..."
 Run-Executable "$package" "/norestart /passive"
 
 Write-Host "Removing $package ..."
-Remove-Item $package
+Remove "$package"
 
 Write-Output "Visual Studio = $version" >> ~\versions.txt

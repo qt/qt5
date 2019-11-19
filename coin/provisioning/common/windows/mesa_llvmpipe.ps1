@@ -53,7 +53,7 @@ function Extract-Mesa
     Verify-Checksum $package $sha1
     Extract-7Zip $package $targetFolder
     Write-Host "Removing $package"
-    Remove-Item -Path $package
+    Remove "$package"
 }
 
 if (Is64BitWinHost) {

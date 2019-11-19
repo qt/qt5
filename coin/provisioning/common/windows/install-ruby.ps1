@@ -52,6 +52,6 @@ Verify-Checksum $rubyPackage $sha1
 Run-Executable $rubyPackage "/dir=C:\Ruby-$version$arch /tasks=modpath /verysilent"
 
 Write-Host "Cleaning $rubyPackage.."
-Remove-Item -Recurse -Force -Path "$rubyPackage"
+Remove "$rubyPackage"
 
 Write-Output "Ruby = $version" >> ~\versions.txt

@@ -55,10 +55,10 @@ if (Is64BitWinHost) {
     Extract-7Zip $packagex64 $installFolder "pgsql\lib pgsql\bin pgsql\share pgsql\include"
 
     Write-Host "Remove downloaded $packagex64 ..."
-    Remove-Item -Path $packagex64
+    Remove $packagex64
     # Remove pthread.h file so it won't be used in mingw builds (QTBUG-79555)
-    Remove-item -Path "$installFolder\pgsql\include\pthread.h"
-    Remove-item -Path "$installFolder\pgsql\include\unistd.h"
+    Remove "$installFolder\pgsql\include\pthread.h"
+    Remove "$installFolder\pgsql\include\unistd.h"
 
     Set-EnvironmentVariable "POSTGRESQL_INCLUDE_x64" "$installFolder\pgsql\include"
     Set-EnvironmentVariable "POSTGRESQL_LIB_x64" "$installFolder\pgsql\lib"
@@ -83,10 +83,10 @@ Write-Host "Installing $packagex86 ..."
 Extract-7Zip $packagex86 $installFolder "pgsql\lib pgsql\bin pgsql\share pgsql\include"
 
 Write-Host "Remove downloaded $packagex86 ..."
-Remove-Item -Path $packagex86
+Remove $packagex86
 # Remove pthread.h file so it won't be used in mingw builds (QTBUG-79555)
-Remove-item -Path "$installFolder\pgsql\include\pthread.h"
-Remove-item -Path "$installFolder\pgsql\include\unistd.h"
+Remove "$installFolder\pgsql\include\pthread.h"
+Remove "$installFolder\pgsql\include\unistd.h"
 
 Set-EnvironmentVariable "POSTGRESQL_INCLUDE_x86" "$installFolder\pgsql\include"
 Set-EnvironmentVariable "POSTGRESQL_LIB_x86" "$installFolder\pgsql\lib"

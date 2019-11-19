@@ -52,7 +52,7 @@ Verify-Checksum $nppPackage $sha1
 Run-Executable "$nppPackage" "/S"
 
 Write-Host "Cleaning $nppPackage.."
-Remove-Item -Recurse -Force -Path "$nppPackage"
+Remove "$nppPackage"
 
 Write-Output "Notepad++ = $version" >> ~\versions.txt
 

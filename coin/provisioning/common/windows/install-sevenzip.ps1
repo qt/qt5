@@ -56,7 +56,7 @@ Verify-Checksum $7zPackage $sha1
 Run-Executable $7zPackage "/S","/D=$7zTargetLocation"
 
 Write-Host "Cleaning $7zPackage.."
-Remove-Item -Recurse -Force -Path "$7zPackage"
+Remove "$7zPackage"
 
 Add-Path $7zTargetLocation
 

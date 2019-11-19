@@ -45,6 +45,6 @@ Verify-Checksum $package $sha1
 Run-Executable $package "/features + /q"
 
 Write-Host "Cleaning $package.."
-Remove-Item -Recurse -Force -Path "$package"
+Remove "$package"
 
 Write-Output "Windows 10 SDK = 10.0.16229.91" >> ~\versions.txt

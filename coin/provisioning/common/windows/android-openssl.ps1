@@ -60,7 +60,7 @@ Verify-Checksum $zip $sha1
 Extract-7Zip $zip C:\Utils\tmp
 Extract-7Zip C:\Utils\tmp\openssl-$version.tar C:\Utils\tmp
 Move-Item C:\Utils\tmp\openssl-${version} $destination
-Remove-Item -Path $zip
+Remove "$zip"
 
 Write-Host "Configuring OpenSSL $version for Android..."
 Push-Location $destination

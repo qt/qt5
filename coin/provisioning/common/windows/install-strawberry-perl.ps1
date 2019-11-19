@@ -53,6 +53,6 @@ Verify-Checksum $strawberryPackage $sha1
 Run-Executable "msiexec" "/quiet /i $strawberryPackage INSTALLDIR=C:\strawberry REBOOT=REALLYSUPPRESS"
 
 Write-Host "Cleaning $strawberryPackage.."
-Remove-Item -Recurse -Force -Path "$strawberryPackage"
+Remove "$strawberryPackage"
 
 Write-Output "strawberry = $version" >> ~\versions.txt

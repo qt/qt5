@@ -67,14 +67,14 @@ try {
     Download $breakpad_tar_url $breakpad_tar_url $targetBreakpad
     Verify-Checksum $targetBreakpad $breakpad_tar_sha
     Extract-tar_gz $targetBreakpad $installFolder
-    Remove-Item -Path $targetBreakpad
+    Remove "$targetBreakpad"
     # linux-syscall-support
     Download $linux_syscall_support_tar_url $linux_syscall_support_tar_url $targetSyscall
     Verify-Checksum $targetSyscall $linux_syscall_support_tar_sha
     Extract-tar_gz $targetSyscall "$env:tmp\"
     New-Item -ItemType directory -Path "$installFolder\breakpad\third_party\lss"
     Get-ChildItem -Path "$env:tmp\linux-syscall-support\*" -Recurse | Move-Item -Destination "$installFolder\breakpad\third_party\lss"
-    Remove-Item -Path $targetSyscall
+    Remove "$targetSyscall"
 }
 catch {
     Write-Host "Cached download failed: Attempping fallback method eg git."

@@ -43,6 +43,6 @@ Copy-Item $url_cache $vulkanPackage
 Run-Executable $vulkanPackage "/S"
 
 Write-Host "Cleaning $vulkanPackage.."
-Remove-Item -Recurse -Force -Path "$vulkanPackage"
+Remove "$vulkanPackage"
 
 Write-Output "Vulkan SDK = $version" >> ~\versions.txt

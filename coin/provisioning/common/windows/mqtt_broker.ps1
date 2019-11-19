@@ -46,6 +46,6 @@ Verify-Checksum $zip $sha1
 
 Write-Host "MQTT: Installing $zip..."
 Extract-7Zip $zip C:\Utils
-Remove-Item -Path $zip
+Remove "$zip"
 
 Set-EnvironmentVariable "MQTT_TEST_BROKER_LOCATION" "C:\Utils\paho.mqtt.testing-$commitSHA\interoperability\startbroker.py"

@@ -7,6 +7,6 @@ $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\winrtrunner\winr
 Download $url $url_cache $zip
 Verify-Checksum $zip "93548e8c3fb8fded2474996ef5e0163f489ce8cf"
 Extract-7Zip $zip C:\Utils\winrtrunner
-Remove-Item -Path $zip
+Remove "$zip"
 
 Set-EnvironmentVariable "CI_WINRTRUNNER_PATH" "C:\Utils\winrtrunner"

@@ -60,8 +60,7 @@ Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 Write-Host "Installing $package..."
 Run-Executable "$package" "/q TargetDir=$install_path"
-Write-Host "Remove $package..."
-Remove-Item -Path $package
+Remove "$package"
 
 # For cross-compilation we export some helper env variable
 if (($archVer -eq 32) -And (Is64BitWinHost)) {

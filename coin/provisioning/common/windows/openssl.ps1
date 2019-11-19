@@ -56,7 +56,7 @@ if (Is64BitWinHost) {
     Run-Executable "$packagex64" "/SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
 
     Write-Host "Remove downloaded $packagex64 ..."
-    Remove-Item -Path $packagex64
+    Remove "$packagex64"
 
     Set-EnvironmentVariable "OPENSSL_CONF_x64" "$installFolder\bin\openssl.cfg"
     Set-EnvironmentVariable "OPENSSL_INCLUDE_x64" "$installFolder\include"
@@ -83,7 +83,7 @@ Write-Host "Installing $packagex86 ..."
 Run-Executable "$packagex86" "/SP- /SILENT /LOG /SUPPRESSMSGBOXES /NORESTART /DIR=$installFolder"
 
 Write-Host "Remove downloaded $packagex86 ..."
-Remove-Item -Path $packagex86
+Remove "$packagex86"
 
 Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\bin\openssl.cfg"
 Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"

@@ -77,6 +77,6 @@ if ((Test-Path $url_cache_prebuilt)) {
 }
 
 Write-Host "Cleaning $PackagePath.."
-Remove-Item -Recurse -Force -Path "$PackagePath"
+Remove "$PackagePath"
 
 Write-Output "msys2 = $version" >> ~\versions.txt

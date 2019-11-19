@@ -82,8 +82,7 @@ while ($stop -ne $true)
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
 Write-Host "Changing allowZip64 value to 'True'..."
 (Get-Content $targetDir\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content $targetDir\lib\zipfile.py
-Write-Host "Remove $package..."
-Remove-Item -Path $package
+Remove "$package"
 
 # When installing 32 bit python to 64 bit host, we want to keep only default python in path
 # For cross-compilation we export some helper env variable

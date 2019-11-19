@@ -32,7 +32,7 @@ function install() {
     Verify-Checksum $zip $sha1
     Extract-7Zip $zip C:\Utils\
     Rename-Item C:\Utils\libclang $destination
-    Remove-Item -Force -Path $zip
+    Remove "$zip"
 }
 
 $toolchainSuffix = ""

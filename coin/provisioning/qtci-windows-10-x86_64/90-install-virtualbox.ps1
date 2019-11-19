@@ -46,6 +46,6 @@ Verify-Checksum $virtualboxPackage $sha1
 Run-Executable $virtualboxPackage "--silent"
 
 Write-Output "Cleaning $virtualboxPackage.."
-Remove-Item -Recurse -Force -Path "$virtualboxPackage"
+Remove "$virtualboxPackage"
 
 Write-Output "VirtualBox = $version" >> ~\versions.txt
