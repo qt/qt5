@@ -68,8 +68,7 @@ try {
 Verify-Checksum $javaPackage $sha1
 
 Run-Executable "$javaPackage" "/s SPONSORS=0"
-Write-Host "Cleaning $javaPackage.."
-Remove-Item -Recurse -Force -Path "$javaPackage"
+Remove "$javaPackage"
 
 Write-Host "Remove Java update from startup"
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v SunJavaUpdateSched /f
