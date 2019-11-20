@@ -31,35 +31,42 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\windows\helpers.ps1"
-
-# This script will install OpenSSL prebuild version. Currently this pre-build version is only needed for Windows 7.
-# Version was build using Windows 7 x86 and MSVC2010
-
-# Used build commands below:
-# call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
-# perl Configure no-asm VC-WIN32 --prefix=C:\openssl\ --openssldir=C:\openssl\
-# nmake
-# nmake install
-
-
-$version = "1.1.1d"
-$zip = Get-DownloadLocation ("openssl-$version.7z")
-$sha1 = "2bf9379c4cea81858c4288cf06cc3444996bcad5"
-$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86_windows7_msvc2010.zip"
-
-Download $url $url $zip
-Verify-Checksum $zip $sha1
-$installFolder = "C:\openssl"
-
-Extract-7Zip $zip "C:\"
-Remove-Item -Path $zip
-
-Move-Item -Path C:\openssl_${version}_prebuild_x86_windows7_msvc2010 -Destination C:\openssl
-
-Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\openssl.cnf"
-Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"
-Set-EnvironmentVariable "OPENSSL_LIB_x86" "$installFolder\lib"
-Prepend-Path "$installFolder\bin"
-
-Write-Output "OpenSSL = $version" >> ~/versions.txt
+# Windows 7 does not have Get-ScheduledTask and Unregister-ScheduledTask
+# thus needing its own version.
+Write-Host "Disabling defragmentation"
+$version = Get-CimInstance Win32_OperatingSystem | Select-Object -ExpandProperty Caption
+if ($version -like '*Windows 7*'){
+    $pi = New-Object System.Diagnostics.ProcessStartInfo
+    $pi.FileName = "C:\Windows\System32\schtasks.exe"
+    $pi.RedirectStandardError = $true
+    $pi.UseShellExecute  = $false
+    $pi.Arguments = "/Delete /TN `"\Microsoft\Windows\Defrag\ScheduledDefrag`" /F"
+    $prog = New-Object System.Diagnostics.Process
+    $prog.StartInfo = $pi
+    $prog.Start() | Out-Null
+    $err = $prog.StandardError.ReadToEnd()
+    $prog.WaitForExit()
+    if ($prog.ExitCode -eq 0){
+        Write-Host "Scheduled defragmentation removed"
+    } else {
+        if ($err -like '*cannot find the file*'){
+            Write-Host "No scheduled defragmentation task found"
+            exit 0
+        } else {
+            Write-Host "Error while deleting scheduled defragmentation task: $err"
+        }
+    }
+}
+else {
+    try {
+        $state = (Get-ScheduledTask -ErrorAction Stop -TaskName "ScheduledDefrag").State
+        Write-Host "Scheduled defragmentation task found in state: $state"
+    }
+    catch {
+        Write-Host "No scheduled defragmentation task found"
+        exit 0
+    }
+    Write-Host "Unregistering scheduled defragmentation task"
+    Unregister-ScheduledTask -ErrorAction Stop -Confirm:$false -TaskName ScheduledDefrag
+    Write-Host "Scheduled Defragmentation task was cancelled"
+}

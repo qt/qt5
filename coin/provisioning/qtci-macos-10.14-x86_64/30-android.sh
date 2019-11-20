@@ -51,7 +51,7 @@ toolsVersion="r26.1.1"
 # toolsFile dertermines tools version
 toolsFile="sdk-tools-darwin-4333796.zip"
 
-ndkVersion="r19c"
+ndkVersion="r20"
 ndkFile="android-ndk-$ndkVersion-darwin-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
 # this is compile sdk version

@@ -1,0 +1,11 @@
+# List about manual pre-installations to Tier1 image:
+
+Vmware tools: installed
+Resolution: 1280 X 800
+Coin setup (installed boostrap agent, disabled fast boot, disabled firewall (both public and private), disabled UAC, enabled autologin)
+Remote Desktop Connection: enabled
+Timezone: set to UTC
+Administrator tools - services - Windows search: stop & disable
+Power settings screen & slee: never
+Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+
