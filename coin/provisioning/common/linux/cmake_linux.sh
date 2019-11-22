@@ -33,7 +33,7 @@
 ##
 #############################################################################
 
-# This script installs CMake 3.15.0-rc1
+# This script installs CMake
 
 # CMake is needed for autotests that verify that Qt can be built with CMake
 
@@ -42,11 +42,11 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-majorminorversion="3.15"
-version="3.15.5"
+majorminorversion="3.16"
+version="3.16.0-rc4"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-Linux-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-Linux-x86_64.tar.gz"
-SHA1="867f44e232346b79167b64cb5380bc0955e953fb"
+SHA1="def260a8f27d3b1b9c3d042ec936236598bea52a"
 targetFolder="/opt/cmake-$version"
 appPrefix="cmake-$version-Linux-x86_64"
 
