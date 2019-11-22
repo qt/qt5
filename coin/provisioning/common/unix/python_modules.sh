@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,15 +33,6 @@
 ##
 #############################################################################
 
-set -ex
-
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-
-version="11.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.14_mojave/$packageName"
-sha1="04f288e0dce69ddbce52ea707f978afcbf6be107"
-
-InstallCommandLineTools $url $url $sha1 $packageName $version
-
+# needed by packaging scripts
+sudo pip3 install bs4
+sudo pip3 install sh
