@@ -236,7 +236,7 @@
 	recommends = qtimageformats
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
-	branch = dev
+	branch = wip/cmake
 	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase
