@@ -8,9 +8,9 @@
     Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Target arch: 'x86'
-    Compiler: 'MSVC2017'
+    Compiler: 'MSVC2019'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x86-msvc2017 -qt-zlib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2019 -xplatform winrt-x86-msvc2019 -qt-zlib'
 -
     Template: 'qtci-windows-7-x86-3'
     Compiler: 'Mingw73'
@@ -25,15 +25,15 @@
     Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Target arch: 'armv7'
-    Compiler: 'MSVC2017'
+    Compiler: 'MSVC2019'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-arm-msvc2017 -qt-zlib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2019 -xplatform winrt-arm-msvc2019 -qt-zlib'
 -
     Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
-    Compiler: 'MSVC2017'
+    Compiler: 'MSVC2019'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x64-msvc2017 -qt-zlib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2019 -xplatform winrt-x64-msvc2019 -qt-zlib'
 -
     Template: 'qtci-windows-10-x86_64-16'
     Target os: 'Android_ANY'

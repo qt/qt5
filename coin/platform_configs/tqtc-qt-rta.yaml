@@ -10,5 +10,5 @@
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
 -
     Template: 'qtci-windows-10-x86-3'
-    Compiler: 'MSVC2017'
+    Compiler: 'MSVC2019'
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
