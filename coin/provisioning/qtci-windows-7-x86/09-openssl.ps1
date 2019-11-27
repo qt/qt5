@@ -43,10 +43,10 @@
 # nmake install
 
 
-$version = "1.1.1b"
+$version = "1.1.1d"
 $zip = Get-DownloadLocation ("openssl-$version.7z")
-$sha1 = "7afba53ab984cecb54a1915c135cbb2a20c6b576"
-$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86.7z"
+$sha1 = "2bf9379c4cea81858c4288cf06cc3444996bcad5"
+$url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86_windows7_msvc2010.zip"
 
 Download $url $url $zip
 Verify-Checksum $zip $sha1
@@ -54,6 +54,8 @@ $installFolder = "C:\openssl"
 
 Extract-7Zip $zip "C:\"
 Remove-Item -Path $zip
+
+Move-Item -Path C:\openssl_${version}_prebuild_x86_windows7_msvc2010 -Destination C:\openssl
 
 Set-EnvironmentVariable "OPENSSL_CONF_x86" "$installFolder\openssl.cnf"
 Set-EnvironmentVariable "OPENSSL_INCLUDE_x86" "$installFolder\include"

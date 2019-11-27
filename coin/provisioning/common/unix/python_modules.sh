@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,7 +33,6 @@
 ##
 #############################################################################
 
-set -ex
-
-# shellcheck source=../common/linux/openssl_for_android_linux.sh
-source "${BASH_SOURCE%/*}/../common/linux/openssl_for_android_linux.sh"
+# needed by packaging scripts
+pip3 install bs4
+pip3 install sh
