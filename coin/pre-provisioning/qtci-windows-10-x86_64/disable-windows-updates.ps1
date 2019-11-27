@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,15 +31,24 @@
 ##
 #############################################################################
 
-set -ex
+# This script disables the automatic Windows updates
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
+$service = get-service wuauserv
+if (-not $service) {
+    Write-Host "Windows Update service not found."
+    exit 0
+}
 
-version="11.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.14_mojave/$packageName"
-sha1="04f288e0dce69ddbce52ea707f978afcbf6be107"
+if ($service.Status -eq "Stopped") {
+    Write-Host "Windows Update service already stopped."
+} else {
+    Write-Host "Stopping Windows Update service."
+    Stop-Service -Name "wuauserv" -Force
+}
 
-InstallCommandLineTools $url $url $sha1 $packageName $version
-
+$startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"
+if ($startup -ne "Disabled") {
+    set-service wuauserv -startup disabled
+} else {
+    Write-Host "Windows Update service startup already disabled."
+}

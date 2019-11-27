@@ -34,7 +34,8 @@
 # Visual Studio $version version $version_number was installed manually using $installer.
 
 $version = "2017"
-$version_number = "15.8.5"
+# Current version was manually upgraded from the installer
+$version_number = "15.9.16"
 $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312218103.1526017942.exe"
 
 # Following components were selected from installer:
