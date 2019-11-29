@@ -188,7 +188,7 @@
 	recommends = qtdeclarative qtmultimedia
 	path = qtwinextras
 	url = ../qtwinextras.git
-	branch = dev
+	branch = wip/cmake
 	status = addon
 [submodule "qtandroidextras"]
 	depends = qtbase
@@ -297,7 +297,7 @@
 	recommends = qtdeclarative
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
-	branch = dev
+	branch = wip/cmake
 	status = addon
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
