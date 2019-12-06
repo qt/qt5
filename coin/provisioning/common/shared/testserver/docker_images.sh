@@ -51,18 +51,20 @@ sha1tree () {
         sort | ${SHASUM-sha1sum} | cut -d ' ' -f 1
 }
 
-# Using SHA-1 of each server context as the tag of docker images. A tag labels a
-# specific image version. It is used by docker compose file (docker-compose.yml)
-# to launch the corresponding docker containers. If one of the server contexts
-# (./apache2, ./danted, ...) gets changes, all the related compose files in
-# qtbase should be updated as well.
+# A tag labels a specific image version. In the docker compose file
+# (docker-compose.yml) that launches the containers, the tag used is
+# "latest". Here the images are also tagged with the SHA1 of each server
+# context, so if needed we can modify docker-compose.yml to launch a very
+# specific image, thus providing a way to stage backwards-incompatible changes
+# across repositories.
 
 source "$SERVER_PATH/settings.sh"
 
 for server in $testserver
 do
     context="$SERVER_PATH/$server"
-    docker build -t qt-test-server-$server:$(sha1tree $context) $context
+    tag=$(sha1tree $context)
+    docker build -t qt-test-server-$server:$tag -t qt-test-server-$server:latest  $context
 done
 
 docker images

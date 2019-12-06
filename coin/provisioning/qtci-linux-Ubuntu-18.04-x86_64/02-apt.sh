@@ -169,6 +169,8 @@ installPackages+=(git-lfs)
 installPackages+=(chrpath)
 installPackages+=(gawk)
 installPackages+=(texinfo)
+# Needed for Poppler test in QtWebEngine
+installPackages+=(libpoppler-cpp-dev)
 
 echo "Running update for apt"
 waitLoop
