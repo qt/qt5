@@ -103,7 +103,6 @@ Configurations:
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
-    Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.14-x86_64'
