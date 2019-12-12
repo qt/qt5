@@ -35,7 +35,7 @@
 
 set -ex
 
-sudo zypper -nq install git gcc gcc-c++
+sudo zypper -nq install git gcc gcc-c++ ninja
 
 sudo zypper -nq install bison flex gperf \
         zlib-devel \

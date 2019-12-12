@@ -171,6 +171,12 @@ installPackages+=(gawk)
 installPackages+=(texinfo)
 # Needed for Poppler test in QtWebEngine
 installPackages+=(libpoppler-cpp-dev)
+# Needed for QtCore
+installPackages+=(libdouble-conversion-dev)
+installPackages+=(libpcre2-dev)
+# Needed for qtgampepad
+installPackages+=(libsdl2-2.0)
+installPackages+=(libsdl2-dev)
 
 echo "Running update for apt"
 waitLoop

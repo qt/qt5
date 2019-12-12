@@ -53,7 +53,7 @@ sudo rm "$targetFile"
 
 # devtoolset is needed when running configuration
 if uname -a |grep -qv "Darwin"; then
-    export PATH="/opt/rh/devtoolset-4/root/usr/bin:$PATH"
+    export PATH="/opt/rh/devtoolset-7/root/usr/bin:$PATH"
 fi
 
 echo "Configuring and building protobuf"

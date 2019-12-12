@@ -1,9 +1,6 @@
-#!/usr/bin/env bash
-
 #############################################################################
 ##
 ## Copyright (C) 2019 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,33 +30,40 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+. "$PSScriptRoot\helpers.ps1"
 
-# This script installs python3
+# This script will install vcpkg
 
-# shellcheck source=./InstallPKGFromURL.sh
-source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-# shellcheck source=./pip.sh
-source "${BASH_SOURCE%/*}/pip.sh"
+Write-Host "Installing vcpkg"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-3.7.4-macosx10.9.pkg"
-AltUrl="https://www.python.org/ftp/python/3.7.4/python-3.7.4-macosx10.9.pkg"
-SHA1="ef8a6b1abba6a6e8553916a881af440705653fa8"
-DestDir="/"
+$n = Get-Content "$PSScriptRoot\..\shared\vcpkg_version.txt"
+$n = $n.Split('=')
+New-Variable -Name $n[0] -Value $n[1]
 
-InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
+$officialUrl = "https://codeload.github.com/tronical/vcpkg/zip/$vcpkg_version"
+$zip = "C:\Utils\vcpkg.zip"
 
-InstallPip python3.7
+Download "$officialUrl" "" "$zip"
+Extract-7Zip "$zip" c:\utils
+Remove-Item $zip
 
-/Library/Frameworks/Python.framework/Versions/3.7/bin/pip3 install virtualenv wheel
+$installationFolder = "c:\utils\vcpkg-$vcpkg_version"
 
-SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.7/bin"
-SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.7/bin"
+cd $installationFolder
 
-# Install all needed packages in a special wheel cache directory
-/Library/Frameworks/Python.framework/Versions/3.7/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../shared/requirements.txt
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
+cmd /c bootstrap-vcpkg.bat
 
-echo "python3 = 3.7.4" >> ~/versions.txt
+if(![System.IO.File]::Exists("$installationFolder\vcpkg.exe")){
+    Write-Host "Can't find $installationFolder\vcpkg.exe. Installation probably failed!"
+    exit 1
+}
 
+Set-EnvironmentVariable VCPKG_DEFAULT_TRIPLET "qt-x64-windows-static"
+Set-EnvironmentVariable VCPKG_ROOT "$installationFolder"
+
+cmd /c $installationFolder\vcpkg.exe install --triplet qt-x64-windows-static @qt-packages-windows.txt
+cmd /c $installationFolder\vcpkg.exe install --triplet qt-x86-windows-static @qt-packages-windows.txt
+
+Remove-Item -Recurse -Force packages
+Remove-Item -Recurse -Force buildtrees
+Remove-Item -Recurse -Force downloads

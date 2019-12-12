@@ -3,8 +3,7 @@
 #############################################################################
 ##
 ## Copyright (C) 2019 The Qt Company Ltd.
-## Copyright (C) 2017 Pelagicore AG
-## Contact: http://www.qt.io/licensing/
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -34,32 +33,41 @@
 ##
 #############################################################################
 
-# This script installs python3
+set -ex
 
-# shellcheck source=./InstallPKGFromURL.sh
-source "${BASH_SOURCE%/*}/InstallPKGFromURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-# shellcheck source=./pip.sh
-source "${BASH_SOURCE%/*}/pip.sh"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-3.7.4-macosx10.9.pkg"
-AltUrl="https://www.python.org/ftp/python/3.7.4/python-3.7.4-macosx10.9.pkg"
-SHA1="ef8a6b1abba6a6e8553916a881af440705653fa8"
-DestDir="/"
+# This script installs VcPkg. It is used to provide third-party libraries when cross-compiling
+# for example for Emscripten or Android.
 
-InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
+# Refresh to make sure we have the EMSCRIPTEN environment variable, needed for the vcpkg wasm build.
+source ~/.bashrc
 
-InstallPip python3.7
+source "${BASH_SOURCE%/*}/../shared/vcpkg_version.txt"
 
-/Library/Frameworks/Python.framework/Versions/3.7/bin/pip3 install virtualenv wheel
+officialUrl="https://codeload.github.com/tronical/vcpkg/tar.gz/$vcpkg_version"
+targetFile="vcpkg.tar.gz"
+targetFolder="$HOME/vcpkg"
 
-SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.7/bin"
-SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.7/bin"
+wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$officialUrl"
 
-# Install all needed packages in a special wheel cache directory
-/Library/Frameworks/Python.framework/Versions/3.7/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../shared/requirements.txt
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
+if [ ! -d "${targetFolder}" ]; then
+    mkdir -p $targetFolder
+fi
 
-echo "python3 = 3.7.4" >> ~/versions.txt
+tar -C $targetFolder --strip-components=1 -xvzf $targetFile
+rm -rf $targetFile
 
+SetEnvVar "VCPKG_ROOT" "$targetFolder"
+
+cd $targetFolder
+./bootstrap-vcpkg.sh
+
+./vcpkg install --triplet arm-android @qt-packages-android.txt
+./vcpkg install --triplet arm64-android @qt-packages-android.txt
+./vcpkg install --triplet x86-android @qt-packages-android.txt
+./vcpkg install --triplet x64-android @qt-packages-android.txt
+
+rm -rf packages buildtrees downloads
+
+echo "VCPKG = $vcpkg_version" >> ~/versions.txt
