@@ -297,3 +297,9 @@
 	url = ../qtopcua.git
 	branch = dev
 	status = addon
+[submodule "qtlanguageserver"]
+	depends = qtbase
+	path = qtlanguageserver
+	url = ../qtlanguageserver.git
+	branch = dev
+	status = preview
