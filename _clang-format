@@ -59,6 +59,9 @@ ContinuationIndentWidth: 8
 # No indentation for namespaces.
 NamespaceIndentation: None
 
+# Allow indentation for preprocessing directives (if/ifdef/endif). https://reviews.llvm.org/rL312125
+IndentPPDirectives: AfterHash
+
 # Horizontally align arguments after an open bracket.
 # The coding style does not specify the following, but this is what gives
 # results closest to the existing code.
