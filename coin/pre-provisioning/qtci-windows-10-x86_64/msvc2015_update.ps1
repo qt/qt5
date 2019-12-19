@@ -33,7 +33,7 @@
 
 # Visual Studio $version was installed manually using $installer.
 $version = "2015 update 3"
-$version_number ="14.0.25431.01"
+$version_number ="14.0.25420.1"
 $installer = "http://ci-files01-hki.intra.qt.io/input/windows/en_visual_studio_professional_2015_with_update_3_x86_x64_web_installer_8922978"
 
 # default plus following components were selected:

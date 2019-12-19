@@ -1,4 +1,4 @@
-. "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\..\..\provisioning\common\windows\helpers.ps1"
 
 # Disable the NTP from syncing
 Run-Executable "w32tm.exe" "/config /syncfromflags:NO"

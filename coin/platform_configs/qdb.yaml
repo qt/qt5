@@ -2,13 +2,13 @@ Version: 2
 Module only: True
 Configurations:
     -
-        Template: 'qtci-windows-10-x86_64-16'
+        Template: 'qtci-windows-10-x86_64-17'
         Compiler: 'MSVC2015'
         Target arch: 'x86'
         Features: ['Packaging']
         Configure arguments: '-opensource -confirm-license -nomake tests -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -opengl dynamic -static -no-icu -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86%'
     -
-        Template: 'qtci-windows-10-x86_64-16'
+        Template: 'qtci-windows-10-x86_64-17'
         Compiler: 'MSVC2015'
         Features: ['Packaging']
         Configure arguments: '-opensource -confirm-license -nomake tests -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -opengl dynamic -static -no-icu -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64%'
