@@ -113,20 +113,6 @@ Configurations:
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
 -
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'TvOS_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-tvos-clang'
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'WatchOS_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-watchos-clang'
--
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'Android_ANY'
     Target arch: 'multi'
