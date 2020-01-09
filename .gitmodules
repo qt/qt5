@@ -181,8 +181,8 @@
 	depends = qtbase
 	path = qtmacextras
 	url = ../qtmacextras.git
-	branch = dev
-	status = ignore
+	branch = wip/cmake
+	status = addon
 [submodule "qtwinextras"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
