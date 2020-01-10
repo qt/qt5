@@ -19,7 +19,7 @@
     Compiler: 'MSVC2015'
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -static -nomake tests -nomake examples -no-icu -force-debug-info -platform win32-msvc2015 -xplatform winrt-x64-msvc2015'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Features: ['DisableTests']

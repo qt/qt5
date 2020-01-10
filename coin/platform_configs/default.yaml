@@ -55,16 +55,16 @@ Configurations:
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-pch -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'ICC_18'
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-pch -system-sqlite -R . -platform linux-icc-64 -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests']
