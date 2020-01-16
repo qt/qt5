@@ -36,7 +36,9 @@
 set -e
 
 
-. $(dirname "$0")/../../common/unix/DownloadURL.sh
+PROVISIONING_DIR="$(dirname "$0")/../../"
+. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
 
 
 localRepo=http://ci-files01-hki.intra.qt.io/input/docker
@@ -52,8 +54,8 @@ do
     DownloadURL  $localRepo/$f  $upstreamRepo/$f  $sha
 done
 
-sudo apt-get -y install  ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
-rm -f                    ./containerd.io*.deb ./docker-ce*.deb ./docker-ce-cli*.deb
+sudo apt-get -y install  ./containerd.io_*.deb ./docker-ce_*.deb ./docker-ce-cli_*.deb
+rm -f                    ./containerd.io_*.deb ./docker-ce_*.deb ./docker-ce-cli_*.deb
 
 sudo usermod -a -G docker $USER
 sudo docker --version
@@ -61,7 +63,7 @@ sudo docker --version
 # Download and install the docker-compose extension from https://github.com/docker/compose/releases
 f=docker-compose-$(uname -s)-$(uname -m)
 DownloadURL  \
-    $localRepo/$f  \
+    $localRepo/$f-1.24.1  \
     https://github.com/docker/compose/releases/download/1.24.1/$f \
     cfb3439956216b1248308141f7193776fcf4b9c9b49cbbe2fb07885678e2bb8a
 sudo install -m 755 ./docker-compose* /usr/local/bin/docker-compose

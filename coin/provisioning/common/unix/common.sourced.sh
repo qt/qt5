@@ -43,6 +43,7 @@ export PROVISIONING_ARCH
 export CMD_PKG_INSTALL
 export CMD_PKG_LOCALINSTALL
 export CMD_INSTALL
+export COIN_RUNS_IN_QT_COMPANY
 
 
 
@@ -143,6 +144,13 @@ set_common_environment () {
     esac
 
     CMD_INSTALL="sudo install"
+
+    COIN_RUNS_IN_QT_COMPANY=false
+    if  ping -c1 repo-clones.ci.qt.io  >/dev/null 2>&1
+    then
+        COIN_RUNS_IN_QT_COMPANY=true
+    fi
+
 }
 
 set_common_environment
