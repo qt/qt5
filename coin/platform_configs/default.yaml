@@ -19,7 +19,7 @@ Configurations:
 -
     Template: 'qtci-windows-10-x86_64-15'
     Compiler: 'MSVC2019'
-    Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake'
+    Configure arguments: '-DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Compiler: 'GCC'

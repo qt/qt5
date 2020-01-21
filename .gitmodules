@@ -1,7 +1,7 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
-	branch = wip/cmake
+	branch = refs/changes/71/283671/6
 	status = essential
 [submodule "qtsvg"]
 	depends = qtbase
@@ -14,7 +14,7 @@
 	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = wip/cmake
+	branch = refs/changes/15/287315/8
 	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
@@ -42,7 +42,7 @@
 	path = qttools
 	url = ../qttools.git
 	branch = wip/cmake
-	status = essential
+	status = ignore
 [submodule "qtxmlpatterns"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -189,7 +189,7 @@
 	path = qtwinextras
 	url = ../qtwinextras.git
 	branch = wip/cmake
-	status = addon
+	status = ignore
 [submodule "qtandroidextras"]
 	depends = qtbase
 	path = qtandroidextras
@@ -202,7 +202,7 @@
 	path = qtwebsockets
 	url = ../qtwebsockets.git
 	branch = wip/cmake
-	status = addon
+	status = ignore
 [submodule "qtwebchannel"]
 	depends = qtbase
 	recommends = qtdeclarative qtwebsockets
@@ -278,7 +278,7 @@
 	path = qtscxml
 	url = ../qtscxml.git
 	branch = wip/cmake
-	status = addon
+	status = ignore
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
@@ -298,7 +298,7 @@
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = wip/cmake
-	status = addon
+	status = ignore
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
 	recommends = qtdeclarative
