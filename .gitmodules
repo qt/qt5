@@ -330,3 +330,9 @@
 	url = ../qtshadertools.git
 	branch = dev
 	status = addon
+[submodule "qt5compat"]
+	depends = qtbase
+	path = qt5compat
+	url = ../qt5compat.git
+	branch = dev
+	status = deprecated
