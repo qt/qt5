@@ -1,7 +1,7 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
-	branch = refs/changes/71/283671/6
+	branch = wip/cmake
 	status = essential
 [submodule "qtsvg"]
 	depends = qtbase
@@ -14,7 +14,7 @@
 	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = refs/changes/15/287315/8
+	branch = wip/cmake
 	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
