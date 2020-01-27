@@ -114,10 +114,3 @@ Configurations:
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck']
--
-    Template: 'qtci-linux-RHEL-7.6-x86_64'
-    Target os: 'QNX_700'
-    Target arch: 'armv7'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -no-sql-mysql -qpa qnx -xplatform qnx-armle-v7-qcc'
