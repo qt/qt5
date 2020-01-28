@@ -237,7 +237,7 @@
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
 	branch = wip/cmake
-	status = essential
+	status = ignore
 [submodule "qtpurchasing"]
 	depends = qtbase
 	recommends = qtdeclarative qtandroidextras
