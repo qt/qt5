@@ -97,7 +97,7 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 
 cd $toolsFolder\bin\
 $sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion"
-$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args'
+$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args | Out-Null'
 Invoke-Expression $command
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'
 iex $command
