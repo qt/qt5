@@ -73,7 +73,7 @@ $CMD_INSTALL -m 755  "$PROVISIONING_DIR"/common/shared/telegraf/telegraf-ioping.
 
 [ x"$PROVISIONING_OS"   = xmacos ] && os=darwin || os=linux
 [ x"$PROVISIONING_ARCH" = xx86   ] && arch=i386 || arch=amd64
-package_filename=telegraf-1.12.1_${os}_${arch}.tar.gz
+package_filename=telegraf-1.12.6_${os}_${arch}.tar.gz
 package_sha256_list="$PROVISIONING_DIR"/common/shared/telegraf/telegraf_packages.sha256.txt
 package_sha256=$(sed -n "s/.*$package_filename *//p" "$package_sha256_list")
 
