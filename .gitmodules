@@ -144,7 +144,7 @@
 	path = qtimageformats
 	url = ../qtimageformats.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
