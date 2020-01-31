@@ -25,12 +25,6 @@
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host darwin-x86_64'
 -
-    Template: 'qtci-windows-10-x86_64-15'
-    Target os: 'WebAssembly'
-    Compiler: 'Mingw73'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake examples -nomake tests -no-feature-thread -static -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-pch -platform win32-g++ -xplatform wasm-emscripten'
--
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'WebAssembly'
     Compiler: 'Clang'
