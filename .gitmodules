@@ -311,16 +311,16 @@
 	path = qtlottie
 	url = ../qtlottie.git
 	branch = 5.15
-	status = preview
+	status = addon
 [submodule "qtquicktimeline"]
 	depends = qtbase qtdeclarative
 	path = qtquicktimeline
 	url = ../qtquicktimeline
 	branch = 5.15
-	status = preview
+	status = addon
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative
 	path = qtquick3d
 	url = ../qtquick3d.git
 	branch = 5.15
-	status = preview
+	status = addon
