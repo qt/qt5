@@ -50,8 +50,8 @@ $CMD_PKG_INSTALL python-devel
 # Selected installation instructions coming from:
 # https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
 export PACKAGE_NAME="python"
-export PACKAGE_VERSION="3.7.2"
-export PACKAGE_SHA=d83fe8ce51b1bb48bbcf0550fd265b9a75cdfdfa93f916f9e700aef8444bf1bb
+export PACKAGE_VERSION="3.7.6"
+export PACKAGE_SHA=55a2cce72049f0794e9a11a84862e9039af9183603b78bc60d89539f82cf533f
 (
 
     $CMD_PKG_INSTALL  ncurses zlib-devel libffi-devel libopenssl-devel
