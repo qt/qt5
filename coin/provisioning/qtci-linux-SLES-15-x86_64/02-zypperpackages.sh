@@ -35,10 +35,9 @@
 
 set -ex
 
-
 sudo zypper -nq install elfutils binutils
 
-sudo zypper -nq install git gcc gcc-c++
+sudo zypper -nq install git gcc gcc-c++ make patch wget tar
 
 sudo zypper -nq install bison flex gperf \
         zlib-devel \

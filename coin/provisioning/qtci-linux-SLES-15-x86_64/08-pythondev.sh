@@ -39,21 +39,31 @@
 
 set -ex
 
-sudo zypper -nq install python-devel
+PROVISIONING_DIR="$(dirname "$0")/../"
+. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
+
+
+# Python 2
+$CMD_PKG_INSTALL python-devel
 
 # Selected installation instructions coming from:
 # https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
 export PACKAGE_NAME="python"
 export PACKAGE_VERSION="3.7.2"
+export PACKAGE_SHA=d83fe8ce51b1bb48bbcf0550fd265b9a75cdfdfa93f916f9e700aef8444bf1bb
 (
 
-    sudo zypper install -y  gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib libffi-devel libopenssl-devel
+    $CMD_PKG_INSTALL  ncurses zlib-devel libffi-devel libopenssl-devel
 
-    printf -- 'Configuration and Installation started \n'
+    echo 'Configuration and Installation started'
 
-    #Downloading Source code
-    wget "https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz"
-    tar -xvf "Python-${PACKAGE_VERSION}.tar.xz"
+    #Download Source code
+    DownloadURL  \
+        http://ci-files01-hki.intra.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz  \
+        https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz  \
+        $PACKAGE_SHA
+    tar -xf "Python-${PACKAGE_VERSION}.tar.xz"
 
     #Configure and Build
     cd "Python-${PACKAGE_VERSION}"
@@ -61,14 +71,14 @@ export PACKAGE_VERSION="3.7.2"
     make
     sudo make install
 
-    export PATH="/usr/local/bin:${PATH}"
-    printf -- '\nInstalled python successfully \n'
+    echo 'Installed python successfully'
 
     #Cleanup
     cd -
     rm "Python-${PACKAGE_VERSION}.tar.xz"
 
     #Verify python installation
+    export PATH="/usr/local/bin:${PATH}"
     if command -V "$PACKAGE_NAME"${PACKAGE_VERSION:0:1} >/dev/null
     then
         printf -- "%s installation completed. Please check the Usage to start the service.\n" "$PACKAGE_NAME"
