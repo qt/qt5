@@ -100,20 +100,27 @@ DownloadURL () {
         targetFile=$4
     fi
 
-    if VerifyHash "$targetFile" "$expectedHash"
+    # If a non-empty file already exists
+    if [ -s "$targetFile" ]
     then
-        echo "Skipping download, found and validated existing file:  $targetFile"
-    else
-        echo "Downloading from primary URL:  $url"
-        if  ! Download "$url" "$targetFile"
+        if   VerifyHash "$targetFile" "$expectedHash"
         then
-            echo "FAIL! to download, trying alternative URL:  $url2"  1>&2
-            if  ! Download "$url2" "$targetFile"
-            then
-                echo 'FAIL! to download even from alternative URL'  1>&2
-                return 1
-            fi
+            echo "Skipping download, found and validated existing file:  $targetFile"
+            return
+        else
+            echo "WARNING: Non-empty but different file found at destination; will re-download and overwrite file:  $targetFile"
         fi
-        VerifyHash "$targetFile" "$expectedHash"
     fi
+
+    echo "Downloading from primary URL:  $url"
+    if  ! Download "$url" "$targetFile"
+    then
+        echo "FAIL! to download, trying alternative URL:  $url2"  1>&2
+        if  ! Download "$url2" "$targetFile"
+        then
+            echo 'FAIL! to download even from alternative URL'  1>&2
+            return 1
+        fi
+    fi
+    VerifyHash "$targetFile" "$expectedHash"
 }
