@@ -39,10 +39,12 @@
 # based on the SHA length). Target filename should also be given.
 
 ############################ BOILERPLATE ###############################
-command -v sha1sum >/dev/null   ||  alias   sha1sum='shasum -a 1'
-command -v sha256sum >/dev/null ||  alias sha256sum='shasum -a 256'
-command -v sha384sum >/dev/null ||  alias sha384sum='shasum -a 384'
-command -v sha512sum >/dev/null ||  alias sha512sum='shasum -a 512'
+
+command -v sha1sum   >/dev/null ||  sha1sum   () { shasum -a 1   "$@" ; }
+command -v sha256sum >/dev/null ||  sha256sum () { shasum -a 256 "$@" ; }
+command -v sha384sum >/dev/null ||  sha384sum () { shasum -a 384 "$@" ; }
+command -v sha512sum >/dev/null ||  sha512sum () { shasum -a 512 "$@" ; }
+
 ########################################################################
 
 
