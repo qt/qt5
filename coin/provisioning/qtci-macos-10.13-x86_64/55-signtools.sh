@@ -96,8 +96,8 @@ Install "$cacheSigningTools/csreq_qt_company.txt" "$csreq" $shaCsreq
 chmod 755 "$csreq"
 
 # iOS signing tools
-devIDKeychain="Developer_ID_TheQtCompany.keychain"
-shaDevIdKeychain="0420a129c17725a97afd6fdafeb9cddfb80a65ca"
+devIDKeychain="Developer_ID_TheQtCompany.keychain-db"
+shaDevIdKeychain="972cca1879cdaeeb6042f9879756c748a8d1eddc"
 Install "$cacheSigningTools/$devIDKeychain" "$keychains/$devIDKeychain" $shaDevIdKeychain
 echo "Opening $devIDKeychain.."
 open "$keychains/$devIDKeychain"
