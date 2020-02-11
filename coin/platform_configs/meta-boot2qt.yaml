@@ -2,49 +2,39 @@
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET1'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET2'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET3'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET4'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET5'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET6'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET7'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET8'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET9'
-    Features: ['UseLegacyInstructions']
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'Yocto'
     Target arch: 'TARGET10'
-    Features: ['UseLegacyInstructions']
