@@ -31,7 +31,7 @@ Configurations:
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON'
 -
     Template: 'qtci-linux-openSUSE-15.0-x86_64'
-    Compiler: 'ICC_18'
+    Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF'
 -
     Template: 'qtci-macos-10.14-x86_64-2'
