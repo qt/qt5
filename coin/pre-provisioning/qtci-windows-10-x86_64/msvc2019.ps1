@@ -35,7 +35,7 @@
 
 $version = "2019"
 # Current version was manually upgraded from the installer
-$version_number = "16.3.2"
+$version_number = "16.3.10"
 $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__505064367.1547034421.exe"
 
 .NET Framework 4.5 targeting pack

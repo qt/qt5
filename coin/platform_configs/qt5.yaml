@@ -1,47 +1,47 @@
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Compiler: 'MSVC2015'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2015 -xplatform winrt-x64-msvc2015'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2015 -xplatform winrt-x64-msvc2015 -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Target arch: 'x86'
     Compiler: 'MSVC2017'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x86-msvc2017'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x86-msvc2017 -qt-zlib'
 -
     Template: 'qtci-windows-7-x86-3'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Target arch: 'armv7'
     Compiler: 'MSVC2017'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-arm-msvc2017'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-arm-msvc2017 -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WinRT_10'
     Compiler: 'MSVC2017'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x64-msvc2017'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -debug-and-release -nomake tests -nomake examples -force-debug-info -no-sql-mysql -platform win32-msvc2017 -xplatform winrt-x64-msvc2017 -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'Android_ANY'
     Target arch: 'multi'
     Compiler: 'Mingw73'
     Target compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20 -qt-zlib'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'Android_ANY'
@@ -58,26 +58,26 @@
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -extprefix /Users/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-qcc'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'QNX_700'
     Target arch: 'armv7'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-armle-v7-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-armle-v7-qcc -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'QNX_700'
     Target arch: 'armv8'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -opengl es2 -nomake tests -nomake examples -no-sql-mysql -xplatform qnx-aarch64le-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -opengl es2 -nomake tests -nomake examples -no-sql-mysql -xplatform qnx-aarch64le-qcc -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'QNX_700'
     Target arch: 'x86_64'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-x86-64-qcc'
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-x86-64-qcc -qt-zlib'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'QNX_700'
@@ -93,11 +93,11 @@
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-64-qcc'
 -
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Target os: 'WebAssembly'
     Compiler: 'Mingw73'
     Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake examples -nomake tests -no-feature-thread -static -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-pch -platform win32-g++ -xplatform wasm-emscripten'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake examples -nomake tests -no-feature-thread -static -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-pch -platform win32-g++ -xplatform wasm-emscripten -qt-zlib'
 -
     Template: 'qtci-macos-10.13-x86_64-2'
     Target os: 'WebAssembly'
