@@ -95,9 +95,12 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 # Get a PATH where Java's path is defined from previous provisioning
 [Environment]::SetEnvironmentVariable("PATH", [Environment]::GetEnvironmentVariable("PATH", "Machine"), "Process")
 
+# Attempt to catch all errors of sdkmanager.bat, even when hidden behind a pipeline.
+$ErrorActionPreference = "Stop"
+
 cd $toolsFolder\bin\
 $sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion"
-$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args'
+$command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args | Out-Null'
 Invoke-Expression $command
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'
 iex $command

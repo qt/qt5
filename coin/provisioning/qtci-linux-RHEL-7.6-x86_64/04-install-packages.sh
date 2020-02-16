@@ -120,6 +120,8 @@ installPackages+=(xz-devel)
 installPackages+=(zlib-devel)
 installPackages+=(libffi-devel)
 installPackages+=(libsqlite3x-devel)
+# Build.pl
+installPackages+=(perl-Data-Dumper)
 
 sudo yum -y install "${installPackages[@]}"
 

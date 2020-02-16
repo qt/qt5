@@ -37,14 +37,14 @@
 # Install a specific version of Telegraf
 # https://github.com/influxdata/telegraf/releases
 
-$version = "1.12.1"
+$version = "1.12.6"
 
 if (Is64BitWinHost) {
     $arch = "amd64"
-    $sha256 = "88d8c8146b561f43726e61688b42d0b5ab88fc22607b94df5a2c8245bbb27e29"
+    $sha256 = "5d025d85070e8c180c443580afa8a27421a7bbcf14b5044894e9f3298d0ce97a"
 } else {
     $arch = "i386"
-    $sha256 = "d2dea67a28fd7a9e21395d14f0b7ce1b6413e85cc9ffd89cc7ff8f35e8af5837"
+    $sha256 = "5178a0bdaab448c2ef965b0e36f835849cea731ccd87c4a4527f0f05fbbdf271"
 }
 
 $filename = "telegraf-" + $version + "_windows_" + $arch + ".zip"

@@ -39,13 +39,57 @@
 
 set -ex
 
-sudo zypper -nq install python-devel
+PROVISIONING_DIR="$(dirname "$0")/../"
+. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
 
-wget -q https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
-bash build_python3.sh
 
-export
-python3 --version
+# Python 2
+$CMD_PKG_INSTALL python-devel
+
+# Selected installation instructions coming from:
+# https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
+export PACKAGE_NAME="python"
+export PACKAGE_VERSION="3.7.6"
+export PACKAGE_SHA=55a2cce72049f0794e9a11a84862e9039af9183603b78bc60d89539f82cf533f
+(
+
+    $CMD_PKG_INSTALL  ncurses zlib-devel libffi-devel libopenssl-devel
+
+    echo 'Configuration and Installation started'
+
+    #Download Source code
+    DownloadURL  \
+        http://ci-files01-hki.intra.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz  \
+        https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz  \
+        $PACKAGE_SHA
+    tar -xf "Python-${PACKAGE_VERSION}.tar.xz"
+
+    #Configure and Build
+    cd "Python-${PACKAGE_VERSION}"
+    ./configure --prefix=/usr/local --exec-prefix=/usr/local
+    make
+    sudo make install
+
+    echo 'Installed python successfully'
+
+    #Cleanup
+    cd -
+    rm "Python-${PACKAGE_VERSION}.tar.xz"
+
+    #Verify python installation
+    export PATH="/usr/local/bin:${PATH}"
+    if command -V "$PACKAGE_NAME"${PACKAGE_VERSION:0:1} >/dev/null
+    then
+        printf -- "%s installation completed. Please check the Usage to start the service.\n" "$PACKAGE_NAME"
+    else
+        printf -- "Error while installing %s, exiting with 127 \n" "$PACKAGE_NAME"
+        exit 127
+    fi
+)
+
+
+python3 --version | fgrep "$PACKAGE_VERSION"
 
 pip3 install --user wheel
 pip3 install --user virtualenv
