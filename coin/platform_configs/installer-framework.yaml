@@ -1,0 +1,30 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Template: 'qtci-windows-10-x86_64-10'
+    Compiler: 'MSVC2015'
+    Target arch: 'x86'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -nomake examples -nomake tests -accessibility -static -no-sql-sqlite -no-icu -mp -openssl-linked OPENSSL_LIBS="-llibssl_static -llibcrypto_static -lUser32 -lWs2_32 -lAdvapi32 -lCrypt32" -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -prefix c:\Users\qt\work\install'
+    Environment variables: ['TARGET_ARCHITECTURE=amd64_x86', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;']
+    Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat', 'amd64_x86']
+-
+    Template: 'qtci-macos-10.13-x86_64-2'
+    Compiler: 'Clang'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -no-sql-sqlite -qt-zlib -qt-libpng -qt-libjpeg -no-cups -no-freetype -prefix /Users/qt/work/install'
+-
+    Template: 'qtci-linux-RHEL-7.4-x86_64'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -nomake examples -nomake tests -accessibility -static -no-sql-sqlite -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked  -qt-xcb -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz -prefix /home/qt/work/install OPENSSL_LIBS="{{.Env.OPENSSL_HOME}}/lib/libssl.a {{.Env.OPENSSL_HOME}}/lib/libcrypto.a -ldl -lpthread" -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/libs'
+-
+    Template: 'qtci-linux-RHEL-7.4-x86_64'
+    Compiler: 'GCC'
+    Features: ['Documentation', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -nomake tests -qt-zlib -qt-libpng -qt-libjpeg -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'LicenseCheck']
