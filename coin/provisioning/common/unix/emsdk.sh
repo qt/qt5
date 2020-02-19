@@ -39,59 +39,55 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-version="1.38.27"
-version_node="8.9.1"
-urlOfficial="https://s3.amazonaws.com/mozilla-games/emscripten/packages"
+version="1.39.8"
 urlCache="http://ci-files01-hki.intra.qt.io/input/emsdk"
 targetFolder="/opt/emsdk"
 
-urlEmscriptenCache="$urlCache/emscripten-$version.tar.gz"
-urlEmscriptenExternal="https://github.com/kripken/emscripten/archive/$version.tar.gz"
-sha1Emscripten="ff9748a8f6b8eaa8192cce9fe2befc801443a161"
+# cross-platform emscripten SDK
+urlEmscriptenExternal="https://github.com/emscripten-core/emscripten/archive/$version.tar.gz"
+urlEmscriptenCache="$urlCache/emscripten.$version.tar.gz"
+sha1Emscripten="a593ea3b4ab7e3d57e1232b19a903ccf8f137d2f"
 
+# platform-specific toolchain and node binaries. urls obtained from "emsdk install"
 if uname -a |grep -q Darwin; then
-    urlEmscriptenLlvmCache="$urlCache/macos/emscripten-llvm-e$version.tar.gz"
-    urlEmscriptenLlvmExternal="$urlOfficial/llvm/tag/osx_64bit/emscripten-llvm-e$version.tar.gz"
-    urlNodeCache="$urlCache/macos/node-v$version_node-darwin-x64.tar.gz"
-    urlNodeExternal="$urlOfficial/node-v$version_node-darwin-x64.tar.gz"
-    sha1EmscriptenLlvm="66dffbc44cfcb7bcb1ed0d2658b519276c3077fa"
-    sha1Node="b9ec6fe9701d385e385886a4b171ba02bb6aead7"
-    node_js="$targetFolder/node-v$version_node-darwin-x64/bin"
+    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/mac/9e60f34accb4627d7358223862a7e74291886ab6/wasm-binaries.tbz2"
+    urlWasmBinariesCache="$urlCache/macos/wasm-binaries.$version.tbz2"
+    sha1WasmBinaries="aedb30fb07d565c35305af0920ab072ae743895d"
+
+    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v12.9.1-darwin-x64.tar.gz"
+    urlNodeBinariesCache="$urlCache/mac/node-v12.9.1-darwin-x64.tar.gz"
+    sha1NodeBinaries="f5976321ded091e70358e406b223f6fd64e35a43"
+    pathNodeExecutable='node-v12.9.1-darwin-x64/bin/node'
 else
-    urlEmscriptenLlvmCache="$urlCache/linux/emscripten-llvm-e$version.tar.gz"
-    urlEmscriptenLlvmExternal="$urlOfficial/llvm/tag/linux_64bit/emscripten-llvm-e$version.tar.gz"
-    urlNodeCache="$urlCache/linux/node-v$version_node-linux-x64.tar.xz"
-    urlNodeExternal="$urlOfficial/node-v$version_node-linux-x64.tar.xz"
-    sha1EmscriptenLlvm="8f5cd026c98cd40e53e6d11fbc32b116280ef9bb"
-    sha1Node="eaec5de2af934f7ebc7f9597983e71c5d5a9a726"
-    node_js="$targetFolder/node-v$version_node-linux-x64/bin"
+    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/9e60f34accb4627d7358223862a7e74291886ab6/wasm-binaries.tbz2"
+    urlWasmBinariesCache="$urlCache/linux/wasm-binaries.$version.tbz2"
+    sha1WasmBinaries="eb7fc94aa79a6e215272e2586173515aa37c3141"
+
+    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v12.9.1-linux-x64.tar.xz"
+    urlNodeBinariesCache="$urlCache/linux/node-v12.9.1-linux-x64.tar.xz"
+    sha1NodeBinaries="cde96023b468d593c50de27470dd714c8cfda9aa"
+    pathNodeExecutable='node-v12.9.1-linux-x64/bin/node'
 fi
 
 sudo mkdir "$targetFolder"
 
 InstallFromCompressedFileFromURL "$urlEmscriptenCache" "$urlEmscriptenExternal" "$sha1Emscripten" "$targetFolder" ""
-InstallFromCompressedFileFromURL "$urlEmscriptenLlvmCache" "$urlEmscriptenLlvmExternal" "$sha1EmscriptenLlvm" "$targetFolder" ""
-InstallFromCompressedFileFromURL "$urlNodeCache" "$urlNodeExternal" "$sha1Node" "$targetFolder" ""
+InstallFromCompressedFileFromURL "$urlWasmBinariesCache" "$urlWasmBinariesExternal" "$sha1WasmBinaries" "$targetFolder" ""
+InstallFromCompressedFileFromURL "$urlNodeBinariesCache" "$urlNodeBinariesExternal" "$sha1NodeBinaries" "$targetFolder" ""
 
 sudo chmod -R a+rwx "$targetFolder"
 
 echo "Writing $targetFolder/.emscripten"
 cat <<EOM >"$targetFolder/.emscripten"
-LLVM_ROOT='$targetFolder/emscripten-llvm-e$version/'
-EMSCRIPTEN_NATIVE_OPTIMIZER='$targetFolder/emscripten-llvm-e$version/optimizer'
-BINARYEN_ROOT='$targetFolder/emscripten-llvm-e$version/binaryen'
-NODE_JS='$node_js/node'
 EMSCRIPTEN_ROOT='$targetFolder/emscripten-$version'
-SPIDERMONKEY_ENGINE = ''
-V8_ENGINE = ''
+LLVM_ROOT='$targetFolder/install/bin'
+BINARYEN_ROOT='$targetFolder/install'
+NODE_JS='$targetFolder/$pathNodeExecutable'
 TEMP_DIR = '/tmp'
-COMPILER_ENGINE = NODE_JS
-JS_ENGINES = [NODE_JS]
 EOM
 
-SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-llvm-e$version/:$node_js:$targetFolder/emscripten-$version\""
+SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-$version/\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
 SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
 
 echo "Emsdk = $version" >> ~/versions.txt
-echo "Emsdk node = $version_node" >> ~/versions.txt
