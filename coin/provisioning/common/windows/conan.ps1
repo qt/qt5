@@ -36,8 +36,8 @@
 
 $scriptsPath = "C:\Python36\Scripts"
 
-Run-Executable "$scriptsPath\pip3.exe" "install --upgrade conan==1.17.0"
-Write-Output "Conan = 1.17.0" >> ~\versions.txt
+Run-Executable "$scriptsPath\pip3.exe" "install -r $PSScriptRoot\conan_requirements.txt"
+Write-Output "Conan = 1.22.2" >> ~\versions.txt
 
 # Use Qt Project repository by default
 Run-Executable "$scriptsPath\conan.exe" "remote add qtproject https://api.bintray.com/conan/qtproject/conan --insert --force"
