@@ -1,0 +1,3 @@
+1582268701
+conanfile.py: 0b5f0deb08eb369fa19f3f01d80c92be
+export_source/patches/0001-fix-install-mingw.patch: 10e6d5f804a7e2eadb8886369b87cc95
