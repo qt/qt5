@@ -1,1 +1,0 @@
-vcpkg_version=qt-snapshot-2019-12-05
