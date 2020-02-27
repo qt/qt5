@@ -34,6 +34,22 @@ Run-Conan-Install `
 
 Run-Conan-Install `
     -ConanfilesDir "$PSScriptRoot\conanfiles" `
+    -BuildinfoDir MSVC2019-x86_64 `
+    -Arch x86_64 `
+    -Compiler "Visual Studio" `
+    -CompilerVersion 16 `
+    -CompilerRuntime MD
+
+Run-Conan-Install `
+    -ConanfilesDir "$PSScriptRoot\conanfiles" `
+    -BuildinfoDir MSVC2019-x86 `
+    -Arch x86 `
+    -Compiler "Visual Studio" `
+    -CompilerVersion 16 `
+    -CompilerRuntime MD
+
+Run-Conan-Install `
+    -ConanfilesDir "$PSScriptRoot\conanfiles" `
     -BuildinfoDir Mingw73-x86 `
     -Arch x86 `
     -Compiler "gcc" `
