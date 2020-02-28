@@ -15,7 +15,7 @@ Configurations:
     Target arch: 'x86'
     Compiler: 'MSVC2019'
     Features: ['Packaging']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86%'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -qt-zlib'
 -
     Template: 'qtci-windows-10-x86_64-16'
     Compiler: 'MSVC2015'
@@ -39,7 +39,7 @@ Configurations:
     Template: 'qtci-windows-10-x86_64-16'
     Compiler: 'MSVC2019'
     Features: ['Packaging']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64%'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
