@@ -5,16 +5,11 @@ Configurations:
     Template: 'qtci-windows-7-x86-3'
     Compiler: 'Mingw73'
     Features: ['UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -developer-build -release -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -developer-build -release -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++ -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-15'
-    Compiler: 'MSVC2017'
-    Features: ['Packaging', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64%'
--
-    Template: 'qtci-windows-10-x86_64-15'
+    Template: 'qtci-windows-10-x86_64-16'
     Compiler: 'MSVC2019'
-    Features: ['DisableTests', 'UseLegacyInstructions']
+    Features: ['Packaging', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64%'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
@@ -50,7 +45,7 @@ Configurations:
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
+    Features: ['UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.14-x86_64'
@@ -64,20 +59,6 @@ Configurations:
     Compiler: 'Clang'
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'TvOS_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-tvos-clang'
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'WatchOS_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-watchos-clang'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'Android_ANY'

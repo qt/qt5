@@ -317,13 +317,13 @@
 	path = qtquicktimeline
 	url = ../qtquicktimeline
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative qtshadertools
 	path = qtquick3d
 	url = ../qtquick3d.git
 	branch = dev
-	status = preview
+	status = addon
 [submodule "qtshadertools"]
 	depends = qtbase
 	path = qtshadertools

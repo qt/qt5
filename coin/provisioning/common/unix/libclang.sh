@@ -65,10 +65,10 @@ zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-$version"
 
 DownloadURL $url_cached $url $sha1 $zip
-7z x $zip -o/tmp/
+sudo 7z x $zip -o/usr/local/
+sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
 
-sudo mv /tmp/libclang "$destination"
 
 echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
 echo "libClang = $version" >> ~/versions.txt

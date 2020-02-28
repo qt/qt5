@@ -8,4 +8,7 @@ Timezone: set to UTC
 Administrator tools - services - Windows search: stop & disable
 Power settings screen & slee: never
 Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
-
+MSVC 2019 build tools (default installation, no additional selections).
+    * Install after MSVC2019 is installed!
+    * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
+    * Version: 16.3.10

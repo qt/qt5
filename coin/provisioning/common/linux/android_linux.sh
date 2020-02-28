@@ -37,6 +37,8 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
+set -e
+
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/check_and_set_proxy.sh
@@ -80,8 +82,11 @@ else
     sudo chown -R qt:users "$targetFolder"
 fi
 
-# Run the following command under `eval` or `sh -c` so that the shell properly splits it
+# Stop the sdkmanager from printing thousands of lines of #hashmarks.
+# Run the following command under `eval` or `sh -c` so that the shell properly splits it.
 sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
+# But don't let the pipeline hide sdkmanager failures.
+set -o pipefail
 
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 # shellcheck disable=SC2031
