@@ -11,7 +11,6 @@
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
-	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
 	branch = 5.15.1
@@ -80,7 +79,7 @@
 	priority = 50
 [submodule "qtlocation"]
 	depends = qtbase
-	recommends = qtdeclarative qtquickcontrols qtquickcontrols2 qtserialport
+	recommends = qtdeclarative
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = 5.15.1
@@ -205,7 +204,7 @@
 	status = addon
 [submodule "qtwebchannel"]
 	depends = qtbase
-	recommends = qtdeclarative qtwebsockets
+	recommends = qtdeclarative
 	path = qtwebchannel
 	url = ../qtwebchannel.git
 	branch = 5.15.1
