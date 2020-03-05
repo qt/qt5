@@ -77,27 +77,20 @@ function Run-Conan-Install
     $manifestsDir = "$PSScriptRoot\conan_manifests"
     $buildinfoRoot = "C:\Utils\conanbuildinfos"
 
+    # Make up to 5 attempts for all download operations in conan
+    $env:CONAN_RETRY = "5"
+
     Get-ChildItem -Path "$ConanfilesDir\*.txt" |
     ForEach-Object {
         $conanfile = $_.FullName
         $outpwd = "$buildinfoRoot\$BuildinfoDir\$($_.BaseName)"
         New-Item $outpwd -Type directory -Force | Out-Null
 
-        for ($i = 1; $i -le 5; $i++) {
-            try {
-                Push-Location $outpwd
-                Run-Executable "$scriptsPath\conan.exe" "install --no-imports --verify $manifestsDir", `
-                    '-s', ('compiler="' + $Compiler + '"'), `
-                    "-s os=Windows -s arch=$Arch -s compiler.version=$CompilerVersion $extraArgs $conanfile"
-                break;
-            } catch {
-                if ($i -eq 5) {
-                    throw "Could not install conan content"
-                }
-            } finally {
-                Pop-Location
-            }
-        }
+        Push-Location $outpwd
+        Run-Executable "$scriptsPath\conan.exe" "install --no-imports --verify $manifestsDir", `
+            '-s', ('compiler="' + $Compiler + '"'), `
+            "-s os=Windows -s arch=$Arch -s compiler.version=$CompilerVersion $extraArgs $conanfile"
+        Pop-Location
 
         Copy-Item -Path $conanfile -Destination "$outpwd\conanfile.txt"
     }
