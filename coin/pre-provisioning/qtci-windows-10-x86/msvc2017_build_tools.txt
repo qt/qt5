@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -30,20 +30,11 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-
 . "$PSScriptRoot\..\common\helpers.ps1"
 
-# This script will install Visual Studio 2017
+# Install Visual Studio 2017 Build Tools
+# Install both build tools: Visual C++ and Web development
+# https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017
 
-$version = "2017"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
-$sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
-$msvcPackage = "C:\Windows\Temp\$version.exe"
-
-
-Download $url_cache $url_cache $msvcPackage
-Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --norestart --quiet --wait --add Microsoft.VisualStudio.Component.VC.Tools.ARM"
-echo "Cleaning $msvcPackage.."
-Remove-Item -Recurse -Force "$msvcPackage"
-echo "Visual Studio = $version" >> ~\versions.txt
+$url_internal = https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_build_tools_for_visual_studio_2017_version_15.0_x86_x64_10254482.exe"
