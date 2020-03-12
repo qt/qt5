@@ -37,7 +37,16 @@ set -ex
 
 sudo zypper -nq install elfutils binutils
 
-sudo zypper -nq install git gcc gcc-c++ make patch wget tar
+sudo zypper addrepo --no-gpgcheck https://download.opensuse.org/repositories/devel:gcc/SLE-15/devel:gcc.repo
+sudo zypper refresh
+sudo zypper -nq install --force-resolution gcc10 gcc10-c++
+
+sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 1 \
+                                     --slave /usr/bin/g++ g++ /usr/bin/g++-10 \
+                                     --slave /usr/bin/cc cc /usr/bin/gcc-10 \
+                                     --slave /usr/bin/c++ c++ /usr/bin/g++-10
+
+sudo zypper -nq install git make patch wget tar
 
 sudo zypper -nq install bison flex gperf \
         zlib-devel \
