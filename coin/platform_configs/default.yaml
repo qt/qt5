@@ -73,7 +73,7 @@ Configurations:
 -
     Template: 'qtci-linux-SLES-15-x86_64'
     Compiler: 'GCC'
-    Features: ['DisableTests']
+    Features: ['Insignificant']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-sql-mysql -no-pch -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 -
     Template: 'qtci-linux-RHEL-7.6-x86_64'
