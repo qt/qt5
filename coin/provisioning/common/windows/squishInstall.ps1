@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,120 +33,48 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-# This script will install squish package for Windows.
+# This script will pre-installed squish package for Windows.
 # Squish is need by Release Test Automation (RTA)
-# NOTE! Make sure 64bit versions are always installed before 32bit,
-# because they use same folder name before a rename
 
-$version = "6.5"
-
-# Qt branch without dot (*.*)
-$qtBranch = "513x"
-# So far Squish built with Qt5.12 works also with 5.13, but we have to be prepared that on some point
-# the compatibility breaks, and we may need to have separate Squish packages for different Qt versions.
-
+$version = "6.5.2"
+$qtBranch = "514x"
 $targetDir = "C:\Utils\squish"
-$squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin"
-$squishBranchUrl = "$squishUrl\$qtBranch"
-$testSuite = "suite_test_squish"
-$testSuiteUrl = "$squishUrl\$testSuite.7z"
+$squishPackage = "C:\Utils\rta_squish"
+$squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build"
+$licenseUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin"
 
 # Squish license
 $licensePackage = ".squish-3-license"
 
+Write-Host "Installing Squish license to home directory"
+Copy-Item $licenseUrl\$licensePackage ~\$licensePackage
+
+if (Is64BitWinHost) {
+     $arch = "x64"
+} else {
+    $arch = "x86"
+}
+
 $OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 
-Function DownloadAndInstallSquish {
-    Param (
-        [string]$version,
-        [string]$bit,
-        [string]$squishPackage
-    )
-    $SquishUrl = $squishBranchUrl + "\squish-nosignalhandler-" + $version + "-qt" + $qtBranch + "-" + $bit + "-" + $squishPackage + ".exe"
-    $SquishInstaller = "$targetDir\$squishPackage.exe"
-    $SquishParameters = "unattended=1 targetdir=$targetDir\$squishPackage"
-
-    Write-Host "Fetching from URL $squishUrl"
-    Copy-Item "$SquishUrl" "$SquishInstaller"
-    Write-Host "Installing Squish"
-    $stdoutFile = [System.IO.Path]::GetTempFileName()
-    $stderrFile = [System.IO.Path]::GetTempFileName()
-    Start-Process -FilePath "$SquishInstaller" -Wait -ArgumentList $SquishParameters -PassThru -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile | Out-Null
-    Remove-Item -Path $SquishInstaller
-    if ("$bit" -eq "win64") {
-        if ($squishPackage.StartsWith("mingw")) {
-            $squishPackage64bit = "mingw_64"
-        } else {
-            $squishPackage64bit = "$squishPackage`_64"
-        }
-        Rename-Item $targetDir\$squishPackage $targetDir\$squishPackage64bit
-        TestSquish $squishPackage64bit
-    } else {
-        if ($squishPackage.StartsWith("mingw")) {
-            Rename-Item $targetDir\$squishPackage $targetDir\mingw
-            TestSquish mingw
-        } else {
-            TestSquish $squishPackage
-        }
-    }
-}
-
-Function DownloadSquishLicence {
-    Param (
-        [string]$squishUrl
-    )
-
-    Write-Host "Installing Squish license to home directory"
-    Copy-Item $squishUrl\$licensePackage ~\$licensePackage
-}
-
-Function TestSquish {
-    Param (
-        [string]$squishPackage
-    )
-
-    Write-Host "Verifying Squish Installation"
-    if (cmd /c "$targetDir\$squishPackage\bin\squishrunner.exe --testsuite $targetDir\$testSuite" |Select-String -Pattern "Squish test run successfully") {
-        Write-Host "Squish installation tested successfully!"
-    } else {
-        Write-Host "Squish test failed! $squishPackage wasn't installed correctly."
-        [Environment]::Exit(1)
-    }
-}
-
-Write-Host "Creating $targetDir"
-New-Item -ErrorAction Ignore -ItemType directory -Path "$targetDir"
-
-Write-Host "Download and install Test Suite for squish"
-Copy-Item $testSuiteUrl $targetDir/$testSuite.7z
-Extract-7Zip $targetDir/$testSuite.7z $targetDir
-
-DownloadSquishLicence $squishUrl
-
 if ($OSVersion -eq "Windows 10 Enterprise") {
-
+    $winVersion = "win10"
     if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 "msvc14"
-        DownloadAndInstallSquish $version win64 "msvc141"
-        DownloadAndInstallSquish $version win64 "mingw_gcc73_posix_seh"
+        $sha1 = "9262d3b749483094024c74986f93e9340afbdb62"
     } else {
-        DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
+        $sha1 = "0763b344afa327e6c374971492021c5e923be892"
     }
-    DownloadAndInstallSquish $version win32 "msvc141"
-
-} elseif ($OSVersion -eq "Windows 8.1 Enterprise") {
-
-    if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 "msvc14"
-    }
-    DownloadAndInstallSquish $version win32 "msvc141"
-
 } elseif ($OSVersion -eq "Windows 7 Enterprise") {
-
-    if (Is64BitWinHost) {
-        DownloadAndInstallSquish $version win64 "msvc14"
-    } else {
-        DownloadAndInstallSquish $version win32 "mingw_gcc53_posix_dwarf"
-    }
-    DownloadAndInstallSquish $version win32 "msvc141"
+    $winVersion = "win7"
+    $sha1 = "01b3529459da948cfde319d60becc666da0e1c4d"
 }
+$squishArchive = "prebuild-squish-$version-$qtBranch-$winVersion-$arch.zip"
+
+Copy-Item "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable\$squishArchive" "C:\Utils"
+Verify-Checksum "C:\Utils\$squishArchive" $sha1
+Extract-7Zip "C:\Utils\$squishArchive" "C:\Utils"
+Rename-Item "$squishPackage" "$targetDir"
+
+Write-Host "Verifying Squish Installation for following targets:"
+get-childitem "$targetDir" -Filter squishrunner.exe -Recurse | % { $_.FullName }
+get-childitem "$targetDir" -Filter squishrunner.exe -Recurse | % { if (cmd /c $_.FullName --testsuite "$targetDir\suite_test_squish" |Select-String -Pattern "Squish test run successfully") { Write-Host "Squish tested successfully"} else { [Environment]::Exit(1) } }
