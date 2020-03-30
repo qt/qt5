@@ -140,3 +140,10 @@ Configurations:
     Compiler: 'GCC'
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -xplatform integrity-armv7-imx6'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'QNX_700'
+    Target arch: 'armv7'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -no-sql-mysql -qpa qnx -xplatform qnx-armle-v7-qcc -I /opt/qnx700/target/qnx7/usr/include/openssl1_1'

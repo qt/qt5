@@ -56,6 +56,51 @@ Configurations:
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host darwin-x86_64'
 -
+    Template: 'qtci-macos-10.13-x86_64-2'
+    Target os: 'QNX_700'
+    Target arch: 'x86'
+    Compiler: 'GCC'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /Users/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-qcc -I /opt/qnx700/target/qnx7/usr/include/openssl1_1'
+-
+    Template: 'qtci-windows-10-x86_64-17'
+    Target os: 'QNX_700'
+    Target arch: 'armv7'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\Program Files\Git\bin;C:\MINGW810\mingw64\bin;$PATH;C:\qnx700\host\win64\x86_64\usr\bin;C:\qnx700\.qnx\bin', 'MAKEFLAGS=-j4 -Ic:\qnx700\target\qnx7\usr\include', 'QNX_CONFIGURATION=c:/qnx700/.qnx', 'QNX_CONFIGURATION_EXCLUSIVE=c:/qnx700/.qnx', 'QNX_TARGET=c:/qnx700/target/qnx7', 'QNX_HOST=c:/qnx700/host/win64/x86_64', 'LIB=""', 'INCLUDE=""']
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-armle-v7-qcc -Ic:\qnx700\target\qnx7\usr\include\openssl1_1'
+-
+    Template: 'qtci-windows-10-x86_64-17'
+    Target os: 'QNX_700'
+    Target arch: 'armv8'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\Program Files\Git\bin;C:\MINGW810\mingw64\bin;$PATH;C:\qnx700\host\win64\x86_64\usr\bin;C:\qnx700\.qnx\bin', 'MAKEFLAGS=-j4 -Ic:\qnx700\target\qnx7\usr\include', 'QNX_CONFIGURATION=c:/qnx700/.qnx', 'QNX_CONFIGURATION_EXCLUSIVE=c:/qnx700/.qnx', 'QNX_TARGET=c:/qnx700/target/qnx7', 'QNX_HOST=c:/qnx700/host/win64/x86_64', 'LIB=""', 'INCLUDE=""']
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -opengl es2 -nomake tests -nomake examples -no-sql-mysql -xplatform qnx-aarch64le-qcc -Ic:\qnx700\target\qnx7\usr\include\openssl1_1'
+-
+    Template: 'qtci-windows-10-x86_64-17'
+    Target os: 'QNX_700'
+    Target arch: 'x86_64'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\Program Files\Git\bin;C:\MINGW810\mingw64\bin;$PATH;C:\qnx700\host\win64\x86_64\usr\bin;C:\qnx700\.qnx\bin', 'MAKEFLAGS=-j4 -Ic:\qnx700\target\qnx7\usr\include', 'QNX_CONFIGURATION=c:/qnx700/.qnx', 'QNX_CONFIGURATION_EXCLUSIVE=c:/qnx700/.qnx', 'QNX_TARGET=c:/qnx700/target/qnx7', 'QNX_HOST=c:/qnx700/host/win64/x86_64', 'LIB=""', 'INCLUDE=""']
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -opengl es2 -xplatform qnx-x86-64-qcc -Ic:\qnx700\target\qnx7\usr\include\openssl1_1'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'QNX_700'
+    Target arch: 'armv8'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-aarch64le-qcc -I /opt/qnx700/target/qnx7/usr/include/openssl1_1'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'QNX_700'
+    Target arch: 'x86_64'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-use-gold-linker -opengl es2 -qpa qnx -xplatform qnx-x86-64-qcc -I /opt/qnx700/target/qnx7/usr/include/openssl1_1'
+-
     Template: 'qtci-windows-10-x86_64-17'
     Target os: 'WebAssembly'
     Compiler: 'Mingw'
