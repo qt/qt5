@@ -22,13 +22,6 @@
 	url = ../qtactiveqt.git
 	branch = dev
 	status = ignore
-[submodule "qtscript"]
-	depends = qtbase
-	recommends = qttools
-	path = qtscript
-	url = ../qtscript.git
-	branch = dev
-	status = ignore
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
