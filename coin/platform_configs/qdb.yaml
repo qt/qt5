@@ -18,6 +18,11 @@ Configurations:
         Features: ['Packaging']
         Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -qt-harfbuzz -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib QMAKE_LFLAGS_APP+=-s -static -no-icu'
     -
+        Template: 'qtci-macos-10.13-x86_64-2'
+        Compiler: 'Clang'
+        Features: ['Packaging']
+        Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include -static -no-icu'
+    -
         Template: 'qtci-linux-Ubuntu-18.04-x86_64'
         Compiler: 'GCC'
         Features: ['TestOnly', 'LicenseCheck']
