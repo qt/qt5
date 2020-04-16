@@ -1,0 +1,45 @@
+### CENTOS 8.1 ###
+Hard Disk: 500G
+Network: CI
+Video Card: Total Video Memory: 64MB
+Boot options/Firmware: BIOS
+
+Language: English (United States)
+Time & Date: Europe/Helsinki
+Software Selection: Server with GUI
+Network & Host..: Connect
+
+Language: English (US)
+Typing:English (US)
+Privacy: Location Services: OFF
+Connect Your Online Accounts: Skip
+
+
+# Configure Settings
+ Notifications:
+    * Notification Popups: OFF
+    * Lock Screen Notifications: OFF
+ Privacy:
+    * Screen Lock: OFF
+ Power:
+    * Blank screen: Never
+ Devices:
+    * Displays: Resolution 1280 x 800
+ Details:
+    * Time Zone: GMT
+    * Users: Automatic login on
+
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_386/coin-setup
+
+run 'sudo ./coin-setup'
+
+Add 'GRUB_GFXMODE=1280x800' to /etc/default/grub
+grub2-mkconfig -o /etc/grub2.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+Reboot
+

@@ -3,7 +3,6 @@
 #############################################################################
 ##
 ## Copyright (C) 2018 The Qt Company Ltd.
-## Copyright (C) 2020 Konstantin Tokarev <annulen@yandex.ru>
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -34,40 +33,44 @@
 ##
 #############################################################################
 
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-# This script will install dwz 0.13 - optimization tool for DWARF debug info
+set -ex
 
-version="0.13"
-sha1="21e6d5878bb84ac6c9ad07b00ed248d8c547bc7d"
-internalUrl="http://ci-files01-hki.intra.qt.io/input/centos/dwz-$version.tar.xz"
-externalUrl="https://www.sourceware.org/ftp/dwz/releases/dwz-$version.tar.xz"
+# This script will install ICU
 
-targetDir="$HOME/dwz"
-targetFile="$HOME/dwz-$version.zip"
-DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
-tar -xJf "$targetFile" -C "$HOME"
+icuVersion="56.1"
+icuLocation="/usr/lib64"
+sha1="6dd9ca6b185681a7ddc4bb94fd7fced27647a21c"
+baseBinaryPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+
+sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
+develPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+
+echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
+
+targetFile=$(mktemp)
+DownloadURL "$baseBinaryPackageURL" "$baseBinaryPackageExternalURL" "$sha1" "$targetFile"
+sudo 7z x -y -o/usr/lib64 "$targetFile"
 sudo rm "$targetFile"
 
-# devtoolset is needed when running configuration in RedHat
-if uname -a |grep -q "el7"; then
-    export PATH="/opt/rh/devtoolset-4/root/usr/bin:$PATH"
-fi
+echo "Installing custom ICU devel packages on RHEL"
 
-installPrefix="/opt/dwz-$version"
+tempDir=$(mktemp -d)
 
-echo "Configuring and building dwz"
-cd "$targetDir"
-# dwz uses plain makefile instead of autotools, so it works a bit unconventionally
-./configure
-make -j5
-sudo make install prefix=$installPrefix
+targetFile=$(mktemp)
+DownloadURL "$develPackageURL" "$develPackageExternalURL" "$sha1Dev" "$targetFile"
+7z x -y -o"$tempDir" "$targetFile"
 
-sudo rm -r "$targetDir"
+sudo cp -a "$tempDir"/lib/* /usr/lib64
+sudo cp -a "$tempDir"/* /usr/
 
-SetEnvVar "PATH" "$installPrefix/bin:\$PATH"
+sudo rm "$targetFile"
+sudo rm -fr "$tempDir"
 
-echo "dwz = $version" >> ~/versions.txt
+sudo /sbin/ldconfig
+
+echo "ICU = $icuVersion" >> ~/versions.txt

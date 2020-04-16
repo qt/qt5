@@ -4,7 +4,7 @@
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
     Features: ['UseLegacyInstructions']
 -
-    Template: 'qtci-linux-RHEL-6.6-x86_64'
+    Template: 'qtci-linux-CentOS-8.1-x86_64-50'
     Compiler: 'GCC'
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -force-debug-info -nomake examples -nomake tests'
     Features: ['UseLegacyInstructions']

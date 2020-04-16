@@ -3,7 +3,6 @@
 #############################################################################
 ##
 ## Copyright (C) 2018 The Qt Company Ltd.
-## Copyright (C) 2020 Konstantin Tokarev <annulen@yandex.ru>
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -34,40 +33,16 @@
 ##
 #############################################################################
 
-# shellcheck source=../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# This script needs to be called last during provisioning so that the software information will show up last in provision log.
 
-# This script will install dwz 0.13 - optimization tool for DWARF debug info
+# Storage installed RPM packages information
 
-version="0.13"
-sha1="21e6d5878bb84ac6c9ad07b00ed248d8c547bc7d"
-internalUrl="http://ci-files01-hki.intra.qt.io/input/centos/dwz-$version.tar.xz"
-externalUrl="https://www.sourceware.org/ftp/dwz/releases/dwz-$version.tar.xz"
+set -ex
 
-targetDir="$HOME/dwz"
-targetFile="$HOME/dwz-$version.zip"
-DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
-tar -xJf "$targetFile" -C "$HOME"
-sudo rm "$targetFile"
+# shellcheck disable=SC2129
+echo "*********************************************" >> ~/versions.txt
+echo "***** All installed RPM packages *****" >> ~/versions.txt
+rpm -q -a | sort >> ~/versions.txt
+echo "*********************************************" >> ~/versions.txt
 
-# devtoolset is needed when running configuration in RedHat
-if uname -a |grep -q "el7"; then
-    export PATH="/opt/rh/devtoolset-4/root/usr/bin:$PATH"
-fi
-
-installPrefix="/opt/dwz-$version"
-
-echo "Configuring and building dwz"
-cd "$targetDir"
-# dwz uses plain makefile instead of autotools, so it works a bit unconventionally
-./configure
-make -j5
-sudo make install prefix=$installPrefix
-
-sudo rm -r "$targetDir"
-
-SetEnvVar "PATH" "$installPrefix/bin:\$PATH"
-
-echo "dwz = $version" >> ~/versions.txt
+"$(dirname "$0")/../common/linux/version.sh"
