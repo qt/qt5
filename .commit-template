@@ -17,6 +17,10 @@
 #Task-number: 
 #Coverity-Id: 
 #
+# Add a space-separated list of target branches that the change should
+# be cherry-picked to automatically.
+#Pick-to: 
+#
 # ==[ Please wrap at 72 characters ]===================================|
 #
 # Remember to read http://wiki.qt.io/Commit_Policy
