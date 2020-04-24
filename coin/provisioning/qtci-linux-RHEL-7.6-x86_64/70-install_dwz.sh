@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 Konstantin Tokarev <annulen@yandex.ru>
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -30,29 +32,11 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\..\..\provisioning\common\helpers.ps1"
 
-# Install Visual Studio $version with $update_version
-# Original download page: https://www.visualstudio.com/en-us/news/releasenotes/vs2015-update3-vs
-$version = "2015"
-$update_version = "3"
+set -ex
 
-# Only way to install specific Visual studio release is to use feed.xml.
-# Visual Studio $version setup will use the feed.xml that was available when $update_version released -> 'https://msdn.microsoft.com/en-us/library/mt653628.aspx'
-# These parameters will install Visual Studio Enterprise Update $update_version (the original Update $update_version without any further Update $update_version-era updates)
-$parameters = "/OverrideFeedURI http://download.microsoft.com/download/6/B/B/6BBD3561-D764-4F39-AB8E-05356A122545/20160628.2/enu/feed.xml"
+sudo yum -y install elfutils-libelf-devel
 
-$msvc_web_installer = "vs" + $version + "_" + $update_version
-$package = "C:\Windows\temp\$msvc_web_installer.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/$msvc_web_installer.exe"
-$url_official = "https://go.microsoft.com/fwlink/?LinkId=691129"
-$sha1 = "68abf90424aff604a04d6c61fb52adcd2cab2266"
+# shellcheck source=../common/linux/install_dwz.sh
+source "${BASH_SOURCE%/*}/../common/linux/install_dwz.sh"
 
-echo "Fetching Visual Studio $version update $update_version..."
-Download $url_official $url_cache $package
-Verify-Checksum $package $sha1
-echo "Installing Visual studio $version update $update_version..."
-cmd /c "$package $parameters /norestart /Quiet"
-remove-item $package
-
-echo "Visual Studio = $version update $update_version" >> ~\versions.txt

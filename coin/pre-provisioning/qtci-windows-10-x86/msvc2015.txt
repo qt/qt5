@@ -1,0 +1,14 @@
+# Install visual studio 2015
+
+version = "2015 update 3"
+installer = "http://ci-files01-hki.intra.qt.io/input/windows/en_visual_studio_professional_2015_x86_x64_web_installer_6846650.exe"
+# Select default values
+# Make sure these are selected:
+    * All values from 'Universal Windows App Development Tools'
+    * 'Visual C++'
+        * 'Common Tools for Visual C++ 2015'
+        * 'Windows XP Support for C++'
+    * 'Common Tools and Software Development Kits'
+        * 'Android Native Development Kit (R11C, 32 bits)
+        * 'Apache Ant (1.9.3)
+
