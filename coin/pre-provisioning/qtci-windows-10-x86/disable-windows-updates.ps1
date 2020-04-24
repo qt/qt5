@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,16 +31,24 @@
 ##
 #############################################################################
 
-set -e
+# This script disables the automatic Windows updates
 
-curl --retry 5 --retry-delay 10 --retry-max-time 60 http://ci-files01-hki.intra.qt.io/input/semisecure/redhat_ak.sh -o "/tmp/redhat_ak.sh" &>/dev/null
-sudo chmod 755 /tmp/redhat_ak.sh
-/tmp/redhat_ak.sh
+$service = get-service wuauserv
+if (-not $service) {
+    Write-Host "Windows Update service not found."
+    exit 0
+}
 
-# refresh local certificates
-sudo subscription-manager refresh
+if ($service.Status -eq "Stopped") {
+    Write-Host "Windows Update service already stopped."
+} else {
+    Write-Host "Stopping Windows Update service."
+    Stop-Service -Name "wuauserv" -Force
+}
 
-# Attach available subscriptions to system. This is needed when subscriptions are renewed.
-sudo subscription-manager attach --auto
-
-sudo rm -f /tmp/redhat_ak.sh
+$startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"
+if ($startup -ne "Disabled") {
+    set-service wuauserv -startup disabled
+} else {
+    Write-Host "Windows Update service startup already disabled."
+}

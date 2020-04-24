@@ -1,6 +1,9 @@
-############################################################################
+#!/usr/bin/env bash
+
+#############################################################################
 ##
 ## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 Konstantin Tokarev <annulen@yandex.ru>
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,19 +34,38 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\..\common\helpers.ps1"
+# shellcheck source=../unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# shellcheck source=../unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-# This script will install Visual Studio 2017
+# This script will install dwz 0.13 - optimization tool for DWARF debug info
 
-$version = "2017"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/mu_visual_studio_professional_" + $version + "_x86_x64_10049787.exe"
-$sha1 = "8d678d27735018a99dc22ddb5412e4e6868991ae"
-$msvcPackage = "C:\Windows\Temp\$version.exe"
+version="0.13"
+sha1="21e6d5878bb84ac6c9ad07b00ed248d8c547bc7d"
+internalUrl="http://ci-files01-hki.intra.qt.io/input/rhel7/dwz-$version.tar.xz"
+externalUrl="https://www.sourceware.org/ftp/dwz/releases/dwz-$version.tar.xz"
 
+targetDir="$HOME/dwz"
+targetFile="$HOME/dwz-$version.zip"
+DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
+tar -xJf "$targetFile" -C "$HOME"
+sudo rm "$targetFile"
 
-Download $url_cache $url_cache $msvcPackage
-Verify-Checksum $msvcPackage $sha1
-cmd /c "$msvcPackage --all --norestart --quiet --wait --add Microsoft.VisualStudio.Component.VC.Tools.ARM"
-echo "Cleaning $msvcPackage.."
-Remove-Item -Recurse -Force "$msvcPackage"
-echo "Visual Studio = $version" >> ~\versions.txt
+# devtoolset is needed when running configuration
+export PATH="/opt/rh/devtoolset-4/root/usr/bin:$PATH"
+
+installPrefix="/opt/dwz-$version"
+
+echo "Configuring and building dwz"
+cd "$targetDir"
+# dwz uses plain makefile instead of autotools, so it works a bit unconventionally
+./configure
+make -j5
+sudo make install prefix=$installPrefix
+
+sudo rm -r "$targetDir"
+
+SetEnvVar "PATH" "$installPrefix/bin:\$PATH"
+
+echo "dwz = $version" >> ~/versions.txt
