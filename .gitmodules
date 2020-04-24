@@ -48,7 +48,7 @@
 	path = qttranslations
 	url = ../qttranslations.git
 	branch = dev
-	status = essential
+	status = ignore
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
@@ -56,20 +56,20 @@
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = dev
-	status = essential
+	status = ignore
 	priority = 40
 [submodule "qtrepotools"]
 	path = qtrepotools
 	url = ../qtrepotools.git
 	branch = master
-	status = essential
+	status = ignore
 	project = -
 [submodule "qtqa"]
 	depends = qtbase
 	path = qtqa
 	url = ../qtqa.git
 	branch = master
-	status = essential
+	status = ignore
 	priority = 50
 [submodule "qtlocation"]
 	depends = qtbase
@@ -188,7 +188,7 @@
 	path = qtandroidextras
 	url = ../qtandroidextras.git
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -258,7 +258,7 @@
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -310,13 +310,13 @@
 	path = qtquicktimeline
 	url = ../qtquicktimeline
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative qtshadertools
 	path = qtquick3d
 	url = ../qtquick3d.git
 	branch = dev
-	status = addon
+	status = ignore
 [submodule "qtshadertools"]
 	depends = qtbase
 	path = qtshadertools
