@@ -34,22 +34,35 @@
 
 set -ex
 
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-# build latest qemu to usermode
 sudo apt-get -y install automake autoconf libtool
 
-tempDir=$(mktemp -d)
-git clone git://git.qemu.org/qemu.git "$tempDir"
-cd "$tempDir"
+DownloadAndBuiltQemu () {
+    tempDir=$(mktemp -d)
+    cd ${tempDir}
 
-#latest commit from the master proven to work
-git checkout c7f1cf01b8245762ca5864e835d84f6677ae8b1f
-git cherry-pick 75e5b70e6b5dcc4f2219992d7cffa462aa406af0
-git cherry-pick 04b33e21866412689f18b7ad6daf0a54d8f959a7
-git cherry-pick cd8133679f7e0e2c292f631f1c78b2452d2435c7
-git submodule update --init pixman
+    commit_sha=c7f1cf01b8245762ca5864e835d84f6677ae8b1f
+    qemu_tarball="qemu_tarball.zip"
+    PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/qemu/${qemu_tarball}"
+    AltUrl="https://github.com/qemu/qemu/archive/${commit_sha}.zip"
+    SHA1="351289c4420f16575bff060f91ce540d7b3fa2ab"
+    DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$qemu_tarball"
+    unzip ${qemu_tarball}
+    cd qemu-${commit_sha}
+
+    fixes=( 75e5b70e6b5dcc4f2219992d7cffa462aa406af0 04b33e21866412689f18b7ad6daf0a54d8f959a7 cd8133679f7e0e2c292f631f1c78b2452d2435c7 )
+    fixes_sha1sums=( e53c4f567b461e7e2905636b369c4458ee8c0277 1914e5fa2f707d69d86ceb7c94957d096c8e8db4 eeca01c307d37eb362913b3f811034d5ac77cac8 )
+    for i in $(seq 0 $((${#fixes[@]} - 1))); do
+        PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/qemu/${fixes[$i]}.diff"
+        AltUrl="https://github.com/qemu/qemu/commit/${fixes[$i]}.diff"
+        SHA1="${fixes_sha1sums[$i]}"
+        DownloadURL  "$PrimaryUrl" "$AltUrl" "$SHA1" "${fixes[$i]}.diff"
+        patch -p1 < ${fixes[$i]}.diff
+    done
 
 patch -p1 <<EOT
 From aad6a8f17dc7ad3681d2d98a01e474a8904a129b Mon Sep 17 00:00:00 2001
@@ -159,27 +172,46 @@ index 94d8abc745..e72cfb0cb5 100644
 2.17.1
 EOT
 
-./configure --target-list=arm-linux-user,aarch64-linux-user --static --disable-werror
-make
-sudo make install
-rm -rf "$tempDir"
+    ./configure --disable-bsd-user --disable-guest-agent --disable-strip --disable-werror --disable-gcrypt --disable-debug-info --disable-debug-tcg --disable-tcg-interpreter --enable-attr --disable-brlapi --disable-linux-aio --disable-bzip2 --disable-bluez --disable-cap-ng --disable-curl --disable-fdt --disable-glusterfs --disable-gnutls --disable-nettle --disable-gtk --disable-rdma --disable-libiscsi --disable-vnc-jpeg --disable-kvm --disable-lzo --disable-curses --disable-libnfs --disable-numa --disable-opengl --disable-vnc-png --disable-rbd --disable-vnc-sasl --disable-sdl --disable-seccomp --disable-smartcard --disable-snappy --disable-spice --disable-libusb --disable-usb-redir --disable-vde --disable-vhost-net --disable-virglrenderer --disable-virtfs --disable-vnc --disable-vte --disable-xen --disable-xen-pci-passthrough --disable-xfsctl --enable-linux-user --disable-system --disable-blobs --disable-tools --target-list=arm-linux-user,aarch64-linux-user --static --disable-pie --disable-docs
+    make
+    sudo make install
+
+# To create a new qemu.deb file add "--prefix=${tempDir}/qemu_prebuilt/usr/local/" to ./configure
+# Then add the following commands, make sure to change the version number.
+#     mkdir ${tempDir}/qemu_prebuilt/DEBIAN
+#     echo -n "Package: QEMU
+# Version: 2.8.0-833-g09cc6b1ab7-dirty
+# Section: misc
+# Priority: important
+# Architecture: i386
+# Maintainer: Fabrice Bellard and the QEMU Project developers
+# Description: QEMU for arm and arm64" > ${tempDir}/qemu_prebuilt/DEBIAN/control
+#
+#         dpkg-deb --build ${tempDir}/qemu_prebuilt/
+        rm -rf ${tempDir}
+}
+
+qemu_prebuilt="/tmp/qemu_prebuilt.deb"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/qemu/qemu_prebuilt.deb"
+AltUrl=${PrimaryUrl}
+SHA1="a50bea7ee79ca7b7b6eebe55f02853997d445ea4"
+DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$qemu_prebuilt" 2>&1 && success=$? || success=$?
+if [ $success -eq 0  ]; then
+    sudo dpkg -i ${qemu_prebuilt}
+else
+    DownloadAndBuiltQemu
+fi
 
 # Enable binfmt support
 sudo apt-get -y install binfmt-support
 
 # Install qemu binfmt for 32bit and 64bit arm architectures
-sudo update-binfmts --package qemu-arm --install arm \
-/usr/local/bin/qemu-arm \
---magic \
-"\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
---mask \
-"\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
-sudo update-binfmts --package qemu-aarch64 --install aarch64 \
-/usr/local/bin/qemu-aarch64 \
---magic \
-"\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00" \
---mask \
-"\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
+sudo update-binfmts --package qemu-arm --install arm /usr/local/bin/qemu-arm \
+--magic "\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
+--mask "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
+sudo update-binfmts --package qemu-aarch64 --install aarch64 /usr/local/bin/qemu-aarch64 \
+--magic "\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00" \
+--mask "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
 
 # First test using QFont fails if fonts-noto-cjk is installed. This happens because
 # running fontcache for that font takes > 5 mins when run on QEMU. Running fc-cache

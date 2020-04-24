@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -122,6 +122,13 @@ installPackages+=(unixODBC-devel)
 installPackages+=(unixODBC)
 # Vulkan support
 installPackages+=(vulkan-devel)
+# Conan: For Python build
+installPackages+=(xz-devel)
+installPackages+=(zlib-devel)
+installPackages+=(libffi-devel)
+installPackages+=(libsqlite3x-devel)
+# Build.pl
+installPackages+=(perl-Data-Dumper)
 
 sudo yum -y install "${installPackages[@]}"
 

@@ -2,5 +2,4 @@
 
 set -ex
 
-# Need ninja for CMake.
 brew install ninja

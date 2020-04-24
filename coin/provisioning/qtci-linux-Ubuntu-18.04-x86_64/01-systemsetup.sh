@@ -57,6 +57,9 @@ echo "Setting up workaround for Ubuntu systemd resolve bug"
 sudo rm -f /etc/resolv.conf
 sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
+# remove hostname to get unique based on IP address
+sudo rm /etc/hostname
+
 echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
 echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
 

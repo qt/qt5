@@ -37,7 +37,7 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
-set -ex
+set -e
 
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
@@ -68,8 +68,16 @@ sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder"
 echo "Changing ownership of Android files."
 sudo chown -R qt:wheel "$targetFolder"
 
+# Stop the sdkmanager from printing thousands of lines of #hashmarks.
+# Run the following command under `eval` or `sh -c` so that the shell properly splits it.
+sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
+# But don't let the pipeline hide sdkmanager failures.
+set -o pipefail
+
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
-(echo "y"; echo "y") |"$sdkTargetFolder/tools/bin/sdkmanager" "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"
+(echo "y"; echo "y") | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+    "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
+    | eval $sdkmanager_no_progress_bar_cmd
 
 echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"

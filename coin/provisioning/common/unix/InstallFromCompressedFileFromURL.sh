@@ -67,6 +67,9 @@ function InstallFromCompressedFileFromURL {
         "xz")
             tar -xf "$targetFile" --directory "$targetDirectory"
         ;;
+        "tbz2")
+            tar -xjf "$targetFile" --directory "$targetDirectory"
+        ;;
         *)
             exit 1
         ;;

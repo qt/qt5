@@ -35,7 +35,7 @@
 
 $version = "2017"
 # Current version was manually upgraded from the installer
-$version_number = "15.9.16"
+$version_number = "15.9.17"
 $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312218103.1526017942.exe"
 
 # Following components were selected from installer:

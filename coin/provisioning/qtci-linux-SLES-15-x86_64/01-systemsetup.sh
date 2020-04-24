@@ -59,10 +59,12 @@ echo 'export DISPLAY=":0"' >> ~/.bashrc
 
 sudo systemctl stop packagekit
 sudo systemctl disable packagekit
+sudo systemctl mask packagekit
 while sudo fuser /usr/lib/packagekitd >/dev/null 2>&1 ; do
     echo "Waiting for PackageKit to finish..."
     sleep 5
 done
+sudo zypper -nq remove gnome-software
 
 # shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
