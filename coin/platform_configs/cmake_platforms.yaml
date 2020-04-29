@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache']
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DQT_NAMESPACE=TestNamespace -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'

@@ -51,10 +51,10 @@ function set_internal_repo {
     sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
 
     sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ bionic main restricted universe multiverse
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ bionic-updates main restricted universe multiverse
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ bionic-backports main restricted universe
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ bionic-security main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-updates main restricted universe multiverse
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-backports main restricted universe
+    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-security main restricted universe multiverse
 EOC
 }
 
@@ -140,7 +140,7 @@ installPackages+=(libxdamage-dev)
 installPackages+=(libxrandr-dev)
 installPackages+=(libfontconfig1-dev)
 installPackages+=(libxss-dev)
-installPackages+=(libsrtp0-dev)
+installPackages+=(libsrtp2-dev)
 installPackages+=(libwebp-dev)
 installPackages+=(libjsoncpp-dev)
 installPackages+=(libopus-dev)

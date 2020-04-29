@@ -53,9 +53,10 @@ sudo sed -i 's|GRUB_TIMEOUT=10|GRUB_TIMEOUT=0|g' /etc/default/grub
 sudo update-grub
 
 # https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1624320
-echo "Setting up workaround for Ubuntu systemd resolve bug"
-sudo rm -f /etc/resolv.conf
-sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+# Checking if Ubuntu 20.04 works without this
+#echo "Setting up workaround for Ubuntu systemd resolve bug"
+#sudo rm -f /etc/resolv.conf
+#sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
 # remove hostname to get unique based on IP address
 sudo rm /etc/hostname

@@ -23,6 +23,6 @@ Configurations:
         Features: ['Packaging', 'UseLegacyInstructions']
         Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include -static -no-icu'
     -
-        Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+        Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
         Compiler: 'GCC'
         Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
