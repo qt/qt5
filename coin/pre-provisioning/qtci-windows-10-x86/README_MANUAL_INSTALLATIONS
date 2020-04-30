@@ -1,0 +1,47 @@
+CPU 4G
+Memory: 4G
+Hard disk: 250G
+Network: CI_NW
+Video Card - total memory: 32MB
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language: English US
+Time and currency format: Finnish (Finland)
+Keyboard: Finnish
+Windows 10 Enterprise
+Region: Finland
+Default keyboard layout: English (United States)
+
+* VMware tools (complete) installed
+* Resolution set to 1280x800
+* Coin-setup:
+   - Installing Boostrap agent
+   - Disabling fast boot
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+   - Automatic login
+   - Disabling windows updates
+* Enable 'Allow remote connections to this computer'
+* Windows Defender Antivirus turned off: Open 'gpedit.msc': 'Computer Configuration' - 'Administrative Templates' - 'Windows Components' -  'Windows Defender Antivirus'
+   - Edit 'Turn off Windows Defender Antivirus' > 'Enabled' > 'Apply' * Background defrag disabled: 'defragment and optimize drives' - 'change settings' - unchecked "run on a schedule" * Background defrag disabled: 'defragment
+   NOTE! Without this step windows defender can't be disabled!
+* Background defrag disabled: 'defragment and optimize drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time zone: Coordinated Universal Time
+* Windows search disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Power saver disabled: Open 'Power & sleep' and set 'Screen' to 'never'
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support
+* Google Chrome installed for RTA
+* Turn off Virus & threat protection (all sections) manually. Without this step windows defender can't be disabled!
+   - Real-tiem protection -> off
+   - Cloud-delivered protection -> off
+   - Automatic sample submission -> off
+   - Tamper protection -> off
+* Activate Windows
+* Modify 'Windows Software Development Kit - Windows 10.0.18362.1' from 'Add or remove programs'
+   - Add feature 'Debugging Tools for Windows'
+* REBOOT the VM

@@ -143,7 +143,7 @@
 	path = qtgraphicaleffects
 	url = ../qtgraphicaleffects.git
 	branch = dev
-	status = addon
+	status = essential
 [submodule "qtquickcontrols"]
 	depends = qtdeclarative
 	recommends = qtgraphicaleffects

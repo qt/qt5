@@ -1,0 +1,69 @@
+# Visual Studio $version version $version_number was installed manually using $installer.
+
+$version = "2019"
+# Current version was manually upgraded from the installer
+$version_number = "16.4.6"
+$installer = "http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__505064367.1547034421.exe"
+
+MSVC 2019 build tools (default installation, no additional selections).
+    * Install after MSVC2019 is installed!
+    * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
+    * Version: 16.4.6
+
+Installed MSVC-2019 Components:
+
+.NET Framework 4.5 targeting pack
+.NET Framework 4.5.1 targeting pack
+.NET Framework 4.5.2 targeting pack
+.NET Framework 4.6.1 SDK
+.NET Framework 4.6.1 targeting pack
+.NET Framework 4.6.2 SDK
+.NET Framework 4.6.2 targeting pack
+.NET Framework 4.7.2 SDK
+.NET Framework 4.7.2 targeting pack
+.NET Framework 4.8 SDK
+.NET Framework 4.8 targeting pack
+.NET Native
+.NET Portable Library targeting pack
+CLR data typer for SQL Sever
+Connectivity and publishing tools
+Data sources for SQL Server support
+SQL ADAL runtime
+SQL Server Command Linne Utilities
+SQL Server Data Tools
+SQL Server Express 2016 LocalDB
+SQL Server ODBC Driver
+ClickOnce Publishing
+Developer Analytics tools
+NuGet package manager
+Text Template Transformation
+C# and Visual Basic Roslyn compilers
+C++ 2019 Redistributable Update
+C++ Cmake tools for Windows
+C++/CLI support for v142 build tools /14.24)
+MSBuild
+MSVC v142 - VS 2019 C++ ARM build tools (v14.20)
+MSVC v142 - VS 2019 C++ ARM build tools (v14.24)
+MSVC v142 - VS 2019 C++ ARM64 build tools (v14.20)
+MSVC v142 - VS 2019 C++ ARM64 build tools (v14.24)
+MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.20)
+MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.24)
+.NET profiling tools
+C++ profiling tools
+JavaScript diagnostics
+Just-In-Time debugger
+C# and Visual Basic
+C++ core features
+JavaSript and TypeScript language support
+Razor Language Services
+Graphics debugger and GPU profiler for DirectX
+Image and 3D model editors
+C++ ATL for latest v142 build tools (x86 & x64)
+TypeScript 3.7 SDK
+Windows 10 SDK (10.0.16299.0)
+Windows 10 SDK (10.0.17134.0)
+Windows 10 SDK (10.0.17763.0)
+Windows 10 SDK (10.0.18362.0)
+
+# NOTE! Work loads were added during installation!
+

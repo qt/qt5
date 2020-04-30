@@ -1,14 +1,50 @@
 # List about manual pre-installations to Tier1 image:
 
-Vmware tools: installed
-Resolution: 1280 X 800
-Coin setup (installed boostrap agent, disabled fast boot, disabled firewall (both public and private), disabled UAC, enabled autologin)
-Remote Desktop Connection: enabled
-Timezone: set to UTC
-Administrator tools - services - Windows search: stop & disable
-Power settings screen & slee: never
-Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
-MSVC 2019 build tools (default installation, no additional selections).
-    * Install after MSVC2019 is installed!
-    * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
-    * Version: 16.3.10
+Virtual Hardware:
+CPU: 4
+Memory: 8 GB
+Hard Disk: 550 GB
+CI_NW
+Video Card - total memory: 32MB
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language: English US
+Keyboard: finnish
+location: finnish
+Windows 10 Enterprise
+Region: Finland
+Keyboard layout: Finnish
+
+* VMware tools (complete) installed
+* Resolution set to 1280x800
+* Coin-setup:
+   - Installing Boostrap agent
+   - Disabling fast boot
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+   - Automatic login
+   - Disabling windows updates
+* Windows Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Windows Defender Antivirus'
+   - Edit 'Turn off Windows Defender Antivirus' > 'Enabled' > 'Apply'
+   - NOTE! Without this step windows defender can't be disabled!
+* Remote connections allowed:
+   - Enable Remote Desktop
+* Background defrag disabled: 'defragment and optimize drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time zone: Coordinated Universal Time
+* Windows search disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Power saver disabled: Open 'Power & sleep' and set 'Screen' to 'never'
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support
+* Google Chrome installed for RTA
+* Turn off Virus & threat protection (all sections) manually
+   - Real-tiem protection -> off
+   - Cloud-delivered protection -> off
+   - Automatic sample submission -> off
+   - Tamper protection -> off
+* Activate Windows
+* Modify 'Windows Software Development Kit - Windows 10.0.18362.1' from 'Add or remove programs'
+   - Add feature 'Debugging Tools for Windows'

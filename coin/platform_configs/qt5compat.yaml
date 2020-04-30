@@ -5,7 +5,7 @@ Configurations:
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -

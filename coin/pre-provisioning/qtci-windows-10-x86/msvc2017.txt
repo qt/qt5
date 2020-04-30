@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,8 +35,8 @@
 
 $version = "2017"
 # Current version was manually upgraded from the installer
-$version_number = "15.9.17"
-$installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312218103.1526017942.exe"
+$version_number = "15.9.21"
+$installer = "http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__1312218103.1526017942.exe"
 
 # Following components were selected from installer:
 # Microsoft.Net.Component.4.5.TargetingPack (.NET Framework 4.5 targeting pack)
@@ -52,7 +52,7 @@ $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312
 # Microsoft.VisualStudio.Component.TextTemplating (Text Template Transformation)
 # Microsoft.VisualStudio.Component.Roslyn.Compiler (C# and Visual Basic Roslyn compilers)
 # Microsoft.Component.MSBuild (MSBuild)
-# Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (VC++ 2017 version 15.8 v14.15 latest v141 tools)
+# Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (VC++ 2017 version 15.9 v14.16 latest v141 tools)
 # Microsoft.VisualStudio.Component.VC.Redist.14.Latest (Visual C++ 2017 Redistributable Update)
 # Microsoft.VisualStudio.Component.VC.Tools.ARM (Visual C++ compilers and libraries for ARM)
 # Microsoft.VisualStudio.Component.VC.Tools.ARM64 (Visual C++ compilers and libraries for ARM64)
@@ -71,6 +71,7 @@ $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312
 # Microsoft.VisualStudio.Component.Graphics.Win81 (Graphics Tools Windows 8.1 SDK)
 # Microsoft.VisualStudio.Component.TypeScript.2.3 (TypeScript 2.3 SDK)
 # Microsoft.VisualStudio.Component.TypeScript.3.0 (TypeScript 3.0 SDK)
+# Microsoft.VisualStudio.Component.TypeScript.3.0 (TypeScript 3.1 SDK)
 # Microsoft.VisualStudio.Component.VC.ATL (Visual C++ ATL for x86 and x64)
 # Microsoft.VisualStudio.Component.Windows10SDK.10240 (Windows 10 SDK (10.0.10240.0))
 # Microsoft.VisualStudio.Component.Windows10SDK.10586 (Windows 10 SDK (10.0.10586.0))
@@ -84,5 +85,7 @@ $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__1312
 # Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop.arm (Windows 10 SDK (10.0.16299.0) for Desktop C++ [ARM and ARM64])
 # Microsoft.VisualStudio.Component.Windows10SDK.17134 (Windows 10 SDK (10.0.17134.0))
 # Microsoft.VisualStudio.Component.Windows10SDK.17763 (Windows 10 SDK (10.0.17763.0))
+
+# NOTE! Work loads were added during installation!
 
 echo "Visual Studio = $version version version_number" >> ~\versions.txt

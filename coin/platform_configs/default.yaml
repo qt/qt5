@@ -1,16 +1,16 @@
 Version: 2
-Module only: True
 Configurations:
 -
     Template: 'qtci-windows-7-x86-3'
-    Compiler: 'Mingw73'
+    Compiler: 'Mingw'
     Features: ['UseLegacyInstructions']
+    Environment variables: ['PATH=C:\MINGW810_i686\mingw32\bin;$PATH']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -developer-build -release -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++ -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-16'
+    Template: 'qtci-windows-10-x86_64-17'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64%'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
@@ -22,7 +22,7 @@ Configurations:
     Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-warnings-are-errors -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']

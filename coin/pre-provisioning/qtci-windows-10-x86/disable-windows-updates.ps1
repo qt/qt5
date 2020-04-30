@@ -1,4 +1,4 @@
-#############################################################################
+############################################################################
 ##
 ## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
@@ -30,38 +30,25 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
-. "$PSScriptRoot\helpers.ps1"
 
-# Install Cumulative Servicing Release Visual Studio 2015 update 3
-# Original download page: https://msdn.microsoft.com/en-us/library/mt752379.aspx
+# This script disables the automatic Windows updates
 
-$version = "2015 update3 (KB3165756)"
-$packagePath = "C:\Windows\Temp"
-$package = $packagePath + "\vs14-kb3165756.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/vs14-kb3165756.exe"
-$url_official = "http://go.microsoft.com/fwlink/?LinkID=816878"
-$sha1 = "6a21d9b291ca75d44baad95e278fdc0d05d84c02"
-$preparedPackage = "\\ci-files01-hki.intra.qt.io\provisioning\windows\vs14-kb3165756-update"
-
-if (Test-Path $preparedPackage) {
-    # The prepared package contains updated packages so that not everything has to be downloaded
-    Write-Host "Using prepared package"
-    Copy-Item -Recurse $preparedPackage $packagePath
-    # Remove the whole downloaded folder
-    $toRemove = $packagePath + "\vs14-kb3165756-update"
-    $executable = "$toRemove\vs14-kb3165756.exe"
-} else {
-    Write-Host "Fetching patch for Visual Studio $version..."
-    Download $url_official $url_cache $package
-    $executable = $package
-    # Remove the downloaded executable
-    $toRemove = $executable
+$service = get-service wuauserv
+if (-not $service) {
+    Write-Host "Windows Update service not found."
+    exit 0
 }
 
-Verify-Checksum $executable $sha1
-Write-Host "Installing patch for Visual Studio $version..."
-Run-Executable $executable "/norestart /passive"
+if ($service.Status -eq "Stopped") {
+    Write-Host "Windows Update service already stopped."
+} else {
+    Write-Host "Stopping Windows Update service."
+    Stop-Service -Name "wuauserv" -Force
+}
 
-Remove-Item -Force -Recurse -Path $toRemove
-
-Write-Output "Visual Studio = $version" >> ~\versions.txt
+$startup = Get-WmiObject Win32_Service | Where-Object {$_.Name -eq "wuauserv"} | Select -ExpandProperty "StartMode"
+if ($startup -ne "Disabled") {
+    set-service wuauserv -startup disabled
+} else {
+    Write-Host "Windows Update service startup already disabled."
+}
