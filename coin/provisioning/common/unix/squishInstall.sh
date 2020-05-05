@@ -55,22 +55,21 @@ else
      sha1="63f33de55770e2588dd9f482546900e33d20f8ec"
 fi
 
+mountFolder="/tmp/squish"
+sudo mkdir "$mountFolder"
+
 # Check which platform
 if uname -a |grep -q Darwin; then
     usersGroup="staff"
-    mountFolder="/Volumes"
     squishLicenseDir="/Users/qt"
 elif uname -a |grep -q "el7"; then
     usersGroup="qt"
-    mountFolder="/tmp"
     squishLicenseDir="/root"
 elif uname -a |grep -q "Ubuntu"; then
     usersGroup="users"
-    mountFolder="/tmp"
     squishLicenseDir="/home/qt"
 else
     usersGroup="users"
-    mountFolder="/tmp"
     squishLicenseDir="/root"
 fi
 
