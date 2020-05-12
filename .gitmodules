@@ -188,7 +188,7 @@
 	path = qtandroidextras
 	url = ../qtandroidextras.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -258,7 +258,7 @@
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -316,7 +316,7 @@
 	path = qtquick3d
 	url = ../qtquick3d.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtshadertools"]
 	depends = qtbase
 	path = qtshadertools
