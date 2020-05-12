@@ -177,6 +177,11 @@ installPackages+=(libpcre2-dev)
 # Needed for qtgampepad
 installPackages+=(libsdl2-2.0)
 installPackages+=(libsdl2-dev)
+# Needed for qtwebkit
+installPackages+=(ruby)
+installPackages+=(libxslt1-dev)
+installPackages+=(libxml2-dev)
+installPackages+=(libhyphen-dev)
 
 echo "Running update for apt"
 waitLoop

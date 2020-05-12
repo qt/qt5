@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -61,8 +61,16 @@ Extract-tar_gz $PackagePath $TargetLocation
 $msys = "$TargetLocation\$folder\msys2_shell.cmd"
 
 # install perl
-Run-Executable "$msys" "`"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
-Run-Executable "$msys" "`"-l`" `"-c`" `"cpan -i Text::Template Test::More`""
+# Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
+cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
+Start-Sleep -s 30
+cmd /c "$msys `"-l`" `"-c`" `"cpan -i Text::Template Test::More`""
+
+# Sometimes gpg-agent won't get killed after the installation process. If that happens the provisioning will won't continue and it will hang until timeout. So we need make sure it will be killed.
+# Let's sleep for awhile and wait that msys installation is finished. Otherwise the installation might start up gpg-agent or dirmngr after the script has passed the killing process.
+Start-Sleep -s 180
+if (Get-Process -Name "gpg-agent" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name gpg-agent }
+if (Get-Process -Name "dirmngr" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name dirmngr }
 
 Write-Host "Cleaning $PackagePath.."
 Remove-Item -Recurse -Force -Path "$PackagePath"

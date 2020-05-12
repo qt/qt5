@@ -38,13 +38,13 @@ Configurations:
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
-    Template: 'qtci-linux-openSUSE-15.0-x86_64'
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
-    Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_framework=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
 -
     Template: 'qtci-windows-10-x86_64-15'
     Compiler: 'MSVC2019'
