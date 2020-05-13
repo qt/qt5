@@ -10,7 +10,7 @@ Configurations:
     Template: 'qtci-windows-10-x86_64-17'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -headersclean -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
@@ -36,12 +36,12 @@ Configurations:
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Compiler: 'GCC'
     Features: ['Packaging', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -separate-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -xcb -bundled-xcb-xinput -sysconfdir /etc/xdg -qt-pcre -qt-harfbuzz -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib QMAKE_LFLAGS_APP+=-s'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -headersclean -force-debug-info -separate-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -xcb -bundled-xcb-xinput -sysconfdir /etc/xdg -qt-pcre -qt-harfbuzz -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib QMAKE_LFLAGS_APP+=-s'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
     Features: ['DisableTests', 'Packaging', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -headersclean -force-debug-info -separate-debug-info -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
