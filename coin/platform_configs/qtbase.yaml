@@ -13,7 +13,7 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Features: ['DisableTests']
-    Environment variables: ['TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF', 'QT_YOCTO_ENVSETUP={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../../environment-setup-armv7at2hf-neon-poky-linux-gnueabi', "QT_CMAKE_DIR=/opt/cmake-3.17.0-rc2/bin"]
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF', 'QT_YOCTO_ENVSETUP={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../../environment-setup-armv7at2hf-neon-poky-linux-gnueabi', "QT_CMAKE_DIR=/opt/cmake-3.17.2/bin"]
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
