@@ -5,23 +5,9 @@ Configurations:
     Target os: 'QEMU'
     Target arch: 'armv7'
     Compiler: 'GCC'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -sysroot /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/bin/mysql_config -psql_config /dev/null -tslib'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Target os: 'QEMU'
-    Target arch: 'armv7'
-    Compiler: 'GCC'
     Features: ['DisableTests']
     Environment variables: ['TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF', 'QT_YOCTO_ENVSETUP={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../../environment-setup-armv7at2hf-neon-poky-linux-gnueabi', "QT_CMAKE_DIR=/opt/cmake-3.17.2/bin"]
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Target os: 'QEMU'
-    Target arch: 'arm64'
-    Compiler: 'GCC'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib'
 -
     Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Target os: 'WebAssembly'
