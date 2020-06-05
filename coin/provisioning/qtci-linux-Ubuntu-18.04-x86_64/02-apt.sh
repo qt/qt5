@@ -84,6 +84,9 @@ installPackages+=(libudev-dev)
 installPackages+=(libegl1-mesa-dev)
 installPackages+=(libfontconfig1-dev)
 installPackages+=(libxss-dev)
+installPackages+=(nodejs)
+# NOTE! Can't install nodejs-dev because libssl1.0-dev conflicts with libssl1.0-dev which is depandency of nodejs-dev.
+
 # Common event loop handling
 installPackages+=(libglib2.0-dev)
 # MySQL support
