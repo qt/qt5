@@ -80,6 +80,8 @@ installPackages+=(pulseaudio-libs-devel)
 installPackages+=(libXtst-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
+installPackages+=(rh-nodejs12-nodejs)
+installPackages+=(rh-nodejs12-nodejs-devel)
 # For Android builds
 installPackages+=(java-1.8.0-openjdk-devel)
 # For receiving shasum
