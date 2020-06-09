@@ -35,10 +35,14 @@
 #
 # If disabled manually, windows will automatically enable it after
 # some period of time. Disabling it speeds up the builds.
+# NOTE! Windows Defender Antivirus needs to be turned off!
+#     Open 'gpedit.msc': 'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Windows Defender Antivirus'
+#     Edit 'Turn off Windows Defender Antivirus' > 'Enabled' > 'Apply'
 
-. "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\..\..\provisioning\common\windows\helpers.ps1"
 
 Run-Executable "reg.exe" "ADD `"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender`" /V DisableAntiSpyware /T REG_dWORD /D 1 /F"
+Run-Executable "reg.exe" "ADD `"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender`" /V DisableRoutinelyTakingAction /T REG_dWORD /D 1 /F"
 
 # 'Windows Defender Cache Maintenance' - "Periodic maintenance task."
 DisableSchedulerTask "Windows Defender\Windows Defender Cache Maintenance"

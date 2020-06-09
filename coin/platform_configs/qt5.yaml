@@ -1,21 +1,26 @@
+Version: 2
+Configurations:
 -
     Template: 'qtci-windows-7-x86-3'
-    Compiler: 'Mingw73'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\MINGW810_i686\mingw32\bin;$PATH']
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-16'
-    Compiler: 'Mingw73'
+    Template: 'qtci-windows-10-x86_64-17'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-16'
+    Template: 'qtci-windows-10-x86_64-17'
     Target os: 'Android_ANY'
     Target arch: 'multi'
-    Compiler: 'Mingw73'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
     Target compiler: 'Clang'
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20 -qt-zlib'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'Android_ANY'
