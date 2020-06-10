@@ -68,7 +68,7 @@
 	depends = qtbase
 	path = qtqa
 	url = ../qtqa.git
-	branch = master
+	branch = dev
 	status = essential
 	priority = 50
 [submodule "qtlocation"]
