@@ -3,7 +3,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
-    Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DQT_NAMESPACE=TestNamespace -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
     Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'GCC'
