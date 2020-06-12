@@ -1,0 +1,43 @@
+Version: 2
+Configurations:
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'GCC'
+    Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+-
+    Template: 'qtci-linux-openSUSE-15.1-x86_64'
+    Compiler: 'GCC'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+-
+    Template: 'qtci-macos-10.14-x86_64'
+    Compiler: 'Clang'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_framework=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
+-
+    Template: 'qtci-windows-10-x86_64-15'
+    Compiler: 'MSVC2019'
+    Configure arguments: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Compiler: 'GCC'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+-
+    Template: 'qtci-linux-RHEL-7.6-x86_64'
+    Target os: 'Android_ANY'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Target compiler: 'Clang'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_HOME}} -DANDROID_ABI=arm64-v8a -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}}']
+-
+    Template: 'qtci-macos-10.14-x86_64'
+    Target os: 'IOS_ANY'
+    Target arch: 'arm64'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS -DQT_UIKIT_SDK=iphoneos']
+-
+    Template: 'qtci-windows-7-x86-3'
+    Compiler: 'Mingw'
+    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x86}}\.. -DFEATURE_system_zlib=OFF'
+    Environment variables: ['Path={{.Env.MINGW810_i686}}\bin;{{.Env.Path}}']
