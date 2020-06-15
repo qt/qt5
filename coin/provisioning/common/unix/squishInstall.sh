@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,120 +33,79 @@
 ##
 #############################################################################
 
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
+
 set -ex
 
-# This script will install squish package for Linux and Mac.
+# This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.5"
-# Branch version without dot
-qtBranch="513x"
-squishFolder="/opt/squish"
-squishUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/$qtBranch/"
-squishFile="squish-nosignalhandler-$version-qt$qtBranch-linux64.run"
+version="6.5.2"
+qtBranch="514x"
+installFolder="/opt"
+squishFolder="$installFolder/squish"
+preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable"
+licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/.squish-3-license"
 if uname -a |grep -q Darwin; then
-     squishFile="squish-nosignalhandler-$version-qt$qtBranch-macx86_64.dmg"
+     compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
+     sha1="91a1d7228dc4b4bd64f93191c33d2642abc97e14"
+else
+     compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
+     sha1="63f33de55770e2588dd9f482546900e33d20f8ec"
 fi
 
-squishLicenseUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/"
-squishLicenseFile=".squish-3-license.tar.gz"
+mountFolder="/tmp/squish"
+sudo mkdir "$mountFolder"
 
-testSuite="suite_test_squish"
-testSuiteUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/coin/"
-
-# These checks can be removed when Vanilla OS for all linux and Mac are in
-if [ -d "$squishFolder" ]; then
-    echo "Move old squish to /tmp"
-    sudo mv "$squishFolder" "/tmp/squish_$(date)"
+# Check which platform
+if uname -a |grep -q Darwin; then
+    usersGroup="staff"
+    squishLicenseDir="/Users/qt"
+elif uname -a |grep -q "el7"; then
+    usersGroup="qt"
+    squishLicenseDir="/root"
+elif uname -a |grep -q "Ubuntu"; then
+    usersGroup="users"
+    squishLicenseDir="/home/qt"
+else
+    usersGroup="users"
+    squishLicenseDir="/root"
 fi
 
-if [ -f "/etc/profile.d/squish_env.sh" ]; then
-    echo "Remove /etc/profile.d/squish_env.sh"
-    sudo rm -f "/etc/profile.d/squish_env.sh"
-    export SQUISH_LICENSEKEY_DIR=$HOME
+targetFileMount="$mountFolder"/"$compressedFolder"
+
+echo "Mounting $preBuildCacheUrl to $mountFolder"
+sudo mount "$preBuildCacheUrl" "$mountFolder"
+echo "Create $installFolder if needed"
+if [ !  -d "$installFolder" ]; then
+    sudo mkdir "$installFolder"
 fi
 
-function MountAndInstall {
-    url=$1
-    targetDirectory=$2
-    targetFile=$3
+VerifyHash "$targetFileMount" "$sha1"
 
-    # Check which platform
-    if uname -a |grep -q Darwin; then
-        usersGroup="staff"
-        mountFolder="/Volumes"
-        squishLicenseDir="/Users/qt"
-    elif uname -a |grep -q "el7"; then
-        usersGroup="qt"
-        mountFolder="/tmp"
-        squishLicenseDir="/root"
-    elif uname -a |grep -q "Ubuntu"; then
-        usersGroup="users"
-        mountFolder="/tmp"
-        squishLicenseDir="/home/qt"
-    else
-        usersGroup="users"
-        mountFolder="/tmp"
-        squishLicenseDir="/root"
+echo "Uncompress $compressedFolder"
+sudo tar -xzf "$targetFileMount" --directory "$installFolder"
+
+echo "Unmounting $mountFolder"
+sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
+
+sudo mv "$installFolder/rta_squish_$version" "$squishFolder"
+
+if uname -a |grep -q "Ubuntu"; then
+    if [ ! -e "/usr/lib/tcl8.6" ]; then
+        sudo mkdir /usr/lib/tcl8.6
+        sudo cp "$squishFolder/package/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
     fi
+fi
 
-    function UnMount {
-        echo "Unmounting $mountFolder"
-        sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
-    }
+DownloadURL "$licenseUrl" "$licenseUrl" "3c6b2b3ca047f68e20f697afcc3a9d376f01b376" "$HOME/.squish-3-license"
 
-    targetFileMount="$mountFolder"/"$targetFile"
-
-    echo "Mounting $url to $mountFolder"
-    sudo mount "$url" "$mountFolder"
-    echo "Create $targetDirectory if needed"
-    if [ !  -d "/opt" ]; then
-        sudo mkdir "/opt"
-    fi
-    if [ !  -d "$targetDirectory" ]; then
-        sudo mkdir "$targetDirectory"
-    fi
-    echo "Uncompress $targetFile"
-    if [[ $targetFile == *.tar.gz ]]; then
-        if [[ $targetFile == .squish-3-license.* ]]; then
-            target="$squishLicenseDir"
-            # Squish license need to be exists also in users home directory, because squish check it before it starts running tests
-            sudo tar -xzf "$targetFileMount" --directory "$HOME"
-        else
-            target="$targetDirectory"
-        fi
-        sudo tar -xzf "$targetFileMount" --directory "$target"
-        UnMount
-    elif [[ $targetFile == *.dmg ]]; then
-        echo "'dmg-file', no need to uncompress"
-        sudo cp $targetFileMount /tmp
-        UnMount
-        sudo hdiutil attach "/tmp/$targetFile"
-        sudo /Volumes/froglogic\ Squish/Install\ Squish.app/Contents/MacOS/Squish unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null
-        mountFolder="/Volumes/froglogic Squish"
-        UnMount
-    elif [[ $targetFile == *.run ]]; then
-        echo "'run-file', no need to uncompress"
-        sudo cp $targetFileMount $targetDirectory
-        UnMount
-        sudo chmod +x $targetDirectory/$targetFile
-        sudo $targetDirectory/$targetFile unattended=1 targetdir="$targetDirectory/package" qtpath="$targetDirectory" > /dev/null
-        sudo rm -fr "$targetDirectory/$targetFile"
-        if uname -a |grep -q "Ubuntu"; then
-            sudo mkdir /usr/lib/tcl8.6
-            sudo cp "$targetDirectory/package/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
-        fi
-    else
-        exit 1
-    fi
-
-    echo "Changing ownerships"
-    sudo chown -R qt:$usersGroup "$targetDirectory"
-    sudo chown qt:$usersGroup "$HOME/.squish-3-license"
-}
+echo "Changing ownerships"
+sudo chown -R qt:$usersGroup "$squishFolder"
+sudo chown qt:$usersGroup "$HOME/.squish-3-license"
 
 echo "Set commands for environment variables in .bashrc"
-
 if uname -a |grep -q "Ubuntu"; then
     echo "export SQUISH_PATH=$squishFolder/package" >> ~/.profile
     echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.profile
@@ -155,19 +114,11 @@ else
     echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.bashrc
 fi
 
-echo "Installing squish license to home directory.."
-MountAndInstall "$squishLicenseUrl" "$squishFolder" "$squishLicenseFile"
-
-echo "Installing squish $version.."
-MountAndInstall "$squishUrl" "$squishFolder" "$squishFile"
-
-echo "Installing provisioning scripts for squish"
-MountAndInstall "$testSuiteUrl" "$squishFolder" "$testSuite.tar.gz"
-
-echo "Verifying Squish Installation"
-if "$squishFolder/package/bin/squishrunner" --testsuite "$squishFolder/$testSuite" | grep "Squish test run successfully" ; then
+echo "Verifying Squish"
+if "$squishFolder/package/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
     echo "Squish installation tested successfully"
 else
     echo "Squish test failed! Package wasn't installed correctly."
     exit 1
 fi
+

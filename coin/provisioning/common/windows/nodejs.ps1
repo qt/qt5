@@ -30,37 +30,32 @@
 ## $QT_END_LICENSE$
 ##
 #############################################################################
+
 . "$PSScriptRoot\helpers.ps1"
 
-$version = "11_2_2"
-$package = "C:\Windows\temp\opengl32sw.7z"
-$mesaOpenglSha1_64 = "0ed35efbc8112282be5d0c87c37fde2d15e81998"
-$mesaOpenglUrl_64_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-64-mesa_$version-signed.7z"
-$mesaOpenglUrl_64_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version-signed.7z"
-$mesaOpenglSha1_32 = "96bd6ca0d7fd249fb61531dca888965ffd20f53c"
-$mesaOpenglUrl_32_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-32-mesa_$version-signed.7z"
-$mesaOpenglUrl_32_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version-signed.7z"
+# This script will install Node.js
+# Needed by QtWebengine
 
-function Extract-Mesa
-{
-    Param (
-        [string]$downloadUrlCache,
-        [string]$downloadUrlAlt,
-        [string]$sha1,
-        [string]$targetFolder
-    )
-    Download $downloadUrlAlt $downloadUrlCache $package
-    Verify-Checksum $package $sha1
-    Extract-7Zip $package $targetFolder
-    Write-Host "Removing $package"
-    Remove-Item -Path $package
-}
+$version = "12.18.0"
+$package = "C:\Windows\temp\nodejs-$version.zip"
+$targetFolder = "C:\Utils\nodejs"
+$arch = "$((Get-WmiObject Win32_Processor).AddressWidth)"
+$externalUrl = "https://nodejs.org/dist/v$version/node-v$version-win-x$arch.zip"
+$internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/node-v$version-win-x$arch.zip"
 
-if (Is64BitWinHost) {
-    Extract-Mesa $mesaOpenglUrl_64_cache $mesaOpenglUrl_64_alt $mesaOpenglSha1_64 "C:\Windows\System32"
-    Extract-Mesa $mesaOpenglUrl_32_cache $mesaOpenglUrl_32_alt $mesaOpenglSha1_32 "C:\Windows\SysWOW64"
+if ( $arch -eq 64 ) {
+    $sha1 = "457b1527d249ee471a9445953a906cb10c75378d"
 } else {
-    Extract-Mesa $mesaOpenglUrl_32_cache $mesaOpenglUrl_32_alt $mesaOpenglSha1_32 "C:\Windows\system32"
+    $sha1 = "58801900f5bddca9c00feed6b84fed729426fc92"
+
 }
 
-Write-Output "Mesa llvmpipe = $version" >> ~/versions.txt
+Write-Host "Installing Node.js"
+Download $externalUrl $internalUrl $package
+Verify-Checksum $package $sha1
+mkdir $targetFolder
+Extract-7Zip $package $targetFolder
+Add-Path $targetFolder
+Remove $package
+
+Write-Output "Node.js = $version" >> ~/versions.txt
