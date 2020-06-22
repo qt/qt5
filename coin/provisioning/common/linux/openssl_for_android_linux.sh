@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -53,11 +53,11 @@ else
     rm -rf "$exports_file"
 fi
 
-version="1.1.1d"
+version="1.1.1g"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="056057782325134b76d1931c48f2c7e6595d7ef4"
+sha="b213a293f2127ec3e323fb3cfc0c9807664fd997"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
