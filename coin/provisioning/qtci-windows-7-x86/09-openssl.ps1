@@ -43,9 +43,9 @@
 # nmake install
 
 
-$version = "1.1.1d"
+$version = "1.1.1g"
 $zip = Get-DownloadLocation ("openssl-$version.7z")
-$sha1 = "2bf9379c4cea81858c4288cf06cc3444996bcad5"
+$sha1 = "e94263ba067a5cc0ace17e26bb2f98c62d298b5a"
 $url = "http://ci-files01-hki.intra.qt.io/input/openssl/openssl_${version}_prebuild_x86_windows7_msvc2010.zip"
 
 Download $url $url $zip
