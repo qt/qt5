@@ -10,12 +10,13 @@ Video Card - total memory: 32MB
 VM Options:
 Boot options/Firmware: BIOS
 
-Language: English US
-Keyboard: finnish
+Language to install: English UK
+Time and currency format: English UK
+Keyboard or input method: United Kingdom
 location: finnish
 Windows 10 Enterprise
 Region: Finland
-Keyboard layout: Finnish
+Keyboard layout: United Kingdom
 
 * VMware tools (complete) installed
 * Resolution set to 1280x800
@@ -27,24 +28,29 @@ Keyboard layout: Finnish
    - Enabling autologin
    - Automatic login
    - Disabling windows updates
-* Windows Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Windows Defender Antivirus'
-   - Edit 'Turn off Windows Defender Antivirus' > 'Enabled' > 'Apply'
+* Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+   - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
    - NOTE! Without this step windows defender can't be disabled!
 * Remote connections allowed:
    - Enable Remote Desktop
-* Background defrag disabled: 'defragment and optimize drives' - 'change settings' - unchecked "run on a schedule"
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
    - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
-* Time zone: Coordinated Universal Time
+* Time zone: 'Co-ordinated Universal Time'
 * Windows search disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'Windows search' - stop & disable
 * Sysmain disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'SysMain' - stop & disable
-* Power saver disabled: Open 'Power & sleep' and set 'Screen' to 'never'
+* Power saver disabled: Open 'Power & sleep settings'
+   - set 'Screen' to 'never'
+   - set 'Sleep' to 'never'
 * Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support
+* (Restart Windows)
 * Google Chrome installed for RTA
-* Turn off Virus & threat protection (all sections) manually
-   - Real-tiem protection -> off
+* Virus & threat protection settings:
+   - Real-time protection -> off
    - Cloud-delivered protection -> off
    - Automatic sample submission -> off
    - Tamper protection -> off
+* Virus & threat protection notifications:
+   - Get informational notifications -> off
+   - Account protection notifications -> off
 * Activate Windows
-* Modify 'Windows Software Development Kit - Windows 10.0.18362.1' from 'Add or remove programs'
-   - Add feature 'Debugging Tools for Windows'
+
