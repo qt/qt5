@@ -1,0 +1,27 @@
+Install virtio
+
+Our vanilla images are pre-installed in VMware where we have networking available. In KVM we can
+use the VMware installed vmxnet3 NIC to fetch VirtIO drivers, install them, and only then switch
+to using the VirtIO NIC in KVM.
+
+* Download https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win-0.1.171.iso
+* Mount virtio-win-0.1.171.iso by double clicking it.
+* Right click 'E:\NetKVM\w10\amd64\netkvm.inf' and select Install
+* Right click 'E:\Balloon\w10\amd64\balloon.inf' and select Install
+
+* Right click 'E:\vioscsi\w10\amd64\vioscsi.inf' and select Install
+
+Because vioscsi does not install the entries in windows registry before we actually
+have a VirtIO device installed, and we can't boot with a VirtIO device before
+the driver is installed, we have to blindly install the registry entries:
+
+* Download https://bugreports.qt.io/secure/attachment/95685/95685_vioscsi.reg
+
+However, we've seen that the Owner in the registry can be wrong. This entry
+sets it to oem11.inf, but we've seen it be oem10.inf in one case and it has
+to be corrected so that it will boot from the VirtIO driver. This was found out
+by having 2 devices installed simultaneously and having the drivers install
+properly into the registry.
+
+* Eject the mounting
+* Remove downloaded virtio-win-0.1.171.iso

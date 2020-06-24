@@ -2,13 +2,13 @@
 
 $version = "2019"
 # Current version was manually upgraded from the installer
-$version_number = "16.4.4"
+$version_number = "16.6.2"
 $installer = "http://ci-files01-hki.ci.local/input/windows/vs_professional__505064367.1547034421.exe"
 
 MSVC 2019 build tools (default installation, no additional selections).
     * Install after MSVC2019 is installed!
     * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
-    * Version: 16.4.4
+    * Version: 16.6.2
 
 Installed MSVC-2019 Components:
 
@@ -38,14 +38,14 @@ Text Template Transformation
 C# and Visual Basic Roslyn compilers
 C++ 2019 Redistributable Update
 C++ Cmake tools for Windows
-C++/CLI support for v142 build tools /14.24)
+C++/CLI support for v142 build tools /14.26)
 MSBuild
 MSVC v142 - VS 2019 C++ ARM build tools (v14.20)
-MSVC v142 - VS 2019 C++ ARM build tools (v14.24)
+MSVC v142 - VS 2019 C++ ARM build tools (v14.26)
 MSVC v142 - VS 2019 C++ ARM64 build tools (v14.20)
-MSVC v142 - VS 2019 C++ ARM64 build tools (v14.24)
+MSVC v142 - VS 2019 C++ ARM64 build tools (v14.26)
 MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.20)
-MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.24)
+MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.26)
 .NET profiling tools
 C++ profiling tools
 JavaScript diagnostics
@@ -57,11 +57,14 @@ Razor Language Services
 Graphics debugger and GPU profiler for DirectX
 Image and 3D model editors
 C++ ATL for latest v142 build tools (x86 & x64)
-TypeScript 3.7 SDK
+TypeScript 3.8 SDK
 Windows 10 SDK (10.0.16299.0)
 Windows 10 SDK (10.0.17134.0)
 Windows 10 SDK (10.0.17763.0)
 Windows 10 SDK (10.0.18362.0)
+Windows 10 SDK (10.0.19041.0)
 
 # NOTE! Work loads were added during installation!
 
+* Modify 'Windows Software Development Kit - Windows 10.0.18362.1' from 'Add or remove programs'
+   - Add feature 'Debugging Tools for Windows'
