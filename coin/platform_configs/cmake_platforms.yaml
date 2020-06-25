@@ -42,7 +42,7 @@ Configurations:
     Configure arguments: '-DBUILD_EXAMPLES=OFF -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.14 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl'
     Environment variables: ['TARGET_CONFIGURE_ARGS=-DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS -DQT_FORCE_SIMULATOR_AND_DEVICE=ON']
 -
-    Template: 'qtci-windows-7-x86-3'
+    Template: 'qtci-windows-10-x86_64-17'
     Compiler: 'Mingw'
-    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x86}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
-    Environment variables: ['Path={{.Env.MINGW810_i686}}\bin;{{.Env.Path}}']
+    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DBUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
+    Environment variables: ['Path={{.Env.MINGW810}}\bin;{{.Env.Path}}']
