@@ -1,0 +1,1 @@
+Disable-NetAdapterLso Ethernet
