@@ -1,5 +1,5 @@
 Version: 2
-Include: [cmake_platforms.yaml, cmake_platforms_qemu.yaml]
+Include: [cmake_platforms.yaml]
 Configurations:
 -
     Template: 'qtci-linux-openSUSE-15.1-x86_64'
