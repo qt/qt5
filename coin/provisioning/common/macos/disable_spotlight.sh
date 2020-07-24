@@ -35,4 +35,8 @@
 
 # Disable spotlight and and stop indexing
 sudo mdutil -a -i off
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+sudo mdutil -a -i off /
+# Disable spotlight indexing /Volumes
+sudo mdutil -i off /Volumes
+# Erase spotlight index
+sudo mdutil -E /
