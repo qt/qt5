@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,32 +33,14 @@
 ##
 #############################################################################
 
-# This script installs JDK
-
 set -ex
 
-echo "Installing Java Development Kit"
+# shellcheck source=../common/macos/install-commandlinetools.sh
+source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
+version="11.3.1"
+packageName="Command_Line_Tools_for_Xcode_$version.dmg"
+url="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.15_catalina/$packageName"
+sha1="cec5824d127bba2d2a3ba8e5343ae7a32214e62c"
 
-targetFile=jdk-8u102-macosx-x64.dmg
+InstallCommandLineTools $url $url $sha1 $packageName $version
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
-# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
-
-echo "Mounting $targetFile"
-sudo mkdir -p /Volumes/files
-sudo mount "$url" /Volumes/files
-
-sudo cp "/Volumes/files/$targetFile" /tmp
-sudo umount /Volumes/files
-sudo hdiutil attach "/tmp/$targetFile"
-
-echo Installing JDK
-cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
-
-echo "Unmounting $targetFile"
-sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
-
-echo "Disable auto update"
-sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
-
-echo "JDK Version = 8 update 102" >> ~/versions.txt
