@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -40,23 +40,24 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersion = "r20"
+$ndkVersion = "r21d"
 $ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows-x86_64.zip"
 $ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows-x86_64.zip"
-$ndkChecksum = "36e1dc77fad08ad2498fb94b13ad8caf26bbd9df"
+$ndkChecksum = "99175ce1210258f2280568cd340e0666c69955c7"
 $ndkFolder = "c:\Utils\Android\android-ndk-$ndkVersion"
 $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 
 # SDK
-$toolsVersion = "26.1.1"
-$toolsFile = "sdk-tools-windows-4333796.zip"
+$toolsVersion = "2.1"
+$toolsFile = "commandlinetools-win-6609375_latest.zip"
 $sdkApi = "ANDROID_API_VERSION"
 $sdkApiLevel = "android-28"
 $sdkBuildToolsVersion = "28.0.3"
 $toolsCachedUrl= "\\ci-files01-hki.intra.qt.io\provisioning\android\$toolsFile"
 $toolsOfficialUrl = "https://dl.google.com/android/repository/$toolsFile"
-$toolsChecksum = "aa298b5346ee0d63940d13609fe6bec621384510"
-$toolsFolder = "c:\Utils\Android\tools"
+$toolsChecksum = "e2e19c2ff584efa87ef0cfdd1987f92881323208"
+$toolsFolder = "c:\Utils\Android\cmdline-tools"
+
 $sdkZip = "c:\Windows\Temp\$toolsFile"
 
 function Install($1, $2, $3, $4) {
@@ -76,7 +77,9 @@ Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolder
 Set-EnvironmentVariable "ANDROID_NDK_ROOT" $ndkFolder
 
 Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
-Set-EnvironmentVariable "ANDROID_SDK_HOME" C:\Utils\Android
+New-Item -ItemType directory -Path $toolsFolder
+Move-Item -Path C:\Utils\Android\tools -Destination $toolsFolder\
+Set-EnvironmentVariable "ANDROID_SDK_HOME" "C:\Utils\Anrdoid"
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
 if (IsProxyEnabled) {
@@ -98,8 +101,8 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 # Attempt to catch all errors of sdkmanager.bat, even when hidden behind a pipeline.
 $ErrorActionPreference = "Stop"
 
-cd $toolsFolder\bin\
-$sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion"
+cd $toolsFolder\tools\bin\
+$sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion", "--sdk_root=C:\Utils\Android"
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args | Out-Null'
 Invoke-Expression $command
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat --licenses'

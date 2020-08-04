@@ -45,7 +45,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r21d -android-ndk-host linux-x86_64'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'

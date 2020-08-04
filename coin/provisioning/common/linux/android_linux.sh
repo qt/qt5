@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -51,15 +51,15 @@ sdkTargetFolder="$targetFolder/sdk"
 
 basePath="http://ci-files01-hki.intra.qt.io/input/android"
 
-toolsVersion="r26.1.1"
-toolsFile="sdk-tools-linux-4333796.zip"
-ndkVersion="r20"
+toolsVersion="2.1"
+toolsFile="commandlinetools-linux-6609375_latest.zip"
+ndkVersion="r21d"
 ndkFile="android-ndk-$ndkVersion-linux-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
 sdkApiLevel="android-28"
 
-toolsSha1="8c7c28554a32318461802c1291d76fccfafde054"
-ndkSha1="8665fc84a1b1f0d6ab3b5fdd1e30200cc7b9adff"
+toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
+ndkSha1="bcf4023eb8cb6976a4c7cff0a8a8f145f162bf4d"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
@@ -88,17 +88,20 @@ sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
 # But don't let the pipeline hide sdkmanager failures.
 set -o pipefail
 
+sudo mkdir "$sdkTargetFolder/cmdline-tools"
+sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
+
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 # shellcheck disable=SC2031
 if [ "$http_proxy" != "" ]; then
     proxy_host=$(echo "$proxy" | cut -d'/' -f3 | cut -d':' -f1)
     proxy_port=$(echo "$proxy" | cut -d':' -f3)
-    echo "y" | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+    echo "y" | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" --sdk_root=$sdkTargetFolder  \
                    --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port"  \
                    "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
         | eval $sdkmanager_no_progress_bar_cmd
 else
-    echo "y" | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+    echo "y" | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" --sdk_root=$sdkTargetFolder  \
                    "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
         | eval $sdkmanager_no_progress_bar_cmd
 fi
@@ -118,16 +121,16 @@ echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
 echo "Android NDK = $ndkVersion" >> ~/versions.txt
 
-cd "$sdkTargetFolder/tools/bin"
-./sdkmanager --install "emulator"  \
+cd "$sdkTargetFolder/cmdline-tools/tools/bin"
+./sdkmanager --install "emulator" --sdk_root=$sdkTargetFolder \
     | eval $sdkmanager_no_progress_bar_cmd
-echo "y" | ./sdkmanager --install "system-images;android-21;google_apis;x86"  \
+echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86"  \
     | eval $sdkmanager_no_progress_bar_cmd
 
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
-echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-21;google_apis;x86" -c 2048M -f
+echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-23;google_apis;x86" -c 2048M -f
 # Purely informative, show the list of avd devices
 ./avdmanager list avd

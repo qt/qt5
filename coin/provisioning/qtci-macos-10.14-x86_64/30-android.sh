@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -47,11 +47,11 @@ sdkTargetFolder="$targetFolder/sdk"
 
 basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
 
-toolsVersion="r26.1.1"
+toolsVersion="2.1"
 # toolsFile dertermines tools version
-toolsFile="sdk-tools-darwin-4333796.zip"
+toolsFile="commandlinetools-mac-6609375_latest.zip"
 
-ndkVersion="r20"
+ndkVersion="r21d"
 ndkFile="android-ndk-$ndkVersion-darwin-x86_64.zip"
 sdkBuildToolsVersion="28.0.3"
 # this is compile sdk version
@@ -71,8 +71,11 @@ sudo chown -R qt:wheel "$targetFolder"
 # Run the following command under `eval` or `sh -c` so that the shell properly splits it
 sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
 
+sudo mkdir "$sdkTargetFolder/cmdline-tools"
+sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
+
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
-(echo "y"; echo "y") | "$sdkTargetFolder/tools/bin/sdkmanager"  \
+(echo "y"; echo "y") | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" "--sdk_root=$sdkTargetFolder" \
     "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
     | eval $sdkmanager_no_progress_bar_cmd
 

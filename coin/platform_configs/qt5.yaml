@@ -15,4 +15,4 @@ Configurations:
     Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
     Target compiler: 'Clang'
     Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r20'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r21d'
