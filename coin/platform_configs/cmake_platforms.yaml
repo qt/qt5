@@ -1,7 +1,8 @@
 Version: 2
 Include: [
     cmake_platforms_target_android_host_linux.yaml,
-    cmake_platforms_target_android_host_macos.yaml
+    cmake_platforms_target_android_host_macos.yaml,
+    cmake_platforms_target_android_host_windows.yaml
     ]
 Configurations:
 -
@@ -58,6 +59,7 @@ Configurations:
     Features: ['Packaging', 'Sccache']
     Environment variables: ['TARGET_CONFIGURE_ARGS=-DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS -DQT_FORCE_SIMULATOR_AND_DEVICE=ON -DBUILD_WITH_PCH=OFF', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
 -
+    Id: 'Windows10-Mingw8-x64-host'
     Template: 'qtci-windows-10-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache']
