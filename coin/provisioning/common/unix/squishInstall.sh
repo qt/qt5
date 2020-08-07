@@ -41,18 +41,19 @@ set -ex
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.5.2"
-qtBranch="514x"
+version="6.6.1"
+qtBranch="515x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
 preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable"
-licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/.squish-3-license"
+licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/$qtBranch/.squish-3-license"
+licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
 if uname -a |grep -q Darwin; then
      compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
-     sha1="91a1d7228dc4b4bd64f93191c33d2642abc97e14"
+     sha1="9fff9a7cb037214d21f47f2cc53747885fd1f2ae"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="63f33de55770e2588dd9f482546900e33d20f8ec"
+     sha1="3a50052caafa3ca583b7edf754227999d7185ffa"
 fi
 
 mountFolder="/tmp/squish"
@@ -95,11 +96,11 @@ sudo mv "$installFolder/rta_squish_$version" "$squishFolder"
 if uname -a |grep -q "Ubuntu"; then
     if [ ! -e "/usr/lib/tcl8.6" ]; then
         sudo mkdir /usr/lib/tcl8.6
-        sudo cp "$squishFolder/package/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
+        sudo cp "$squishFolder/squish_for_qt/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
     fi
 fi
 
-DownloadURL "$licenseUrl" "$licenseUrl" "3c6b2b3ca047f68e20f697afcc3a9d376f01b376" "$HOME/.squish-3-license"
+DownloadURL "$licenseUrl" "$licenseUrl" "$licenseSHA" "$HOME/.squish-3-license"
 
 echo "Changing ownerships"
 sudo chown -R qt:$usersGroup "$squishFolder"
@@ -107,18 +108,18 @@ sudo chown qt:$usersGroup "$HOME/.squish-3-license"
 
 echo "Set commands for environment variables in .bashrc"
 if uname -a |grep -q "Ubuntu"; then
-    echo "export SQUISH_PATH=$squishFolder/package" >> ~/.profile
-    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.profile
+    echo "export SQUISH_PATH=$squishFolder/squish_for_qt" >> ~/.profile
+    echo "export PATH=\$PATH:$squishFolder/squish_for_qt/bin" >> ~/.profile
 else
-    echo "export SQUISH_PATH=$squishFolder/package" >> ~/.bashrc
-    echo "export PATH=\$PATH:$squishFolder/squish-$version/bin" >> ~/.bashrc
+    echo "export SQUISH_PATH=$squishFolder/squish_for_qt" >> ~/.bashrc
+    echo "export PATH=\$PATH:$squishFolder/squish_for_qt/bin" >> ~/.bashrc
 fi
 
 echo "Verifying Squish"
-if "$squishFolder/package/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
-    echo "Squish installation tested successfully"
+if "$squishFolder/squish_for_qt/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
+    echo "Squish for Qt installation tested successfully"
 else
-    echo "Squish test failed! Package wasn't installed correctly."
+    echo "Squish for Qt test failed! Package wasn't installed correctly."
     exit 1
 fi
 
