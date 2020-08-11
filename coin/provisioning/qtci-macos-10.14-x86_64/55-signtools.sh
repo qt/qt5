@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -114,15 +114,15 @@ sha1Ios="aae58d00d0a1b179a09f21cfc67f9d16fb95ff36"
 { Install "$cacheSigningTools/ios_password.txt" "$targetFolder/ios_password.txt" $sha1Ios; } 2> /dev/null
 { iosPassword=$(cat "$targetFolder/ios_password.txt"); } 2> /dev/null
 
-iPhoneDeveloper="iosDevelopment2019CiTeam.p12"
-shaIPhoneDeveloper="fa22abe1b1cc64af6585f7a61c4aba5e00220bdc"
-Install "$cacheSigningTools/latest_ios_cert_2019/$iPhoneDeveloper" "$targetFolder/$iPhoneDeveloper" $shaIPhoneDeveloper
+iPhoneDeveloper="iPhoneDeveloperCiTeam2020.p12"
+shaIPhoneDeveloper="73136e44fed850f398e85908e4a73f20a6bdd8a2"
+Install "$cacheSigningTools/latest_ios_cert_2020/$iPhoneDeveloper" "$targetFolder/$iPhoneDeveloper" $shaIPhoneDeveloper
 echo "Importing $iPhoneDeveloper.."
 { security import $targetFolder/$iPhoneDeveloper -k $loginKeychain* -P "$iosPassword" -T /usr/bin/codesign; } 2> /dev/null
 
-iPhoneDistribution="iosDistribution2019CiTeam.p12"
-shaIPhoneDistribution="6510119651c7aecb21d0a1dae329f2eae1e8f4e9"
-Install "$cacheSigningTools/latest_ios_cert_2019/$iPhoneDistribution" "$targetFolder/$iPhoneDistribution" $shaIPhoneDistribution
+iPhoneDistribution="iPhoneDistributionCiTeam2020.p12"
+shaIPhoneDistribution="36215c3cbc6bfee48e86aafbd53c56282fe36d8d"
+Install "$cacheSigningTools/latest_ios_cert_2020/$iPhoneDistribution" "$targetFolder/$iPhoneDistribution" $shaIPhoneDistribution
 echo "Importing $iPhoneDistribution.."
 { security import "$targetFolder/$iPhoneDistribution" -k $loginKeychain* -P "$iosPassword" -T /usr/bin/codesign; } 2> /dev/null
 
@@ -130,8 +130,8 @@ echo "Importing $iPhoneDistribution.."
 echo "Creating directory $targetFolder/Library/MobileDevice/Provisioning Profiles.."
 mkdir "$targetFolder/Library/MobileDevice"
 mkdir "$targetFolder/Library/MobileDevice/Provisioning Profiles"
-shaMobileprovision="477a7f3876c4333bd56a045df0d82fce795b1ebb"
-Install "$cacheSigningTools/latest_ios_cert_2019/iOS_Dev_2019_citeam.mobileprovision" "$targetFolder/Library/MobileDevice/Provisioning Profiles/iOS_Dev08112017.mobileprovision" $shaMobileprovision
+shaMobileprovision="ec9697276253ca7bf4401912236f0e6fde4214da"
+Install "$cacheSigningTools/latest_ios_cert_2020/iOS_Dev_2020_citeam.mobileprovision" "$targetFolder/Library/MobileDevice/Provisioning Profiles/iOS_Dev_2020_citeam.mobileprovision" $shaMobileprovision
 
 # Removing password files
 rm -fr "$targetFolder/login_keychain_password.txt"
