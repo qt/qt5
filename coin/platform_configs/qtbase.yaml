@@ -2,17 +2,6 @@ Version: 2
 Include: [cmake_platforms.yaml]
 Configurations:
 -
-    Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
-    Target os: 'WebAssembly'
-    Compiler: 'GCC'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -developer-build -static -nomake tests -nomake examples -no-pch -no-feature-thread -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -xplatform wasm-emscripten'
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Compiler: 'Clang'
-    Features: ['UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
--
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
     Features: ['Sccache']
