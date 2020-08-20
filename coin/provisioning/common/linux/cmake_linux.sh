@@ -43,10 +43,10 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 majorminorversion="3.17"
-version="3.17.2"
+version="3.17.4"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-Linux-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-Linux-x86_64.tar.gz"
-SHA1="24a68e61292b91c706b09b4aa8044764e2dfb2e2"
+SHA1="02329fd9091013ac6379b02ceb64df39659437de"
 targetFolder="/opt/cmake-$version"
 appPrefix="cmake-$version-Linux-x86_64"
 

@@ -43,10 +43,10 @@ source "${BASH_SOURCE%/*}/InstallAppFromCompressedFileFromURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 majorminorversion="3.17"
-version="3.17.2"
+version="3.17.4"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-Darwin-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-Darwin-x86_64.tar.gz"
-SHA1="918a21481751b19915767649281d623aa60716f4"
+SHA1="2ce5b66796876133f894e9d255bd25327c8a4fa9"
 appPrefix="cmake-$version-Darwin-x86_64"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
