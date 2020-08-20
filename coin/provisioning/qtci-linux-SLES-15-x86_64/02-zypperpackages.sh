@@ -103,3 +103,5 @@ sudo zypper -nq install unixODBC-devel unixODBC
 # sqlite support
 sudo zypper -nq install sqlite3 sqlite3-devel
 
+# Java - needed by RTA jenkins
+sudo zypper -nq install java
