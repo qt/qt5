@@ -3,7 +3,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache']
+    Features: ['Sccache', 'Insignificant']
     Configure arguments: '-DBUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DQT_NAMESPACE=TestNamespace -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
