@@ -185,6 +185,8 @@ installPackages+=(ruby)
 installPackages+=(libxslt1-dev)
 installPackages+=(libxml2-dev)
 installPackages+=(libhyphen-dev)
+# For remote access
+installPackages+=(ssh)
 
 echo "Running update for apt"
 waitLoop
