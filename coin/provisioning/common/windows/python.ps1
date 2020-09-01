@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2019 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -55,14 +55,8 @@ Write-Host "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
 Write-Host "Installing $package..."
-# /levx = e:'All error messages' v:'Verbose' x:'Extra debugging info'
-try {
-    Run-Executable "msiexec" "/passive /i $package /levx C:\Windows\Temp\Python_log.log TARGETDIR=$targetDir ALLUSERS=1"
-}
-catch {
-    Get-Content C:\Windows\Temp\Python_log.log -Tail 50
-    exit 1
-}
+Run-Executable "msiexec" "/passive /i $package TARGETDIR=$targetDir ALLUSERS=1"
+
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
 Write-Host "Changing allowZip64 value to 'True'..."
 (Get-Content $targetDir\lib\zipfile.py) | ForEach-Object { $_ -replace "allowZip64=False", "allowZip64=True" } | Set-Content $targetDir\lib\zipfile.py
