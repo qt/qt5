@@ -187,6 +187,8 @@ installPackages+=(libxml2-dev)
 installPackages+=(libhyphen-dev)
 # For remote access
 installPackages+=(ssh)
+# For bitbake
+installPackages+=(diffstat)
 
 echo "Running update for apt"
 waitLoop
