@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -54,8 +54,30 @@ $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$versio
 Write-Host "Fetching from URL..."
 Download $externalUrl $internalUrl $package
 Verify-Checksum $package $sha1
-Write-Host "Installing $package..."
-Run-Executable "msiexec" "/passive /i $package TARGETDIR=$targetDir ALLUSERS=1"
+
+# Python installation is flaky, but seems to pass with second run if error occurs.
+$stop = $false
+[int]$retry = "0"
+do {
+    try {
+        # /levx = e:'All error messages' v:'Verbose' x:'Extra debugging info'
+        Run-Executable "msiexec" "/passive /i $package /levx C:\Windows\Temp\Python_log.log TARGETDIR=$targetDir ALLUSERS=1"
+        $stop = $true
+    }
+    catch {
+        Get-Content C:\Windows\Temp\Python_log.log -Tail 50
+        if ($retry -gt 2) {
+        Write-Host "Python installation failed!"
+        throw
+        }
+        else {
+            Write-Host "Couldn't install python, retrying in 30 seconds"
+            Start-Sleep -s 30
+            $retry = $retry + 1
+        }
+    }
+}
+while ($stop -ne $true)
 
 # We need to change allowZip64 from 'False' to 'True' to be able to create ZIP files that use the ZIP64 extensions when the zipfile is larger than 2 GB
 Write-Host "Changing allowZip64 value to 'True'..."
