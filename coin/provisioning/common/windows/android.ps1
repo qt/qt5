@@ -79,7 +79,7 @@ Set-EnvironmentVariable "ANDROID_NDK_ROOT" $ndkFolder
 Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
 New-Item -ItemType directory -Path $toolsFolder
 Move-Item -Path C:\Utils\Android\tools -Destination $toolsFolder\
-Set-EnvironmentVariable "ANDROID_SDK_HOME" "C:\Utils\Anrdoid"
+Set-EnvironmentVariable "ANDROID_SDK_HOME" "C:\Utils\Android"
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
 if (IsProxyEnabled) {
