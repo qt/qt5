@@ -23,20 +23,6 @@ Configurations:
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
 -
     Template: 'qtci-windows-10-x86_64-17'
-    Target os: 'WinRT_10'
-    Target arch: 'x86'
-    Compiler: 'MSVC2015'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -nomake examples -no-sql-mysql -platform win32-msvc2015 -xplatform winrt-x86-msvc2015'
--
-    Template: 'qtci-windows-10-x86_64-17'
-    Target os: 'WinRT_10'
-    Target arch: 'armv7'
-    Compiler: 'MSVC2015'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -nomake examples -no-sql-mysql -platform win32-msvc2015 -xplatform winrt-arm-msvc2015'
--
-    Template: 'qtci-windows-10-x86_64-17'
     Compiler: 'MSVC2019'
     Features: ['Packaging']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
@@ -58,18 +44,6 @@ Configurations:
     Template: 'qtci-linux-openSUSE-15.1-x86_64'
     Compiler: 'GCC'
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-pch -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
--
-    Template: 'qtci-linux-openSUSE-15.1-x86_64'
-    Compiler: 'ICC'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-pch -system-sqlite -R . -platform linux-icc-64 -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
-    Environment variables: ['LD_LIBRARY_PATH=$ICC64_19_LDLP:$LD_LIBRARY_PATH', 'PATH=$ICC64_19_PATH:$PATH' ]
--
-    Template: 'qtci-linux-openSUSE-15.1-x86_64'
-    Target os: 'WebAssembly'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -static -nomake tests -nomake examples -no-sql-mysql -no-pch -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-feature-thread -xplatform wasm-emscripten'
 -
     Template: 'qtci-linux-SLES-15-x86_64'
     Compiler: 'GCC'
@@ -94,57 +68,3 @@ Configurations:
     Compiler: 'Clang'
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'IOS_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
--
-    Template: 'qtci-linux-RHEL-7.6-x86_64'
-    Target os: 'Android_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Target compiler: 'Clang'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r20 -android-ndk-host linux-x86_64'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Target os: 'QEMU'
-    Target arch: 'armv7'
-    Compiler: 'GCC'
-    Environment variables: ['GST_PLUGIN_SCANNER=/opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/libexec/gstreamer-1.0/gst-plugin-scanner']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -sysroot /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/bin/mysql_config -psql_config /dev/null -tslib'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Target os: 'QEMU'
-    Target arch: 'arm64'
-    Compiler: 'GCC'
-    Environment variables: ['GST_PLUGIN_SCANNER=/opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/libexec/gstreamer-1.0/gst-plugin-scanner']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Target os: 'QEMU'
-    Target arch: 'mips64'
-    Compiler: 'GCC'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-mips64/sysroots/x86_64-pokysdk-linux/usr/bin/mips64-poky-linux/mips64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-mips64/sysroots/mips64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-mips64/sysroots/mips64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib'
--
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
-    Compiler: 'GCC'
-    Features: ['TestOnly', 'LicenseCheck']
--
-    Template: 'qtci-linux-RHEL-7.6-x86_64'
-    Target os: 'INTEGRITY_11_04'
-    Target arch: 'armv7'
-    Compiler: 'GCC'
-    Features: ['DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -xplatform integrity-armv7-imx6'
--
-    Template: 'qtci-linux-RHEL-7.6-x86_64'
-    Target os: 'QNX_700'
-    Target arch: 'armv7'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'DisableTests']
-    Configure arguments: '-opensource -confirm-license -verbose -extprefix /home/qt/work/install -release -nomake tests -nomake examples -no-use-gold-linker -opengl es2 -no-sql-mysql -qpa qnx -xplatform qnx-armle-v7-qcc -I /opt/qnx700/target/qnx7/usr/include/openssl1_1'
