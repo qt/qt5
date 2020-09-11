@@ -40,7 +40,7 @@ $version = "6.6.1"
 $qtBranch = "515x"
 $targetDir = "C:\Utils\squish"
 $squishPackage = "C:\Utils\rta_squish"
-$squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build"
+$squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable"
 $licenseUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin"
 
 # Squish license
@@ -62,7 +62,9 @@ if ($OSVersion -eq "Windows 10 Enterprise") {
     if (Is64BitWinHost) {
         $sha1 = "17b5bec83f448877e42e5effdc7daf723d157800"
     } else {
-        $sha1 = "1e6c1b3935e1c1bcdd28ec2511f24b8656d3ee6a"
+        $sha1 = "9c0fc186605522ac0ac11066c10c3f3e8a95a705"
+        #Remove special handling when all packages are in same dir, exception now for win10 x86->the archive had to be rebuild
+        $squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable\6.6.1_rerun"
     }
 } elseif ($OSVersion -eq "Windows 7 Enterprise") {
     $winVersion = "win7"
@@ -70,7 +72,7 @@ if ($OSVersion -eq "Windows 10 Enterprise") {
 }
 $squishArchive = "prebuild-squish-$version-$qtBranch-$winVersion-$arch.zip"
 
-Copy-Item "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable\$squishArchive" "C:\Utils"
+Copy-Item "$squishUrl\$squishArchive" "C:\Utils"
 Verify-Checksum "C:\Utils\$squishArchive" $sha1
 Extract-7Zip "C:\Utils\$squishArchive" "C:\Utils"
 Rename-Item "$squishPackage" "$targetDir"
