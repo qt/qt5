@@ -2,7 +2,7 @@
 icu/65.1@qtproject/stable
 libxml2/2.9.10@qtproject/stable
 libxslt/1.1.34@qtproject/stable
-libjpeg-turbo/2.0.3@qtproject/stable
+libjpeg-turbo/2.0.5@qtproject/stable
 
 [generators]
 cmake
