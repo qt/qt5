@@ -2,10 +2,10 @@
 
 Run-Conan-Install `
     -ConanfilesDir "$PSScriptRoot\conanfiles" `
-    -BuildinfoDir Mingw73-x86 `
+    -BuildinfoDir Mingw-x86 `
     -Arch x86 `
     -Compiler "gcc" `
-    -CompilerVersion 7 `
+    -CompilerVersion 8 `
     -CompilerLibcxx "libstdc++" `
     -CompilerException "dwarf2" `
     -CompilerThreads "posix"
