@@ -1,0 +1,54 @@
+{
+ "graph_lock": {
+  "nodes": {
+   "0": {
+    "options": "icu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False\nlibjpeg-turbo:SIMD=True\nlibjpeg-turbo:arithmetic_decoder=True\nlibjpeg-turbo:arithmetic_encoder=True\nlibjpeg-turbo:enable12bit=False\nlibjpeg-turbo:fPIC=True\nlibjpeg-turbo:java=False\nlibjpeg-turbo:libjpeg7_compatibility=True\nlibjpeg-turbo:libjpeg8_compatibility=True\nlibjpeg-turbo:mem_src_dst=True\nlibjpeg-turbo:shared=False\nlibjpeg-turbo:turbojpeg=True\nlibxml2:iconv=False\nlibxml2:icu=True\nlibxml2:lzma=False\nlibxml2:shared=True\nlibxml2:zlib=False\nlibxslt:shared=True",
+    "requires": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "path": "..\\coin\\provisioning\\qtci-windows-10-x86_64\\conanfiles\\qtwebkit.txt",
+    "context": "host"
+   },
+   "1": {
+    "ref": "icu/65.1@qtproject/stable",
+    "options": "data_packaging=library\nshared=True\nsilent=True\nwith_unit_tests=False",
+    "package_id": "5df173d8cb73784907692ca167e7d2e8316b10c7",
+    "prev": "0",
+    "context": "host"
+   },
+   "2": {
+    "ref": "libxml2/2.9.10@qtproject/stable",
+    "options": "iconv=False\nicu=True\nlzma=False\nshared=True\nzlib=False\nicu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False",
+    "package_id": "852e73d42d44dff3fe4b6ed5d6a4546250ec180e",
+    "prev": "0",
+    "requires": [
+     "1"
+    ],
+    "context": "host"
+   },
+   "3": {
+    "ref": "libxslt/1.1.34@qtproject/stable",
+    "options": "shared=True\nicu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False\nlibxml2:iconv=False\nlibxml2:icu=True\nlibxml2:lzma=False\nlibxml2:shared=True\nlibxml2:zlib=False",
+    "package_id": "7e451536519482997336e237346b93d95b87eb32",
+    "prev": "0",
+    "requires": [
+     "2"
+    ],
+    "context": "host"
+   },
+   "4": {
+    "ref": "libjpeg-turbo/2.0.5@qtproject/stable",
+    "options": "SIMD=True\narithmetic_decoder=True\narithmetic_encoder=True\nenable12bit=False\nfPIC=True\njava=False\nlibjpeg7_compatibility=True\nlibjpeg8_compatibility=True\nmem_src_dst=True\nshared=False\nturbojpeg=True",
+    "package_id": "793aa46df280f94646f5e993f5e3553e18ec8ae9",
+    "prev": "0",
+    "context": "host"
+   }
+  },
+  "revisions_enabled": false
+ },
+ "version": "0.4",
+ "profile_host": "[settings]\narch=x86_64\narch_build=x86_64\nbuild_type=Release\ncompiler=gcc\ncompiler.exception=seh\ncompiler.libcxx=libstdc++\ncompiler.threads=posix\ncompiler.version=8\nos=Windows\nos_build=Windows\n[options]\n[build_requires]\n[env]\n"
+}

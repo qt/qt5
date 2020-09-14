@@ -1,0 +1,54 @@
+{
+ "graph_lock": {
+  "nodes": {
+   "0": {
+    "options": "icu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False\nlibjpeg-turbo:SIMD=True\nlibjpeg-turbo:arithmetic_decoder=True\nlibjpeg-turbo:arithmetic_encoder=True\nlibjpeg-turbo:enable12bit=False\nlibjpeg-turbo:java=False\nlibjpeg-turbo:libjpeg7_compatibility=True\nlibjpeg-turbo:libjpeg8_compatibility=True\nlibjpeg-turbo:mem_src_dst=True\nlibjpeg-turbo:shared=False\nlibjpeg-turbo:turbojpeg=True\nlibxml2:iconv=False\nlibxml2:icu=True\nlibxml2:lzma=False\nlibxml2:shared=True\nlibxml2:zlib=False\nlibxslt:shared=True",
+    "requires": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "path": "..\\coin\\provisioning\\qtci-windows-10-x86_64\\conanfiles\\qtwebkit.txt",
+    "context": "host"
+   },
+   "1": {
+    "ref": "icu/65.1@qtproject/stable",
+    "options": "data_packaging=library\nshared=True\nsilent=True\nwith_unit_tests=False",
+    "package_id": "c55d3669e198b38f9cbd3031c1943896d7bcdad9",
+    "prev": "0",
+    "context": "host"
+   },
+   "2": {
+    "ref": "libxml2/2.9.10@qtproject/stable",
+    "options": "iconv=False\nicu=True\nlzma=False\nshared=True\nzlib=False\nicu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False",
+    "package_id": "12ee02550ebaf136555a7f3bbc8cc25cfb8bb72b",
+    "prev": "0",
+    "requires": [
+     "1"
+    ],
+    "context": "host"
+   },
+   "3": {
+    "ref": "libxslt/1.1.34@qtproject/stable",
+    "options": "shared=True\nicu:data_packaging=library\nicu:shared=True\nicu:silent=True\nicu:with_unit_tests=False\nlibxml2:iconv=False\nlibxml2:icu=True\nlibxml2:lzma=False\nlibxml2:shared=True\nlibxml2:zlib=False",
+    "package_id": "466fc39fa8b7a19ee2095aa945fff98630acdd12",
+    "prev": "0",
+    "requires": [
+     "2"
+    ],
+    "context": "host"
+   },
+   "4": {
+    "ref": "libjpeg-turbo/2.0.5@qtproject/stable",
+    "options": "SIMD=True\narithmetic_decoder=True\narithmetic_encoder=True\nenable12bit=False\njava=False\nlibjpeg7_compatibility=True\nlibjpeg8_compatibility=True\nmem_src_dst=True\nshared=False\nturbojpeg=True",
+    "package_id": "4985763cfece81b148d7c11f16d564e42ee2756c",
+    "prev": "0",
+    "context": "host"
+   }
+  },
+  "revisions_enabled": false
+ },
+ "version": "0.4",
+ "profile_host": "[settings]\narch=x86\narch_build=x86_64\nbuild_type=Release\ncompiler=Visual Studio\ncompiler.runtime=MD\ncompiler.version=14\nos=Windows\nos_build=Windows\n[options]\n[build_requires]\n[env]\n"
+}
