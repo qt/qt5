@@ -29,7 +29,7 @@ Configurations:
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
-    Template: 'qtci-linux-SLES-15-x86_64'
+    Template: 'qtci-linux-SLES-15_SP2-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'DisableTests']
     Configure arguments: '-DBUILD_EXAMPLES=OFF -FEATURE_developer_build=ON -DBUILD_WITH_PCH=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'

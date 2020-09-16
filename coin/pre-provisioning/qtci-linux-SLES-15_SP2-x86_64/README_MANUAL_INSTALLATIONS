@@ -1,0 +1,47 @@
+### SUSE Linux Enterprise Desktop 15 SP2 ###
+
+Language: English (US)
+Keyboard Layout: English (US)
+
+Available Extensions and Modules:
+   Basesystem Module
+   Desktop Applications Module
+   Python 2 Module
+
+Gnome Desktop (X11)
+
+Resolution 1280x800
+
+# Settings
+Notification Popups - disabled
+LockScreen Notifications - disabled
+
+# Privacy
+Screen Lock - Off
+
+# Power
+Power Saving - Blank Screen - never
+
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_386/coin-setup
+sudo ./coin-setup
+
+# Add support for virtio driver
+sudo echo "add_drivers+=\"virtio-blk\"" >> /etc/dracut.conf.d/virtio.conf
+sudo dracut -f
+
+# Add these to '/etc/polkit-default-privs.local'
+org.freedesktop.udisks2.filesystem-mount                yes
+org.freedesktop.udisks2.filesystem-mount-other-seat     yes
+org.freedesktop.udisks2.filesystem-mount-system         yes
+org.freedesktop.login1.power-off                        yes
+org.freedesktop.login1.power-off-ignore-inhibit         yes
+org.freedesktop.login1.power-off-multiple-sessions      yes
+
+# Register product
+# Add 'Available Extensions and Modules'
+* Basesystem Module 15 SP2 x86_64
+* Server Applications Module 15 SP2 x86_64

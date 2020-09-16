@@ -22,7 +22,7 @@ Configurations:
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -static -nomake tests -nomake examples -no-sql-mysql -no-pch -no-dbus -no-headersclean -no-ssl -no-warnings-are-errors -no-feature-thread -xplatform wasm-emscripten'
 -
-    Template: 'qtci-linux-SLES-15-x86_64'
+    Template: 'qtci-linux-SLES-15_SP2-x86_64-50'
     Compiler: 'GCC'
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-sql-mysql -no-pch -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'

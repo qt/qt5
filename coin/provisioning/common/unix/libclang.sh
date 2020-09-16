@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -70,7 +70,11 @@ zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-$version"
 
 DownloadURL $url_cached $url $sha1 $zip
-sudo 7z x $zip -o/usr/local/
+if command -v 7zr &> /dev/null; then
+    sudo 7zr x $zip -o/usr/local/
+else
+    sudo 7z x $zip -o/usr/local/
+fi
 sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
 
