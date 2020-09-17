@@ -49,6 +49,14 @@ Configurations:
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
 -
+    Template: 'qtci-macos-10.14-x86_64'
+    Target os: 'Android_ANY'
+    Target arch: 'multi'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Features: ['DisableTests', 'UseLegacyInstructions']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r21d -android-ndk-host darwin-x86_64'
+-
     Template: 'qtci-linux-RHEL-7.6-x86_64'
     Target os: 'Android_ANY'
     Target arch: 'multi'
