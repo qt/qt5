@@ -105,3 +105,6 @@ sudo zypper -nq install sqlite3 sqlite3-devel
 
 # Java - needed by RTA jenkins
 sudo zypper -nq install java
+
+# open-vm-tools requires update. Version in tier1 is broken and causes segfault on boot.
+sudo zypper -nq update open-vm-tools
