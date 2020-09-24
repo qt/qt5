@@ -136,6 +136,9 @@ sudo ln -s /opt/rh/rh-python36/root/usr/bin/pip3 /usr/local/bin/pip3
 sudo pip install --upgrade pip
 sudo pip install virtualenv wheel
 
+# Needed by packaging scripts
+sudo /usr/local/bin/pip3 install colorlog --user
+
 sudo /usr/local/bin/pip3 install wheel
 # Install all needed packages in a special wheel cache directory
 /usr/local/bin/pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
