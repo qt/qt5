@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -44,3 +44,5 @@ installPackages+=(openssl-devel)
 
 sudo yum -y install "${installPackages[@]}"
 
+gccVersion="$(gcc --version |grep gcc |cut -b 11-16)"
+echo "GCC = $gccVersion" >> versions.txt

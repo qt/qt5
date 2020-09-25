@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -56,3 +56,5 @@ sudo apt-get update
 echo "Installing packages"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 
+gccVersion="$(gcc --version |grep gcc |cut -b 13-17)"
+echo "GCC = $gccVersion" >> versions.txt

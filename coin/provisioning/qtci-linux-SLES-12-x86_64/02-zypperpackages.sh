@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -94,3 +94,5 @@ sudo zypper -nq install libfreetds freetds-devel
 # sqlite2 support
 sudo zypper -nq install sqlite2 sqlite2-devel
 
+gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
+echo "GCC = $gccVersion" >> versions.txt

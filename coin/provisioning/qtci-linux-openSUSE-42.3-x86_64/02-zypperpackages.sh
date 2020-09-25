@@ -67,3 +67,6 @@ sudo zypper -nq install libpulse-devel
 
 # cups
 sudo zypper -nq install cups-devel
+
+gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
+echo "GCC = $gccVersion" >> versions.txt
