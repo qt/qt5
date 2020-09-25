@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -105,3 +105,10 @@ sudo zypper -nq install sqlite3 sqlite3-devel
 
 # Java - needed by RTA jenkins
 sudo zypper -nq install java
+
+# open-vm-tools requires update. Version in tier1 is broken and causes segfault on boot.
+sudo zypper -nq update open-vm-tools
+
+gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
+echo "GCC = $gccVersion" >> versions.txt
+
