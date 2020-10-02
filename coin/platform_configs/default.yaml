@@ -71,7 +71,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['UseLegacyInstructions', 'Insignificant']
     Environment variables: ['GST_PLUGIN_SCANNER=/opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/libexec/gstreamer-1.0/gst-plugin-scanner', 'QT_QUICK_BACKEND=software']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -sysroot /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-imx7-g++ -device-option CROSS_COMPILE=/opt/yocto-armv7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- -device-option DISTRO_OPTS="hard-float boot2qt" -sysroot /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi -extprefix /home/qt/work/install -mysql_config /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd -no-warnings-are-errors'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'
@@ -79,7 +79,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['UseLegacyInstructions', 'Insignificant']
     Environment variables: ['GST_PLUGIN_SCANNER=/opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/libexec/gstreamer-1.0/gst-plugin-scanner', 'QT_QUICK_BACKEND=software']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd -no-warnings-are-errors'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'
@@ -87,7 +87,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['DisableTests', 'UseLegacyInstructions']
     Environment variables: ['QT_QUICK_BACKEND=software']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-mips64/sysroots/x86_64-pokysdk-linux/usr/bin/mips64-poky-linux/mips64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-mips64/sysroots/mips64r2-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-mips64/sysroots/mips64r2-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd'
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-mips64/sysroots/x86_64-pokysdk-linux/usr/bin/mips64-poky-linux/mips64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-mips64/sysroots/mips64r2-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-mips64/sysroots/mips64r2-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd -no-warnings-are-errors'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
