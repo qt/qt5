@@ -60,9 +60,9 @@ if ( $toolchain -eq "mingw" ) {
 install $sha1 $baseDestination-$archVer
 
 if ( $setDefault ) {
-    Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-_ARCH_")
+    Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-$archVer")
 }
-Set-EnvironmentVariable ("LLVM_INSTALL_DIR_" + $toolchainSuffix) ($baseDestination + "-_ARCH_")
+Set-EnvironmentVariable ("LLVM_INSTALL_DIR_${toolchainSuffix}") ($baseDestination + "-$archVer")
 
 if ( $libclang_version -eq "100" ) {
     # This is a hacked static build of libclang which requires special
