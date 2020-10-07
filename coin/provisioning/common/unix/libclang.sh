@@ -54,7 +54,7 @@ if uname -a |grep -q Darwin; then
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-mac.7z"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-mac.7z"
     sha1="6e019c428511e74c5d46d0ddca79d8e804b67f8a"
-elif test -f /etc/redhat-release; then
+elif test -f /etc/redhat-release && cat /etc/redhat-release | grep "Red Hat"; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
