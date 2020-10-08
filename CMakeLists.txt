@@ -48,8 +48,6 @@ endif()
 include(ECMOptionalAddSubdirectory)
 include(TopologicalSort)
 
-# Use the CMake config files from the binary dir
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
 # Also make sure the CMake config files do not recreate the already-existing targets
 if (NOT QT_BUILD_STANDALONE_TESTS)
     set(QT_NO_CREATE_TARGETS TRUE)
