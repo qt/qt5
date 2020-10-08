@@ -2,4 +2,7 @@
 
 set -ex
 
-brew install ninja
+# shellcheck source=../common/macos/ninja.sh
+source "${BASH_SOURCE%/*}/../common/macos/ninja.sh"
+
+
