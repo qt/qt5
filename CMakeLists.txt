@@ -82,7 +82,8 @@ list(REMOVE_ITEM git_module_list qtbase)
 add_subdirectory(qtbase)
 
 if (NOT QT_BUILD_STANDALONE_TESTS)
-    list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}")
+    list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/lib/cmake")
+    list(APPEND CMAKE_FIND_ROOT_PATH "${QtBase_BINARY_DIR}")
 endif()
 
 foreach(module IN LISTS git_module_list)
