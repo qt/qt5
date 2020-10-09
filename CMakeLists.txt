@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/qtbase/cmake/QtAutoDetect.cmake)
+
 project(Qt
     VERSION 6.0.0
     DESCRIPTION "Qt Libraries"
