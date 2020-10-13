@@ -5,7 +5,7 @@ Configurations:
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
     Features: ['UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
+    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
 -
     Template: 'qtci-macos-10.14-x86_64'
     Compiler: 'Clang'
