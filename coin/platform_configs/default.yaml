@@ -57,14 +57,6 @@ Configurations:
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r21d -android-ndk-host darwin-x86_64'
 -
-    Template: 'qtci-linux-RHEL-7.6-x86_64'
-    Target os: 'Android_ANY'
-    Target arch: 'multi'
-    Compiler: 'GCC'
-    Target compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-use-gold-linker -opengl es2 -sysconfdir /etc/xdg -openssl -I {{.Env.OPENSSL_ANDROID_HOME}}/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r21d -android-ndk-host linux-x86_64'
--
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'
     Target arch: 'armv7'
