@@ -86,6 +86,8 @@ installPackages+=(rh-nodejs12-nodejs-devel)
 installPackages+=(java-1.8.0-openjdk-devel)
 # For receiving shasum
 installPackages+=(perl-Digest-SHA)
+# For Clang 11 tests
+installPackages+=(perl-Digest-MD5)
 # INTEGRITY requirements
 installPackages+=(glibc.i686)
 # Enable Qt Bluetooth
