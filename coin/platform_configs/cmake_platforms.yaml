@@ -80,7 +80,7 @@ Configurations:
     Target compiler: 'Clang'
     Platform dependency: 'macos-10.14-host'
     Features: ['Packaging', 'Sccache']
-    Environment variables: ['TARGET_CONFIGURE_ARGS=-DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS -DQT_FORCE_SIMULATOR_AND_DEVICE=ON -DBUILD_WITH_PCH=OFF', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DBUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS -DBUILD_WITH_PCH=OFF', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
 -
     Id: 'Windows10-Mingw8-x64-host'
     Template: 'qtci-windows-10-x86_64-51'
