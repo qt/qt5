@@ -111,3 +111,6 @@ sudo zypper -nq update open-vm-tools
 
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
+
+OpenSSLVersion="$(openssl version |cut -b 9-14)"
+echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt

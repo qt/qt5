@@ -153,3 +153,7 @@ sudo /usr/bin/pip3 install wheel
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
+
+OpenSSLVersion="$(openssl version |cut -b 9-14)"
+echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
+
