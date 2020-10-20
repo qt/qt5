@@ -5,7 +5,7 @@ param(
 )
 . "$PSScriptRoot\helpers.ps1"
 
-$libclang_version="10.0"
+$libclang_version="11.0"
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
@@ -39,20 +39,20 @@ $toolchainSuffix = ""
 
 if ( $toolchain -eq "vs2019" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "6e1b3e6d38803a3bf088e521f4f4feb1ca44bac3"
+        $sha1 = "ff0a30c881691068c14fbed9239b3583c8c45c6a"
     }
     else {
-        $sha1 = "36fcdc3155eef3636d99ed591f12e73d7a9a2e0c"
+        $sha1 = ""
     }
     $toolchainSuffix = "msvc"
 }
 
 if ( $toolchain -eq "mingw" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "34daf2324d190de49f8e4005afeb39a7d70c5842"
+        $sha1 = "40141a788b1ccb615544e18da27cd95b4986217b"
     }
     else {
-        $sha1 = "3d7c809ab12c9293df8ffd9343cee68f184c8612"
+        $sha1 = ""
     }
     $toolchainSuffix = "mingw"
 }
@@ -64,7 +64,7 @@ if ( $setDefault ) {
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_${toolchainSuffix}") ($baseDestination + "-$archVer")
 
-if ( $libclang_version -eq "100" ) {
+if ( $libclang_version -eq "110" ) {
     # This is a hacked static build of libclang which requires special
     # handling on the qdoc side.
     Set-EnvironmentVariable "QDOC_USE_STATIC_LIBCLANG" "1"
