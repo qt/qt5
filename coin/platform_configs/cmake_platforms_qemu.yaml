@@ -6,7 +6,7 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'Insignificant']
+    Features: ['Sccache', 'InsignificantTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
 
@@ -23,7 +23,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'Insignificant']
+    Features: ['Sccache', 'InsignificantTests']
     Environment variables: [
 
         'TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
@@ -40,7 +40,7 @@ Configurations:
     Target arch: 'mips64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'Insignificant', 'DisableTests']
+    Features: ['Sccache', 'InsignificantTests', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_SYSROOT}}/../x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake -DQT_FEATURE_system_harfbuzz=OFF -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUMIPS64_TOOLCHAIN_SYSROOT}}/../../environment-setup-mips64r2-poky-linux',
