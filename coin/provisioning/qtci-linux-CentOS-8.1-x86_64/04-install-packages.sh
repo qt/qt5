@@ -133,6 +133,7 @@ installPackages+=(perl-Data-Dumper)
 # In RedHat these come with Devtoolset
 installPackages+=(gcc)
 installPackages+=(gcc-c++)
+installPackages+=(libstdc++-static)
 installPackages+=(make)
 # Open source VMware Tools
 installPackages+=(open-vm-tools)
