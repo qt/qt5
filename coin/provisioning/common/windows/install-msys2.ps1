@@ -33,46 +33,50 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-# This script installs 7-Zip
+# This script will installs msys2
 
-$version = "20181211"
+$version = "20200903"
 $prog = "msys2"
-if (Is64BitWinHost) {
-    $arch = "x86_64"
-    $sha1 = "d689ff74fd060934bd7aaf458a11db67833463c2"
-    $folder = "msys64"
-} else {
-    $arch = "i686"
-    $sha1 = "928f9d1537d1a77dc7f2adab74fb438e7d11a98e"
-    $folder = "msys32"
-}
+$arch = "x86_64"
+$sha1 = "5a1644585fac2d58855d48b4ba4a92579a14cf03"
+$sha1_prebuilt = "d86d45d72228f53f7ae060771bc95b6f54c703c8"
+$folder = "msys64"
+
+$package_prebuilt = $folder + "_" + $version + "_prebuilt.7z"
 $package = $prog + "-base-" + $arch + "-" + $version + ".tar.xz"
 
-
+$url_cache_prebuilt = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package_prebuilt"
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package"
 $url_official = "http://repo.msys2.org/distrib/$arch/$package"
-$PackagePath = "C:\Windows\Temp\$package"
 $TargetLocation = "C:\Utils"
 
 
-Download $url_official $url_cache $PackagePath
-Verify-Checksum $PackagePath $sha1
-Extract-tar_gz $PackagePath $TargetLocation
-$msys = "$TargetLocation\$folder\msys2_shell.cmd"
+if ((Test-Path $url_cache_prebuilt)) {
+    $PackagePath = "C:\Windows\Temp\$package_prebuilt"
+    Download $url_cache_prebuilt $url_cache_prebuilt $PackagePath
+    Verify-Checksum $PackagePath $sha1_prebuilt
+    Extract-7Zip $PackagePath $TargetLocation
+} else {
+    $PackagePath = "C:\Windows\Temp\$package"
+    Download $url_official $url_cache $PackagePath
+    Verify-Checksum $PackagePath $sha1
+    Extract-tar_gz $PackagePath $TargetLocation
+    $msys = "$TargetLocation\$folder\msys2_shell.cmd"
 
-# install perl
-# Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
-cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
-Start-Sleep -s 30
-cmd /c "$msys `"-l`" `"-c`" `"cpan -i Text::Template Test::More`""
+    # install perl
+    # Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
+    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
+    Start-Sleep -s 60
+    cmd /c "$msys `"-l`" `"-c`" `"echo y | cpan -i Text::Template Test::More`""
 
-# Sometimes gpg-agent won't get killed after the installation process. If that happens the provisioning will won't continue and it will hang until timeout. So we need make sure it will be killed.
-# Let's sleep for awhile and wait that msys installation is finished. Otherwise the installation might start up gpg-agent or dirmngr after the script has passed the killing process.
-Start-Sleep -s 180
-if (Get-Process -Name "gpg-agent" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name gpg-agent }
-if (Get-Process -Name "dirmngr" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name dirmngr }
+    # Sometimes gpg-agent won't get killed after the installation process. If that happens the provisioning will won't continue and it will hang until timeout. So we need make sure it will be killed.
+    # Let's sleep for awhile and wait that msys installation is finished. Otherwise the installation might start up gpg-agent or dirmngr after the script has passed the killing process.
+    Start-Sleep -s 360
+    if (Get-Process -Name "gpg-agent" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name gpg-agent }
+    if (Get-Process -Name "dirmngr" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name dirmngr }
+}
 
 Write-Host "Cleaning $PackagePath.."
 Remove-Item -Recurse -Force -Path "$PackagePath"
 
-Write-Output "7-Zip = $version" >> ~\versions.txt
+Write-Output "msys2 = $version" >> ~\versions.txt
