@@ -1,6 +1,10 @@
 set(__qt6_qtbase_src_path "${CMAKE_CURRENT_SOURCE_DIR}/qtbase")
 
-cmake_minimum_required(VERSION 3.15.0)
+include("${__qt6_qtbase_src_path}/.cmake.conf")
+include("${__qt6_qtbase_src_path}/cmake/QtCMakeVersionHelpers.cmake")
+qt_internal_check_for_suitable_cmake_version()
+qt_internal_get_computed_minimum_cmake_version(__qt_minimum_cmake_version)
+cmake_minimum_required(VERSION ${__qt_minimum_cmake_version})
 
 include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
 
