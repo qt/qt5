@@ -1,6 +1,8 @@
+set(__qt6_qtbase_src_path "${CMAKE_CURRENT_SOURCE_DIR}/qtbase")
+
 cmake_minimum_required(VERSION 3.15.0)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/qtbase/cmake/QtAutoDetect.cmake)
+include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
 
 project(Qt
     VERSION 6.0.0
@@ -42,9 +44,10 @@ endfunction()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (NOT QT_BUILD_STANDALONE_TESTS)
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/qtbase/cmake")
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/qtbase/cmake/3rdparty/extra-cmake-modules/find-modules")
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/qtbase/cmake/3rdparty/kwin")
+    list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake")
+    list(APPEND CMAKE_MODULE_PATH
+        "${__qt6_qtbase_src_path}/cmake/3rdparty/extra-cmake-modules/find-modules")
+    list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake/3rdparty/kwin")
 endif()
 
 include(ECMOptionalAddSubdirectory)
