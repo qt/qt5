@@ -51,6 +51,11 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
+    Features: ['DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-gui -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'GCC'
     Features: ['OutOfSourceBuild', 'Documentation']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib'
 
