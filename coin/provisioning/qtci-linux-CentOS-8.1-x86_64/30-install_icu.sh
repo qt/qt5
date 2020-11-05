@@ -50,14 +50,14 @@ sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
 develPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
 develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
 
-echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
+echo "Installing custom ICU $icuVersion $sha1 packages on CentOS to $icuLocation"
 
 targetFile=$(mktemp)
 DownloadURL "$baseBinaryPackageURL" "$baseBinaryPackageExternalURL" "$sha1" "$targetFile"
 sudo 7z x -y -o/usr/lib64 "$targetFile"
 sudo rm "$targetFile"
 
-echo "Installing custom ICU devel packages on RHEL"
+echo "Installing custom ICU devel packages on CentOS"
 
 tempDir=$(mktemp -d)
 
