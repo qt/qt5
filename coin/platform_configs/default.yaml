@@ -13,6 +13,11 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
+    Features: ['UseLegacyInstructions', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -no-gui -R . -openssl'
+-
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Compiler: 'GCC'
     Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions', 'InsignificantTests']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-warnings-are-errors -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl'
 -
