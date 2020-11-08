@@ -19,32 +19,6 @@ project(Qt
 enable_testing()
 
 set(qt_module_prop_prefix "__qt_prop_")
-function(extract_git_submodules out_module_list)
-    set(current_module "")
-    set(module_list "")
-    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/.gitmodules" lines)
-    foreach(line IN LISTS lines)
-        # Skip empty lines.
-        if(NOT line)
-            continue()
-        endif()
-        string(REGEX REPLACE "^\\[submodule \"([^\"]+)\"\\]$" "\\1" module "${line}")
-        if (NOT module STREQUAL line)
-            set(current_module "${module}")
-            list(APPEND module_list "${module}")
-        else()
-            string(REGEX REPLACE "^\t([^ =]+) *=.*$" "\\1" prop "${line}")
-            if (NOT prop STREQUAL line)
-                string(REGEX REPLACE "^[^=]+= *" "" value "${line}")
-                string(REPLACE " " ";" value "${value}")
-                set("${qt_module_prop_prefix}${current_module}_${prop}" "${value}" PARENT_SCOPE)
-            else()
-                message(FATAL_ERROR "Malformed line ${CMAKE_CURRENT_SOURCE_DIR}/.gitmodules: ${line}")
-            endif()
-        endif()
-    endforeach()
-    set(${out_module_list} ${module_list} PARENT_SCOPE)
-endfunction()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (NOT QT_BUILD_STANDALONE_TESTS)
@@ -54,8 +28,8 @@ if (NOT QT_BUILD_STANDALONE_TESTS)
     list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake/3rdparty/kwin")
 endif()
 
+include("QtTopLevelHelpers")
 include(ECMOptionalAddSubdirectory)
-include(TopologicalSort)
 
 # Also make sure the CMake config files do not recreate the already-existing targets
 if (NOT QT_BUILD_STANDALONE_TESTS)
@@ -63,44 +37,27 @@ if (NOT QT_BUILD_STANDALONE_TESTS)
 endif()
 set(QT_SUPERBUILD TRUE)
 
-# Get submodules list
-extract_git_submodules(git_module_list)
-foreach(module IN LISTS git_module_list)
-    # Prepare a list of dependencies to be fed into topological sort
-    set("${qt_module_prop_prefix}${module}_all_dependencies"
-            ${${qt_module_prop_prefix}${module}_depends}
-            ${${qt_module_prop_prefix}${module}_recommends}
-            ${${qt_module_prop_prefix}${module}_serialize}
-    )
-endforeach()
-
-# Sort by dependencies
-topological_sort(git_module_list "${qt_module_prop_prefix}" "_all_dependencies")
-
-# Check for unknown modules
-foreach(module IN LISTS git_module_list)
-    foreach(dep IN LISTS "${qt_module_prop_prefix}${module}_all_dependencies")
-        if (NOT dep IN_LIST git_module_list)
-            message(FATAL_ERROR "Module '${module}' depends on undeclared module '${dep}'")
-        endif()
-    endforeach()
-endforeach()
-
-# qtbase is always needed
-list(REMOVE_ITEM git_module_list qtbase)
-add_subdirectory(qtbase)
-
-if (NOT QT_BUILD_STANDALONE_TESTS)
-    list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/lib/cmake")
-    list(APPEND CMAKE_FIND_ROOT_PATH "${QtBase_BINARY_DIR}")
+# Get submodule list if not already defined
+if (NOT BUILD_SUBMODULES)
+    qt_internal_find_modules(BUILD_SUBMODULES)
 endif()
 
-foreach(module IN LISTS git_module_list)
-    ecm_optional_add_subdirectory(${module})
+qt_internal_sort_module_dependencies("${BUILD_SUBMODULES}" BUILD_SUBMODULES)
+
+foreach(module IN LISTS BUILD_SUBMODULES)
+    message(NOTICE "Configuring '${module}'")
+    ecm_optional_add_subdirectory("${module}")
+
+    if(module STREQUAL "qtbase")
+        if (NOT QT_BUILD_STANDALONE_TESTS)
+            list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/lib/cmake")
+            list(APPEND CMAKE_FIND_ROOT_PATH "${QtBase_BINARY_DIR}")
+        endif()
+    endif()
 endforeach()
 
 # Check for unmet dependencies
-foreach(module IN LISTS git_module_list)
+foreach(module IN LISTS BUILD_SUBMODULES)
     foreach(dep IN LISTS "${qt_module_prop_prefix}${module}_depends")
         if (dep STREQUAL qtbase)
             # Always available skip
