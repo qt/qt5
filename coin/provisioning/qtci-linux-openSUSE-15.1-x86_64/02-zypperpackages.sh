@@ -2,11 +2,11 @@
 
 set -ex
 
-sudo zypper -nq install git gcc7 gcc7-c++ ninja
-sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 \
-                                     --slave /usr/bin/g++ g++ /usr/bin/g++-7 \
-                                     --slave /usr/bin/cc cc /usr/bin/gcc-7 \
-                                     --slave /usr/bin/c++ c++ /usr/bin/g++-7
+sudo zypper -nq install git gcc9 gcc9-c++ ninja
+sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 1 \
+                                     --slave /usr/bin/g++ g++ /usr/bin/g++-9 \
+                                     --slave /usr/bin/cc cc /usr/bin/gcc-9 \
+                                     --slave /usr/bin/c++ c++ /usr/bin/g++-9
 
 sudo zypper -nq install bison flex gperf \
         zlib-devel \
