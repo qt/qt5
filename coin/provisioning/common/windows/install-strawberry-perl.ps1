@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,13 +35,13 @@
 
 # This script installs Strawberry Perl
 
-$version = "5.26.0.1"
+$version = "5.32.0.1"
 if (Is64BitWinHost) {
     $arch = "-64bit"
-    $sha1 = "2AE2EDA36A190701399130CBFEE04D00E9BA036D"
+    $sha1 = "9ec5ebc865da82eacc2d95ff2976492ca69934ab"
 } else {
     $arch = "-32bit"
-    $sha1 = "b50b688a879f33941433774b2813bfd4b917e4ee"
+    $sha1 = "6ad89c6358a174c048f113bfd274d2d0378d60aa"
 }
 $installer_name = "strawberry-perl-" + $version + $arch + ".msi"
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\" + $installer_name
