@@ -8,7 +8,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['UseLegacyInstructions', 'InsignificantTests']
+    Features: ['UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -force-debug-info -nomake tests -no-widgets -R . -openssl'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
@@ -18,7 +18,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions', 'InsignificantTests']
+    Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-warnings-are-errors -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl'
 -
     Template: 'qtci-linux-openSUSE-15.1-x86_64'

@@ -21,8 +21,3 @@ Configurations:
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
         ]
--
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-warnings-are-errors -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl'
