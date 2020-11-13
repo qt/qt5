@@ -144,6 +144,67 @@ function(qt_internal_checkout module revision)
     )
 endfunction()
 
+# clones or creates a worktree for $dependency, using the source of $dependent
+function(qt_internal_get_dependency dependent dependency)
+    set(gitdir "")
+    set(remote "")
+
+    # try to read the worktree source
+    execute_process(
+        COMMAND "git" "rev-parse" "--git-dir"
+        WORKING_DIRECTORY "./${dependent}"
+        RESULT_VARIABLE git_result
+        OUTPUT_VARIABLE git_stdout
+        ERROR_VARIABLE git_stderr
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    string(FIND "${git_stdout}" "${module}" index)
+    string(SUBSTRING "${git_stdout}" 0 ${index} gitdir)
+    message(DEBUG "Will look for clones in ${gitdir}")
+
+    execute_process(
+        COMMAND "git" "remote" "get-url" "origin"
+        WORKING_DIRECTORY "./${dependent}"
+        RESULT_VARIABLE git_result
+        OUTPUT_VARIABLE git_stdout
+        ERROR_VARIABLE git_stderr
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    string(FIND "${git_stdout}" "${dependent}.git" index)
+    string(SUBSTRING "${git_stdout}" 0 ${index} remote)
+    message(DEBUG "Will clone from ${remote}")
+
+    if(EXISTS "${gitdir}${dependency}")
+        # for the module we want, there seems to be a clone parallel to what we have
+        message(DEBUG "Adding worktree for ${dependency} from ${gitdir}${dependency}")
+        execute_process(
+            COMMAND "git" "worktree" "add" "${CMAKE_CURRENT_SOURCE_DIR}/${dependency}"
+            WORKING_DIRECTORY "${gitdir}/${dependency}"
+            RESULT_VARIABLE git_result
+            OUTPUT_VARIABLE git_stdout
+            ERROR_VARIABLE git_stderr
+        )
+        if (git_result)
+            message(WARNING "${git_stdout}")
+            message(FATAL_ERROR "Failed to create worktree for '${dependency}': ${git_stderr}")
+        endif()
+    else()
+        # we don't find the existing clone, so clone from the saame remote
+        message(DEBUG "Cloning ${dependency} from ${remote}${dependency}.git")
+        execute_process(
+            COMMAND "git" "clone" "${remote}${dependency}.git"
+            WORKING_DIRECTORY "."
+            RESULT_VARIABLE git_result
+            OUTPUT_VARIABLE git_stdout
+            ERROR_VARIABLE git_stderr
+        )
+        if (git_result)
+            message(WARNING "${git_stdout}")
+            message(FATAL_ERROR "Failed to clone '${dependency}': ${git_stderr}")
+        endif()
+    endif()
+endfunction()
+
 # evaluates the dependencies for $module, and checks all dependencies
 # out so that it is a consistent set
 function(qt_internal_sync_to module)
@@ -190,6 +251,11 @@ function(qt_internal_sync_to module)
             if ("${revision}" STREQUAL "HEAD")
                 message(DEBUG "Not changing checked out revision of ${dependency}")
                 continue()
+            endif()
+
+            if(NOT EXISTS "./${dependency}")
+                message(DEBUG "No worktree for '${dependency}' found in '${CMAKE_CURRENT_SOURCE_DIR}'")
+                qt_internal_get_dependency("${module}" "${dependency}")
             endif()
 
             execute_process(
