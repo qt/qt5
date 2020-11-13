@@ -42,10 +42,32 @@ if (NOT BUILD_SUBMODULES)
     qt_internal_find_modules(BUILD_SUBMODULES)
 endif()
 
-qt_internal_sort_module_dependencies("${BUILD_SUBMODULES}" BUILD_SUBMODULES)
+set(qt_module_dependency_map_prefix "__qt_module_dependencies_")
+qt_internal_sort_module_dependencies("${BUILD_SUBMODULES}" BUILD_SUBMODULES
+                                     "${qt_module_dependency_map_prefix}")
 
 foreach(module IN LISTS BUILD_SUBMODULES)
     message(NOTICE "Configuring '${module}'")
+
+    # Check for unmet dependencies
+    if(NOT DEFINED BUILD_${module} OR BUILD_${module})
+        foreach(dep IN LISTS "${qt_module_dependency_map_prefix}${module}")
+            if (dep STREQUAL "qtbase")
+                # Always available skip
+                continue()
+            endif()
+            if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${dep}/CMakeLists.txt")
+                message(FATAL_ERROR "Module '${module}' depends on '${dep}', but ${dep}'s \
+                CMakeLists.txt couldn't be found.\nNote: Use '-skip ${module}' to exclude it \
+                from build.\n")
+            endif()
+            if(DEFINED BUILD_${dep} AND NOT BUILD_${dep})
+                message(FATAL_ERROR "Module '${module}' depends on '${dep}', but '${dep}' \
+                will not be built.\nNote: Use '-skip ${module}' to exclude it from build.\n")
+            endif()
+        endforeach()
+    endif()
+
     ecm_optional_add_subdirectory("${module}")
 
     if(module STREQUAL "qtbase")
@@ -55,25 +77,6 @@ foreach(module IN LISTS BUILD_SUBMODULES)
         endif()
     endif()
 endforeach()
-
-# Check for unmet dependencies
-foreach(module IN LISTS BUILD_SUBMODULES)
-    foreach(dep IN LISTS "${qt_module_prop_prefix}${module}_depends")
-        if (dep STREQUAL qtbase)
-            # Always available skip
-            continue()
-        endif()
-        if (DEFINED BUILD_${module} AND BUILD_${module})
-            if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${dep}/CMakeLists.txt")
-                message(FATAL_ERROR "Module '${module} depends on '${dep}', but ${deps}'s CMakeLists.txt couldn't be found.\n")
-            endif()
-            if(NOT BUILD_${dep})
-                message(FATAL_ERROR "Module '${module} depends on '${dep}', but ${deps} will not be built.\n")
-            endif()
-        endif()
-    endforeach()
-endforeach()
-
 
 if(NOT QT_BUILD_STANDALONE_TESTS)
     # Display a summary of everything

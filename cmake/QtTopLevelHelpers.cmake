@@ -33,9 +33,12 @@ endfunction()
 
 # Load $module and populate $out_ordered with the submodules based on their dependencies
 # $ordered carries already sorted dependencies; $out_has_dependencies is left empty
-# if there are no dependencies, otherwise set to 1
+# if there are no dependencies, otherwise set to 1; Save list of dependencies for $module into
+# $out_module_dependencies. List may contain duplicates, since function checks max depth
+# dependencies.
 # Function calls itself recursively if a dependency is found that is not yet in $ordered.
-function(qt_internal_add_module_dependencies module ordered out_ordered out_has_dependencies)
+function(qt_internal_add_module_dependencies module ordered out_ordered out_has_dependencies
+                                             out_module_dependencies)
     set(depends_file "${CMAKE_CURRENT_SOURCE_DIR}/${module}/dependencies.yaml")
     if(NOT EXISTS "${depends_file}")
         set(${out_has_dependencies} "" PARENT_SCOPE)
@@ -55,7 +58,8 @@ function(qt_internal_add_module_dependencies module ordered out_ordered out_has_
         if (dindex EQUAL -1)
             # dependency hasnt' been seen yet - load it
             list(INSERT ordered ${pindex} "${dependency}")
-            qt_internal_add_module_dependencies(${dependency} "${ordered}" ordered has_dependency)
+            qt_internal_add_module_dependencies(${dependency} "${ordered}" ordered has_dependency
+                                                "${out_module_dependencies}")
         elseif(dindex GREATER pindex)
             # otherwise, make sure it is before module
             list(REMOVE_AT ordered ${dindex})
@@ -63,15 +67,24 @@ function(qt_internal_add_module_dependencies module ordered out_ordered out_has_
         endif()
     endforeach()
     set(${out_ordered} "${ordered}" PARENT_SCOPE)
+    set(${out_module_dependencies} ${${out_module_dependencies}} ${dependencies} PARENT_SCOPE)
 endfunction()
 
 # populates $out_all_ordered with the sequence of the modules that need
-# to be built in order to build $modules
-function(qt_internal_sort_module_dependencies modules out_all_ordered)
+# to be built in order to build $modules; dependencies for each module are populated
+# in variables with specified in $dependencies_map_prefix prefix
+function(qt_internal_sort_module_dependencies modules out_all_ordered dependencies_map_prefix)
     set(ordered "")
     foreach(module IN LISTS modules)
         set(out_ordered "")
-        qt_internal_add_module_dependencies(${module} "${ordered}" out_ordered module_depends)
+        if(NOT dependencies_map_prefix)
+            message(FATAL_ERROR "dependencies_map_prefix is not provided")
+        endif()
+        set(module_dependencies_list_var_name "${dependencies_map_prefix}${module}")
+        qt_internal_add_module_dependencies(${module} "${ordered}" out_ordered module_depends
+                                            "${module_dependencies_list_var_name}")
+        set(${module_dependencies_list_var_name}
+                "${${module_dependencies_list_var_name}}" PARENT_SCOPE)
         if(NOT module_depends)
             list(APPEND no_dependencies "${module}")
         endif()
