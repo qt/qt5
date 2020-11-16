@@ -47,10 +47,9 @@ qt_internal_sort_module_dependencies("${BUILD_SUBMODULES}" BUILD_SUBMODULES
                                      "${qt_module_dependency_map_prefix}")
 
 foreach(module IN LISTS BUILD_SUBMODULES)
-    message(NOTICE "Configuring '${module}'")
-
     # Check for unmet dependencies
     if(NOT DEFINED BUILD_${module} OR BUILD_${module})
+        message(NOTICE "Check dependencies of '${module}'")
         foreach(dep IN LISTS "${qt_module_dependency_map_prefix}${module}")
             if (dep STREQUAL "qtbase")
                 # Always available skip
@@ -67,7 +66,10 @@ foreach(module IN LISTS BUILD_SUBMODULES)
             endif()
         endforeach()
     endif()
+endforeach()
 
+foreach(module IN LISTS BUILD_SUBMODULES)
+    message(NOTICE "Configuring '${module}'")
     ecm_optional_add_subdirectory("${module}")
 
     if(module STREQUAL "qtbase")
