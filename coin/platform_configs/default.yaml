@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Template: 'qtci-windows-10-x86_64-51'
+    Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -headersclean -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -qt-zlib'
@@ -86,13 +86,13 @@ Configurations:
     Environment variables: ['QT_QUICK_BACKEND=software']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-mips64/sysroots/x86_64-pokysdk-linux/usr/bin/mips64-poky-linux/mips64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-mips64/sysroots/mips64r2-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-mips64/sysroots/mips64r2-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib -no-feature-forkfd_pidfd -no-warnings-are-errors'
 -
-    Template: 'qtci-windows-10-x86_64-51'
+    Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'Mingw'
     Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
 -
-    Template: 'qtci-windows-10-x86_64-51'
+    Template: 'qtci-windows-10-x86_64-52'
     Target os: 'Android_ANY'
     Target arch: 'multi'
     Compiler: 'Mingw'
