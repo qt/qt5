@@ -1,12 +1,5 @@
 # List about manual pre-installations to Tier1 image:
 
-Virtual Hardware:
-CPU: 4
-Memory: 8 GB
-Hard Disk: 550 GB
-CI_NW
-Video Card - total memory: 32MB
-
 VM Options:
 Boot options/Firmware: BIOS
 
@@ -17,6 +10,14 @@ location: finnish
 Windows 10 Enterprise
 Region: Finland
 Keyboard layout: United Kingdom
+
+* Don't use online speech recognition
+* Let Microsoft and apps use your location: no
+* Find my devicer: no
+* Send diagnostic data to Microsoft: Send required diagnostic data
+* Imporve inking & typing: no
+* Get tailored expreriences with diagnostic data: no
+* Let apps use advertising ID: no
 
 * VMware tools (complete) installed
 * Resolution set to 1280x800
@@ -45,12 +46,7 @@ Keyboard layout: United Kingdom
 * (Restart Windows)
 * Google Chrome installed for RTA
 * Virus & threat protection settings:
-   - Real-time protection -> off
-   - Cloud-delivered protection -> off
-   - Automatic sample submission -> off
-   - Tamper protection -> off
-* Virus & threat protection notifications:
-   - Get informational notifications -> off
-   - Account protection notifications -> off
+   * Check that there's no active antivirus providers
+* From 'Region Settings'
+   * Set Regional format: English (United States)
 * Activate Windows
-
