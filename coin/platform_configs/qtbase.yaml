@@ -13,7 +13,7 @@
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -nomake tests -nomake examples -no-xcb -R . -openssl -device linux-generic-g++ -device-option CROSS_COMPILE=/opt/yocto-arm64/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux- -device-option DISTRO_OPTS=boot2qt -sysroot /opt/yocto-arm64/sysroots/aarch64-poky-linux -extprefix /home/qt/work/install -mysql_config /opt/yocto-arm64/sysroots/aarch64-poky-linux/usr/bin/mysql_config -psql_config /dev/null -tslib'
 -
-    Template: 'qtci-windows-10-x86_64-51'
+    Template: 'qtci-windows-10-x86_64-52'
     Target os: 'WinRT_10'
     Target arch: 'x86_64'
     Compiler: 'MSVC2015'

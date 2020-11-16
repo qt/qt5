@@ -2,12 +2,12 @@ Version: 2
 Module only: True
 Configurations:
     -
-        Template: 'qtci-windows-10-x86_64-51'
+        Template: 'qtci-windows-10-x86_64-52'
         Compiler: 'MSVC2019'
         Features: ['Packaging']
         Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -static -no-icu'
     -
-        Template: 'qtci-windows-10-x86_64-51'
+        Template: 'qtci-windows-10-x86_64-52'
         Compiler: 'MSVC2019'
         Target arch: 'x86'
         Features: ['Packaging']

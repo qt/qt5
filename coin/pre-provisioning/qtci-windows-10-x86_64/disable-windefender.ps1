@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -43,18 +43,6 @@
 
 Run-Executable "reg.exe" "ADD `"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender`" /V DisableAntiSpyware /T REG_dWORD /D 1 /F"
 Run-Executable "reg.exe" "ADD `"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender`" /V DisableRoutinelyTakingAction /T REG_dWORD /D 1 /F"
-
-# 'Windows Defender Cache Maintenance' - "Periodic maintenance task."
-DisableSchedulerTask "Windows Defender\Windows Defender Cache Maintenance"
-
-# 'Windows Defender Cleanup' - "Periodic cleanup task."
-DisableSchedulerTask "Windows Defender\Windows Defender Cleanup"
-
-# 'Windows Defender Scheduled Scan' - "Periodic scan task."
-DisableSchedulerTask "Windows Defender\Windows Defender Scheduled Scan"
-
-# 'Windows Defender Verification' - "Periodic verification task."
-DisableSchedulerTask "Windows Defender\Windows Defender Verification"
 
 # Disable 'QueueReporting' - "Windows Error Reporting task to process queued reports."
 DisableSchedulerTask "Windows Error Reporting\QueueReporting"
