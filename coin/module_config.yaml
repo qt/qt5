@@ -37,6 +37,11 @@ instructions:
             Failed to generate docs.
         - type: MakeDirectory
           directory: "{{.BuildDir}}/qtbase/doc/global"
+        - type: UploadArtifact
+          archiveDirectory: '{{.BuildDir}}/doc'
+          transferType: UploadModuleDocumentation
+          maxTimeInSeconds: 1800
+          maxTimeBetweenOutput: 1800
       enable_if:
         condition: property
         property: features
