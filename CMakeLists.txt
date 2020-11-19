@@ -83,6 +83,7 @@ endforeach()
 if(NOT QT_BUILD_STANDALONE_TESTS)
     # Display a summary of everything
     include(QtBuildInformation)
+    include(QtPlatformSupport)
     qt_print_feature_summary()
     qt_print_build_instructions()
 endif()
