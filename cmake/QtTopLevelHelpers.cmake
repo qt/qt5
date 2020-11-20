@@ -120,20 +120,19 @@ endfunction()
 
 # does what it says, but also updates submodules
 function(qt_internal_checkout module revision)
+    set(swallow_output "") # unless VERBOSE, eat git output, show it in case of error
+    if (NOT VERBOSE)
+        list(APPEND swallow_output "OUTPUT_VARIABLE" "git_output" "ERROR_VARIABLE" "git_output")
+    endif()
     message(NOTICE "Checking '${module}' out to revision '${revision}'")
     execute_process(
         COMMAND "git" "checkout" "${revision}"
         WORKING_DIRECTORY "./${module}"
         RESULT_VARIABLE git_result
-        OUTPUT_VARIABLE git_stdout
-        ERROR_VARIABLE git_stderr
+        ${swallow_output}
     )
-    if (VERBOSE)
-        message(NOTICE ${git_stdout})
-    endif()
     if (git_result)
-        message(WARNING "${git_stdout}")
-        message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_stderr}")
+        message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_output}")
     endif()
     execute_process(
         COMMAND "git" "submodule" "update"
@@ -146,6 +145,11 @@ endfunction()
 
 # clones or creates a worktree for $dependency, using the source of $dependent
 function(qt_internal_get_dependency dependent dependency)
+    set(swallow_output "") # unless VERBOSE, eat git output, show it in case of error
+    if (NOT VERBOSE)
+        list(APPEND swallow_output "OUTPUT_VARIABLE" "git_output" "ERROR_VARIABLE" "git_output")
+    endif()
+
     set(gitdir "")
     set(remote "")
 
@@ -176,31 +180,27 @@ function(qt_internal_get_dependency dependent dependency)
 
     if(EXISTS "${gitdir}${dependency}")
         # for the module we want, there seems to be a clone parallel to what we have
-        message(DEBUG "Adding worktree for ${dependency} from ${gitdir}${dependency}")
+        message(NOTICE "Adding worktree for ${dependency} from ${gitdir}${dependency}")
         execute_process(
             COMMAND "git" "worktree" "add" "${CMAKE_CURRENT_SOURCE_DIR}/${dependency}"
             WORKING_DIRECTORY "${gitdir}/${dependency}"
             RESULT_VARIABLE git_result
-            OUTPUT_VARIABLE git_stdout
-            ERROR_VARIABLE git_stderr
+            ${swallow_output}
         )
         if (git_result)
-            message(WARNING "${git_stdout}")
-            message(FATAL_ERROR "Failed to create worktree for '${dependency}': ${git_stderr}")
+            message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_output}")
         endif()
     else()
         # we don't find the existing clone, so clone from the saame remote
-        message(DEBUG "Cloning ${dependency} from ${remote}${dependency}.git")
+        message(NOTICE "Cloning ${dependency} from ${remote}${dependency}.git")
         execute_process(
             COMMAND "git" "clone" "${remote}${dependency}.git"
             WORKING_DIRECTORY "."
             RESULT_VARIABLE git_result
-            OUTPUT_VARIABLE git_stdout
-            ERROR_VARIABLE git_stderr
+            ${swallow_output}
         )
         if (git_result)
-            message(WARNING "${git_stdout}")
-            message(FATAL_ERROR "Failed to clone '${dependency}': ${git_stderr}")
+            message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_output}")
         endif()
     endif()
 endfunction()
