@@ -35,10 +35,50 @@
 
 set -ex
 
-sudo yum -y install yum-utils
+sudo rm -f /etc/yum.repos.d/*.repo
 
-sudo yum-config-manager --enable AppStream
-sudo yum-config-manager --enable PowerTools
-sudo yum-config-manager --enable BaseOS
-sudo yum-config-manager --enable epel-playground
+sudo tee "/etc/yum.repos.d/local.repo" > /dev/null <<EOC
+[BaseOS]
+name = Qt Centos-8 - Base
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/centos/8/BaseOS/x86_64/os/
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+enabled = 1
+gpgcheck = 1
 
+[AppStream]
+name = Qt Centos-8 - AppStream
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/centos/8/AppStream/x86_64/os/
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+enabled = 1
+gpgcheck = 1
+
+[PowerTools]
+name = Qt Centos-8 - PowerTools
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/centos/8/PowerTools/x86_64/os/
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+enabled = 1
+gpgcheck = 1
+
+[epel]
+name = Qt Centos-8 - EPEL
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/centos/8/epel/Everything/x86_64/
+enabled = 1
+gpgcheck = 1
+gpgkey = http://repo-clones.ci.qt.io/repos/centos/8/epel/RPM-GPG-KEY-EPEL-8
+
+[epel-playground]
+name = Qt Centos-8 - EPEL Playground
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/centos/8/epel/playground/Everything/x86_64/os/
+enabled = 1
+gpgcheck = 1
+gpgkey = http://repo-clones.ci.qt.io/repos/centos/8/epel/RPM-GPG-KEY-EPEL-8
+EOC
+
+sudo yum clean all
+# As well as this fetching the repository data, we also get a printout of the used repos
+sudo yum repolist
