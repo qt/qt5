@@ -65,18 +65,18 @@ gpgcheck = 1
 [epel]
 name = Qt Centos-8 - EPEL
 metadata_expire = 86400
-baseurl = http://repo-clones.ci.qt.io/repos/centos/8/epel/Everything/x86_64/
+baseurl = http://repo-clones.ci.qt.io/repos/centos/epel/8/Everything/x86_64/
 enabled = 1
 gpgcheck = 1
-gpgkey = http://repo-clones.ci.qt.io/repos/centos/8/epel/RPM-GPG-KEY-EPEL-8
+gpgkey = http://repo-clones.ci.qt.io/repos/centos/epel/RPM-GPG-KEY-EPEL-8
 
 [epel-playground]
 name = Qt Centos-8 - EPEL Playground
 metadata_expire = 86400
-baseurl = http://repo-clones.ci.qt.io/repos/centos/8/epel/playground/Everything/x86_64/os/
+baseurl = http://repo-clones.ci.qt.io/repos/centos/epel/playground/8/Everything/x86_64/os/
 enabled = 1
 gpgcheck = 1
-gpgkey = http://repo-clones.ci.qt.io/repos/centos/8/epel/RPM-GPG-KEY-EPEL-8
+gpgkey = http://repo-clones.ci.qt.io/repos/centos/epel/RPM-GPG-KEY-EPEL-8
 EOC
 
 sudo yum clean all
