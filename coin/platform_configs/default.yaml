@@ -21,7 +21,7 @@ Configurations:
     Features: ['OutOfSourceBuild', 'Documentation', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -developer-build -no-warnings-are-errors -nomake tests -R . -qtlibinfix TestInfix -qtnamespace TestNamespace -openssl'
 -
-    Template: 'qtci-linux-openSUSE-15.1-x86_64'
+    Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Features: ['DisableTests', 'UseLegacyInstructions']

@@ -32,7 +32,7 @@ sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-dev
          xcb-util-wm-devel xcb-util-renderutil-devel
 
 # ICU
-sudo zypper -nq install libicu-devel libicu60_2
+sudo zypper -nq install libicu-devel
 
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel \

@@ -37,7 +37,7 @@ Configurations:
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
-    Template: 'qtci-linux-openSUSE-15.1-x86_64'
+    Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'InsignificantTests']
     Configure arguments: '-DBUILD_EXAMPLES=OFF -FEATURE_developer_build=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
