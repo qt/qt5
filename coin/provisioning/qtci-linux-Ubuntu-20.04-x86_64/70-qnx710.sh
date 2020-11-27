@@ -2,10 +2,10 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
-## This file is part of the provisioning scripts of the Qt Toolkit.
+## This file is part of the test suite of the Qt Toolkit.
 ##
 ## $QT_BEGIN_LICENSE:LGPL21$
 ## Commercial License Usage
@@ -36,4 +36,4 @@
 set -ex
 
 # shellcheck source=../common/linux/qnx_700.sh
-source "${BASH_SOURCE%/*}/../common/linux/qnx_700.sh"
+source "${BASH_SOURCE%/*}/../common/linux/qnx_710.sh"
