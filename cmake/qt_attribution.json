@@ -2,6 +2,7 @@
     "Id": "cmake_topological_sort",
     "Name": "CMake Topological Sort",
     "QDocModule": "qt",
+    "QtParts": ["tools"],
     "QtUsage": "Used in the CMake super build project file",
     "Files": "TopologicalSort.cmake",
 
