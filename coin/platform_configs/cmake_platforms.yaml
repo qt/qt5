@@ -122,3 +122,36 @@ Configurations:
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DBUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['Path={{.Env.MINGW810}}\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache','LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
+-
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Target os: 'QNX_710'
+    Target arch: 'x86_64'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'Ubuntu-20.04-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'Insignificant']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+-
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Target os: 'QNX_710'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'Ubuntu-20.04-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'Insignificant']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+-
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Target os: 'QNX_710'
+    Target arch: 'armv7'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'Ubuntu-20.04-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'Insignificant']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']

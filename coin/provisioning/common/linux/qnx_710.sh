@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -37,31 +37,53 @@
 
 set -ex
 
+# shellcheck source=../unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
+DownloadAndExtract () {
+    url=$1
+    sha=$2
+    file=$3
+    folder=$4
+
+    DownloadURL "$url" "$url" "$sha" "$file"
+    sudo tar -C $folder -Jxf $file
+
+    rm -rf $file
+}
+
 targetFolder="/opt/"
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx700-20190325-2-linux.tar.xz"
-sha1="9fb115b2c84b8e7b6016a51cc421a763bda298a1"
-folderName="qnx700"
-targetFile="qnx700.tar.xz"
-wget --tries=5 --waitretry=5 --progress=dot:giga --output-document="$targetFile" "$sourceFile"
-echo "$sha1  $targetFile" | sha1sum --check
+folderName="qnx710"
+targetPath="$targetFolder$folderName"
+
 if [ ! -d "$targetFolder" ]; then
     mkdir -p $targetFolder
 fi
-sudo tar -C $targetFolder -Jxf $targetFile
-sudo chown -R qt:users "$targetFolder"/"$folderName"
 
-# Verify that we have last file in tar
-if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
-    echo "Installation failed!"
+# QNX SDP
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx710-20201027-linux.tar.xz"
+targetFile="qnx710.tar.xz"
+sha1="fa9eb0f4247504a546cb014784646847eb6c8114"
+DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
+
+# Toolchain files
+sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx-toolchains.tar.xz"
+targetFile="qnx-toolchains.tar.xz"
+sha1="d8a97605d80a2296f98caba3854557ca0dd5d7d3"
+DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetPath"
+
+sudo chown -R qt:users "$targetPath"
+
+# Verify that we have last files in tars
+if [ ! -f $targetPath/qnxsdp-env.sh ] || [ ! -f $targetPath/qnx-toolchain-x8664.cmake ]
+then
+    echo "QNX toolchain installation failed!"
     exit -1
 fi
 
-rm -rf $targetFile
-
 # Set env variables
-SetEnvVar "QNX_700" "$targetFolder$folderName"
+SetEnvVar "QNX_710" "$targetPath"
 
-echo "QNX SDP = 7.0.0" >> ~/versions.txt
+echo "QNX SDP = 7.1.0" >> ~/versions.txt
