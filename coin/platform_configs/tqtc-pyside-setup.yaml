@@ -1,0 +1,9 @@
+Version: 2
+Module only: True
+Include: [cmake_platforms.yaml]
+Configurations:
+-
+    Template: 'qtci-linux-Ubuntu-18.04-x86_64'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'LicenseCheck']
+
