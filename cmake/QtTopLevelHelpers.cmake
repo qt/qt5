@@ -164,6 +164,10 @@ function(qt_internal_get_dependency dependent dependency)
     )
     string(FIND "${git_stdout}" "${module}" index)
     string(SUBSTRING "${git_stdout}" 0 ${index} gitdir)
+    string(FIND "${gitdir}" ".git/modules" index)
+    if(index GREATER -1) # submodules have not been absorbed
+        string(SUBSTRING "${gitdir}" 0 ${index} gitdir)
+    endif()
     message(DEBUG "Will look for clones in ${gitdir}")
 
     execute_process(
