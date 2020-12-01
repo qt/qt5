@@ -182,6 +182,21 @@ function(qt_internal_get_dependency dependent dependency)
     string(SUBSTRING "${git_stdout}" 0 ${index} remote)
     message(DEBUG "Will clone from ${remote}")
 
+    if(EXISTS "${gitdir}.gitmodules" AND NOT EXISTS "${gitdir}${dependency}/.git")
+        # super repo exists, but the submodule we need does not - try to initialize
+        message(NOTICE "Initializing submodule '${dependency}' from ${gitdir}")
+        execute_process(
+            COMMAND "git" "submodule" "update" "--init" "${dependency}"
+            WORKING_DIRECTORY "${gitdir}"
+            RESULT_VARIABLE git_result
+            ${swallow_output}
+        )
+        if (git_result)
+            # ignore errors, fall back to an independent clone instead
+            message(WARNING "Failed to initialize submodule '${dependency}' from ${gitdir}")
+        endif()
+    endif()
+
     if(EXISTS "${gitdir}${dependency}")
         # for the module we want, there seems to be a clone parallel to what we have
         message(NOTICE "Adding worktree for ${dependency} from ${gitdir}${dependency}")
