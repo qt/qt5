@@ -131,6 +131,15 @@ function(qt_internal_checkout module revision)
         RESULT_VARIABLE git_result
         ${swallow_output}
     )
+    if (git_result EQUAL 128)
+        message(WARNING "${git_output}, trying detached checkout")
+        execute_process(
+            COMMAND "git" "checkout" "--detach" "${revision}"
+            WORKING_DIRECTORY "./${module}"
+            RESULT_VARIABLE git_result
+            ${swallow_output}
+        )
+    endif()
     if (git_result)
         message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_output}")
     endif()
