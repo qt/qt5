@@ -201,7 +201,7 @@ function(qt_internal_get_dependency dependent dependency)
         # for the module we want, there seems to be a clone parallel to what we have
         message(NOTICE "Adding worktree for ${dependency} from ${gitdir}${dependency}")
         execute_process(
-            COMMAND "git" "worktree" "add" "${CMAKE_CURRENT_SOURCE_DIR}/${dependency}"
+            COMMAND "git" "worktree" "add" "--detach" "${CMAKE_CURRENT_SOURCE_DIR}/${dependency}"
             WORKING_DIRECTORY "${gitdir}/${dependency}"
             RESULT_VARIABLE git_result
             ${swallow_output}
@@ -210,7 +210,7 @@ function(qt_internal_get_dependency dependent dependency)
             message(FATAL_ERROR "Failed to check '${module}' out to '${revision}': ${git_output}")
         endif()
     else()
-        # we don't find the existing clone, so clone from the saame remote
+        # we don't find the existing clone, so clone from the same remote
         message(NOTICE "Cloning ${dependency} from ${remote}${dependency}.git")
         execute_process(
             COMMAND "git" "clone" "${remote}${dependency}.git"
