@@ -101,7 +101,7 @@ Configurations:
 -
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
-    Features: ['InsignificantTests', 'Sccache', "DebugAndRelease"]
+    Features: ['Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
