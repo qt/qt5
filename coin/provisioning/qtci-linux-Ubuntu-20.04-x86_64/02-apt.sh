@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -189,6 +189,7 @@ installPackages+=(libhyphen-dev)
 installPackages+=(ssh)
 # For bitbake
 installPackages+=(diffstat)
+installPackages+=(binfmt-support)
 
 echo "Running update for apt"
 waitLoop

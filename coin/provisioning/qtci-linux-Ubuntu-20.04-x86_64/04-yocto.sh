@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -44,15 +44,17 @@ source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 echo "Installing Yocto toolchain for 32-bit b2qt ARMV7..."
 
-versionARM="2.7.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarmv7-60f80be.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/warrior/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/warrior/$package"
-SHA1="b4a090f85268bed076451584cd48e27e17a6ae48"
+versionARM="3.2"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm-7031f145.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/gatesgarth/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/gatesgarth/$package"
+SHA1="167071eb1a02fdffe1d12576dcad6497fc996776"
 yoctoInstaller="/tmp/yocto-toolchain-ARMv7.sh"
-yoctoLocationARMv7="/opt/yocto-armv7"
-sysrootARMv7="sysroots/armv7at2hf-neon-poky-linux-gnueabi"
+yoctoLocationARMv7="/opt/b2qt/$versionARM"
+sysrootARMv7="armv7vet2hf-neon-poky-linux-gnueabi"
 crosscompileARMv7="sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-"
+envSetupARMv7="environment-setup-$sysrootARMv7"
+toolchainFileARMv7="sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake"
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$yoctoInstaller"
 chmod +x "$yoctoInstaller"
@@ -62,15 +64,17 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt ARM64..."
 
-versionARM64="2.7.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemuarm64-60f80be.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/warrior/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/warrior/$package"
-SHA1="9ba48d4d80a09908dd75090f94662c8192f0b19f"
+versionARM64="3.2"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm64-7031f145.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/gatesgarth/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/gatesgarth/$package"
+SHA1="518afdecc4e2883d4ba1f4c43a628ce06df4e39a"
 yoctoInstaller="/tmp/yocto-toolchain-ARM64.sh"
-yoctoLocationARM64="/opt/yocto-arm64"
-sysrootARM64="sysroots/aarch64-poky-linux"
+yoctoLocationARM64="/opt/b2qt/$versionARM64"
+sysrootARM64="cortexa57-poky-linux"
 crosscompileARM64="sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-"
+envSetupARM64="environment-setup-$sysrootARM64"
+toolchainFileARM64="sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake"
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$yoctoInstaller"
 chmod +x "$yoctoInstaller"
@@ -80,15 +84,17 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt MIPS64..."
 
-versionMIPS64="2.7.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-embedded-sdk-qemumips64-60f80be.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/warrior/$package"
-AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/warrior/$package"
-SHA1="b3a922b7501123464454c9a49f32b23fe1fd25b4"
+versionMIPS64="3.2"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemumips64-7031f145.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/boot2qt/gatesgarth/$package"
+AltUrl="http://download.qt.io/development_releases/prebuilt/boot2qt/gatesgarth/$package"
+SHA1="ba076bdc44d0fdce5d628f0d930943aa108d616d"
 yoctoInstaller="/tmp/yocto-toolchain-mips64.sh"
-yoctoLocationMIPS64="/opt/yocto-mips64"
-sysrootMIPS64="sysroots/mips64r2-poky-linux"
+yoctoLocationMIPS64="/opt/b2qt/$versionMIPS64"
+sysrootMIPS64="mips64r2-poky-linux"
 crosscompileMIPS64="sysroots/x86_64-pokysdk-linux/usr/bin/mips64-poky-linux/mips64-poky-linux-"
+envSetupMIPS64="environment-setup-$sysrootMIPS64"
+toolchainFileMIPS64="sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake"
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$yoctoInstaller"
 chmod +x "$yoctoInstaller"
@@ -98,13 +104,24 @@ rm -rf "$yoctoInstaller"
 
 
 
-if [ -e "$yoctoLocationARMv7/$sysrootARMv7" ] && [ -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" ] && [ -e "$yoctoLocationARM64/$sysrootARM64" ] && [ -e "$yoctoLocationARM64/${crosscompileARM64}g++" ] && [ -e "$yoctoLocationMIPS64/$sysrootMIPS64" ] && [ -e "$yoctoLocationMIPS64/${crosscompileMIPS64}g++" ]; then
-    SetEnvVar "QEMUARMV7_TOOLCHAIN_SYSROOT" "$yoctoLocationARMv7/$sysrootARMv7"
+if [ -e "$yoctoLocationARMv7/sysroots/$sysrootARMv7" ] && [ -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" ] && \
+   [ -e "$yoctoLocationARMv7/$envSetupARMv7" ] && [ -e "$yoctoLocationARMv7/$toolchainFileARMv7" ] && \
+   [ -e "$yoctoLocationARM64/sysroots/$sysrootARM64" ] && [ -e "$yoctoLocationARM64/${crosscompileARM64}g++" ] && \
+   [ -e "$yoctoLocationARM64/$envSetupARM64" ] && [ -e "$yoctoLocationARM64/$toolchainFileARM64" ] && \
+   [ -e "$yoctoLocationMIPS64/sysroots/$sysrootMIPS64" ] && [ -e "$yoctoLocationMIPS64/${crosscompileMIPS64}g++" ] && \
+   [ -e "$yoctoLocationMIPS64/$envSetupMIPS64" ] && [ -e "$yoctoLocationMIPS64/$toolchainFileMIPS64" ]; then
+    SetEnvVar "QEMUARMV7_TOOLCHAIN_SYSROOT" "$yoctoLocationARMv7/sysroots/$sysrootARMv7"
     SetEnvVar "QEMUARMV7_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationARMv7/$crosscompileARMv7"
-    SetEnvVar "QEMUARM64_TOOLCHAIN_SYSROOT" "$yoctoLocationARM64/$sysrootARM64"
+    SetEnvVar "QEMUARMV7_TOOLCHAIN_ENVSETUP" "$yoctoLocationARMv7/$envSetupARMv7"
+    SetEnvVar "QEMUARMV7_TOOLCHAIN_FILE" "$yoctoLocationARMv7/$toolchainFileARMv7"
+    SetEnvVar "QEMUARM64_TOOLCHAIN_SYSROOT" "$yoctoLocationARM64/sysroots/$sysrootARM64"
     SetEnvVar "QEMUARM64_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationARM64/$crosscompileARM64"
-    SetEnvVar "QEMUMIPS64_TOOLCHAIN_SYSROOT" "$yoctoLocationMIPS64/$sysrootMIPS64"
+    SetEnvVar "QEMUARM64_TOOLCHAIN_ENVSETUP" "$yoctoLocationARM64/$envSetupARM64"
+    SetEnvVar "QEMUARM64_TOOLCHAIN_FILE" "$yoctoLocationARM64/$toolchainFileARM64"
+    SetEnvVar "QEMUMIPS64_TOOLCHAIN_SYSROOT" "$yoctoLocationMIPS64/sysroots/$sysrootMIPS64"
     SetEnvVar "QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE" "$yoctoLocationMIPS64/$crosscompileMIPS64"
+    SetEnvVar "QEMUMIPS64_TOOLCHAIN_ENVSETUP" "$yoctoLocationMIPS64/$envSetupMIPS64"
+    SetEnvVar "QEMUMIPS64_TOOLCHAIN_FILE" "$yoctoLocationMIPS64/$toolchainFileMIPS64"
 else
     echo "Error! Couldn't find installation paths for Yocto toolchain. Aborting provisioning." 1>&2
     exit 1
@@ -115,7 +132,15 @@ echo "Yocto ARM64 toolchain = $versionARM64" >> ~/versions.txt
 echo "Yocto MIPS64 toolchain = $versionMIPS64" >> ~/versions.txt
 
 # List qt user in qemu toolchain sysroots
-sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/etc/passwd"
-sudo sh -c "grep ^qt /etc/group >> /opt/yocto-armv7/sysroots/armv7at2hf-neon-poky-linux-gnueabi/etc/group"
-sudo sh -c "grep ^qt /etc/passwd >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/passwd"
-sudo sh -c "grep ^qt /etc/group >> /opt/yocto-arm64/sysroots/aarch64-poky-linux/etc/group"
+sudo sh -c "grep ^qt /etc/passwd >> $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/passwd"
+sudo sh -c "grep ^qt /etc/group >> $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/group"
+sudo sh -c "grep ^qt /etc/passwd >> $yoctoLocationARM64/sysroots/$sysrootARM64/etc/passwd"
+sudo sh -c "grep ^qt /etc/group >> $yoctoLocationARM64/sysroots/$sysrootARM64/etc/group"
+
+# Install qemu binfmt for 32bit and 64bit arm architectures
+sudo update-binfmts --package qemu-arm --install arm $yoctoLocationARMv7/sysroots/x86_64-pokysdk-linux/usr/bin/qemu-arm \
+--magic "\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00" \
+--mask "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
+sudo update-binfmts --package qemu-aarch64 --install aarch64 $yoctoLocationARM64/sysroots/x86_64-pokysdk-linux/usr/bin/qemu-aarch64 \
+--magic "\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00" \
+--mask "\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff"
