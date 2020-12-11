@@ -80,7 +80,7 @@ installPackages+=(pulseaudio-libs-devel)
 installPackages+=(libXtst-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
-installPackages+=(rh-nodejs12-nodejs)
+installPackages+=(rh-nodejs12-nodejs) # NOTE! Nodejs12 needs to be added to PATH!
 installPackages+=(rh-nodejs12-nodejs-devel)
 # For Android builds
 installPackages+=(java-1.8.0-openjdk-devel)
@@ -146,6 +146,7 @@ sudo /usr/local/bin/pip3 install wheel
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
+SetEnvVar "PATH" "/opt/rh/rh-nodejs12/root/usr/bin/node:\$PATH"
 
 gccVersion="$(gcc --version |grep gcc |cut -b 11-16)"
 echo "GCC = $gccVersion" >> versions.txt
