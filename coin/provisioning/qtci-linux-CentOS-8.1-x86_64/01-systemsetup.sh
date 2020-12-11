@@ -46,6 +46,8 @@ echo 'export DISPLAY=":0"' >> ~/.bashrc
 # for current session
 export DISPLAY=:0
 
+# Set timezone to UTC.
+sudo timedatectl set-timezone Etc/UTC
 # disable Automatic screen lock
 gsettings set org.gnome.desktop.screensaver lock-enabled false
 # disable blank screen power saving
