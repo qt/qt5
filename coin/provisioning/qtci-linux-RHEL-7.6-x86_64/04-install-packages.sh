@@ -146,7 +146,7 @@ sudo /usr/local/bin/pip3 install wheel
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
-SetEnvVar "PATH" "/opt/rh/rh-nodejs12/root/usr/bin/node:\$PATH"
+SetEnvVar "PATH" "/opt/rh/rh-nodejs12/root/usr/bin:\$PATH"
 
 gccVersion="$(gcc --version |grep gcc |cut -b 11-16)"
 echo "GCC = $gccVersion" >> versions.txt
