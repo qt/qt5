@@ -37,7 +37,7 @@
 set -ex
 
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-brew install libusb
+brew install --build-from-source libusb
 read -r -a arr <<< $(brew list --versions libusb)
 version=${arr[1]}
 echo "libusb = $version" >> ~/versions.txt

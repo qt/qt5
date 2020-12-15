@@ -2,5 +2,4 @@
 
 set -ex
 
-brew install nodejs
-
+brew install --build-from-source node
