@@ -324,7 +324,7 @@
 	branch = dev
 	status = addon
 [submodule "qt5compat"]
-	depends = qtbase
+	depends = qtbase qtdeclarative
 	path = qt5compat
 	url = ../qt5compat.git
 	branch = dev
