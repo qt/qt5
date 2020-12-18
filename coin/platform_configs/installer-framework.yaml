@@ -10,7 +10,7 @@ Configurations:
     Environment variables: ['TARGET_ARCHITECTURE=amd64_x86', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;']
     Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat', 'amd64_x86']
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -no-sql-sqlite -qt-zlib -qt-libpng -qt-libjpeg -no-cups -no-freetype -prefix /Users/qt/work/install'
