@@ -67,7 +67,7 @@
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r19c -android-arch arm64-v8a'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'Android_ANY'
     Target arch: 'armv7'
     Compiler: 'Clang'
@@ -75,7 +75,7 @@
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r19c -android-ndk-host darwin-x86_64 -android-arch armeabi-v7a'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'Android_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
@@ -83,7 +83,7 @@
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -no-qpa-platform-guard -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r19c -android-ndk-host darwin-x86_64 -android-arch arm64-v8a'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'QNX_700'
     Target arch: 'x86'
     Compiler: 'GCC'

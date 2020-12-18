@@ -100,7 +100,7 @@
     Features: ['Packaging']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -separate-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -qt-harfbuzz -R . -openssl -I {{.Env.OPENSSL_HOME}}/include -L {{.Env.OPENSSL_HOME}}/lib QMAKE_LFLAGS_APP+=-s'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Compiler: 'Clang'
     Features: ['Packaging']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -separate-debug-info -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include'
@@ -114,28 +114,28 @@
     Compiler: 'Clang'
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -developer-build -release -no-pch -no-framework -qtnamespace TestNamespace -nomake tests -nomake examples -I/usr/local/opt/openssl/include'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'IOS_ANY'
     Target arch: 'multi'
     Compiler: 'Clang'
     Features: ['Packaging', 'DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'TvOS_ANY'
     Target arch: 'multi'
     Compiler: 'Clang'
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-tvos-clang'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'WatchOS_ANY'
     Target arch: 'multi'
     Compiler: 'Clang'
     Features: ['DisableTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -xplatform macx-watchos-clang'
 -
-    Template: 'qtci-macos-10.13-x86_64-2'
+    Template: 'qtci-macos-10.13-x86_64-3'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'Clang'
