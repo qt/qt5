@@ -5,6 +5,7 @@
 -
     Template: 'qtci-windows-7-x86-3'
     Compiler: 'Mingw73'
+    Features: ['InsignificantTests']
     Configure arguments: '-opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -developer-build -release -nomake tests -opengl dynamic -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -platform win32-g++'
 -
     Template: 'qtci-windows-10-x86_64-16'
