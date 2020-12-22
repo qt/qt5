@@ -34,7 +34,7 @@
 . "$PSScriptRoot\helpers.ps1"
 
 $majorminorversion = "3.19"
-$version = "3.19.0"
+$version = "3.19.2"
 
 $zip = Get-DownloadLocation ("cmake-" + $version + "-win32-x86.zip")
 $officialurl = "https://cmake.org/files/v" + $majorminorversion + "/cmake-" + $version + "-win32-x86.zip"
@@ -44,7 +44,7 @@ Write-Host "Removing old cmake"
 Remove "C:\CMake"
 
 Download $officialurl $cachedurl $zip
-Verify-Checksum $zip "fac77ed3eca52168b15c30979ee43310a3cb968e"
+Verify-Checksum $zip "5e42a287610a619c3a150376d9aaad31282cdcd4"
 
 Extract-7Zip $zip C:
 $defaultinstallfolder = "C:\cmake-" + $version + "-win32-x86"
