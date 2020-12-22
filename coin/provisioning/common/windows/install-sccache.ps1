@@ -35,8 +35,8 @@
 
 param(
     [string]$arch="x86_64-pc-windows-msvc",
-    [string]$version="0.2.13-alpha-0",
-    [string]$sha1="39ee0b0b98aa20c54a75ba1cb3116ea694e83c38"
+    [string]$version="0.2.14",
+    [string]$sha1="bbdceb59d6fd7b6a3af02fb36f65c8bf324757b0"
 )
 
 . "$PSScriptRoot\helpers.ps1"

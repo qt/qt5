@@ -38,6 +38,6 @@ set -ex
 source "${BASH_SOURCE%/*}/../unix/sccache.sh"
 
 targetArch=x86_64-unknown-linux-musl
-targetVersion=0.2.13-alpha-0
-sha1=0cb28f7408e5246bc71132f27d86301c30e16c74
+targetVersion=0.2.14
+sha1=281680c0fc2c09173e94d12ba45d9f1b8e62e5b3
 installSccache "$targetArch" "$targetVersion" "$sha1"

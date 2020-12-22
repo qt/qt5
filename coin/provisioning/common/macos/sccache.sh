@@ -38,6 +38,6 @@ set -ex
 source "${BASH_SOURCE%/*}/../unix/sccache.sh"
 
 targetArch=x86_64-apple-darwin
-targetVersion=0.2.13-alpha-0
-sha1=8fe82ddc05a25debc314ea1a8cda665cddb90f72
+targetVersion=0.2.14
+sha1=764bc1664c0ff616d9980a6d127175d0a2041781
 installSccache "$targetArch" "$targetVersion" "$sha1"
