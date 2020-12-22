@@ -44,8 +44,6 @@ sw_vers >> ~/versions.txt
 echo "***** All installed packages *****" >> ~/versions.txt
 echo "***** HomeBrew *****" >> ~/versions.txt
 brew list --versions >> ~/versions.txt
-echo "***** HomeBrew Casks*****" >> ~/versions.txt
-brew cask list --versions >> ~/versions.txt
 echo "***** Apple's installer *****" >> ~/versions.txt
 pkgutil --pkgs >> ~/versions.txt
 echo "*********************************************" >> ~/versions.txt
