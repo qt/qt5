@@ -109,6 +109,9 @@ sudo zypper -nq install java
 # open-vm-tools requires update. Version in tier1 is broken and causes segfault on boot.
 sudo zypper -nq update open-vm-tools
 
+# Nodejs - needed by QtWebEngine
+sudo zypper -nq install nodejs10
+sudo zypper -nq install nodejs10-devel
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
-
