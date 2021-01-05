@@ -82,7 +82,7 @@ Configurations:
     Template: 'qtci-macos-10.15-x86_64-100'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'InsignificantTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
+    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode12.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
@@ -91,7 +91,7 @@ Configurations:
     Template: 'qtci-macos-10.15-x86_64-100'
     Compiler: 'Clang'
     Features: ['Sccache', 'InsignificantTests']
-    Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode11.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
+    Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DCMAKE_OSX_SYSROOT:PATH=/Applications/Xcode12.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
