@@ -77,7 +77,11 @@ fi
 targetFileMount="$mountFolder"/"$compressedFolder"
 
 echo "Mounting $preBuildCacheUrl to $mountFolder"
-sudo mount "$preBuildCacheUrl" "$mountFolder"
+if uname -a |grep -q Darwin; then
+   sudo mount -o locallocks "$preBuildCacheUrl" "$mountFolder"
+else
+   sudo mount "$preBuildCacheUrl" "$mountFolder"
+fi
 echo "Create $installFolder if needed"
 if [ !  -d "$installFolder" ]; then
     sudo mkdir "$installFolder"

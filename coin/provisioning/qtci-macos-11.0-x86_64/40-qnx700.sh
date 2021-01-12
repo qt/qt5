@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,32 +33,24 @@
 ##
 #############################################################################
 
-# This script installs JDK
+# This script installs QNX 7.
 
-set -ex
+targetFolder="/opt/"
+sourceFile="/net/ci-files01-hki.intra.qt.io/hdd/www/input/qnx/qnx700-20190325-2-macos.tar.xz"
+folderName="qnx700"
 
-echo "Installing Java Development Kit"
+sudo mkdir -p "$targetFolder"
 
-targetFile=jdk-8u102-macosx-x64.dmg
+echo "Extracting QNX 7"
+sudo tar -C "$targetFolder" -Jxf $sourceFile
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
-# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
+sudo chown -R qt:wheel "$targetFolder"/"$folderName"
 
-echo "Mounting $targetFile"
-sudo mkdir -p /Volumes/files
-sudo mount -o locallocks "$url" /Volumes/files
+# Verify that we have last file in zip
+if [ ! -f $targetFolder/$folderName/qnxsdp-env.sh ]; then
+    exit 1
+fi
 
-sudo cp "/Volumes/files/$targetFile" /tmp
-sudo umount /Volumes/files
-sudo hdiutil attach "/tmp/$targetFile"
-
-echo Installing JDK
-cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
-
-echo "Unmounting $targetFile"
-sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
-
-echo "Disable auto update"
-sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
-
-echo "JDK Version = 8 update 102" >> ~/versions.txt
+# Set env variables
+echo "export QNX_700=$targetFolder/$folderName" >> ~/.bashrc
+echo "QNX SDP = 7.0.0" >> ~/versions.txt

@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2020 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,32 +33,20 @@
 ##
 #############################################################################
 
-# This script installs JDK
+# This script installs XZ-Utils
+
+# XZ-Utils are needed for uncompressing xz-compressed files
 
 set -ex
 
-echo "Installing Java Development Kit"
+# shellcheck source=../common/macos/InstallPKGFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
 
-targetFile=jdk-8u102-macosx-x64.dmg
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/XZ.pkg"
+AltUrl="http://sourceforge.net/projects/macpkg/files/XZ/5.0.7/XZ.pkg"
+SHA1="f0c1f82ebcffe0bd4b8b57b6a77805db56b2de67"
+DestDir="/"
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
-# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
+InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
-echo "Mounting $targetFile"
-sudo mkdir -p /Volumes/files
-sudo mount -o locallocks "$url" /Volumes/files
-
-sudo cp "/Volumes/files/$targetFile" /tmp
-sudo umount /Volumes/files
-sudo hdiutil attach "/tmp/$targetFile"
-
-echo Installing JDK
-cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
-
-echo "Unmounting $targetFile"
-sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
-
-echo "Disable auto update"
-sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
-
-echo "JDK Version = 8 update 102" >> ~/versions.txt
+echo "XZ = 5.0.7" >> ~/versions.txt

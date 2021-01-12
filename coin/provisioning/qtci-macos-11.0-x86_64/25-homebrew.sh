@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,32 +33,27 @@
 ##
 #############################################################################
 
-# This script installs JDK
+# Will install homebrew package manager for macOS.
+#     WARNING: Requires commandlinetools
 
-set -ex
 
-echo "Installing Java Development Kit"
+set -e
 
-targetFile=jdk-8u102-macosx-x64.dmg
+. "$(dirname "$0")"/../common/unix/DownloadURL.sh
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
-# url_alt=http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-macosx-x64.dmg
 
-echo "Mounting $targetFile"
-sudo mkdir -p /Volumes/files
-sudo mount -o locallocks "$url" /Volumes/files
+DownloadURL  \
+    http://ci-files01-hki.intra.qt.io/input/mac/homebrew/a822f0d0f1838c07e86b356fcd2bf93c7a11c2aa/install.sh  \
+    https://raw.githubusercontent.com/Homebrew/install/c744a716f9845988d01e6e238eee7117b8c366c9/install  \
+    3210da71e12a699ab3bba43910a6d5fc64b92000  \
+    /tmp/homebrew_install.sh
 
-sudo cp "/Volumes/files/$targetFile" /tmp
-sudo umount /Volumes/files
-sudo hdiutil attach "/tmp/$targetFile"
+DownloadURL "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
+{ pw=$(cat "/Users/qt/pw"); } 2> /dev/null
+sudo chmod 755 /tmp/homebrew_install.sh
+{ (echo $pw | /tmp/homebrew_install.sh); } 2> /dev/null
+rm -f "/Users/qt/pw"
 
-echo Installing JDK
-cd /Volumes/JDK\ 8\ Update\ 102/ && sudo installer -package JDK\ 8\ Update\ 102.pkg -target /
+# No need to manually do `brew update`, the homebrew installer script does it.
+### brew update
 
-echo "Unmounting $targetFile"
-sudo hdiutil unmount /Volumes/JDK\ 8\ Update\ 102/ -force
-
-echo "Disable auto update"
-sudo defaults write /Library/Preferences/com.oracle.java.Java-Updater JavaAutoUpdateEnabled -bool false
-
-echo "JDK Version = 8 update 102" >> ~/versions.txt
