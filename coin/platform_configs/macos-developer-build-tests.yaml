@@ -1,0 +1,20 @@
+Version: 2
+Configurations:
+    -
+        Id: 'macos-10.14-x86_64-developer-build-tests'
+        Template: 'qtci-macos-10.14-x86_64'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly']
+        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+    -
+        Id: 'macos-10.15-x86_64-developer-build-tests'
+        Template: 'qtci-macos-10.15-x86_64-100'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+    -
+        Id: 'macos-11-x86_64-developer-build-tests'
+        Template: 'qtci-macos-11.0-x86_64-100'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'

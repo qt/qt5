@@ -1,12 +1,6 @@
 Version: 2
-Include: [cmake_platforms.yaml]
-Configurations:
--
-    Template: 'qtci-macos-10.14-x86_64'
-    Compiler: 'Clang'
-    Features: ['Sccache']
-    Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
-    Environment variables: [
-        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
-        ]
+Include: [
+    cmake_platforms.yaml,
+    macos-developer-build-tests.yaml
+]
+Configurations: []
