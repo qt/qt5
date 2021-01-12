@@ -77,6 +77,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
+    Id: 'Windows10-MSVC2019-x64-host'
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease"]
@@ -84,6 +85,16 @@ Configurations:
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+-
+    Template: 'qtci-windows-10-x86_64-52'
+    Compiler: 'MSVC2019'
+    Target arch: 'arm64'
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Insignificant', 'Packaging']
+    Platform dependency: 'Windows10-MSVC2019-x64-host'
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_msvc_obj_debug_info=ON',
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
     Id: 'CentOS-8.3-host'
     Template: 'qtci-linux-CentOS-8.3-x86_64-50'
