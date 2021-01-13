@@ -1,11 +1,9 @@
 Version: 2
+Include: [cmake_platforms.yaml]
 Configurations:
--   Template: 'qtci-windows-8.1-x86_64'
-    Compiler: 'MSVC2013'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
 -
     Template: 'qtci-windows-10-x86-4'
     Compiler: 'MSVC2019'
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -opengl dynamic -nomake examples -nomake tests'
     Features: ['UseLegacyInstructions']
+
