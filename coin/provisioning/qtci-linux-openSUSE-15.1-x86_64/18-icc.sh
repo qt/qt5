@@ -78,7 +78,7 @@ ARCH_SELECTED=INTEL64
 COMPONENTS=;intel-conda-index-tool__x86_64;intel-comp__x86_64;intel-comp-doc__noarch;intel-comp-l-all-common__noarch;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-comp-ps__x86_64;intel-comp-ps-ss-bec__x86_64;intel-openmp__x86_64;intel-openmp-common__noarch;intel-openmp-common-icc__noarch;intel-tbb-libs__x86_64;intel-idesupport-icc-common-ps__noarch;intel-conda-icc_rt-linux-64-shadow-package__x86_64;intel-icc__x86_64;intel-c-comp-common__noarch;intel-icc-common__noarch;intel-icc-common-ps__noarch;intel-icc-doc__noarch;intel-icc-ps__x86_64;intel-icc-ps-ss-bec__x86_64;intel-icx__x86_64;intel-icx-common__noarch;intel-tbb-devel__x86_64;intel-tbb-common__noarch;intel-tbb-doc__noarch;intel-conda-tbb-linux-64-shadow-package__x86_64;intel-conda-tbb-devel-linux-64-shadow-package__x86_64;intel-ccompxe__noarch;intel-psxe-common__noarch;intel-psxe-doc__noarch;intel-psxe-common-doc__noarch;intel-compxe-doc__noarch;intel-psxe-licensing__noarch;intel-psxe-licensing-doc__noarch;intel-icsxe-pset
 EOT
 
-( cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu )
+(cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu)
 
 # Export LD_LIBRARY_PATH to Coin
 echo "export ICC64_19_LDLP=$iccInstallPath/lib/intel64" >>~/.bashrc
