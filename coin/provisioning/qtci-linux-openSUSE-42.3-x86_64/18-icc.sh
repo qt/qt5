@@ -76,7 +76,7 @@ ARCH_SELECTED=ALL
 COMPONENTS=;intel-comp__x86_64;intel-comp-32bit__x86_64;intel-comp-doc__noarch;intel-comp-l-all-common__noarch;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-comp-ps-32bit__x86_64;intel-comp-ps__x86_64;intel-comp-ps-ss__x86_64;intel-comp-ps-ss-bec__x86_64;intel-comp-ps-ss-bec-32bit__x86_64;intel-openmp__x86_64;intel-openmp-32bit__x86_64;intel-openmp-common__noarch;intel-openmp-common-icc__noarch;intel-tbb-libs-32bit__x86_64;intel-tbb-libs__x86_64;intel-idesupport-icc-common-ps__noarch;intel-icc__x86_64;intel-icc-32bit__x86_64;intel-c-comp-common__noarch;intel-icc-common__noarch;intel-icc-common-ps__noarch;intel-icc-common-ps-ss-bec__noarch;intel-icc-doc__noarch;intel-icc-doc-ps__noarch;intel-icc-ps__x86_64;intel-icc-ps-ss__x86_64;intel-icc-ps-ss-bec__x86_64;intel-icc-ps-ss-bec-32bit__x86_64;intel-tbb-devel-32bit__x86_64;intel-tbb-devel__x86_64;intel-tbb-common__noarch;intel-tbb-doc__noarch;intel-ism__noarch;intel-ccompxe__noarch;intel-psxe-common__noarch;intel-psxe-doc__noarch;intel-psxe-common-doc__noarch;intel-ccompxe-doc__noarch;intel-psxe-licensing__noarch;intel-psxe-licensing-doc__noarch;intel-icsxe-pset
 EOT
 
-(cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu)
+(cd "$iccTmpPath" && sudo ./install.sh --silent $iccInstallInstructions --ignore-cpu --ignore-signature)
 
 # Export LD_LIBRARY_PATH to Coin
 echo "export ICC64_18_LDLP=$iccInstallPath/lib/intel64" >>~/.bashrc
