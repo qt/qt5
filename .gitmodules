@@ -112,7 +112,7 @@
 	path = qtconnectivity
 	url = ../qtconnectivity.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtwayland"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -184,7 +184,7 @@
 	path = qtandroidextras
 	url = ../qtandroidextras.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
