@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -47,45 +47,55 @@ if (Is64BitWinHost) {
 
 $version = "1.1.1g"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
+$prebuilt_zip = Get-DownloadLocation ("openssl-android-master-$version.zip")
 $sha1 = "b213a293f2127ec3e323fb3cfc0c9807664fd997"
+$prebuilt_sha1 = "d799f54e402c00eaa2633d54df1e8295bfac3d7b"
 $destination = "C:\Utils\openssl-android-master"
+$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-android-master-$version.zip"
 
 # msys unix style paths
 $ndkPath = "/c/Utils/Android/android-ndk-r21d"
 $openssl_path = "/c/Utils/openssl-android-master"
 $cc_path = "$ndkPath/toolchains/llvm/prebuilt/windows-x86_64/bin"
-Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
-Verify-Checksum $zip $sha1
+if ((Test-Path $prebuilt_url)) {
+    Download $prebuilt_url $prebuilt_url $prebuilt_zip
+    Verify-Checksum $prebuilt_zip $prebuilt_sha1
+    Extract-7Zip $prebuilt_zip C:\Utils
+    Remove $prebuilt_zip
+} else {
+    Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
+    Verify-Checksum $zip $sha1
 
-Extract-7Zip $zip C:\Utils\tmp
-Extract-7Zip C:\Utils\tmp\openssl-$version.tar C:\Utils\tmp
-Move-Item C:\Utils\tmp\openssl-${version} $destination
-Remove-Item -Path $zip
+    Extract-7Zip $zip C:\Utils\tmp
+    Extract-7Zip C:\Utils\tmp\openssl-$version.tar C:\Utils\tmp
+    Move-Item C:\Utils\tmp\openssl-${version} $destination
+    Remove "$zip"
 
-Write-Host "Configuring OpenSSL $version for Android..."
-Push-Location $destination
-# $ must be escaped in powershell...
+    Write-Host "Configuring OpenSSL $version for Android..."
+    Push-Location $destination
+    # $ must be escaped in powershell...
 
-function CheckExitCode {
+    function CheckExitCode {
 
-    param (
-        $p
-    )
+        param (
+            $p
+        )
 
-    if ($p.ExitCode) {
-        Write-host "Process failed with exit code: $($p.ExitCode)"
-        exit 1
+        if ($p.ExitCode) {
+            Write-host "Process failed with exit code: $($p.ExitCode)"
+            exit 1
+        }
     }
+
+    $configure = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang $openssl_path/Configure shared android-arm`"")
+    CheckExitCode $configure
+
+    $make = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang make -f $openssl_path/Makefile build_generated`"")
+    CheckExitCode $make
+
+    Pop-Location
+    Remove-item C:\Utils\tmp -Recurse -Confirm:$false
 }
 
-$configure = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang $openssl_path/Configure shared android-arm`"")
-CheckExitCode $configure
-
-$make = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_HOME=$ndkPath PATH=${cc_path}:`$PATH CC=clang make -f $openssl_path/Makefile build_generated`"")
-CheckExitCode $make
-
-Pop-Location
-
 Set-EnvironmentVariable "OPENSSL_ANDROID_HOME" "$destination"
-Remove-item C:\Utils\tmp -Recurse -Confirm:$false
 Write-Output "Android OpenSSL = $version" >> ~/versions.txt
