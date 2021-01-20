@@ -53,15 +53,15 @@ if uname -a |grep -q Darwin; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-based-mac.7z"
     sha1="0fe1fa50b1b469d2c05acc3a3468bc93a66f1e5a"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-mac.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/dynamic/libclang-release_${version//\./}-based-mac.7z"
 elif test -f /etc/redhat-release || /etc/centos-release; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
     sha1="1d2e265502fc0832a854f989d757105833fbd179"
-    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/dynamic/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
 else
     version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
+    url="https://download.qt.io/development_releases/prebuilt/libclang/dynamic/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
     sha1="c1580acb3a82e193acf86f18afb52427c5e67de8"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
 fi
