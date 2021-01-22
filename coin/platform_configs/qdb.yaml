@@ -1,28 +1,3 @@
 Version: 2
-Module only: True
-Configurations:
-    -
-        Template: 'qtci-windows-10-x86_64-52'
-        Compiler: 'MSVC2015'
-        Target arch: 'x86'
-        Features: ['Packaging', 'UseLegacyInstructions']
-        Configure arguments: '-qmake -opensource -confirm-license -nomake tests -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -opengl dynamic -static -no-icu -nomake examples -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86%'
-    -
-        Template: 'qtci-windows-10-x86_64-52'
-        Compiler: 'MSVC2015'
-        Features: ['Packaging', 'UseLegacyInstructions']
-        Configure arguments: '-qmake -opensource -confirm-license -nomake tests -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -opengl dynamic -static -no-icu -nomake examples -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64%'
-    -
-        Template: 'qtci-linux-CentOS-8.3-x86_64-50'
-        Compiler: 'GCC'
-        Features: ['Packaging', 'UseLegacyInstructions']
-        Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -openssl -qt-harfbuzz QMAKE_LFLAGS_APP+=-s -static -no-icu'
-    -
-        Template: 'qtci-macos-10.14-x86_64'
-        Compiler: 'Clang'
-        Features: ['Packaging']
-        Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -release -nomake tests -nomake examples -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -sysconfdir /Library/Preferences/Qt -I/usr/local/opt/openssl/include -static -no-icu'
-    -
-        Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
-        Compiler: 'GCC'
-        Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
+Include: [cmake_platforms.yaml]
+Configurations: []
