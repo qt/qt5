@@ -34,7 +34,7 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation']
+    Features: ['Sccache', 'Documentation', 'TestDocs']
     Configure arguments: '-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DWARNINGS_ARE_ERRORS=OFF -DQT_LIBINFIX=TestInfix -DQT_NAMESPACE=TestNamespace -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
