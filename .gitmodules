@@ -125,13 +125,13 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
