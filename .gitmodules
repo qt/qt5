@@ -21,7 +21,7 @@
 	path = qtactiveqt
 	url = ../qtactiveqt.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -125,13 +125,13 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
@@ -238,21 +238,21 @@
 	path = qtcharts
 	url = ../qtcharts.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtdatavis3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
 	recommends = qtmultimedia qtquickcontrols
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -265,7 +265,7 @@
 	path = qtscxml
 	url = ../qtscxml.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
@@ -278,7 +278,7 @@
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -298,7 +298,7 @@
 	path = qtlottie
 	url = ../qtlottie.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtquicktimeline"]
 	depends = qtbase qtdeclarative
 	path = qtquicktimeline
@@ -323,3 +323,21 @@
 	url = ../qt5compat.git
 	branch = dev
 	status = deprecated
+[submodule "qtcoap"]
+	depends = qtbase qttools
+	path = qtcoap
+	url = ../qtcoap.git
+	branch = dev
+	status = additionalLibrary
+[submodule "qtmqtt"]
+	depends = qtbase qtdeclarative qttools
+	path = qtmqtt
+	url = ../qtmqtt.git
+	branch = dev
+	status = additionalLibrary
+[submodule "qtopcua"]
+	depends = qtbase qtdeclarative qtquickcontrols2 qttools
+	path = qtopcua
+	url = ../qtopcua.git
+	branch = dev
+	status = additionalLibrary
