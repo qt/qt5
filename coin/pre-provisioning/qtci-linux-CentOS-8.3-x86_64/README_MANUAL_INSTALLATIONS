@@ -1,11 +1,11 @@
-### CENTOS 8.1 ###
+### CENTOS 8.3 ###
 Hard Disk: 500G
 Network: CI
 Video Card: Total Video Memory: 64MB
 Boot options/Firmware: BIOS
 
 Language: English (United States)
-Time & Date: Europe/Helsinki
+Time & Date: Etc/Coordinated Universal Time
 Software Selection: Server with GUI
 Network & Host..: Connect
 
@@ -26,20 +26,25 @@ Connect Your Online Accounts: Skip
  Devices:
     * Displays: Resolution 1280 x 800
  Details:
-    * Time Zone: GMT
+    * Time Zone: UTC
+       * run "sudo timedatectl set-timezone Etc/UTC"
     * Users: Automatic login on
 
 # Add user to sudoers
 Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
 
-# Fetch and run coin-setup
-Download http://coin/coin/binary/linux_386/coin-setup
-
-run 'sudo ./coin-setup'
-
 Add 'GRUB_GFXMODE=1280x800' to /etc/default/grub
-grub2-mkconfig -o /etc/grub2.cfg
-grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo grub2-mkconfig -o /etc/grub2.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+# Add support for virtio driver
+su
+echo "add_drivers+=\"virtio-blk\"" >> /etc/dracut.conf.d/virtio.conf
+dracut -f
+
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_amd64/coin-setup
+run './coin-setup'
 
 Reboot
 

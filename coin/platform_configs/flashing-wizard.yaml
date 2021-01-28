@@ -13,7 +13,7 @@ Configurations:
         Features: ['Packaging', 'UseLegacyInstructions']
         Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -debug-and-release -release -force-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x86% -L %OPENSSL_LIB_x86% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x86% -L %MYSQL_LIB_x86% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x86% -L %POSTGRESQL_LIB_x86% -static -no-icu'
     -
-        Template: 'qtci-linux-CentOS-8.1-x86_64-50'
+        Template: 'qtci-linux-CentOS-8.3-x86_64-50'
         Compiler: 'GCC'
         Features: ['Packaging', 'UseLegacyInstructions']
         Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -openssl -qt-harfbuzz QMAKE_LFLAGS_APP+=-s -static -no-icu'
