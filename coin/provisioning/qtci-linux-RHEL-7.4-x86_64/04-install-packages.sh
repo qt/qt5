@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -122,7 +122,7 @@ sudo ln -s /opt/rh/rh-python36/root/usr/bin/python3 /usr/local/bin/python3
 sudo ln -s /opt/rh/rh-python36/root/usr/bin/pip3 /usr/local/bin/pip3
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
-sudo pip install --upgrade pip
+sudo pip install --upgrade "pip < 21.0"
 sudo pip install virtualenv wheel
 
 sudo /usr/local/bin/pip3 install wheel
