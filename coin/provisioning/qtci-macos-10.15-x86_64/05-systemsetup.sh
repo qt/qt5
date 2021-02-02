@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -104,3 +104,5 @@ sudo rm -f "$targetFile"
 sudo sed -i'.orig' -e 's:^#/net:/net:' -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master
 sudo automount -cv
 
+# Disable multicast advertisements
+sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
