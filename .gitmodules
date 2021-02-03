@@ -1,20 +1,20 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
-	branch = dev
+	branch = 6.1
 	status = essential
 [submodule "qtsvg"]
 	depends = qtbase
 	path = qtsvg
 	url = ../qtsvg.git
-	branch = dev
+	branch = 6.1
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
 	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = dev
+	branch = 6.1
 	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
@@ -34,7 +34,7 @@
 	recommends = qtdeclarative qtactiveqt
 	path = qttools
 	url = ../qttools.git
-	branch = dev
+	branch = 6.1
 	status = essential
 [submodule "qtxmlpatterns"]
 	depends = qtbase
@@ -47,7 +47,7 @@
 	depends = qttools
 	path = qttranslations
 	url = ../qttranslations.git
-	branch = dev
+	branch = 6.1
 	status = essential
 	priority = 30
 [submodule "qtdoc"]
@@ -55,7 +55,7 @@
 	recommends = qtmultimedia qtquickcontrols qtquickcontrols2
 	path = qtdoc
 	url = ../qtdoc.git
-	branch = dev
+	branch = 6.1
 	status = essential
 	priority = 40
 [submodule "qtrepotools"]
@@ -117,7 +117,7 @@
 	recommends = qtdeclarative
 	path = qtwayland
 	url = ../qtwayland.git
-	branch = dev
+	branch = 6.1
 	status = addon
 [submodule "qt3d"]
 	depends = qtbase
@@ -223,7 +223,7 @@
 	recommends = qtimageformats qtgraphicaleffects
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
-	branch = dev
+	branch = 6.1
 	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase
@@ -303,23 +303,23 @@
 	depends = qtbase qtdeclarative
 	path = qtquicktimeline
 	url = ../qtquicktimeline
-	branch = dev
+	branch = 6.1
 	status = addon
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative qtshadertools
 	path = qtquick3d
 	url = ../qtquick3d.git
-	branch = dev
+	branch = 6.1
 	status = addon
 [submodule "qtshadertools"]
 	depends = qtbase
 	path = qtshadertools
 	url = ../qtshadertools.git
-	branch = dev
+	branch = 6.1
 	status = addon
 [submodule "qt5compat"]
 	depends = qtbase qtdeclarative
 	path = qt5compat
 	url = ../qt5compat.git
-	branch = dev
+	branch = 6.1
 	status = deprecated
