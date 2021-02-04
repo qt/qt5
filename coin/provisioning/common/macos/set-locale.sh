@@ -39,3 +39,10 @@ set -ex
 
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 SetEnvVar "LANG" "en_US.UTF-8"
+
+# The following settings match the "United States" region default
+defaults write -globalDomain AppleLocale "en_US"
+defaults write -globalDomain AppleLanguages "(en)"
+defaults write -globalDomain AppleMeasurementUnits "Inches"
+defaults write -globalDomain AppleTemperatureUnit "Fahrenheit"
+defaults write -globalDomain AppleMetricUnits -bool false
