@@ -47,5 +47,6 @@ function SetEnvVar {
         echo "export $name=$path" >> ~/.profile
     else
         echo "export $name=$path" >> ~/.bashrc
+        echo "export $name=$path" >> ~/.zshrc
     fi
 }
