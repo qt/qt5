@@ -18,6 +18,7 @@
 	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
+	recommends = qttools
 	path = qtactiveqt
 	url = ../qtactiveqt.git
 	branch = dev
@@ -121,13 +122,14 @@
 	status = addon
 [submodule "qt3d"]
 	depends = qtbase
-	recommends = qtdeclarative qtshadertools
+	recommends = qtdeclarative qtshadertools qttools
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
 	status = additionalLibrary
 [submodule "qtimageformats"]
 	depends = qtbase
+	recommends = qttools
 	path = qtimageformats
 	url = ../qtimageformats.git
 	branch = dev
@@ -234,21 +236,21 @@
 	status = ignore
 [submodule "qtcharts"]
 	depends = qtbase
-	recommends = qtdeclarative qtmultimedia
+	recommends = qtdeclarative qtmultimedia qttools
 	path = qtcharts
 	url = ../qtcharts.git
 	branch = dev
 	status = additionalLibrary
 [submodule "qtdatavis3d"]
 	depends = qtbase
-	recommends = qtdeclarative qtmultimedia
+	recommends = qtdeclarative qtmultimedia qttools
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
 	branch = dev
 	status = additionalLibrary
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
-	recommends = qtmultimedia qtquickcontrols
+	recommends = qtmultimedia qtquickcontrols qttools
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = dev
@@ -262,6 +264,7 @@
 	status = ignore
 [submodule "qtscxml"]
 	depends = qtbase qtdeclarative
+	recommends = qttools
 	path = qtscxml
 	url = ../qtscxml.git
 	branch = dev
@@ -275,6 +278,7 @@
 	status = ignore
 [submodule "qtnetworkauth"]
 	depends = qtbase
+	recommends = qttools
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
 	branch = dev
@@ -295,6 +299,7 @@
 	status = ignore
 [submodule "qtlottie"]
 	depends = qtbase qtdeclarative
+	recommends = qttools
 	path = qtlottie
 	url = ../qtlottie.git
 	branch = dev
