@@ -52,3 +52,8 @@ sudo timedatectl set-timezone Etc/UTC
 gsettings set org.gnome.desktop.screensaver lock-enabled false
 # disable blank screen power saving
 gsettings set org.gnome.desktop.session idle-delay 0
+
+# Set Wayland enable as false. CentOS may start using Wayland instead of x-session randomly if this is not set
+echo "Setting Wayland enable as false"
+sudo sed -i 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm/custom.conf
+
