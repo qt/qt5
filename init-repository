@@ -645,12 +645,13 @@ sub run
     chomp(my $url = `git config remote.origin.url`);
     die("Have no origin remote.\n") if (!$url);
     $url =~ s,\.git$,,;
-    $url =~ s/qt5$//;
+    $url =~ s/((?:tqtc-)?qt5)$//;
+    my $qtrepo = $1 or 'qt5';
     $self->{'base-url'} = $url;
 
-    $self->git_clone_all_submodules('qt5', $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
+    $self->git_clone_all_submodules($qtrepo, $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
 
-    $self->git_add_remotes('qt5');
+    $self->git_add_remotes($qtrepo);
 
     $self->git_install_hooks;
 
