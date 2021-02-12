@@ -139,6 +139,7 @@ set_common_environment () {
     uname_m="$(uname -m)"
     case "$uname_m" in
         x86_64|amd64) PROVISIONING_ARCH=amd64 ;;
+        arm64) PROVISIONING_ARCH=arm64 ;;
         i[3456]86)    PROVISIONING_ARCH=x86  ;;
         *) fatal "Unknown architecture in uname: $uname_m" 43 ;;
     esac
