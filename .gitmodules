@@ -21,7 +21,7 @@
 	path = qtactiveqt
 	url = ../qtactiveqt.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -238,14 +238,14 @@
 	path = qtcharts
 	url = ../qtcharts.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtdatavis3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
 	recommends = qtmultimedia qtquickcontrols
@@ -265,7 +265,7 @@
 	path = qtscxml
 	url = ../qtscxml.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
