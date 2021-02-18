@@ -1,0 +1,8 @@
+Add accessibility settings:
+/Volumes/Macintosh\ HD/usr/bin/sqlite3 "/Volumes/Macintosh HD/Library/Application Support/com.apple.TCC/TCC.db" <<"EOF"{{insert into access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_code_identity,last_modified) values }}
+('kTCCServiceAccessibility','com.froglogic.squish.ide.product',0,2,4,1,0,0,1612867994);
+
+{{insert into access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_code_identity,last_modified) values }}
+('kTCCServiceAccessibility','/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk/Contents/Home/jre/bin/java',1,2,4,1,0,0,1612867994);
+
+EOF

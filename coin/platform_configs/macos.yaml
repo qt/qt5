@@ -3,7 +3,7 @@ Configurations:
     # Build with latest Xcode
     -
         Id: 'macos-latest-xcode-x86_64-packaging-build'
-        Template: 'qtci-macos-11.0-x86_64-100'
+        Template: 'qtci-macos-11.0-x86_64-102'
         Compiler: 'Clang'
         Features: ['Packaging', 'Sccache', 'DoNotRunTests']
         Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
@@ -21,13 +21,13 @@ Configurations:
         Platform dependency: 'macos-latest-xcode-x86_64-packaging-build'
     -
         Id: 'macos-10.15-x86_64-tests'
-        Template: 'qtci-macos-10.15-x86_64-100'
+        Template: 'qtci-macos-10.15-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'InsignificantTests']
         Platform dependency: 'macos-latest-xcode-x86_64-packaging-build'
     -
         Id: 'macos-11-x86_64-tests'
-        Template: 'qtci-macos-11.0-x86_64-100'
+        Template: 'qtci-macos-11.0-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'InsignificantTests']
         Platform dependency: 'macos-latest-xcode-x86_64-packaging-build'
@@ -36,7 +36,7 @@ Configurations:
     # See macos-developer-build-tests.yaml for the tests
     -
         Id: 'macos-latest-xcode-x86_64-developer-build'
-        Template: 'qtci-macos-11.0-x86_64-100'
+        Template: 'qtci-macos-11.0-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests']
         Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
