@@ -1,0 +1,7 @@
+Add accessibility settings:
+/Volumes/Macintosh\ HD/usr/bin/sqlite3 "/Volumes/Macintosh HD/Library/Application Support/com.apple.TCC/TCC.db" <<"EOF"
+insert into access (service,client,client_type,allowed,prompt_count,indirect_object_identifier,flags,last_modified) values ("kTCCServiceAccessibility","com.froglogic.squish.ide.product",0,1,1,"UNSEEN",0,1612871478)
+
+insert into access (service,client,client_type,allowed,prompt_count,indirect_object_identifier,flags,last_modified) values ("kTCCServiceAccessibility","/Users/qt/bootstrap-agent",1,1,1,"UNSEEN",0,1612871478);
+EOF
+
