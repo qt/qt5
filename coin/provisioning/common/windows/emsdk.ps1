@@ -35,8 +35,9 @@
 
 # This script will install emscripten needed by WebAssembly
 
-$version = "1.39.8"
-$versionNode = "12.9.1"
+$version = "2.0.14"
+$versionTag="fc5562126762ab26c4757147a3b4c24e85a7289e"
+$versionNode = "14.15.5"
 $versionWinPython = "3.7.4"
 $versionJre = "8_update_152"
 
@@ -48,13 +49,13 @@ $urlCache = "http://ci-files01-hki.intra.qt.io/input/emsdk"
 
 $urlEmscriptenCache="$urlCache/emscripten.$version.zip"
 
-$urlWasmBinariesExternal="$urlEmscripten/win/9e60f34accb4627d7358223862a7e74291886ab6/wasm-binaries.zip"
+$urlWasmBinariesExternal="$urlEmscripten/win/$versionTag/wasm-binaries.zip"
 $urlWasmBinariesCache="$urlCache\windows\wasm-binaries.$version.zip"
-$sha1WasmBinaries="E94DCA7BA0526F88EDDBE45A0A0F61778D173603"
+$sha1WasmBinaries="a6f3f49df50fe7c8a0e61065b80fd885b8266bf3"
 
 $urlOfficialNode = "$urlEmscripten/deps/node-v$versionNode-win-x64.zip"
 $urlCacheNode = "$urlCache/windows/node-v$versionNode-win-x64.zip"
-$sha1Node = "D064145694578D6617AA99C694772D21480B6B6D"
+$sha1Node = "7df0af8aa3c128cff43d77dd6f3a163d405d0469"
 
 $urlOfficialWinPython = "$urlEmscripten/deps/python-$versionWinPython-embed-amd64-patched.zip"
 $urlCacheWinPython = "$urlCache/windows/python-$versionWinPython-embed-amd64-patched.zip"
@@ -66,7 +67,7 @@ $sha1ProtableJre = "6830524ec8b16742f956897abb6b6f5ef890a1c2"
 
 $urlOfficialEmscripten = "https://github.com/kripken/emscripten/archive/$version.zip"
 $urlCacheEmscripten = "$urlCache/windows/emscripten-$version.zip"
-$sha1Emscripten = "3721DC133824BA59CDBDFC93704D47CE265F2AFE"
+$sha1Emscripten = "c34789939b8b35b2225b8c9f1c80495238339d6e"
 
 $installLocationEmsdk = "C:\\Utils\\emsdk"
 $temp = "C:\Windows\Temp"

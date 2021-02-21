@@ -39,34 +39,36 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-version="1.39.8"
+version="2.0.14"
+versionTag="fc5562126762ab26c4757147a3b4c24e85a7289e"
+versionNode="v14.15.5"
 urlCache="http://ci-files01-hki.intra.qt.io/input/emsdk"
 targetFolder="/opt/emsdk"
 
 # cross-platform emscripten SDK
 urlEmscriptenExternal="https://github.com/emscripten-core/emscripten/archive/$version.tar.gz"
 urlEmscriptenCache="$urlCache/emscripten.$version.tar.gz"
-sha1Emscripten="a593ea3b4ab7e3d57e1232b19a903ccf8f137d2f"
+sha1Emscripten="5fbdca8ed238b90ab8c3656831fcc5eb1ce08c58"
 
 # platform-specific toolchain and node binaries. urls obtained from "emsdk install"
 if uname -a |grep -q Darwin; then
-    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/mac/9e60f34accb4627d7358223862a7e74291886ab6/wasm-binaries.tbz2"
+    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/mac/$versionTag/wasm-binaries.tbz2"
     urlWasmBinariesCache="$urlCache/macos/wasm-binaries.$version.tbz2"
-    sha1WasmBinaries="aedb30fb07d565c35305af0920ab072ae743895d"
+    sha1WasmBinaries="86dc16b299543cf593abc6f0137f8d0d723baddb"
 
-    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v12.9.1-darwin-x64.tar.gz"
-    urlNodeBinariesCache="$urlCache/mac/node-v12.9.1-darwin-x64.tar.gz"
-    sha1NodeBinaries="f5976321ded091e70358e406b223f6fd64e35a43"
-    pathNodeExecutable='node-v12.9.1-darwin-x64/bin/node'
+    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-$versionNode-darwin-x64.tar.gz"
+    urlNodeBinariesCache="$urlCache/mac/node-$versionNode-darwin-x64.tar.gz"
+    sha1NodeBinaries="6db16d024ea9e5f2ebdd0c1ef07ea67c2004ce93"
+    pathNodeExecutable="node-$versionNode-darwin-x64/bin/node"
 else
-    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/9e60f34accb4627d7358223862a7e74291886ab6/wasm-binaries.tbz2"
+    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/$versionTag/wasm-binaries.tbz2"
     urlWasmBinariesCache="$urlCache/linux/wasm-binaries.$version.tbz2"
-    sha1WasmBinaries="eb7fc94aa79a6e215272e2586173515aa37c3141"
+    sha1WasmBinaries="9724185c06c461edec3495e37e034066479b9ccf"
 
-    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v12.9.1-linux-x64.tar.xz"
-    urlNodeBinariesCache="$urlCache/linux/node-v12.9.1-linux-x64.tar.xz"
-    sha1NodeBinaries="cde96023b468d593c50de27470dd714c8cfda9aa"
-    pathNodeExecutable='node-v12.9.1-linux-x64/bin/node'
+    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-$versionNode-linux-x64.tar.xz"
+    urlNodeBinariesCache="$urlCache/linux/node-$versionNode-linux-x64.tar.xz"
+    sha1NodeBinaries="ca7ce363ceaf71b65e85243a71252c20cfd97982"
+    pathNodeExecutable="node-$versionNode-darwin-x64/bin/node"
 fi
 
 sudo mkdir "$targetFolder"
@@ -89,5 +91,6 @@ EOM
 SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-$version/\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
 SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
+SetEnvVar "EMSDK" "$targetFolder"
 
 echo "Emsdk = $version" >> ~/versions.txt
