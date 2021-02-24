@@ -54,14 +54,6 @@ Configurations:
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /Users/qt/work/install -debug-and-release -nomake tests -no-icu -nomake examples -no-sql-mysql -no-sql-psql -plugin-sql-sqlite -static -xplatform macx-ios-clang'
 -
-    Template: 'qtci-macos-10.14-x86_64'
-    Target os: 'Android_ANY'
-    Target arch: 'multi'
-    Compiler: 'Clang'
-    Target compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /Users/qt/work/install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I /usr/local/opt/openssl/include -xplatform android-clang -android-sdk /opt/android/sdk -android-ndk /opt/android/android-ndk-r21d -android-ndk-host darwin-x86_64'
--
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'
     Target arch: 'armv7'
@@ -91,15 +83,6 @@ Configurations:
     Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
     Features: ['DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -force-debug-info -separate-debug-info -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s -qt-zlib'
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Target os: 'Android_ANY'
-    Target arch: 'multi'
-    Compiler: 'Mingw'
-    Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
-    Target compiler: 'Clang'
-    Features: ['DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -no-sql-mysql -no-dbus -opengl es2 -sysconfdir /etc/xdg -openssl -I c:\utils\openssl-android-master\include -xplatform android-clang -android-sdk C:\Utils\Android -android-ndk c:\Utils\Android\android-ndk-r21d'
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
