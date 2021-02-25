@@ -646,7 +646,7 @@ sub run
     die("Have no origin remote.\n") if (!$url);
     $url =~ s,\.git$,,;
     $url =~ s/((?:tqtc-)?qt5)$//;
-    my $qtrepo = $1 or 'qt5';
+    my $qtrepo = $1 || 'qt5';
     $self->{'base-url'} = $url;
 
     $self->git_clone_all_submodules($qtrepo, $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
