@@ -124,14 +124,14 @@
 	recommends = qtdeclarative qtshadertools
 	path = qt3d
 	url = ../qt3d.git
-	branch = dev
-	status = ignore
+	branch = 6.0
+	status = additionalLibrary
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
-	branch = dev
-	status = ignore
+	branch = 6.0
+	status = additionalLibrary
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
@@ -277,8 +277,8 @@
 	depends = qtbase
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
-	branch = dev
-	status = ignore
+	branch = 6.0
+	status = additionalLibrary
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -323,3 +323,21 @@
 	url = ../qt5compat.git
 	branch = 6.0
 	status = deprecated
+[submodule "qtcoap"]
+	depends = qtbase qttools
+	path = qtcoap
+	url = ../qtcoap.git
+	branch = 6.0
+	status = additionalLibrary
+[submodule "qtmqtt"]
+	depends = qtbase qtdeclarative qttools
+	path = qtmqtt
+	url = ../qtmqtt.git
+	branch = 6.0
+	status = additionalLibrary
+[submodule "qtopcua"]
+	depends = qtbase qtdeclarative qtquickcontrols2 qttools
+	path = qtopcua
+	url = ../qtopcua.git
+	branch = 6.0
+	status = additionalLibrary
