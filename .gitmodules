@@ -21,7 +21,7 @@
 	recommends = qttools
 	path = qtactiveqt
 	url = ../qtactiveqt.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtmultimedia"]
 	depends = qtbase
@@ -125,14 +125,14 @@
 	recommends = qtdeclarative qtshadertools qttools
 	path = qt3d
 	url = ../qt3d.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtimageformats"]
 	depends = qtbase
 	recommends = qttools
 	path = qtimageformats
 	url = ../qtimageformats.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
@@ -239,21 +239,21 @@
 	recommends = qtdeclarative qtmultimedia qttools
 	path = qtcharts
 	url = ../qtcharts.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtdatavis3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia qttools
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
 	recommends = qtmultimedia qtquickcontrols qttools
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtgamepad"]
 	depends = qtbase
@@ -267,7 +267,7 @@
 	recommends = qttools
 	path = qtscxml
 	url = ../qtscxml.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtspeech"]
 	depends = qtbase
@@ -281,7 +281,7 @@
 	recommends = qttools
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtremoteobjects"]
 	depends = qtbase
@@ -302,7 +302,7 @@
 	recommends = qttools
 	path = qtlottie
 	url = ../qtlottie.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtquicktimeline"]
 	depends = qtbase qtdeclarative
@@ -332,17 +332,17 @@
 	depends = qtbase qttools
 	path = qtcoap
 	url = ../qtcoap.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtmqtt"]
 	depends = qtbase qtdeclarative qttools
 	path = qtmqtt
 	url = ../qtmqtt.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
 [submodule "qtopcua"]
 	depends = qtbase qtdeclarative qtquickcontrols2 qttools
 	path = qtopcua
 	url = ../qtopcua.git
-	branch = dev
+	branch = 6.1
 	status = additionalLibrary
