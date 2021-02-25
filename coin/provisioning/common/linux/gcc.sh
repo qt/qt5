@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -57,7 +57,7 @@ function InstallGCC() {
     suffixVersion=$(echo "$version" | cut -d "." -f1,2)
     sourceFile="gcc-$version.tar.xz"
     cachedUrl="http://ci-files01-hki.intra.qt.io/input/gcc/$sourceFile"
-    officialUrl="ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-$version/$sourceFile"
+    officialUrl="https://gcc.gnu.org/pub/gcc/releases/gcc-$version/gcc-$version.tar.xz"
 
     targetFile="$tmpFolder/$sourceFile"
     buildFolder="$HOME/gcc_build"
