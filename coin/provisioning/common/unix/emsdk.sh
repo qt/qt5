@@ -91,7 +91,7 @@ EOM
 
 SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-$version/\""
 SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
-SetEnvVar "EM_CONFIG" "$targetFolder/.emscripten"
 SetEnvVar "EMSDK" "$targetFolder"
+SetEnvVar "EMSDK_NODE" "$targetFolder/$pathNodeExecutable"
 
 echo "Emsdk = $version" >> ~/versions.txt

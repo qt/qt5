@@ -4,6 +4,7 @@ Include: [
     cmake_platforms_target_android_host_linux.yaml,
     cmake_platforms_target_android_host_macos.yaml,
     cmake_platforms_target_android_host_windows.yaml,
+    cmake_platforms_wasm.yaml,
     macos.yaml
     ]
 Configurations:
@@ -46,6 +47,7 @@ Configurations:
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
+    Id: 'OpenSUSE-15.2-host'
     Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache']

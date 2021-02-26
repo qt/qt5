@@ -109,7 +109,6 @@ cd $installLocationEmsdk
 "JS_ENGINES = [NODE_JS]" | Out-File '.emscripten' -Append -Encoding ASCII
 
 Set-EnvironmentVariable "EMSDK" "$installLocationEmsdk"
-Set-EnvironmentVariable "EM_CONFIG" "$installLocationEmsdk\.emscripten"
 Set-EnvironmentVariable "EMSDK_LLVM_ROOT" "$installLocationEmsdk\emscripten-llvm-e$version\install\bin"
 Set-EnvironmentVariable "BINARYEN_ROOT" "$installLocationEmsdk\emscripten-llvm-e$version\install\"
 Set-EnvironmentVariable "EMSDK_NODE" "$installLocationEmsdk\node$versionNode-win-x64\bin\node.exe"
