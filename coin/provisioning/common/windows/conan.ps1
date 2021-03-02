@@ -43,6 +43,7 @@ Write-Output "Conan = 1.29.0" >> ~\versions.txt
 Run-Executable "$scriptsPath\conan.exe" "remote add qtproject https://api.bintray.com/conan/qtproject/conan --insert --force"
 
 Set-EnvironmentVariable "CI_CONAN_BUILDINFO_DIR" "C:\Utils\conanbuildinfos"
+Set-EnvironmentVariable "CONAN_REVISIONS_ENABLED" "1"
 
 function Run-Conan-Install
 {
