@@ -159,7 +159,7 @@
 	path = qtserialport
 	url = ../qtserialport.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtx11extras"]
 	depends = qtbase
 	path = qtx11extras
