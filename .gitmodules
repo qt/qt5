@@ -74,11 +74,11 @@
 	priority = 50
 [submodule "qtlocation"]
 	depends = qtbase
-	recommends = qtdeclarative qtquickcontrols qtquickcontrols2 qtserialport
+	recommends = qtdeclarative qtserialport
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtsensors"]
 	depends = qtbase
 	recommends = qtdeclarative
