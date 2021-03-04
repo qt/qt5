@@ -153,7 +153,7 @@
 	path = qtserialbus
 	url = ../qtserialbus.git
 	branch = dev
-	status = ignore
+	status = additionalLibrary
 [submodule "qtserialport"]
 	depends = qtbase
 	path = qtserialport
