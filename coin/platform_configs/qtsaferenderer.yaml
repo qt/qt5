@@ -18,6 +18,11 @@ Configurations:
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-icu -no-fontconfig -qt-freetype -no-opengl -qpa offscreen -no-xcb -qt-libpng -no-vulkan'
 -
+    Template: 'qtci-linux-RHEL-8.2-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions', 'Insignificant']
+    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-icu -no-fontconfig -qt-freetype -no-opengl -qpa offscreen -no-xcb -qt-libpng -no-vulkan'
+-
     Template: 'qtci-linux-Ubuntu-18.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']

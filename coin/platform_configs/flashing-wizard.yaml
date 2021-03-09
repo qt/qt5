@@ -18,6 +18,11 @@ Configurations:
         Features: ['Packaging', 'UseLegacyInstructions']
         Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -openssl -qt-harfbuzz QMAKE_LFLAGS_APP+=-s -static -no-icu'
     -
+        Template: 'qtci-linux-RHEL-8.2-x86_64-50'
+        Compiler: 'GCC'
+        Features: ['Packaging', 'UseLegacyInstructions', 'Insignificant']
+        Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -nomake tests -nomake examples -no-libudev -no-use-gold-linker -force-debug-info -no-sql-mysql -plugin-sql-psql -plugin-sql-sqlite -qt-libjpeg -qt-libpng -qt-xcb -sysconfdir /etc/xdg -qt-pcre -openssl -qt-harfbuzz QMAKE_LFLAGS_APP+=-s -static -no-icu'
+    -
         Template: 'qtci-linux-Ubuntu-18.04-x86_64-50'
         Compiler: 'GCC'
         Features: ['Packaging', 'UseLegacyInstructions']
