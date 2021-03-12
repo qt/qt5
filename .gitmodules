@@ -11,7 +11,7 @@
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
-	recommends = qtsvg
+	recommends = qtshadertools qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
 	branch = dev
