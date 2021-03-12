@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
@@ -35,20 +35,5 @@
 
 set -ex
 
-BASEDIR=$(dirname "$0")
-# shellcheck source=../common/shared/network_test_server_ip.txt
-source "$BASEDIR/../common/shared/network_test_server_ip.txt"
-
-echo "Set Network Test Server address to $network_test_server_ip in /etc/hosts"
-echo "$network_test_server_ip    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
-echo "Set DISPLAY"
-echo 'export DISPLAY=":0"' >> ~/.bashrc
-# for current session
-export DISPLAY=:0
-
-# Set timezone to UTC.
-sudo timedatectl set-timezone Etc/UTC
-# disable Automatic screen lock
-gsettings set org.gnome.desktop.screensaver lock-enabled false
-# disable blank screen power saving
-gsettings set org.gnome.desktop.session idle-delay 0
+# shellcheck source=../common/linux/android_linux.sh
+source "${BASH_SOURCE%/*}/../common/linux/android_linux.sh"

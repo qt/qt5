@@ -24,13 +24,13 @@ instructions:
     - type: Group
       instructions:
         - type: ExecuteCommand
-          command: "{{.Env.ENV_PREFIX}} cmake --build . --target qttools/all --parallel -v"
+          command: "{{.Env.ENV_PREFIX}} cmake --build . --target qtbase/src/plugins/platforms/all qtbase/src/plugins/sqldrivers/all qttools/all --parallel -v"
           maxTimeInSeconds: 12000
           maxTimeBetweenOutput: 1200
           userMessageOnFailure: >
             Failed to build sources.
         - type: ExecuteCommand
-          command: "{{.Env.ENV_PREFIX}} cmake --build . --target generate_docs -v"
+          command: "{{.Env.ENV_PREFIX}} cmake --build . --target docs -v"
           maxTimeInSeconds: 12000
           maxTimeBetweenOutput: 1200
           userMessageOnFailure: >

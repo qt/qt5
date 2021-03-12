@@ -14,8 +14,8 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Id: 'CentOS-8.1-host'
-    Template: 'qtci-linux-CentOS-8.1-x86_64-50'
+    Id: 'CentOS-8.3-host'
+    Template: 'qtci-linux-CentOS-8.3-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOpenGL_GL_PREFERENCE=LEGACY'

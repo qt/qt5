@@ -6,7 +6,7 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'InsignificantTests']
+    Features: ['Sccache']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-imx7-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=hard-float boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARMV7_TOOLCHAIN_ENVSETUP}}',
@@ -22,7 +22,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'InsignificantTests']
+    Features: ['Sccache']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARM64_TOOLCHAIN_ENVSETUP}}',
@@ -38,7 +38,7 @@ Configurations:
     Target arch: 'mips64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'InsignificantTests', 'DisableTests']
+    Features: ['Sccache', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUMIPS64_TOOLCHAIN_ENVSETUP}}',

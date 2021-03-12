@@ -294,7 +294,8 @@ use constant {
     STS_ESSENTIAL => 2,
     STS_ADDON => 3,
     STS_DEPRECATED => 4,
-    STS_OBSOLETE => 5
+    STS_OBSOLETE => 5,
+    STS_ADDITIONAL => 6
 };
 
 sub git_clone_all_submodules
@@ -332,6 +333,8 @@ sub git_clone_all_submodules
                 $subinits{$1} = STS_DEPRECATED;
             } elsif ($3 eq "obsolete") {
                 $subinits{$1} = STS_OBSOLETE;
+            } elsif ($3 eq "additionalLibrary") {
+                $subinits{$1} = STS_ADDITIONAL;
             } elsif ($3 eq "ignore") {
                 delete $subinits{$1};
             } else {
@@ -351,6 +354,8 @@ sub git_clone_all_submodules
             @what = grep { ($subinits{$_} || 0) eq STS_ESSENTIAL } keys %subbases;
         } elsif ($mod eq "addon") {
             @what = grep { ($subinits{$_} || 0) eq STS_ADDON } keys %subbases;
+        } elsif ($mod eq "additionalLibrary") {
+            @what = grep { ($subinits{$_} || 0) eq STS_ADDITIONAL } keys %subbases;
         } elsif ($mod eq "preview") {
             @what = grep { ($subinits{$_} || 0) eq STS_PREVIEW } keys %subbases;
         } elsif ($mod eq "deprecated") {
@@ -640,12 +645,13 @@ sub run
     chomp(my $url = `git config remote.origin.url`);
     die("Have no origin remote.\n") if (!$url);
     $url =~ s,\.git$,,;
-    $url =~ s/qt5$//;
+    $url =~ s/((?:tqtc-)?qt5)$//;
+    my $qtrepo = $1 || 'qt5';
     $self->{'base-url'} = $url;
 
-    $self->git_clone_all_submodules('qt5', $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
+    $self->git_clone_all_submodules($qtrepo, $self->{branch}, $self->{alternates}, @{$self->{'module-subset'}});
 
-    $self->git_add_remotes('qt5');
+    $self->git_add_remotes($qtrepo);
 
     $self->git_install_hooks;
 
