@@ -99,7 +99,7 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-latest-xcode-x86_64-packaging-build'
-    Features: ['Packaging', 'Sccache', 'DebugAndRelease']
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests']
     Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
 -
     Id: 'Windows10-Mingw8-x64-host'
