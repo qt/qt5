@@ -35,10 +35,9 @@ if [ ! -e "$configure" ]; then
     exit 1
 fi
 
-mkdir -p qtbase || exit
+set -ex
 
-echo "+ cd qtbase"
-cd qtbase || exit
+mkdir -p qtbase
+cd qtbase
 
-echo "+ $configure -top-level $@"
 exec "$configure" -top-level "$@"
