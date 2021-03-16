@@ -67,7 +67,7 @@ $sha1ProtableJre = "6830524ec8b16742f956897abb6b6f5ef890a1c2"
 
 $urlOfficialEmscripten = "https://github.com/kripken/emscripten/archive/$version.zip"
 $urlCacheEmscripten = "$urlCache/windows/emscripten-$version.zip"
-$sha1Emscripten = "c34789939b8b35b2225b8c9f1c80495238339d6e"
+$sha1Emscripten = "4f50327e1605e787669eb8c5e37733914e32d592"
 
 $installLocationEmsdk = "C:\\Utils\\emsdk"
 $temp = "C:\Windows\Temp"
