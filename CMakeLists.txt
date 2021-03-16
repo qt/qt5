@@ -38,15 +38,19 @@ endif()
 set(QT_SUPERBUILD TRUE)
 
 # Get submodule list if not already defined
-if (NOT BUILD_SUBMODULES)
-    qt_internal_find_modules(BUILD_SUBMODULES)
+if(NOT QT_BUILD_SUBMODULES)
+    if(DEFINED ENV{QT_BUILD_SUBMODULES})
+        set(QT_BUILD_SUBMODULES "$ENV{QT_BUILD_SUBMODULES}")
+    else()
+        qt_internal_find_modules(QT_BUILD_SUBMODULES)
+    endif()
 endif()
 
 set(qt_module_dependency_map_prefix "__qt_module_dependencies_")
-qt_internal_sort_module_dependencies("${BUILD_SUBMODULES}" BUILD_SUBMODULES
+qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES
                                      "${qt_module_dependency_map_prefix}")
 
-foreach(module IN LISTS BUILD_SUBMODULES)
+foreach(module IN LISTS QT_BUILD_SUBMODULES)
     # Check for unmet dependencies
     if(NOT DEFINED BUILD_${module} OR BUILD_${module})
         message(NOTICE "Checking dependencies of '${module}'")
@@ -83,7 +87,7 @@ foreach(module IN LISTS BUILD_SUBMODULES)
     endif()
 endforeach()
 
-foreach(module IN LISTS BUILD_SUBMODULES)
+foreach(module IN LISTS QT_BUILD_SUBMODULES)
     message(NOTICE "Configuring '${module}'")
     ecm_optional_add_subdirectory("${module}")
 
