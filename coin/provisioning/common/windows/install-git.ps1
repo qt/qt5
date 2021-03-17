@@ -32,15 +32,15 @@
 #############################################################################
 . "$PSScriptRoot\helpers.ps1"
 
-# Install Git version 2.13.0
+# Install Git version 2.31.0
 
-$version = "2.13.0"
+$version = "2.31.0"
 if (Is64BitWinHost) {
     $arch = "-64-bit"
-    $sha1 = "E1D7C6E5E16ACAF3C108064A2ED158F604FA29A7"
+    $sha1 = "495d78f8d961e030944d9cb53af80d909d493c3f"
 } else {
     $arch = "-32-bit"
-    $sha1 = "03c7df2e4ef61ea6b6f9c0eb7e6d5151d9682aec"
+    $sha1 = "e57c040aea297b363aefaf26424f2e7a84a4a173"
 }
 $gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
