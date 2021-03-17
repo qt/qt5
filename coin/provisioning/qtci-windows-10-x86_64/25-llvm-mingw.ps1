@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,32 +35,21 @@
 
 # This script installs LLVM-Mingw by mstorsjo
 
-$zip = Get-DownloadLocation "llvm-mingw-20201020-ucrt-x86_64.zip"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20201020-ucrt-x86_64.zip"
-$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20201020/llvm-mingw-20201020-ucrt-x86_64.zip"
+$zip = Get-DownloadLocation "llvm-mingw-20210423-ucrt-x86_64.zip"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20210423-ucrt-x86_64.zip"
+$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20210423/llvm-mingw-20210423-ucrt-x86_64.zip"
 
 Download $url_official $url_cache $zip
-Verify-Checksum $zip "fdb40870de0967b5116855901196fc277087d76f"
+Verify-Checksum $zip "da9fb1e4a74747b6c410240cec0d488e428fd338"
 Extract-7Zip $zip C:\
 
-Write-Output "llvm-mingw = 20201020" >> ~/versions.txt
+Rename-Item C:\llvm-mingw-20210423-ucrt-x86_64 C:\llvm-mingw
+
+# Due to https://github.com/mstorsjo/llvm-mingw/issues/199
+Remove-Item C:\llvm-mingw\aarch64-w64-mingw32\lib\libc++.dll.a
+Remove-Item C:\llvm-mingw\x86_64-w64-mingw32\lib\libc++.dll.a
+Remove-Item C:\llvm-mingw\armv7-w64-mingw32\lib\libc++.dll.a
+Remove-Item C:\llvm-mingw\i686-w64-mingw32\lib\libc++.dll.a
+
+Write-Output "llvm-mingw = 12" >> ~/versions.txt
 Remove-Item -Path $zip
-
-# Apply patch https://reviews.llvm.org/D92379
-$patch = Get-DownloadLocation "lgamma_fix_for_llvm-mingw.patch"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/lgamma_fix_for_llvm-mingw.patch"
-Download $url_cache $url_cache $patch
-Verify-Checksum $patch d0f5fb2a5168d409eaee66542954aa22ac3ed1d8
-
-Run-Executable "C:\Program Files\Git\usr\bin\patch" "-u -b c:/llvm-mingw/include/c++/v1/random -i $patch"
-
-# Get fixed llvm-rc.exe (fixes https://reviews.llvm.org/D92558)
-$fix = Get-DownloadLocation "llvm-rc.exe"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-rc.exe"
-Download $url_cache $url_cache $fix
-Verify-Checksum $fix 75afa882bd587138481b632409c0a3fcb09ba75f
-
-Rename-Item -Path "C:\llvm-mingw\bin\llvm-rc.exe" -NewName "llvm-rc.orig"
-Copy-Item $fix -Destination "C:\llvm-mingw\bin\"
-
-
