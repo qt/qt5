@@ -21,7 +21,7 @@
 	path = qtactiveqt
 	url = ../qtactiveqt.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtmultimedia"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -77,7 +77,7 @@
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtsensors"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -125,13 +125,13 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
 	path = qtgraphicaleffects
@@ -151,13 +151,13 @@
 	path = qtserialbus
 	url = ../qtserialbus.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtserialport"]
 	depends = qtbase
 	path = qtserialport
 	url = ../qtserialport.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtx11extras"]
 	depends = qtbase
 	path = qtx11extras
@@ -182,7 +182,7 @@
 	path = qtandroidextras
 	url = ../qtandroidextras.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -238,21 +238,21 @@
 	path = qtcharts
 	url = ../qtcharts.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtdatavis3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
 	recommends = qtmultimedia qtquickcontrols
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtgamepad"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -265,7 +265,7 @@
 	path = qtscxml
 	url = ../qtscxml.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
@@ -278,7 +278,7 @@
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtremoteobjects"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -298,7 +298,7 @@
 	path = qtlottie
 	url = ../qtlottie.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtquicktimeline"]
 	depends = qtbase qtdeclarative
 	path = qtquicktimeline
@@ -328,16 +328,16 @@
 	path = qtcoap
 	url = ../qtcoap.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtmqtt"]
 	depends = qtbase qtdeclarative qttools
 	path = qtmqtt
 	url = ../qtmqtt.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtopcua"]
 	depends = qtbase qtdeclarative qtquickcontrols2 qttools
 	path = qtopcua
 	url = ../qtopcua.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
