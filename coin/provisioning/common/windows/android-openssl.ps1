@@ -54,7 +54,7 @@ $destination = "C:\Utils\openssl-android-master"
 $prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-android-master-$version.zip"
 
 # msys unix style paths
-$ndkPath = "/c/Utils/Android/android-ndk-r21d"
+$ndkPath = "/c/Utils/Android/android-ndk-r22b"
 $openssl_path = "/c/Utils/openssl-android-master"
 $cc_path = "$ndkPath/toolchains/llvm/prebuilt/windows-x86_64/bin"
 if ((Test-Path $prebuilt_url)) {
