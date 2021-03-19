@@ -44,6 +44,7 @@ Run-Executable "$scriptsPath\conan.exe" "remote add qtproject https://api.bintra
 
 Set-EnvironmentVariable "CI_CONAN_BUILDINFO_DIR" "C:\Utils\conanbuildinfos"
 Set-EnvironmentVariable "CONAN_REVISIONS_ENABLED" "1"
+Add-Path $scriptsPath
 
 function Run-Conan-Install
 {

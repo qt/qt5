@@ -3,4 +3,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/unix/install-conan.sh"
+"$BASEDIR/../common/unix/install-conan.sh" "macos"
