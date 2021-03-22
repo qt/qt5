@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -50,4 +50,4 @@ set -ex
 # shellcheck source=../common/macos/install_xcode.sh
 source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
-InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/macos_10.14_mojave/Xcode_11.3.tar.gz 11.3
+InstallXCode http://ci-files01-hki.intra.qt.io/input/mac/macos_10.14_mojave/Xcode_11.3.1.xip 11.3.1
