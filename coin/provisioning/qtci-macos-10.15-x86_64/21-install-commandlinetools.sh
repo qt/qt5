@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -37,10 +37,10 @@ set -ex
 
 # shellcheck source=../common/macos/install-commandlinetools.sh
 source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="12.3"
+version="12.4"
 packageName="Command_Line_Tools_for_Xcode_$version.dmg"
 url="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.15_catalina/$packageName"
-sha1="67d55d5868e1f495a66e2b302e91a3cdea923ca9"
+sha1="eabb32d167da029dfc70af94de2bf61abd416ca1"
 
 InstallCommandLineTools $url $url $sha1 $packageName $version
 
