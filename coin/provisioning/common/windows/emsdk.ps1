@@ -97,12 +97,13 @@ Install $urlOfficialProtableJre $urlCacheProtableJre $sha1ProtableJre "$temp\por
 Install $urlOfficialEmscripten $urlCacheEmscripten $sha1Emscripten "$temp\emscripten-$version.zip" "$installLocationEmsdk"
 
 cd $installLocationEmsdk
-"LLVM_ROOT='$installLocationEmsdk\\emscripten-llvm-e$version\\install\\bin'" | Out-File '.emscripten' -Encoding ASCII
-"BINARYEN_ROOT='$installLocationEmsdk\\emscripten-llvm-e$version\\install'" | Out-File '.emscripten' -Append -Encoding ASCII
-"PYTHON='$installLocationEmsdk\\python-$versionWinPython-embed-amd64-patched\\python.exe'" | Out-File '.emscripten' -Append -Encoding ASCII
-"NODE_JS='$installLocationEmsdk\\node-v$versionNode-win-x64\\bin\\node.exe'" | Out-File '.emscripten' -Append -Encoding ASCII
-"EMSCRIPTEN_ROOT='$installLocationEmsdk\\emscripten-llvm-e$version\\install\\emscripten'" | Out-File '.emscripten' -Append -Encoding ASCII
-"JAVA='$installLocationEmsdk\\Java64'" | Out-File '.emscripten' -Append -Encoding ASCII
+"emsdk_path = '$installLocationEmsdk'" | Out-File '.emscripten' -Encoding ASCII
+"LLVM_ROOT = emsdk_path + '\\emscripten-llvm-e$version\\install\\bin'" | Out-File '.emscripten' -Encoding ASCII
+"BINARYEN_ROOT = emsdk_path + '\\emscripten-llvm-e$version\\install'" | Out-File '.emscripten' -Append -Encoding ASCII
+"PYTHON = emsdk_path + '\\python-$versionWinPython-embed-amd64-patched\\python.exe'" | Out-File '.emscripten' -Append -Encoding ASCII
+"NODE_JS = emsdk_path + '\\node-v$versionNode-win-x64\\bin\\node.exe'" | Out-File '.emscripten' -Append -Encoding ASCII
+"EMSCRIPTEN_ROOT = emsdk_path + '\\emscripten-llvm-e$version\\install\\emscripten'" | Out-File '.emscripten' -Append -Encoding ASCII
+"JAVA = emsdk_path + '\\Java64'" | Out-File '.emscripten' -Append -Encoding ASCII
 "TEMP_DIR = '/tmp'" | Out-File '.emscripten' -Append -Encoding ASCII
 "COMPILER_ENGINE = NODE_JS" | Out-File '.emscripten' -Append -Encoding ASCII
 "JS_ENGINES = [NODE_JS]" | Out-File '.emscripten' -Append -Encoding ASCII

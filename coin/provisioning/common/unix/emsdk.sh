@@ -81,10 +81,11 @@ sudo chmod -R a+rwx "$targetFolder"
 
 echo "Writing $targetFolder/.emscripten"
 cat <<EOM >"$targetFolder/.emscripten"
-EMSCRIPTEN_ROOT='$targetFolder/emscripten-$version'
-LLVM_ROOT='$targetFolder/install/bin'
-BINARYEN_ROOT='$targetFolder/install'
-NODE_JS='$targetFolder/$pathNodeExecutable'
+emsdk_path = '$targetFolder'
+EMSCRIPTEN_ROOT = emsdk_path + '/emscripten-$version'
+LLVM_ROOT = emsdk_path + '/install/bin'
+BINARYEN_ROOT = emsdk_path + '/install'
+NODE_JS = emsdk_path + '/$pathNodeExecutable'
 TEMP_DIR = '/tmp'
 EOM
 
