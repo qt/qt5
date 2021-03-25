@@ -72,11 +72,14 @@ Options:
         Only initialize the specified subset of modules given as the
         argument. Specified modules must already exist in .gitmodules. The
         string "all" results in cloning all known modules. The strings
-        "essential", "addon", "preview", "deprecated", "obsolete", and
-        "ignore" refer to classes of modules; "default" maps to
-        "essential,addon,preview,deprecated", which corresponds with the
-        set of maintained modules and is also the default set. Module
-        names may be prefixed with a dash to exclude them from a bigger
+        "essential", "addon", "preview", "deprecated", "obsolete",
+        "additionalLibrary", and "ignore" refer to classes of modules
+        identified by "status=" lines in the .gitmodules file.
+        You can use "default" in the subset as a short-hand for
+        "essential,addon,preview,deprecated", which corresponds to the set of
+        maintained modules included in standard Qt releases; this is also the
+        default module subset when this option is not given. Entries
+        may be prefixed with a dash to exclude them from a bigger
         set, e.g. "all,-ignore".
 
     --no-update
