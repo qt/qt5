@@ -41,7 +41,7 @@ set -ex
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.7-20210119-1632"
+version="6.7-20210318-1241"
 qtBranch="60x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
@@ -49,12 +49,12 @@ preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build
 licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/515x/.squish-3-license"
 licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
 if uname -a |grep -q Darwin; then
-     version="6.6.1"
-     compressedFolder="prebuild-squish-$version-515x-macx86_64.tar.gz"
-     sha1="9fff9a7cb037214d21f47f2cc53747885fd1f2ae"
+     version="6.7-20210301-1401"
+     compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
+     sha1="562d065ed810f03cb0dad4cf81a4fc688bc813ec"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="8780665c3560456cd86980802cb24513233444fe"
+     sha1="80b3f36e760963a6989a49c79818bf8671d1932a"
 fi
 
 mountFolder="/tmp/squish"
@@ -117,31 +117,24 @@ if uname -a |grep -q "Ubuntu"; then
     echo "export SQUISH_PATH=$squishFolder/squish_for_qt6" >> ~/.profile
     echo "export PATH=\$PATH:$squishFolder/squish_for_qt6/bin" >> ~/.profile
 else
-    echo "export SQUISH_PATH=$squishFolder/squish_for_qt" >> ~/.bashrc
-    echo "export PATH=\$PATH:$squishFolder/squish_for_qt/bin" >> ~/.bashrc
+    echo "export SQUISH_PATH=$squishFolder/squish_for_qt6" >> ~/.bashrc
+    echo "export PATH=\$PATH:$squishFolder/squish_for_qt6/bin" >> ~/.bashrc
 fi
 
 echo "Verifying Squish, available installations:"
 ls -la $squishFolder
-if uname -a |grep -q Darwin; then
-  if "$squishFolder/squish_for_qt/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
-      echo "Squish for Qt installation tested successfully"
-  else
-      echo "Squish for Qt test failed! Package wasn't installed correctly."
-      exit 1
-  fi
+
+if "$squishFolder/squish_for_qt5/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
+  echo "Squish for Qt5 installation tested successfully"
 else
-  if "$squishFolder/squish_for_qt5/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
-      echo "Squish for Qt5 installation tested successfully"
-  else
-      echo "Squish for Qt5 test failed! Package wasn't installed correctly."
-      exit 1
-  fi
-  if "$squishFolder/squish_for_qt6/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
-      echo "Squish for Qt6 installation tested successfully"
-  else
-      echo "Squish for Qt6 test failed! Package wasn't installed correctly."
-      exit 1
-  fi
+  echo "Squish for Qt5 test failed! Package wasn't installed correctly."
+  exit 1
 fi
+if "$squishFolder/squish_for_qt6/bin/squishrunner" --testsuite "$squishFolder/suite_test_squish" | grep "Squish test run successfully" ; then
+  echo "Squish for Qt6 installation tested successfully"
+else
+  echo "Squish for Qt6 test failed! Package wasn't installed correctly."
+  exit 1
+fi
+
 
