@@ -68,7 +68,7 @@ else
     urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-$versionNode-linux-x64.tar.xz"
     urlNodeBinariesCache="$urlCache/linux/node-$versionNode-linux-x64.tar.xz"
     sha1NodeBinaries="ca7ce363ceaf71b65e85243a71252c20cfd97982"
-    pathNodeExecutable="node-$versionNode-darwin-x64/bin/node"
+    pathNodeExecutable="node-$versionNode-linux-x64/bin/node"
 fi
 
 sudo mkdir "$targetFolder"
