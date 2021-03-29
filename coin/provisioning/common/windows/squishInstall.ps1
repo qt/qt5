@@ -36,7 +36,7 @@
 # This script will pre-installed squish package for Windows.
 # Squish is need by Release Test Automation (RTA)
 
-$version = "6.7-20210112-1612"
+$version = "6.7-20210319-0956"
 $qtBranch = "60x"
 $targetDir = "C:\Utils\squish"
 $squishPackage = "C:\Utils\rta_squish"
@@ -50,7 +50,7 @@ Write-Host "Installing Squish license to home directory"
 Copy-Item $licenseUrl\$licensePackage ~\$licensePackage
 
 if (Is64BitWinHost) {
-     $arch = "x64"
+    $arch = "x64"
 } else {
     $arch = "x86"
 }
@@ -60,15 +60,10 @@ $OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\Curren
 if ($OSVersion -eq "Windows 10 Enterprise") {
     $winVersion = "win10"
     if (Is64BitWinHost) {
-        $sha1 = "628bb65cf515d08df388b0dc4d5b403e4c6657b2"
-    } else {
-        $sha1 = "9c0fc186605522ac0ac11066c10c3f3e8a95a705"
-        #Remove special handling when all packages are in same dir, exception now for win10 x86->the archive had to be rebuild
-        $squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable\6.6.1_rerun"
+        $sha1 = "61eca4950d24d9780e02cd4183c54009eda46114"
     }
-} elseif ($OSVersion -eq "Windows 7 Enterprise") {
-    $winVersion = "win7"
-    $sha1 = "ec890c16bb671ae79b093ba81e6567d2780f85a2"
+} else {
+    $winVersion = "n/a"
 }
 $squishArchive = "prebuild-squish-$version-$qtBranch-$winVersion-$arch.zip"
 
