@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -97,5 +97,17 @@ echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
 echo "$NTS_IP    qt-test-server qt-test-server.qt-test-net" | sudo tee -a /etc/hosts
 
 sudo systemsetup settimezone GMT
+# Setting Time Zone seems to be flaky in macOS 10.13 and in macOS 10.14. Checking that Time Zone is correct. If not, reset it.
+if [[ $(sudo systemsetup -gettimezone) = *GMT* ]]; then
+    echo "Time Zone is GMT"
+else
+    echo "Wrong Time Zone. Reset Time Zone to GMT"
+    sleep 5
+    sudo systemsetup settimezone GMT
+        if [[ $(sudo systemsetup -gettimezone) != *GMT* ]]; then
+            echo "Couldn't set Time Zone!"
+            exit 1
+        fi
+fi
 sudo systemsetup setusingnetworktime off
 sudo rm -f "$targetFile"
