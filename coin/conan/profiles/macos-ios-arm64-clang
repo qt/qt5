@@ -1,0 +1,18 @@
+[settings]
+    os=iOS
+    os.version=13.0
+    arch=armv8
+    compiler=apple-clang
+    compiler.version=11.0
+    compiler.libcxx=libc++
+    build_type=Release
+[options]
+*:shared=no
+*:debug_and_release=yes
+*:nomake=examples;tests
+*:qt_host_path=$QT_HOST_PATH
+*:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_SYSTEM_NAME=iOS"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja
+

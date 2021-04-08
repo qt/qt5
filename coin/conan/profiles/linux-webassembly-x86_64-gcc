@@ -1,0 +1,18 @@
+[settings]
+    os=Emscripten
+    arch=wasm
+    compiler=clang
+    compiler.version=10
+    compiler.libcxx=libstdc++
+    build_type=Release
+[options]
+*:release=yes
+*:shared=no
+*:qt_host_path=$QT_HOST_PATH
+*:nomake=examples;tests
+*:force_debug_info=yes
+*:cmake_args_qtbase="-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

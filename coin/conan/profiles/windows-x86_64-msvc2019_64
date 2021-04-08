@@ -1,0 +1,23 @@
+[settings]
+    os=Windows
+    arch=x86_64
+    compiler=msvc
+    compiler.version=19.28
+    compiler.cppstd=17
+    compiler.runtime=dynamic
+    compiler.runtime_type=Release
+    build_type=Release
+[options]
+*:release=yes
+*:shared=yes
+*:nomake=tests
+*:debug_and_release=yes
+*:force_debug_info=yes
+*:headersclean=yes
+*:zlib=None
+*:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR=%OPENSSL_INCLUDE_x64%\.. -DPostgreSQL_ROOT=%POSTGRESQL_LIB_x64%\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja
+
