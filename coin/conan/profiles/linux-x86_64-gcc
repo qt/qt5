@@ -1,0 +1,25 @@
+[settings]
+    os=Linux
+    arch=x86_64
+    compiler=gcc
+    compiler.version=9.3
+    compiler.libcxx=libstdc++11
+    build_type=Release
+[options]
+*:release=yes
+*:shared=yes
+*:nomake=tests;examples
+*:separate_debug_info=yes
+*:force_debug_info=yes
+*:bundled_xcb_xinput=yes
+*:headersclean=yes
+*:libudev=no
+*:doubleconversion=qt
+*:pcre=qt
+*:libjpeg=qt
+*:libpng=qt
+*:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOpenGL_GL_PREFERENCE=LEGACY -DFEATURE_system_harfbuzz=OFF -DOPENSSL_ROOT_DIR=$OPENSSL_ANDROID_HOME -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

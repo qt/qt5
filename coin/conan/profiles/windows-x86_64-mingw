@@ -1,0 +1,22 @@
+[settings]
+    os=Windows
+    arch=x86_64
+    compiler=gcc
+    compiler.version=8.1
+    compiler.libcxx=libstdc++
+    build_type=Release
+[options]
+*:release=yes
+*:shared=yes
+*:debug_and_release=yes
+*:force_debug_info=yes
+*:separate_debug_info=yes
+*:nomake=examples;tests
+*:zlib=qt
+*:libjpeg=qt
+*:freetype=qt
+*:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR=%OPENSSL_INCLUDE_x64%\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DPostgreSQL_ROOT=%POSTGRESQL_LIB_x64%\.."
+*:cmake_args_leaf_module="-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

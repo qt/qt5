@@ -1,0 +1,24 @@
+[settings]
+    os=Android
+    os.api_level=8
+    arch=x86
+    compiler=clang
+    compiler.version=11
+    compiler.libcxx=c++_shared
+    build_type=Release
+[options]
+*:release=yes
+*:shared=yes
+*:force_debug_info=yes
+*:nomake=examples;tests
+*:qt_host_path=$QT_HOST_PATH
+*:platform=android-clang
+*:android_abis=x86
+*:android_ndk=$ANDROID_NDK_ROOT
+*:android_sdk=$ANDROID_SDK_HOME
+*:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DOPENSSL_ROOT_DIR=$OPENSSL_ANDROID_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja
+

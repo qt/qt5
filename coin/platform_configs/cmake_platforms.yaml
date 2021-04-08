@@ -54,7 +54,9 @@ Configurations:
     Features: ['Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'CONAN_PROFILE=coin/conan/profiles/linux-developer-x86_64-gcc'
+    ]
 -
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
     Compiler: 'GCC'
@@ -77,7 +79,8 @@ Configurations:
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64'
     ]
 -
     Id: 'Windows10-MSVC2019-x64-host'
@@ -100,7 +103,10 @@ Configurations:
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}']
+        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64',
+        'CONAN_PROFILE=coin/conan/profiles/windows-arm64-msvc2019_64'
+    ]
 -
     Id: 'RHEL-8.2-host'
     Template: 'qtci-linux-RHEL-8.2-x86_64-50'
@@ -108,7 +114,9 @@ Configurations:
     Features: ['Packaging', 'Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOpenGL_GL_PREFERENCE=LEGACY'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
+    ]
 -
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'IOS_ANY'
@@ -117,7 +125,11 @@ Configurations:
     Target compiler: 'Clang'
     Platform dependency: 'macos-latest-xcode-universal-packaging-build'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests']
-    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS',
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/macos-universal-clang',
+        'CONAN_PROFILE=coin/conan/profiles/macos-ios-arm64-clang'
+    ]
 -
     Id: 'Windows10-Mingw8-x64-host'
     Template: 'qtci-windows-10-x86_64-52'
@@ -128,7 +140,8 @@ Configurations:
         'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
         'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
+        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-mingw'
     ]
 -
     Id: 'Windows10-Mingw11-x64-host'

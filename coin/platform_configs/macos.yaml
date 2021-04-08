@@ -11,7 +11,8 @@ Configurations:
         Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
         Environment variables: [
             'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_gds=OFF',
-            'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
+            'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+            'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
             ]
 
     # Then run tests on all supported deployment targets
