@@ -46,21 +46,6 @@ Configurations:
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
-    Id: 'Ubuntu-18.04-host'
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOpenGL_GL_PREFERENCE=LEGACY'
-    Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
--
-    Id: 'Ubuntu-18.04-test-20.04'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['TestOnly', 'Sccache']
-    Environment variables: ['LD_LIBRARY_PATH=/opt/icu/lib64', 'QT_PRESERVE_TESTLIB_PATH=1']
-    Platform dependency: 'Ubuntu-18.04-host'
--
     Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache']
@@ -70,7 +55,7 @@ Configurations:
 -
     Template: 'qtci-linux-openSUSE-15.2-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache']
+    Features: ['Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOpenGL_GL_PREFERENCE=LEGACY'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
@@ -151,7 +136,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Sccache', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
@@ -162,7 +147,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Sccache', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
@@ -173,7 +158,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Sccache', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
