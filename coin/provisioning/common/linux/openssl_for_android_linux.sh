@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,14 +33,18 @@
 ##
 #############################################################################
 
-# This script install OpenSSL from sources.
-# Requires GCC and Perl to be in PATH.
+# This script install prebuilt OpenSSL which was built against Android NDK 21.
+# OpenSSL build will fail with Android NDK 22, because it's missing platforms and sysroot directories
+
 set -ex
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
+version="1.1.1g"
+: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
+# Source built requires GCC and Perl to be in PATH.
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
 if uname -a |grep -q "Ubuntu"; then
@@ -52,8 +56,6 @@ else
     grep -e "^export" "$HOME/.bashrc" > $exports_file && source $exports_file
     rm -rf "$exports_file"
 fi
-
-version="1.1.1g"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
@@ -67,7 +69,14 @@ TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
 cd "$opensslHome"
 PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
+'
+prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_g_for-android-ndk-21.tar.gz"
+targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
+sha="2998e1a3bc9aa4bc7475d1be270db9f4109fca00"
+DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
+tar -xzf "$targetFile" -C "${HOME}"
 
+opensslHome="${HOME}/openssl/android/openssl-${version}"
 SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
 
 echo "OpenSSL for Android = $version" >> ~/versions.txt
