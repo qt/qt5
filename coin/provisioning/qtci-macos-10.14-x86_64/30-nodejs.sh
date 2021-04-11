@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
 set -ex
 
-brew install nodejs
-
+BASEDIR=$(dirname "$0")
+"$BASEDIR/../common/macos/nodejs.sh"
