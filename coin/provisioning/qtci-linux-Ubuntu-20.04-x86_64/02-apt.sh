@@ -190,6 +190,8 @@ installPackages+=(ssh)
 # For bitbake
 installPackages+=(diffstat)
 installPackages+=(binfmt-support)
+# Vulkan is needed for examples
+installPackages+=(libvulkan-dev)
 
 echo "Running update for apt"
 waitLoop
