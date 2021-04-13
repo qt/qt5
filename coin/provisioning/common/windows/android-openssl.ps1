@@ -45,11 +45,11 @@ if (Is64BitWinHost) {
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$version = "1.1.1g"
+$version = "1.1.1k"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
 $prebuilt_zip = Get-DownloadLocation ("openssl-android-master-$version.zip")
-$sha1 = "b213a293f2127ec3e323fb3cfc0c9807664fd997"
-$prebuilt_sha1 = "d799f54e402c00eaa2633d54df1e8295bfac3d7b"
+$sha1 = "bad9dc4ae6dcc1855085463099b5dacb0ec6130b"
+$prebuilt_sha1 = "07fad2a44ffa90261a779782bd64fe2304487945"
 $destination = "C:\Utils\openssl-android-master"
 $prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-android-master-$version.zip"
 
