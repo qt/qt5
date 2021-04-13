@@ -45,6 +45,7 @@ if(NOT QT_BUILD_SUBMODULES)
         qt_internal_find_modules(QT_BUILD_SUBMODULES)
     endif()
 endif()
+set(QT_BUILD_SUBMODULES "${QT_BUILD_SUBMODULES}" CACHE STRING "Submodules to build")
 
 set(qt_module_dependency_map_prefix "__qt_module_dependencies_")
 qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES
