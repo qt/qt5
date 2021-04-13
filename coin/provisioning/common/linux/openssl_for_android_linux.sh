@@ -42,7 +42,7 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="1.1.1g"
+version="1.1.1k"
 : ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
 # Source built requires GCC and Perl to be in PATH.
 exports_file="/tmp/export.sh"
@@ -56,10 +56,11 @@ else
     grep -e "^export" "$HOME/.bashrc" > $exports_file && source $exports_file
     rm -rf "$exports_file"
 fi
+
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="b213a293f2127ec3e323fb3cfc0c9807664fd997"
+sha="bad9dc4ae6dcc1855085463099b5dacb0ec6130b"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
