@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,6 +33,9 @@
 ##
 #############################################################################
 
+# shellcheck source=./../unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+
 # This script installs Xcode
 # Prerequisites: Have Xcode prefetched to local cache as xz compressed.
 # This can be achieved by fetching Xcode_8.xip from Apple Store.
@@ -52,7 +55,12 @@ function InstallXCode() {
     if [[ $sourceFile =~ tar ]]; then
         cd /Applications/ && sudo tar -zxf "$sourceFile"
     elif [[ $sourceFile =~ "xip" ]]; then
-        cd /Applications/ && xip -x "$sourceFile"
+        if [[ $sourceFile =~ "http" ]]; then
+            Download $sourceFile /Applications/Xcode_$version.xip
+            cd /Applications/ && xip -x "Xcode_$version.xip"
+        else
+            cd /Applications/ && xip -x "$sourceFile"
+        fi
     else
         xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
     fi
