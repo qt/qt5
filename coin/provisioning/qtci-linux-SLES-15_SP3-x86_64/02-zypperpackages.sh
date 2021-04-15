@@ -118,6 +118,9 @@ sudo zypper -nq update open-vm-tools
 # RTA tests requires python 2 xml modules
 sudo zypper -nq install python-xml
 
+# Tools to build Git
+sudo zypper -nq install autoconf libcurl-devel libexpat-devel
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 
