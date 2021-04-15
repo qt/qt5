@@ -55,6 +55,9 @@ sudo zypper -nq install libspeechd-devel
 # make
 sudo zypper -nq install make
 
+# Tools to build Git
+sudo zypper -nq install autoconf libcurl-devel libexpat-devel
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 
