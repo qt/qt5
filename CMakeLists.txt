@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION ${__qt_minimum_cmake_version})
 include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
 
 project(Qt
-    VERSION 6.1.0
+    VERSION "${QT_REPO_MODULE_VERSION}"
     DESCRIPTION "Qt Libraries"
     HOMEPAGE_URL "https://qt.io/"
     LANGUAGES CXX C ASM
