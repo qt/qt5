@@ -327,17 +327,17 @@
 	depends = qtbase qttools
 	path = qtcoap
 	url = ../qtcoap.git
-	branch = 6.1
+	branch = 6.1.0
 	status = addon
 [submodule "qtmqtt"]
 	depends = qtbase qtdeclarative qttools
 	path = qtmqtt
 	url = ../qtmqtt.git
-	branch = 6.1
+	branch = 6.1.0
 	status = addon
 [submodule "qtopcua"]
 	depends = qtbase qtdeclarative qtquickcontrols2 qttools
 	path = qtopcua
 	url = ../qtopcua.git
-	branch = 6.1
+	branch = 6.1.0
 	status = addon
