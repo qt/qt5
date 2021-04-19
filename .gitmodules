@@ -84,7 +84,7 @@
 	path = qtsensors
 	url = ../qtsensors.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtsystems"]
 	depends = qtbase
 	recommends = qtdeclarative
