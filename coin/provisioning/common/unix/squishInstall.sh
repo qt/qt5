@@ -49,9 +49,12 @@ preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build
 licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/515x/.squish-3-license"
 licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
 if uname -a |grep -q Darwin; then
-     version="6.7-20210301-1401"
-     compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
-     sha1="562d065ed810f03cb0dad4cf81a4fc688bc813ec"
+    #macOS package had to redo, so it's having same filename but different location to
+    #keep previous provisioning in working state
+    preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable/6.7_rerun"
+    version="6.7-20210301-1401"
+    compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
+    sha1="e82701ffc1eb465dce3163ce7eab9ccaedc568c1"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
      sha1="80b3f36e760963a6989a49c79818bf8671d1932a"
