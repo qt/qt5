@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -37,13 +37,13 @@
 # NOTE! Visual Studio is pre-installed to tier 1 image so this script won't install the whole Visual Studio. See ../../../pre-provisioning/qtci-windows-10-x86_64/msvc2019.txt
 # MSVC 2019 online installers can be found from here https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
 
-$version = "16_7_5"
+$version = "16_9_4"
 $urlCache_vsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_Professional_$version.exe"
-$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/e8bc3741-cb70-42aa-9b4e-2bd497de85dd/74b4e599138d5b5824d87ee657b78cbdeb3716f58a9645047e53bb5f68131516/vs_Professional.exe"
-$sha1_vsInstaller = "70062274c1ae79f5f0f7cb91192347abc1ebcb00"
+$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/3105fcfe-e771-41d6-9a1c-fc971e7d03a7/d60c42571053950bf742db19e30430f76354c95af06afb1364d5b2aab620f4e5/vs_Professional.exe"
+$sha1_vsInstaller = "03e3896b790b1734434ab12c2e06ca458e67395f"
 $urlCache_buildToolsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_BuildTools_$version.exe"
-$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/e8bc3741-cb70-42aa-9b4e-2bd497de85dd/f3713de3e01b7829d529f67d6240116b73cc0743974bb5373a052f9629cc24d2/vs_BuildTools.exe"
-$sha1_buildToolsInstaller = "efb4600bf9bd09adf55a36e2e5d0d47a3abd481e"
+$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/3105fcfe-e771-41d6-9a1c-fc971e7d03a7/e0c2f5b63918562fd959049e12dffe64bf46ec2e89f7cadde3214921777ce5c2/vs_BuildTools.exe"
+$sha1_buildToolsInstaller = "59e62e552305e60420154395d79d5261d65f52dc"
 $installerPath = "C:\Windows\Temp\installer.exe"
 
 function Install {
