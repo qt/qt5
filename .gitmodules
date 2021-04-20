@@ -324,19 +324,19 @@
 	branch = dev
 	status = deprecated
 [submodule "qtcoap"]
-	depends = qtbase qttools
+	depends = qtbase
 	path = qtcoap
 	url = ../qtcoap.git
 	branch = dev
 	status = addon
 [submodule "qtmqtt"]
-	depends = qtbase qtdeclarative qttools
+	depends = qtbase qtdeclarative
 	path = qtmqtt
 	url = ../qtmqtt.git
 	branch = dev
 	status = addon
 [submodule "qtopcua"]
-	depends = qtbase qtdeclarative qtquickcontrols2 qttools
+	depends = qtbase qtdeclarative qtquickcontrols2
 	path = qtopcua
 	url = ../qtopcua.git
 	branch = dev
