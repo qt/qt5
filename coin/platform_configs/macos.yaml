@@ -45,3 +45,11 @@ Configurations:
             'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
             'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
             ]
+
+    # ARM64 target built on apple silicon
+    -
+        Id: 'macos-latest-xcode-arm64-developer-build'
+        Template: 'qtci-macos-11.0-arm64'
+        Compiler: 'Clang'
+        Features: ['InsignificantTests']
+        Configure arguments: '-DFEATURE_developer_build=ON -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_framework=ON -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'

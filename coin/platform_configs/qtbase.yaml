@@ -15,14 +15,6 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_HOME}} -DANDROID_ABI=x86 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
-
-# ARM64 target built on apple silicon
--
-    Id: 'macos-latest-xcode-arm64-build'
-    Template: 'qtci-macos-11.0-arm64'
-    Compiler: 'Clang'
-    Features: ['InsignificantTests']
-    Configure arguments: '-DFEATURE_developer_build=ON -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_framework=ON -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
 -
     Template: 'qtci-linux-RHEL-8.2-x86_64-50'
     Target os: 'Android_ANY'
