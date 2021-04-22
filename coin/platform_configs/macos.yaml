@@ -6,6 +6,7 @@ Configurations:
         Id: 'macos-latest-xcode-universal-packaging-build'
         Template: 'qtci-macos-11.0-x86_64-102'
         Compiler: 'Clang'
+        Target arch: 'x86_64+arm64'
         Features: ['Packaging', 'Sccache', 'DoNotRunTests']
         Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
         Environment variables: [
