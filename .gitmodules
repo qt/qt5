@@ -111,7 +111,7 @@
 	path = qtconnectivity
 	url = ../qtconnectivity.git
 	branch = dev
-	status = additionalLibrary
+	status = addon
 [submodule "qtwayland"]
 	depends = qtbase
 	recommends = qtdeclarative
