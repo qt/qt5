@@ -37,5 +37,5 @@ set -ex
 
 sudo yum -y install gcc-toolset-9
 
-echo "source /opt/rh/gcc-toolset-10/enable" >> ~/.bashrc
+echo "source /opt/rh/gcc-toolset-9/enable" >> ~/.bashrc
 
