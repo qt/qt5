@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Copyright (C) 2017 Pelagicore AG
 ## Contact: http://www.qt.io/licensing/
 ##
@@ -40,7 +40,7 @@ param(
 )
 . "$PSScriptRoot\helpers.ps1"
 
-$version = "3.6.1"
+$version = "3.6.2"
 $package = "C:\Windows\temp\python-$version.exe"
 
 # check bit version
@@ -48,11 +48,11 @@ if ( $archVer -eq 64 ) {
     Write-Host "Installing 64 bit Python"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
     $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version-amd64.exe"
-    $sha1 = "bf54252c4065b20f4a111cc39cf5215fb1edccff"
+    $sha1 = "bcf9bda733a9153811209c62d628c41ab6cedbe2"
 } else {
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
     $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version.exe"
-    $sha1 = "76c50b747237a0974126dd8b32ea036dd77b2ad1"
+    $sha1 = "cd9744b142eca832f9534390676e6cfb84bf655d"
 }
 
 Write-Host "Fetching from URL..."
