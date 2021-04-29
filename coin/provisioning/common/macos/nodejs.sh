@@ -43,8 +43,8 @@ urlCache="http://ci-files01-hki.ci.local/input/nodejs/node-v$version.pkg"
 urlOffcial="https://nodejs.org/dist/v$version/node-v$version.pkg"
 sha1="4720274971c40fe51b2c647060f77c45fb4949a7"
 
-DownloadURL $urlCache $urlOffcial $sha1 "/tmp"
-sudo installer -pkg node-v$version.pkg -target /
+DownloadURL $urlCache $urlOffcial $sha1 "/tmp/node-v$version.pkg"
+sudo installer -pkg "/tmp/node-v$version.pkg" -target /
 
  echo "Nodejs = $version" >> ~/versions.txt
 
