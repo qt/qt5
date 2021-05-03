@@ -41,6 +41,7 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
+version="1.1.1k"
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
 if uname -a |grep -q "Ubuntu"; then
@@ -53,11 +54,10 @@ else
     rm -rf "$exports_file"
 fi
 
-version="1.1.1g"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="b213a293f2127ec3e323fb3cfc0c9807664fd997"
+sha="bad9dc4ae6dcc1855085463099b5dacb0ec6130b"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
