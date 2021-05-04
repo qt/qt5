@@ -1,3 +1,40 @@
 Version: 2
-Include: [cmake_platforms.yaml]
-Configurations: []
+Configurations:
+-
+    Template: 'qtci-windows-10-x86_64-52'
+    Compiler: 'MSVC2019'
+    Features: ['Packaging', 'Sccache', "Static"]
+    Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo" -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DBUILD_SHARED_LIBS=OFF'
+    Environment variables: [
+        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
+    ]
+-
+    Id: 'CentOS-8.3-host'
+    Template: 'qtci-linux-CentOS-8.3-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'Sccache', "Static"]
+    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=OFF -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOpenGL_GL_PREFERENCE=LEGACY -DBUILD_SHARED_LIBS=OFF'
+    Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+-
+    Id: 'macOS-11.0'
+    Template: 'qtci-macos-11.0-x86_64-102'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=OFF -DFEATURE_headersclean=ON -DFEATURE_framework=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DBUILD_SHARED_LIBS=OFF'
+    Features: ['Packaging', 'Sccache', "Static"]
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
+-
+    Id: 'Windows10-Mingw8-x64-host'
+    Template: 'qtci-windows-10-x86_64-52'
+    Compiler: 'Mingw'
+    Features: ['Packaging', 'Sccache', "Static"]
+    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=OFF -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DBUILD_SHARED_LIBS=OFF'
+    Environment variables: [
+        'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
+        'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
+    ]
