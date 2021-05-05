@@ -285,7 +285,7 @@
 	path = qtremoteobjects
 	url = ../qtremoteobjects.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtwebglplugin"]
 	depends = qtbase qtwebsockets
 	recommends = qtdeclarative
