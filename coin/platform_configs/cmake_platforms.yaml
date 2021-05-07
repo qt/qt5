@@ -125,7 +125,7 @@ Configurations:
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'Mingw'
     Environment variables: ['PATH=C:\MINGW810\mingw64\bin;$PATH']
-    Features: ['Sccache', 'InsignificantTests']
+    Features: ['Sccache']
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DBUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['Path={{.Env.MINGW810}}\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache','LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
