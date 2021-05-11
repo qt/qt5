@@ -158,18 +158,6 @@
 	url = ../qtserialport.git
 	branch = dev
 	status = addon
-[submodule "qtx11extras"]
-	depends = qtbase
-	path = qtx11extras
-	url = ../qtx11extras.git
-	branch = dev
-	status = ignore
-[submodule "qtmacextras"]
-	depends = qtbase
-	path = qtmacextras
-	url = ../qtmacextras.git
-	branch = dev
-	status = ignore
 [submodule "qtwinextras"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
