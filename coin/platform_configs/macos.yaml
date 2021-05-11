@@ -48,19 +48,19 @@ Configurations:
         Id: 'macos-13-arm64-tests'
         Template: 'qtci-macos-13-arm-107'
         Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging']
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-14-arm64-tests'
         Template: 'qtci-macos-14-arm-106'
         Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging']
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-15-arm64-tests'
         Template: 'qtci-macos-15-arm-104'
         Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging']
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
 
     # =========================================================================
@@ -83,7 +83,7 @@ Configurations:
         Id: 'macos-arm64-developer-build'
         Template: 'qtci-macos-15-arm-104'
         Compiler: 'Clang'
-        Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
+        Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -nomake examples -debug -framework'
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
