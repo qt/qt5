@@ -1,7 +1,6 @@
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
-## Copyright (C) 2019 Konstantin Tokarev <annulen@yandex.ru>
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -30,68 +29,26 @@
 ##
 ## $QT_END_LICENSE$
 ##
-#############################################################################
+############################################################################
 
 . "$PSScriptRoot\helpers.ps1"
 
-$scriptsPath = "C:\Python36\Scripts"
+# This is temporary solution for installing packages provided by Conan until we have fixed Conan setup for this
 
-Run-Executable "$scriptsPath\pip3.exe" "install -r $PSScriptRoot\conan_requirements.txt"
-Write-Output "Conan = 1.29.0" >> ~\versions.txt
+$url_conan = "\\ci-files01-hki.intra.qt.io\provisioning\windows\.conan.zip"
+$url_conan_home = "\\ci-files01-hki.intra.qt.io\provisioning\windows\.conanhome.zip"
+$sha1_conan_compressed = "1abbe43e7a29ddd9906328702b5bc5231deeb721"
+$sha1_conanhome_compressed = "f44c2ae21cb1c7dc139572e399b7b0eaf492af03"
+$conan_compressed = "C:\.conan.zip"
+$conanhome_compressed = "C:\.conanhome.zip"
 
-# Use Qt Project repository by default
-Run-Executable "$scriptsPath\conan.exe" "remote add qtproject https://api.bintray.com/conan/qtproject/conan --insert --force"
+Download $url_conan $url_conan $conan_compressed
+Verify-Checksum $conan_compressed $sha1_conan_compressed
+Extract-7Zip $conan_compressed C:\
 
-Set-EnvironmentVariable "CI_CONAN_BUILDINFO_DIR" "C:\Utils\conanbuildinfos"
+Download $url_conan_home $url_conan_home $conanhome_compressed
+Verify-Checksum $conanhome_compressed $sha1_conanhome_compressed
+Extract-7Zip $conanhome_compressed C:\Users\qt
 
-function Run-Conan-Install
-{
-    Param (
-        [string]$ConanfilesDir,
-        [string]$BuildinfoDir,
-        [string]$Arch,
-        [string]$Compiler,
-        [string]$CompilerVersion,
-        [string]$CompilerRuntime,
-        [string]$CompilerLibcxx,
-        [string]$CompilerException,
-        [string]$CompilerThreads
-    )
-
-    if ($CompilerRuntime) {
-        $extraArgs += " -s compiler.runtime=$CompilerRuntime"
-    }
-
-    if ($CompilerLibcxx) {
-        $extraArgs += " -s compiler.libcxx=$CompilerLibcxx"
-    }
-
-    if ($CompilerException) {
-        $extraArgs += " -s compiler.exception=$CompilerException"
-    }
-
-    if ($CompilerThreads) {
-        $extraArgs += " -s compiler.threads=$CompilerThreads"
-    }
-
-    $manifestsDir = "$PSScriptRoot\conan_manifests"
-    $buildinfoRoot = "C:\Utils\conanbuildinfos"
-
-    # Make up to 5 attempts for all download operations in conan
-    $env:CONAN_RETRY = "5"
-
-    Get-ChildItem -Path "$ConanfilesDir\*.txt" |
-    ForEach-Object {
-        $conanfile = $_.FullName
-        $outpwd = "$buildinfoRoot\$BuildinfoDir\$($_.BaseName)"
-        New-Item $outpwd -Type directory -Force | Out-Null
-
-        Push-Location $outpwd
-        Run-Executable "$scriptsPath\conan.exe" "install --no-imports --verify $manifestsDir", `
-            '-s', ('compiler="' + $Compiler + '"'), `
-            "-s os=Windows -s arch=$Arch -s compiler.version=$CompilerVersion $extraArgs $conanfile"
-        Pop-Location
-
-        Copy-Item -Path $conanfile -Destination "$outpwd\conanfile.txt"
-    }
-}
+Remove $conan_compressed
+Remove $conanhome_compressed
