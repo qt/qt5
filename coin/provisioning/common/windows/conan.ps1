@@ -33,6 +33,14 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
+$scriptsPath = "C:\Python36\Scripts"
+$version = "1.39.0"
+Run-Executable "$scriptsPath\pip3.exe" "install conan==$version"
+Write-Output "Conan = $version" >> ~\versions.txt
+
+# Add conan to path.
+Add-Path $scriptsPath
+
 # This is temporary solution for installing packages provided by Conan until we have fixed Conan setup for this
 
 $url_conan = "\\ci-files01-hki.intra.qt.io\provisioning\windows\.conan.zip"
