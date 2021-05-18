@@ -33,12 +33,6 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
-    -
-        Id: 'macos-11-arm64-tests'
-        Template: 'qtci-macos-11.0-arm64'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'InsignificantTests']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
 
     # Build developer builds for all modules, but only run tests for qtbase and declarative.
     # See macos-developer-build-tests.yaml for the tests
