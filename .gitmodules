@@ -184,7 +184,7 @@
 	path = qtwebchannel
 	url = ../qtwebchannel.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtwebengine"]
 	depends = qtdeclarative
 	recommends = qtquickcontrols qtquickcontrols2 qtlocation qtwebchannel qttools
