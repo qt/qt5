@@ -301,6 +301,12 @@ use constant {
     STS_ADDITIONAL => 6
 };
 
+sub has_url_scheme
+{
+    my ($url) = @_;
+    return $url =~ "^[a-z][a-z0-9+\-.]*://";
+}
+
 sub git_clone_all_submodules
 {
     my ($self, $my_repo_base, $co_branch, $alternates, @subset) = @_;
@@ -319,8 +325,9 @@ sub git_clone_all_submodules
             $subbranches{$1} = $3;
         } elsif ($2 eq "url") {
             my ($mod, $base) = ($1, $3);
-            next if ($base !~ /^\.\.\//);
-            $base = $my_repo_base.'/'.$base;
+            if (!has_url_scheme($base)) {
+                $base = $my_repo_base.'/'.$base;
+            }
             while ($base =~ s,(?!\.\./)[^/]+/\.\./,,g) {}
             $subbases{$mod} = $base;
         } elsif ($2 eq "update") {
@@ -519,7 +526,11 @@ sub git_clone_one_submodule
 
     my $do_clone = (! -e "$submodule/.git");
 
-    my $url = $self->{'base-url'}.$repo_basename;
+    my $url = $repo_basename;
+    if (!has_url_scheme($url)) {
+        $url = $self->{'base-url'}.$url;
+    }
+
     my $mirror;
     if ($mirror_url && ($do_clone || $self->{fetch})) {
         $mirror = $mirror_url.$repo_basename;
