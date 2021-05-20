@@ -55,6 +55,9 @@ function set_internal_repo {
     deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-updates main restricted universe multiverse
     deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-backports main restricted universe
     deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-security main restricted universe multiverse
+    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal main restricted
+    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-updates main restricted
+    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal universe
 EOC
 }
 
@@ -192,6 +195,16 @@ installPackages+=(diffstat)
 installPackages+=(binfmt-support)
 # Vulkan is needed for examples
 installPackages+=(libvulkan-dev)
+# For integrity
+installPackages+=(libc6:i386)
+installPackages+=(libncurses5:i386)
+installPackages+=(libstdc++6:i386)
+installPackages+=(libx11-6:i386)
+installPackages+=(lib32z1)
+installPackages+=(linux-libc-dev:i386)
+installPackages+=(libxcursor1:i386)
+installPackages+=(libc6-dev-i386)
+sudo dpkg --add-architecture i386
 
 echo "Running update for apt"
 waitLoop

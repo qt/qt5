@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -33,26 +33,28 @@
 ##
 #############################################################################
 
-# This script installs INTEGRITY
+# This script installs needed toolchains for INTEGRITY
 
 # shellcheck source=../unix/InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+# shellcheck source=../unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="11.4.4"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/integrity/ghs_$version.tar.gz"
-AltUrl="$PrimaryUrl" # we lack an external source for this
-SHA1="4afa3c15e13c91734951b73f6b21388294c5d794"
-targetFolder="/opt/ghs"
+urlToolchainEs7="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_es7.zip"
+urlToolchainAddons="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_addons.zip"
+SHA1_toolchainEs7="3c1edba781aa518e53e962cdb5fc5483aaa4991b"
+SHA1_toolchainAddons="1eb838edca4edaa3d9076b5ce4aea6409ffaa022"
+targetFolder="$HOME"
 appPrefix=""
 
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+echo "Install Integrity toolchain es7"
+InstallFromCompressedFileFromURL "$urlToolchainEs7" "$urlToolchainEs7" "$SHA1_toolchainEs7" "$targetFolder" "$appPrefix"
 
-SetEnvVar "INTEGRITY_BSP" "platform-cortex-a9"
-SetEnvVar "INTEGRITY_PATH" "$targetFolder/comp_201654"
-SetEnvVar "INTEGRITY_DIR" "$targetFolder/int1144"
-SetEnvVar "INTEGRITY_GL_INC_DIR" "\$INTEGRITY_DIR/INTEGRITY-include/Vivante/sdk/inc"
-SetEnvVar "INTEGRITY_GL_LIB_DIR" "\$INTEGRITY_DIR/libs/Vivante"
-
-echo "INTEGRITY = $version" >> ~/versions.txt
+echo "Install Integrity toochain addons"
+DownloadURL "$urlToolchainAddons" "$urlToolchainAddons" "$SHA1_toolchainAddons" "/tmp/integrity_toolchain_addons.zip"
+unzip "/tmp/integrity_toolchain_addons.zip" -d "/tmp"
+mv /tmp/toolchain/* $targetFolder/toolchain
+mv $targetFolder/toolchain $targetFolder/integrity_toolchain
+sudo rm -fr /tmp/toolchain
