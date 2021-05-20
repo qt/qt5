@@ -1,6 +1,5 @@
 Version: 2
 Include: [
-  cmake_platforms.yaml,
-  macos-universal-build-tests.yaml
+  cmake_platforms.yaml
 ]
 Configurations: []

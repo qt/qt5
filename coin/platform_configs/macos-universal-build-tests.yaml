@@ -1,8 +1,0 @@
-Version: 2
-Configurations:
-    -
-        Id: 'macos-11-arm64-tests'
-        Template: 'qtci-macos-11.0-arm64'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
