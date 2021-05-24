@@ -191,7 +191,7 @@
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = dev
-	status = ignore
+	status = addon
 	priority = 10
 [submodule "qtcanvas3d"]
 	depends = qtdeclarative
