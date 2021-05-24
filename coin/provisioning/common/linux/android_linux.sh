@@ -67,6 +67,12 @@ sdkApiLevel="android-31"
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
 ndkSha1="9ece64c7f19763dd67320d512794969930fce9dc"
 
+# Android automotive
+sdkApiLevelAutomovie="android-30"
+androidAutomotive11Url="$basePath/${sdkApiLevelAutomovie}_automotive.tar.gz"
+androidAutomotive="android-automotive"
+android11Sha="4a5cd2bea7ce323b724c3ff1faab13d99f9d2be9"
+
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
 ndkTargetFile="/tmp/$ndkFile"
@@ -136,6 +142,15 @@ echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86"  \
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
-echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -k "system-images;android-23;google_apis;x86" -c 2048M -f
+echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -c 2048M -f \
+    -k "system-images;android-23;google_apis;x86"
+
+echo "Install $sdkApiLevelAutomovie $androidAutomotive"
+DownloadURL "$androidAutomotive11Url" "$androidAutomotive11Url" "$android11Sha" \
+    "/tmp/${sdkApiLevelAutomovie}_automotive.tar.gz"
+sudo tar -xzf "/tmp/${sdkApiLevelAutomovie}_automotive.tar.gz" -C $sdkTargetFolder/system-images
+echo "no" | ./avdmanager create avd -n automotive_emulator_x86_api_30 -c 2048M -f \
+    -k "system-images;${sdkApiLevelAutomovie};${androidAutomotive};x86"
+
 # Purely informative, show the list of avd devices
 ./avdmanager list avd
