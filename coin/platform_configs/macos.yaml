@@ -40,7 +40,7 @@ Configurations:
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
 
-    # Build developer builds for all modules, but only run tests for qtbase and declarative.
+    # Build x86_64 developer-builds for all modules, but only run tests for qtbase and declarative.
     # See macos-developer-build-tests.yaml for the tests
     -
         Id: 'macos-latest-xcode-x86_64-developer-build'
@@ -53,10 +53,17 @@ Configurations:
             'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
             ]
 
-    # ARM64 target built on apple silicon
+    # Build arm64 developer-builds for all modules, and run their tests. This ensures that we have full
+    # arm64 build and test coverage, regardless of possible issues with the universal build.
     -
         Id: 'macos-latest-xcode-arm64-developer-build'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
-        Features: ['InsignificantTests']
+        Features: ['DoNotRunTests']
         Configure arguments: '-DFEATURE_developer_build=ON -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_framework=ON -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
+    -
+        Id: 'macos-11-arm64-developer-build-tests'
+        Template: 'qtci-macos-11.0-arm64'
+        Compiler: 'Clang'
+        Features: ['TestOnly']
+        Platform dependency: 'macos-latest-xcode-arm64-developer-build'
