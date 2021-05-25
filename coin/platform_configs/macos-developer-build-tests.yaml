@@ -1,5 +1,9 @@
 Version: 2
 Configurations:
+
+    # These developer-build tests are only run for qtbase and qtdeclarative
+    # See macos.yaml for arm64 developer-build tests, run for all modules.
+
     -
         Id: 'macos-10.14-x86_64-developer-build-tests'
         Template: 'qtci-macos-10.14-x86_64'
