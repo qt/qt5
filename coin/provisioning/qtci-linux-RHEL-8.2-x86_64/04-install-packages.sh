@@ -86,6 +86,7 @@ installPackages+=(gperf)
 installPackages+=(alsa-lib-devel)
 installPackages+=(pulseaudio-libs-devel)
 installPackages+=(libXtst-devel)
+installPackages+=(libxshmfence-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 # For Android builds
