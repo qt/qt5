@@ -65,18 +65,48 @@ if [[ "$os" == "linux" ]]; then
         echo "export LD_LIBRARY_PATH=$opensslHome/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
     fi
 
-elif [ "$os" == "macos" ]; then
+elif [ "$os" == "macos" -o "$os" == "macos-universal" ]; then
     # Below target location has been hard coded into Coin.
     # QTQAINFRA-1195
     openssl_install_dir=/usr/local/openssl-$version
     opensslTargetLocation="/usr/local/opt/openssl"
-    sudo ./Configure --prefix=$openssl_install_dir shared no-ssl3-method enable-ec_nistp_64_gcc_128 darwin64-x86_64-cc "-Wa,--noexecstack"
-    echo "Running 'make' for OpenSSL"
-    # shellcheck disable=SC2024
-    sudo make --silent > /tmp/openssl_make.log 2>&1
-    echo "Running 'make install' for OpenSSL"
-    # shellcheck disable=SC2024
-    sudo make --silent install > /tmp/openssl_make_install.log 2>&1
+
+    commonFlags="no-tests shared no-ssl3-method enable-ec_nistp_64_gcc_128 -Wa,--noexecstack"
+
+    opensslBuild="${opensslHome}-build"
+    opensslDestdir="${opensslHome}-destdir"
+    mkdir -p $opensslBuild
+
+    if [ "$os" == "macos-universal" ]; then
+        archs="x86_64 arm64"
+    else
+        archs="x86_64"
+    fi
+
+    for arch in $archs; do
+        cd $opensslBuild
+        echo "Configuring OpenSSL for $arch"
+        mkdir $arch && cd $arch
+        $opensslSource/Configure --prefix=$openssl_install_dir $commonFlags darwin64-$arch-cc
+
+        echo "Building OpenSSL for $arch"
+        make --silent >> /tmp/openssl_make.log 2>&1
+
+        echo "Installing OpenSSL for $arch"
+        if [ "$os" == "macos-universal" ]; then
+            destdir="$opensslDestdir/$arch"
+        else
+            destdir=""
+        fi
+        # shellcheck disable=SC2024
+        sudo make --silent install DESTDIR=$destdir >> /tmp/openssl_make_install.log 2>&1
+    done
+
+    if [ "$os" == "macos-universal" ]; then
+        echo "Making universal OpenSSL package"
+        # shellcheck disable=SC2024
+        sudo ${BASH_SOURCE%/*}/../macos/makeuniversal.sh "$opensslDestdir/x86_64" $opensslDestdir/arm64
+    fi
 
     path=$(echo "$opensslTargetLocation" | sed -E 's/(.*)\/.*$/\1/')
     sudo mkdir -p "$path"
