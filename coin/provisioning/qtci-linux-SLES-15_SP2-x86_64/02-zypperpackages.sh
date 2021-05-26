@@ -80,9 +80,9 @@ sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-dev
 sudo zypper -nq install libicu-devel libicu60_2
 
 # qtwebengine
-sudo zypper -nq install alsa-devel dbus-1-devel \
+sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
-         mozilla-nspr-devel mozilla-nss-devel
+         mozilla-nspr-devel mozilla-nss-devel glproto-devel libxshmfence-devel
 
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
