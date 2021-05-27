@@ -158,13 +158,6 @@
 	url = ../qtserialport.git
 	branch = dev
 	status = addon
-[submodule "qtwinextras"]
-	depends = qtbase
-	recommends = qtdeclarative qtmultimedia
-	path = qtwinextras
-	url = ../qtwinextras.git
-	branch = dev
-	status = ignore
 [submodule "qtandroidextras"]
 	depends = qtbase
 	path = qtandroidextras
