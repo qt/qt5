@@ -28,7 +28,6 @@
 	path = qtmultimedia
 	url = ../qtmultimedia.git
 	branch = 6.2
-	status = ignore
 [submodule "qttools"]
 	depends = qtbase
 	recommends = qtdeclarative qtactiveqt
