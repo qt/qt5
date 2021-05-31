@@ -532,7 +532,7 @@ sub git_clone_one_submodule
     }
 
     my $mirror;
-    if ($mirror_url && ($do_clone || $self->{fetch})) {
+    if (!has_url_scheme($repo_basename) && $mirror_url && ($do_clone || $self->{fetch})) {
         $mirror = $mirror_url.$repo_basename;
     }
 
@@ -582,7 +582,9 @@ sub git_clone_one_submodule
         $self->exe('git', 'config', 'commit.template', $template);
     }
 
-    $self->git_add_remotes($repo_basename);
+    if (!has_url_scheme($repo_basename)) {
+        $self->git_add_remotes($repo_basename);
+    }
 
     if ($self->{'detach-alternates'}) {
         $self->exe('git', 'repack', '-a');
