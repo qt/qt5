@@ -60,3 +60,6 @@ Extract-7Zip $conanhome_compressed C:\Users\qt
 
 Remove $conan_compressed
 Remove $conanhome_compressed
+
+# Remove existing settings file to generate a new.
+Remove "C:\Users\qt\.conan\settings.yml"
