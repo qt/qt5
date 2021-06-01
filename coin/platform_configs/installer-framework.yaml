@@ -7,7 +7,7 @@ Configurations:
     Target arch: 'x86'
     Features: ['Packaging']
     Configure arguments: '-opensource -confirm-license -verbose -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-icu -mp -openssl-linked OPENSSL_LIBS="-llibssl -llibcrypto -lUser32 -lWs2_32 -lAdvapi32 -lCrypt32" -I %STATIC_OPENSSL_INCLUDE_x86% -L %STATIC_OPENSSL_LIB_x86% -prefix c:\Users\qt\work\install -static-runtime'
-    Environment variables: ['TARGET_ARCHITECTURE=amd64_x86', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;']
+    Environment variables: ['TARGET_ARCHITECTURE=amd64_x86', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;', 'LLVM_INSTALL_DIR=', 'LLVM_INSTALL_DIR_msvc=', 'QDOC_USE_STATIC_LIBCLANG=']
     Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat', 'amd64_x86']
 -
     Template: 'qtci-macos-10.13-x86_64-2'
