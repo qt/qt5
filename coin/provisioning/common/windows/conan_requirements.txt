@@ -28,6 +28,6 @@ PyYAML==5.3.1
 requests==2.24.0
 six==1.15.0
 tqdm==4.49.0
-urllib3==1.25.10
+urllib3==1.26.5
 virtualenv==20.0.31
 zipp==3.1.0
