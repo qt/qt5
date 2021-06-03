@@ -205,7 +205,7 @@
 	path = qtwebview
 	url = ../qtwebview.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtquickcontrols2"]
 	depends = qtdeclarative
 	recommends = qtimageformats qtgraphicaleffects
