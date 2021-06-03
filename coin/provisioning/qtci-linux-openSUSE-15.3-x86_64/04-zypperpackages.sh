@@ -51,6 +51,9 @@ sudo zypper -nq install cups-devel
 #speech-dispatcher
 sudo zypper -nq install libspeechd-devel
 
+# make
+sudo zypper -nq install make
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 

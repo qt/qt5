@@ -35,9 +35,9 @@
 
 set -ex
 
-sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/distribution/leap/15.2/repo/oss/#g" /etc/zypp/repos.d/repo-oss.repo
-sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/distribution/leap/15.2/repo/non-oss/#g" /etc/zypp/repos.d/repo-non-oss.repo
-sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/update/leap/15.2/oss/#g" /etc/zypp/repos.d/repo-update.repo
-sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/update/leap/15.2/non-oss/#g" /etc/zypp/repos.d/repo-update-non-oss.repo
+sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/distribution/leap/15.3/repo/oss/#g" /etc/zypp/repos.d/repo-oss.repo
+sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/distribution/leap/15.3/repo/non-oss/#g" /etc/zypp/repos.d/repo-non-oss.repo
+sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/update/leap/15.3/oss/#g" /etc/zypp/repos.d/repo-update.repo
+sudo sed -i "s#baseurl=.*#baseurl=http://repo-clones.ci.qt.io/repos/opensuse/update/leap/15.3/non-oss/#g" /etc/zypp/repos.d/repo-update-non-oss.repo
 
 sudo zypper lr -u
