@@ -195,6 +195,8 @@ installPackages+=(diffstat)
 installPackages+=(binfmt-support)
 # Vulkan is needed for examples
 installPackages+=(libvulkan-dev)
+# Needed for qtdltlogging
+installPackages+=(libdlt-dev)
 # For integrity
 installPackages+=(libc6:i386)
 installPackages+=(libncurses5:i386)
