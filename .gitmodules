@@ -200,13 +200,6 @@
 	url = ../qtquickcontrols2.git
 	branch = dev
 	status = essential
-[submodule "qtpurchasing"]
-	depends = qtbase
-	recommends = qtdeclarative
-	path = qtpurchasing
-	url = ../qtpurchasing.git
-	branch = dev
-	status = ignore
 [submodule "qtcharts"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
