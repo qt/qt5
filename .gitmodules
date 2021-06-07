@@ -107,7 +107,7 @@
 	status = ignore
 [submodule "qtconnectivity"]
 	depends = qtbase
-	recommends = qtdeclarative qtandroidextras
+	recommends = qtdeclarative
 	path = qtconnectivity
 	url = ../qtconnectivity.git
 	branch = dev
@@ -158,12 +158,6 @@
 	url = ../qtserialport.git
 	branch = dev
 	status = addon
-[submodule "qtandroidextras"]
-	depends = qtbase
-	path = qtandroidextras
-	url = ../qtandroidextras.git
-	branch = dev
-	status = addon
 [submodule "qtwebsockets"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -208,7 +202,7 @@
 	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase
-	recommends = qtdeclarative qtandroidextras
+	recommends = qtdeclarative
 	path = qtpurchasing
 	url = ../qtpurchasing.git
 	branch = dev
