@@ -288,6 +288,7 @@
 	status = addon
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative qtshadertools
+	recommends = qtquicktimeline
 	path = qtquick3d
 	url = ../qtquick3d.git
 	branch = dev
