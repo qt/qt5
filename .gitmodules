@@ -34,7 +34,7 @@
 	recommends = qtdeclarative qtactiveqt
 	path = qttools
 	url = ../qttools.git
-	branch = dev
+	branch = 6.2
 	status = essential
 [submodule "qtxmlpatterns"]
 	depends = qtbase
@@ -309,17 +309,17 @@
 	depends = qtbase
 	path = qtcoap
 	url = ../qtcoap.git
-	branch = dev
+	branch = 6.2
 	status = addon
 [submodule "qtmqtt"]
 	depends = qtbase qtdeclarative
 	path = qtmqtt
 	url = ../qtmqtt.git
-	branch = dev
+	branch = 6.2
 	status = addon
 [submodule "qtopcua"]
 	depends = qtbase qtdeclarative qtquickcontrols2
 	path = qtopcua
 	url = ../qtopcua.git
-	branch = dev
+	branch = 6.2
 	status = addon
