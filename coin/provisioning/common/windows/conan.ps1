@@ -40,6 +40,7 @@ Write-Output "Conan = $version" >> ~\versions.txt
 
 # Add conan to path.
 Add-Path $scriptsPath
+Set-EnvironmentVariable "CONAN_REVISIONS_ENABLED" "1"
 
 # This is temporary solution for installing packages provided by Conan until we have fixed Conan setup for this
 
