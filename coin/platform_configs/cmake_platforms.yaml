@@ -91,7 +91,7 @@ Configurations:
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Insignificant', 'Packaging']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
     Platform dependency: 'Windows10-MSVC2019-x64-host'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
