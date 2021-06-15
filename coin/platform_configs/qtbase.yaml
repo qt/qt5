@@ -7,7 +7,7 @@ Include: [
 ]
 Configurations:
 -
-    Template: 'qtci-linux-CentOS-8.3-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.2-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'GCC'
