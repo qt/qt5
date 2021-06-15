@@ -35,8 +35,16 @@ instructions:
           maxTimeBetweenOutput: 1200
           userMessageOnFailure: >
             Failed to generate docs.
-        - type: MakeDirectory
-          directory: "{{.BuildDir}}/qtbase/doc/global"
+        - type: ExecuteCommand
+          command: "cp -r {{.BuildDir}}/qtbase/doc/config {{.BuildDir}}/doc"
+          maxTimeInSeconds: 12000
+          maxTimeBetweenOutput: 1200
+          userMessageOnFailure: "Failed to copy qtbase/doc/config to documentation directory."
+        - type: ExecuteCommand
+          command: "cp -r {{.BuildDir}}/qtbase/doc/global {{.BuildDir}}/doc"
+          maxTimeInSeconds: 12000
+          maxTimeBetweenOutput: 1200
+          userMessageOnFailure: "Failed to copy qtbase/doc/global to documentation directory."
         - type: UploadArtifact
           archiveDirectory: '{{.BuildDir}}/doc'
           transferType: UploadModuleDocumentation
