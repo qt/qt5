@@ -41,23 +41,20 @@ set -ex
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.7-20210318-1241"
-qtBranch="60x"
+version="6.7-20210615-1349"
+qtBranch="61x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
 preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable"
 licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/515x/.squish-3-license"
 licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
 if uname -a |grep -q Darwin; then
-    #macOS package had to redo, so it's having same filename but different location to
-    #keep previous provisioning in working state
-    preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable/6.7_rerun"
     version="6.7-20210301-1401"
     compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
-    sha1="e82701ffc1eb465dce3163ce7eab9ccaedc568c1"
+    sha1="15f7f8e9944fdc36b9b6e37576d6ca96713a8ac5"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="80b3f36e760963a6989a49c79818bf8671d1932a"
+     sha1="e32e5db1713e3050c3cdce696d7509c468afc7d3"
 fi
 
 mountFolder="/tmp/squish"
