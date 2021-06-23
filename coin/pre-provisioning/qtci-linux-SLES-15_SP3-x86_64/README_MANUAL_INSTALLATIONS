@@ -1,4 +1,4 @@
-### SUSE Linux Enterprise Desktop 15 SP2 ###
+### SUSE Linux Enterprise Desktop 15 SP3 ###
 
 Language: English (US)
 Keyboard Layout: English (US)
@@ -7,8 +7,12 @@ Available Extensions and Modules:
    Basesystem Module
    Desktop Applications Module
    Python 2 Module
+   Server Applications Module
 
 Gnome Desktop (X11)
+
+Enable SSH service
+Disable Firewall
 
 Resolution 1280x800
 
@@ -41,7 +45,9 @@ org.freedesktop.login1.power-off                        yes
 org.freedesktop.login1.power-off-ignore-inhibit         yes
 org.freedesktop.login1.power-off-multiple-sessions      yes
 
+sudo /sbin/set_polkit_default_privs
+
 # Register product
 # Add 'Available Extensions and Modules'
-* Basesystem Module 15 SP2 x86_64
-* Server Applications Module 15 SP2 x86_64
+* Basesystem Module 15 SP3 x86_64
+* Server Applications Module 15 SP3 x86_64

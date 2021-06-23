@@ -70,14 +70,14 @@ sudo zypper -nq install Mesa-libEGL-devel Mesa-libGL-devel
 sudo zypper -nq install gtk3-devel
 
 # Xinput2
-sudo zypper -nq install libXi-devel postgresql10 postgresql10-devel mysql-devel mysql mysql-server
+sudo zypper -nq install libXi-devel postgresql13 postgresql13-devel mysql-devel mysql mysql-server
 
 # system provided XCB libraries
 sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
          xcb-util-wm-devel xcb-util-renderutil-devel
 
 # ICU
-sudo zypper -nq install libicu-devel libicu60_2
+sudo zypper -nq install libicu-devel libicu-suse65_1
 
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
