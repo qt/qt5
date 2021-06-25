@@ -23,8 +23,8 @@
 	branch = 6.2
 	status = addon
 [submodule "qtmultimedia"]
-	depends = qtbase
-	recommends = qtdeclarative
+	depends = qtbase qtshadertools
+	recommends = qtdeclarative qtquickcontrols2
 	path = qtmultimedia
 	url = ../qtmultimedia.git
 	branch = 6.2
