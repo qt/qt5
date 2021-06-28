@@ -4,7 +4,7 @@ Configurations:
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', 'MinimalStaticTests']
-    Configure arguments: '-G"Ninja" -DCMAKE_BUILD_TYPE="RelWithDebInfo" -DBUILD_SHARED_LIBS=OFF -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
+    Configure arguments: '-G"Ninja" -DCMAKE_BUILD_TYPE="RelWithDebInfo" -DBUILD_SHARED_LIBS=OFF -DFEATURE_icu=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
@@ -15,7 +15,7 @@ Configurations:
     Template: 'qtci-linux-RHEL-8.2-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'MinimalStaticTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
+    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_icu=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
@@ -23,7 +23,7 @@ Configurations:
     Template: 'qtci-macos-11.0-x86_64-102'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'MinimalStaticTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DFEATURE_framework=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
+    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DFEATURE_icu=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_framework=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
