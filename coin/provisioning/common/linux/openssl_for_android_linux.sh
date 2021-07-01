@@ -71,9 +71,9 @@ cd "$opensslHome"
 PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
-prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_g_for-android-ndk-21.tar.gz"
+prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21.tar.gz"
 targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
-sha="2998e1a3bc9aa4bc7475d1be270db9f4109fca00"
+sha="8c4db1eb8460d749c998a0e033b3939123cbc5ac"
 DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
 tar -xzf "$targetFile" -C "${HOME}"
 
