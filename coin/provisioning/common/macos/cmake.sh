@@ -42,11 +42,11 @@ source "${BASH_SOURCE%/*}/InstallAppFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-majorminorversion="3.19"
-version="3.19.2"
+majorminorversion="3.20"
+version="3.20.5"
 PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-macos-universal.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-macos-universal.tar.gz"
-SHA1="753c72931e9c76c969255c197781635e7110e363"
+SHA1="5632fed86dbe0e5157fd233b1db6db738dbe4d1f"
 appPrefix="cmake-$version-macos-universal"
 
 InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix"
