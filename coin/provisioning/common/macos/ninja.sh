@@ -38,10 +38,10 @@
 # shellcheck source=./../unix/InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 
-version="1.10.1"
+version="1.10.2"
 internalUrl="http://ci-files01-hki.ci.local/input/mac/ninja-mac_v${version}.zip"
 externalUrl="https://github.com/ninja-build/ninja/releases/download/v${version}/ninja-mac.zip"
-SHA1="de7c594e3bf76f7c86b9d6874d49c8824b2a76e1"
+SHA1="95d0ca5e7c67ab7181c87e6a6ec59d11b1ff2d30"
 DestDir="/usr/local/bin/"
 
 InstallFromCompressedFileFromURL "$internalUrl" "$externalUrl" "$SHA1" "$DestDir" ""
