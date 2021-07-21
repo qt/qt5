@@ -1,11 +1,13 @@
+# The real minimum version will be checked by the qtbase project.
+# 3.16 is the absolute minimum though.
+cmake_minimum_required(VERSION 3.16...3.20)
+
+# Include qtbase's .cmake.conf for access to QT_REPO_MODULE_VERSION
 set(__qt6_qtbase_src_path "${CMAKE_CURRENT_SOURCE_DIR}/qtbase")
-
 include("${__qt6_qtbase_src_path}/.cmake.conf")
-include("${__qt6_qtbase_src_path}/cmake/QtCMakeVersionHelpers.cmake")
-qt_internal_check_for_suitable_cmake_version()
-qt_internal_get_computed_minimum_cmake_version(__qt_minimum_cmake_version)
-cmake_minimum_required(VERSION ${__qt_minimum_cmake_version})
 
+# Run platform auto-detection /before/ the first project() call and thus
+# before the toolchain file is loaded.
 include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
 
 project(Qt
