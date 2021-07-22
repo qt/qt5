@@ -90,8 +90,7 @@ installPackages+=(libgbm-dev)
 installPackages+=(libxkbfile-dev)
 installPackages+=(libxshmfence-dev)
 installPackages+=(libxss-dev)
-installPackages+=(nodejs)
-# NOTE! Can't install nodejs-dev because libssl1.0-dev conflicts with libssl1.0-dev which is depandency of nodejs-dev.
+installPackages+=(nodejs-mozilla) # use nodejs-mozilla because nodejs is outdated
 
 # Common event loop handling
 installPackages+=(libglib2.0-dev)
@@ -231,6 +230,7 @@ pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/sh
 
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
+SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
 
 OpenSSLVersion="$(openssl version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
