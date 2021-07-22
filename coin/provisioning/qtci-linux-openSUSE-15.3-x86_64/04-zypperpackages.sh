@@ -37,7 +37,7 @@ sudo zypper -nq install libicu-devel
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
-         mozilla-nspr-devel mozilla-nss-devel nodejs10 nodejs10-devel glproto-devel \
+         mozilla-nspr-devel mozilla-nss-devel nodejs12 glproto-devel \
          libxshmfence-devel libXdamage-devel
 
 # qtwebkit
