@@ -1,6 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml,
-    macos-developer-build-tests.yaml
+    macos-developer-build-tests.yaml,
+    integrity.yaml
 ]
 Configurations: []
