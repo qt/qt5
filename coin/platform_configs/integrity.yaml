@@ -7,7 +7,7 @@ Configurations:
       Platform dependency: 'Ubuntu-20.04-host'
       Features: ['Sccache', 'DisableTests']
       Environment variables: [
-          'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_HOST_PATH=/home/qt/work/install -DQT_BUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DQT_QMAKE_TARGET_MKSPEC=devices/integrity-armv8-SA8155P -DINPUT_harfbuzz=no -DFEATURE_library=OFF -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DFEATURE_printdialog=OFF --debug-trycompile -DFEATURE_quick3d_assimp=OFF -DFEATURE_dbus=OFF -GNinja -DUNIX=ON -DFEATURE_gtk3=OFF -DFEATURE_glib=OFF -DFEATURE_libudev=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_sql_mysql=OFF -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64',
+          'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_HOST_PATH=/home/qt/work/install -DQT_BUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DQT_QMAKE_TARGET_MKSPEC=devices/integrity-armv8-SA8155P -DFEATURE_library=OFF -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DFEATURE_printdialog=OFF --debug-trycompile -DFEATURE_dbus=OFF -GNinja -DUNIX=ON -DFEATURE_gtk3=OFF -DFEATURE_glib=OFF -DFEATURE_libudev=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_sql_mysql=OFF -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64',
           'INTEGRITY_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/integrity',
           'INTEGRITY_BSP=platform-sa8155', 'INTEGRITY_BUILD_TARGET=rel',
           'QC_MULTIMEDIA_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/include/amss/multimedia',
