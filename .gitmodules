@@ -24,7 +24,7 @@
 	status = addon
 [submodule "qtmultimedia"]
 	depends = qtbase qtshadertools
-	recommends = qtdeclarative qtquickcontrols2
+	recommends = qtdeclarative
 	path = qtmultimedia
 	url = ../qtmultimedia.git
 	branch = 6.2
@@ -52,7 +52,7 @@
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
-	recommends = qtmultimedia qtquickcontrols2
+	recommends = qtmultimedia
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = 6.2
@@ -167,7 +167,7 @@
 	status = addon
 [submodule "qtwebengine"]
 	depends = qtdeclarative
-	recommends = qtquickcontrols2 qtlocation qtwebchannel qttools
+	recommends = qtlocation qtwebchannel qttools
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 6.2
@@ -186,13 +186,6 @@
 	url = ../qtwebview.git
 	branch = 6.2
 	status = addon
-[submodule "qtquickcontrols2"]
-	depends = qtdeclarative
-	recommends = qtimageformats qtgraphicaleffects
-	path = qtquickcontrols2
-	url = ../qtquickcontrols2.git
-	branch = 6.2
-	status = essential
 [submodule "qtcharts"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
@@ -298,7 +291,7 @@
 	branch = 6.2
 	status = addon
 [submodule "qtopcua"]
-	depends = qtbase qtdeclarative qtquickcontrols2
+	depends = qtbase qtdeclarative
 	path = qtopcua
 	url = ../qtopcua.git
 	branch = 6.2
