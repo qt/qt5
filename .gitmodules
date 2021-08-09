@@ -132,12 +132,6 @@
 	url = ../qtimageformats.git
 	branch = 6.2
 	status = addon
-[submodule "qtgraphicaleffects"]
-	depends = qtdeclarative
-	path = qtgraphicaleffects
-	url = ../qtgraphicaleffects.git
-	branch = 6.2
-	status = ignore
 [submodule "qtserialbus"]
 	depends = qtbase
 	recommends = qtserialport
