@@ -138,6 +138,8 @@ installPackages+=(gcc-c++)
 installPackages+=(make)
 # Open source VMware Tools
 installPackages+=(open-vm-tools)
+# Install all available locales (COIN-727)
+installPackages+=(langpacks-*)
 
 sudo yum -y install "${installPackages[@]}"
 
