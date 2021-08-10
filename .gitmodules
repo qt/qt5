@@ -52,7 +52,7 @@
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
-	recommends = qtmultimedia qtquickcontrols qtquickcontrols2
+	recommends = qtmultimedia qtquickcontrols2
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = 6.2
@@ -138,13 +138,6 @@
 	url = ../qtgraphicaleffects.git
 	branch = 6.2
 	status = ignore
-[submodule "qtquickcontrols"]
-	depends = qtdeclarative
-	recommends = qtgraphicaleffects
-	path = qtquickcontrols
-	url = ../qtquickcontrols.git
-	branch = 6.2
-	status = ignore
 [submodule "qtserialbus"]
 	depends = qtbase
 	recommends = qtserialport
@@ -174,7 +167,7 @@
 	status = addon
 [submodule "qtwebengine"]
 	depends = qtdeclarative
-	recommends = qtquickcontrols qtquickcontrols2 qtlocation qtwebchannel qttools
+	recommends = qtquickcontrols2 qtlocation qtwebchannel qttools
 	path = qtwebengine
 	url = ../qtwebengine.git
 	branch = 6.2
@@ -216,7 +209,7 @@
 	status = addon
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
-	recommends = qtmultimedia qtquickcontrols
+	recommends = qtmultimedia
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
 	branch = 6.2
