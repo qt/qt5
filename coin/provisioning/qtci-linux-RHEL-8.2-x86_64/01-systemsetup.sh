@@ -57,3 +57,5 @@ gsettings set org.gnome.desktop.session idle-delay 0
 echo "Setting Wayland enable as false"
 sudo sed -i 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm/custom.conf
 
+# Set system locale
+sudo localectl set-locale LANG=en_US.UTF-8
