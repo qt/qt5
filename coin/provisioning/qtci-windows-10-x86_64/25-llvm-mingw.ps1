@@ -35,21 +35,15 @@
 
 # This script installs LLVM-Mingw by mstorsjo
 
-$zip = Get-DownloadLocation "llvm-mingw-20210423-ucrt-x86_64.zip"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20210423-ucrt-x86_64.zip"
-$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20210423/llvm-mingw-20210423-ucrt-x86_64.zip"
+$zip = Get-DownloadLocation "llvm-mingw-20211002-ucrt-x86_64.zip"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20211002-ucrt-x86_64.zip"
+$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20211002/llvm-mingw-20211002-ucrt-x86_64.zip"
 
 Download $url_official $url_cache $zip
-Verify-Checksum $zip "da9fb1e4a74747b6c410240cec0d488e428fd338"
+Verify-Checksum $zip "69907fa281552f795f28438ab69f8c7032c8d20e"
 Extract-7Zip $zip C:\
 
-Rename-Item C:\llvm-mingw-20210423-ucrt-x86_64 C:\llvm-mingw
+Rename-Item C:\llvm-mingw-20211002-ucrt-x86_64 C:\llvm-mingw
 
-# Due to https://github.com/mstorsjo/llvm-mingw/issues/199
-Remove-Item C:\llvm-mingw\aarch64-w64-mingw32\lib\libc++.dll.a
-Remove-Item C:\llvm-mingw\x86_64-w64-mingw32\lib\libc++.dll.a
-Remove-Item C:\llvm-mingw\armv7-w64-mingw32\lib\libc++.dll.a
-Remove-Item C:\llvm-mingw\i686-w64-mingw32\lib\libc++.dll.a
-
-Write-Output "llvm-mingw = 12" >> ~/versions.txt
+Write-Output "llvm-mingw = 13.0.0" >> ~/versions.txt
 Remove-Item -Path $zip
