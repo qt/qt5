@@ -1,26 +1,26 @@
 [submodule "qtbase"]
 	path = qtbase
 	url = ../qtbase.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 [submodule "qtsvg"]
 	depends = qtbase
 	path = qtsvg
 	url = ../qtsvg.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtdeclarative"]
 	depends = qtbase
 	recommends = qtsvg
 	path = qtdeclarative
 	url = ../qtdeclarative.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 [submodule "qtactiveqt"]
 	depends = qtbase
 	path = qtactiveqt
 	url = ../qtactiveqt.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtmultimedia"]
 	depends = qtbase
@@ -34,7 +34,7 @@
 	recommends = qtdeclarative qtactiveqt
 	path = qttools
 	url = ../qttools.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 [submodule "qtxmlpatterns"]
 	depends = qtbase
@@ -47,7 +47,7 @@
 	depends = qttools
 	path = qttranslations
 	url = ../qttranslations.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 	priority = 30
 [submodule "qtdoc"]
@@ -55,7 +55,7 @@
 	recommends = qtmultimedia qtquickcontrols qtquickcontrols2
 	path = qtdoc
 	url = ../qtdoc.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 	priority = 40
 [submodule "qtrepotools"]
@@ -117,20 +117,20 @@
 	recommends = qtdeclarative
 	path = qtwayland
 	url = ../qtwayland.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qt3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtshadertools
 	path = qt3d
 	url = ../qt3d.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
 	url = ../qtimageformats.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtgraphicaleffects"]
 	depends = qtdeclarative
@@ -223,7 +223,7 @@
 	recommends = qtimageformats qtgraphicaleffects
 	path = qtquickcontrols2
 	url = ../qtquickcontrols2.git
-	branch = 6.1
+	branch = 6.1.3
 	status = essential
 [submodule "qtpurchasing"]
 	depends = qtbase
@@ -237,21 +237,21 @@
 	recommends = qtdeclarative qtmultimedia
 	path = qtcharts
 	url = ../qtcharts.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtdatavis3d"]
 	depends = qtbase
 	recommends = qtdeclarative qtmultimedia
 	path = qtdatavis3d
 	url = ../qtdatavis3d.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtvirtualkeyboard"]
 	depends = qtbase qtdeclarative qtsvg
 	recommends = qtmultimedia qtquickcontrols
 	path = qtvirtualkeyboard
 	url = ../qtvirtualkeyboard.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtgamepad"]
 	depends = qtbase
@@ -264,7 +264,7 @@
 	depends = qtbase qtdeclarative
 	path = qtscxml
 	url = ../qtscxml.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtspeech"]
 	depends = qtbase
@@ -277,7 +277,7 @@
 	depends = qtbase
 	path = qtnetworkauth
 	url = ../qtnetworkauth.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtremoteobjects"]
 	depends = qtbase
@@ -297,47 +297,47 @@
 	depends = qtbase qtdeclarative
 	path = qtlottie
 	url = ../qtlottie.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtquicktimeline"]
 	depends = qtbase qtdeclarative
 	path = qtquicktimeline
 	url = ../qtquicktimeline
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtquick3d"]
 	depends = qtbase qtdeclarative qtshadertools
 	path = qtquick3d
 	url = ../qtquick3d.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtshadertools"]
 	depends = qtbase
 	path = qtshadertools
 	url = ../qtshadertools.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qt5compat"]
 	depends = qtbase qtdeclarative
 	path = qt5compat
 	url = ../qt5compat.git
-	branch = 6.1
+	branch = 6.1.3
 	status = deprecated
 [submodule "qtcoap"]
 	depends = qtbase qttools
 	path = qtcoap
 	url = ../qtcoap.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtmqtt"]
 	depends = qtbase qtdeclarative qttools
 	path = qtmqtt
 	url = ../qtmqtt.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
 [submodule "qtopcua"]
 	depends = qtbase qtdeclarative qtquickcontrols2 qttools
 	path = qtopcua
 	url = ../qtopcua.git
-	branch = 6.1
+	branch = 6.1.3
 	status = addon
