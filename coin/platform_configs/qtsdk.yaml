@@ -1,0 +1,6 @@
+Version: 2
+Include: [
+    cmake_platforms.yaml,
+    qt-creator.yaml
+    ]
+Configurations: []
