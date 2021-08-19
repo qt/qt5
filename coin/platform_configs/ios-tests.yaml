@@ -1,0 +1,12 @@
+Version: 2
+Configurations:
+-
+    Id: "ios-tests-target"
+    Template: 'qtci-macos-10.14-x86_64'
+    Target os: 'IOS_ANY'
+    Target arch: 'arm64'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests']
+    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
