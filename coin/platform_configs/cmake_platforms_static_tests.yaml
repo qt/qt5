@@ -8,7 +8,7 @@ Configurations:
     Environment variables: ['NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
-    Template: 'qtci-windows-10-x86_64-52'
+    Template: 'qqtci-windows-10_21H1-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'MinimalStaticTests']
     Configure arguments: '-G"Ninja" -DCMAKE_BUILD_TYPE="RelWithDebInfo" -DBUILD_SHARED_LIBS=OFF -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
