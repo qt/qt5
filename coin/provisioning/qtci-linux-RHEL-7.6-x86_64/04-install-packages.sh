@@ -126,6 +126,9 @@ installPackages+=(libffi-devel)
 installPackages+=(libsqlite3x-devel)
 # Build.pl
 installPackages+=(perl-Data-Dumper)
+# IFW
+installPackages+=(lzma)
+installPackages+=(bzip2-devel)
 
 sudo yum -y install "${installPackages[@]}"
 
