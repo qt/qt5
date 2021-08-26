@@ -12,6 +12,7 @@ os="$1"
 pip3 install conan --user
 
 SetEnvVar "CONAN_REVISIONS_ENABLED" "1"
+SetEnvVar "CONAN_V2_MODE" "1"
 
 if [ "$os" == "linux" ]; then
     SetEnvVar "PATH" "/home/qt/.local/bin:\$PATH"
