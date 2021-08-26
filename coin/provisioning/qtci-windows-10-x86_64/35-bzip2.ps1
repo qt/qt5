@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
-
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,22 +29,25 @@
 ##
 ## $QT_END_LICENSE$
 ##
-#############################################################################
+############################################################################
 
-# This script installs XZ-Utils
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
-# XZ-Utils are needed for uncompressing xz-compressed files
+# This script will install prebuilt PZIB2 for IFW
 
-set -ex
+# Prebuilt instructions:
+# Download https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz
+# Extract to C:\Utils
+# cd C:\Utils\bzip2-$version
+# Run in powershell: (Get-Content C:\Utils\bzip2-$version\makefile.msc) | ForEach-Object { $_ -replace "-DWIN32 -MD -Ox -D_FILE_OFFSET_BITS=64 -nologo", "-DWIN32 -MT -Ox -D_FILE_OFFSET_BITS=64 -nologo" } | Set-Content C:\Utils\bzip2-$version\makefile.msc
+# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# nmake -f makefile.msc
 
-# shellcheck source=../common/macos/InstallPKGFromURL.sh
-source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
+$version = "1.0.8"
+$sha1 = "4397208f4c4348d6662c9aa459cb3e508a872d42"
+Download http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-prebuilt.zip C:\Windows\Temp\bzip2-$version.zip
+Verify-Checksum "C:\Windows\Temp\bzip2-$version.zip" "$sha1"
+Extract-7Zip "C:\Windows\Temp\bzip2-$version.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\bzip2-$version.zip"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/XZ.pkg"
-AltUrl="http://sourceforge.net/projects/macpkg/files/XZ/5.0.7/XZ.pkg"
-SHA1="f0c1f82ebcffe0bd4b8b57b6a77805db56b2de67"
-DestDir="/"
-
-InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
-
-echo "XZ = 5.0.7" >> ~/versions.txt
+Write-Output "Bzip2 = $version" >> ~\versions.txt
