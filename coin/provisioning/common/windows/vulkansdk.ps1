@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -34,12 +34,14 @@
 . "$PSScriptRoot\helpers.ps1"
 
 # This script will install Vulkan SDK
+# Original Download page: https://vulkan.lunarg.com/sdk/home#windows
 
-$version = "1.0.51.0"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\VulkanSDK-" +$version+ "-Installer.exe"
+$version = "1.2.182.0"
 $vulkanPackage = "C:\Windows\Temp\vulkan-installer-$version.exe"
+$sha1 = "1b662f338bfbfdd00fb9b0c09113eacb94f68a0e"
+Download "https://sdk.lunarg.com/sdk/download/1.2.182.0/windows/VulkanSDK-$version-Installer.exe" "\\ci-files01-hki.intra.qt.io\provisioning\windows\VulkanSDK-$version-Installer.exe" $vulkanPackage
+Verify-Checksum "$vulkanPackage" "$sha1"
 
-Copy-Item $url_cache $vulkanPackage
 Run-Executable $vulkanPackage "/S"
 
 Write-Host "Cleaning $vulkanPackage.."
