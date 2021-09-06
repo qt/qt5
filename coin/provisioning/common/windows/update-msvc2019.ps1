@@ -70,3 +70,6 @@ $msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Insta
 
 Write-Output "Visual Studio 2019 = $msvc2019Version" >> ~\versions.txt
 Write-Output "Visual Studio 2019 Build Tools = $version" >> ~\versions.txt
+
+# Add Windows SDK Version and VCTools Version to versions.txt
+cmd /c '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 & set' |Select-String -Pattern '(WindowsSDKVersion)|(VCToolsVersion)' >> ~\versions.txt
