@@ -42,9 +42,9 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-urlToolchainEs7="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_es7.zip"
+urlToolchainEs7="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_es7_patched.zip"
 urlToolchainAddons="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_addons.zip"
-SHA1_toolchainEs7="3c1edba781aa518e53e962cdb5fc5483aaa4991b"
+SHA1_toolchainEs7="e890fe332a81f8345fed3dff89b30019d9989765"
 SHA1_toolchainAddons="1eb838edca4edaa3d9076b5ce4aea6409ffaa022"
 targetFolder="$HOME"
 appPrefix=""
