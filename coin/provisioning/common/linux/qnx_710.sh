@@ -54,6 +54,10 @@ DownloadAndExtract () {
     rm -rf $file
 }
 
+aarch64le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-aarch64le.cmake"
+armv7le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-armv7le.cmake"
+x8664_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-x8664.cmake"
+
 targetFolder="/opt/"
 folderName="qnx710"
 targetPath="$targetFolder$folderName"
@@ -68,11 +72,9 @@ targetFile="qnx710.tar.xz"
 sha1="fa9eb0f4247504a546cb014784646847eb6c8114"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
-# Toolchain files
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx-toolchains.tar.xz"
-targetFile="qnx-toolchains.tar.xz"
-sha1="d8a97605d80a2296f98caba3854557ca0dd5d7d3"
-DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetPath"
+sudo cp $aarch64le_toolchain $targetPath
+sudo cp $armv7le_toolchain $targetPath
+sudo cp $x8664_toolchain $targetPath
 
 sudo chown -R qt:users "$targetPath"
 
