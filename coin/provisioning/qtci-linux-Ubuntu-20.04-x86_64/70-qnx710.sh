@@ -37,3 +37,8 @@ set -ex
 
 # shellcheck source=../common/linux/qnx_700.sh
 source "${BASH_SOURCE%/*}/../common/linux/qnx_710.sh"
+
+# setup NFS
+sudo bash -c "echo '/home/qt/work ${qemuNetwork}/24(rw,sync,root_squash,no_subtree_check,anonuid=1000,anongid=1000)' >> /etc/exports"
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
