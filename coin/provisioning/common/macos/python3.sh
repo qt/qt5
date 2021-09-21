@@ -61,5 +61,7 @@ SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"
 /Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../shared/requirements.txt
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
 
-echo "python3 = 3.9.6" >> ~/versions.txt
+# Install Python certificates. Required at least for emsdk installation
+open /Applications/Python\ 3.9/Install\ Certificates.command
 
+echo "python3 = 3.9.6" >> ~/versions.txt
