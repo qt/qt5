@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -32,66 +32,29 @@
 ##
 #############################################################################
 
-# shellcheck source=./InstallFromCompressedFileFromURL.sh
-source "${BASH_SOURCE%/*}/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
-# shellcheck source=./DownloadURL.sh
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
 version="2.0.14"
-versionTag="fc5562126762ab26c4757147a3b4c24e85a7289e"
 versionNode="v14.15.5"
-urlCache="http://ci-files01-hki.intra.qt.io/input/emsdk"
-targetFolder="/opt/emsdk"
 
-# cross-platform emscripten SDK
-urlEmscriptenExternal="https://github.com/emscripten-core/emscripten/archive/$version.tar.gz"
-urlEmscriptenCache="$urlCache/emscripten.$version.tar.gz"
-sha1Emscripten="5fbdca8ed238b90ab8c3656831fcc5eb1ce08c58"
+mkdir -p /opt
+cd /opt
+sudo git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+sudo ./emsdk install $version
+sudo ./emsdk activate $version
 
 # platform-specific toolchain and node binaries. urls obtained from "emsdk install"
 if uname -a |grep -q Darwin; then
-    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/mac/$versionTag/wasm-binaries.tbz2"
-    urlWasmBinariesCache="$urlCache/macos/wasm-binaries.$version.tbz2"
-    sha1WasmBinaries="86dc16b299543cf593abc6f0137f8d0d723baddb"
-
-    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-$versionNode-darwin-x64.tar.gz"
-    urlNodeBinariesCache="$urlCache/mac/node-$versionNode-darwin-x64.tar.gz"
-    sha1NodeBinaries="6db16d024ea9e5f2ebdd0c1ef07ea67c2004ce93"
     pathNodeExecutable="node-$versionNode-darwin-x64/bin/node"
 else
-    urlWasmBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/$versionTag/wasm-binaries.tbz2"
-    urlWasmBinariesCache="$urlCache/linux/wasm-binaries.$version.tbz2"
-    sha1WasmBinaries="9724185c06c461edec3495e37e034066479b9ccf"
-
-    urlNodeBinariesExternal="https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-$versionNode-linux-x64.tar.xz"
-    urlNodeBinariesCache="$urlCache/linux/node-$versionNode-linux-x64.tar.xz"
-    sha1NodeBinaries="ca7ce363ceaf71b65e85243a71252c20cfd97982"
     pathNodeExecutable="node-$versionNode-linux-x64/bin/node"
 fi
 
-sudo mkdir "$targetFolder"
-
-InstallFromCompressedFileFromURL "$urlEmscriptenCache" "$urlEmscriptenExternal" "$sha1Emscripten" "$targetFolder" ""
-InstallFromCompressedFileFromURL "$urlWasmBinariesCache" "$urlWasmBinariesExternal" "$sha1WasmBinaries" "$targetFolder" ""
-InstallFromCompressedFileFromURL "$urlNodeBinariesCache" "$urlNodeBinariesExternal" "$sha1NodeBinaries" "$targetFolder" ""
-
-sudo chmod -R a+rwx "$targetFolder"
-
-echo "Writing $targetFolder/.emscripten"
-cat <<EOM >"$targetFolder/.emscripten"
-emsdk_path = '$targetFolder'
-EMSCRIPTEN_ROOT = emsdk_path + '/emscripten-$version'
-LLVM_ROOT = emsdk_path + '/install/bin'
-BINARYEN_ROOT = emsdk_path + '/install'
-NODE_JS = emsdk_path + '/$pathNodeExecutable'
-TEMP_DIR = '/tmp'
-EOM
-
-SetEnvVar "PATH" "\"\$PATH:$targetFolder/emscripten-$version/\""
-SetEnvVar "EMSCRIPTEN" "$targetFolder/emscripten-$version"
-SetEnvVar "EMSDK" "$targetFolder"
-SetEnvVar "EMSDK_NODE" "$targetFolder/$pathNodeExecutable"
+SetEnvVar "PATH" "\"\$PATH:/opt/emsdk/emscripten-$version/\""
+SetEnvVar "EMSCRIPTEN" "/opt/emsdk/emscripten-$version"
+SetEnvVar "EMSDK" "/opt/emsdk"
+SetEnvVar "EMSDK_NODE" "/opt/emsdk/$pathNodeExecutable"
 
 echo "Emsdk = $version" >> ~/versions.txt
