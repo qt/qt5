@@ -3,17 +3,17 @@
 # Then all the packages. Duplicates are wanted as every module should install
 # all packages it needs and shouldn't depend on a package from another module
 #
-# qtivi
-antlr4-python3-runtime==4.7.1
+# qtinterfaceframework
+antlr4-python3-runtime==4.9.2
 argh==0.26.2
-click==6.7
-coloredlogs==10.0
-humanfriendly==4.15.1
-Jinja2==2.10.3
-MarkupSafe==1.0
-path.py==11.0.1
+click==8.0.1
+coloredlogs==15.0.1
+humanfriendly==10.0
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+path.py==12.5.0
 pathtools==0.1.2
-PyYAML==5.1
-six==1.11.0
-typing==3.6.4
-watchdog==0.8.3
+PyYAML==5.4.1
+six==1.16.0
+typing==3.7.4
+watchdog==2.1.5
