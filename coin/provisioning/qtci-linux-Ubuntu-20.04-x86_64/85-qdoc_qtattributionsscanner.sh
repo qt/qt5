@@ -43,20 +43,20 @@ set -e
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-version="f9b33f96cdc47551179348720961f085c518af92"
-sha1="af4dd2600361acab588f8d15ffcbbf480f1e2b21"
+version="23b467c443917d04ae337afd777ee14760c07a34"
+sha1="1a7eb08ade89fe89dd05bab8108f442b861433f0"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 
 zip="/tmp/qdoc-qtattributionsscanner.7z"
-destination="/home/qt/work/install"
+destination="/opt/qt-doctools"
 
-mkdir -p $destination
+sudo mkdir -p $destination
 DownloadURL $url_cached $url $sha1 $zip
 if command -v 7zr &> /dev/null; then
-    7zr x $zip -o$destination/
+    sudo 7zr x $zip -o$destination/
 else
-    7z x $zip -o$destination/
+    sudo 7z x $zip -o$destination/
 fi
 rm -rf $zip
 
