@@ -174,7 +174,7 @@ Configurations:
     Platform dependency: 'Ubuntu-20.04-host'
     Features: ['Sccache', 'DisableTests']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
+        'TARGET_CONFIGURE_ARGS=-DFEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
@@ -185,7 +185,7 @@ Configurations:
     Platform dependency: 'Ubuntu-20.04-host'
     Features: ['Sccache', 'DisableTests']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
+        'TARGET_CONFIGURE_ARGS=-DFEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
@@ -196,5 +196,5 @@ Configurations:
     Platform dependency: 'Ubuntu-20.04-host'
     Features: ['Sccache', 'DisableTests']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake',
+        'TARGET_CONFIGURE_ARGS=-DFEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
