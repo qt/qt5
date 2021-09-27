@@ -57,10 +57,17 @@ DownloadAndExtract () {
 aarch64le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-aarch64le.cmake"
 armv7le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-armv7le.cmake"
 x8664_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-x8664.cmake"
+QNX_qemu_bld_files_dir="${BASH_SOURCE%/*}/qnx_qemu_build_files/"
 
 targetFolder="/opt/"
 folderName="qnx710"
 targetPath="$targetFolder$folderName"
+qemuTargetPath="$HOME/QNX"
+qemuIpAddress="172.31.1.10"
+qemuNetwork="172.31.1.1"
+qemuSSHuser="root"
+qemuSSHurl="$qemuSSHuser@$qemuIpAddress"
+qemuLDpath="/proc/boot:/system/lib:/system/lib/dll:/home/qt/work/install/target/lib"
 
 if [ ! -d "$targetFolder" ]; then
     mkdir -p $targetFolder
@@ -75,6 +82,7 @@ DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 sudo cp $aarch64le_toolchain $targetPath
 sudo cp $armv7le_toolchain $targetPath
 sudo cp $x8664_toolchain $targetPath
+cp -R $QNX_qemu_bld_files_dir $qemuTargetPath
 
 sudo chown -R qt:users "$targetPath"
 
@@ -87,5 +95,9 @@ fi
 
 # Set env variables
 SetEnvVar "QNX_710" "$targetPath"
+SetEnvVar "QNX_QEMU" "$qemuTargetPath"
+SetEnvVar "QNX_QEMU_IPADDR" "$qemuIpAddress"
+SetEnvVar "QNX_QEMU_SSH" "$qemuSSHurl"
+SetEnvVar "QNX_QEMU_LD_LIBRARY_PATH" "$qemuLDpath"
 
 echo "QNX SDP = 7.1.0" >> ~/versions.txt

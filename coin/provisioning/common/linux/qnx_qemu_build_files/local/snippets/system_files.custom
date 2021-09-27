@@ -1,0 +1,29 @@
+# local/snippets/system_files.custom
+# Placeholder for local list of files to add to system partition
+
+[perms=444] etc/ssh/sshd_config={
+HostKey /data/var/ssh/ssh_host_rsa_key
+HostKey /data/var/ssh/ssh_host_ed25519_key
+AuthorizedKeysFile .ssh/authorized_keys
+PermitUserEnvironment yes
+AuthenticationMethods none
+PermitEmptyPasswords yes
+PermitRootLogin yes
+PidFile none
+Subsystem sftp /system/xbin/sftp-server
+}
+
+# libraries Qt requires
+lib/libicuuc.so.64=usr/lib/libicuuc.so.64
+lib/libicudata.so.64=usr/lib/libicudata.so.64
+lib/libicui18n.so.64=usr/lib/libicui18n.so.64
+lib/libGLESv2.so.1=usr/lib/libGLESv2.so.1
+lib/libEGL.so.1=usr/lib/libEGL.so.1
+lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
+lib/libz.so.2=usr/lib/libz.so.2
+lib/libxml2.so.2=usr/lib/libxml2.so.2
+lib/libfreetype.so.1=usr/lib/libfreetype.so.1
+lib/libpng16.so.16=usr/lib/libpng16.so.16
+lib/liblzma.so.5=usr/lib/liblzma.so.5
+lib/libbacktrace.so.1=usr/lib/libbacktrace.so.1
+lib/libm.so.3=lib/libm.so.3
