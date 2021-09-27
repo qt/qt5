@@ -43,8 +43,8 @@ set -e
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-version="23b467c443917d04ae337afd777ee14760c07a34"
-sha1="1a7eb08ade89fe89dd05bab8108f442b861433f0"
+version="d2fc6facca4ddf889bb4f5d1f60592fd228d246e"
+sha1="8c2f42eaa520dc2b26072233fe000bb7b050e9c8"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 
@@ -52,12 +52,14 @@ zip="/tmp/qdoc-qtattributionsscanner.7z"
 destination="/opt/qt-doctools"
 
 sudo mkdir -p $destination
+sudo chmod 755 $destination
 DownloadURL $url_cached $url $sha1 $zip
 if command -v 7zr &> /dev/null; then
     sudo 7zr x $zip -o$destination/
 else
     sudo 7z x $zip -o$destination/
 fi
+sudo chown -R qt:users $destination
 rm -rf $zip
 
 echo -e "qdoc = $version\nqtattributionsscanner = $version" >> ~/versions.txt
