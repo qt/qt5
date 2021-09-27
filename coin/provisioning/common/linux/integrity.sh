@@ -49,12 +49,15 @@ SHA1_toolchainAddons="1eb838edca4edaa3d9076b5ce4aea6409ffaa022"
 targetFolder="$HOME"
 appPrefix=""
 
+toolchain_file="${BASH_SOURCE%/*}/cmake_toolchain_files/integrity_toolchain.cmake"
+
 echo "Install Integrity toolchain es7"
 InstallFromCompressedFileFromURL "$urlToolchainEs7" "$urlToolchainEs7" "$SHA1_toolchainEs7" "$targetFolder" "$appPrefix"
 
-echo "Install Integrity toochain addons"
+echo "Install Integrity toolchain addons"
 DownloadURL "$urlToolchainAddons" "$urlToolchainAddons" "$SHA1_toolchainAddons" "/tmp/integrity_toolchain_addons.zip"
 unzip "/tmp/integrity_toolchain_addons.zip" -d "/tmp"
 mv /tmp/toolchain/* $targetFolder/toolchain
 mv $targetFolder/toolchain $targetFolder/integrity_toolchain
+cp $toolchain_file "$targetFolder/integrity_toolchain/toolchain.cmake"
 sudo rm -fr /tmp/toolchain
