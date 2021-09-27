@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function brief()
+{
+    echo "--nfs=[<mount>|no]"
+}
+
+function help()
+{
+    brief
+    cat <<EOF
+    If yes, the given nfs share "<mount>" will be mounted at <mount>
+
+    The default is no.
+EOF
+}
+
+function validate() {
+    exit 0
+}
+
+function configure()
+{
+    if [ "$OPT_NFS_QT" != no ]; then
+        cat >output/option_files/post_start.opt_nfs <<EOF
+
+echo "---> Starting NFS"
+STARTU_P(fs_nfs3_t,__FS_NFS3_ID__) fs-nfs3 172.31.1.1:$OPT_NFS_QT $OPT_NFS_QT
+EOF
+    fi
+
+    exit 0
+}
+
+case "$1" in
+    brief)
+        brief;;
+    help)
+        help;;
+    validate)
+        validate;;
+    configure)
+        configure;;
+    default)
+        echo no;;
+esac

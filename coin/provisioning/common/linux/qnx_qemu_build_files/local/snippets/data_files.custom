@@ -1,0 +1,10 @@
+# local/snippets/data_files.custom
+# Placeholder for local list of files to add to data partition
+
+home/root/.ssh/environment = {
+TERM=qansi
+PATH=__IFS_PATH__:/system/xbin
+#LD_LIBRARY_PATH=__PROC_LIB__:/home/qt/work/install/target/lib
+#QSG_RHI_BACKEND=software
+#QT_QPA_PLATFORM=offscreen
+}
