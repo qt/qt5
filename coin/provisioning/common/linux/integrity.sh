@@ -43,9 +43,9 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 urlToolchainEs7="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_es7_patched.zip"
-urlToolchainAddons="http://ci-files01-hki.ci.local/input/integrity/integrity_toolchain_addons.zip"
+urlLibeglmegapack="http://ci-files01-hki.ci.local/input/integrity/integrity_libeglmegapack.zip"
 SHA1_toolchainEs7="e890fe332a81f8345fed3dff89b30019d9989765"
-SHA1_toolchainAddons="1eb838edca4edaa3d9076b5ce4aea6409ffaa022"
+SHA1_Libeglmegapack="7f8ca64132eaea66202ea8db7f71f3300aab0777"
 targetFolder="$HOME"
 appPrefix=""
 
@@ -55,8 +55,8 @@ echo "Install Integrity toolchain es7"
 InstallFromCompressedFileFromURL "$urlToolchainEs7" "$urlToolchainEs7" "$SHA1_toolchainEs7" "$targetFolder" "$appPrefix"
 
 echo "Install Integrity toolchain addons"
-DownloadURL "$urlToolchainAddons" "$urlToolchainAddons" "$SHA1_toolchainAddons" "/tmp/integrity_toolchain_addons.zip"
-unzip "/tmp/integrity_toolchain_addons.zip" -d "/tmp"
+DownloadURL "$urlLibeglmegapack" "$urlLibeglmegapack" "$SHA1_Libeglmegapack" "/tmp/integrity_libeglmegapack.zip"
+unzip "/tmp/integrity_libeglmegapack.zip" -d "/tmp"
 mv /tmp/toolchain/* $targetFolder/toolchain
 mv $targetFolder/toolchain $targetFolder/integrity_toolchain
 cp $toolchain_file "$targetFolder/integrity_toolchain/toolchain.cmake"
