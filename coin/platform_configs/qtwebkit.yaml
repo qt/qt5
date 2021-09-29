@@ -6,3 +6,9 @@ Configurations:
     Environment variables: ['PATH=C:\MINGW810_i686\mingw32\bin;$PATH']
     Features: ['Packaging', UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s'
+-
+    Template: 'qtci-windows-10-x86_64-52'
+    Compiler: 'Mingw'
+    Environment variables: ['PATH=C:\MINGW1120_i686\mingw32\bin;$PATH']
+    Features: ['Packaging', UseLegacyInstructions']
+    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -nomake tests -nomake examples -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -no-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++ QMAKE_LFLAGS_APP+=-s'

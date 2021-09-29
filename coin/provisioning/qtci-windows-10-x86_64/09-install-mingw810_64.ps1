@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\common\windows\install-mingw.ps1"
+. "$PSScriptRoot\..\common\windows\install-mingw-810.ps1"
 
 # This script will install 64-bit MinGW 8.1.0
 

@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2017 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -37,19 +37,23 @@ function InstallMinGW
 {
     Param (
         [string] $release = $(BadParam("release file name")),
-        [string] $sha1    = $(BadParam("SHA1 checksum of the file"))
+        [string] $sha1    = $(BadParam("SHA1 checksum of the file")),
+        [string] $suffix  = ""
     )
 
-    $null, $null, $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
+    $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
 
-    if ($arch -eq "x86_64") { $win_arch = "Win64" }
-    $envvar = "MINGW$version"
+    if ($arch -eq "i686") { $win_arch = "Win32" }
+    elseif ($arch -eq "x86_64") { $win_arch = "Win64" }
+
+    $envvar = "MINGW$version$suffix"
     $envvar = $envvar -replace '["."]'
     $targetdir = "C:\$envvar"
-
     $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\" + $release + ".7z"
+    $url_official = "https://netcologne.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20" + $win_arch + "/Personal%20Builds/mingw-builds/" + $version + "/threads-" + $threading + "/" + $ex_handling + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $build_ver + "-" + $revision + ".7z"
+
     $mingwPackage = "C:\Windows\Temp\MinGW-$version.zip"
-    Download $url_cache $url_cache $mingwPackage
+    Download $url_official $url_cache $mingwPackage
     Verify-Checksum $mingwPackage $sha1
 
     Extract-7Zip $mingwPackage $TARGETDIR
