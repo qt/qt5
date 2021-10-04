@@ -7,14 +7,14 @@
     compiler.libcxx=libc++
     build_type=Release
 [options]
-*:release=yes
-*:shared=yes
-*:nomake=examples;tests
-*:force_debug_info=yes
-*:separate_debug_info=yes
-*:headersclean=yes
-*:framework=yes
-*:cmake_args_qtbase='-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT=$POSTGRESQLBINPATH/..'
+qtbase:release=yes
+qtbase:shared=yes
+qtbase:nomake=examples;tests
+qtbase:force_debug_info=yes
+qtbase:separate_debug_info=yes
+qtbase:headersclean=yes
+qtbase:framework=yes
+qtbase:cmake_args_qtbase='-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT=$POSTGRESQLBINPATH/..'
 *:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
 [build_requires]
 [env]

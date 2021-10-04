@@ -6,11 +6,11 @@
     compiler.libcxx=libstdc++11
     build_type=Release
 [options]
-*:release=yes
-*:shared=yes
-*:nomake=tests;examples
-*:developer_build=yes
-*:cmake_args_qtbase="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:release=yes
+qtbase:shared=yes
+qtbase:nomake=tests;examples
+qtbase:developer_build=yes
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
 *:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
 [build_requires]
 [env]
