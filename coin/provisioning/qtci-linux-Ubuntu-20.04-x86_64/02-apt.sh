@@ -63,6 +63,9 @@ EOC
 
 (ping -c 3 repo-clones.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
 
+# Make sure needed ca-certificates are available
+sudo apt-get install --reinstall ca-certificates
+
 # Git is not needed by builds themselves, but is nice to have
 # immediately as one starts debugging
 installPackages+=(git)
