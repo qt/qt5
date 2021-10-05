@@ -115,6 +115,10 @@ installPackages+=(unixODBC-devel)
 installPackages+=(unixODBC)
 # Vulkan support
 installPackages+=(vulkan-devel)
+# IFW
+installPackages+=(zlib-devel)
+installPackages+=(lzma)
+installPackages+=(bzip2-devel)
 
 sudo yum -y install "${installPackages[@]}"
 

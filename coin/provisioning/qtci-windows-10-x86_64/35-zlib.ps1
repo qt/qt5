@@ -1,6 +1,6 @@
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -29,18 +29,26 @@
 ##
 ## $QT_END_LICENSE$
 ##
-#############################################################################
+############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
-# This script installs static OpenSSL .
+# This script will install prebuilt ZLIB for IFW
 
-# For static runtime build we need static only version from openssl libs
-$static_lib_url = "http://ci-files01-hki.intra.qt.io/input/openssl/opensslx86_static-1-1.1d.7z"
-$static_package = "C:\Windows\Temp\opensslx86_static-1-1.1d.7z"
-Download $static_lib_url $static_lib_url $static_package
-Extract-7Zip $static_package C:\Utils\
-Set-EnvironmentVariable "STATIC_OPENSSL_LIB_x86" "C:\Utils\opensslx86_static\lib"
-Set-EnvironmentVariable "STATIC_OPENSSL_INCLUDE_x86" "C:\Utils\opensslx86_static\include"
-Remove-Item -Path $static_package
+# Prebuilt instructions:
+# Download https://zlib.net/zlib1211.zip
+# Extract to C:\Utils
+# cd C:\Utils\zlib-$version
+# (Get-Content C:\Utils\zlib-$version\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version\win32\makefile.msc
+# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# nmake -f win32\makefile.msc
+
+$version = "1.2.11"
+$sha1 = "e1992ff9ad58ad6631a84c1557e2a158ec90c5ce"
+Download http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-prebuilt.zip C:\Windows\Temp\zlib-$version.zip
+Verify-Checksum "C:\Windows\Temp\zlib-$version.zip" "$sha1"
+Extract-7Zip "C:\Windows\Temp\zlib-$version.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\zlib-$version.zip"
+
+Write-Output "ZLIB = $version" >> ~\versions.txt
 

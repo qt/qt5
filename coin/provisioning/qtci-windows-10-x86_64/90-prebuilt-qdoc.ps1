@@ -1,6 +1,6 @@
-#############################################################################
+############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,16 +31,14 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 
-# This script installs static OpenSSL .
+# Installs prebuilt qdoc for creating documentation
 
-# For static runtime build we need static only version from openssl libs
-$static_lib_url = "http://ci-files01-hki.intra.qt.io/input/openssl/opensslx86_static-1-1.1d.7z"
-$static_package = "C:\Windows\Temp\opensslx86_static-1-1.1d.7z"
-Download $static_lib_url $static_lib_url $static_package
-Extract-7Zip $static_package C:\Utils\
-Set-EnvironmentVariable "STATIC_OPENSSL_LIB_x86" "C:\Utils\opensslx86_static\lib"
-Set-EnvironmentVariable "STATIC_OPENSSL_INCLUDE_x86" "C:\Utils\opensslx86_static\include"
-Remove-Item -Path $static_package
+$url = "http://ci-files01-hki.intra.qt.io/input/windows/qdoc_for_ifw/qt-bin-5.12.7-x86-msvc2015_shared.zip"
 
+$destination = "C:\Windows\temp\qdoc.zip"
+
+Download $url $url $destination
+Extract-7Zip "$destination" "C:\Utils"
+Remove-Item -Path "$destination"

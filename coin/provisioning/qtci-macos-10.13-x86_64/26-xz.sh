@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -31,16 +33,10 @@
 ##
 #############################################################################
 
-. "$PSScriptRoot\helpers.ps1"
+# This script installs XZ
 
-# This script installs static OpenSSL .
+# XZ are needed for uncompressing xz-compressed files
 
-# For static runtime build we need static only version from openssl libs
-$static_lib_url = "http://ci-files01-hki.intra.qt.io/input/openssl/opensslx86_static-1-1.1d.7z"
-$static_package = "C:\Windows\Temp\opensslx86_static-1-1.1d.7z"
-Download $static_lib_url $static_lib_url $static_package
-Extract-7Zip $static_package C:\Utils\
-Set-EnvironmentVariable "STATIC_OPENSSL_LIB_x86" "C:\Utils\opensslx86_static\lib"
-Set-EnvironmentVariable "STATIC_OPENSSL_INCLUDE_x86" "C:\Utils\opensslx86_static\include"
-Remove-Item -Path $static_package
+set -ex
 
+brew install xz

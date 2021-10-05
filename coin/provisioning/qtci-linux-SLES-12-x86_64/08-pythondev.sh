@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -41,12 +41,45 @@ set -ex
 
 sudo zypper -nq install python-devel
 
-wget -q https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
-sed -i 's/12.3/12.4/g' build_python3.sh
-bash build_python3.sh
+# Selected installation instructions coming from:
+# https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
+export PACKAGE_NAME="python"
+export PACKAGE_VERSION="3.7.2"
+(
 
-export
-python3 --version
+    sudo zypper install -y  gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib libffi-devel libopenssl-devel
+
+    printf -- 'Configuration and Installation started \n'
+
+    #Downloading Source code
+    wget "https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz"
+    tar -xvf "Python-${PACKAGE_VERSION}.tar.xz"
+
+    #Configure and Build
+    cd "Python-${PACKAGE_VERSION}"
+    ./configure --prefix=/usr/local --exec-prefix=/usr/local
+    make
+    sudo make install
+
+    export PATH="/usr/local/bin:${PATH}"
+    printf -- '\nInstalled python successfully \n'
+
+    #Cleanup
+    cd -
+    rm "Python-${PACKAGE_VERSION}.tar.xz"
+
+    #Verify python installation
+    if command -V "$PACKAGE_NAME"${PACKAGE_VERSION:0:1} >/dev/null
+    then
+        printf -- "%s installation completed. Please check the Usage to start the service.\n" "$PACKAGE_NAME"
+    else
+        printf -- "Error while installing %s, exiting with 127 \n" "$PACKAGE_NAME"
+        exit 127
+    fi
+)
+
+
+python3 --version | fgrep "$PACKAGE_VERSION"
 
 pip3 install --user wheel
 pip3 install --user virtualenv
