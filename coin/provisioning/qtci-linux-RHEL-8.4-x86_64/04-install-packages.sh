@@ -90,7 +90,7 @@ installPackages+=(libxshmfence-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 # For Android builds
-installPackages+=(java-1.8.0-openjdk-devel)
+installPackages+=(java-11-openjdk-devel)
 # For receiving shasum
 installPackages+=(perl-Digest-SHA)
 # INTEGRITY requirements
