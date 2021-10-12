@@ -65,15 +65,24 @@ opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
 tar -xzf "$targetFile" -C "${HOME}/openssl/android/"
-
-TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
+if uname -a |grep -q "Darwin"; then
+    TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/darwin-x86_64/bin
+else
+    TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
+fi
 cd "$opensslHome"
 PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
-prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21.tar.gz"
+
+if uname -a |grep -q "Darwin"; then
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21_darwin.tar.gz"
+    sha="6e3e48441ff58596f25bc27fdc05ae43e5a7581d"
+else
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21.tar.gz"
+    sha="8c4db1eb8460d749c998a0e033b3939123cbc5ac"
+fi
 targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
-sha="8c4db1eb8460d749c998a0e033b3939123cbc5ac"
 DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
 tar -xzf "$targetFile" -C "${HOME}"
 

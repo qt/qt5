@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -35,5 +35,5 @@
 
 set -ex
 
-# shellcheck source=../common/linux/openssl_for_android_linux.sh
-source "${BASH_SOURCE%/*}/../common/linux/openssl_for_android_linux.sh"
+# shellcheck source=../common/unix/openssl_for_android_linux.sh
+source "${BASH_SOURCE%/*}/../common/unix/openssl_for_android_linux.sh"
