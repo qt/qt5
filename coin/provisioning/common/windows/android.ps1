@@ -73,13 +73,12 @@ function Install($1, $2, $3, $4) {
 
 Write-Host "Installing Android NDK $nkdVersion"
 Install $ndkCachedUrl $ndkZip $ndkChecksum $ndkOfficialUrl
-Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolder
 Set-EnvironmentVariable "ANDROID_NDK_ROOT" $ndkFolder
 
 Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
 New-Item -ItemType directory -Path $toolsFolder
 Move-Item -Path C:\Utils\Android\tools -Destination $toolsFolder\
-Set-EnvironmentVariable "ANDROID_SDK_HOME" "C:\Utils\Android"
+Set-EnvironmentVariable "ANDROID_SDK_ROOT" "C:\Utils\Android"
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
 if (IsProxyEnabled) {

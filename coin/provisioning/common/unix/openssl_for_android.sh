@@ -66,9 +66,9 @@ DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
 tar -xzf "$targetFile" -C "${HOME}/openssl/android/"
 if uname -a |grep -q "Darwin"; then
-    TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/darwin-x86_64/bin
+    TOOLCHAIN=${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/darwin-x86_64/bin
 else
-    TOOLCHAIN=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin
+    TOOLCHAIN=${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin
 fi
 cd "$opensslHome"
 PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
