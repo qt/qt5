@@ -13,7 +13,7 @@ filelock==3.0.12
 future==0.18.2
 idna==2.10
 importlib-metadata==1.7.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 monotonic==1.5
 node-semver==0.6.1
