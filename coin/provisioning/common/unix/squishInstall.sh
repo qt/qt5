@@ -41,20 +41,19 @@ set -ex
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.7-20210615-1349"
-qtBranch="61x"
+version="6.7.1"
+qtBranch="62x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
 preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable"
 licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/515x/.squish-3-license"
 licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
 if uname -a |grep -q Darwin; then
-    version="6.7-20210301-1401"
-    compressedFolder="prebuild-squish-$version-$qtBranch-macx86_64.tar.gz"
-    sha1="15f7f8e9944fdc36b9b6e37576d6ca96713a8ac5"
+    compressedFolder="prebuild-squish-$version-515x-macx86_64.tar.gz"
+    sha1="1526d4d57f8025f83aad836a43e8fa0317dbddc2"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="e32e5db1713e3050c3cdce696d7509c468afc7d3"
+     sha1="d412c3389d95a65341b51d2e14cba47ce3b54a86"
 fi
 
 mountFolder="/tmp/squish"
@@ -97,6 +96,9 @@ echo "Unmounting $mountFolder"
 sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
 
 sudo mv "$installFolder/rta_squish_$version" "$squishFolder"
+if uname -a |grep -q Darwin; then
+    sudo xattr -r -c "$squishFolder"
+fi
 
 if uname -a |grep -q "Ubuntu"; then
     if [ ! -e "/usr/lib/tcl8.6" ]; then
