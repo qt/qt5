@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -48,25 +48,15 @@ if (Is64BitWinHost) {
 $installdir = "C:\Program Files\Java\jdk-$version"
 
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
+# NOTE! Official URL is behind login portal. It can't be used whit this script instead it need to be fetched to $url_cache first
 # java 11: https://www.oracle.com/java/technologies/downloads/#java11-windows
 # java 8: $official_url = "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-" + $version + "-windows-" + $arch + ".exe"
 $javaPackage = "C:\Windows\Temp\jdk-$version.exe"
 
 Write-Host "Fetching Java SE $version..."
 $ProgressPreference = 'SilentlyContinue'
-try {
-    Write-Host "...from local cache"
-    Download $url_cache $url_cache $javaPackage
-} catch {
-    Write-Host "...from oracle.com"
-    $client = new-object System.Net.WebClient
-    $cookie = "oraclelicense=accept-securebackup-cookie"
-    $client.Headers.Add("Cookie", $cookie)
-    $client.DownloadFile($official_url, $javaPackage)
-
-    Download $official_url $official_url $javaPackage
-}
-
+Write-Host "...from local cache"
+Download $url_cache $url_cache $javaPackage
 Verify-Checksum $javaPackage $sha1
 
 Run-Executable "$javaPackage" "/s SPONSORS=0"
