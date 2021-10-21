@@ -43,8 +43,8 @@ set -e
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-version="d2fc6facca4ddf889bb4f5d1f60592fd228d246e"
-sha1="8c2f42eaa520dc2b26072233fe000bb7b050e9c8"
+version="52538a9d3d1ba10c638441666f8efbc78ba0b347"
+sha1="13614b273994547876a19d46348fc3a3e86481be"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 
