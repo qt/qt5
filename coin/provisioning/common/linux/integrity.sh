@@ -42,9 +42,9 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-urlToolchainEs7="http://ci-files01-hki.intra.qt.io/input/integrity/integrity_toolchain_es7_patched.zip"
+urlToolchainEs7="http://ci-files01-hki.intra.qt.io/input/integrity/integrity_toolchain_es7_25102021.zip"
 urlLibeglmegapack="http://ci-files01-hki.intra.qt.io/input/integrity/integrity_libeglmegapack.zip"
-SHA1_toolchainEs7="e890fe332a81f8345fed3dff89b30019d9989765"
+SHA1_toolchainEs7="13f634213187d94f70d184c6af38eb38f0bf44f0"
 SHA1_Libeglmegapack="7f8ca64132eaea66202ea8db7f71f3300aab0777"
 targetFolder="$HOME"
 appPrefix=""
