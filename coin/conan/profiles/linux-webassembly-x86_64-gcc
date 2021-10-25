@@ -4,7 +4,7 @@
     compiler=clang
     compiler.version=10
     compiler.libcxx=libstdc++
-    build_type=Release
+    build_type=RelWithDebInfo
 [options]
 qtbase:release=yes
 qtbase:shared=no

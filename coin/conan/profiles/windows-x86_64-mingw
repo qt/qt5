@@ -4,9 +4,8 @@
     compiler=gcc
     compiler.version=8.1
     compiler.libcxx=libstdc++
-    build_type=Release
+    build_type=RelWithDebInfo
 [options]
-qtbase:release=yes
 qtbase:shared=yes
 qtbase:debug_and_release=yes
 qtbase:force_debug_info=yes
@@ -20,3 +19,4 @@ qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEAT
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja
+
