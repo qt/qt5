@@ -4,7 +4,7 @@
     compiler=gcc
     compiler.version=9.3
     compiler.libcxx=libstdc++11
-    build_type=Release
+    build_type=RelWithDebInfo
 [options]
 qtbase:release=yes
 qtbase:shared=yes

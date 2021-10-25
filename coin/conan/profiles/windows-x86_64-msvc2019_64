@@ -6,9 +6,8 @@
     compiler.cppstd=17
     compiler.runtime=dynamic
     compiler.runtime_type=Release
-    build_type=Release
+    build_type=RelWithDebInfo
 [options]
-qtbase:release=yes
 qtbase:shared=yes
 qtbase:nomake=tests
 qtbase:debug_and_release=yes
