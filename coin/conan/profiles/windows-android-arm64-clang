@@ -17,9 +17,8 @@ qtbase:platform=android-clang
 qtbase:android_abis=arm64-v8a
 qtbase:android_ndk=%ANDROID_NDK_ROOT%
 qtbase:android_sdk=%ANDROID_SDK_ROOT%
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DOPENSSL_ROOT_DIR=%OPENSSL_ANDROID_HOME% -DCMAKE_TOOLCHAIN_FILE=%ANDROID_NDK_ROOT%/build/cmake/android.toolchain.cmake -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DOPENSSL_ROOT_DIR=%OPENSSL_ANDROID_HOME% -DCMAKE_TOOLCHAIN_FILE=%ANDROID_NDK_ROOT%/build/cmake/android.toolchain.cmake -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU"
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja
-
