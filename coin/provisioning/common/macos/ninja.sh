@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,7 +39,7 @@
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 
 version="1.10.2"
-internalUrl="http://ci-files01-hki.ci.local/input/mac/ninja-mac_v${version}.zip"
+internalUrl="http://ci-files01-hki.intra.qt.io/input/mac/ninja-mac_v${version}.zip"
 externalUrl="https://github.com/ninja-build/ninja/releases/download/v${version}/ninja-mac.zip"
 SHA1="95d0ca5e7c67ab7181c87e6a6ec59d11b1ff2d30"
 DestDir="/usr/local/bin/"

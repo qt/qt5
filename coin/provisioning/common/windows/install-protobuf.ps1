@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2019 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -38,7 +38,7 @@
 $version = "3.6.1"
 $sha1 = "44b8ba225f3b4dc45fb56d5881ec6a91329802b6"
 $officialUrl = "https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
-$cachedUrl = "http://ci-files01-hki.ci.local/input/automotive_suite/protobuf-all-$version.zip"
+$cachedUrl = "http://ci-files01-hki.intra.qt.io/input/automotive_suite/protobuf-all-$version.zip"
 $zip = "C:\Utils\protobuf-all-$version.zip"
 $installationFolder = "C:\Utils\protobuf"
 
