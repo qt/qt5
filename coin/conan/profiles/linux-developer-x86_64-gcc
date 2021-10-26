@@ -10,8 +10,8 @@ qtbase:release=yes
 qtbase:shared=yes
 qtbase:nomake=tests;examples
 qtbase:developer_build=yes
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:cmake_args_qtbase=""
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja

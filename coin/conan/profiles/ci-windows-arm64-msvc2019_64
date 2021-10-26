@@ -1,0 +1,4 @@
+include(windows-arm64-msvc2019_64)
+
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_msvc_obj_debug_info=ON"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"

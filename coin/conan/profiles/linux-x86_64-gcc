@@ -12,14 +12,13 @@ qtbase:nomake=tests;examples
 qtbase:separate_debug_info=yes
 qtbase:force_debug_info=yes
 qtbase:bundled_xcb_xinput=yes
-qtbase:headersclean=yes
 qtbase:libudev=no
 qtbase:doubleconversion=qt
 qtbase:pcre=qt
 qtbase:libjpeg=qt
 qtbase:libpng=qt
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOpenGL_GL_PREFERENCE=LEGACY -DFEATURE_system_harfbuzz=OFF -DOPENSSL_ROOT_DIR=$OPENSSL_ANDROID_HOME -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOpenGL_GL_PREFERENCE=LEGACY -DFEATURE_system_harfbuzz=OFF"
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja

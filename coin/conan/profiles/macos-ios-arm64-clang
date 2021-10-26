@@ -15,4 +15,3 @@ qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ 
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja
-

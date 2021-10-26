@@ -12,9 +12,8 @@ qtbase:release=yes
 qtbase:shared=yes
 qtbase:qt_host_path=$QT_HOST_PATH
 qtbase:nomake=tests
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_msvc_obj_debug_info=ON"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -DFEATURE_msvc_obj_debug_info=ON"
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja
-

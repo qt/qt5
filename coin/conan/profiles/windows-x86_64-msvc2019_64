@@ -12,10 +12,9 @@ qtbase:shared=yes
 qtbase:nomake=tests
 qtbase:debug_and_release=yes
 qtbase:force_debug_info=yes
-qtbase:headersclean=yes
 qtbase:zlib=None
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR=%OPENSSL_INCLUDE_x64%\.. -DPostgreSQL_ROOT=%POSTGRESQL_LIB_x64%\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON"
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja

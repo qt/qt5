@@ -1,0 +1,6 @@
+include(linux-x86_64-gcc)
+
+[options]
+qtbase:headersclean=yes
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOpenGL_GL_PREFERENCE=LEGACY -DFEATURE_system_harfbuzz=OFF -DOPENSSL_ROOT_DIR=$OPENSSL_ANDROID_HOME -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
