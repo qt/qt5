@@ -72,8 +72,8 @@
 	status = essential
 	priority = 50
 [submodule "qtlocation"]
-	depends = qtbase
-	recommends = qtdeclarative qtserialport
+	depends = qtbase qtpositioning
+	recommends = qtdeclarative
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = 6.2
