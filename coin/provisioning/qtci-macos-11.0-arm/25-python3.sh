@@ -36,22 +36,20 @@
 
 # This script installs python3
 
-# shellcheck source=./InstallPKGFromURL.sh
-source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-# shellcheck source=./pip.sh
-source "${BASH_SOURCE%/*}/../common/macos/pip.sh"
 
-InstallPip python3
+brew install ${BASH_SOURCE%/*}/pyenv.rb
 
-/usr/bin/pip3 install virtualenv wheel
+pyenv install 3.9.7
 
-SetEnvVar "PYTHON3_PATH" "/usr/bin"
-SetEnvVar "PIP3_PATH" "/usr/bin"
+/Users/qt/.pyenv/versions/3.9.7/bin/pip3 install --user install virtualenv wheel
+
+SetEnvVar "PYTHON3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
+SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
 
 # Install all needed packages in a special wheel cache directory
-/usr/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
+/Users/qt/.pyenv/versions/3.9.7/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
 
-echo "python3 = 3.8.2" >> ~/versions.txt
+echo "python3 = 3.9.7" >> ~/versions.txt
