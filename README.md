@@ -22,11 +22,11 @@ http://wiki.qt.io/Get_The_Source
 Linux, Mac:
 -----------
 
-````
+```
 cd <path>/<source_package>
 ./configure -prefix $PWD/qtbase
 cmake --build .
-````
+```
 
 Windows:
 --------
@@ -38,11 +38,11 @@ Windows:
  * Python version 2.7 or later  [http://www.activestate.com/activepython/]
  * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
 
-````
+```
 cd <path>\<source_package>
 configure -prefix %CD%\qtbase
 cmake --build .
-````
+```
 
 More details follow.
 
@@ -61,18 +61,18 @@ Some relevant configure options (see configure -help):
 
 Example for a release build:
 
-````
+```
 ./configure -prefix $PWD/qtbase
 cmake --build .
-````
+```
 
 Example for a developer build:
 (enables more autotests, builds debug version of libraries, ...)
 
-````
+```
 ./configure -developer-build
 cmake --build .
-````
+```
 
  See output of `./configure -help` for documentation on various options to
  configure.
@@ -81,13 +81,13 @@ cmake --build .
  by default in the build system.
 
  It is possible to build selected repositories with their dependencies by doing
- a `ninja <repo-name>/all'.  For example, to build only qtdeclarative,
+ a `ninja <repo-name>/all`.  For example, to build only qtdeclarative,
  and the modules it depends on:
 
-````
+```
 ./configure
 ninja qtdeclarative/all
-````
+```
 
 This can save a lot of time if you are only interested in a subset of Qt.
 
