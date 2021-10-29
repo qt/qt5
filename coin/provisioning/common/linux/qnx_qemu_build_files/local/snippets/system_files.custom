@@ -14,9 +14,9 @@ Subsystem sftp /system/xbin/sftp-server
 }
 
 # libraries Qt requires
-lib/libicuuc.so.64=usr/lib/libicuuc.so.64
-lib/libicudata.so.64=usr/lib/libicudata.so.64
-lib/libicui18n.so.64=usr/lib/libicui18n.so.64
+lib/libicuuc.so.67=usr/lib/libicuuc.so.67
+lib/libicudata.so.67=usr/lib/libicudata.so.67
+lib/libicui18n.so.67=usr/lib/libicui18n.so.67
 lib/libGLESv2.so.1=usr/lib/libGLESv2.so.1
 lib/libEGL.so.1=usr/lib/libEGL.so.1
 lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
