@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -57,7 +57,8 @@ if (Is64BitWinHost) {
 
 $OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 
-if ($OSVersion -eq "Windows 10 Enterprise") {
+if (($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 10 Pro")) {
+    # In Windows 11 case $OSVersion is 'Windows 10 Pro'
     $winVersion = "win10"
     if (Is64BitWinHost) {
         $sha1 = "0ce4f94ebff488fedef29e9ed62b400a8b5014fb"
