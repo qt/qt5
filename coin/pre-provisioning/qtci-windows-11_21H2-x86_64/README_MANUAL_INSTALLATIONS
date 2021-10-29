@@ -1,0 +1,72 @@
+# List about manual pre-installations to Tier1 image:
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language to install: English UK
+Time and currency format: English UK
+Keyboard or input method: United Kingdom
+location: finnish
+Windows 11 Enterprise
+Region: Finland
+Keyboard layout: United Kingdom
+
+* Set up for work or school
+* Sign-in options - Domain join instead
+   - Add user & pw
+* Location - no
+* Find my device - no
+* Diagnostic data - Required only
+* Inking and typing - no
+* Tailored expreriences - no
+* Advertising ID - no
+
+* Resolution set to 1280x800
+* Coin-setup:
+   - Installing Boostrap agent
+   - Disabling fast boot
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+   - Automatic login
+   - Disabling windows updates
+* Turn of Windows defender:
+   - Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+      - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
+   - Reboot on Safe mode:
+      - Open msconfig - Boot tab - enable “Safe boot“ - apply - restart
+      - In Safe mode:
+         - Take Ownership of Defender:
+            - Open properties - Right click "C:\Program Files\Windows Defender\Platform" and select 'Properties'
+            - Open Security tab - Advanced - Owner: Change - Advanced - Find now - Select Administrators - Ok - Ok
+            - Remove all Permissions: Permissions tab - Select 'Disable inheritance' - Select 'Convert..' - Remove all entries - select 'Replace owner on subcontainers and objects' - Select 'Replace all child object permi…' - Apply
+         - Disable Windows defender also from RegEdit:
+            - Open regedit - Navigate to 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Service'
+            - Change the following folders the key Start to 4
+               - Sense (Windows defender advanced threat protection)
+               - WdBoot (Windows defender boot)
+               - WdFilter (Microsoft antimalware file system filter driver)
+               - WdNisDrv (Windows Defender Network Inspection Driver)
+               - WdNisSvc (Windows Defender Network Inspection Service)
+               - WinDefend (Windows Defender Antivirus Service)
+               - mpssvc (Windows Defender Firewall)
+   - NOTE! Without these step windows defender can't be disabled!
+* Remote connections allowed:
+   - Enable Remote Desktop
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time zone: 'Co-ordinated Universal Time'
+* Windows search disabled: 'Control Panel\System and Security\Windows Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Power saver disabled: System -> Power
+   - set 'When plugged in, turn off my screen after' to 'never'
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support
+* (Restart Windows)
+* Google Chrome installed for RTA
+* Virus & threat protection settings:
+   * Check that there's no active antivirus providers
+* From 'Region Settings'
+   * Set Regional format: English (United States)
+* Defragment and Optimize Drives
+   * Change settings - Uncheck "Run on schedule"
+* Activate Windows
