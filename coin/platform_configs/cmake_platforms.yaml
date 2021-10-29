@@ -56,7 +56,7 @@ Configurations:
 -
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease", "InsignificantTests"]
+    Features: ['Packaging', 'Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
     Environment variables: [
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
@@ -99,7 +99,7 @@ Configurations:
     Id: 'Windows10-MSVC2019-x64-host'
     Template: 'qtci-windows-10-x86_64-52'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", "InsignificantTests"]
+    Features: ['Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
 -
     Template: 'qtci-windows-10-x86_64-52'
