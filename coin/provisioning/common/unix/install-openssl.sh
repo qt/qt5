@@ -37,11 +37,11 @@
 # Requires GCC and Perl to be in PATH.
 set -ex
 os="$1"
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-
 version="1.1.1k"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
@@ -112,7 +112,7 @@ elif [ "$os" == "macos" -o "$os" == "macos-universal" ]; then
         echo "Making universal OpenSSL package"
         # shellcheck disable=SC2024
         sudo rm -Rf "$openssl_install_dir"
-        sudo ${BASH_SOURCE%/*}/../macos/makeuniversal.sh "$opensslDestdir/x86_64" $opensslDestdir/arm64
+        sudo ${SCRIPT_DIR}/../macos/makeuniversal.sh "$opensslDestdir/x86_64" $opensslDestdir/arm64
     fi
 
     path=$(echo "$opensslTargetLocation" | sed -E 's/(.*)\/.*$/\1/')

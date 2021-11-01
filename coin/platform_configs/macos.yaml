@@ -13,6 +13,18 @@ Configurations:
             'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_gds=OFF',
             'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
         ]
+    -
+        # This is a universal build containing both x86_64 and arm64 architectures
+        Id: 'macos-12-latest-xcode-universal-packaging-build'
+        Template: 'qtci-macos-12-x86_64-102'
+        Compiler: 'Clang'
+        Target arch: 'x86_64-arm64'
+        Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors']
+        Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
+        Environment variables: [
+            'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_gds=OFF',
+            'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
+        ]
 
     # Then run tests on all supported deployment targets
     -
@@ -44,6 +56,11 @@ Configurations:
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging', 'InsignificantTests']
+    -
+        Id: 'macos-12-x86_64-tests'
+        Template: 'qtci-macos-12-x86_64-102'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
 
     # Build x86_64 developer-builds for all modules, but only run tests for qtbase and declarative.
@@ -51,6 +68,12 @@ Configurations:
     -
         Id: 'macos-latest-xcode-x86_64-developer-build'
         Template: 'qtci-macos-11.0-x86_64-102'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors']
+        Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
+    -
+        Id: 'macos-12-latest-xcode-x86_64-developer-build'
+        Template: 'qtci-macos-12-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors']
         Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
