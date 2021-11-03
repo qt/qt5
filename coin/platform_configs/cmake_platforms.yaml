@@ -158,7 +158,7 @@ Configurations:
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc']
 -
-    Template: 'qtci-macos-10.14-x86_64'
+    Template: 'qtci-macos-11.0-x86_64-102'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
