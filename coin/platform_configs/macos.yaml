@@ -8,10 +8,9 @@ Configurations:
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
         Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors']
-        Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
+        Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
         Environment variables: [
-            'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_gds=OFF',
-            'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+            'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_gds=OFF',
             'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
         ]
 
@@ -48,11 +47,7 @@ Configurations:
         Template: 'qtci-macos-11.0-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors']
-        Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
-        Environment variables: [
-            'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-            'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
-            ]
+        Configure arguments: '-DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WITH_PCH=OFF -DFEATURE_framework=OFF -DQT_NAMESPACE=TestNamespace  -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
 
     # Build arm64 developer-builds for all modules, and run their tests. This ensures that we have full
     # arm64 build and test coverage, regardless of possible issues with the universal build.
