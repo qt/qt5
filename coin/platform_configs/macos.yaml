@@ -39,6 +39,12 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    -
+        Id: 'macos-12-arm64-tests'
+        Template: 'qtci-macos-12-arm64'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging', 'InsignificantTests']
+        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
 
     # Build x86_64 developer-builds for all modules, but only run tests for qtbase and declarative.
     # See macos-developer-build-tests.yaml for the tests
@@ -62,8 +68,20 @@ Configurations:
         Features: ['DoNotRunTests', 'WarningsAreErrors']
         Configure arguments: '-DFEATURE_developer_build=ON -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_framework=ON -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/..'
     -
+        Id: 'macos-12-xcode-arm64-developer-build'
+        Template: 'qtci-macos-12-arm64'
+        Compiler: 'Clang'
+        Features: ['DoNotRunTests', 'WarningsAreErrors']
+        Configure arguments: '-DFEATURE_developer_build=ON -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_framework=ON'
+    -
         Id: 'macos-11-arm64-developer-build-tests'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+    -
+        Id: 'macos-12-arm64-developer-build-tests'
+        Template: 'qtci-macos-12-arm64'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'InsignificantTests']
+        Platform dependency: 'macos-12-xcode-arm64-developer-build'
