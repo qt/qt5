@@ -52,7 +52,7 @@ InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
 InstallPip python3.9
 
-/Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 install virtualenv wheel
+/Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 install virtualenv wheel html5lib
 
 SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"
 SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"

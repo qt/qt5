@@ -36,3 +36,4 @@
 # needed by packaging scripts
 pip3 install bs4
 pip3 install sh
+pip3 install html5lib

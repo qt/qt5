@@ -90,7 +90,7 @@ if (IsProxyEnabled) {
 Write-Host "Upgrade pip3 to the latest version available."
 Run-Executable "$install_path\python.exe" "-m pip install --upgrade pip"
 
-Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel"
+Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel html5lib"
 
 # Install all needed packages in a special wheel cache directory
 $python3_wheel_dir="$install_path\python3-wheels"
