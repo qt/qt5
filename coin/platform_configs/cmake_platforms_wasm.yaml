@@ -9,6 +9,8 @@ Configurations:
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer',
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-webassembly-x86_64-clang'
     ]
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
@@ -21,7 +23,9 @@ Configurations:
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
-        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DFEATURE_pkg_config=OFF']
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DFEATURE_pkg_config=OFF',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
 -
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'WebAssembly'
@@ -32,6 +36,6 @@ Configurations:
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/linux-developer-x86_64-gcc',
-        'CONAN_PROFILE=coin/conan/profiles/linux-webassembly-x86_64-gcc'
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
+        'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang'
     ]

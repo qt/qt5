@@ -1,15 +1,9 @@
-[settings]
-    os=Windows
-    arch=x86_64
-    compiler=gcc
-    compiler.version=8.1
-    compiler.libcxx=libstdc++
-    build_type=RelWithDebInfo
+include(baseprofiles/windows-x86_64-mingw)
+
 [options]
-qtbase:shared=yes
-qtbase:debug_and_release=yes
-qtbase:force_debug_info=yes
-qtbase:separate_debug_info=yes
+qtbase:release=True
+qtbase:force_debug_info=True
+qtbase:separate_debug_info=True
 qtbase:nomake=examples;tests
 qtbase:zlib=qt
 qtbase:libjpeg=qt

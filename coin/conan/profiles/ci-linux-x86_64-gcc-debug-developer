@@ -1,4 +1,4 @@
-include(linux-developer-x86_64-gcc)
+include(./linux-x86_64-gcc-debug-developer)
 
 [options]
 qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"

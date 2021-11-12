@@ -1,0 +1,11 @@
+include(baseprofiles/linux-x86_64-gcc-debug-developer)
+
+[options]
+qtbase:debug=True
+qtbase:nomake=tests;examples
+qtbase:developer_build=True
+qtbase:cmake_args_qtbase=""
+*:cmake_args_leaf_module=""
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

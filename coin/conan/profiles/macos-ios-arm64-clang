@@ -1,17 +1,11 @@
-[settings]
-    os=iOS
-    os.version=13.0
-    arch=armv8
-    compiler=apple-clang
-    compiler.version=11.0
-    compiler.libcxx=libc++
-    build_type=Release
+include(baseprofiles/macos-ios-arm64-clang)
+
 [options]
-qtbase:shared=no
-qtbase:debug_and_release=yes
+qtbase:debug_and_release=True
 qtbase:nomake=examples;tests
 qtbase:qt_host_path=$QT_HOST_PATH
 qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_SYSTEM_NAME=iOS"
+*:cmake_args_leaf_module=""
 [build_requires]
 [env]
 CONAN_CMAKE_GENERATOR=Ninja

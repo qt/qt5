@@ -1,15 +1,7 @@
-[settings]
-    os=Windows
-    arch=armv8
-    compiler=msvc
-    compiler.version=19.28
-    compiler.cppstd=17
-    compiler.runtime=dynamic
-    compiler.runtime_type=Release
-    build_type=Release
+include(baseprofiles/windows-arm64-msvc2019_64)
+
 [options]
-qtbase:release=yes
-qtbase:shared=yes
+qtbase:release=True
 qtbase:qt_host_path=$QT_HOST_PATH
 qtbase:nomake=tests
 qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -DFEATURE_msvc_obj_debug_info=ON"

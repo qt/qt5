@@ -1,0 +1,10 @@
+[settings]
+    os=Android
+    os.api_level=8
+    arch=armv7
+    compiler=clang
+    compiler.version=11
+    compiler.libcxx=c++_shared
+    build_type=RelWithDebInfo
+[options]
+*:shared=True

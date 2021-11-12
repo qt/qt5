@@ -27,7 +27,7 @@ Configurations:
     Features: ['Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/linux-developer-x86_64-gcc']
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer']
 -
     Template: 'qtci-linux-SLES-15_SP3-x86_64-51'
     Compiler: 'GCC'
@@ -40,7 +40,7 @@ Configurations:
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
     Environment variables: [
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64']
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64']
 -
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
@@ -72,8 +72,9 @@ Configurations:
     Id: 'Windows10_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease"]
+    Features: ['Sccache', 'Conan', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
+    Environment variables: ['CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64-developer']
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
@@ -82,8 +83,8 @@ Configurations:
     Platform dependency: 'Windows10_21H2-MSVC2019-x64-host'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64',
-        'CONAN_PROFILE=coin/conan/profiles/windows-arm64-msvc2019_64',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64-developer',
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-arm64-msvc2019_64',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}']
@@ -105,7 +106,9 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64',
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-arm64-msvc2019_64']
 -
     Id: 'RHEL-8.4-host'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
@@ -113,7 +116,7 @@ Configurations:
     Features: ['Packaging', 'Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DOpenGL_GL_PREFERENCE=LEGACY'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc']
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc']
 -
     Template: 'qtci-macos-11-x86_64-104'
     Target os: 'IOS_ANY'
@@ -124,8 +127,8 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests']
     Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/macos-universal-clang',
-        'CONAN_PROFILE=coin/conan/profiles/macos-ios-arm64-clang']
+        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
+        'CONAN_PROFILE=coin/conan/profiles/ci-macos-ios-arm64-clang']
 -
     Id: 'Windows10_21H2-Mingw11-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
@@ -136,7 +139,7 @@ Configurations:
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-mingw']
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw']
 -
     Id: 'Windows10_21H2-LLVM-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'

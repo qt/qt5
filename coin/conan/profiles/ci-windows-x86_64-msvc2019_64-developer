@@ -1,0 +1,7 @@
+include(./windows-x86_64-msvc2019_64-developer)
+
+[options]
+qtbase:headersclean=True
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR=%OPENSSL_INCLUDE_x64%\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+

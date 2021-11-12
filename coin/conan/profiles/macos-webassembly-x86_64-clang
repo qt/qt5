@@ -1,16 +1,9 @@
-[settings]
-    os=Emscripten
-    arch=wasm
-    compiler=clang
-    compiler.version=10
-    compiler.libcxx=libstdc++
-    build_type=RelWithDebInfo
+include(baseprofiles/macos-webassembly-x86_64-clang)
+
 [options]
-qtbase:release=yes
-qtbase:shared=no
+qtbase:release=True
 qtbase:qt_host_path=$QT_HOST_PATH
 qtbase:nomake=examples;tests
-qtbase:force_debug_info=yes
 qtbase:cmake_args_qtbase="-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten"
 *:cmake_args_leaf_module=""
 [build_requires]

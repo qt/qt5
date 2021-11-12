@@ -1,16 +1,9 @@
-[settings]
-    os=Android
-    os.api_level=8
-    arch=x86_64
-    compiler=clang
-    compiler.version=11
-    compiler.libcxx=c++_shared
-    build_type=RelWithDebInfo
+include(baseprofiles/windows-android-x86_64-clang)
+
 [options]
-qtbase:release=yes
-qtbase:shared=yes
-qtbase:pkg_config=no
-qtbase:force_debug_info=yes
+qtbase:release=True
+qtbase:pkg_config=False
+qtbase:force_debug_info=True
 qtbase:nomake=examples;tests
 qtbase:qt_host_path=%QT_HOST_PATH%
 qtbase:platform=android-clang

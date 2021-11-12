@@ -1,0 +1,9 @@
+[settings]
+    os=Emscripten
+    arch=wasm
+    compiler=clang
+    compiler.version=10
+    compiler.libcxx=libstdc++
+    build_type=RelWithDebInfo
+[options]
+*:shared=False

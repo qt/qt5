@@ -1,7 +1,7 @@
-include(windows-x86_64-msvc2019_64)
+include(./windows-x86_64-msvc2019_64)
 
 [options]
-qtbase:headersclean=yes
+qtbase:headersclean=True
 qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR=%OPENSSL_INCLUDE_x64%\.. -DPostgreSQL_ROOT=%POSTGRESQL_LIB_x64%\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
 *:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
 

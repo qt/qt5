@@ -1,0 +1,14 @@
+include(baseprofiles/windows-x86_64-msvc2019_64-developer)
+
+[options]
+qtbase:nomake=tests
+qtbase:debug_and_release=True
+qtbase:force_debug_info=True
+qtbase:developer_build=True
+qtbase:headersclean=True
+qtbase:make=examples
+qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_system_zlib=OFF"
+*:cmake_args_leaf_module="-DFEATURE_system_zlib=OFF"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

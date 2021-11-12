@@ -1,6 +1,6 @@
-include(macos-universal-clang)
+include(./macos-universal-clang)
 
 [options]
-qtbase:headersclean=yes
+qtbase:headersclean=True
 qtbase:cmake_args_qtbase='-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT=$POSTGRESQLBINPATH/..'
 *:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"

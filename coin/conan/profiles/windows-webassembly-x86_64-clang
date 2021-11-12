@@ -1,0 +1,12 @@
+include(baseprofiles/windows-webassembly-x86_64-clang)
+
+[options]
+qtbase:release=True
+qtbase:qt_host_path=%QT_HOST_PATH%
+qtbase:nomake=examples;tests
+qtbase:force_debug_info=True
+qtbase:cmake_args_qtbase="-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten"
+*:cmake_args_leaf_module="-DFEATURE_pkg_config=OFF"
+[build_requires]
+[env]
+CONAN_CMAKE_GENERATOR=Ninja

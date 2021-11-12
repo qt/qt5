@@ -1,0 +1,5 @@
+include(./linux-webassembly-x86_64-clang)
+
+[options]
+qtbase:cmake_args_qtbase="-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
+*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"

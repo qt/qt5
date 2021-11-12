@@ -1,0 +1,11 @@
+[settings]
+    os=Windows
+    arch=armv8
+    compiler=msvc
+    compiler.version=19.28
+    compiler.cppstd=17
+    compiler.runtime=dynamic
+    compiler.runtime_type=Release
+    build_type=Release
+[options]
+*:shared=True

@@ -1,18 +1,11 @@
-[settings]
-    os=Macos
-    os.version=11.0
-    arch=x86_64
-    compiler=apple-clang
-    compiler.version=12.0
-    compiler.libcxx=libc++
-    build_type=RelWithDebInfo
+include(baseprofiles/macos-universal-clang)
+
 [options]
-qtbase:release=yes
-qtbase:shared=yes
+qtbase:release=True
 qtbase:nomake=examples;tests
-qtbase:force_debug_info=yes
-qtbase:separate_debug_info=yes
-qtbase:framework=yes
+qtbase:force_debug_info=True
+qtbase:separate_debug_info=True
+qtbase:framework=True
 qtbase:cmake_args_qtbase='-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DODBC_ROOT=/usr/local/opt/libiodbc'
 *:cmake_args_leaf_module=""
 [build_requires]
