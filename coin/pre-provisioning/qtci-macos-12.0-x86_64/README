@@ -1,0 +1,29 @@
+# List of manual pre-installation steps for Tier1 image creation
+
+* Open KVM connection to Intel mac Parallels host
+   - Open Parallels :: create new VM :: select macOS :: Install
+   - Check first boot settings from infratools repository mac instructions
+   - Upgrade OS if needed
+* Modify OS settings / check these from infratools again
+* Install Parallels tools
+* Enable Terminal full access
+* Run these two commands in local Terminal:
+
+  sudo /usr/bin/sqlite3 "/Users/qt/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_code_identity,last_modified) values
+  ('kTCCServiceAccessibility','com.froglogic.squish.ide.product',0,2,4,1,0,0,1612867994);"
+
+  sudo /usr/bin/sqlite3 "/Users/qt/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_code_identity,last_modified) values
+  ('kTCCServiceAccessibility','/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk/Contents/Home/jre/bin/java',1,2,4,1,0,0,1612867994);"
+
+* Download and run coin setup binaries from http://coin/coin/setup
+   - Check /Users/qt folder for bootstrap agent
+* Create /etc/sudoers.d/qt with a line of qt ALL=(ALL) NOPASSWD: ALL
+* Poweroff VM
+* Enlarge disk space
+   - Parallels Control center :: VM settings :: Hardware :: Hard Disk :: 300GB
+   - Start VM and use Disk Utility to enlarge disk space into use
+* Poweroff VM
+* Go to /Users/qt/Parallels/<created VM>/harddisk.hdd folder in the Intel mac host
+  - Copy its content to Tier1 folder
+* Copy Tier1 folder to 101 NFS
+   - Check folder access rights
