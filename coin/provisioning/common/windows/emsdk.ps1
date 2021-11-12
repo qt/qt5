@@ -113,6 +113,11 @@ Set-EnvironmentVariable "EMSDK_PATH" "$installLocationEmsdk\emscripten-llvm-e$ve
 
 Add-Path "$env:EMSDK_PATH"
 
+# These can be removed when installing emsdk using emsdk.git
+Set-Content -Path C:\Utils\emsdk\emsdk_env.bat -Value ":: This file is needed to get support for setting Emscripten environment for Webassembly through qtbase" -Encoding ASCII
+Set-Content -Path C:\Utils\emsdk\emsdk_env.bat -Value ":: This file will have environment variables when https://codereview.qt-project.org/c/qt/qt5/+/372122 get merged" -Encoding ASCII
+Set-Content -Path C:\Utils\emsdk\emsdk_env.bat -Value "echo nothing to run at this point" -Encoding ASCII
+
 Write-Output "emsdk = $version" >> ~/versions.txt
 Write-Output "emsdk llvm = $version" >> ~/versions.txt
 Write-Output "emsdk NodeJs = $versionNode" >> ~/versions.txt
