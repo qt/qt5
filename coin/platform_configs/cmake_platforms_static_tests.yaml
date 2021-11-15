@@ -22,7 +22,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Template: 'qtci-macos-11.0-x86_64-102'
+    Template: 'qtci-macos-11-x86_64-104'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DFEATURE_framework=OFF'
