@@ -8,4 +8,3 @@ $release = "MinGW-w64-x86_64-11.2.0-release-posix-seh-rt_v9-rev1"
 $sha1    = "76bbfd135633d3d414e06cd7bf70cae94d2311db"
 
 InstallMinGW $release $sha1
-
