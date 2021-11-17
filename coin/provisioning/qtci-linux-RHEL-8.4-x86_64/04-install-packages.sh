@@ -145,7 +145,7 @@ sudo yum -y install "${installPackages[@]}"
 
 sudo ln -s /usr/bin/python2 /usr/bin/python
 
-sudo yum -y install @nodejs
+sudo dnf -y module install nodejs:12
 
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
