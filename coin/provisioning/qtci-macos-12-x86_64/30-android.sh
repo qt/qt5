@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -53,9 +53,9 @@ toolsFile="commandlinetools-mac-6609375_latest.zip"
 
 ndkVersion="r22b"
 ndkFile="android-ndk-$ndkVersion-darwin-x86_64.zip"
-sdkBuildToolsVersion="30.0.3"
+sdkBuildToolsVersion="31.0.0"
 # this is compile sdk version
-sdkApiLevel="android-30"
+sdkApiLevel="android-31"
 
 toolsSourceFile="$basePath/$toolsFile"
 ndkSourceFile="$basePath/$ndkFile"
