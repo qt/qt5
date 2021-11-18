@@ -7,7 +7,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['InsignificantTests']
+    Features: ['Packaging', 'InsignificantTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_FEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
         'QT_CMAKE_DIR=/opt/cmake-3.21.1/bin',
@@ -22,7 +22,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['DisableTests']
+    Features: ['Packaging', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_FEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
@@ -33,7 +33,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['DisableTests']
+    Features: ['Packaging', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_FEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
