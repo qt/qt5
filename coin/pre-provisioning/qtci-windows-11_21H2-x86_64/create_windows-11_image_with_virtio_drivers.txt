@@ -1,0 +1,42 @@
+# Create Windows 11 Tier1 image with Virtio drivers
+
+# Create Ubuntu 20.04 and install virt-manager:
+Create e.g. Ubuntu 20.04 VM
+Connect to machine and download the ISO-image and virtio-drivers (http://ci-files01-hki.intra.qt.io/input/windows/virtio/virtio-win-0.1.204.iso or https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.204-1/)
+sudo apt update
+sudo apt install virt-manager
+sudo systemctl start libvirtd
+sudo systemctl enable libvirtd
+sudo reboot now
+
+# Start virt-manager and add configurations for Windows 11:
+virt-manager
+File  - New virtual machine
+Local install media - Select ISO-image - Unselect automatically detect and select 'Microsoft Windows server 2019'
+Add memory and CPU
+Disk space 550
+customize configuration before install
+from virtual machine manager - edit - Preferences - Enable system tray icon and Enable XML editing
+Overview: Firmware: UEFI x86_64: /usr/share/OVMF/OVMG_CODE.fd - Apply (chipset Q35) (i440FX UEFI) 4: UEFI-secboot
+XML: Remove these two lines:
+    <timer name="rtc" tickpolicy="catchip"/>
+    <timer name="pit" tickpolicy="delay"/>
+    under these change 'no' to 'yes':
+    <timer name="hpet" present="yes"
+    Apply
+Sata Disk 1: Disk bus: Virtio
+    Apply
+NIC: Device model: virtio
+    Apply
+Add Hardware: Storage: Device Type: CDROM Device
+    Select or create custom storage - Manage - Browse local - virtio-win-0.1.204.iso - Open - Finish
+Begin installation
+
+# If note "This PC can't run Windows 11" appears
+shift + F10 - regedit - add: HKEY_LOCAL_MACHINE/SYSTEM/Setup/LabConfig
+    add DWORD value BypassTPMCheck with value 1
+    add DWORD value BypassSecureBootCheck value 1
+
+Load driver (select win10)
+
+After reboot and startup open virtio-win-0.1.204.iso and run virtio-win-qt-x64
