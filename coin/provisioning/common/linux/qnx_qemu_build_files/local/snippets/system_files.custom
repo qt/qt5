@@ -27,3 +27,6 @@ lib/libpng16.so.16=usr/lib/libpng16.so.16
 lib/liblzma.so.5=usr/lib/liblzma.so.5
 lib/libbacktrace.so.1=usr/lib/libbacktrace.so.1
 lib/libm.so.3=lib/libm.so.3
+
+# for inotify
+xbin/fsevmgr=sbin/fsevmgr
