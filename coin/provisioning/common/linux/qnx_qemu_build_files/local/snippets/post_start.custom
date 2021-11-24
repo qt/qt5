@@ -1,0 +1,14 @@
+# local/snippets/post_start.custom
+# Commands executed from post_startup.sh. Executed at the end of system startup whether slm is in use
+# or not
+#
+# To allow resource managers to be run properly with and without security policies, command lines
+# should be written in one of the following forms:
+#
+#     START(resmgr_t) resmgr DROPROOT(resmgr_uid)
+#     STARTU(resmgr_t, resmgr_uid) resmgr
+# Where resmgr_t is the security type name (arbitrary but usually the name of the resmgr with _t appended),
+# and resmgr_uid is the id to use for both uid and gid.  DROPROOT is used only in cases where the
+# resource manager supports a -U option for switching to non-root.
+echo "---> Starting Filesystem event manager (fsevmgr)"
+STARTU_P(fsevmg_t,__FSEVMG_ID__) fsevmgr -d -F __DEVB_ID__ -N __DEVB_ID__
