@@ -1,0 +1,3 @@
+# Add root HOME env variable
+procmgr_symlink /data/home/root/ /home/root
+HOME=/home/root
