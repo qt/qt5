@@ -8,3 +8,6 @@ PATH=__IFS_PATH__:/system/xbin
 #QSG_RHI_BACKEND=software
 #QT_QPA_PLATFORM=offscreen
 }
+
+[uid=0 gid=0 dperms=755 type=dir] var/share
+var/share/zoneinfo=usr/share/zoneinfo
