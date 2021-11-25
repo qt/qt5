@@ -1,3 +1,8 @@
 # Add root HOME env variable
 procmgr_symlink /data/home/root/ /home/root
 HOME=/home/root
+
+# Needed for timezone related tests
+TZ=Europe/Oslo
+procmgr_symlink /data/var/share /usr/share
+procmgr_symlink /data/var/share/zoneinfo/Europe/Oslo /data/var/etc/localtime
