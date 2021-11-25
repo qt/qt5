@@ -104,6 +104,8 @@ sudo rm -f "$targetFile"
 sudo sed -i'.orig' -e 's:^#/net:/net:' -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master || sudo curl -o /etc/auto_master http://ci-files01-hki.intra.qt.io/input/mac/arm/auto_master
 sudo automount -cv
 
-
 # Disable multicast advertisements
 sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
+
+# Enable Use keyboard navigation to move focus between controls
+defaults write -g AppleKeyboardUIMode -int 2

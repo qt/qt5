@@ -106,3 +106,6 @@ sudo automount -cv
 
 # Disable multicast advertisements
 sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
+
+# Enable Use keyboard navigation to move focus between controls
+defaults write -g AppleKeyboardUIMode -int 2
