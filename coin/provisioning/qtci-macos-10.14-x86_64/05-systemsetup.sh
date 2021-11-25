@@ -111,3 +111,6 @@ else
 fi
 sudo systemsetup setusingnetworktime off
 sudo rm -f "$targetFile"
+
+# Enable Use keyboard navigation to move focus between controls
+defaults write -g AppleKeyboardUIMode -int 2
