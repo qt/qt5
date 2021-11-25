@@ -69,7 +69,7 @@ function InstallGCC() {
     buildFolder="$HOME/gcc_build"
 
     echo "Fetching prebuilt GCC."
-    curl --fail -L --retry 5 --retry-delay 5 -o "$prebuiltTarget" "$prebuiltGCC" || (
+    DownloadURL "$prebuiltGCC" "" "$prebuiltSHA1" "$prebuiltTarget" || (
         echo "Fetching prebuilt GCC failed. Building from sources."
         DownloadURL "$cachedUrl" "$officialUrl" "$sourcesSHA1" "$targetFile"
     )
