@@ -1,0 +1,51 @@
+# List about manual pre-installations to Tier1 image:
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language to install: English UK
+Time and currency format: English UK
+Keyboard or input method: United Kingdom
+location: finnish
+Windows 10 Enterprise
+Region: Finland
+Keyboard layout: United Kingdom
+
+* Let Microsoft and apps use your location: no
+* Find my devicer: no
+* Send diagnostic data to Microsoft: Send required diagnostic data
+* Imporve inking & typing: no
+* Get tailored expreriences with diagnostic data: no
+* Let apps use advertising ID: no
+
+* Resolution set to 1280x800
+* Coin-setup:
+   - Installing Boostrap agent
+   - Disabling fast boot
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+   - Automatic login
+   - Disabling windows updates
+* Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+   - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
+   - NOTE! Without this step windows defender can't be disabled!
+* Remote connections allowed:
+   - Enable Remote Desktop
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time zone: 'Co-ordinated Universal Time'
+* Windows search disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled: 'Control Panel\System and Security\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Power saver disabled: Open 'Power & sleep settings'
+   - Power & sleep - Never
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support
+* (Restart Windows)
+* Google Chrome installed for RTA
+* Virus & threat protection settings:
+   * Check that there's no active antivirus providers
+* From 'Region Settings'
+   * Set Regional format: English (United States)
+* Defragment and Optimize Drives
+   * Change settings - Uncheck "Run on schedule"
+* Activate Windows

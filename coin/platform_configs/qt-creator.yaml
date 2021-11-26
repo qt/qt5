@@ -9,7 +9,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-windows-10_21H1-x86_64-52'
+    Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'Insignificant']
     Configure arguments: ''
