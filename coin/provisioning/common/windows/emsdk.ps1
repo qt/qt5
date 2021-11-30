@@ -35,8 +35,7 @@
 
 # This script will install emscripten needed by WebAssembly
 
-$version = "2.0.14"
-$versionTag="fc5562126762ab26c4757147a3b4c24e85a7289e"
+$version = "3.0.0"
 $versionNode = "14.15.5"
 $versionWinPython = "3.9.2-1"
 $versionJre = "8.152"
