@@ -26,5 +26,5 @@ Configurations:
         Id: 'macos-12-x86_64-developer-build-tests'
         Template: 'qtci-macos-12-x86_64-102'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+        Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-12-latest-xcode-x86_64-developer-build'
