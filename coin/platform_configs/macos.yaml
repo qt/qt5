@@ -55,7 +55,7 @@ Configurations:
         Id: 'macos-12-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging', 'InsignificantTests']
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
     -
         Id: 'macos-12-x86_64-tests'
