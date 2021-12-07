@@ -47,6 +47,8 @@ pyenv install 3.9.7
 
 SetEnvVar "PYTHON3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
 SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
+# Use 3.9 as a default python
+SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
 
 # Install all needed packages in a special wheel cache directory
 /Users/qt/.pyenv/versions/3.9.7/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
