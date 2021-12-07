@@ -79,7 +79,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
-    Compiler: 'MSVC2022_PREVIEW'
+    Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'Insignificant']
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
     Environment variables: [
