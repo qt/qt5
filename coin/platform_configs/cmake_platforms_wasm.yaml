@@ -24,6 +24,19 @@ Configurations:
         '-DFEATURE_pkg_config=OFF'
     ]
 -
+    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'Mingw'
+    Target compiler: 'Clang'
+    Platform dependency: 'Windows10_21H2-Mingw11-x64-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Environment variables: [
+        'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
+        '-DFEATURE_pkg_config=OFF'
+    ]
+-
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'WebAssembly'
     Compiler: 'Clang'

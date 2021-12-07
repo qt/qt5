@@ -9,6 +9,14 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
+    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Compiler: 'MSVC2019'
+    Features: ['Packaging', 'Sccache', 'MinimalStaticTests']
+    Configure arguments: '-G"Ninja" -DCMAKE_BUILD_TYPE="RelWithDebInfo" -DBUILD_SHARED_LIBS=OFF -DFEATURE_icu=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
+    Environment variables: [
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
+    ]
+-
     Id: 'RHEL-8.4-host'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
