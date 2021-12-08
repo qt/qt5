@@ -12,3 +12,9 @@
 # resource manager supports a -U option for switching to non-root.
 echo "---> Starting Filesystem event manager (fsevmgr)"
 STARTU_P(fsevmg_t,__FSEVMG_ID__) fsevmgr -d -F __DEVB_ID__ -N __DEVB_ID__
+
+echo "---> Remove large fonts"
+rm -rf /data/var/share/fonts/NotoSansCJK*
+rm -rf /data/var/share/fonts/NotoSansMonoCJK*
+echo "---> Create fontconfig cache"
+fc-cache &
