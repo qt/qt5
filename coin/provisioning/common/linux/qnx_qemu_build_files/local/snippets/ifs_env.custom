@@ -6,3 +6,7 @@ HOME=/home/root
 TZ=Europe/Oslo
 procmgr_symlink /data/var/share /usr/share
 procmgr_symlink /data/var/share/zoneinfo/Europe/Oslo /data/var/etc/localtime
+
+# fontconfig
+procmgr_symlink /data/var/etc/fontconfig/fonts.conf /etc/fontconfig/fonts.conf
+procmgr_symlink /data/var/share/fonts /usr/share/fonts
