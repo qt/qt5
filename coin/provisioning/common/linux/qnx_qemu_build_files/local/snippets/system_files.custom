@@ -19,7 +19,6 @@ lib/libicudata.so.67=usr/lib/libicudata.so.67
 lib/libicui18n.so.67=usr/lib/libicui18n.so.67
 lib/libGLESv2.so.1=usr/lib/libGLESv2.so.1
 lib/libEGL.so.1=usr/lib/libEGL.so.1
-lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
 lib/libz.so.2=usr/lib/libz.so.2
 lib/libxml2.so.2=usr/lib/libxml2.so.2
 lib/libfreetype.so.1=usr/lib/libfreetype.so.1
@@ -44,3 +43,8 @@ lib/dll/img_codec_tif.so=lib/dll/img_codec_tif.so
 
 # for inotify
 xbin/fsevmgr=sbin/fsevmgr
+
+# for fontconfig
+lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
+xbin/fc-cache=bin/fc-cache
+xbin/fc-match=local/misc_files/fc-match
