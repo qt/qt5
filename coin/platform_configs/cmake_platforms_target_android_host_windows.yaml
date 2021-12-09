@@ -6,39 +6,11 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
-    Platform dependency: 'Windows10-Mingw8-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
-    Environment variables: [
-        'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=arm64-v8a -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/windows-android-arm64-clang'
-    ]
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Target os: 'Android_ANY'
-    Target arch: 'arm64'
-    Compiler: 'Mingw'
-    Target compiler: 'Clang'
     Platform dependency: 'Windows10-Mingw11-x64-host'
     Features: ['Packaging', 'Sccache', 'DisableTests']
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=arm64-v8a -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-    ]
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Target os: 'Android_ANY'
-    Target arch: 'armv7'
-    Compiler: 'Mingw'
-    Target compiler: 'Clang'
-    Platform dependency: 'Windows10-Mingw8-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
-    Environment variables: [
-        'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=armeabi-v7a -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/windows-android-armv7-clang'
     ]
 -
     Template: 'qtci-windows-10-x86_64-52'
@@ -58,39 +30,11 @@ Configurations:
     Target arch: 'x86'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
-    Platform dependency: 'Windows10-Mingw8-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
-    Environment variables: [
-        'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=x86 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/windows-android-x86-clang'
-    ]
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Target os: 'Android_ANY'
-    Target arch: 'x86'
-    Compiler: 'Mingw'
-    Target compiler: 'Clang'
     Platform dependency: 'Windows10-Mingw11-x64-host'
     Features: ['Packaging', 'Sccache', 'DisableTests']
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=x86 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-    ]
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Target os: 'Android_ANY'
-    Target arch: 'x86_64'
-    Compiler: 'Mingw'
-    Target compiler: 'Clang'
-    Platform dependency: 'Windows10-Mingw8-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
-    Environment variables: [
-        'Path={{.Env.MINGW810}}\bin;{{.Env.Path}}',
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=x86_64 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}} -DFEATURE_pkg_config=OFF',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/windows-android-x86_64-clang'
     ]
 -
     Template: 'qtci-windows-10-x86_64-52'
