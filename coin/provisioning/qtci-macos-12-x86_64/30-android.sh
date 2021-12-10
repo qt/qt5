@@ -82,8 +82,7 @@ echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-t
 echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
 
-SetEnvVar "ANDROID_SDK_HOME" "$sdkTargetFolder"
-SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersion"
+SetEnvVar "ANDROID_SDK_ROOT" "$sdkTargetFolder"
 SetEnvVar "ANDROID_NDK_ROOT" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
