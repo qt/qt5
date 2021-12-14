@@ -155,8 +155,8 @@ echo "Android NDK = $ndkVersion" >> ~/versions.txt
 cd "$sdkTargetFolder/cmdline-tools/tools/bin"
 ./sdkmanager --install "emulator" --sdk_root=$sdkTargetFolder \
     | eval $sdkmanager_no_progress_bar_cmd
-echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86"  \
-    | eval $sdkmanager_no_progress_bar_cmd
+echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" \
+    "system-images;android-31;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
 
 
 echo "Checking the contents of Android SDK again..."
@@ -164,6 +164,9 @@ ls -l "$sdkTargetFolder"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -c 2048M -f \
     -k "system-images;android-23;google_apis;x86"
+
+echo "no" | ./avdmanager create avd -n emulator_x86_64_api_31 -c 2048M -f \
+    -k "system-images;android-31;google_apis;x86_64"
 
 echo "Install $sdkApiLevelAutomovie $androidAutomotive"
 DownloadURL "$androidAutomotive11Url" "$androidAutomotive11Url" "$android11Sha" \
