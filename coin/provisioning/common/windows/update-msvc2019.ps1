@@ -76,7 +76,8 @@ function Install {
 Install $urlOfficial_vsInstaller $urlCache_vsInstaller $sha1_vsInstaller
 # Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
 
-$msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property catalog_productDisplayVersion 2`>`&1)
+$msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
+    -version [16.0,17.0`) -latest -property catalog_productDisplayVersion 2`>`&1)
 
 Write-Output "Visual Studio 2019 = $msvc2019Version" >> ~\versions.txt
 Write-Output "Visual Studio 2019 Build Tools = $version" >> ~\versions.txt
