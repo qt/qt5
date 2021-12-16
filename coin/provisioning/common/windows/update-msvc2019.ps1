@@ -76,6 +76,16 @@ Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_bui
 
 $msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
     -version [16.0,17.0`) -latest -property catalog_productDisplayVersion 2`>`&1)
+$msvc2019Complete = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
+    -version [16.0,17.0`) -latest -property isComplete 2`>`&1)
+$msvc2019Launchable = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
+    -version [16.0,17.0`) -latest -property isLaunchable 2`>`&1)
+
+if($msvc2019Version -ne $version -or [int]$msvc2019Complete -ne 1 `
+    -or [int]$msvc2019Launchable -ne 1) {
+    throw "MSVC 2019 update failed. msvc2019Version: $($msvc2019Version) `
+        msvc2019Complete: $($msvc2019Complete) msvc2019Launchable: $($msvc2019Launchable)"
+}
 
 Write-Output "Visual Studio 2019 = $msvc2019Version" >> ~\versions.txt
 Write-Output "Visual Studio 2019 Build Tools = $version" >> ~\versions.txt
