@@ -37,13 +37,13 @@
 # NOTE! Visual Studio is pre-installed to tier 1 image so this script won't install the whole Visual Studio. See ../../../pre-provisioning/qtci-windows-10-x86_64/msvc2019.txt
 # MSVC 2019 online installers can be found from here https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
 
-$version = "16_9_4"
+$version = "16.11.8"
 $urlCache_vsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_Professional_$version.exe"
-$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/3105fcfe-e771-41d6-9a1c-fc971e7d03a7/d60c42571053950bf742db19e30430f76354c95af06afb1364d5b2aab620f4e5/vs_Professional.exe"
-$sha1_vsInstaller = "03e3896b790b1734434ab12c2e06ca458e67395f"
+$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/e122bff0bac32d630b335db65fb61c7da25fea28b7ae58fd65cb2e170ef94f2c/vs_Professional.exe"
+$sha1_vsInstaller = "993f4e9ece89dd5d8daac3c241f97e24a464f78c"
 $urlCache_buildToolsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_BuildTools_$version.exe"
-$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/3105fcfe-e771-41d6-9a1c-fc971e7d03a7/e0c2f5b63918562fd959049e12dffe64bf46ec2e89f7cadde3214921777ce5c2/vs_BuildTools.exe"
-$sha1_buildToolsInstaller = "59e62e552305e60420154395d79d5261d65f52dc"
+$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/4c9d3173a35956d1cf87e0fa8a9c79a0195e6e2acfe39f1ab92522d54a3bebb9/vs_BuildTools.exe"
+$sha1_buildToolsInstaller = "9a7d0dd58b68a31305c1ffa0181e5b64d2b48d3b"
 $installerPath = "C:\Windows\Temp\installer.exe"
 
 function Install {
