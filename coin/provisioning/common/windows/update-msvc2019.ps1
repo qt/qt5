@@ -37,13 +37,13 @@
 # NOTE! Visual Studio is pre-installed to tier 1 image so this script won't install the whole Visual Studio. See ../../../pre-provisioning/qtci-windows-10-x86_64/msvc2019.txt
 # MSVC 2019 online installers can be found from here https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
 
-$version = "16.11.2"
+$version = "16.11.8"
 $urlCache_vsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_Professional_$version.exe"
-$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/bacf7555-1a20-4bf4-ae4d-1003bbc25da8/938488ec671252db4188aac5cf158d0610d7a0b107761863aa6a24f63c339e37/vs_Professional.exe"
-$sha1_vsInstaller = "4d7017638bea8ef197d34df9e5511c7bcc236423"
+$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/e122bff0bac32d630b335db65fb61c7da25fea28b7ae58fd65cb2e170ef94f2c/vs_Professional.exe"
+$sha1_vsInstaller = "993f4e9ece89dd5d8daac3c241f97e24a464f78c"
 $urlCache_buildToolsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_BuildTools_$version.exe"
-$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/bacf7555-1a20-4bf4-ae4d-1003bbc25da8/e6cfafe7eb84fe7f6cfbb10ff239902951f131363231ba0cfcd1b7f0677e6398/vs_BuildTools.exe"
-$sha1_buildToolsInstaller = "8ddce11d439ec748cbddc879e9acb99a0d0e99d3"
+$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/4c9d3173a35956d1cf87e0fa8a9c79a0195e6e2acfe39f1ab92522d54a3bebb9/vs_BuildTools.exe"
+$sha1_buildToolsInstaller = "9a7d0dd58b68a31305c1ffa0181e5b64d2b48d3b"
 $installerPath = "C:\Windows\Temp\installer.exe"
 
 function Install {
@@ -62,9 +62,8 @@ function Install {
     Remove-Item -Force -Path $installerPath
 }
 
-# Cunrrent version 16.11.2 is installed to Tier1. When next version is released these needs to be uncommented:
-#Install $urlOfficial_vsInstaller $urlCache_vsInstaller $sha1_vsInstaller
-#Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
+Install $urlOfficial_vsInstaller $urlCache_vsInstaller $sha1_vsInstaller
+Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
 
 $msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property catalog_productDisplayVersion 2`>`&1)
 
