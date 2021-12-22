@@ -1,5 +1,5 @@
 ### Visual Studio 2019 ###
-Visual Studio 2019 version 16.11.2 was installed manually using installer: http://ci-files01-hki.ci.local/input/windows/vs_professional__505064367.1547034421.exe
+Visual Studio 2019 version 16.11.2 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__505064367.1547034421.exe
 
 Installed MSVC-2019 Components:
 
