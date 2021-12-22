@@ -6,7 +6,7 @@ to using the VirtIO NIC in KVM.
 
 NOTE! Install these Virtio drivers in Opennebula when using Windows 10 20H2
 * Download https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.185-2/virtio-win-0.1.185.iso
-    cache: http://ci-files01-hki.ci.local/input/windows/virtio/virtio-win-0.1.185.iso
+    cache: http://ci-files01-hki.ci.qt.io/input/windows/virtio/virtio-win-0.1.185.iso
 * Mount virtio-win-0.1.185.iso by double clicking it.
 * Right click 'E:\NetKVM\w10\amd64\netkvm.inf' and select Install
 * Right click 'E:\Balloon\w10\amd64\balloon.inf' and select Install

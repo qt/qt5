@@ -1,5 +1,5 @@
 ### Visual Studio 2022 Preview ###
-Visual Studio 2022 version 17.0.0 preview 3.1 was installed manually using installer: http://ci-files01-hki.ci.local/input/windows/vs_professional_2022_preview.exe
+Visual Studio 2022 version 17.0.0 preview 3.1 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional_2022_preview.exe
 
 Installed MSVC-2022 Components:
 
@@ -58,7 +58,7 @@ Windows Universal C Runtime
 ############################################################
 ### Visual Studio 2022 build tools ###
 
-Visual studio 2022 build tools version 17.0.0 preview 3.1 was installed manually using installer: "http://ci-files01-hki.ci.local/input/windows/vs_buildtools__msvc2022_preview.exe"
+Visual studio 2022 build tools version 17.0.0 preview 3.1 was installed manually using installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_buildtools__msvc2022_preview.exe"
  * Only default installation, no additional selections
 
 ############################################################
