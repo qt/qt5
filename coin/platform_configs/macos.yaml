@@ -91,7 +91,7 @@ Configurations:
         Id: 'macos-12-arm64-developer-build-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
-        Features: ['TestOnly', 'InsignificantTests']
+        Features: ['TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-developer-build'
 
     # See macos-developer-build-tests.yaml for x86_64 tests,
