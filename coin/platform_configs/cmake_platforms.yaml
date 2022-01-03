@@ -71,7 +71,7 @@ Configurations:
 -
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'Insignificant']
+    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'InsignificantTests']
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
@@ -88,7 +88,7 @@ Configurations:
 -
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', "DebugAndRelease", 'Insignificant']
+    Features: ['Sccache', "DebugAndRelease", 'InsignificantTests']
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
@@ -133,7 +133,7 @@ Configurations:
     Id: 'Windows11_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", "Insignificant"]
+    Features: ['Sccache', "DebugAndRelease", "InsignificantTests"]
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
@@ -142,7 +142,7 @@ Configurations:
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'Insignificant']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'InsignificantTests']
     Platform dependency: 'Windows11_21H2-MSVC2019-x64-host'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
