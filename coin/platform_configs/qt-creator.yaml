@@ -11,7 +11,7 @@ Configurations:
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'Insignificant']
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests']
     Configure arguments: ''
     Environment variables: []
     Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']

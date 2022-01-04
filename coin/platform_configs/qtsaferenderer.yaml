@@ -16,7 +16,7 @@ Configurations:
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
     Environment variables: ['PATH=C:\MINGW1120\mingw64\bin;$PATH']
-    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions', 'Insignificant']
+    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
     Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -static -nomake tests -nomake examples -no-icu -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -platform win32-g++'
 -
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
