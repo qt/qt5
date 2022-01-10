@@ -66,6 +66,9 @@ sudo zypper -nq install p7zip
 # EGL support
 sudo zypper -nq install Mesa-libEGL-devel Mesa-libGL-devel
 
+# ICU
+sudo zypper -nq install libicu-devel libicu-suse65_1
+
 # gtk3 style for QtGui/QStyle
 sudo zypper -nq install gtk3-devel
 
@@ -75,9 +78,6 @@ sudo zypper -nq install libXi-devel postgresql13 postgresql13-devel mysql-devel 
 # system provided XCB libraries
 sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
          xcb-util-wm-devel xcb-util-renderutil-devel
-
-# ICU
-sudo zypper -nq install libicu-devel libicu-suse65_1
 
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
