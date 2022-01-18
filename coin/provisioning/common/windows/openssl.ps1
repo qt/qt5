@@ -1,7 +1,7 @@
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
-## Contact: http://www.qt.io/licensing/
+## Copyright (C) 2022 The Qt Company Ltd.
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -36,7 +36,7 @@
 # This script installs OpenSSL $version.
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
-$version = "1_1_1k"
+$version = "1_1_1m"
 $packagex64 = "C:\Windows\Temp\Win64OpenSSL-$version.exe"
 $packagex86 = "C:\Windows\Temp\Win32OpenSSL-$version.exe"
 
@@ -47,7 +47,7 @@ if (Is64BitWinHost) {
     $installFolder = "C:\openssl"
     $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
     $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
-    $sha1 = "ab5367a1f46a3779a870fe2c1a99e03f8ffa3041"
+    $sha1 = "16d83bd6d36be7b3ea85f822135352fa8f8d8134"
 
     Write-Host "Fetching from URL ..."
     Download $externalUrl $internalUrl $packagex64
@@ -74,7 +74,7 @@ if (Is64BitWinHost) {
 
 $externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
-$sha1 = "49f5b7fe01d686f706071c9a00d19bd69f2e7371"
+$sha1 = "1d7146e56b201404ce67f1e636eab360211c175a"
 
 Write-Host "Fetching from URL ..."
 Download $externalUrl $internalUrl $packagex86

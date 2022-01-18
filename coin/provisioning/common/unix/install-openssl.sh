@@ -2,8 +2,8 @@
 
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
-## Contact: http://www.qt.io/licensing/
+## Copyright (C) 2022 The Qt Company Ltd.
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -42,11 +42,11 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-version="1.1.1k"
+version="1.1.1m"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="bad9dc4ae6dcc1855085463099b5dacb0ec6130b"
+sha="39d424c4411e45f1570073d7a71b1830b96007ca"
 opensslHome="${HOME}/openssl-${version}"
 opensslSource="${opensslHome}-src"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"

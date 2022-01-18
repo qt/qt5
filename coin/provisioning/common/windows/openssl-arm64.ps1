@@ -1,7 +1,7 @@
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
-## Contact: http://www.qt.io/licensing/
+## Copyright (C) 2022 The Qt Company Ltd.
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -50,9 +50,9 @@
 # nmake install
 #################################################################################################################################################
 
-$version = "1_1_1_k"
+$version = "1_1_1_m"
 $url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version-arm64.zip"
-$sha1 = "e31f6d3a4af225f9314830aad099bb8e5d4a7ff1"
+$sha1 = "52963bba9b542eb885f19641f5cd78870246ea02"
 $installFolder = "C:\openssl_arm64"
 $zip_package = "C:\Windows\Temp\$version.zip"
 

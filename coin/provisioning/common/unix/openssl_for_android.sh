@@ -2,8 +2,8 @@
 
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
-## Contact: http://www.qt.io/licensing/
+## Copyright (C) 2022 The Qt Company Ltd.
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -42,7 +42,7 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="1.1.1k"
+version="1.1.1m"
 : ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
 # Source built requires GCC and Perl to be in PATH.
 exports_file="/tmp/export.sh"
@@ -60,7 +60,7 @@ fi
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="bad9dc4ae6dcc1855085463099b5dacb0ec6130b"
+sha="39d424c4411e45f1570073d7a71b1830b96007ca"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
@@ -76,11 +76,11 @@ PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
 
 if uname -a |grep -q "Darwin"; then
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21_darwin.tar.gz"
-    sha="6e3e48441ff58596f25bc27fdc05ae43e5a7581d"
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_m_for-android-ndk-21_darwin.tar.gz"
+    sha="d8c189f8a329263365c73bc471b6c9c68d117e3a"
 else
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_k_for-android-ndk-21.tar.gz"
-    sha="8c4db1eb8460d749c998a0e033b3939123cbc5ac"
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_m_for-android-ndk-21.tar.gz"
+    sha="db028f25ca4d000fe2317c3abfdfa0c234833549"
 fi
 targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
 DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
