@@ -1,7 +1,7 @@
 ############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
-## Contact: http://www.qt.io/licensing/
+## Copyright (C) 2022 The Qt Company Ltd.
+## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
 ##
@@ -45,9 +45,11 @@ if (Is64BitWinHost) {
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$version = "1.1.1g"
+$version = "1.1.1m"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$sha1 = "b213a293f2127ec3e323fb3cfc0c9807664fd997"
+$prebuilt_zip = Get-DownloadLocation ("openssl-android-master-$version.zip")
+$sha1 = "39d424c4411e45f1570073d7a71b1830b96007ca"
+$prebuilt_sha1 = "07fad2a44ffa90261a779782bd64fe2304487945"
 $destination = "C:\Utils\openssl-android-master"
 
 # msys unix style paths
