@@ -5,7 +5,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Sccache', 'MinimalStaticTests']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
-
+-
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'MinimalStaticTests']
