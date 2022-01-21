@@ -52,16 +52,15 @@ if(NOT QT_BUILD_SUBMODULES)
 endif()
 set(QT_BUILD_SUBMODULES "${QT_BUILD_SUBMODULES}" CACHE STRING "Submodules to build")
 
-set(qt_module_dependency_map_prefix "__qt_module_dependencies_")
-qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES
-                                     "${qt_module_dependency_map_prefix}")
+qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES)
 
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
     # Check for unmet dependencies
     if(NOT DEFINED BUILD_${module} OR BUILD_${module})
         message(NOTICE "Checking dependencies of '${module}'")
         get_property(required_deps GLOBAL PROPERTY QT_REQUIRED_DEPS_FOR_${module})
-        foreach(dep IN LISTS "${qt_module_dependency_map_prefix}${module}")
+        get_property(dependencies GLOBAL PROPERTY QT_DEPS_FOR_${module})
+        foreach(dep IN LISTS dependencies)
             if (dep STREQUAL "qtbase")
                 # Always available skip
                 continue()
