@@ -1,0 +1,1 @@
+--disable-programs --disable-doc --disable-debug --disable-network --enable-pic
