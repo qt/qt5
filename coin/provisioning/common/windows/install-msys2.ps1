@@ -41,10 +41,10 @@
 
 # This script will installs msys2
 
-$version = "20200903"
+$version = "20220319"
 $prog = "msys2"
 $arch = "x86_64"
-$sha1 = "5a1644585fac2d58855d48b4ba4a92579a14cf03"
+$sha1 = "d3d05090c09c08a47efbffe469142b45231cbc89"
 $sha1_prebuilt = "d86d45d72228f53f7ae060771bc95b6f54c703c8"
 $folder = "msys64"
 
@@ -69,9 +69,9 @@ if ((Test-Path $url_cache_prebuilt)) {
     Extract-tar_gz $PackagePath $TargetLocation
     $msys = "$TargetLocation\$folder\msys2_shell.cmd"
 
-    # install perl
+    # install perl make and yasm
     # Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
-    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make`""
+    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman -S --noconfirm perl make yasm`""
     Start-Sleep -s 60
     cmd /c "$msys `"-l`" `"-c`" `"echo y | cpan -i Text::Template Test::More`""
 
