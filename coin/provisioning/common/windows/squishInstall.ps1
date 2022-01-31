@@ -42,15 +42,15 @@
 # This script will pre-installed squish package for Windows.
 # Squish is need by Release Test Automation (RTA)
 
-$version = "6.7-20210614-1625"
-$qtBranch = "61x"
+$version = "6.7.2"
+$qtBranch = "62x"
 $targetDir = "C:\Utils\squish"
 $squishPackage = "C:\Utils\rta_squish"
 $squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable"
-$licenseUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin\515x"
+$licenseUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin\"
 
 # Squish license
-$licensePackage = ".squish-3-license"
+$licensePackage = ".squish-license"
 
 Write-Host "Installing Squish license to home directory"
 Copy-Item $licenseUrl\$licensePackage ~\$licensePackage
@@ -67,7 +67,7 @@ if (($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 10 Pro
     # In Windows 11 case $OSVersion is 'Windows 10 Pro'
     $winVersion = "win10"
     if (Is64BitWinHost) {
-        $sha1 = "0ce4f94ebff488fedef29e9ed62b400a8b5014fb"
+        $sha1 = "3dd65fe3996bffd25892d5a7dfd2da26420a3f33"
     }
 } else {
     $winVersion = "n/a"
@@ -78,6 +78,7 @@ Copy-Item "$squishUrl\$squishArchive" "C:\Utils"
 Verify-Checksum "C:\Utils\$squishArchive" $sha1
 Extract-7Zip "C:\Utils\$squishArchive" "C:\Utils"
 Rename-Item "$squishPackage" "$targetDir"
+Remove-Item "C:\Utils\prebuild*"
 
 Write-Host "Verifying Squish Installation for following targets:"
 get-childitem "$targetDir" -Filter squishrunner.exe -Recurse | % { $_.FullName }

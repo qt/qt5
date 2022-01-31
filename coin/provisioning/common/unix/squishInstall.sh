@@ -47,19 +47,20 @@ set -ex
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="6.7.1"
+version="6.7.2"
 qtBranch="62x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
 preBuildCacheUrl="ci-files01-hki.intra.qt.io:/hdd/www/input/squish/jenkins_build/stable"
-licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/515x/.squish-3-license"
-licenseSHA="e000d2f95b30b82f405b9dcbeb233cd43710a41a"
+licenseFile=".squish-license"
+licenseUrl="http://ci-files01-hki.intra.qt.io/input/squish/coin/$licenseFile"
+licenseSHA="bda9c3bce2b9a74cb10ead9e87a4ebacd9eef4c2"
 if uname -a |grep -q Darwin; then
-    compressedFolder="prebuild-squish-$version-515x-macx86_64.tar.gz"
-    sha1="1526d4d57f8025f83aad836a43e8fa0317dbddc2"
+    compressedFolder="prebuild-squish-$version-$qtBranch-mac.tar.gz"
+    sha1="6b7d80be4d107ba53ac9218fe5ca79f72c6e1e2d"
 else
      compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="d412c3389d95a65341b51d2e14cba47ce3b54a86"
+     sha1="1f57efd6f21a994b07f28b0b44ff7972bbf51733"
 fi
 
 mountFolder="/tmp/squish"
@@ -101,7 +102,7 @@ sudo tar -xzf "$targetFileMount" --directory "$installFolder"
 echo "Unmounting $mountFolder"
 sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
 
-sudo mv "$installFolder/rta_squish_$version" "$squishFolder"
+sudo mv "$installFolder/rta_squish_$qtBranch" "$squishFolder"
 if uname -a |grep -q Darwin; then
     sudo xattr -r -c "$squishFolder"
 fi
@@ -114,11 +115,12 @@ if uname -a |grep -q "Ubuntu"; then
     fi
 fi
 
-DownloadURL "$licenseUrl" "$licenseUrl" "$licenseSHA" "$HOME/.squish-3-license"
+
+DownloadURL "$licenseUrl" "$licenseUrl" "$licenseSHA" "$HOME/$licenseFile"
 
 echo "Changing ownerships"
 sudo chown -R qt:$usersGroup "$squishFolder"
-sudo chown qt:$usersGroup "$HOME/.squish-3-license"
+sudo chown qt:$usersGroup "$HOME/$licenseFile"
 
 echo "Set commands for environment variables in .bashrc"
 if uname -a |grep -q "Ubuntu"; then
