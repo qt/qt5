@@ -54,14 +54,6 @@ Configurations:
     Features: ['Sccache', 'DisableTests']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
-    Template: 'qtci-windows-10-x86_64-52'
-    Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease"]
-    Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
-    Environment variables: [
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64']
--
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease"]
@@ -96,25 +88,6 @@ Configurations:
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
--
-    Id: 'Windows10-MSVC2019-x64-host'
-    Template: 'qtci-windows-10-x86_64-52'
-    Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease"]
-    Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
--
-    Template: 'qtci-windows-10-x86_64-52'
-    Compiler: 'MSVC2019'
-    Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
-    Platform dependency: 'Windows10-MSVC2019-x64-host'
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64',
-        'CONAN_PROFILE=coin/conan/profiles/windows-arm64-msvc2019_64',
-        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
-        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}']
 -
     Id: 'Windows10_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
@@ -174,17 +147,6 @@ Configurations:
         'CONAN_HOST_PROFILE=coin/conan/profiles/macos-universal-clang',
         'CONAN_PROFILE=coin/conan/profiles/macos-ios-arm64-clang']
 -
-    Id: 'Windows10-Mingw11-x64-host'
-    Template: 'qtci-windows-10-x86_64-52'
-    Compiler: 'Mingw'
-    Features: ['Packaging', 'Sccache']
-    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
-    Environment variables: [
-        'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-mingw']
--
     Id: 'Windows10_21H2-Mingw11-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
@@ -195,14 +157,6 @@ Configurations:
         'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-mingw']
--
-    Id: 'Windows10-LLVM-x64-host'
-    Template: 'qtci-windows-10-x86_64-52'
-    Compiler: 'Clang'
-    Features: ['Sccache']
-    Configure arguments: '-GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
-    Environment variables: ['Path=C:\llvm-mingw\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR=C:\llvm-mingw']
 -
     Id: 'Windows10_21H2-LLVM-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
