@@ -36,10 +36,7 @@
 # This script will install emscripten needed by WebAssembly
 
 $version = "2.0.14"
-$versionTag="fc5562126762ab26c4757147a3b4c24e85a7289e"
-$versionNode = "14.15.5"
-$versionWinPython = "3.9.2-1"
-$versionJre = "8.152"
+
 
 # Make sure python is in the path
 Prepend-Path "C:\Python27"
@@ -51,11 +48,19 @@ cd $installLocationEmsdk
 .\emsdk install $version
 .\emsdk activate $version
 
-Set-EnvironmentVariable "EMSDK" "$installLocationEmsdk"
-Set-EnvironmentVariable "EM_CONFIG" "$installLocationEmsdk\.emscripten"
-Set-EnvironmentVariable "EMSDK_NODE" "$installLocationEmsdk\node\${versionNode}_64bit\bin\node.exe"
-Set-EnvironmentVariable "EMSDK_PYTHON" "$installLocationEmsdk\python\${versionWinPython}_64bit\python.exe"
-Set-EnvironmentVariable "EMSDK_JAVA_HOME" "$installLocationEmsdk\java\${versionJre}_64bit"
+$versionWinPython = $($Env:EMSDK_PYTHON -split ('python\\') -split ('_64bit'))[1]
+$versionNode = $($Env:EMSDK_NODE -split ('node\\') -split ('_64bit'))[1]
+$versionJre = $($Env:EMSDK_JAVA_HOME -split ('java\\') -split ('_64bit'))[1]
+
+# Set these environment variables permanently.
+# Note! Using 'emsdk_env.bat --permanent' doesn't set these permanently
+Set-EnvironmentVariable "EMSDK" "$env:EMSDK"
+Set-EnvironmentVariable "EM_CONFIG" "$env:EM_CONFIG"
+Set-EnvironmentVariable "EMSDK_NODE" "$env:EMSDK_NODE"
+Set-EnvironmentVariable "EMSDK_PYTHON" "$env:EMSDK_PYTHON"
+# In this case JAVA_HOME is the one emsdk install/activate set.
+# We need to use EMSDK_JAVA_HOME so that we don't override JAVA_HOME which comes from install-jdk.ps1
+Set-EnvironmentVariable "EMSDK_JAVA_HOME" "$env:JAVA_HOME"
 Set-EnvironmentVariable "EMSDK_PATH" "$installLocationEmsdk;$installLocationEmsdk\node\${versionNode}_64bit\bin;$installLocationEmsdk\upstream\emscripten;$PATH"
 Add-Path "$env:EMSDK_PATH"
 
