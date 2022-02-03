@@ -32,7 +32,7 @@ Configurations:
     Environment variables: [
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo',
+        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DFEATURE_pkg_config=OFF']
 -
     Template: 'qtci-macos-10.14-x86_64'

@@ -67,7 +67,8 @@ Configurations:
     Features: ['Packaging', 'Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
     Environment variables: [
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64']
 -
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
@@ -127,8 +128,12 @@ Configurations:
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
     Platform dependency: 'Windows10_21H2-MSVC2019-x64-host'
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON',
-        ]
+        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
+        'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64',
+        'CONAN_PROFILE=coin/conan/profiles/windows-arm64-msvc2019_64',
+        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
+        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
+        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}']
 -
     Id: 'Windows11_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-11_21H2-x86_64-51'
@@ -188,7 +193,8 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
+        'CONAN_PROFILE=coin/conan/profiles/windows-x86_64-mingw']
 -
     Id: 'Windows10-LLVM-x64-host'
     Template: 'qtci-windows-10-x86_64-52'
