@@ -70,7 +70,8 @@ endmacro()
 # module is the Qt repository.
 #
 # out_ordered is where the result is stored. This is a list of all dependencies, including
-# transitive ones, in topologically sorted order.
+# transitive ones, in topologically sorted order. Note that ${module} itself is also part of
+# out_ordered.
 #
 # out_revisions is a list of git commit IDs for each of the dependencies in ${out_ordered}. This
 # list has the same length as ${out_ordered}.
@@ -119,12 +120,10 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
         set(dependencies "${arg_PARSED_DEPENDENCIES}")
     else()
         set(depends_file "${CMAKE_CURRENT_SOURCE_DIR}/${module}/dependencies.yaml")
-        if(NOT EXISTS "${depends_file}")
-            qt_internal_resolve_module_dependencies_set_skipped(TRUE)
-            return()
-        endif()
         set(dependencies "")
-        qt_internal_parse_dependencies("${depends_file}" dependencies)
+        if(EXISTS "${depends_file}")
+            qt_internal_parse_dependencies("${depends_file}" dependencies)
+        endif()
     endif()
 
     # Traverse the dependencies.
