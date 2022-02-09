@@ -3,6 +3,7 @@ Include: [
     cmake_platforms.yaml,
     macos-developer-build-tests.yaml,
     integrity.yaml,
-    cmake_platforms_static_tests.yaml
+    cmake_platforms_static_tests.yaml,
+    linux_android_tests.yaml
 ]
 Configurations: []
