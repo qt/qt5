@@ -41,15 +41,15 @@
 
 # This script installs LLVM-Mingw by mstorsjo
 
-$zip = Get-DownloadLocation "llvm-mingw-20211002-ucrt-x86_64.zip"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20211002-ucrt-x86_64.zip"
-$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20211002/llvm-mingw-20211002-ucrt-x86_64.zip"
+$zip = Get-DownloadLocation "llvm-mingw-20220209-ucrt-x86_64.zip"
+$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20220209-ucrt-x86_64.zip"
+$url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20220209/llvm-mingw-20220209-ucrt-x86_64.zip"
 
 Download $url_official $url_cache $zip
-Verify-Checksum $zip "69907fa281552f795f28438ab69f8c7032c8d20e"
+Verify-Checksum $zip "e24078c0d742b39eef4d739b345a0b6b49bc348b"
 Extract-7Zip $zip C:\
 
-Rename-Item C:\llvm-mingw-20211002-ucrt-x86_64 C:\llvm-mingw
+Rename-Item C:\llvm-mingw-20220209-ucrt-x86_64 C:\llvm-mingw
 
-Write-Output "llvm-mingw = 13.0.0" >> ~/versions.txt
+Write-Output "llvm-mingw = 14.0.0 RC1" >> ~/versions.txt
 Remove-Item -Path $zip
