@@ -43,13 +43,13 @@
 # NOTE! Visual Studio is pre-installed to tier 1 image so this script won't install the whole Visual Studio. See ../../../pre-provisioning/qtci-windows-10-x86_64/msvc2019.txt
 # MSVC 2019 online installers can be found from here https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
 
-$version = "16.11.8"
+$version = "16.11.10"
 $urlCache_vsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_Professional_$version.exe"
-$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/e122bff0bac32d630b335db65fb61c7da25fea28b7ae58fd65cb2e170ef94f2c/vs_Professional.exe"
-$sha1_vsInstaller = "993f4e9ece89dd5d8daac3c241f97e24a464f78c"
+$urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/791f3d28-7e20-45d9-9373-5dcfbdd1f6db/cd440cf67c0cf1519131d1d51a396e44c5b4f7b68b541c9f35c05a310d692f0a/vs_Professional.exe"
+$sha1_vsInstaller = "d4f3b3b7dc28dcc3f25474cd1ca1e39fca7dcf3f"
 $urlCache_buildToolsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_BuildTools_$version.exe"
-$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/b763973d-da6e-4025-834d-d8bc48e7d37f/4c9d3173a35956d1cf87e0fa8a9c79a0195e6e2acfe39f1ab92522d54a3bebb9/vs_BuildTools.exe"
-$sha1_buildToolsInstaller = "9a7d0dd58b68a31305c1ffa0181e5b64d2b48d3b"
+$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/791f3d28-7e20-45d9-9373-5dcfbdd1f6db/d5eabc3f4472d5ab18662648c8b6a08ea0553699819b88f89d84ec42d12f6ad7/vs_BuildTools.exe"
+$sha1_buildToolsInstaller = "69889f45d229de8e0e76b6d9e05964477eee2e78"
 $installerPath = "C:\Windows\Temp\installer.exe"
 
 function Install {
@@ -64,6 +64,9 @@ function Install {
     Write-Host "Installing msvc 2019 $version"
     Download $urlOfficial $urlCache $installerPath
     Verify-Checksum $installerPath $sha1
+    # We have to update the installer bootstrapper before calling the actual installer.
+    # Otherwise installation might fail silently
+    Run-Executable "$installerPath" "--quiet --update"
     Run-Executable "$installerPath" "update --passive --wait"
     Remove-Item -Force -Path $installerPath
 }
