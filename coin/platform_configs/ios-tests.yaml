@@ -8,5 +8,7 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-latest-xcode-universal-packaging-build'
-    Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests']
-    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS', 'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
+    Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests', 'UseConfigure']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=debug-and-release -nomake examples -platform macx-ios-clang'
+    ]
