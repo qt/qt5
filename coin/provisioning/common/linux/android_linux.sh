@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -136,6 +136,6 @@ echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86"  \
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
-echo "no" | ./avdmanager create avd -n x86emulator -k "system-images;android-23;google_apis;x86" -c 2048M -f
+echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -k "system-images;android-23;google_apis;x86" -c 2048M -f
 # Purely informative, show the list of avd devices
 ./avdmanager list avd
