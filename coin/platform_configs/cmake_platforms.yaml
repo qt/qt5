@@ -129,11 +129,12 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-latest-xcode-universal-packaging-build'
-    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests']
-    Environment variables: ['TARGET_CONFIGURE_ARGS=-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_SYSTEM_NAME=iOS',
-        'NON_QTBASE_TARGET_CONFIGURE_ARGS=',
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
-        'CONAN_PROFILE=coin/conan/profiles/ci-macos-ios-arm64-clang']
+        'CONAN_PROFILE=coin/conan/profiles/ci-macos-ios-arm64-clang'
+    ]
 -
     Id: 'Windows10_21H2-Mingw11-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
