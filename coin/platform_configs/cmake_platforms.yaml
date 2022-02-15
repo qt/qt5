@@ -12,14 +12,17 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'TestDocs']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DFEATURE_cxx20=ON -DWARNINGS_ARE_ERRORS=OFF -DQT_LIBINFIX=TestInfix -DQT_NAMESPACE=TestNamespace'
+    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
 -
     Id: 'Ubuntu-20.04-host'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DCMAKE_AUTOGEN_VERBOSE=ON -DINPUT_bundled_xcb_xinput=yes -DOpenGL_GL_PREFERENCE=LEGACY'
+    Features: ['Sccache', 'UseConfigure']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+    ]
 -
     Id: 'OpenSUSE-15.3-host'
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
