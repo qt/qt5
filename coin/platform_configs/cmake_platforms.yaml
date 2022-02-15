@@ -121,10 +121,12 @@ Configurations:
     Id: 'RHEL-8.4-host'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DOpenGL_GL_PREFERENCE=LEGACY'
+    Features: ['Packaging', 'Sccache', 'UseConfigure']
+    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc']
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc'
+    ]
 -
     Template: 'qtci-macos-11-x86_64-104'
     Target os: 'IOS_ANY'
