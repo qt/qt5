@@ -49,3 +49,8 @@ xbin/fsevmgr=sbin/fsevmgr
 lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
 xbin/fc-cache=bin/fc-cache
 xbin/fc-match=local/misc_files/fc-match
+
+# network
+lib/libssl.so=usr/lib/libssl.so
+xbin/nslookup=usr/bin/nslookup
+xbin/curl=usr/bin/curl

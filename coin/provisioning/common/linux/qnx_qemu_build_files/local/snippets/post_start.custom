@@ -18,3 +18,8 @@ rm -rf /data/var/share/fonts/NotoSansCJK*
 rm -rf /data/var/share/fonts/NotoSansMonoCJK*
 echo "---> Create fontconfig cache"
 fc-cache &
+
+# Add default route so QNX knows where to send
+# requests for unknown network
+echo "---> Add default route"
+route add default 172.31.1.1

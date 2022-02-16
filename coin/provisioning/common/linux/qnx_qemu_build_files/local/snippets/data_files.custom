@@ -15,3 +15,7 @@ var/share/zoneinfo=usr/share/zoneinfo
 [uid=0 gid=0 dperms=755 type=dir] var/share/fonts
 var/etc/fontconfig/fonts.conf=etc/fontconfig/fonts.conf
 var/share/fonts=usr/share/fonts
+
+var/etc/hosts=local/misc_files/etc/hosts
+var/etc/resolv.conf=local/misc_files/etc/resolv.conf
+var/etc/nsswitch.conf=etc/nsswitch.conf
