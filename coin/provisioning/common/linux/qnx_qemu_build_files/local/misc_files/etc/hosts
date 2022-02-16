@@ -1,0 +1,11 @@
+# Need to add all testserver names statically
+# as current Docker uses Multicast DNS (mDNS) (avahi)
+# Which does not work with QNX qemu
+172.31.1.1  apache2     apache2.test-net.qt.local
+172.31.1.1  squid       squid.test-net.qt.local
+172.31.1.1  vsftpd      vsftpd.test-net.qt.local
+172.31.1.1  ftp-proxy   ftp-proxy.test-net.qt.local
+172.31.1.1  danted      danted.test-net.qt.local
+172.31.1.1  cyrus       cyrus.test-net.qt.local
+172.31.1.1  echo        echo.test-net.qt.local
+172.31.1.1  iptables    iptables.test-net.qt.local
