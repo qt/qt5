@@ -6,6 +6,11 @@ Include: [
     ]
 Configurations:
 -
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'Documentation', 'TestDocs']
+    Configure arguments: '-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DFEATURE_cxx20=ON -DWARNINGS_ARE_ERRORS=OFF -DQT_LIBINFIX=TestInfix -DQT_NAMESPACE=TestNamespace'
+-
     Id: 'Windows10_21H2-Mingw11-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
