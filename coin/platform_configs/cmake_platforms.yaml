@@ -24,7 +24,7 @@ Configurations:
     Id: 'OpenSUSE-15.3-host'
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache']
+    Features: ['Sccache', 'WarningsAreErrors']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON'
     Environment variables: [
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer']
@@ -72,7 +72,7 @@ Configurations:
     Id: 'Windows10_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', 'Conan', "DebugAndRelease"]
+    Features: ['Sccache', 'Conan', "DebugAndRelease", 'WarningsAreErrors']
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
     Environment variables: ['CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64-developer']
 -
@@ -92,7 +92,7 @@ Configurations:
     Id: 'Windows11_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease"]
+    Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors']
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
     Environment variables: [
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
@@ -159,14 +159,14 @@ Configurations:
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
-    Features: ['Sccache']
+    Features: ['Sccache', 'WarningsAreErrors']
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
     Environment variables: ['Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
 -
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'Mingw'
-    Features: ['Sccache', 'InsignificantTests']
+    Features: ['Sccache', 'InsignificantTests', 'WarningsAreErrors']
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
     Environment variables: ['Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
