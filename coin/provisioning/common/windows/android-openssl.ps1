@@ -52,13 +52,13 @@ if (Is64BitWinHost) {
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
 $version = "1.1.1m"
-$ndk_version = "r22b"
-$zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$prebuilt_zip = Get-DownloadLocation ("prebuilt-openssl-${version}-fixes-ndk_root-windows.zip")
+$ndk_version = "r23b"
+$zip = Get-DownloadLocation ("openssl-${version}_fixes-ndk_root.tar.gz")
+$prebuilt_zip = Get-DownloadLocation ("prebuilt-openssl-${version}-for-android-used-ndk-${ndk_version}-windows.zip")
 $sha1 = "c9638d25b9709eda1ac52591c0993af52d6d1206"
-$prebuilt_sha1 = "2bf5354b2264ed80e85fea3705ba434a38fe563e"
+$prebuilt_sha1 = "0aebe55d2436f235e1a24ae9d1030cb6ce8f31da"
 $destination = "C:\Utils\openssl-android-master"
-$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${version}-fixes-ndk_root-windows.zip"
+$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${version}-for-android-used-ndk-${ndk_version}-windows.zip"
 
 # msys unix style paths
 $ndkPath = "/c/Utils/Android/android-ndk-${ndk_version}"

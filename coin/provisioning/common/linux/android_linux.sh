@@ -59,13 +59,13 @@ basePath="http://ci-files01-hki.intra.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
-ndkVersion="r22b"
-ndkFile="android-ndk-$ndkVersion-linux-x86_64.zip"
+ndkVersion="r23b"
+ndkFile="android-ndk-$ndkVersion-linux.zip"
 sdkBuildToolsVersion="31.0.0"
 sdkApiLevel="android-31"
 
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
-ndkSha1="9ece64c7f19763dd67320d512794969930fce9dc"
+ndkSha1="f47ec4c4badd11e9f593a8450180884a927c330d"
 
 # Android automotive
 sdkApiLevelAutomovie="android-30"

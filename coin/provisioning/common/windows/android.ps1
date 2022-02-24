@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -46,10 +46,10 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersion = "r22b"
-$ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows-x86_64.zip"
-$ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows-x86_64.zip"
-$ndkChecksum = "96ba1a049303cf6bf3ee84cfd64d6bcd43486a50"
+$ndkVersion = "r23b"
+$ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows.zip"
+$ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows.zip"
+$ndkChecksum = "6e3fb50022c611a2b13d02f5de5c21cc7206a298"
 $ndkFolder = "c:\Utils\Android\android-ndk-$ndkVersion"
 $ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
 

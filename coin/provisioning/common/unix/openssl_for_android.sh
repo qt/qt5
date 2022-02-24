@@ -82,11 +82,11 @@ PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
 
 if uname -a |grep -q "Darwin"; then
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_m_for-android-ndk-21_darwin.tar.gz"
-    sha="d8c189f8a329263365c73bc471b6c9c68d117e3a"
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1.1.1m-for-android-ndk-r23b-darwin.tar.gz"
+    sha="2624b0c2772e360bbbae7a7f2dc342e4b97f1a2e"
 else
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1_1_1_m_for-android-ndk-21.tar.gz"
-    sha="db028f25ca4d000fe2317c3abfdfa0c234833549"
+    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1.1.1m-for-android-ndk-r23b-linux.tar.gz"
+    sha="f58dcb32b2d3e5edc7e5141ae139a50547805f60"
 fi
 targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
 DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
