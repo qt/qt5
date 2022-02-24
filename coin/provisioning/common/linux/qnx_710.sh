@@ -96,6 +96,11 @@ if [ ! -d "$targetFolder" ]; then
 fi
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
+# Add ssl certificates. Expects Ubuntu 20.04 LTS with ca-certificates package installed
+cp -R /usr/share/ca-certificates "$targetFolder"
+mkdir -p "$targetFolder/etc/ssl/certs"
+cp -PR /etc/ssl/certs/* "$targetFolder/etc/ssl/certs"
+
 sudo chown -R qt:users "$targetPath"
 
 # Verify that we have last files in tars
