@@ -7,10 +7,43 @@ instructions:
     directory: "{{.SourceDir}}"
   - type: ChangeDirectory
     directory: "{{.BuildDir}}"
+
+  - !include "{{qt/qt5}}/prepare_configure_executable.yaml"
+
+  - type: EnvironmentVariable
+    variableName: COIN_CONFIGURE_ARGS
+    variableValue: "{{.Env.CONFIGURE_ARGS}}"
+  - type: EnvironmentVariable
+    variableName: COIN_CMAKE_ARGS
+    # Use unix separators even on Windows, to avoid escaping issues in the configure script.
+    variableValue: "{{.Env.CMAKE_ARGS}} {{.Env.COMMON_CMAKE_ARGS}} -DCMAKE_INSTALL_PREFIX:PATH={{unixPathSeparators .InstallDir}}"
+  - type: EnvironmentVariable
+    variableName: CONFIGURE_ENV_PREFIX
+    variableValue: "{{.Env.ENV_PREFIX}}"
+
   - type: ExecuteCommand
-    command: "{{.Env.ENV_PREFIX}} cmake {{.Env.CONFIGURE_ARGS}} -DCMAKE_INSTALL_PREFIX:PATH={{.InstallDir}} -DQT_BUILD_TESTS=OFF {{.SourceDir}}"
+    # There is no SourceDir on purpose, because configure is called directly from qtbase,
+    # so the script knows it's own source dir.
+    # TODO: Consider removing these instructions, and using the ones in qtbase/call_configure_qtbase.yaml
+    # once all dependencies are propagated.
+    command: "{{.Env.CONFIGURE_ENV_PREFIX}} {{.Env.CONFIGURE_EXECUTABLE}} {{.Env.COIN_CONFIGURE_ARGS}} -- {{.Env.COIN_CMAKE_ARGS}}"
     executeCommandArgumentSplitingBehavior: SplitAfterVariableSubstitution
     maxTimeInSeconds: 6000
     maxTimeBetweenOutput: 1200
     userMessageOnFailure: >
       Failed to call cmake.
+    enable_if:
+      condition: property
+      property: features
+      contains_value: UseConfigure
+  - type: ExecuteCommand
+    command: "{{.Env.CONFIGURE_ENV_PREFIX}} {{.Env.CONFIGURE_EXECUTABLE}} {{.SourceDir}} {{.Env.COIN_CONFIGURE_ARGS}} {{.Env.COIN_CMAKE_ARGS}}"
+    executeCommandArgumentSplitingBehavior: SplitAfterVariableSubstitution
+    maxTimeInSeconds: 6000
+    maxTimeBetweenOutput: 1200
+    userMessageOnFailure: >
+      Failed to call cmake.
+    disable_if:
+      condition: property
+      property: features
+      contains_value: UseConfigure
