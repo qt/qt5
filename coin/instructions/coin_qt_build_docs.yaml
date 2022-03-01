@@ -1,0 +1,33 @@
+type: Group
+instructions:
+  - type: ExecuteCommand
+    command: "{{.Env.ENV_PREFIX}} cmake --build . --target qtbase/src/plugins/platforms/all qtbase/src/plugins/sqldrivers/all qttools/all --parallel -v"
+    maxTimeInSeconds: 12000
+    maxTimeBetweenOutput: 1200
+    userMessageOnFailure: >
+      Failed to build sources.
+  - type: ExecuteCommand
+    command: "{{.Env.ENV_PREFIX}} cmake --build . --target docs -v"
+    maxTimeInSeconds: 12000
+    maxTimeBetweenOutput: 1200
+    userMessageOnFailure: >
+      Failed to generate docs.
+  - type: ExecuteCommand
+    command: "cp -r {{.BuildDir}}/qtbase/doc/config {{.BuildDir}}/doc"
+    maxTimeInSeconds: 12000
+    maxTimeBetweenOutput: 1200
+    userMessageOnFailure: "Failed to copy qtbase/doc/config to documentation directory."
+  - type: ExecuteCommand
+    command: "cp -r {{.BuildDir}}/qtbase/doc/global {{.BuildDir}}/doc"
+    maxTimeInSeconds: 12000
+    maxTimeBetweenOutput: 1200
+    userMessageOnFailure: "Failed to copy qtbase/doc/global to documentation directory."
+  - type: UploadArtifact
+    archiveDirectory: '{{.BuildDir}}/doc'
+    transferType: UploadModuleDocumentation
+    maxTimeInSeconds: 1800
+    maxTimeBetweenOutput: 1800
+enable_if:
+  condition: property
+  property: features
+  contains_value: "Documentation"
