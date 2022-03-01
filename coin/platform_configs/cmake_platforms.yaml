@@ -42,7 +42,9 @@ Configurations:
     Features: ['Sccache']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/linux-developer-x86_64-gcc']
+        'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
+        'CONAN_PROFILE=coin/conan/profiles/linux-developer-x86_64-gcc'
+    ]
 -
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
     Compiler: 'GCC'
