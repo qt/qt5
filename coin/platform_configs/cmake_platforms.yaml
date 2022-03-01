@@ -27,7 +27,9 @@ Configurations:
     Features: ['Sccache', 'WarningsAreErrors']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer']
+        'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer'
+    ]
 -
     Template: 'qtci-linux-SLES-15_SP3-x86_64-51'
     Compiler: 'GCC'
