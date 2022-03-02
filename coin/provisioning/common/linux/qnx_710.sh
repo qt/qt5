@@ -60,9 +60,9 @@ DownloadAndExtract () {
     rm -rf $file
 }
 
-aarch64le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-aarch64le.cmake"
-armv7le_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-armv7le.cmake"
-x8664_toolchain="${BASH_SOURCE%/*}/cmake_toolchain_files/qnx-toolchain-x8664.cmake"
+aarch64le_toolchain="${BASH_SOURCE%/*}/../shared/cmake_toolchain_files/qnx-toolchain-aarch64le.cmake"
+armv7le_toolchain="${BASH_SOURCE%/*}/../shared/cmake_toolchain_files/qnx-toolchain-armv7le.cmake"
+x8664_toolchain="${BASH_SOURCE%/*}/../shared/cmake_toolchain_files/qnx-toolchain-x8664.cmake"
 QNX_qemu_bld_files_dir="${BASH_SOURCE%/*}/qnx_qemu_build_files/"
 
 targetFolder="/opt/"
