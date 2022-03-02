@@ -84,6 +84,9 @@ installPackages+=(python2-devel python2-pip)
 # Python 3 with python-devel, pip and virtualenv
 installPackages+=(python36)
 installPackages+=(python36-devel)
+# Python 3.8 for pyside. Qt for Python support for Python 3.6 will be deprecated in within pyside6.3
+installPackages+=(python38)
+installPackages+=(python38-devel)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
