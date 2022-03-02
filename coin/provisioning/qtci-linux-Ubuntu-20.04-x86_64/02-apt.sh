@@ -156,6 +156,8 @@ installPackages+=(libicu-dev)
 installPackages+=(zlib1g-dev)
 installPackages+=(zlib1g)
 installPackages+=(openjdk-8-jdk)
+#Java 11 for Android
+installPackages+=(openjdk-11-jdk)
 installPackages+=(libgtk-3-dev)
 installPackages+=(ninja-build)
 installPackages+=(libssl-dev)
