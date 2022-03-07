@@ -46,15 +46,16 @@ if (Is64BitWinHost) {
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
 $version = "1.1.1m"
+$ndk_version = "r22b"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$prebuilt_zip = Get-DownloadLocation ("openssl-android-master-$version.zip")
+$prebuilt_zip = Get-DownloadLocation ("prebuilt-openssl-${version}-for-android-ndk-${ndk_version}-windows.zip")
 $sha1 = "39d424c4411e45f1570073d7a71b1830b96007ca"
-$prebuilt_sha1 = "07fad2a44ffa90261a779782bd64fe2304487945"
+$prebuilt_sha1 = "860a7e675bf177e1d929d7594ef4efcf07838327"
 $destination = "C:\Utils\openssl-android-master"
-$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-android-master-$version.zip"
+$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${version}-for-android-ndk-${ndk_version}-windows.zip"
 
 # msys unix style paths
-$ndkPath = "/c/Utils/Android/android-ndk-r22b"
+$ndkPath = "/c/Utils/Android/android-ndk-${ndk_version}"
 $openssl_path = "/c/Utils/openssl-android-master"
 $cc_path = "$ndkPath/toolchains/llvm/prebuilt/windows-x86_64/bin"
 if ((Test-Path $prebuilt_url)) {
