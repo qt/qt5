@@ -164,6 +164,8 @@ sudo dnf -y module install nodejs:12
 # working, but we can use installed pip
 sudo pip3 install --upgrade pip
 sudo pip3 install virtualenv wheel
+# Just make sure we have virtualenv to run with python3.8 -m virtualenv
+python3.8 -m pip install virtualenv --user
 
 sudo /usr/bin/pip3 install wheel
 # Install all needed packages in a special wheel cache directory
