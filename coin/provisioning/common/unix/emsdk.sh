@@ -41,8 +41,8 @@
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
-version="3.0.0"
-versionNode="v14.15.5"
+version="3.1.6"
+versionNode="v14.18.2"
 
 mkdir -p /opt
 cd /opt
