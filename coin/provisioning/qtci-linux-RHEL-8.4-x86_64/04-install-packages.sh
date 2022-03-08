@@ -167,11 +167,14 @@ sudo dnf -y module install nodejs:12
 sudo pip3 install --upgrade pip
 sudo pip3 install virtualenv wheel
 # Just make sure we have virtualenv to run with python3.8 -m virtualenv
-python3.8 -m pip install virtualenv --user
+sudo python3.8 -m pip install virtualenv wheel
 
 sudo /usr/bin/pip3 install wheel
 # Install all needed packages in a special wheel cache directory
 /usr/bin/pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
+
+# Install 3.8 compatible wheels
+python3.8 -m pip wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
