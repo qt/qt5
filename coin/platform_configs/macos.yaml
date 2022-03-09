@@ -19,6 +19,14 @@ Configurations:
             'CONAN_PROFILE=coin/conan/profiles/ci-macos-universal-clang'
         ]
 
+    -
+        Id: 'macos-latest-xcode-arm64-universal-build'
+        Template: 'qtci-macos-12-arm64'
+        Compiler: 'Clang'
+        Target arch: 'x86_64-arm64'
+        Features: ['DoNotRunTests', 'WarningsAreErrors']
+        Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON'
+
     # Test on all supported macOS versions (deployment targets)
 
     -
@@ -57,6 +65,18 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    -
+        Id: 'macos-12-arm64-arm64-universal-build-tests'
+        Template: 'qtci-macos-12-arm64'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly']
+        Platform dependency: 'macos-latest-xcode-arm64-universal-build'
+    -
+        Id: 'macos-12-x86_64-arm64-universal-build-tests'
+        Template: 'qtci-macos-12-x86_64-102'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly']
+        Platform dependency: 'macos-latest-xcode-arm64-universal-build'
 
     # =========================================================================
     # Developer build. Single architecture builds.
