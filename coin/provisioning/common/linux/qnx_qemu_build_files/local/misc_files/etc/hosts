@@ -13,3 +13,7 @@
 # For network test server which is still used on some test
 # like networkselftest for local dns resolution
 172.31.1.1  qt-test-server
+
+# QtCoap testservers
+172.31.1.1  californium     californium.test-net.qt.local
+172.31.1.1  freecoap        freecoap.test-net.qt.local
