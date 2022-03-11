@@ -1,6 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml,
-    integrity.yaml
+    integrity.yaml,
+    linux_android_tests.yaml
 ]
 Configurations: []
