@@ -2,6 +2,10 @@
 # 3.16 is the absolute minimum though.
 cmake_minimum_required(VERSION 3.16...3.20)
 
+
+# set QT_SUPERBUILD early, so that qtbase/.cmake.conf can check it
+set(QT_SUPERBUILD TRUE)
+
 # Include qtbase's .cmake.conf for access to QT_REPO_MODULE_VERSION
 set(__qt6_qtbase_src_path "${CMAKE_CURRENT_SOURCE_DIR}/qtbase")
 include("${__qt6_qtbase_src_path}/.cmake.conf")
@@ -37,7 +41,6 @@ include(ECMOptionalAddSubdirectory)
 if (NOT QT_BUILD_STANDALONE_TESTS)
     set(QT_NO_CREATE_TARGETS TRUE)
 endif()
-set(QT_SUPERBUILD TRUE)
 
 # Get submodule list if not already defined
 if(NOT QT_BUILD_SUBMODULES)
