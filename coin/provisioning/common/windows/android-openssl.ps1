@@ -54,11 +54,11 @@ if (Is64BitWinHost) {
 $version = "1.1.1m"
 $ndk_version = "r22b"
 $zip = Get-DownloadLocation ("openssl-$version.tar.gz")
-$prebuilt_zip = Get-DownloadLocation ("prebuilt-openssl-${version}-for-android-ndk-${ndk_version}-windows.zip")
-$sha1 = "39d424c4411e45f1570073d7a71b1830b96007ca"
-$prebuilt_sha1 = "860a7e675bf177e1d929d7594ef4efcf07838327"
+$prebuilt_zip = Get-DownloadLocation ("prebuilt-openssl-${version}-fixes-ndk_root-windows.zip")
+$sha1 = "c9638d25b9709eda1ac52591c0993af52d6d1206"
+$prebuilt_sha1 = "2bf5354b2264ed80e85fea3705ba434a38fe563e"
 $destination = "C:\Utils\openssl-android-master"
-$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${version}-for-android-ndk-${ndk_version}-windows.zip"
+$prebuilt_url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${version}-fixes-ndk_root-windows.zip"
 
 # msys unix style paths
 $ndkPath = "/c/Utils/Android/android-ndk-${ndk_version}"
@@ -70,7 +70,8 @@ if ((Test-Path $prebuilt_url)) {
     Extract-7Zip $prebuilt_zip C:\Utils
     Remove $prebuilt_zip
 } else {
-    Download https://www.openssl.org/source/openssl-$version.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version.tar.gz $zip
+    # openssl-${version}_fixes-ndk_root.tar.gz package includes fixes from https://github.com/openssl/openssl/pull/17322 and string ANDROID_NDK_HOME is replaced with ANDROID_NDK_ROOT in Configurations/15-android.conf
+    Download \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${version}_fixes-ndk_root.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${version}_fixes-ndk_root.tar.gz $zip
     Verify-Checksum $zip $sha1
 
     Extract-7Zip $zip C:\Utils\tmp
