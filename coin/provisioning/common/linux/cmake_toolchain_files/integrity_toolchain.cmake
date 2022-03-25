@@ -59,38 +59,61 @@ endif()
 
 set(CMAKE_FIND_ROOT_PATH ${TARGET_ROOT_PATH})
 
+#graphical lib paths
+set(EGL_LIBRARY_GRAPHIC_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/multimedia/graphics)
+set(EGL_LIBRARY_PLATFORM_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/platform)
+set(EGL_LIBRARY_BASE_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/base)
+set(EGL_LIBRARY_CHK_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/integrity/libs/arm64/chk)
+set(EGL_LIBRARY_PREBUILD_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt)
+set(EGL_LIBRARY_OPENWFD_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/multimedia/display)
+
 #base
-set(CMAKE_C_FLAGS  "-bsp $ENV{INTEGRITY_BSP} -os_dir $ENV{INTEGRITY_DIR} -non_shared -startfile_dir=$ENV{INTEGRITY_DIR}/libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/arm64/$ENV{INTEGRITY_BUILD_TARGET} -bigswitch -DINTEGRITY -llibivfs.a -llibposix.a -llibpaged_alloc.a -llibnet.a -llibsocket.a")
+set(CMAKE_C_FLAGS  "-bsp $ENV{INTEGRITY_BSP} -os_dir $ENV{INTEGRITY_DIR} -non_shared -startfile_dir=$ENV{INTEGRITY_DIR}/libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/arm64/$ENV{INTEGRITY_BUILD_TARGET} -bigswitch -DINTEGRITY -llibposix.a")
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Omaxdebug")
-set(CMAKE_C_FLAGS_RELEASE "-Ospeed -Olink -Omax")
+set(CMAKE_C_FLAGS_RELEASE "-Ospeed -Olink -Omax -no_uvfd")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --signed_fields --diag_suppress=1,82,228,236,381,611,961,997,1795,1931,1974,3148 --c++17 --thread_local_storage --exceptions --defer_parse_function_templates")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} --signed_fields --no_implicit_include --link_once_templates -non_shared --new_outside_of_constructor -I $ENV{QC_MULTIMEDIA_INC_DIR}")
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -frigor=accurate --signed_fields --no_implicit_include --link_once_templates -non_shared --new_outside_of_constructor --commons -I $ENV{QC_MULTIMEDIA_INC_DIR}")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${TARGET_ROOT_PATH} -L${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/graphics -L${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/rel/libs/base -L${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt -L${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/rel/libs/platform -L${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/display/ --commons")
 
 set(CMAKE_FIND_LIBRARY_PREFIXES "lib")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_EXE_LINKER_FLAGS "")
 
-set(QT_CFLAGS_OPTIMIZE_FULL "-Ospeed -olink -Omax")
-
+set(QT_CFLAGS_OPTIMIZE_FULL "-Ospeed -Olink -Omax")
 set(GLSLANG_OSDEP_PATH ../3rdparty/glslang/glslang/OSDependent/Unix)
-
-#set(QT_DEBUG_OPTIMIZATION_FLAGS "1")
-#set (QT_CMAKE_DEBUG_EXTEND_TARGET "1")
-
-set(EGL_INCLUDE_DIR $ENV{GL_INC_DIR})
+set(GL_INC_DIR ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/include/public)
 
 set(PKG_EGL_LIBRARY_DIRS ${TARGET_ROOT_PATH})
-set(EGL_LIBRARY ${TARGET_ROOT_PATH}/../libeglmegapack.a)
+set(EGL_INCLUDE_DIR ${GL_INC_DIR})
 
-#set(EGL_LIBRARY libESXEGL_Adreno.a libadreno_utils.a libESXGLESv2_Adreno.a libadreno_utils.a libGSLUser.a libOSUser.a libpanel.a libivfs.a libposix.a libpmem.a libtzbsp.a libpaged_alloc.a libglnext-llvm.a libopenwfd.a libplanedef.a liblogger.a libnet.a libsocket.a librfs_client.a libshm_client.a libmmosalrfs.a libmmosalfile.a libOSAbstraction.a)
+set(EGL_LIBRARY "${EGL_LIBRARY_GRAPHIC_PATH}/libESXEGL_Adreno.a")
 
-set(GLESv2_LIBRARY ${EGL_LIBRARY})
-set(GLESv2_INCLUDE_DIR $ENV{GL_INC_DIR})
-set(OPENGL_INCLUDE_DIR $ENV{GL_INC_DIR})
+set(GLESv2_INCLUDE_DIR ${GL_INC_DIR})
+set(GLESv2_LIBRARY "${EGL_LIBRARY_GRAPHIC_PATH}/libESXGLESv2_Adreno.a")
+
+set(IntegrityPlatformGraphics_INCLUDE_DIR ${GL_INC_DIR})
+set(IntegrityPlatformGraphics_LIBRARY "${EGL_LIBRARY_GRAPHIC_PATH}/libadreno_utils.a")
+set(IntegrityPlatformGraphics_LIBRARIES_PACK
+    "${EGL_LIBRARY_BASE_PATH}/libplanedef.a"
+    "${EGL_LIBRARY_BASE_PATH}/libmmosalfile.a"
+    "${EGL_LIBRARY_BASE_PATH}/libOSAbstraction.a"
+    "${EGL_LIBRARY_OPENWFD_PATH}/libopenwfd.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libOSUser.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libpanel.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libGSLUser.a"
+    "${EGL_LIBRARY_PREBUILD_PATH}/libglnext-llvm.a"
+    "${EGL_LIBRARY_PLATFORM_PATH}/libpmem.a"
+    "${EGL_LIBRARY_CHK_PATH}/libposix.a"
+    "${EGL_LIBRARY_CHK_PATH}/libivfs.a"
+)
+
+list(APPEND _qt_igy_gui_libs
+    "${GLESv2_LIBRARY}"
+    "${IntegrityPlatformGraphics_LIBRARY}"
+    "${IntegrityPlatformGraphics_LIBRARIES_PACK}")
+
+set(OPENGL_INCLUDE_DIR ${GL_INC_DIR})
+set(OPENGL_opengl_LIBRARY ${EGL_LIBRARY})
