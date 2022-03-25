@@ -13,6 +13,17 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-webassembly-x86_64-clang'
     ]
 -
+    Id: 'webassembly-thread-asyncify'
+    Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'OpenSUSE-15.3-host'
+    Features: ['Sccache', 'DisableTests']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_thread=ON -DQT_QMAKE_DEVICE_OPTIONS="QT_EMSCRIPTEN_ASYNCIFY=1"',
+        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+-
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Target os: 'WebAssembly'
     Compiler: 'Mingw'
