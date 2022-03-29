@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -49,3 +49,7 @@ sudo rpm --import /tmp/linux_signing_key.pub
 # Update the repo cache of zypper and install Chrome
 sudo zypper ref -f
 sudo zypper -nq install --no-confirm google-chrome-stable
+
+# Install Chromedriver Chromium
+sudo zypper -nq install chromedriver
+
