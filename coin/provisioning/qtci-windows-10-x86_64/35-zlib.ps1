@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -36,19 +36,26 @@
 # This script will install prebuilt ZLIB for IFW
 
 # Prebuilt instructions:
-# Download https://zlib.net/zlib1211.zip
+# Download https://zlib.net/zlib1212.zip
 # Extract to C:\Utils
 # cd C:\Utils\zlib-$version
-# (Get-Content C:\Utils\zlib-$version\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version\win32\makefile.msc
-# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# powershell: (Get-Content C:\Utils\zlib-$version\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version\win32\makefile.msc
+# x86: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# x64: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 # nmake -f win32\makefile.msc
 
-$version = "1.2.11"
-$sha1 = "e1992ff9ad58ad6631a84c1557e2a158ec90c5ce"
+$version = "1.2.12"
+$sha1 = "d8b9c568ea7a976af1e8de52dfb9a2c55daed0c8"
 Download http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-prebuilt.zip C:\Windows\Temp\zlib-$version.zip
 Verify-Checksum "C:\Windows\Temp\zlib-$version.zip" "$sha1"
 Extract-7Zip "C:\Windows\Temp\zlib-$version.zip" C:\Utils
 Remove-Item -Path "C:\Windows\Temp\zlib-$version.zip"
+
+$sha1_64 = "8cd758804fbbe33006a09134bedaa95e492e034e"
+Download http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt.zip C:\Windows\Temp\zlib-$version-x64.zip
+Verify-Checksum "C:\Windows\Temp\zlib-$version-x64.zip" "$sha1_64"
+Extract-7Zip "C:\Windows\Temp\zlib-$version-x64.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\zlib-$version-x64.zip"
 
 Write-Output "ZLIB = $version" >> ~\versions.txt
 

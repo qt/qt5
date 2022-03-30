@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -42,7 +42,9 @@
 # cd C:\Utils\xz-$version
 # copy "C:\Utils\xz-$version\windows\vs2017\*" "C:\Utils\xz-$version\windows\vs2015\"
 # Run in powershell: (Get-Content C:\Utils\xz-$version\windows\vs2015\liblzma.vcxproj) | ForEach-Object { $_ -replace "<PlatformToolset>v141</PlatformToolset>", "<PlatformToolset>v140</PlatformToolset>" } | Set-Content C:\Utils\xz-$version\windows\vs2015\liblzma.vcxproj
-# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# Exit powershell
+# x86: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# x64: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 # msbuild /property:Configuration=ReleaseMT windows/vs2015/liblzma.vcxproj
 
 $version = "5.2.5"
@@ -51,6 +53,12 @@ Download http://ci-files01-hki.intra.qt.io/input/windows/xz-$version-prebuilt.zi
 Verify-Checksum "C:\Windows\Temp\xz-$version.zip" "$sha1"
 Extract-7Zip "C:\Windows\Temp\xz-$version.zip" C:\Utils
 Remove-Item -Path "C:\Windows\Temp\xz-$version.zip"
+
+$sha1_64 = "83c124bf2b32771a3ba89ab78294802d297b23ea"
+Download http://ci-files01-hki.intra.qt.io/input/windows/xz-$version-x64-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/xz-$version-x64-prebuilt.zip C:\Windows\Temp\xz-$version-x64.zip
+Verify-Checksum "C:\Windows\Temp\xz-$version-x64.zip" "$sha1_64"
+Extract-7Zip "C:\Windows\Temp\xz-$version-x64.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\xz-$version-x64.zip"
 
 Write-Output "XZ = $version" >> ~\versions.txt
 

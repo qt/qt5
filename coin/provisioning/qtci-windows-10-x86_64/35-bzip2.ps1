@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: http://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -40,14 +40,24 @@
 # Extract to C:\Utils
 # cd C:\Utils\bzip2-$version
 # Run in powershell: (Get-Content C:\Utils\bzip2-$version\makefile.msc) | ForEach-Object { $_ -replace "-DWIN32 -MD -Ox -D_FILE_OFFSET_BITS=64 -nologo", "-DWIN32 -MT -Ox -D_FILE_OFFSET_BITS=64 -nologo" } | Set-Content C:\Utils\bzip2-$version\makefile.msc
-# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# exit powershell
+# x86: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+# x64: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 # nmake -f makefile.msc
 
 $version = "1.0.8"
+# Install x86 version
 $sha1 = "4397208f4c4348d6662c9aa459cb3e508a872d42"
 Download http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-prebuilt.zip C:\Windows\Temp\bzip2-$version.zip
 Verify-Checksum "C:\Windows\Temp\bzip2-$version.zip" "$sha1"
 Extract-7Zip "C:\Windows\Temp\bzip2-$version.zip" C:\Utils
 Remove-Item -Path "C:\Windows\Temp\bzip2-$version.zip"
+
+#Install x64 version
+$sha1_64 = "887bb6cfd6a25b3c9b8303698a27ea56fe726758"
+Download http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt.zip C:\Windows\Temp\bzip2-$version-x64.zip
+Verify-Checksum "C:\Windows\Temp\bzip2-$version-x64.zip" "$sha1_64"
+Extract-7Zip "C:\Windows\Temp\bzip2-$version-x64.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\bzip2-$version-x64.zip"
 
 Write-Output "Bzip2 = $version" >> ~\versions.txt
