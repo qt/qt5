@@ -1,0 +1,15 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Template: 'qtci-macos-12-x86_64-102'
+    Compiler: 'Clang'
+    Features: ['DisableTests']
+-
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['DisableTests']
+-
+    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
