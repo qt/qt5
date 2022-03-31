@@ -3,12 +3,12 @@ Module only: True
 Configurations:
 -
     Template: 'qtci-windows-10-x86_64-51'
-    Compiler: 'MSVC2015'
-    Target arch: 'x86'
+    Compiler: 'MSVC2019'
+    Target arch: 'x86_64'
     Features: ['Packaging']
-    Configure arguments: '-opensource -confirm-license -verbose -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-icu -mp -openssl-linked OPENSSL_LIBS="-llibssl -llibcrypto -lUser32 -lWs2_32 -lAdvapi32 -lCrypt32" -I %STATIC_OPENSSL_INCLUDE_x86% -L %STATIC_OPENSSL_LIB_x86% -prefix c:\Users\qt\work\install -static-runtime'
-    Environment variables: ['TARGET_ARCHITECTURE=amd64_x86', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;', 'LLVM_INSTALL_DIR=', 'LLVM_INSTALL_DIR_msvc=', 'QDOC_USE_STATIC_LIBCLANG=']
-    Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat', 'amd64_x86']
+    Configure arguments: '-opensource -confirm-license -verbose -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-icu -mp -openssl-linked OPENSSL_LIBS="-llibssl -llibcrypto -lUser32 -lWs2_32 -lAdvapi32 -lCrypt32" -I %STATIC_OPENSSL_INCLUDE_x64% -L %STATIC_OPENSSL_LIB_x64% -prefix c:\Users\qt\work\install -static-runtime'
+    Environment variables: ['TARGET_ARCHITECTURE=x86_64', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;', 'LLVM_INSTALL_DIR=', 'LLVM_INSTALL_DIR_msvc=', 'QDOC_USE_STATIC_LIBCLANG=']
+    Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
     QmakeArguments: [
         'qtdeclarative': '-no-feature-d3d12'
     ]
