@@ -148,7 +148,7 @@ function Download
         if ($CachedUrl.StartsWith("http")) {
             Invoke-WebRequest -UseBasicParsing $CachedUrl -OutFile $Destination
         } else {
-            Copy-Item $CachedUrl $Destination
+            Copy-Item $CachedUrl $Destination -errorAction stop
         }
     } catch {
         Write-Host "Cached download failed: Downloading from official location: $OfficialUrl"
