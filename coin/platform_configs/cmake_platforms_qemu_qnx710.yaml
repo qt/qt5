@@ -11,7 +11,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DFEATURE_developer_build=ON -DQT_FEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
         'QT_CMAKE_DIR=/opt/cmake-3.21.1/bin',
-        "TESTARGS='{{.Env.QNX_QEMU_SSH}} LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen'",
+        "TESTARGS='{{.Env.QNX_QEMU_SSH}} LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci'",
         "TESTRUNNER='python3 {{.SourceDir}}/coin_qnx_qemu_runner.py'",
         "COIN_CTEST_RESULTSDIR=/home/qt/work",
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=']
