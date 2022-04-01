@@ -2,6 +2,10 @@ Version: 2
 Module only: True
 Configurations:
 -
+    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Compiler: 'MSVC2019'
+    Features: ['DisableTests']
+-
     Template: 'qtci-macos-12-x86_64-102'
     Compiler: 'Clang'
     Features: ['DisableTests']
