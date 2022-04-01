@@ -37,13 +37,25 @@
 
 # Prebuilt instructions:
 # Download https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz
-# Extract to C:\Utils
-# cd C:\Utils\bzip2-$version
-# Run in powershell: (Get-Content C:\Utils\bzip2-$version\makefile.msc) | ForEach-Object { $_ -replace "-DWIN32 -MD -Ox -D_FILE_OFFSET_BITS=64 -nologo", "-DWIN32 -MT -Ox -D_FILE_OFFSET_BITS=64 -nologo" } | Set-Content C:\Utils\bzip2-$version\makefile.msc
-# exit powershell
+#
+# MSVC 2015 used with x86
+# x86: Extract sources to C:\Utils
+# x86: cd C:\Utils\bzip2-$version
+# x86: start powershell
+# x86: (Get-Content C:\Utils\bzip2-$version\makefile.msc) | ForEach-Object { $_ -replace "-DWIN32 -MD -Ox -D_FILE_OFFSET_BITS=64 -nologo", "-DWIN32 -MT -Ox -D_FILE_OFFSET_BITS=64 -nologo" } | Set-Content C:\Utils\bzip2-$version\makefile.msc
+# x86: exit powershell
 # x86: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-# x64: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
-# nmake -f makefile.msc
+# x86: nmake -f makefile.msc
+#
+# MSVC 2019 used with x64
+# x64: Extract sources to C:\Utils
+# x64: rename source folder to C:\Utils\bzip2-$version-x64
+# x64: start powershell
+# x64: (Get-Content C:\Utils\bzip2-$version-x64\makefile.msc) | ForEach-Object { $_ -replace "-DWIN32 -MD -Ox -D_FILE_OFFSET_BITS=64 -nologo", "-DWIN32 -MT -Ox -D_FILE_OFFSET_BITS=64 -nologo" } | Set-Content C:\Utils\bzip2-$version-x64\makefile.msc
+# x64: exit powershell
+# x64: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" x64
+# x64: nmake -f makefile.msc
+
 
 $version = "1.0.8"
 # Install x86 version
@@ -54,10 +66,10 @@ Extract-7Zip "C:\Windows\Temp\bzip2-$version.zip" C:\Utils
 Remove-Item -Path "C:\Windows\Temp\bzip2-$version.zip"
 
 #Install x64 version
-$sha1_64 = "887bb6cfd6a25b3c9b8303698a27ea56fe726758"
-Download http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt.zip C:\Windows\Temp\bzip2-$version-x64.zip
-Verify-Checksum "C:\Windows\Temp\bzip2-$version-x64.zip" "$sha1_64"
-Extract-7Zip "C:\Windows\Temp\bzip2-$version-x64.zip" C:\Utils
-Remove-Item -Path "C:\Windows\Temp\bzip2-$version-x64.zip"
+$sha1_64 = "e4416598c8ba0aa1725a2bfab5a86f2ccd5effc3"
+Download http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt-msvc2019.zip http://ci-files01-hki.intra.qt.io/input/windows/bzip2-$version-x64-prebuilt-msvc2019.zip C:\Windows\Temp\bzip2-$version-x64-prebuilt-msvc2019.zip
+Verify-Checksum "C:\Windows\Temp\bzip2-$version-x64-prebuilt-msvc2019.zip" "$sha1_64"
+Extract-7Zip "C:\Windows\Temp\bzip2-$version-x64-prebuilt-msvc2019.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\bzip2-$version-x64-prebuilt-msvc2019.zip"
 
 Write-Output "Bzip2 = $version" >> ~\versions.txt

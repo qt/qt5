@@ -37,12 +37,25 @@
 
 # Prebuilt instructions:
 # Download https://zlib.net/zlib1212.zip
-# Extract to C:\Utils
-# cd C:\Utils\zlib-$version
-# powershell: (Get-Content C:\Utils\zlib-$version\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version\win32\makefile.msc
+#
+# MSVC 2015 used with x86
+# x86: Extract sources to C:\Utils
+# x86: cd C:\Utils\zlib-$version
+# x86: start powershell
+# x86: (Get-Content C:\Utils\zlib-$version\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version\win32\makefile.msc
+# x86: exit powershell
 # x86: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-# x64: "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
-# nmake -f win32\makefile.msc
+# x86: nmake -f win32\makefile.msc
+#
+# MSVC 2019 used with x64
+# x64: Extract sources to C:\Utils
+# x64: rename source folder to C:\Utils\zlib-$version-x64
+# x64: cd C:\Utils\zlib-$version-x64
+# x64: start powershell
+# x64: (Get-Content C:\Utils\zlib-$version-x64\win32\makefile.msc) | ForEach-Object { $_ -replace "-MD -W3 -O2 -Oy- -Zi", "-MT -W3 -O2 -Oy- -Zi" } | Set-Content C:\Utils\zlib-$version-x64\win32\makefile.msc
+# x64: exit powershell
+# x64: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" x64
+# x64: nmake -f win32\makefile.msc
 
 $version = "1.2.12"
 $sha1 = "d8b9c568ea7a976af1e8de52dfb9a2c55daed0c8"
@@ -51,11 +64,11 @@ Verify-Checksum "C:\Windows\Temp\zlib-$version.zip" "$sha1"
 Extract-7Zip "C:\Windows\Temp\zlib-$version.zip" C:\Utils
 Remove-Item -Path "C:\Windows\Temp\zlib-$version.zip"
 
-$sha1_64 = "8cd758804fbbe33006a09134bedaa95e492e034e"
-Download http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt.zip http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt.zip C:\Windows\Temp\zlib-$version-x64.zip
-Verify-Checksum "C:\Windows\Temp\zlib-$version-x64.zip" "$sha1_64"
-Extract-7Zip "C:\Windows\Temp\zlib-$version-x64.zip" C:\Utils
-Remove-Item -Path "C:\Windows\Temp\zlib-$version-x64.zip"
+$sha1_64 = "e28670ccbfee9e7adb916a7cdc139b85dd6e311b"
+Download http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt-msvc2019.zip http://ci-files01-hki.intra.qt.io/input/windows/zlib-$version-x64-prebuilt-msvc2019.zip C:\Windows\Temp\zlib-$version-x64-prebuilt-msvc2019.zip
+Verify-Checksum "C:\Windows\Temp\zlib-$version-x64-prebuilt-msvc2019.zip" "$sha1_64"
+Extract-7Zip "C:\Windows\Temp\zlib-$version-x64-prebuilt-msvc2019.zip" C:\Utils
+Remove-Item -Path "C:\Windows\Temp\zlib-$version-x64-prebuilt-msvc2019.zip"
 
 Write-Output "ZLIB = $version" >> ~\versions.txt
 
