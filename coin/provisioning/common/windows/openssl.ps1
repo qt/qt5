@@ -92,13 +92,26 @@ Set-EnvironmentVariable "OPENSSL_LIB_x86" "$installFolder\lib"
 # For installer framework we need static OpenSSL .
 # For static runtime build we need static only version from openssl libs
 
-$static_lib_url = "http://ci-files01-hki.intra.qt.io/input/openssl/opensslx86_static-1-1.1d.7z"
-$static_package = "C:\Windows\Temp\opensslx86_static-1-1.1d.7z"
-Download $static_lib_url $static_lib_url $static_package
-Extract-7Zip $static_package C:\Utils\
-Set-EnvironmentVariable "STATIC_OPENSSL_LIB_x86" "C:\Utils\opensslx86_static\lib"
-Set-EnvironmentVariable "STATIC_OPENSSL_INCLUDE_x86" "C:\Utils\opensslx86_static\include"
-Remove-Item -Path $static_package
+function InstallStaticOpenssl {
+
+    Param (
+        [string]$compressed_static_openssl,
+        [string]$arch
+    )
+
+    $url = "http://ci-files01-hki.intra.qt.io/input/openssl/$compressed_static_openssl.7z"
+    $static_openssl_package = "C:\Windows\Temp\$compressed_static_openssl.7z"
+    Download $url $url $static_openssl_package
+    Extract-7Zip $static_openssl_package C:\Utils\
+    Set-EnvironmentVariable "STATIC_OPENSSL_LIB_$arch" "C:\Utils\$compressed_static_openssl\lib"
+    Set-EnvironmentVariable "STATIC_OPENSSL_INCLUDE_$arch" "C:\Utils\$compressed_static_openssl\include"
+    Remove-Item -Path $static_openssl_package
+}
+
+# opensslx86_static.7z is same package as opensslx86_static-1-1.1d
+InstallStaticOpenssl "opensslx86_static" "x86"
+InstallStaticOpenssl "opensslx64_static-1_1_1l_msvc2019" "x64"
+
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 Write-Output "OpenSSL = $version" >> ~/versions.txt
