@@ -45,7 +45,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Platform dependency: 'RHEL-8.4-host'
-    Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'Insignificant']
+    Features: ['Sccache', 'AndroidTestRun', 'Insignificant']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=x86 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}}',
         'CONAN_HOST_PROFILE=coin/conan/profiles/linux-x86_64-gcc',
