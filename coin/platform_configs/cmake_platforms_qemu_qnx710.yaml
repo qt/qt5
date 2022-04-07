@@ -7,7 +7,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Packaging', 'InsignificantTests', 'VMSize8']
+    Features: ['Packaging', 'VMSize8']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DFEATURE_developer_build=ON -DQT_FEATURE_dbus=OFF -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
         'QT_CMAKE_DIR=/opt/cmake-3.21.3/bin',
