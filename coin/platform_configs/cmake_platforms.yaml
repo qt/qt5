@@ -89,15 +89,17 @@ Configurations:
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
     Platform dependency: 'Windows10_21H2-MSVC2019-x64-host'
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
+        'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
         'CONAN_HOST_PROFILE=coin/conan/profiles/windows-x86_64-msvc2019_64',
         'CONAN_PROFILE=coin/conan/profiles/windows-arm64-msvc2019_64',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}']
+        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}'
+    ]
 -
     Id: 'Windows11_21H2-MSVC2019-x64-host'
     Template: 'qtci-windows-11_21H2-x86_64-51'
@@ -111,12 +113,12 @@ Configurations:
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
     Platform dependency: 'Windows11_21H2-MSVC2019-x64-host'
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_QMAKE_TARGET_MKSPEC=win32-arm64-msvc -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
+        'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON'
+    ]
 -
     Id: 'RHEL-8.4-host'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
