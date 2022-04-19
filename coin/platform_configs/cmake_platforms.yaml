@@ -160,18 +160,26 @@ Configurations:
     Id: 'Windows10_21H2-LLVM-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Clang'
-    Features: ['Sccache']
-    Configure arguments: '-GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
-    Environment variables: ['Path=C:\llvm-mingw\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR=C:\llvm-mingw']
+    Features: ['Sccache', 'UseConfigure']
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
+    Environment variables: [
+        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF',
+        'LLVM_INSTALL_DIR=C:\llvm-mingw'
+    ]
 -
     Id: 'Windows11_21H2-LLVM-x64-host'
     Template: 'qtci-windows-11_21H2-x86_64-51'
     Compiler: 'Clang'
-    Features: ['Sccache']
-    Configure arguments: '-GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
-    Environment variables: ['Path=C:\llvm-mingw\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
-        'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache', 'LLVM_INSTALL_DIR=C:\llvm-mingw']
+    Features: ['Sccache', 'UseConfigure']
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
+    Environment variables: [
+        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF',
+        'LLVM_INSTALL_DIR=C:\llvm-mingw'
+    ]
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
