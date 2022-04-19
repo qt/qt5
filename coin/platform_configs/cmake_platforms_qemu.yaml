@@ -7,9 +7,10 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache']
+    Features: ['Sccache', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-imx7-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=hard-float boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -make examples -qt-harfbuzz -device linux-imx7-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=hard-float boot2qt" -no-feature-forkfd_pidfd',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_FILE}} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARMV7_TOOLCHAIN_ENVSETUP}}',
         "QT_CMAKE_DIR=/opt/cmake-3.21.1/bin",
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}',
@@ -22,9 +23,10 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache']
+    Features: ['Sccache', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARM64_TOOLCHAIN_ENVSETUP}}',
         "QT_CMAKE_DIR=/opt/cmake-3.21.1/bin",
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}',
@@ -37,9 +39,10 @@ Configurations:
     Target arch: 'mips64'
     Compiler: 'GCC'
     Platform dependency: 'Ubuntu-20.04-host'
-    Features: ['Sccache', 'DisableTests']
+    Features: ['Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_FILE}} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUMIPS64_TOOLCHAIN_ENVSETUP}}',
         "QT_CMAKE_DIR=/opt/cmake-3.21.1/bin",
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUMIPS64_TOOLCHAIN_SYSROOT}}',
