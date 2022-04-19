@@ -4,18 +4,22 @@ Configurations:
     Id: 'sles-15-static'
     Template: 'qtci-linux-SLES-15_SP3-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'MinimalStaticTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
+    Configure arguments: '-nomake examples -static -no-sql-mysql'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    ]
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Sccache', 'MinimalStaticTests']
-    Configure arguments: '-G"Ninja" -DCMAKE_BUILD_TYPE="RelWithDebInfo" -DBUILD_SHARED_LIBS=OFF -DFEATURE_msvc_obj_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
+    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
+    Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib'
     Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
     Template: 'qtci-macos-11-x86_64-104'
     Compiler: 'Clang'
-    Features: ['Sccache', 'MinimalStaticTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DFEATURE_framework=OFF'
+    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
+    Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'
