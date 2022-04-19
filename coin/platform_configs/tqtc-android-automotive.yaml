@@ -8,36 +8,42 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'TestDocs']
+    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
     Configure arguments: '-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DWARNINGS_ARE_ERRORS=OFF -DQT_LIBINFIX=TestInfix -DQT_NAMESPACE=TestNamespace'
 -
     Id: 'Windows10_21H2-Mingw11-x64-host'
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests']
-    Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
+    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}']
+        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
+    ]
 -
     Id: 'macos-latest-xcode-universal-packaging-build'
     Template: 'qtci-macos-12-x86_64-102'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors']
-    Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}'
+    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
     Environment variables: [
-        'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_gds=OFF',
-        'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang']
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF',
+        'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
+    ]
 -
     Id: 'RHEL-8.4-host'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests']
-    Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_headersclean=ON -DFEATURE_separate_debug_info=ON -DFEATURE_system_jpeg=OFF -DFEATURE_system_png=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_doubleconversion=OFF -DFEATURE_libudev=OFF -DINPUT_bundled_xcb_xinput=yes -DOpenGL_GL_PREFERENCE=LEGACY'
+    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
+    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc']
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
+    ]
 -
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Target os: 'Android_ANY'
@@ -45,9 +51,11 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Platform dependency: 'RHEL-8.4-host'
-    Features: ['Packaging', 'Sccache', 'AndroidTestRun']
+    Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE={{.Env.ANDROID_NDK_ROOT}}/build/cmake/android.toolchain.cmake -DANDROID_SDK_ROOT={{.Env.ANDROID_SDK_ROOT}} -DANDROID_ABI=x86 -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}}',
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME}}',
         'CONAN_HOST_PROFILE=coin/conan/profiles/linux-x86_64-gcc',
         'CONAN_PROFILE=coin/conan/profiles/unix-android-x86-clang',
-        'ANDROID_EMULATOR=@automotive_emulator_x86_api_30']
+        'ANDROID_EMULATOR=@automotive_emulator_x86_api_30'
+    ]
