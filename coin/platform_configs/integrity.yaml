@@ -6,13 +6,15 @@ Configurations:
       Compiler: 'GCC'
       Target os: 'INTEGRITY'
       Platform dependency: 'Ubuntu-20.04-host'
-      Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16']
+      Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16', 'UseConfigure']
       Environment variables: [
-          'TARGET_CONFIGURE_ARGS={{.Env.TARGET_CONFIGURE_ARGS}} -DQT_HOST_PATH=/home/qt/work/install -DQT_BUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DQT_QMAKE_TARGET_MKSPEC=devices/integrity-armv8-SA8155P -DFEATURE_library=OFF -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DFEATURE_printdialog=OFF --debug-trycompile -DFEATURE_dbus=OFF -GNinja -DUNIX=ON -DFEATURE_gtk3=OFF -DFEATURE_glib=OFF -DFEATURE_libudev=OFF -DFEATURE_system_harfbuzz=OFF -DFEATURE_system_pcre2=OFF -DFEATURE_sql_mysql=OFF -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64',
+          'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql',
+          'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64 -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DUNIX=ON --debug-trycompile',
+          'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_system_webp=OFF',
           'INTEGRITY_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/integrity',
           'INTEGRITY_BSP=platform-sa8155', 'INTEGRITY_BUILD_TARGET=rel',
           'QC_MULTIMEDIA_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/include/amss/multimedia',
           'GL_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/include/public',
           'GL_LIB_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/base:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/display:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/graphics:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/platform/:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt/',
           'PATH=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/comp:$PATH',
-          'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DFEATURE_system_webp=OFF']
+      ]
