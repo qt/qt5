@@ -5,10 +5,10 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'OpenSUSE-15.3-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer',
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-webassembly-x86_64-clang'
     ]
@@ -29,12 +29,12 @@ Configurations:
     Compiler: 'Mingw'
     Target compiler: 'Clang'
     Platform dependency: 'Windows10_21H2-Mingw11-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
-        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DFEATURE_pkg_config=OFF',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
 -
@@ -43,10 +43,10 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-latest-xcode-universal-packaging-build'
-    Features: ['Packaging', 'Sccache', 'DisableTests']
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
         'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang'
     ]
