@@ -60,12 +60,9 @@ endif()
 set(CMAKE_FIND_ROOT_PATH ${TARGET_ROOT_PATH})
 
 #graphical lib paths
-set(EGL_LIBRARY_GRAPHIC_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/multimedia/graphics)
-set(EGL_LIBRARY_PLATFORM_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/platform)
-set(EGL_LIBRARY_BASE_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/base)
+set(EGL_LIBRARY_GRAPHIC_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/graphics)
 set(EGL_LIBRARY_CHK_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/integrity/libs/arm64/chk)
 set(EGL_LIBRARY_PREBUILD_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt)
-set(EGL_LIBRARY_OPENWFD_PATH ${TARGET_ROOT_PATH}/apps/ghs_apps_proc/qc_bsp/out/chk/libs/multimedia/display)
 
 #base
 set(CMAKE_C_FLAGS  "-bsp $ENV{INTEGRITY_BSP} -os_dir $ENV{INTEGRITY_DIR} -non_shared -startfile_dir=$ENV{INTEGRITY_DIR}/libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/$ENV{INTEGRITY_BSP}/$ENV{INTEGRITY_BUILD_TARGET} --rtos_library_directory=libs/arm64/$ENV{INTEGRITY_BUILD_TARGET} -bigswitch -DINTEGRITY -llibposix.a")
@@ -97,15 +94,15 @@ set(GLESv2_LIBRARY "${EGL_LIBRARY_GRAPHIC_PATH}/libESXGLESv2_Adreno.a")
 set(IntegrityPlatformGraphics_INCLUDE_DIR ${GL_INC_DIR})
 set(IntegrityPlatformGraphics_LIBRARY "${EGL_LIBRARY_GRAPHIC_PATH}/libadreno_utils.a")
 set(IntegrityPlatformGraphics_LIBRARIES_PACK
-    "${EGL_LIBRARY_BASE_PATH}/libplanedef.a"
-    "${EGL_LIBRARY_BASE_PATH}/libmmosalfile.a"
-    "${EGL_LIBRARY_BASE_PATH}/libOSAbstraction.a"
-    "${EGL_LIBRARY_OPENWFD_PATH}/libopenwfd.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libplanedef.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libmmosalfile.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libOSAbstraction.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libopenwfd.a"
     "${EGL_LIBRARY_GRAPHIC_PATH}/libOSUser.a"
     "${EGL_LIBRARY_GRAPHIC_PATH}/libpanel.a"
     "${EGL_LIBRARY_GRAPHIC_PATH}/libGSLUser.a"
     "${EGL_LIBRARY_PREBUILD_PATH}/libglnext-llvm.a"
-    "${EGL_LIBRARY_PLATFORM_PATH}/libpmem.a"
+    "${EGL_LIBRARY_GRAPHIC_PATH}/libpmem.a"
     "${EGL_LIBRARY_CHK_PATH}/libposix.a"
     "${EGL_LIBRARY_CHK_PATH}/libivfs.a"
 )
