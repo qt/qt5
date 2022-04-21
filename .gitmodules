@@ -227,7 +227,7 @@
 	path = qtspeech
 	url = ../qtspeech.git
 	branch = dev
-	status = ignore
+	status = addon
 [submodule "qtnetworkauth"]
 	depends = qtbase
 	path = qtnetworkauth
