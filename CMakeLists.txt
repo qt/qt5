@@ -57,7 +57,7 @@ qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULE
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
     # Check for unmet dependencies
     if(NOT DEFINED BUILD_${module} OR BUILD_${module})
-        message(NOTICE "Checking dependencies of '${module}'")
+        message(NOTICE "Checking dependencies of submodule '${module}'")
         get_property(required_deps GLOBAL PROPERTY QT_REQUIRED_DEPS_FOR_${module})
         get_property(dependencies GLOBAL PROPERTY QT_DEPS_FOR_${module})
         foreach(dep IN LISTS dependencies)
@@ -93,7 +93,7 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
 endforeach()
 
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
-    message(NOTICE "Configuring '${module}'")
+    message(NOTICE "Configuring submodule '${module}'")
     ecm_optional_add_subdirectory("${module}")
 
     if(module STREQUAL "qtbase")

@@ -47,7 +47,8 @@ function(qt_internal_parse_dependencies depends_file out_dependencies)
             string(TOUPPER "${CMAKE_MATCH_1}" required)
         endif()
     endforeach()
-    message(DEBUG "qt_internal_parse_dependencies for ${depends_file}: ${dependencies} ${revisions}")
+    message(DEBUG
+        "qt_internal_parse_dependencies for ${depends_file}\n    dependencies: ${dependencies}")
     set(${out_dependencies} "${dependencies}" PARENT_SCOPE)
 endfunction()
 
@@ -57,6 +58,24 @@ macro(qt_internal_resolve_module_dependencies_set_skipped value)
         set(${arg_SKIPPED_VAR} ${value} PARENT_SCOPE)
     endif()
 endmacro()
+
+# Strips tqtc- prefix from a repo name.
+function(qt_internal_normalize_repo_name repo_name out_var)
+    string(REGEX REPLACE "^tqtc-" "" normalized "${repo_name}")
+    set(${out_var} "${normalized}" PARENT_SCOPE)
+endfunction()
+
+# Checks if a directory with the given repo name exists in the current
+# source / working directory. If it doesn't, it strips the tqtc- prefix.
+function(qt_internal_use_normalized_repo_name_if_needed repo_name out_var)
+    set(base_dir "${CMAKE_CURRENT_SOURCE_DIR}")
+    set(repo_dir "${base_dir}/${repo_name}")
+    if(NOT IS_DIRECTORY "${repo_dir}")
+        qt_internal_normalize_repo_name("${repo_name}" repo_name)
+    endif()
+    set(${out_var} "${repo_name}" PARENT_SCOPE)
+endfunction()
+
 
 # Resolve the dependencies of the given module.
 # "Module" in the sense of Qt repository.
@@ -89,8 +108,11 @@ endmacro()
 #
 # SKIPPED_VAR is an output variable name that is set to TRUE if the module was skipped, to FALSE
 # otherwise.
+#
+# NORMALIZE_REPO_NAME_IF_NEEDED Will remove 'tqtc-' from the beginning of submodule dependencies
+# if a tqtc- named directory does not exist.
 function(qt_internal_resolve_module_dependencies module out_ordered out_revisions)
-    set(options IN_RECURSION)
+    set(options IN_RECURSION NORMALIZE_REPO_NAME_IF_NEEDED)
     set(oneValueArgs REVISION SKIPPED_VAR)
     set(multiValueArgs PARSED_DEPENDENCIES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
@@ -138,6 +160,12 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             message(FATAL_ERROR "Internal Error: wrong dependency format ${dependency}")
         endif()
 
+        set(normalize_arg "")
+        if(arg_NORMALIZE_REPO_NAME_IF_NEEDED)
+            qt_internal_use_normalized_repo_name_if_needed("${dependency}" dependency)
+            set(normalize_arg "NORMALIZE_REPO_NAME_IF_NEEDED")
+        endif()
+
         set_property(GLOBAL APPEND PROPERTY QT_DEPS_FOR_${module} ${dependency})
         if(required)
             set_property(GLOBAL APPEND PROPERTY QT_REQUIRED_DEPS_FOR_${module} ${dependency})
@@ -146,7 +174,9 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
         qt_internal_resolve_module_dependencies(${dependency} dep_ordered dep_revisions
             REVISION "${revision}"
             SKIPPED_VAR skipped
-            IN_RECURSION)
+            IN_RECURSION
+            ${normalize_arg}
+        )
         if(NOT skipped)
             list(APPEND ordered ${dep_ordered})
             list(APPEND revisions ${dep_revisions})
@@ -179,13 +209,17 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
     endforeach()
 
     qt_internal_resolve_module_dependencies(all_selected_repos ordered unused_revisions
-        PARSED_DEPENDENCIES ${all_selected_repos_as_parsed_dependencies})
+        PARSED_DEPENDENCIES ${all_selected_repos_as_parsed_dependencies}
+        NORMALIZE_REPO_NAME_IF_NEEDED
+    )
 
     # Drop "all_selected_repos" from the output. It depends on all selected repos, thus it must be
     # the last element in the topologically sorted list.
     list(REMOVE_AT ordered -1)
 
-    message(DEBUG "qt_internal_parse_dependencies sorted ${modules}: ${ordered}")
+    message(DEBUG
+        "qt_internal_sort_module_dependencies
+    input modules: ${modules}\n    topo-sorted:   ${ordered}")
     set(${out_all_ordered} "${ordered}" PARENT_SCOPE)
 endfunction()
 
@@ -321,6 +355,17 @@ function(qt_internal_sync_to module)
         set(revision "HEAD")
     endif()
     qt_internal_checkout("${module}" "${revision}")
+
+    qt_internal_resolve_module_dependencies(${module} initial_dependencies initial_revisions)
+    if(initial_dependencies)
+        foreach(dependency ${initial_dependencies})
+            if(dependency MATCHES "^tqtc-")
+                message(WARNING
+                    "Handling of tqtc- repos will likely fail. Fixing this is non-trivial.")
+                break()
+            endif()
+        endforeach()
+    endif()
 
     set(revision "")
     set(checkedout "1")
