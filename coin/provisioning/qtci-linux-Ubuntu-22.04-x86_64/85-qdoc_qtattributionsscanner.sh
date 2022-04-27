@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,25 +39,32 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
+# Provisions qdoc and qtattributionsscanner binaries; these are used for
+# documentation testing without the need for a dependency to qttools.
 
-set -ex
+set -e
 
-function SetEnvVar {
-    name=$1
-    path=$2
+# shellcheck source=./check_and_set_proxy.sh
+"${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
+version="836becf90211c483d3d65987914c9fd962644be9"
+sha1="ef8c886480b57dfc799c7c2dd71ed859787f94a8"
+url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
+url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
 
-    echo "Setting environment variable $name to $path."
+zip="/tmp/qdoc-qtattributionsscanner.7z"
+destination="/opt/qt-doctools"
 
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+sudo mkdir -p $destination
+sudo chmod 755 $destination
+DownloadURL $url_cached $url $sha1 $zip
+if command -v 7zr &> /dev/null; then
+    sudo 7zr x $zip -o$destination/
+else
+    sudo 7z x $zip -o$destination/
+fi
+sudo chown -R qt:users $destination
+rm -rf $zip
+
+echo -e "qdoc = $version\nqtattributionsscanner = $version" >> ~/versions.txt

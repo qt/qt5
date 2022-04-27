@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,25 +38,14 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
+# The new version of libnss-mdns resolver library automatically rejects all
+# hostnames with more than two labels (i.e. subdomains deep), for example
+# vsftpd.test-net.qt.local is automatically rejected. The changes here fix
+# this, see also https://github.com/lathiat/nss-mdns#etcmdnsallow
 
-set -ex
+cat <<EOT | sudo tee /etc/mdns.allow
+.local.
+.local
+EOT
 
-function SetEnvVar {
-    name=$1
-    path=$2
-
-    echo "Setting environment variable $name to $path."
-
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+sudo sed -i '/^hosts:/s/mdns4_minimal/mdns4/' /etc/nsswitch.conf

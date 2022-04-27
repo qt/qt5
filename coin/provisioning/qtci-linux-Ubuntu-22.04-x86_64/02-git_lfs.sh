@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,25 +39,11 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
+# Install Git Large File Storage
 
 set -ex
 
-function SetEnvVar {
-    name=$1
-    path=$2
-
-    echo "Setting environment variable $name to $path."
-
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
+sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main'
+sudo apt update
+sudo apt install git-lfs

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,25 +38,18 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
-
 set -ex
 
-function SetEnvVar {
-    name=$1
-    path=$2
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-    echo "Setting environment variable $name to $path."
+# First test using QFont fails if fonts-noto-cjk is installed. This happens because
+# running fontcache for that font takes > 5 mins when run on QEMU. Running fc-cache
+# doesn't help since host version creates cache for a wrong architecture and running
+# armv7 fc-cache segfaults on QEMU.
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y remove fonts-noto-cjk
 
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+# Disable QtWayland window decorations, as they cause flakiness when used inside qemu (QTBUG-66173)
+qemu_env="QT_WAYLAND_DISABLE_WINDOWDECORATION=1"
+
+SetEnvVar "QEMU_SET_ENV" "\"${qemu_env}\""

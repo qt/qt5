@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2018 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,25 +39,24 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
-
 set -ex
 
-function SetEnvVar {
-    name=$1
-    path=$2
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
-    echo "Setting environment variable $name to $path."
+url="http://ci-files01-hki.intra.qt.io/input/semisecure/test_farm_id_rsa"
+sha1="1b0d651661c33a654ac89ef3c97bbe06d6bf1ca1"
+sshKey="$HOME/.ssh/test_farm_id_rsa"
 
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+DownloadURL "$url" "$url" "$sha1" "$sshKey"
+chmod 600 "$sshKey"
+
+echo "Configuring ssh config file for Yocto"
+cat <<EOT >> "$HOME/.ssh/config"
+StrictHostKeyChecking=no
+Host codereview.qt-project.org
+  Port 29418
+  User qt-builder
+  IdentityFile "$sshKey"
+EOT
+

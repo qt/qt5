@@ -65,6 +65,11 @@ elif test -f /etc/redhat-release && cat /etc/redhat-release | grep "Red Hat" | g
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-linux-CentOS8.3-gcc9.2-x86_64.7z"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version//\./}-based-linux-CentOS8.3-gcc9.2-x86_64.7z"
     sha1="d02e4dd30fe3f810c3a0cdcbed5870dec56ed91b"
+elif [[ "$(cat /etc/os-release |grep VERSION_ID)" == "VERSION_ID=\"22.04\"" ]]; then
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${libclang_version//\./}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${libclang_version//\./}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
+    sha1="7bd311b941df4087621bab306d507a3b1375cdfe"
 else
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #############################################################################
 ##
@@ -39,25 +39,7 @@
 ##
 #############################################################################
 
-# A helper script used for setting environment variables on Unix systems
-
 set -ex
 
-function SetEnvVar {
-    name=$1
-    path=$2
-
-    echo "Setting environment variable $name to $path."
-
-    if uname -a |grep -q "Ubuntu"; then
-        if lsb_release -a |grep "Ubuntu 22.04"; then
-            echo "export $name=$path" >> ~/.bashrc
-            echo "export $name=$path" >> ~/.bash_profile
-        else
-            echo "export $name=$path" >> ~/.profile
-        fi
-    else
-        echo "export $name=$path" >> ~/.bashrc
-        echo "export $name=$path" >> ~/.zshrc
-    fi
-}
+# shellcheck source=../common/linux/android_linux.sh
+source "${BASH_SOURCE%/*}/../common/linux/android_linux.sh"
