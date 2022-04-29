@@ -303,3 +303,10 @@
 	url = ../qtlanguageserver.git
 	branch = dev
 	status = preview
+[submodule "qthttpserver"]
+	depends = qtbase
+	recommends = qtwebsockets
+	path = qthttpserver
+	url = ../qthttpserver.git
+	branch = dev
+	status = preview
