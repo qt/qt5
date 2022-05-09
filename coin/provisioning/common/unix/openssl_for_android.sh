@@ -48,16 +48,16 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="1.1.1m"
+version="3.0.7"
 ndkVersionLatest="r25b"
 ndkVersionDefault=$ndkVersionLatest
-prebuiltOpensslNdkShaDarwinLatest="1f4f994255c39839c8857d2ed1ff58a2101de714"
-prebuiltOpensslNdkShaLinuxLatest="15f7014781186a23f4973a719b55b766b1e69116"
+prebuiltOpensslNdkShaDarwinLatest="5cf5ef6c19e62954ccffcd1e31ac1f331028de0d"
+prebuiltOpensslNdkShaLinuxLatest="f5e7e840dc1fac2868033ecfc0eeb79742b0daff"
 prebuiltOpensslNdkShaDarwinDefault=$prebuiltOpensslNdkShaDarwinLatest
 prebuiltOpensslNdkShaLinuxDefault=$prebuiltOpensslNdkShaLinuxLatest
 
 : ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
-# Source built requires GCC and Perl to be in PATH.
+# Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
 if uname -a |grep -q "Ubuntu"; then
@@ -70,10 +70,13 @@ else
     rm -rf "$exports_file"
 fi
 
+# ANDROID_NDK_ROOT is required during Configure
+export ANDROID_NDK_ROOT=/opt/android/android-ndk-r25b
+
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="39d424c4411e45f1570073d7a71b1830b96007ca"
+sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
@@ -100,8 +103,7 @@ function InstallPrebuiltOpenssl() {
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$nkdSha" "$targetFile"
         tar -xzf "$targetFile" -C "${HOME}"
-        mv "${HOME}/openssl" "${HOME}/openssl_android_ndk_${ndkVersion}"
-        opensslHome="${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version}"
+        opensslHome="${HOME}/openssl_${version}_android_ndk_${ndkVersion}/android/openssl-${version}"
         sudo rm -f $targetFile
     fi
 }

@@ -48,11 +48,11 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-version="1.1.1m"
+version="3.0.7"
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="39d424c4411e45f1570073d7a71b1830b96007ca"
+sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
 opensslHome="${HOME}/openssl-${version}"
 opensslSource="${opensslHome}-src"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
@@ -62,13 +62,13 @@ cd "$opensslSource"
 pwd
 
 if [[ "$os" == "linux" ]]; then
-    ./Configure --prefix="$opensslHome" shared no-ssl3-method enable-ec_nistp_64_gcc_128 linux-x86_64 "-Wa,--noexecstack"
+    ./Configure --prefix="$opensslHome" shared enable-ec_nistp_64_gcc_128 linux-x86_64 "-Wa,--noexecstack"
     make && make install_sw install_ssldirs
     SetEnvVar "OPENSSL_HOME" "$opensslHome"
     if uname -a |grep -q "Ubuntu"; then
-        echo "export LD_LIBRARY_PATH=$opensslHome/lib:$LD_LIBRARY_PATH" >> ~/.bash_profile
+        echo "export LD_LIBRARY_PATH=$opensslHome/lib64:$LD_LIBRARY_PATH" >> ~/.bash_profile
     else
-        echo "export LD_LIBRARY_PATH=$opensslHome/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+        echo "export LD_LIBRARY_PATH=$opensslHome/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
     fi
 
 elif [ "$os" == "macos" -o "$os" == "macos-universal" ]; then

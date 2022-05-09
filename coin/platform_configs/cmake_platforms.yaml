@@ -32,7 +32,8 @@ Configurations:
     Configure arguments: '-nomake examples -developer-build'
     Environment variables: [
         'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
-        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer'
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
 -
     Id: 'sles-15_sp4-static'

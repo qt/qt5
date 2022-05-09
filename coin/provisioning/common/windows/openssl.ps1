@@ -42,7 +42,7 @@
 # This script installs OpenSSL $version.
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
-$version = "1_1_1m"
+$version = "3_0_7"
 $packagex64 = "C:\Windows\Temp\Win64OpenSSL-$version.exe"
 $packagex86 = "C:\Windows\Temp\Win32OpenSSL-$version.exe"
 
@@ -53,7 +53,7 @@ if (Is64BitWinHost) {
     $installFolder = "C:\openssl"
     $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
     $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
-    $sha1 = "16d83bd6d36be7b3ea85f822135352fa8f8d8134"
+    $sha1 = "2fb73f233bc565939312782b8157bebc26a5e17b"
 
     Write-Host "Fetching from URL ..."
     Download $externalUrl $internalUrl $packagex64
@@ -67,6 +67,7 @@ if (Is64BitWinHost) {
     Set-EnvironmentVariable "OPENSSL_CONF_x64" "$installFolder\bin\openssl.cfg"
     Set-EnvironmentVariable "OPENSSL_INCLUDE_x64" "$installFolder\include"
     Set-EnvironmentVariable "OPENSSL_LIB_x64" "$installFolder\lib"
+    Prepend-Path "$installFolder\bin"
 }
 
 # Install x86 bit version
@@ -80,7 +81,7 @@ if (Is64BitWinHost) {
 
 $externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
-$sha1 = "1d7146e56b201404ce67f1e636eab360211c175a"
+$sha1 = "ddead693fa279ad6b1baf123b3af51a9ef289dc1"
 
 Write-Host "Fetching from URL ..."
 Download $externalUrl $internalUrl $packagex86
