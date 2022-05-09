@@ -64,7 +64,7 @@ function InstallPython {
     PACKAGE_VERSION=$1
     PACKAGE_SHA=$2
 
-    $CMD_PKG_INSTALL  ncurses zlib-devel libffi-devel libopenssl-devel
+    $CMD_PKG_INSTALL  ncurses zlib-devel libffi-devel
 
     echo 'Configuration and Installation started'
 

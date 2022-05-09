@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -48,7 +48,7 @@ installPackages=()
 installPackages+=(git)
 installPackages+=(zlib-devel)
 installPackages+=(glib2-devel)
-installPackages+=(openssl-devel)
+installPackages+=(openssl3-devel)
 installPackages+=(freetype-devel)
 installPackages+=(fontconfig-devel)
 installPackages+=(curl-devel)
@@ -183,6 +183,5 @@ python3.8 -m pip wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
 
-OpenSSLVersion="$(openssl version |cut -b 9-14)"
+OpenSSLVersion="$(openssl3 version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
-

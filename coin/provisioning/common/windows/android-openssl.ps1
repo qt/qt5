@@ -51,12 +51,12 @@ if (Is64BitWinHost) {
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$openssl_version = "1.1.1m"
+$openssl_version = "3.0.7"
 $ndk_version_latest = "r25b"
 $ndk_version_default = "$ndk_version_latest"
-$openssl_compressed = Get-DownloadLocation ("openssl-${openssl_version}_fixes-ndk_root.tar.gz")
-$openssl_sha1 = "c9638d25b9709eda1ac52591c0993af52d6d1206"
-$prebuilt_sha1_ndk_latest = "2897c84dccdb26e15b467e4a63de025fe7038899"
+$openssl_compressed = Get-DownloadLocation ("openssl-${openssl_version}.tar.gz")
+$openssl_sha1 = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
+$prebuilt_sha1_ndk_latest = "d4348812054a88b5b672a8ceae62bf30c564869b"
 $prebuilt_sha1_ndk_default = "$prebuilt_sha1_ndk_latest"
 $destination = "C:\Utils\openssl-android-master"
 
@@ -81,16 +81,16 @@ function Install($1, $2) {
     } else {
         Write-Host "Build OpenSSL for Android from sources"
         # openssl-${openssl_version}_fixes-ndk_root.tar.gz package includes fixes from https://github.com/openssl/openssl/pull/17322 and string ANDROID_NDK_HOME is replaced with ANDROID_NDK_ROOT in Configurations/15-android.conf
-        Download \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}_fixes-ndk_root.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}_fixes-ndk_root.tar.gz $openssl_compressed
+        Download \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz $openssl_compressed
         Verify-Checksum $openssl_compressed $openssl_sha1
 
         Extract-7Zip $openssl_compressed C:\Utils\tmp
-        Extract-7Zip C:\Utils\tmp\openssl-${openssl_version}_fixes-ndk_root.tar C:\Utils\tmp
-        Move-Item C:\Utils\tmp\openssl-${openssl_version} $destination
+        Extract-7Zip C:\Utils\tmp\openssl-${openssl_version}.tar C:\Utils\tmp
+        Move-Item C:\Utils\tmp\openssl-${openssl_version} ${destination}-${ndk_version}
         Remove "$openssl_compressed"
 
         Write-Host "Configuring OpenSSL $openssl_version for Android..."
-        Push-Location $destination
+        Push-Location ${destination}-${ndk_version}
         # $ must be escaped in powershell...
 
         function CheckExitCode {
@@ -105,6 +105,12 @@ function Install($1, $2) {
             }
         }
 
+        # ANDROID_NDK_ROOT needs to be in environment variables before running this script
+        # Set-EnvironmentVariable "ANDROID_NDK_ROOT" "C:\Utils\Android\android-ndk-r25b"
+
+        $make_install = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"yes | pacman -S make`"")
+        CheckExitCode $make_install
+
         $configure = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"pushd $openssl_path; ANDROID_NDK_ROOT=$ndk_path PATH=${cc_path}:`$PATH CC=clang $openssl_path/Configure shared android-arm`"")
         CheckExitCode $configure
 
@@ -115,7 +121,6 @@ function Install($1, $2) {
         Remove-item C:\Utils\tmp -Recurse -Confirm:$false
     }
 
-    Move-Item $destination "${destination}-${ndk_version}"
 }
 
 # Install NDK Default version

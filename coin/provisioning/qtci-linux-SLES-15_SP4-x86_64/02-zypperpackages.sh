@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -58,7 +58,6 @@ sudo zypper -nq install bison flex gperf \
         zlib-devel \
         libudev-devel \
         glib2-devel \
-        libopenssl-devel \
         freetype2-devel \
         fontconfig-devel \
         sqlite3-devel \
@@ -126,8 +125,8 @@ sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 # Nodejs - required by QtWebengine
 sudo zypper -nq install nodejs16
 
+# OpenSSL 3
+sudo zypper -nq install openssl-3
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
-
-OpenSSLVersion="$(openssl version |cut -b 9-14)"
-echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
