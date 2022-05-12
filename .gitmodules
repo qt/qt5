@@ -310,3 +310,10 @@
 	url = ../qthttpserver.git
 	branch = dev
 	status = preview
+[submodule "qtquick3dphysics"]
+	depends = qtbase qtdeclarative qtquick3d qtshadertools
+	path = qtquick3dphysics
+	url = ../qtquick3dphysics.git
+	branch = dev
+	status = preview
+
