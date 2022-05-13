@@ -16,7 +16,8 @@ Configurations:
     Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
     ]
 -
     Template: 'qtci-macos-11-x86_64-104'
