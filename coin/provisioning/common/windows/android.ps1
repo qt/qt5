@@ -46,12 +46,17 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersion = "r23b"
-$ndkCachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersion-windows.zip"
-$ndkOfficialUrl = "https://dl.google.com/android/repository/android-ndk-$ndkVersion-windows.zip"
-$ndkChecksum = "6e3fb50022c611a2b13d02f5de5c21cc7206a298"
-$ndkFolder = "c:\Utils\Android\android-ndk-$ndkVersion"
-$ndkZip = "c:\Windows\Temp\android_ndk_$ndkVersion.zip"
+$ndkVersionLatest = "r23b"
+$ndkVersionDefault = $ndkVersionLatest
+$ndkChecksumLatest = "6e3fb50022c611a2b13d02f5de5c21cc7206a298"
+$ndkChecksumDefault = $ndkChecksumLatest
+$ndkCachedUrlLatest = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersionLatest-windows.zip"
+$ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$ndkVersionLatest-windows.zip"
+$ndkCachedUrlDefault = "\\ci-files01-hki.intra.qt.io\provisioning\android\android-ndk-$ndkVersionDefault-windows.zip"
+$ndkOfficialUrlDefault = "https://dl.google.com/android/repository/android-ndk-$ndkVersionDefault-windows.zip"
+$ndkFolderLatest = "c:\Utils\Android\android-ndk-$ndkVersionLatest"
+$ndkFolderDefault = "c:\Utils\Android\android-ndk-$ndkVersionDefault"
+$ndkZip = "c:\Windows\Temp\android_ndk.zip"
 
 # SDK
 $toolsVersion = "2.1"
@@ -75,11 +80,20 @@ function Install($1, $2, $3, $4) {
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
     Extract-7Zip $zip C:\Utils\Android
+    Remove $zip
 }
 
-Write-Host "Installing Android NDK $nkdVersion"
-Install $ndkCachedUrl $ndkZip $ndkChecksum $ndkOfficialUrl
-Set-EnvironmentVariable "ANDROID_NDK_ROOT" $ndkFolder
+Write-Host "Installing Android NDK $ndkVersionDefault"
+Install $ndkCachedUrlDefault $ndkZip $ndkChecksumDefault $ndkOfficialUrlDefault
+Set-EnvironmentVariable "ANDROID_NDK_ROOT_DEFAULT" $ndkFolderDefault
+
+if (Test-Path -Path $ndkFolderLatest) {
+    Write-Host "Android Latest version is the same than Default. NDK installation done."
+} else {
+    Write-Host "Installing Android NDK $nkdVersionLatest"
+    Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
+    Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
+}
 
 Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
 New-Item -ItemType directory -Path $toolsFolder
@@ -117,4 +131,4 @@ cmd /c "dir C:\Utils\android"
 Write-Output "Android SDK tools= $toolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
-Write-Output "Android NDK = $ndkVersion" >> ~/versions.txt
+Write-Output "Android NDK = $ndkVersionDefault" >> ~/versions.txt

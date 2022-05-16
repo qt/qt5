@@ -49,6 +49,13 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="1.1.1m"
+ndkVersionLatest="r23b"
+ndkVersionDefault=$ndkVersionLatest
+prebuiltOpensslNdkShaDarwinLatest="2624b0c2772e360bbbae7a7f2dc342e4b97f1a2e"
+prebuiltOpensslNdkShaLinuxLatest="f58dcb32b2d3e5edc7e5141ae139a50547805f60"
+prebuiltOpensslNdkShaDarwinDefault=$prebuiltOpensslNdkShaDarwinLatest
+prebuiltOpensslNdkShaLinuxDefault=$prebuiltOpensslNdkShaLinuxLatest
+
 : ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
 # Source built requires GCC and Perl to be in PATH.
 exports_file="/tmp/export.sh"
@@ -81,18 +88,34 @@ PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
 
-if uname -a |grep -q "Darwin"; then
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1.1.1m-for-android-ndk-r23b-darwin.tar.gz"
-    sha="2624b0c2772e360bbbae7a7f2dc342e4b97f1a2e"
-else
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-1.1.1m-for-android-ndk-r23b-linux.tar.gz"
-    sha="f58dcb32b2d3e5edc7e5141ae139a50547805f60"
-fi
-targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
-DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
-tar -xzf "$targetFile" -C "${HOME}"
+function InstallPrebuiltOpenssl() {
 
-opensslHome="${HOME}/openssl/android/openssl-${version}"
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
+    ndkVersion=$1
+    nkdSha=$2
+    os=$3
+
+    if [[ ! -d $HOME/openssl/android/openssl ]]; then
+        prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
+        targetFile="/tmp/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
+
+        DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$nkdSha" "$targetFile"
+        tar -xzf "$targetFile" -C "${HOME}"
+        mv "${HOME}/openssl" "${HOME}/openssl_android_ndk_${ndkVersion}"
+        opensslHome="${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version}"
+        sudo rm -f $targetFile
+    fi
+}
+
+if uname -a |grep -q "Darwin"; then
+    InstallPrebuiltOpenssl $ndkVersionDefault $prebuiltOpensslNdkShaDarwinDefault "darwin"
+    SetEnvVar "OPENSSL_ANDROID_HOME_DEFAULT" "$opensslHome"
+    InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslNdkShaDarwinLatest "darwin"
+    SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+else
+    InstallPrebuiltOpenssl $ndkVersionDefault $prebuiltOpensslNdkShaLinuxDefault "linux"
+    SetEnvVar "OPENSSL_ANDROID_HOME_DEFAULT" "$opensslHome"
+    InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslNdkShaLinuxLatest "linux"
+    SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+fi
 
 echo "OpenSSL for Android = $version" >> ~/versions.txt

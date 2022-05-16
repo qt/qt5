@@ -55,18 +55,20 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
+sudo mkdir -p $sdkTargetFolder
+
 basePath="http://ci-files01-hki.intra.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
-ndkVersion="r23b"
-ndkFile="android-ndk-$ndkVersion-linux.zip"
+ndkVersionLatest="r23b"
+ndkVersionDefault=$ndkVersionLatest
 sdkBuildToolsVersion="31.0.0"
 sdkApiLevel="android-31"
 
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
-ndkSha1="f47ec4c4badd11e9f593a8450180884a927c330d"
-
+ndkSha1Latest="f47ec4c4badd11e9f593a8450180884a927c330d"
+ndkSha1Default=$ndkSha1Latest
 # Android automotive
 sdkApiLevelAutomovie="android-30"
 androidAutomotive11Url="$basePath/${sdkApiLevelAutomovie}_automotive.tar.gz"
@@ -75,17 +77,36 @@ android11Sha="4a5cd2bea7ce323b724c3ff1faab13d99f9d2be9"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
-ndkTargetFile="/tmp/$ndkFile"
-ndkSourceFile="$basePath/$ndkFile"
 
+echo "Download and unzip Android SDK"
 DownloadURL "$toolsSourceFile" "$toolsSourceFile" "$toolsSha1" "$toolsTargetFile"
-DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
-echo "Unzipping Android NDK to '$targetFolder'"
-sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
 echo "Unzipping Android Tools to '$sdkTargetFolder'"
 sudo unzip -q "$toolsTargetFile" -d "$sdkTargetFolder"
-rm "$ndkTargetFile"
 rm "$toolsTargetFile"
+
+function InstallNdk() {
+
+    ndkVersion=$1
+    ndkSha1=$2
+
+    if [[ ! -d $targetFolder/android-ndk-$ndkVersion ]]; then
+
+        ndkFile="android-ndk-$ndkVersion-linux.zip"
+        ndkTargetFile="/tmp/$ndkFile"
+        ndkSourceFile="$basePath/$ndkFile"
+
+        DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
+        echo "Unzipping Android NDK to '$targetFolder'"
+        sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
+        rm "$ndkTargetFile"
+    fi
+
+}
+
+InstallNdk $ndkVersionDefault $ndkSha1Default
+SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$targetFolder/android-ndk-$ndkVersionDefault"
+InstallNdk $ndkVersionLatest $ndkSha1Latest
+SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
 
 echo "Changing ownership of Android files."
 if uname -a |grep -q "el7"; then
@@ -122,7 +143,6 @@ echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
 
 SetEnvVar "ANDROID_SDK_ROOT" "$sdkTargetFolder"
-SetEnvVar "ANDROID_NDK_ROOT" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
