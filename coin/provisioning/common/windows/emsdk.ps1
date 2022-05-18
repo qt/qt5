@@ -41,7 +41,7 @@
 
 # This script will install emscripten needed by WebAssembly
 
-$version = "3.1.6"
+$version = "3.1.10"
 
 # Make sure python is in the path
 Prepend-Path "C:\Python27"
