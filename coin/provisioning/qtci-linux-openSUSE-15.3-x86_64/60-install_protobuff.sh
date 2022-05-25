@@ -39,55 +39,8 @@
 ##
 #############################################################################
 
-# shellcheck source=./DownloadURL.sh
-source "${BASH_SOURCE%/*}/DownloadURL.sh"
-# shellcheck source=./SetEnvVar.sh
-source "${BASH_SOURCE%/*}/SetEnvVar.sh"
+set -ex
 
-# Extract cmake path from the environment
-if uname -a |grep -q "Ubuntu"; then
-    source ~/.profile
-else
-    source ~/.bashrc
-fi
+# shellcheck source=../common/unix/install_protobuff.sh
+source "${BASH_SOURCE%/*}/../common/unix/install_protobuff.sh"
 
-# This script will install Google's Protocal Buffers
-
-version="3.6.1"
-sha1="44b8ba225f3b4dc45fb56d5881ec6a91329802b6"
-internalUrl="http://ci-files01-hki.intra.qt.io/input/automotive_suite/protobuf-all-$version.zip"
-externalUrl="https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
-
-targetDir="$HOME/protobuf-$version"
-targetFile="$targetDir.zip"
-DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
-unzip "$targetFile" -d "$HOME"
-sudo rm "$targetFile"
-
-# devtoolset is needed when running configuration
-if uname -a |grep -qv "Darwin"; then
-    export PATH="/opt/rh/devtoolset-7/root/usr/bin:$PATH"
-fi
-
-echo "Configuring and building protobuf"
-
-installPrefix="/usr/local"
-if uname -a |grep -q Darwin; then
-    extraCMakeArgs=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
-    SetEnvVar PATH "\$PATH:$installPrefix/bin"
-fi
-
-buildDir="$HOME/build-protobuf-$version"
-mkdir "$buildDir"
-cd "$buildDir"
-cmake $targetDir/cmake -G"Ninja Multi-Config" -DCMAKE_INSTALL_PREFIX=$installPrefix $extraCMakeArgs -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF -Dprotobuf_BUILD_PROTOC_BINARIES=ON -DBUILD_SHARED_LIBS=OFF -Dprotobuf_WITH_ZLIB=OFF -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" -DCMAKE_CROSS_CONFIGS=all -DCMAKE_DEFAULT_CONFIGS=all
-ninja all:all
-sudo env "PATH=$PATH" ninja install:all
-
-# Refresh shared library cache if OS isn't macOS
-if uname -a |grep -qv "Darwin"; then
-    sudo ldconfig
-fi
-
-sudo rm -r "$targetDir"
-sudo rm -r "$buildDir"
