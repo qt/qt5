@@ -8,4 +8,5 @@ instructions:
   Build:
     - !include "{{qt/qt5}}/coin_qt_build_template.yaml"
 
-  Test: []
+  Test:
+    - !include "{{qt/qt5}}/coin_bic_tests.yaml"
