@@ -1,0 +1,32 @@
+type: Group
+instructions:
+  - type: EnvironmentVariable
+    variableName: QT_MODULE_TO_TEST
+    variableValue: "qt=QtConcurrent,QtCore,QtDBus,QtDesigner,QtGui,QtHelp,QtNetwork,QtOpenGL,QtPrintSupport,QtQml,QtQuick,QtQuickTest,QtSql,QtSvg,QtTest,QtWidgets,QtXml;{{.SourceDir}}/qtbase"
+  - type: EnvironmentVariable
+    variableName: QTDIR
+    variableValue: "{{.InstallDir}}"
+  - type: PrependToEnvironmentVariable
+    variableName: PATH
+    variableValue: "{{.InstallDir}}/bin:"
+  - type: ChangeDirectory
+    directory: "{{.SourceDir}}/qtqa/tests/postbuild/bic"
+  - type: ExecuteCommand
+    command: ["{{.InstallDir}}/bin/qmake"]
+    maxTimeInSeconds: 3600
+    maxTimeBetweenOutput: 300
+    userMessageOnFailure: "Failed to execute qmake for bic tests"
+  - type: ExecuteCommand
+    command: ["make", "check", "-j1"]
+    maxTimeInSeconds: 7200
+    maxTimeBetweenOutput: 300
+    userMessageOnFailure: "Failed to execute bic tests"
+enable_if:
+  condition: and
+  conditions:
+    - condition: property
+      property: features
+      contains_value: Packaging
+    - condition: property
+      property: target.os
+      equals_value: Linux
