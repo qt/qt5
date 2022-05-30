@@ -1,17 +1,19 @@
-OBTAINING QT5 FROM GIT
-======================
+OBTAINING QT 6 FROM GIT
+=======================
 
  Synopsis
  ========
 
- For a more in-depth description on how to build Qt5 from git,
- please see: http://wiki.qt.io/Building_Qt_5_from_Git
+ For a more in-depth description on how to build Qt 6 from git,
+ please see: http://wiki.qt.io/Building_Qt_6_from_Git
 
+ Note that, although the git module is called qt5.git, the dev and 6.x branches
+ do contain Qt 6!
 
  Get The Submodules
  ==================
 
- Cloning Qt5 does not automatically clone all submodules.
+ Cloning qt5.git does not automatically clone all submodules.
  To get the submodules, it is recommended to use the `init-repository' script.
 
    ./init-repository
@@ -49,7 +51,7 @@ OBTAINING QT5 FROM GIT
 
 
  Developing and Contributing to Qt
- ================================
+ =================================
 
  For more information on how to develop and contribute to Qt, please see:
  http://wiki.qt.io/Category:Developing_Qt
