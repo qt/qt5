@@ -13,7 +13,7 @@ set(CMAKE_ASM_COMPILER cxintarm64)
 set(EGL_FOUND True)
 set(UNIX True)
 
-set (CMAKE_C_COMPILE_FEATURES c_std_99)
+set (CMAKE_C_COMPILE_FEATURES c_std_11)
 set (CMAKE_CXX_COMPILE_FEATURES
 cxx_alias_templates
 cxx_alignas
@@ -69,7 +69,7 @@ set(CMAKE_C_FLAGS  "-bsp $ENV{INTEGRITY_BSP} -os_dir $ENV{INTEGRITY_DIR} -non_sh
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Omaxdebug")
 set(CMAKE_C_FLAGS_RELEASE "-Ospeed -Olink -Omax -no_uvfd")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --signed_fields --diag_suppress=1,82,228,236,381,611,961,997,1795,1931,1974,3148 --c++17 --thread_local_storage --exceptions --defer_parse_function_templates")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --signed_fields --diag_suppress=1,82,228,236,381,611,961,997,1795,1931,1974,3148 -std=c11 --c++17 --thread_local_storage --exceptions --defer_parse_function_templates")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -frigor=accurate --signed_fields --no_implicit_include --link_once_templates -non_shared --new_outside_of_constructor --commons -I $ENV{QC_MULTIMEDIA_INC_DIR}")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
