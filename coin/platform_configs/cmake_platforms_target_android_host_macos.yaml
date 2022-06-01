@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
 -
+    Id: 'android-arm64-on-macos'
     Template: 'qtci-macos-10.14-x86_64'
     Target os: 'Android_ANY'
     Target arch: 'arm64'

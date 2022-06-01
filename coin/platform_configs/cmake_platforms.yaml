@@ -117,6 +117,7 @@ Configurations:
     Environment variables: [
         'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc']
 -
+    Id: 'ios-universal'
     Template: 'qtci-macos-11-x86_64-104'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
