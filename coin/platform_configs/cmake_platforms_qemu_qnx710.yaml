@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
 -
+    Id: 'qnx-x86_64-on-ubuntu20.04'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QNX_710'
     Target arch: 'x86_64'
