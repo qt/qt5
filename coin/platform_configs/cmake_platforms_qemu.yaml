@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
 -
+    Id: 'qemu-armv7-on-ubuntu20.04'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Target os: 'QEMU'
     Target arch: 'armv7'

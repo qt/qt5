@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
     -
+      Id: "integrity-arm64-on-ubuntu20.04"
       Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
       Compiler: 'GCC'
       Target os: 'INTEGRITY'

@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
 -
+    Id: 'sles-15-static'
     Template: 'qtci-linux-SLES-15_SP3-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'MinimalStaticTests']
