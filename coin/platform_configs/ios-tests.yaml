@@ -10,5 +10,5 @@ Configurations:
     Platform dependency: 'macos-latest-xcode-universal-packaging-build'
     Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=debug-and-release -nomake examples -platform macx-ios-clang'
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang'
     ]
