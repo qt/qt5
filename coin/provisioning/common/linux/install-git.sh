@@ -42,17 +42,17 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="2.31.1"
+version="2.36.1"
 officialUrl="https://github.com/git/git/archive/refs/tags/v$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/git/git-$version.tar.gz"
 targetFile="/tmp/git-$version.tar.gz"
-sha="859dbeaefd9cb6c590050b9cc4b83cb51e412410"
+sha="a17c11da2968f280a13832d97f48e9039edac354"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 sourceDir="/tmp/git-$version-source"
 mkdir $sourceDir
 tar -xzf "$targetFile" -C $sourceDir
 
-cd "$sourceDir/git-2.31.1"
+cd "$sourceDir/git-$version"
 installDir="$HOME/git"
 make configure
 ./configure --prefix=$installDir

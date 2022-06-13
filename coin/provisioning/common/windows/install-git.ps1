@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -38,15 +38,15 @@
 #############################################################################
 . "$PSScriptRoot\helpers.ps1"
 
-# Install Git version 2.31.0
+# Install Git
 
-$version = "2.31.0"
+$version = "2.36.1"
 if (Is64BitWinHost) {
     $arch = "-64-bit"
-    $sha1 = "495d78f8d961e030944d9cb53af80d909d493c3f"
+    $sha1 = "594bdfc4e7704fb03fe14b7c0613087dfa3d4416"
 } else {
     $arch = "-32-bit"
-    $sha1 = "e57c040aea297b363aefaf26424f2e7a84a4a173"
+    $sha1 = "1bbe040254c236607ccb84e14a3f608b1a4e959a"
 }
 $gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
 $url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
