@@ -49,7 +49,12 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
 
-sudo apt install yasm
+if [ -f /etc/redhat-release ]
+then
+  sudo sudo yum -y install yasm
+else
+  sudo apt install yasm
+fi
 
 version="n5.0"
 ffmpeg_name="FFmpeg-$version"

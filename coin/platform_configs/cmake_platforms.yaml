@@ -49,6 +49,7 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64']
 -
     Template: 'qtci-windows-11_22H2-x86_64-50'
@@ -57,6 +58,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
 -
     Template: 'qtci-windows-10_22H2-x86_64-50'
@@ -134,7 +136,8 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc'
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
     Id: 'ios-universal'
@@ -159,7 +162,7 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw'
     ]
