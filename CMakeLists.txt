@@ -98,7 +98,7 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
 
     if(module STREQUAL "qtbase")
         if (NOT QT_BUILD_STANDALONE_TESTS)
-            list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/lib/cmake")
+            list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/${INSTALL_LIBDIR}/cmake")
             list(APPEND CMAKE_FIND_ROOT_PATH "${QtBase_BINARY_DIR}")
         endif()
     endif()
