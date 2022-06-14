@@ -9,9 +9,6 @@ Include: [
   macos.yaml: [
     "macos-12-arm64-tests",
   ],
-  cmake_platforms_static_tests.yaml: [
-    "sles-15-static"
-  ],
   cmake_platforms_target_android_host_macos.yaml: [
     "android-arm64-on-macos"
   ],
@@ -20,9 +17,6 @@ Include: [
   ],
   cmake_platforms_qemu_qnx710.yaml: [
     "qnx-x86_64-on-ubuntu20.04"
-  ],
-  integrity.yaml: [
-    "integrity-arm64-on-ubuntu20.04"
   ]
 ]
 Configurations: []
