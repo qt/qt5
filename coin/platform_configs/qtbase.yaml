@@ -4,7 +4,6 @@ Include: [
     cmake_platforms_static_tests.yaml,
     integrity.yaml,
     ios-tests.yaml,
-    address_sanitizer_platforms.yaml,
     linux_android_tests.yaml
 ]
 Configurations: []
