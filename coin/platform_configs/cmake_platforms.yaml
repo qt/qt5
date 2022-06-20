@@ -24,8 +24,8 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
-    Id: 'OpenSUSE-15.3-host'
-    Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
+    Id: 'OpenSUSE-15.4-host'
+    Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-nomake examples -developer-build'
