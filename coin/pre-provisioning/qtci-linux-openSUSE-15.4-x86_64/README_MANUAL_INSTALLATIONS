@@ -1,0 +1,42 @@
+### OpenSUSE Leap 15.4 ###
+## KDE ##
+## In qtci-linux-openSUSE-15.4-x86_64-50 > Graphics Platform: X11 (System default) ##
+## In qtci-linux-openSUSE-15.4-x86_64-51 > Graphics Platform: Wayland (Plasma (Wayland))##
+
+# Installation #
+Language: English (US)
+Keyboard Layout: English (US)
+
+Activate online repositories during installation (yes)
+Use default selections
+
+Desktop with KDE Plasma
+
+Suggested Partitioning - default values
+
+Time Zone: UTC
+
+## Configurations ##
+Download and run coin-setup binary
+YaST - System - Services Manager - Firewalld - Stop
+# enable ssh access
+sudo rcsshd start
+Workspace Behavior - Screen locking - Lock screen automatically - unselect options
+Startup and Shutdown - Behavior - Login Screen - Select Automatically log in with session (System default)
+Add below to '$HOME/.config/autostart/coin-bootstrap-agent.desktop'
+    [Desktop Entry]
+    Type=Application
+    Exec=/usr/bin/gnome-terminal -e "/home/qt/bootstrap-agent /dev/ttyS0"
+    Hidden=false
+    X-GNOME-Autostart-enabled=true
+    Name=Coin
+Notifications
+    Critical notifications - unselect
+    Log priority notifications - unselect
+    Application progress: Show in task manager - unselect
+                          Show in notifications - unselect
+    Notification badges:  Show in task manager - unselect
+Display and Monitor - Display Configuration - 1280x800
+Power Management: Screen Energy Saving - unselect
+
+add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
