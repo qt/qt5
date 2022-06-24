@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/linux/install-ffmpeg.sh"
 
+source "${BASH_SOURCE%/*}/../common/unix/install-ffmpeg.sh" "linux"

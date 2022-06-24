@@ -1,1 +1,1 @@
---disable-programs --disable-doc --disable-debug --disable-network --enable-pic
+--disable-programs --disable-doc --disable-debug --disable-network --disable-lzma --enable-pic
