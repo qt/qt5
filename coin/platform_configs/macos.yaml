@@ -25,8 +25,11 @@ Configurations:
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
-        Features: ['DoNotRunTests', 'WarningsAreErrors']
-        Configure arguments: '-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DFEATURE_headersclean=ON -DFEATURE_framework=ON'
+        Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
+        Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
+        Environment variables: [
+            'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"'
+        ]
 
     # Test on all supported macOS versions (deployment targets)
 
