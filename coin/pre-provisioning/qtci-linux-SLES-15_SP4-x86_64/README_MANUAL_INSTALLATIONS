@@ -1,0 +1,64 @@
+### SUSE Linux Enterprise Server 15 SP4 ###
+
+# Installation #
+Language: English (US)
+Keyboard Layout: English (US)
+
+Available Extensions and Modules:
+   Basesystem Module
+   Desktop Applications Module
+   Python 3 Module
+   Server Applications Module
+
+SLES with GNOME
+
+Region: Etc
+Time Zone: UTC
+
+Create user with automatic login
+
+disable firewall
+
+Displays: Resolution 1280x800
+Power: Screen Blank: Never
+Privacy: Screen lock: Automatic screen lock: disable
+Privacy: Screen lock: Show notifications on lock screen: disable
+
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+
+sudo su -
+echo "add_drivers+=\"virtio-blk\"" >/etc/dracut.conf.d/virtio.conf
+dracut -f
+
+# Add these to /etc/polkit-default-privs.local
+org.freedesktop.udisks2.filesystem-mount yes
+org.freedesktop.udisks2.filesystem-mount-other-seat yes
+org.freedesktop.udisks2.filesystem-mount-system yes
+org.freedesktop.login1.power-off yes
+org.freedesktop.login1.power-off-ignore-inhibit yes
+org.freedesktop.login1.power-off-multiple-sessions yes
+
+# Set how DHClient creates CID for compatibility with older DHCP servers
+sudo sed -i 's/DHCLIENT_CREATE_CID=""/DHCLIENT_CREATE_CID="rfc2132"/' /etc/sysconfig/network/dhcp
+systemctl restart wicked
+
+# Create etc/sysconfig/network/ifcfg-eth1 with values:
+* BOOTPROTO='dhcp'
+* STARTMODE='auto'
+sudo ifup eth1
+
+# Register product
+# Add 'Available Extensions and Modules'
+* Basesystem Module 15 SP4 x86_64
+* Server Applications Module 15 SP4 x86_64
+
+zypper yum update
+
+* Download and run coin-setup
+
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_386/coin-setup
+sudo ./coin-setup
+
+sudo reboot now
