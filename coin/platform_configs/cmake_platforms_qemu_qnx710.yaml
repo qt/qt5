@@ -11,7 +11,7 @@ Configurations:
     Features: ['Packaging', 'InsignificantTests', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
-        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'QT_CMAKE_DIR=/opt/cmake-3.21.1/bin',
         "TESTARGS='{{.Env.QNX_QEMU_SSH}} LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci'",
         "TESTRUNNER='python3 {{.SourceDir}}/coin_qnx_qemu_runner.py'",
@@ -27,7 +27,7 @@ Configurations:
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
-        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
     ]
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
@@ -39,5 +39,5 @@ Configurations:
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
-        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
     ]
