@@ -7,7 +7,7 @@ Include: [
     "ios-universal"
   ],
   macos.yaml: [
-    "macos-12-arm64-tests",
+    "macos-12-x86_64-tests",
   ],
   cmake_platforms_target_android_host_macos.yaml: [
     "android-arm64-on-macos"
