@@ -45,6 +45,8 @@ $writable='testsharewritable'
 $readonlypath="${env:SystemDrive}\${readonly}"
 $writablepath="${env:SystemDrive}\${writable}"
 
+Write-Host "******************** Creating folders ${readonlpath} and ${writablepath}"
+
 if ($(Test-Path -Path $readonlypath)) {
     Remove-SmbShare -Name $readonly -Force
     Remove-Item -Path $readonlypath -Force -Recurse
@@ -64,3 +66,11 @@ New-Item "${readonlypath}\readme.txt" -ItemType File
 
 New-Item ${writablepath} -ItemType Directory
 New-SmbShare -Name ${writable} -Path ${writablepath} -ChangeAccess Users
+
+Write-Host "******************** File system content"
+dir ${env:SystemDrive}
+cd "\\${env:COMPUTERNAME}\${readonly}"
+dir
+cd "\\${env:COMPUTERNAME}\${writable}"
+dir
+Write-Host "******************** Done Content"
