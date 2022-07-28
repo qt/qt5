@@ -1,1 +1,1 @@
-"$PSScriptRoot\..\common\windows\share-test-folders.ps1"
+. "$PSScriptRoot\..\common\windows\share-test-folders.ps1"
