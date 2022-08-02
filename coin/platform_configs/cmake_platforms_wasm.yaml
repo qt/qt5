@@ -38,7 +38,7 @@ Configurations:
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
 -
-    Template: 'qtci-macos-10.14-x86_64'
+    Template: 'qtci-macos-12-x86_64-102'
     Target os: 'WebAssembly'
     Compiler: 'Clang'
     Target compiler: 'Clang'
