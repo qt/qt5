@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: "ios-tests-target"
-    Template: 'qtci-macos-10.14-x86_64'
+    Template: 'qtci-macos-12-x86_64-102'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
