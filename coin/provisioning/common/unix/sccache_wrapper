@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Call real sccache with original arguments
+# sccache /opt/android/android-ndk-r23b/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none ......
+real_sccache=/usr/local/sccache/sccache
+$real_sccache "$@"
+retval=$?
+
+if test $retval -ne 0
+then
+    echo "Sccache command failed, re-try calling build tool directly"
+    "$@"
+    retval=$?
+fi
+exit $retval
