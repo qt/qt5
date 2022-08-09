@@ -54,7 +54,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64']
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -73,7 +73,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -110,7 +110,7 @@ Configurations:
     ]
 -
     Id: 'Windows11_21H2-MSVC2019-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
@@ -119,7 +119,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
@@ -182,7 +182,7 @@ Configurations:
     ]
 -
     Id: 'Windows11_21H2-LLVM-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -204,7 +204,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
