@@ -56,7 +56,7 @@ Configurations:
     Features: ['Sccache', 'DisableTests']
     Configure arguments: '-DQT_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DFEATURE_sql_mysql=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DFEATURE_headersclean=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
@@ -99,7 +99,7 @@ Configurations:
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF'
 -
     Id: 'Windows11_21H2-MSVC2019-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease"]
     Configure arguments: '-G"Ninja Multi-Config" -DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Debug" -DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache'
@@ -107,7 +107,7 @@ Configurations:
         'NON_QTBASE_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
         'TEST_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging']
@@ -165,7 +165,7 @@ Configurations:
     ]
 -
     Id: 'Windows11_21H2-LLVM-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'Clang'
     Features: ['Sccache']
     Configure arguments: '-GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=OFF -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..'
@@ -180,7 +180,7 @@ Configurations:
     Environment variables: ['Path=C:\llvm-mingw\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
         'LLVM_INSTALL_DIR=C:\llvm-mingw']
 -
-    Template: 'qtci-windows-11_21H2-x86_64-51'
+    Template: 'qtci-windows-11_21H2-x86_64-52'
     Compiler: 'Mingw'
     Features: ['Sccache']
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
