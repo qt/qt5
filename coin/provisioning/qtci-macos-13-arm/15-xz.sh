@@ -39,55 +39,31 @@
 ##
 #############################################################################
 
-# shellcheck source=./../unix/DownloadURL.sh
-source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+# This script installs XZ-Utils
 
-# This script installs Xcode
-# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
-# This can be achieved by fetching Xcode_8.xip from Apple Store.
-# Uncompress it with 'xar -xf Xcode_8.xip'
-# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
-# with which you can run 'python parse_pbzx2.py Content'.
-# This will give you a file called "Content.part00.cpio.xz" that
-# can be renamed to Xcode_8.xz for this script.
+# XZ-Utils are needed for uncompressing xz-compressed files
 
+# pkg was self builded.
+# wget https://downloads.sourceforge.net/project/lzmautils/xz-5.2.5.tar.gz
+# tar -xzf xz-5.2.5.tar.gz -C /tmp
+# cd /tmp/xz-5.2.5
+# ./configure
+# make
+# ./configure prefix=/tmp/destination_root
+# make install
+# cd /tmp
+# pkgbuild --root destination_root --identifier io.qt.xz.pkg xz-arm64.pkg
 
+set -ex
 
-function InstallXCode() {
-    sourceFile=$1
-    version=$2
+# shellcheck source=../common/macos/InstallPKGFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_11.0_big_sur_arm/xz-arm64.pkg"
+# SourceUrl="https://tukaani.org/xz/xz-5.2.5.tar.gz"
 
-    echo "Uncompressing and installing '$sourceFile'"
-    if [[ $sourceFile =~ tar ]]; then
-        cd /Applications/ && sudo tar -zxf "$sourceFile"
-    elif [[ $sourceFile =~ "xip" ]]; then
-        if [[ $sourceFile =~ "http" ]]; then
-            Download $sourceFile /Applications/Xcode_$version.xip
-            cd /Applications/ && xip -x "Xcode_$version.xip"
-        else
-            cd /Applications/ && xip -x "$sourceFile"
-        fi
-    else
-        xzcat < "$sourceFile" | (cd /Applications/ && sudo cpio -dmi)
-    fi
+SHA1="1afc327965d4af33399ae28f22c4b8e5a9e98dc2"
+DestDir="/"
 
-    echo "Versioning application bundle"
-    majorVersion=$(echo $version | cut -d '.' -f 1)
-    versionedAppBundle="/Applications/Xcode${majorVersion}.app"
-    sudo mv /Applications/Xcode*.app ${versionedAppBundle}
+InstallPKGFromURL "$PrimaryUrl" "$PrimaryUrl" "$SHA1" "$DestDir"
 
-    echo "Selecting Xcode"
-    sudo xcode-select --switch ${versionedAppBundle}
-
-    echo "Accept license"
-    sudo xcodebuild -license accept
-
-    echo "Install packages"
-    # -runFirstLaunch is valid in 9.x
-    sudo xcodebuild -runFirstLaunch || true
-
-    echo "Enabling developer mode, so that using lldb does not require interactive password entry"
-    sudo /usr/sbin/DevToolsSecurity -enable
-
-    echo "Xcode = $version" >> ~/versions.txt
-}
+echo "XZ = 5.2.5" >> ~/versions.txt
