@@ -1,0 +1,13 @@
+Version: 2
+Include: [
+    macos.yaml: [
+        "macos-latest-xcode-arm64-developer-build"
+    ]
+]
+Configurations:
+-
+    Id: 'macos-13-arm64-developer-build-tests'
+    Template: 'qtci-macos-13-arm64'
+    Compiler: 'Clang'
+    Features: ['TestOnly']
+    Platform dependency: 'macos-latest-xcode-arm64-developer-build'
