@@ -19,7 +19,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Template: 'qtci-macos-11-x86_64-104'
+    Template: 'qtci-macos-11-x86_64-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'
