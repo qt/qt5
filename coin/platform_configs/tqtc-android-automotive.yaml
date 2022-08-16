@@ -21,7 +21,7 @@ Configurations:
     ]
 -
     Id: 'macos-latest-xcode-universal-packaging-build'
-    Template: 'qtci-macos-12-x86_64-102'
+    Template: 'qtci-macos-12-x86_64-105'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
