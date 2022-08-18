@@ -1,4 +1,9 @@
 Version: 2
+Include: [
+    cmake_platforms.yaml: [
+        Windows10_21H2-MSVC2019-x64-host
+    ]
+]
 Configurations:
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
