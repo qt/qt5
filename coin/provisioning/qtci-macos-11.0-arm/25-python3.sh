@@ -45,7 +45,7 @@
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-brew install ${BASH_SOURCE%/*}/pyenv.rb
+brew install --formula ${BASH_SOURCE%/*}/pyenv.rb
 
 pyenv install 3.9.7
 
