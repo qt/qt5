@@ -1,4 +1,5 @@
 Version: 2
+Module only: True
 Include: [
     macos.yaml: [
         "macos-latest-xcode-arm64-developer-build"
