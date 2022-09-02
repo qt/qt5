@@ -136,6 +136,9 @@ installPackages+=(xcb-util-image-devel)
 installPackages+=(xcb-util-keysyms-devel)
 installPackages+=(xcb-util-wm-devel)
 installPackages+=(xcb-util-renderutil-devel)
+installPackages+=(xcb-util-cursor)
+installPackages+=(xcb-util-cursor-devel)
+
 # ODBC support
 installPackages+=(unixODBC-devel)
 installPackages+=(unixODBC)

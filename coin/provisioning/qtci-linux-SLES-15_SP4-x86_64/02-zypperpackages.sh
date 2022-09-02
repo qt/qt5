@@ -85,6 +85,11 @@ sudo zypper -nq install libXi-devel postgresql14 postgresql14-devel mysql-devel 
 sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
          xcb-util-wm-devel xcb-util-renderutil-devel
 
+# temporary solution for libxcb-cursor0 xcb-util-cursor-devel
+sudo zypper addrepo --no-gpgcheck https://download.opensuse.org/repositories/home:liangqi_qt:branches:SUSE:SLE-15-SP4:GA/standard/home:liangqi_qt:branches:SUSE:SLE-15-SP4:GA.repo
+sudo zypper refresh
+sudo zypper -nq install --force-resolution libxcb-cursor0 xcb-util-cursor-devel
+
 # qtwebengine
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \

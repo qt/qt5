@@ -29,7 +29,7 @@ sudo zypper -nq install libXi-devel
 
 # system provided XCB libraries
 sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel \
-         xcb-util-wm-devel xcb-util-renderutil-devel
+         xcb-util-wm-devel xcb-util-renderutil-devel xcb-util-cursor-devel
 
 # ICU
 sudo zypper -nq install libicu-devel
