@@ -5,7 +5,7 @@ Configurations:
     Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
-    Platform dependency: 'OpenSUSE-15.4-host'
+    Platform dependency: 'opensuse-15.4-developer-build'
     Features: ['Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
@@ -18,7 +18,7 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
-    Platform dependency: 'Windows10_22H2-Mingw11-x64-host'
+    Platform dependency: 'windows-10_22h2-mingw11'
     Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
@@ -35,7 +35,7 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    Platform dependency: 'macos-universal-on-x86_64'
     Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',

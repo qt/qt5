@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Include: [
     macos.yaml: [
-        "macos-latest-xcode-arm64-developer-build"
+        "macos-12-arm64-developer-build"
     ]
 ]
 Configurations:
@@ -11,4 +11,4 @@ Configurations:
     Template: 'qtci-macos-13-arm64'
     Compiler: 'Clang'
     Features: ['TestOnly']
-    Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+    Platform dependency: 'macos-12-arm64-developer-build'

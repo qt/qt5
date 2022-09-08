@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Id: 'sles-15-static'
+    Id: 'sles-15_sp4-minimal-static'
     Template: 'qtci-linux-SLES-15_SP4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
@@ -10,6 +10,7 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
 -
+    Id: 'windows-10_22h2-minimal-static'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
@@ -21,6 +22,7 @@ Configurations:
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
+    Id: 'macos-11-minimal-static'
     Template: 'qtci-macos-11-x86_64-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']

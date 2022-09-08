@@ -2,12 +2,13 @@ Version: 2
 Configurations:
 -
     # cmake_platforms.yaml
+    Id: 'ubuntu-22.04-documentation'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'UseConfigure']
     Configure arguments: '-make examples -developer-build -c++std c++20 -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
 -
-    Id: 'Ubuntu-22.04-host'
+    Id: 'ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'InsignificantTests']
@@ -17,11 +18,12 @@ Configurations:
     ]
 -
     # cmake_platforms_qemu.yaml
+    Id: 'qemu-armv7-developer-build-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'armv7'
     Compiler: 'GCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=ON -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-imx7-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=hard-float boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
@@ -32,11 +34,12 @@ Configurations:
         'QT_QUICK_BACKEND=software',
     ]
 -
+    Id: 'qemu-arm64-developer-build-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'arm64'
     Compiler: 'GCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
@@ -47,11 +50,12 @@ Configurations:
         'QT_QUICK_BACKEND=software',
     ]
 -
+    Id: 'qemu-mips64-developer-build-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'mips64'
     Compiler: 'GCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache', 'DisableTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-DQT_BUILD_EXAMPLES=OFF -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_FILE}} -DQT_FEATURE_system_harfbuzz=OFF -DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ -DQT_QMAKE_DEVICE_OPTIONS="CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}};DISTRO_OPTS=boot2qt" -DCMAKE_STAGING_PREFIX=/home/qt/work/install/target -DCMAKE_AUTOGEN_VERBOSE=ON -DFEATURE_forkfd_pidfd=OFF -DWARNINGS_ARE_ERRORS=OFF',
@@ -63,12 +67,13 @@ Configurations:
     ]
 -
     # cmake_platforms_qemu_qnx710.yaml
+    Id: 'qnx-710-x86_64-developer-build-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'x86_64'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
@@ -77,24 +82,26 @@ Configurations:
         'QNX_TEST_ENV=LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
     ]
 -
+    Id: 'qnx-710-arm64-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'arm64'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake',
     ]
 -
+    Id: 'qnx-710-armv7-on-ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'armv7'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
@@ -102,15 +109,17 @@ Configurations:
     ]
 -
     # default.yaml
+    Id: 'ubuntu-22.04-license-check'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
 -
     # integrity.yaml
+    Id: 'integrity-arm64-on-ubuntu-22.04-x86_64'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Target os: 'INTEGRITY'
-    Platform dependency: 'Ubuntu-22.04-host'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql -no-feature-brotli',

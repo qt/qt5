@@ -1,13 +1,13 @@
 Version: 2
 Configurations:
 -
-    Id: "ios-tests-target"
+    Id: "ios-tests-on-macos"
     Template: 'qtci-macos-12-x86_64-105'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    Platform dependency: 'macos-universal-on-x86_64'
     Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang'
