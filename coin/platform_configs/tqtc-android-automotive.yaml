@@ -2,13 +2,14 @@ Version: 2
 Include: [ cmake_platforms_target_android.yaml ]
 Configurations:
 -
+    Id: 'automotive-ubuntu-20.04-documentation'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
-    Id: 'Windows10_22H2-Mingw11-x64-host'
+    Id: 'automotive-windows-10_22h2-mingw11'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
@@ -20,7 +21,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
     ]
 -
-    Id: 'macos-latest-xcode-universal-packaging-build'
+    Id: 'macos-universal-on-x86_64'
     Template: 'qtci-macos-12-x86_64-105'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
@@ -32,7 +33,7 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
     ]
 -
-    Id: 'RHEL-9.0-host'
+    Id: 'rhel-9.0'
     Template: 'qtci-linux-RHEL-9.0-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
@@ -42,12 +43,13 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
     ]
 -
+    Id: "automotive-android-x86-on-linux"
     Template: 'qtci-linux-RHEL-9.0-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'GCC'
     Target compiler: 'Clang'
-    Platform dependency: 'RHEL-9.0-host'
+    Platform dependency: 'rhel-9.0'
     Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',

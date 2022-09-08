@@ -3,7 +3,7 @@ Module only: True
 Include: [
   cmake_platforms.yaml: [
     "Ubuntu-20.04-host",
-    "Windows10_22H2-MSVC2019-x64-host",
+    "windows-10_22h2-msvc2019-developer-build",
     "ios-universal"
   ],
   macos.yaml: [
@@ -13,10 +13,10 @@ Include: [
     "android-arm64-on-macos"
   ],
   cmake_platforms_qemu.yaml: [
-    "qemu-armv7-on-ubuntu20.04"
+    "qemu-armv7-developer-build"
   ],
   cmake_platforms_qemu_qnx710.yaml: [
-    "qnx-x86_64-on-ubuntu20.04"
+    "qnx-710-x86_64-developer-build-on-linux"
   ]
 ]
 Configurations: []

@@ -1,11 +1,11 @@
 Version: 2
 Configurations:
     -
-      Id: "integrity-arm64-on-ubuntu20.04"
+      Id: "integrity-arm64"
       Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
       Compiler: 'GCC'
       Target os: 'INTEGRITY'
-      Platform dependency: 'Ubuntu-20.04-host'
+      Platform dependency: 'ubuntu-20.04'
       Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16', 'UseConfigure']
       Environment variables: [
           'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql',
