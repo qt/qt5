@@ -1,6 +1,7 @@
 Version: 2
 Configurations:
 -
+    Id: 'ubuntu-20.04-license-check'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']

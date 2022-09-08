@@ -8,7 +8,7 @@ Configurations:
     # Build on recent macOS version with latest Xcode
 
     -
-        Id: 'macos-latest-xcode-universal-packaging-build'
+        Id: 'macos-universal-on-x86_64'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
@@ -21,7 +21,7 @@ Configurations:
         ]
 
     -
-        Id: 'macos-latest-xcode-arm64-universal-build'
+        Id: 'macos-universal-on-arm64'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
@@ -38,55 +38,55 @@ Configurations:
         Template: 'qtci-macos-10.14-x86_64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-10.15-x86_64-tests'
         Template: 'qtci-macos-10.15-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-11-x86_64-tests'
         Template: 'qtci-macos-11-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-11-arm64-tests'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-12-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-13-arm64-tests'
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-12-x86_64-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Platform dependency: 'macos-universal-on-x86_64'
     -
-        Id: 'macos-12-arm64-arm64-universal-build-tests'
+        Id: 'macos-12-arm-on-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-arm64-universal-build'
+        Platform dependency: 'macos-universal-on-arm64'
     -
-        Id: 'macos-12-x86_64-arm64-universal-build-tests'
+        Id: 'macos-12-arm-on-x86_64-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-arm64-universal-build'
+        Platform dependency: 'macos-universal-on-arm64'
 
     # =========================================================================
     # Developer build. Single architecture builds.
@@ -95,7 +95,7 @@ Configurations:
     # Build on recent macOS version with latest Xcode
 
     -
-        Id: 'macos-latest-xcode-x86_64-developer-build'
+        Id: 'macos-12-x86_64-developer-build'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
@@ -105,7 +105,7 @@ Configurations:
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
         ]
     -
-        Id: 'macos-latest-xcode-arm64-developer-build'
+        Id: 'macos-12-arm64-developer-build'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
@@ -120,40 +120,40 @@ Configurations:
         Template: 'qtci-macos-10.14-x86_64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Platform dependency: 'macos-12-x86_64-developer-build'
     -
         Id: 'macos-10.15-x86_64-developer-build-tests'
         Template: 'qtci-macos-10.15-x86_64-102'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Platform dependency: 'macos-12-x86_64-developer-build'
     -
         Id: 'macos-11-x86_64-developer-build-tests'
         Template: 'qtci-macos-11-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Platform dependency: 'macos-12-x86_64-developer-build'
     -
         Id: 'macos-11-arm64-developer-build-tests'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+        Platform dependency: 'macos-12-arm64-developer-build'
     -
         Id: 'macos-12-x86_64-developer-build-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Platform dependency: 'macos-12-x86_64-developer-build'
     -
         Id: 'macos-12-arm64-developer-build-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+        Platform dependency: 'macos-12-arm64-developer-build'
     -
         Id: 'macos-13-arm64-developer-build-tests'
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+        Platform dependency: 'macos-12-arm64-developer-build'

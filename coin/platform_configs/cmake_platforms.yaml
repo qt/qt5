@@ -8,13 +8,14 @@ Include: [
     ]
 Configurations:
 -
+    Id: 'ubuntu-20.04-documentation'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
-    Id: 'Ubuntu-20.04-host'
+    Id: 'ubuntu-20.04'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure']
@@ -24,7 +25,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
-    Id: 'OpenSUSE-15.4-host'
+    Id: 'opensuse-15.4-developer-build'
     Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
@@ -34,6 +35,7 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer'
     ]
 -
+    Id: 'sles-15_sp4-static'
     Template: 'qtci-linux-SLES-15_SP4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'DisableTests', 'UseConfigure']
@@ -42,6 +44,7 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
 -
+    Id: 'windows-10_22h2-msvc2019'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
@@ -52,6 +55,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64']
 -
+    Id: 'windows-11_22h2-msvc2019'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
@@ -61,6 +65,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
 -
+    Id: 'windows-10_22h2-msvc2022'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
@@ -71,6 +76,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
+    Id: 'windows-11_22h2-msvc2022'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
@@ -81,7 +87,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Id: 'Windows10_22H2-MSVC2019-x64-host'
+    Id: 'windows-10_22h2-msvc2019-developer-build'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'Conan', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
@@ -92,11 +98,12 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}'
     ]
 -
+    Id: 'windows-10_22h2-msvc2019-arm64'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
-    Platform dependency: 'Windows10_22H2-MSVC2019-x64-host'
+    Platform dependency: 'windows-10_22h2-msvc2019-developer-build'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
@@ -107,7 +114,7 @@ Configurations:
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}'
     ]
 -
-    Id: 'Windows11_22H2-MSVC2019-x64-host'
+    Id: 'windows-11_22h2-msvc2019-developer-build'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
@@ -117,11 +124,12 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}'
     ]
 -
+    Id: 'windows-11_2122-msvc2019-arm64'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
-    Platform dependency: 'Windows11_22H2-MSVC2019-x64-host'
+    Platform dependency: 'windows-11_22h2-msvc2019-developer-build'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
@@ -129,7 +137,7 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-arm64-msvc2019_64'
     ]
 -
-    Id: 'RHEL-8.4-host'
+    Id: 'rhel-8.4'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies']
@@ -146,7 +154,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    Platform dependency: 'macos-universal-on-x86_64'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
@@ -154,7 +162,7 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-macos-ios-arm64-clang'
     ]
 -
-    Id: 'Windows10_22H2-Mingw11-x64-host'
+    Id: 'windows-10_22h2-mingw11'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure']
@@ -167,7 +175,7 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw'
     ]
 -
-    Id: 'Windows10_22H2-LLVM-x64-host'
+    Id: 'windows-10_22h2-llvm'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
@@ -179,7 +187,7 @@ Configurations:
         'LLVM_INSTALL_DIR=C:\llvm-mingw'
     ]
 -
-    Id: 'Windows11_22H2-LLVM-x64-host'
+    Id: 'windows-11_22h2-llvm'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
@@ -191,6 +199,7 @@ Configurations:
         'LLVM_INSTALL_DIR=C:\llvm-mingw'
     ]
 -
+    Id: 'windows-10_22h2-mingw11-developer-build'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
@@ -202,6 +211,7 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
     ]
 -
+    Id: 'windows-11_22h2-mingw11-developer-build'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']

@@ -1,17 +1,18 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
-        Windows10_22H2-MSVC2019-x64-host
+        windows-10_22h2-msvc2019-developer-build
     ]
 ]
 Configurations:
 -
+    Id: 'qnx-710-arm64-on-windows'
     Template: 'qtci-windows-10_22H2-x86_64-50'
     Target os: 'QNX_710'
     Target arch: 'arm64'
     Compiler: 'MSVC2019'
     Target compiler: 'QCC'
-    Platform dependency: 'Windows10_22H2-MSVC2019-x64-host'
+    Platform dependency: 'windows-10_22h2-msvc2019-developer-build'
     Features: ['DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples -no-pch',

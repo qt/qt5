@@ -1,54 +1,54 @@
 Version: 2
 Module only: true
 Configurations:
-  - Id: 'WebOS-emulator-build'
+  - Id: 'webos-emulator-build'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_EMULATOR=enabled']
-  - Id: 'WebOS-emulator-qtbase-tests'
+  - Id: 'webos-emulator-qtbase-tests'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtbase']
-    Platform dependency: 'WebOS-emulator-build'
-  - Id: 'WebOS-emulator-qtdeclarative-tests'
+    Platform dependency: 'webos-emulator-build'
+  - Id: 'webos-emulator-qtdeclarative-tests'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtdeclarative']
-    Platform dependency: 'WebOS-emulator-build'
-  - Id: 'WebOS-emulator-qtwayland-tests'
+    Platform dependency: 'webos-emulator-build'
+  - Id: 'webos-emulator-qtwayland-tests'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtwayland']
-    Platform dependency: 'WebOS-emulator-build'
-  - Id: 'WebOS-emulator-qtshadertools-tests'
+    Platform dependency: 'webos-emulator-build'
+  - Id: 'webos-emulator-qtshadertools-tests'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtshadertools']
-    Platform dependency: 'WebOS-emulator-build'
-  - Id: 'WebOS-emulator-qtgraphicaleffects-tests'
+    Platform dependency: 'webos-emulator-build'
+  - Id: 'webos-emulator-qtgraphicaleffects-tests'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtgraphicaleffects']
-    Platform dependency: 'WebOS-emulator-build'
-  - Id: 'WebOS-raspberry-build'
+    Platform dependency: 'webos-emulator-build'
+  - Id: 'webos-raspberry-build'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_RASPBERRY=enabled']
-  - Id: 'WebOS-NDK-installer-build'
+  - Id: 'webos-ndk-installer-build'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_NDK_INSTALLER=enabled']
-  - Id: 'WebOS-NDK-install'
+  - Id: 'webos-ndk-install'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly']
-    Platform dependency: ['WebOS-raspberry-build', 'WebOS-NDK-installer-build']
+    Platform dependency: ['webos-raspberry-build', 'webos-ndk-installer-build']
     Environment variables: ['TEST_INSTALL_NDK=enabled']
