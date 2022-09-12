@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -42,5 +42,5 @@
 set -ex
 
 # shellcheck source=../common/unix/install_protobuff.sh
-source "${BASH_SOURCE%/*}/../common/unix/install_protobuff.sh"
+source "${BASH_SOURCE%/*}/../common/unix/install_protobuf.sh"
 
