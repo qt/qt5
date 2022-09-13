@@ -2,3 +2,7 @@ type: Group
 instructions:
   - !include "{{qt/qt5}}/coin_qt_configure.yaml"
   - !include "{{qt/qt5}}/coin_qt_build_docs.yaml"
+disable_if:
+  condition: property
+  property: features
+  contains_value: "TargetBuildOnly"
