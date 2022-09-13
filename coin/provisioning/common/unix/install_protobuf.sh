@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -46,7 +46,11 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
 # Extract cmake path from the environment
 if uname -a |grep -q "Ubuntu"; then
-    source ~/.profile
+    if lsb_release -a |grep "Ubuntu 22.04"; then
+        source ~/.bash_profile
+    else
+        source ~/.profile
+    fi
 else
     source ~/.bashrc
 fi
