@@ -62,6 +62,8 @@ NamespaceIndentation: None
 
 # Allow indentation for preprocessing directives (if/ifdef/endif). https://reviews.llvm.org/rL312125
 IndentPPDirectives: AfterHash
+# We only indent with 2 spaces for preprocessor directives
+PPIndentWidth: 2
 
 # Horizontally align arguments after an open bracket.
 # The coding style does not specify the following, but this is what gives
@@ -84,6 +86,21 @@ ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH, forever, Q_FOREVER, QBENCH
 
 # Break constructor initializers before the colon and after the commas.
 BreakConstructorInitializers: BeforeColon
+
+# Add "// namespace <namespace>" comments on closing brace for a namespace
+# Ignored for namespaces that qualify as a short namespace,
+# see 'ShortNamespaceLines'
+FixNamespaceComments: true
+
+# Definition of how short a short namespace is, default 1
+ShortNamespaceLines: 1
+
+# When escaping newlines in a macro attach the '\' as far left as possible, e.g.
+##define a     \
+#   something; \
+#   other;     \
+#   thelastlineislong;
+AlignEscapedNewlines: Left
 
 # Avoids the addition of a space between an identifier and the
 # initializer list in list-initialization.
