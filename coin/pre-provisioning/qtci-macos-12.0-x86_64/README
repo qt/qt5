@@ -27,3 +27,12 @@
   - Copy its content to Tier1 folder
 * Copy Tier1 folder to 101 NFS
    - Check folder access rights
+
+# How to upgrade existing Tier1 image
+
+* Open KVM connection to Intel mac Parallels host
+   - Open Parallels :: create new VM :: select macOS :: start installation but then stop it when machine boots to recovery mode
+* You should now have a virtual machine folder in /Users/qt/Parallels/<VM folder>
+* Remove files from <VM folder>/harddisk.hdd/ and copy Tier1 VM files from NFS to <VM folder>/harddisk.hdd/
+* Start the virtual machine and make needed changes
+* Copy <VM folder>/harddisk.hdd to NFS with updated number in its name
