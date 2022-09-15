@@ -123,6 +123,9 @@ sudo zypper -nq update open-vm-tools
 # Tools to build Git
 sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 
+# Nodejs - required by QtWebengine
+sudo zypper -nq install nodejs16
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 

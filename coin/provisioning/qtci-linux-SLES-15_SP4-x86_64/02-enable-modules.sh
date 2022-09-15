@@ -52,6 +52,8 @@ sudo SUSEConnect -p sle-module-server-applications/15.4/x86_64
 sudo SUSEConnect -p sle-module-desktop-applications/15.4/x86_64
 sudo SUSEConnect -p sle-module-development-tools/15.4/x86_64
 sudo SUSEConnect -p sle-module-python3/15.4/x86_64
+# sle-module-web-scripting is required for Nodejs
+sudo SUSEConnect -p sle-module-web-scripting/15.4/x86_64
 
 sudo zypper lr -u
 
