@@ -1,0 +1,22 @@
+Version: 2
+Configurations:
+-
+    # cmake_platforms.yaml
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
+-
+    Id: 'Ubuntu-22.04-xwayland-host'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InsignificantTests']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+    ]
+-
+    # default.yaml
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
