@@ -28,8 +28,8 @@ CommentPragmas: "^!|^:|^ SPDX-License-Identifier:"
 # We want a space between the type and the star for pointer types.
 PointerBindsToType: false
 
-# We use template< without space.
-SpaceAfterTemplateKeyword: false
+# We generally use "template <" with space.
+SpaceAfterTemplateKeyword: true
 
 # We want to break before the operators, but not before a '='.
 BreakBeforeBinaryOperators: NonAssignment
