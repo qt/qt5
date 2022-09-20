@@ -58,9 +58,12 @@ else
     pathNodeExecutable="node-$versionNode-linux-x64/bin/node"
 fi
 
-SetEnvVar "PATH" "\"\$PATH:/opt/emsdk/emscripten-$version/\""
-SetEnvVar "EMSCRIPTEN" "/opt/emsdk/emscripten-$version"
-SetEnvVar "EMSDK" "/opt/emsdk"
-SetEnvVar "EMSDK_NODE" "/opt/emsdk/$pathNodeExecutable"
+emsdkPath="/opt/emsdk/"
+emscriptenPath="${emsdkPath}upstream/emscripten/"
+
+SetEnvVar "PATH" "\"\$PATH:${emscriptenPath}\""
+SetEnvVar "EMSCRIPTEN" "${emscriptenPath}"
+SetEnvVar "EMSDK" "${emsdkPath}"
+SetEnvVar "EMSDK_NODE" "${emsdkPath}${pathNodeExecutable}"
 
 echo "Emsdk = $version" >> ~/versions.txt
