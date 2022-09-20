@@ -29,7 +29,7 @@ Configurations:
     Id: 'OpenSUSE-15.3-host'
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
+    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'InsignificantTests']
     Configure arguments: '-nomake examples -developer-build'
     Environment variables: [
         'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
