@@ -57,7 +57,7 @@ toolsVersion="2.1"
 # toolsFile dertermines tools version
 toolsFile="commandlinetools-mac-6609375_latest.zip"
 
-ndkVersionLatest="r23b"
+ndkVersionLatest="r25b"
 ndkVersionDefault="$ndkVersionLatest"
 sdkBuildToolsVersion="31.0.0"
 # this is compile sdk version

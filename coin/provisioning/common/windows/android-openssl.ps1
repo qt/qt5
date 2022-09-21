@@ -52,11 +52,11 @@ if (Is64BitWinHost) {
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
 $openssl_version = "1.1.1m"
-$ndk_version_latest = "r23b"
+$ndk_version_latest = "r25b"
 $ndk_version_default = "$ndk_version_latest"
 $openssl_compressed = Get-DownloadLocation ("openssl-${openssl_version}_fixes-ndk_root.tar.gz")
 $openssl_sha1 = "c9638d25b9709eda1ac52591c0993af52d6d1206"
-$prebuilt_sha1_ndk_latest = "0aebe55d2436f235e1a24ae9d1030cb6ce8f31da"
+$prebuilt_sha1_ndk_latest = "2897c84dccdb26e15b467e4a63de025fe7038899"
 $prebuilt_sha1_ndk_default = "$prebuilt_sha1_ndk_latest"
 $destination = "C:\Utils\openssl-android-master"
 

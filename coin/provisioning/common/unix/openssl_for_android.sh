@@ -39,7 +39,7 @@
 ##
 #############################################################################
 
-# This script install prebuilt OpenSSL which was built against Android NDK 21.
+# This script install prebuilt OpenSSL which was built against Android NDK 25.
 # OpenSSL build will fail with Android NDK 22, because it's missing platforms and sysroot directories
 
 set -ex
@@ -49,14 +49,14 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="1.1.1m"
-ndkVersionLatest="r23b"
+ndkVersionLatest="r25b"
 ndkVersionDefault=$ndkVersionLatest
-prebuiltOpensslNdkShaDarwinLatest="2624b0c2772e360bbbae7a7f2dc342e4b97f1a2e"
-prebuiltOpensslNdkShaLinuxLatest="f58dcb32b2d3e5edc7e5141ae139a50547805f60"
+prebuiltOpensslNdkShaDarwinLatest="1f4f994255c39839c8857d2ed1ff58a2101de714"
+prebuiltOpensslNdkShaLinuxLatest="15f7014781186a23f4973a719b55b766b1e69116"
 prebuiltOpensslNdkShaDarwinDefault=$prebuiltOpensslNdkShaDarwinLatest
 prebuiltOpensslNdkShaLinuxDefault=$prebuiltOpensslNdkShaLinuxLatest
 
-: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
+: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
 # Source built requires GCC and Perl to be in PATH.
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
