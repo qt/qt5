@@ -9,7 +9,7 @@ Include: [
   macos.yaml: [
     "macos-12-x86_64-tests",
   ],
-  cmake_platforms_target_android_host_macos.yaml: [
+  cmake_platforms_target_android.yaml: [
     "android-arm64-on-macos"
   ],
   cmake_platforms_qemu.yaml: [
