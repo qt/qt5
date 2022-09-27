@@ -1,9 +1,5 @@
 Version: 2
-Include: [
-    cmake_platforms_target_android_host_linux.yaml,
-    cmake_platforms_target_android_host_macos.yaml,
-    cmake_platforms_target_android_host_windows.yaml
-    ]
+Include: [ cmake_platforms_target_android.yaml ]
 Configurations:
 -
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
