@@ -54,7 +54,7 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -76,7 +76,7 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -115,8 +115,8 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
     ]
 -
-    Id: 'Windows11_21H2-MSVC2019-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Id: 'Windows11_22H2-MSVC2019-x64-host'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
@@ -126,11 +126,11 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
-    Platform dependency: 'Windows11_21H2-MSVC2019-x64-host'
+    Platform dependency: 'Windows11_22H2-MSVC2019-x64-host'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
@@ -191,8 +191,8 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}'
     ]
 -
-    Id: 'Windows11_21H2-LLVM-x64-host'
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Id: 'Windows11_22H2-LLVM-x64-host'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -216,7 +216,7 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}'
     ]
 -
-    Template: 'qtci-windows-11_21H2-x86_64-52'
+    Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
