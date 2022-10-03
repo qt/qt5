@@ -1,0 +1,93 @@
+# List about manual pre-installations to Tier1 image:
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language to install: English UK
+Time and currency format: English UK
+Keyboard or input method: United Kingdom
+Windows 11 Enterprise
+location: finnish
+
+
+# If note "This PC can't run Windows 11" appears
+shift + F10 - regedit - add: HKEY_LOCAL_MACHINE/SYSTEM/Setup/LabConfig
+    add DWORD value BypassTPMCheck with value 1
+    add DWORD value BypassSecureBootCheck value 1
+
+Load driver - browse - virtio-win-0.1.204 - amd64 - w10
+
+
+Region: Finland
+Keyboard layout: United Kingdom
+Keyboard layout: English (United State)
+
+
+* Sign-in options - Domain join instead
+   - Add user & pw
+* Location - no
+* Find my device - no
+* Diagnostic data - Required only
+* Inking and typing - no
+* Tailored expreriences - no
+* Advertising ID - no
+
+Reboot
+After reboot and startup open virtio-win-0.1.204.iso and run virtio-win-qt-x64
+
+* Enable Remote Desktop:
+   - Settings - System - Remote Desktop - On
+* Resolution set to 1280x800
+* Coin-setup:
+   - Installing Boostrap agent
+   - Disabling fast boot
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+   - Automatic login
+   - Disabling windows updates
+* Turn off Windows defender:
+   - Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+      - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
+   - Reboot on Safe mode:
+      - Open msconfig - Boot tab - enable “Safe boot“ - apply - restart
+      - In Safe mode:
+         - Take Ownership of Defender:
+            - Open properties - Right click "C:\Program Files\Windows Defender\Platform" and select 'Properties'
+            - Open Security tab - Advanced - Owner: Change - Advanced - Find now - Select Administrators - Ok - Ok
+            - Remove all Permissions: Permissions tab - Select 'Disable inheritance' - Remove all entries -Select 'Replace all child object permi…' - Apply
+         - Disable Windows defender also from RegEdit:
+            - Open regedit - Navigate to 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Service'
+            - Change the following folders the key Start to 4
+               - Sense (Windows defender advanced threat protection)
+               - WdBoot (Windows defender boot)
+               - WdFilter (Microsoft antimalware file system filter driver)
+               - WdNisDrv (Windows Defender Network Inspection Driver)
+               - WdNisSvc (Windows Defender Network Inspection Service)
+               - WinDefend (Windows Defender Antivirus Service)
+               - mpssvc (Windows Defender Firewall)
+   - NOTE! Without these step windows defender can't be disabled!
+   - Reboot back to normal mode
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time:
+   - Settings - System - Date & time - Time zone: 'Co-ordinated Universal Time'
+   - Settings - System - Date & time - "Set the time automatically: Off"
+* Regional format:
+   - Settings - Time & language - Language and region - regional format - English (United States)
+* Power saver:
+   - Settings - System - Power - Screen and sleep: set 'When plugged in, turn off my screen after' to 'never'
+* Windows search disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Windows update:
+   - Settings - Windows Update - run available updates (Windows update2022-09 Cumulative Update for Windows 11 Version 22H2 for x64-based Systems (KB5017321))
+   - After reboot disable windows updates:
+      - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows updates' - stop & disable
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+* (Restart Windows)
+* Google Chrome installed for RTA
+* Virus & threat protection settings:
+   * Check that there's no active antivirus providers
+* Activate Windows
