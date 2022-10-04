@@ -14,6 +14,6 @@ Configurations:
     Compiler: 'GCC'
     Features: ['DisableTests']
 -
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']

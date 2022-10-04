@@ -2,11 +2,11 @@ Version: 2
 Configurations:
 -
     Id: 'qemu-armv7-developer-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'armv7'
     Compiler: 'GCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -make examples -qt-harfbuzz -device linux-imx7-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=hard-float boot2qt" -no-feature-forkfd_pidfd',
@@ -19,11 +19,11 @@ Configurations:
     ]
 -
     Id: 'qemu-arm64-developer-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'arm64'
     Compiler: 'GCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
@@ -36,11 +36,11 @@ Configurations:
     ]
 -
     Id: 'qemu-mips64-developer-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QEMU'
     Target arch: 'mips64'
     Compiler: 'GCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
