@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2020 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -53,6 +53,9 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
+PROVISIONING_DIR="$(dirname "$0")/../../"
+. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+
 libclang_version="15.0.0"
 
 if uname -a |grep -q Darwin; then
@@ -65,6 +68,11 @@ elif test -f /etc/redhat-release && cat /etc/redhat-release | grep "Red Hat" | g
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Rhel8.4-gcc10.0-x86_64.7z"
     url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Rhel8.4-gcc10.0-x86_64.7z"
     sha1="6ca035bb522022d34d61759e0460845832933b5c"
+elif [ "$PROVISIONING_OS_ID" = ubuntu ]; then
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
+    url_cached="http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
+    sha1="dd170ec762a7ec8ac84b4b5cac3a422514e5b030"
 else
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"

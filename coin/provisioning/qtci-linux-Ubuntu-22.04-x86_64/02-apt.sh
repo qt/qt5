@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -163,6 +163,8 @@ installPackages+=(libicu-dev)
 installPackages+=(zlib1g-dev)
 installPackages+=(zlib1g)
 installPackages+=(openjdk-8-jdk)
+#Java 11 for Android
+installPackages+=(openjdk-11-jdk)
 installPackages+=(libgtk-3-dev)
 installPackages+=(ninja-build)
 installPackages+=(libssl-dev)

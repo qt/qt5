@@ -2,8 +2,8 @@ Version: 2
 Include: [ cmake_platforms_target_android.yaml ]
 Configurations:
 -
-    Id: 'automotive-ubuntu-20.04-documentation'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Id: 'automotive-ubuntu-22.04-documentation'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'

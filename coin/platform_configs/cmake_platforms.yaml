@@ -8,15 +8,15 @@ Include: [
     ]
 Configurations:
 -
-    Id: 'ubuntu-20.04-documentation'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Id: 'ubuntu-22.04-documentation'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
-    Id: 'ubuntu-20.04'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Id: 'ubuntu-22.04'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'

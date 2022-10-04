@@ -2,12 +2,12 @@ Version: 2
 Configurations:
 -
     Id: 'qnx-710-x86_64-developer-build-on-linux'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'x86_64'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
@@ -17,12 +17,12 @@ Configurations:
     ]
 -
     Id: 'qnx-710-arm64-on-linux'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'arm64'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
@@ -30,12 +30,12 @@ Configurations:
     ]
 -
     Id: 'qnx-710-armv7-on-linux'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Target os: 'QNX_710'
     Target arch: 'armv7'
     Compiler: 'GCC'
     Target compiler: 'QCC'
-    Platform dependency: 'ubuntu-20.04'
+    Platform dependency: 'ubuntu-22.04'
     Features: ['Packaging', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',

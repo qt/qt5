@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #############################################################################
 ##
-## Copyright (C) 2017 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -41,5 +41,4 @@
 
 set -ex
 
-# shellcheck source=../common/linux/android_linux.sh
-source "${BASH_SOURCE%/*}/../common/linux/android_linux.sh"
+"$(dirname "$0")"/../common/linux/cleanup_cache.sh

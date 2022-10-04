@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Include: [
   cmake_platforms.yaml: [
-    "ubuntu-20.04",
+    "ubuntu-22.04",
     "windows-10_22h2-msvc2019-developer-build",
     "ios-universal"
   ],
