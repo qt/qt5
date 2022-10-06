@@ -5,7 +5,7 @@ param(
 )
 . "$PSScriptRoot\helpers.ps1"
 
-$libclang_version="12.0"
+$libclang_version="15.0.0"
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
@@ -14,7 +14,6 @@ Write-Output "libClang = $libclang_version" >> ~/versions.txt
 # Starting from Qt 5.11 QDoc requires Clang to parse C++
 
 $baseDestination = "C:\Utils\libclang-" + $libclang_version + "-" + $toolchain
-$libclang_version = $libclang_version -replace '["."]'
 
 function install() {
 
@@ -39,7 +38,7 @@ $toolchainSuffix = ""
 
 if ( $toolchain -eq "vs2019" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "44fabbd45b4b7e659c49347c156bae09d7aaffdc"
+        $sha1 = "e7c2d27f0e99d63e49225cb1be18c76a1e2a124b"
     }
     else {
         $sha1 = ""
@@ -49,7 +48,7 @@ if ( $toolchain -eq "vs2019" ) {
 
 if ( $toolchain -eq "mingw" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "9333170111aa90af6e1db824cd964dba227a4710"
+        $sha1 = "6c9300051533d5648ffe3e8ae1eb00decae8e6bf"
     }
     else {
         $sha1 = ""
@@ -64,7 +63,7 @@ if ( $setDefault ) {
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_${toolchainSuffix}") ($baseDestination + "-$archVer")
 
-if ( $libclang_version -eq "120" ) {
+if ( $libclang_version -eq "15.0.0" ) {
     # This is a hacked static build of libclang which requires special
     # handling on the qdoc side.
     Set-EnvironmentVariable "QDOC_USE_STATIC_LIBCLANG" "1"
