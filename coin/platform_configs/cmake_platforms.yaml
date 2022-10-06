@@ -189,7 +189,6 @@ Configurations:
 -
     Template: 'qtci-windows-10_21H2-x86_64-51'
     Compiler: 'Mingw'
-    Environment variables: ['PATH=C:\MINGW1120\mingw64\bin;$PATH']
     Features: ['Sccache']
     Configure arguments: '-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DFEATURE_developer_build=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFEATURE_separate_debug_info=ON -DQT_BUILD_EXAMPLES=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DFEATURE_system_zlib=OFF -DFEATURE_system_tiff=OFF -DFEATURE_system_freetype=OFF -DFEATURE_system_jpeg=OFF'
     Environment variables: ['Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}', 'NON_QTBASE_CONFIGURE_ARGS=-DFEATURE_system_tiff=OFF',
