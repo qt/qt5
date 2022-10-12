@@ -15,6 +15,17 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-webassembly-x86_64-clang'
     ]
 -
+    Id: 'webassembly-linux-thread'
+    Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'OpenSUSE-15.3-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
+    ]
+-
     Id: 'webassembly-linux-thread-asyncify'
     Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
     Target os: 'WebAssembly'
@@ -41,6 +52,20 @@ Configurations:
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
 -
+    Id: 'webassembly-windows-thread'
+    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'Mingw'
+    Target compiler: 'Clang'
+    Platform dependency: 'Windows10_21H2-Mingw11-x64-host'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF',
+    ]
+-
     Id: 'webassembly-macos'
     Template: 'qtci-macos-12-x86_64-105'
     Target os: 'WebAssembly'
@@ -53,4 +78,16 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
         'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang'
+    ]
+-
+    Id: 'webassembly-macos-thread'
+    Template: 'qtci-macos-12-x86_64-105'
+    Target os: 'WebAssembly'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
     ]
