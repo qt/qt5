@@ -12,7 +12,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
-        'QT_CMAKE_DIR=/opt/cmake-3.21.3/bin',
+        'QT_CMAKE_DIR=/opt/cmake-3.24.2/bin',
         'QNX_TEST_ENV=LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
     ]
 -
