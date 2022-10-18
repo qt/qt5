@@ -6,11 +6,12 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'OpenSUSE-15.4-host'
-    Features: ['Sccache', 'DisableTests']
+    Features: ['Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_thread=ON -DQT_QMAKE_DEVICE_OPTIONS="QT_EMSCRIPTEN_ASYNCIFY=1"',
-        'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
+        "TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread \
+        -DQT_QMAKE_DEVICE_OPTIONS=\"QT_EMSCRIPTEN_ASYNCIFY=1\""
+    ]
 -
     Id: 'webassembly-windows'
     Template: 'qtci-windows-10_22H2-x86_64-50'
