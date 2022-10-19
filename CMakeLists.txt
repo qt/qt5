@@ -34,7 +34,7 @@ if (NOT QT_BUILD_STANDALONE_TESTS)
     list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake/3rdparty/kwin")
 endif()
 
-include("QtTopLevelHelpers")
+include(QtTopLevelHelpers)
 include(ECMOptionalAddSubdirectory)
 
 # Also make sure the CMake config files do not recreate the already-existing targets
