@@ -1,23 +1,19 @@
-HOW TO BUILD Qt6
-================
+HOW TO BUILD Qt 6
+=================
 
 
 Synopsis
 ========
 
 System requirements
-------------------
+-------------------
 
-* CMake 3.18 or later
-* Perl 5.8 or later
-* Python 2.7 or later
 * C++ compiler supporting the C++17 standard
+* CMake 3.16 or newer
+* Ninja 1.8 or newer
+* Python 3
 
-It's recommended to have ninja 1.8 or later installed.
-
-For other platform specific requirements,
-please see section "Setting up your machine" on:
-http://wiki.qt.io/Get_The_Source
+For more details, see also https://doc.qt.io/qt-6/build-sources.html
 
 Linux, Mac:
 -----------
@@ -34,8 +30,7 @@ Windows:
 1. Open a command prompt.
 2. Ensure that the following tools can be found in the path:
  * Supported compiler (Visual Studio 2019 or later, or MinGW-builds gcc 8.1 or later)
- * Perl version 5.12 or later   [http://www.activestate.com/activeperl/]
- * Python version 2.7 or later  [http://www.activestate.com/activepython/]
+ * Python 3 ([https://www.python.org/downloads/windows/] or from Microsoft Store)
  * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
 
 ```
@@ -46,13 +41,14 @@ cmake --build .
 
 More details follow.
 
+
 Build!
 ======
 
 Qt is built with CMake, and a typical
 `configure && cmake --build .` build process is used.
 
-If ninja is installed, it is automatically chosen as CMake generator.
+If Ninja is installed, it is automatically chosen as CMake generator.
 
 Some relevant configure options (see configure -help):
 
@@ -101,7 +97,8 @@ to your `PATH` environment variable to access them.
 
 
 Building Qt from git
-=====================
+====================
+
 See http://wiki.qt.io/Building_Qt_6_from_Git and README.git
 for more information.
 See http://wiki.qt.io/Qt_6 for the reference platforms.
