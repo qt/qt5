@@ -17,6 +17,9 @@ Reboot
 # Configure Settings
  Notifications:
     * Lock Screen Notifications: OFF
+    * Applications: Set notificantion off
+ Applications:
+    * Disable notifications from all applications
  Privacy:
     * Blank Screen Delay: Never
     * Screen Lock: OFF
@@ -45,5 +48,11 @@ dracut -f
 Download http://coin/coin/binary/linux_amd64/coin-setup
 # run as qt user
 run './coin-setup'
+
+# Switch to use GNOME Classic user interface
+# GNOME Classic was selected because there's an issue with Starndard (wayland display server). Autotest start failing because terminal session remains in Activities Overview.
+# https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3854
+First execute script ./01-disable-automounting.sh (dconf update crash in GNOME Classic)
+logout -> Select user (without it the drop down menu won't appear) -> switch to 'GNOME Classic' from drop down menu in login screen
 
 Reboot

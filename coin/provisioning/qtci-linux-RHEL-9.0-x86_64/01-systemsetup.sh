@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -58,8 +58,11 @@ sudo timedatectl set-timezone Etc/UTC
 gsettings set org.gnome.desktop.screensaver lock-enabled false
 # disable blank screen power saving
 gsettings set org.gnome.desktop.session idle-delay 0
+# Disable hot corner feature
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+# Disable windows key from showing the GNOME Shell Activities overlay
+gsettings set org.gnome.mutter overlay-key ""
 
 # Set Wayland enable as false.
 echo "Setting Wayland enable as false"
 sudo sed -i 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm/custom.conf
-
