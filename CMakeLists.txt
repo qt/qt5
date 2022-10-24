@@ -1,6 +1,6 @@
 # The real minimum version will be checked by the qtbase project.
 # 3.16 is the absolute minimum though.
-cmake_minimum_required(VERSION 3.16...3.20)
+cmake_minimum_required(VERSION 3.16...3.21)
 
 
 # set QT_SUPERBUILD early, so that qtbase/.cmake.conf can check it
