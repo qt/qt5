@@ -9,6 +9,7 @@ Configurations:
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
+        'TARGET_CMAKE_ARGS=-DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc-debug-developer',
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-webassembly-x86_64-clang'
     ]
@@ -23,30 +24,3 @@ Configurations:
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-DQT_QMAKE_TARGET_MKSPEC=wasm-emscripten -DQT_BUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DFEATURE_thread=ON -DQT_QMAKE_DEVICE_OPTIONS="QT_EMSCRIPTEN_ASYNCIFY=1"',
         'NON_QTBASE_TARGET_CONFIGURE_ARGS=-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache']
--
-    Template: 'qtci-windows-10_21H2-x86_64-51'
-    Target os: 'WebAssembly'
-    Compiler: 'Mingw'
-    Target compiler: 'Clang'
-    Platform dependency: 'Windows10_21H2-Mingw11-x64-host'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
-    Environment variables: [
-        'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
--
-    Template: 'qtci-macos-12-x86_64-105'
-    Target os: 'WebAssembly'
-    Compiler: 'Clang'
-    Target compiler: 'Clang'
-    Platform dependency: 'macos-latest-xcode-universal-packaging-build'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
-    Environment variables: [
-        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
-        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
-        'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
-        'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang'
-    ]
