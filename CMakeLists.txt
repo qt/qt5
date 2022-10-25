@@ -57,7 +57,7 @@ qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULE
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
     # Check for unmet dependencies
     if(NOT DEFINED BUILD_${module} OR BUILD_${module})
-        message(NOTICE "Checking dependencies of submodule '${module}'")
+        message(STATUS "Checking dependencies of submodule '${module}'")
         get_property(required_deps GLOBAL PROPERTY QT_REQUIRED_DEPS_FOR_${module})
         get_property(dependencies GLOBAL PROPERTY QT_DEPS_FOR_${module})
         foreach(dep IN LISTS dependencies)
@@ -84,7 +84,7 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
                         "but ${error_reason}.\n"
                         "Note: Use '-skip ${module}' to exclude it from the build.")
                 else()
-                    message(NOTICE "Skipping optional dependency '${dep}' of '${module}', "
+                    message(STATUS "Skipping optional dependency '${dep}' of '${module}', "
                         "because ${error_reason}.")
                 endif()
             endif()
@@ -92,8 +92,12 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
     endif()
 endforeach()
 
+if(NOT DEFINED CMAKE_MESSAGE_CONTEXT_SHOW)
+    set(CMAKE_MESSAGE_CONTEXT_SHOW TRUE)
+endif()
+
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
-    message(NOTICE "Configuring submodule '${module}'")
+    message(STATUS "Configuring submodule '${module}'")
     ecm_optional_add_subdirectory("${module}")
 
     if(module STREQUAL "qtbase")
