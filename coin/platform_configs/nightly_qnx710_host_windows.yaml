@@ -16,4 +16,5 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples -no-pch',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}\qnx-toolchain-aarch64le.cmake -DCMAKE_LIBRARY_PATH={{.Env.QNX_710}}\target\qnx7\aarch64le\lib;{{.Env.QNX_710}}\target\qnx7\aarch64le\usr\lib -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -G "Ninja"',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON'
     ]
