@@ -31,6 +31,7 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"',
             'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
         ]
 
     # Test on all supported macOS versions (deployment targets)
@@ -41,42 +42,63 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-11-x86_64-tests'
         Template: 'qtci-macos-11-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-11-arm64-tests'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-x86_64-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-arm64-arm64-universal-build-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-universal-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-x86_64-arm64-universal-build-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-universal-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
 
     # =========================================================================
     # Developer build. Single architecture builds.
@@ -102,7 +124,8 @@ Configurations:
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -nomake examples -release -force-debug-info -separate-debug-info -framework'
         Environment variables: [
-            'Protobuf_ROOT=/usr/local/lib/cmake/protobuf'
+            'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
         ]
         # Note: We do not include OpenSSL or PostgreSQL in this build,
         # as the M1 CI machines are not provisioned for that yet.
@@ -115,27 +138,42 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-11-x86_64-developer-build-tests'
         Template: 'qtci-macos-11-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-11-arm64-developer-build-tests'
         Template: 'qtci-macos-11.0-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-x86_64-developer-build-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-latest-xcode-x86_64-developer-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
     -
         Id: 'macos-12-arm64-developer-build-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+        Environment variables: [
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        ]
