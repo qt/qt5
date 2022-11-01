@@ -94,7 +94,7 @@ function InstallPrebuiltOpenssl() {
     nkdSha=$2
     os=$3
 
-    if [[ ! -d $HOME/openssl/android/openssl ]]; then
+    if [[ ! -d ${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version} ]]; then
         prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
         targetFile="/tmp/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
 
