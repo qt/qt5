@@ -51,7 +51,8 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Template: 'qtci-windows-11_22H2-x86_64-50'
@@ -62,7 +63,8 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Template: 'qtci-windows-10_22H2-x86_64-50'
@@ -73,7 +75,8 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Template: 'qtci-windows-11_22H2-x86_64-50'
@@ -84,7 +87,8 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'Windows10_22H2-MSVC2019-x64-host'
@@ -96,7 +100,8 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64-developer',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Template: 'qtci-windows-10_22H2-x86_64-50'
@@ -112,7 +117,8 @@ Configurations:
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'Windows11_22H2-MSVC2019-x64-host'
@@ -123,7 +129,8 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Template: 'qtci-windows-11_22H2-x86_64-50'
@@ -136,7 +143,8 @@ Configurations:
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-msvc2019_64',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-arm64-msvc2019_64',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'RHEL-8.4-host'
@@ -175,7 +183,8 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
 -
     Id: 'Windows10_22H2-LLVM-x64-host'
@@ -188,7 +197,8 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
     ]
 -
     Id: 'Windows11_22H2-LLVM-x64-host'
@@ -201,7 +211,8 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
     ]
 -
     Template: 'qtci-windows-10_22H2-x86_64-50'
@@ -213,7 +224,8 @@ Configurations:
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
 -
     Template: 'qtci-windows-11_22H2-x86_64-50'
@@ -225,5 +237,6 @@ Configurations:
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}'
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
