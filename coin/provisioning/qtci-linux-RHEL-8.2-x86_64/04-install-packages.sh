@@ -86,9 +86,6 @@ installPackages+=(libusbx-devel)
 installPackages+=(speech-dispatcher-devel)
 # Python 2 devel and pip. python-pip requires the EPEL repository to be added
 installPackages+=(python2-devel python2-pip)
-# Python 3 with python-devel, pip and virtualenv
-installPackages+=(python36)
-installPackages+=(python36-devel)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
