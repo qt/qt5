@@ -39,7 +39,7 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$scriptsPath = "C:\Python36\Scripts"
+$scriptsPath = [System.Environment]::GetEnvironmentVariable('PIP3_PATH', [System.EnvironmentVariableTarget]::Machine)
 $version = "1.39.0"
 Run-Executable "$scriptsPath\pip3.exe" "install conan==$version"
 Write-Output "Conan = $version" >> ~\versions.txt
