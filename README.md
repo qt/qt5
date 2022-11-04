@@ -31,7 +31,6 @@ Windows:
 2. Ensure that the following tools can be found in the path:
  * Supported compiler (Visual Studio 2019 or later, or MinGW-builds gcc 8.1 or later)
  * Python 3 ([https://www.python.org/downloads/windows/] or from Microsoft Store)
- * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
 
 ```
 cd <path>\<source_package>
