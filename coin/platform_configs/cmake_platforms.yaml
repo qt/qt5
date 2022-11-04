@@ -42,7 +42,7 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -59,7 +59,7 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -79,8 +79,8 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}'
     ]
 -
-    Id: 'Windows10_21H2-MSVC2019-x64-host'
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Id: 'Windows10_22H2-MSVC2019-x64-host'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'Conan', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
@@ -90,11 +90,11 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}'
     ]
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
-    Platform dependency: 'Windows10_21H2-MSVC2019-x64-host'
+    Platform dependency: 'Windows10_22H2-MSVC2019-x64-host'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
@@ -151,8 +151,8 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-macos-ios-arm64-clang'
     ]
 -
-    Id: 'Windows10_21H2-Mingw11-x64-host'
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Id: 'Windows10_22H2-Mingw11-x64-host'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -164,8 +164,8 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw'
     ]
 -
-    Id: 'Windows10_21H2-LLVM-x64-host'
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Id: 'Windows10_22H2-LLVM-x64-host'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -188,7 +188,7 @@ Configurations:
         'LLVM_INSTALL_DIR=C:\llvm-mingw'
     ]
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'

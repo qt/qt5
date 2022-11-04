@@ -3,7 +3,7 @@ Module only: True
 Include: [
   cmake_platforms.yaml: [
     "Ubuntu-20.04-host",
-    "Windows10_21H2-MSVC2019-x64-host",
+    "Windows10_22H2-MSVC2019-x64-host",
     "ios-universal"
   ],
   macos.yaml: [
