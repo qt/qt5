@@ -17,12 +17,12 @@ Configurations:
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}'
     ]
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'armv7'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
-    Platform dependency: 'Windows10_21H2-Mingw11-x64-host'
+    Platform dependency: 'Windows10_22H2-Mingw11-x64-host'
     Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',

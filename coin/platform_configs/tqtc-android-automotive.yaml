@@ -8,8 +8,8 @@ Configurations:
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
-    Id: 'Windows10_21H2-Mingw11-x64-host'
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Id: 'Windows10_22H2-Mingw11-x64-host'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'

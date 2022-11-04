@@ -1,0 +1,16 @@
+### Visual Studio 2015 ###
+Visual Studio 2015 version 14.0.25420.1 Update 3 was installed manually using ISO-image: http://ci-files01-hki.intra.qt.io/input/windows/en_visual_studio_professional_2015_with_update_3_x86_x64_dvd_8923272.iso
+(Mount the ISO-image by double clicking it and run 'vs_professional.exe')
+
+default plus following components were selected:
+* Programming Languages
+    * Visual C++
+       - Common Tools for Visual C++ 2015
+* Windows and Web Development
+   * Universal Windows App Development Tools
+      - Tools (1.4.1) and Windows SDK (10.0.14393)
+      - Windows 10 SDK (10.0.10586)
+      - Windows 10 SDK (10.0.10240)
+* Common Tools
+   -Visual Studio Extensibility Tools Update 3
+

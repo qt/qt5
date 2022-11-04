@@ -10,7 +10,7 @@ Configurations:
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
 -
-    Template: 'qtci-windows-10_21H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib'
