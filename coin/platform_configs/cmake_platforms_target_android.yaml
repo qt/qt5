@@ -33,6 +33,7 @@ Configurations:
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}'
     ]
 -
+    Id: 'RHEL-8.4-Android-x86'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
@@ -49,6 +50,7 @@ Configurations:
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}'
     ]
 -
+    Id: 'RHEL-8.4-Android-x86_64'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86_64'
