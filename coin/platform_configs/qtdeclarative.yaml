@@ -2,6 +2,7 @@ Version: 2
 Include: [
     cmake_platforms.yaml,
     integrity.yaml,
-    cmake_platforms_static_tests.yaml
+    cmake_platforms_static_tests.yaml,
+    cmake_platforms_target_android_12.yaml
 ]
 Configurations: []

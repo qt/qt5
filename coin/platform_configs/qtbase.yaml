@@ -4,6 +4,7 @@ Include: [
     cmake_platforms_static_tests.yaml,
     integrity.yaml,
     ios-tests.yaml,
-    address_sanitizer_platforms.yaml
+    address_sanitizer_platforms.yaml,
+    cmake_platforms_target_android_12_insignificant.yaml
 ]
 Configurations: []
