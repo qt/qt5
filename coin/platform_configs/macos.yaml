@@ -64,6 +64,12 @@ Configurations:
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-latest-xcode-universal-packaging-build'
     -
+        Id: 'macos-13-arm64-tests'
+        Template: 'qtci-macos-13-arm64'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging', 'InsignificantTests']
+        Platform dependency: 'macos-latest-xcode-universal-packaging-build'
+    -
         Id: 'macos-12-x86_64-tests'
         Template: 'qtci-macos-12-x86_64-105'
         Compiler: 'Clang'
@@ -144,4 +150,10 @@ Configurations:
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
+        Platform dependency: 'macos-latest-xcode-arm64-developer-build'
+    -
+        Id: 'macos-13-arm64-developer-build-tests'
+        Template: 'qtci-macos-13-arm64'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'InsignificantTests']
         Platform dependency: 'macos-latest-xcode-arm64-developer-build'
