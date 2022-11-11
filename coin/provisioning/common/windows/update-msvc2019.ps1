@@ -43,13 +43,15 @@
 # NOTE! Visual Studio is pre-installed to tier 1 image so this script won't install the whole Visual Studio. See ../../../pre-provisioning/qtci-windows-10-x86_64/msvc2019.txt
 # MSVC 2019 online installers can be found from here https://docs.microsoft.com/en-us/visualstudio/releases/2019/history#installing-an-earlier-release
 
+# NOTE! Currenlty Buildtools are not updated. There seems to be an issue with installer. When it's run twice it get stuck and can't be run again. 
+
 $version = "16.11.10"
 $urlCache_vsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_Professional_$version.exe"
 $urlOfficial_vsInstaller = "https://download.visualstudio.microsoft.com/download/pr/791f3d28-7e20-45d9-9373-5dcfbdd1f6db/cd440cf67c0cf1519131d1d51a396e44c5b4f7b68b541c9f35c05a310d692f0a/vs_Professional.exe"
 $sha1_vsInstaller = "d4f3b3b7dc28dcc3f25474cd1ca1e39fca7dcf3f"
 $urlCache_buildToolsInstaller = "\\ci-files01-hki.intra.qt.io\provisioning\windows\msvc\vs2019_BuildTools_$version.exe"
-$urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/791f3d28-7e20-45d9-9373-5dcfbdd1f6db/d5eabc3f4472d5ab18662648c8b6a08ea0553699819b88f89d84ec42d12f6ad7/vs_BuildTools.exe"
-$sha1_buildToolsInstaller = "69889f45d229de8e0e76b6d9e05964477eee2e78"
+# $urlOfficial_buildToolsInstaller = "https://download.visualstudio.microsoft.com/download/pr/791f3d28-7e20-45d9-9373-5dcfbdd1f6db/d5eabc3f4472d5ab18662648c8b6a08ea0553699819b88f89d84ec42d12f6ad7/vs_BuildTools.exe"
+# $sha1_buildToolsInstaller = "69889f45d229de8e0e76b6d9e05964477eee2e78"
 $installerPath = "C:\Windows\Temp\installer.exe"
 
 function Install {
@@ -72,7 +74,7 @@ function Install {
 }
 
 Install $urlOfficial_vsInstaller $urlCache_vsInstaller $sha1_vsInstaller
-Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
+# Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
 
 $msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property catalog_productDisplayVersion 2`>`&1)
 
