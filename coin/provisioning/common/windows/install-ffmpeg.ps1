@@ -58,62 +58,96 @@ Verify-Checksum $download_location $sha1
 Extract-7Zip $download_location $unzip_location
 Remove $download_location
 
-function CheckExitCode {
-    param ($p)
-
-    if ($p.ExitCode) {
-        Write-host "Process failed with exit code: $($p.ExitCode)"
-        exit 1
-    }
-}
-
 $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
 Write-Host "FFmpeg configuration $config"
 
-Write-Host "Configure and compile ffmpeg for MINGW"
-$mingw = [System.Environment]::GetEnvironmentVariable("MINGW1120", [System.EnvironmentVariableTarget]::Machine)
-$env:PATH += ";$mingw\bin"
-$env:MSYS2_PATH_TYPE = "inherit"
-$env:MSYSTEM = "MINGW"
 
-$cmd  = "cd /c/$ffmpeg_name"
-$cmd += "&& mkdir -p build/mingw && cd build/mingw"
-$cmd += "&& ../../configure --prefix=installed $config"
-$cmd += "&& make install -j"
+function InstallFfmpeg {
+    Param (
+        [string]$buildSystem,
+        [string]$msystem,
+        [string]$additionalPath,
+        [string]$ffmpegDirEnvVar,
+        [string]$toolchain
+    )
 
-$build = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys" -ArgumentList ("-lc", "`"$cmd`"")
-CheckExitCode $build
+    Write-Host "Configure and compile ffmpeg for $buildSystem"
 
-Set-EnvironmentVariable "FFMPEG_DIR_MINGW" "C:\$ffmpeg_name\build\mingw\installed"
+    $oldPath = $env:PATH
 
+    if ($additionalPath) { $env:PATH = "$additionalPath;$env:PATH" }
+    $env:MSYS2_PATH_TYPE = "inherit"
+    $env:MSYSTEM = $msystem
 
-Write-Host "Enter VisualStudio developer shell"
-$vsPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional"
-try {
-    Import-Module "$vsPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-    Enter-VsDevShell -VsInstallPath $vsPath -DevCmdArguments "-arch=x64 -no_logo"
-} catch {
-    Write-host "Failed to enter VisualStudio DevShell"
-    exit 1
+    $cmd = "cd /c/$ffmpeg_name"
+    $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
+    $cmd += " && ../../configure --prefix=installed $config"
+    if ($toolchain) { $cmd += " --toolchain=$toolchain" }
+    $cmd += " && make install -j"
+
+    Write-Host "MSYS cmd:"
+    Write-Host $cmd
+    $buildResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys" -ArgumentList ("-lc", "`"$cmd`"")
+
+    $env:PATH = $oldPath
+
+    if ($buildResult.ExitCode) {
+        Write-Host "Failed to build ffmpeg for $buildSystem"
+        return $false
+    }
+
+    Set-EnvironmentVariable $ffmpegDirEnvVar "C:\$ffmpeg_name\build\$buildSystem\installed"
+    return $true
 }
 
-Write-Host "Configure and compile ffmpeg for MSVC"
-$env:MSYSTEM = "MSYS"
-$env:MSYS2_PATH_TYPE = "inherit"
+function InstallMingwFfmpeg {
+    $mingwPath = [System.Environment]::GetEnvironmentVariable("MINGW1120", [System.EnvironmentVariableTarget]::Machine)
+    return InstallFfmpeg -buildSystem "mingw" -msystem "MINGW" -additionalPath "$mingwPath\bin" -ffmpegDirEnvVar "FFMPEG_DIR_MINGW"
+}
 
-$cmd  = "CC=cl;"
-$cmd += "cd /c/$ffmpeg_name"
-$cmd += "&& mkdir -p build/msvc && cd build/msvc"
-$cmd += "&& ../../configure --toolchain=msvc --prefix=installed $config"
-$cmd += "&& make install -j"
 
-$build = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys" -ArgumentList ("-lc", "`"$cmd`"")
-CheckExitCode $build
+function InstallMsvcFfmpeg {
+    $vsPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional"
+    #$vsPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional"
 
-$ffmpeg_mscv_install = "C:\$ffmpeg_name\build\msvc\installed"
+    Write-Host "Enter VisualStudio developer shell"
+    try {
+        Import-Module "$vsPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+        Enter-VsDevShell -VsInstallPath $vsPath -DevCmdArguments "-arch=x64 -no_logo"
+    } catch {
+        Write-Host "Failed to enter VisualStudio DevShell"
+        return $false
+    }
 
-# As ffmpeg build system creates lib*.a file we have to rename them to *.lib files to be recognized by WIN32
-Write-Host "Rename libraries lib*.a -> *.lib"
-Get-ChildItem "$ffmpeg_mscv_install\lib\lib*.a" | Rename-Item -NewName { $_.Name -replace 'lib(\w+).a$', '$1.lib' }
+    $result = InstallFfmpeg -buildSystem "msvc" -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar "FFMPEG_DIR_MSVC"
 
-Set-EnvironmentVariable "FFMPEG_DIR_MSVC" $ffmpeg_mscv_install
+    if ($result) {
+        # As ffmpeg build system creates lib*.a file we have to rename them to *.lib files to be recognized by WIN32
+        Write-Host "Rename libraries lib*.a -> *.lib"
+        try {
+            $msvcDir = [System.Environment]::GetEnvironmentVariable("FFMPEG_DIR_MSVC", [System.EnvironmentVariableTarget]::Machine)
+            Get-ChildItem "$msvcDir\lib\lib*.a" | Rename-Item -NewName { $_.Name -replace 'lib(\w+).a$', '$1.lib' }
+        } catch {
+            Write-Host "Failed to rename libraries lib*.a -> *.lib"
+            return $false
+        }
+    }
+
+    return $result
+}
+
+
+function InstallLlvmMingwFfmpeg {
+    return InstallFfmpeg -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin"
+}
+
+$mingwRes = InstallMingwFfmpeg
+$msvcRes = InstallMsvcFfmpeg
+$llvmMingwRes = InstallLlvmMingwFfmpeg
+
+Write-Host "Ffmpeg installation results:"
+Write-Host "  mingw:" $(if ($mingwRes) { "OK" } else { "FAIL" })
+Write-Host "  msvc:" $(if ($msvcRes) { "OK" } else { "FAIL" })
+Write-Host "  llvm-mingw:" $(if ($llvmMingwRes) { "OK" } else { "FAIL" })
+
+exit $(if ($mingwRes -and $msvcRes -and $llvmMingwRes) { 0 } else { 1 })
