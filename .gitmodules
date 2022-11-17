@@ -316,4 +316,9 @@
 	url = ../qtquick3dphysics.git
 	branch = dev
 	status = preview
-
+[submodule "qtgrpc"]
+	depends = qtbase
+	path = qtgrpc
+	url = ../qtgrpc.git
+	branch = dev
+	status = preview
