@@ -73,15 +73,57 @@ function Install {
     Remove-Item -Force -Path $installerPath
 }
 
+function Get-Vswhere-Property {
+    Param (
+        [ValidateSet(2017, 2019, 2022)]
+        [int] $vsYear = $(BadParam("Visual Studio Year")),
+
+        [ValidatePattern("Professional|Build *Tools|Community|Enterprise")]
+        [string] $vsEdition = $(BadParam("Visual Studio Edition")),
+
+        [string] $property = $(BadParam("vswhere property"))
+    )
+
+    $range = switch ($vsYear)
+    {
+        2017 { "[15.0,16`)" }
+        2019 { "[16.0,17`)" }
+        2022 { "[17.0,18`)" }
+    }
+
+    $vsEdition = $vsEdition -replace " ",""
+
+    $vswhereInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $vswhereInfo.FileName = "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    $vswhereInfo.RedirectStandardError = $true
+    $vswhereInfo.RedirectStandardOutput = $true
+    $vswhereInfo.UseShellExecute = $false
+    $vswhereInfo.Arguments = "-version $range", "-latest", `
+    "-products Microsoft.VisualStudio.Product.$vsEdition", "-property $property"
+    $vswhereProcess = New-Object System.Diagnostics.Process
+    $vswhereProcess.StartInfo = $vswhereInfo
+    $vswhereProcess.Start() | Out-Null
+    $vswhereProcess.WaitForExit()
+    $stdout = $vswhereProcess.StandardOutput.ReadToEnd()
+    if ([string]::IsNullOrEmpty($stdout))
+    {
+        throw "VS edition or property $property not found by vswhere"
+    }
+    $stderr = $vswhereProcess.StandardError.ReadToEnd()
+    $vsExit = $vswhereProcess.ExitCode
+    if ($vsExit -ne 0)
+    {
+        throw "vswhere failed with exit code $vsExit. stderr: $stderr"
+    }
+    return $stdout
+}
+
 Install $urlOfficial_vsInstaller $urlCache_vsInstaller $sha1_vsInstaller
 # Install $urlOfficial_buildToolsInstaller $urlCache_buildToolsInstaller $sha1_buildToolsInstaller
 
-$msvc2019Version = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
-    -version [16.0,17.0`) -latest -property catalog_productDisplayVersion 2`>`&1)
-$msvc2019Complete = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
-    -version [16.0,17.0`) -latest -property isComplete 2`>`&1)
-$msvc2019Launchable = (cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" `
-    -version [16.0,17.0`) -latest -property isLaunchable 2`>`&1)
+$msvc2019Version = Get-Vswhere-Property 2019 "Professional" catalog_productDisplayVersion
+$msvc2019Complete = Get-Vswhere-Property 2019 "Professional" isComplete
+$msvc2019Launchable = Get-Vswhere-Property 2019 "Professional" isLaunchable
 
 if($msvc2019Version -ne $version -or [int]$msvc2019Complete -ne 1 `
     -or [int]$msvc2019Launchable -ne 1) {
