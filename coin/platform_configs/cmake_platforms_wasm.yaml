@@ -48,9 +48,10 @@ Configurations:
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF -DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH={{.Env.Protobuf_ROOT_mingw}}',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-windows-x86_64-mingw',
-        'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang']
+        'CONAN_PROFILE=coin/conan/profiles/ci-windows-webassembly-x86_64-clang',
+    ]
 -
     Id: 'webassembly-windows-thread'
     Template: 'qtci-windows-10_22H2-x86_64-50'
@@ -63,7 +64,7 @@ Configurations:
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_pkg_config=OFF -DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
     Id: 'webassembly-macos'
@@ -77,7 +78,8 @@ Configurations:
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples',
         'CONAN_HOST_PROFILE=coin/conan/profiles/ci-macos-universal-clang',
-        'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang'
+        'CONAN_PROFILE=coin/conan/profiles/ci-macos-webassembly-x86_64-clang',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH=/usr/local',
     ]
 -
     Id: 'webassembly-macos-thread'
@@ -90,4 +92,5 @@ Configurations:
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH=/usr/local',
     ]
