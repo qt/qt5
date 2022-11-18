@@ -235,6 +235,8 @@ sudo dpkg --add-architecture i386
 installPackages+=(nfs-kernel-server)
 installPackages+=(net-tools)
 installPackages+=(bridge-utils)
+# For qdoc-qtattributionsscanner provisioning package originally built on Ubuntu 20.04
+installPackages+=(libicu66)
 
 echo "Running update for apt"
 waitLoop
