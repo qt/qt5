@@ -1,8 +1,8 @@
 Version: 2
 Configurations:
 -
-    Id: 'OpenSUSE-15.3-host-ASAN'
-    Template: 'qtci-linux-openSUSE-15.3-x86_64-50'
+    Id: 'OpenSUSE-15.4-host-ASAN'
+    Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'UseAddressSanitizer']
     Configure arguments: '-nomake examples -developer-build'
