@@ -41,6 +41,6 @@
 
 set -ex
 
-# shellcheck source=../common/unix/install_protobuff.sh
+# shellcheck source=../common/unix/install_protobuf.sh
 source "${BASH_SOURCE%/*}/../common/unix/install_protobuf.sh"
 
