@@ -58,7 +58,3 @@ rm -rf $zip
 
 echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
 echo "libClang = $version" >> ~/versions.txt
-
-# This is a hacked static build of libclang which requires special
-# handling on the qdoc side.
-SetEnvVar "QDOC_USE_STATIC_LIBCLANG" "1"

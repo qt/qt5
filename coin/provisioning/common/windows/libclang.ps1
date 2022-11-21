@@ -62,9 +62,3 @@ if ( $setDefault ) {
     Set-EnvironmentVariable "LLVM_INSTALL_DIR" ($baseDestination + "-$archVer")
 }
 Set-EnvironmentVariable ("LLVM_INSTALL_DIR_${toolchainSuffix}") ($baseDestination + "-$archVer")
-
-if ( $libclang_version -eq "15.0.0" ) {
-    # This is a hacked static build of libclang which requires special
-    # handling on the qdoc side.
-    Set-EnvironmentVariable "QDOC_USE_STATIC_LIBCLANG" "1"
-}
