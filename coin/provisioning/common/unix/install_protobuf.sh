@@ -57,8 +57,8 @@ fi
 
 # This script will install Google's Protocal Buffers
 
-version="3.6.1"
-sha1="44b8ba225f3b4dc45fb56d5881ec6a91329802b6"
+version="21.9"
+sha1="3226a0e49d048759b702ae524da79387c59f05cc"
 internalUrl="http://ci-files01-hki.intra.qt.io/input/automotive_suite/protobuf-all-$version.zip"
 externalUrl="https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
 
@@ -84,7 +84,7 @@ fi
 buildDir="$HOME/build-protobuf-$version"
 mkdir "$buildDir"
 cd "$buildDir"
-cmake $targetDir/cmake -G"Ninja Multi-Config" -DCMAKE_INSTALL_PREFIX=$installPrefix $extraCMakeArgs -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF -Dprotobuf_BUILD_PROTOC_BINARIES=ON -DBUILD_SHARED_LIBS=OFF -Dprotobuf_WITH_ZLIB=OFF -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" -DCMAKE_CROSS_CONFIGS=all -DCMAKE_DEFAULT_CONFIGS=all
+cmake $targetDir -G"Ninja Multi-Config" -DCMAKE_INSTALL_PREFIX=$installPrefix $extraCMakeArgs -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF -Dprotobuf_BUILD_PROTOC_BINARIES=ON -DBUILD_SHARED_LIBS=OFF -Dprotobuf_WITH_ZLIB=OFF -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" -DCMAKE_CROSS_CONFIGS=all -DCMAKE_DEFAULT_CONFIGS=all
 ninja all:all
 sudo env "PATH=$PATH" ninja install:all
 

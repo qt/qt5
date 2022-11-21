@@ -60,8 +60,8 @@ function Find-Tool {
 Find-Tool -Name "cmake.exe" -Path "C:\CMake\bin"
 Find-Tool -Name "ninja.exe" -Path "C:\Utils\Ninja"
 
-$version = "3.20.1"
-$sha1 = "d89de6b747a264c0ddca3294b5095b785f1bd4f0"
+$version = "21.9"
+$sha1 = "3226a0e49d048759b702ae524da79387c59f05cc"
 $internalUrl = "http://ci-files01-hki.intra.qt.io/input/protobuf/protobuf-all-$version.zip"
 $externalUrl = "https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
 
@@ -75,7 +75,7 @@ Remove $targetFile
 
 # cd into the cmake directory where the CMakeLists.txt file is located
 # then we build in a build\ subfolder there for simplicity's sake
-Push-Location $targetDir\cmake
+Push-Location $targetDir
 
 ### MinGW
 
