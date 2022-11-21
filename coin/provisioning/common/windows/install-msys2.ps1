@@ -71,7 +71,7 @@ if ((Test-Path $url_cache_prebuilt)) {
 
     # install perl make and yasm
     # Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
-    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman-key --refresh;pacman -S --noconfirm perl make yasm`""
+    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman-key --refresh;pacman -S --noconfirm perl make yasm diffutils`""
     Start-Sleep -s 60
     cmd /c "$msys `"-l`" `"-c`" `"echo y | cpan -i Text::Template Test::More`""
 
