@@ -77,7 +77,7 @@
 	path = qtlocation
 	url = ../qtlocation.git
 	branch = dev
-	status = ignore
+	status = preview
 [submodule "qtpositioning"]
 	depends = qtbase
 	recommends = qtdeclarative qtserialport
