@@ -83,7 +83,7 @@ elif [ "$os" == "macos" -o "$os" == "macos-universal" ]; then
 
     commonFlags="no-tests shared no-ssl3-method enable-ec_nistp_64_gcc_128 -Wa,--noexecstack"
 
-    export MACOSX_DEPLOYMENT_TARGET=10.15
+    export MACOSX_DEPLOYMENT_TARGET=11
 
     opensslBuild="${opensslHome}-build"
     opensslDestdir="${opensslHome}-destdir"

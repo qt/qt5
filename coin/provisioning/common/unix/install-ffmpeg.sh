@@ -86,13 +86,13 @@ if [ "$os" == "linux" ]; then
 
 elif [ "$os" == "macos" ]; then
   brew install yasm
-  export MACOSX_DEPLOYMENT_TARGET=10.15
+  export MACOSX_DEPLOYMENT_TARGET=11
   build_ffmpeg
   sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
 
 elif [ "$os" == "macos-universal" ]; then
   brew install yasm
-  export MACOSX_DEPLOYMENT_TARGET=10.15
+  export MACOSX_DEPLOYMENT_TARGET=11
   build_ffmpeg "arm64"
   build_ffmpeg "x86_64"
 
