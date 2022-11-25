@@ -49,12 +49,12 @@ set -e
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 version="39fad60085501729985888d3f546c7b8d897a394"
-sha1="b3bc413866951807fe2e87e84394cd6f69904718"
+sha1="c66e3984cd647c8e32977dee72fe9d06f1b2ea28"
 
 # Provision Ubuntu 20.04-built package for 22.04
 # TODO: Remove libicu66 from 02-apt.sh when updating the package
-url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
-url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
+url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
+url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
 
 zip="/tmp/qdoc-qtattributionsscanner.7z"
 destination="/opt/qt-doctools"
