@@ -40,12 +40,12 @@
 
 $version = "11_2_2"
 $package = "C:\Windows\temp\opengl32sw.7z"
-$mesaOpenglSha1_64 = "0ed35efbc8112282be5d0c87c37fde2d15e81998"
-$mesaOpenglUrl_64_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-64-mesa_$version-signed.7z"
-$mesaOpenglUrl_64_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version-signed.7z"
-$mesaOpenglSha1_32 = "96bd6ca0d7fd249fb61531dca888965ffd20f53c"
-$mesaOpenglUrl_32_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-32-mesa_$version-signed.7z"
-$mesaOpenglUrl_32_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version-signed.7z"
+$mesaOpenglSha1_64 = "58f948746696b17a594b2f542e87b0e831b28dc3"
+$mesaOpenglUrl_64_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-64-mesa_$version-signed_sha256.7z"
+$mesaOpenglUrl_64_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_$version-signed_sha256.7z"
+$mesaOpenglSha1_32 = "974f468acaa0018d46607e2100f1214fecd35bd4"
+$mesaOpenglUrl_32_cache = "http://ci-files01-hki.intra.qt.io/input/windows/opengl32sw-32-mesa_$version-signed_sha256.7z"
+$mesaOpenglUrl_32_alt = "http://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-32-mesa_$version-signed_sha256.7z"
 
 function Extract-Mesa
 {
