@@ -1,47 +1,21 @@
 Version: 2
-Include: [ cmake_platforms_target_android.yaml ]
+Include: [
+    cmake_platforms.yaml: [
+        'rhel-8.4',
+        'windows-10_22h2-mingw11',
+        'ubuntu-22.04-documentation'
+    ],
+    macos.yaml: [
+        'macos-universal-on-x86_64'
+    ],
+    cmake_platforms_target_android.yaml: [
+        'android-arm64-on-macos',
+        'android-armv7-on-windows',
+        'android-x86-on-linux',
+        'android-x86_64-on-linux'
+    ]
+]
 Configurations:
--
-    Id: 'automotive-ubuntu-22.04-documentation'
-    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
-    Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
-    Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
-    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
--
-    Id: 'windows-10_22h2-mingw11'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
-    Compiler: 'Mingw'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
-    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
-    Environment variables: [
-        'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}'
-    ]
--
-    Id: 'macos-universal-on-x86_64'
-    Template: 'qtci-macos-12-x86_64-105'
-    Compiler: 'Clang'
-    Target arch: 'x86_64-arm64'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
-    Environment variables: [
-        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF',
-        'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
-    ]
--
-    Id: 'rhel-8.4'
-    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
-    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
-    ]
 -
     Id: "automotive-android-x86-on-linux"
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
