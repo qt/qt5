@@ -39,7 +39,7 @@
 ##
 #############################################################################
 
-# This script install prebuilt OpenSSL which was built against Android NDK 21.
+# This script install prebuilt OpenSSL which was built against Android NDK 25.
 # OpenSSL build will fail with Android NDK 22, because it's missing platforms and sysroot directories
 
 set -ex
@@ -48,9 +48,16 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="3.0.3"
-: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 21
-# Source built requires GCC and Perl to be in PATH.
+version="3.0.7"
+ndkVersionLatest="r25b"
+ndkVersionDefault=$ndkVersionLatest
+prebuiltOpensslNdkShaDarwinLatest="5cf5ef6c19e62954ccffcd1e31ac1f331028de0d"
+prebuiltOpensslNdkShaLinuxLatest="f5e7e840dc1fac2868033ecfc0eeb79742b0daff"
+prebuiltOpensslNdkShaDarwinDefault=$prebuiltOpensslNdkShaDarwinLatest
+prebuiltOpensslNdkShaLinuxDefault=$prebuiltOpensslNdkShaLinuxLatest
+
+: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
+# Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
 if uname -a |grep -q "Ubuntu"; then
@@ -63,10 +70,13 @@ else
     rm -rf "$exports_file"
 fi
 
+# ANDROID_NDK_ROOT is required during Configure
+export ANDROID_NDK_ROOT=/opt/android/android-ndk-r25b
+
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
-sha="1138de3f1a2f573ae69302ab52ecd9bbf5e063ca"
+sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
@@ -81,18 +91,33 @@ PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
 '
 
-if uname -a |grep -q "Darwin"; then
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-3.0.3-for-android-ndk-r23b-darwin.tar.gz"
-    sha="d204cb4011ba8672aec62ab36a00dd3e32a3a5e9"
-else
-    prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-3.0.3-for-android-ndk-r23b-linux.tar.gz"
-    sha="2d1b6f5d90b5e3ae6a7e2a376250c66e99371485"
-fi
-targetFile="/tmp/prebuilt-openssl-$version.tar.gz"
-DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
-tar -xzf "$targetFile" -C "${HOME}"
+function InstallPrebuiltOpenssl() {
 
-opensslHome="${HOME}/openssl/android/openssl-${version}"
-SetEnvVar "OPENSSL_ANDROID_HOME" "$opensslHome"
+    ndkVersion=$1
+    nkdSha=$2
+    os=$3
+
+    if [[ ! -d ${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version} ]]; then
+        prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
+        targetFile="/tmp/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
+
+        DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$nkdSha" "$targetFile"
+        tar -xzf "$targetFile" -C "${HOME}"
+        opensslHome="${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version}"
+        sudo rm -f $targetFile
+    fi
+}
+
+if uname -a |grep -q "Darwin"; then
+    InstallPrebuiltOpenssl $ndkVersionDefault $prebuiltOpensslNdkShaDarwinDefault "darwin"
+    SetEnvVar "OPENSSL_ANDROID_HOME_DEFAULT" "$opensslHome"
+    InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslNdkShaDarwinLatest "darwin"
+    SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+else
+    InstallPrebuiltOpenssl $ndkVersionDefault $prebuiltOpensslNdkShaLinuxDefault "linux"
+    SetEnvVar "OPENSSL_ANDROID_HOME_DEFAULT" "$opensslHome"
+    InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslNdkShaLinuxLatest "linux"
+    SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+fi
 
 echo "OpenSSL for Android = $version" >> ~/versions.txt
