@@ -55,6 +55,8 @@ installPackages+=(curl-devel)
 installPackages+=(expat-devel)
 installPackages+=(gettext-devel)
 installPackages+=(perl-devel)
+# Required by some old pkg perl script, FindBin.pm was moved to new package in perl 5.32
+installPackages+=(perl-FindBin)
 installPackages+=(dh-autoreconf)
 # cmake build
 installPackages+=(ninja-build)
