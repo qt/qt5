@@ -1,3 +1,4 @@
+. "$PSScriptRoot\..\common\windows\helpers.ps1"
 # Needed by packaging scripts
-C:\Python36\Scripts\pip3 install bs4
-C:\Python36\Scripts\pip3 install sh
+$scriptsPath = [System.Environment]::GetEnvironmentVariable('PIP3_PATH', [System.EnvironmentVariableTarget]::Machine)
+Run-Executable "$scriptsPath\pip3.exe" "install bs4"
