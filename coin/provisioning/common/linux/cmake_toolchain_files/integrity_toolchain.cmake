@@ -69,7 +69,7 @@ set(CMAKE_C_FLAGS  "-bsp $ENV{INTEGRITY_BSP} -os_dir $ENV{INTEGRITY_DIR} -non_sh
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Omaxdebug")
 set(CMAKE_C_FLAGS_RELEASE "-Ospeed -Olink -Omax -no_uvfd")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --signed_fields --diag_suppress=1,82,228,236,381,611,961,997,1795,1931,1974,3148 -std=c11 --c++17 --thread_local_storage --exceptions --defer_parse_function_templates")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --signed_fields --diag_suppress=1,82,228,236,381,611,961,997,1795,1931,1974,3148,1721,1424,193,940,620,111,128,185,826,186,68,830,177,554,550,175,1441,546 -std=c11 --c++17 --thread_local_storage --exceptions --defer_parse_function_templates")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -frigor=accurate --signed_fields --no_implicit_include --link_once_templates -non_shared --new_outside_of_constructor --commons -I $ENV{QC_MULTIMEDIA_INC_DIR}")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
