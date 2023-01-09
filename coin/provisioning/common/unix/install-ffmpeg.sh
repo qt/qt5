@@ -68,9 +68,9 @@ version="f0d2ed135c3602670b56a95e0346487730317407"
 url_public="https://github.com/FFmpeg/FFmpeg/archive/$version.tar.gz"
 sha1="a429060d07b6d84c849a68741f816a7e91447d12"
 else
-version="n5.0"
+version="n5.1"
 url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-sha1="1a979876463fd81e481d53ceb3cc117f0fce8521"
+sha1="1d4283c5ff9e02378893168f55b8672bb30b9176"
 fi
 
 url_cached="http://ci-files01-hki.intra.qt.io/input/ffmpeg/$version.tar.gz"
