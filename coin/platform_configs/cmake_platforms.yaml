@@ -124,7 +124,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}'
     ]
 -
-    Id: 'windows-11_2122-msvc2019-arm64'
+    Id: 'windows-11_22h2-msvc2019-arm64'
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
