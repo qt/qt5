@@ -2,13 +2,13 @@ Version: 2
 Module only: True
 Include: [
     macos.yaml: [
-        "macos-12-arm64-developer-build"
+        "macos-12-x86_64-developer-build"
     ]
 ]
 Configurations:
 -
-    Id: 'macos-13-arm64-developer-build-tests'
-    Template: 'qtci-macos-13-arm64'
+    Id: 'macos-13-x86_64-developer-build-tests'
+    Template: 'qtci-macos-13-x86_64-102'
     Compiler: 'Clang'
     Features: ['TestOnly']
-    Platform dependency: 'macos-12-arm64-developer-build'
+    Platform dependency: 'macos-12-x86_64-developer-build'
