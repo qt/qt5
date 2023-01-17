@@ -8,7 +8,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Platform dependency: [
-        'rhel-9.0',
+        'rhel-8.4',
         'android-x86-on-linux',
         'android-x86_64-on-linux'
     ]
@@ -19,7 +19,7 @@ Configurations:
         'InstallDepsPerPlatformSubdir'
     ]
     Environment variables: [
-        'QT_CI_ARTIFACT_ID_PATH_Android-host=QT_CI_ARTIFACT_ID_PATH_rhel-9.0',
+        'QT_CI_ARTIFACT_ID_PATH_Android-host=QT_CI_ARTIFACT_ID_PATH_rhel-8.4',
         'QT_CI_ARTIFACT_ID_PATH_Android-x86=QT_CI_ARTIFACT_ID_PATH_android-x86-on-linux',
         'QT_CI_ARTIFACT_ID_PATH_Android-x86_64=QT_CI_ARTIFACT_ID_PATH_android-x86_64-on-linux',
         'COMMON_TARGET_TEST_CMAKE_ARGS=-DQT_ANDROID_ABIS="x86;x86_64"'

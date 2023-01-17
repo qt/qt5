@@ -16,13 +16,13 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'x86']
 -
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Template: 'qtci-linux-RHEL-9.0-x86_64-500'
     Compiler: 'GCC'
     Features: ['Qt5', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''
