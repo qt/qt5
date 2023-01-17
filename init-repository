@@ -630,7 +630,10 @@ sub git_install_hooks
     my ($self) = @_;
 
     my $hooks = $script_path.'/qtrepotools/git-hooks';
-    return if (!-d $hooks);
+    if (!-d $hooks) {
+        print "Warning: cannot find Git hooks, qtrepotools module might be absent\n";
+        return;
+    };
 
     my @configresult = qx(git config --list --local);
     foreach my $line (@configresult) {
