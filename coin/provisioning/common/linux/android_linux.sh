@@ -63,8 +63,8 @@ toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
 ndkVersionLatest="r25b"
 ndkVersionDefault=$ndkVersionLatest
-sdkBuildToolsVersion="31.0.0"
-sdkApiLevel="android-31"
+sdkBuildToolsVersion="33.0.1"
+sdkApiLevel="android-33"
 
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
 ndkSha1Latest="e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"

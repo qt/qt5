@@ -59,9 +59,9 @@ toolsFile="commandlinetools-mac-6609375_latest.zip"
 
 ndkVersion="r25b"
 ndkFile="android-ndk-$ndkVersion-darwin.zip"
-sdkBuildToolsVersion="28.0.3"
+sdkBuildToolsVersion="33.0.1"
 # this is compile sdk version
-sdkApiLevel="android-28"
+sdkApiLevel="android-33"
 
 toolsSourceFile="$basePath/$toolsFile"
 ndkSourceFile="$basePath/$ndkFile"
