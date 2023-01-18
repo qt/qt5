@@ -164,7 +164,7 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
         'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
