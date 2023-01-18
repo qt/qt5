@@ -65,6 +65,7 @@ if [[ "$os" == "linux" ]]; then
     ./Configure --prefix="$opensslHome" shared enable-ec_nistp_64_gcc_128 linux-x86_64 "-Wa,--noexecstack"
     make && make install_sw install_ssldirs
     SetEnvVar "OPENSSL_HOME" "$opensslHome"
+    SetEnvVar "PATH" "\"$opensslHome/bin:\$PATH\""
     if uname -a |grep -q "Ubuntu"; then
         echo "export LD_LIBRARY_PATH=$opensslHome/lib64:$LD_LIBRARY_PATH" >> ~/.bash_profile
     else
