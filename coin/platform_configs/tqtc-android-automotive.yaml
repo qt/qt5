@@ -1,7 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
-        'rhel-8.4',
+        'rhel-8.6',
         'windows-10_22h2-mingw11',
         'ubuntu-22.04-documentation'
     ],
@@ -18,7 +18,7 @@ Include: [
 Configurations:
 -
     Id: "automotive-android-x86-on-linux"
-    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.6-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'GCC'

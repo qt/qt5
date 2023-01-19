@@ -16,7 +16,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'x86']
 -
-    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.6-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''
