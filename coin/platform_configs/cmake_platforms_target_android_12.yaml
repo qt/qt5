@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'android-12-x86_64-on-linux'
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86_64'
     Compiler: 'GCC'

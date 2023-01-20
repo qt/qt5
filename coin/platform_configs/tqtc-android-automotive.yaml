@@ -33,8 +33,8 @@ Configurations:
         'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
     ]
 -
-    Id: 'rhel-9.0'
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Id: 'rhel-8.4'
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
@@ -44,12 +44,12 @@ Configurations:
     ]
 -
     Id: "automotive-android-x86-on-linux"
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'GCC'
     Target compiler: 'Clang'
-    Platform dependency: 'rhel-9.0'
+    Platform dependency: 'rhel-8.4'
     Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',
