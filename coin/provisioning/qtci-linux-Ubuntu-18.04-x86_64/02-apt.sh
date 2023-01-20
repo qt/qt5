@@ -117,6 +117,7 @@ installPackages+=(libgstreamer1.0-dev)
 installPackages+=(libgstreamer-plugins-base1.0-dev)
 installPackages+=(libgstreamer-plugins-good1.0-dev)
 installPackages+=(libgstreamer-plugins-bad1.0-dev)
+installPackages+=(yasm)
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 installPackages+=(g++-multilib)
 # python3 development package
