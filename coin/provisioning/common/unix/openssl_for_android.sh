@@ -103,7 +103,7 @@ function InstallPrebuiltOpenssl() {
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$nkdSha" "$targetFile"
         tar -xzf "$targetFile" -C "${HOME}"
-        opensslHome="${HOME}/openssl_${version}_android_ndk_${ndkVersion}/android/openssl-${version}"
+        opensslHome="${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version}"
         sudo rm -f $targetFile
     fi
 }
