@@ -3,9 +3,6 @@ Include: [
     cmake_platforms.yaml: [
         Windows10_22H2-Mingw11-x64-host,
         rhel-8.4
-    ],
-    macos.yaml: [
-        macos-universal-on-x86_64
     ]
 ]
 Configurations:
