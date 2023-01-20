@@ -43,6 +43,9 @@ sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
 
+# yasm (for ffmpeg in multimedia)
+sudo zypper -nq install yasm
+
 # GStreamer (qtwebkit and qtmultimedia), pulseaudio (qtmultimedia)
 sudo zypper -nq install gstreamer-devel gstreamer-plugins-base-devel libpulse-devel
 
