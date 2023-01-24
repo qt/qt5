@@ -421,3 +421,87 @@ function(qt_internal_sync_to module)
         endforeach()
     endwhile()
 endfunction()
+
+# Runs user specified command for all qt repositories in qt directory.
+# Similar to git submodule foreach, except without relying on .gitmodules existing.
+# Useful for worktree checkouts.
+function(qt_internal_foreach_repo_run)
+    cmake_parse_arguments(PARSE_ARGV 0 arg
+                          ""
+                          ""
+                          "ARGS"
+    )
+    if(NOT arg_ARGS)
+        message(FATAL_ERROR "No arguments specified to qt_internal_foreach_repo_run")
+    endif()
+    separate_arguments(args NATIVE_COMMAND "${arg_ARGS}")
+
+    # Find the qt repos
+    qt_internal_find_modules(modules)
+
+    # Hack to support color output on unix systems
+    # https://stackoverflow.com/questions/18968979/how-to-make-colorized-message-with-cmake
+    execute_process(COMMAND
+        /usr/bin/tty
+        OUTPUT_VARIABLE tty_name
+        RESULT_VARIABLE tty_exit_code
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
+    set(color_supported FALSE)
+    set(output_goes_where "")
+    if(NOT tty_exit_CODE AND tty_name)
+        set(color_supported TRUE)
+        set(output_goes_where "OUTPUT_FILE" "${tty_name}")
+    endif()
+
+    # Count successes and failures.
+    set(count_success "0")
+    set(count_failure "0")
+
+    # Show colored error markers.
+    set(color "--normal")
+    if(color_supported)
+        set(color "--red")
+    endif()
+
+    foreach(module IN LISTS modules)
+        message("Entering '${module}'")
+        execute_process(
+            COMMAND ${args}
+            WORKING_DIRECTORY "${module}"
+            ${output_goes_where}
+            RESULT_VARIABLE cmd_result
+        )
+        if(cmd_result)
+            math(EXPR count_failure "${count_failure}+1")
+            # cmake_echo_color is undocumented, but lets us output colors and control newlines.
+            execute_process(
+                COMMAND
+                ${CMAKE_COMMAND} -E env CLICOLOR_FORCE=1
+                ${CMAKE_COMMAND} -E cmake_echo_color "${color}"
+                "Process execution failed here ^^^^^^^^^^^^^^^^^^^^"
+            )
+        else()
+            math(EXPR count_success "${count_success}+1")
+        endif()
+    endforeach()
+
+    # Show summary with colors.
+    set(color "--normal")
+    if(count_failure AND color_supported)
+        set(color "--red")
+    endif()
+
+    message("\nSummary\n=======\n")
+    execute_process(
+        COMMAND
+            ${CMAKE_COMMAND} -E cmake_echo_color --normal --no-newline "Failures: "
+    )
+    execute_process(
+        COMMAND
+            ${CMAKE_COMMAND} -E env CLICOLOR_FORCE=1
+            ${CMAKE_COMMAND} -E cmake_echo_color "${color}" "${count_failure}"
+    )
+    message("Successes: ${count_success}")
+endfunction()
