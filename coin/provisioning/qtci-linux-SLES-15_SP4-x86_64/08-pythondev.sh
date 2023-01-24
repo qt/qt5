@@ -54,9 +54,9 @@ PROVISIONING_DIR="$(dirname "$0")/../"
 # https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
 export PACKAGE_NAME="python"
 python2Version="2.7.18"
-python3Version="3.7.6"
+python3Version="3.8.16"
 python2Sha="678d4cf483a1c92efd347ee8e1e79326dc82810b"
-python3Sha="55a2cce72049f0794e9a11a84862e9039af9183603b78bc60d89539f82cf533f"
+python3Sha="d85dbb3774132473d8081dcb158f34a10ccad7a90b96c7e50ea4bb61f5ce4562"
 
 
 function InstallPython {
@@ -113,4 +113,5 @@ pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/sh
 
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "PYTHON3_PATH" "/usr/local/bin"
 SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
