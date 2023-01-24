@@ -169,6 +169,17 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
+    Id: 'rhel-9.0'
+    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies']
+    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CONAN_PROFILE=coin/conan/profiles/ci-linux-x86_64-gcc',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+    ]
+-
     Id: 'ios-universal'
     Template: 'qtci-macos-12-x86_64-105'
     Target os: 'IOS_ANY'
