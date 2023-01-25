@@ -6,7 +6,7 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'opensuse-15.4-developer-build'
-    Features: ['Sccache', 'DisableTests', 'UseConfigure']
+    Features: ['Sccache', 'DoNotRunTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         "TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread \
