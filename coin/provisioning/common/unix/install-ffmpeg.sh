@@ -181,13 +181,14 @@ elif  [ "$os" == "android" ]; then
     target_arch=x86_64
     sha1="0241fd483c16f4ce53206b911214b06854cdef9d"
     url_cached="http://ci-files01-hki.intra.qt.io/input/ffmpeg/android-ffmpeg-x86_64.zip"
+    target_dir="/opt/android/$ffmpeg_name/ffmpeg-x86_64"
   else
     target_arch=x86
     url_cached="http://ci-files01-hki.intra.qt.io/input/ffmpeg/android-ffmpeg-x86.zip"
     sha1="8b254e31411a350edb581bb30e31401866abbe7d"
+    target_dir="/opt/android/$ffmpeg_name/ffmpeg-x86"
   fi
 
-  target_dir="/opt/android/$ffmpeg_name"
   app_prefix=""
 
   #try install a pre-build
