@@ -67,7 +67,7 @@ installPrefix="$HOME/install-grpc-$version"
 targetDir="$HOME/grpc-$version"
 targetFile="$targetDir.zip"
 DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
-unzip "$targetFile" -d "$HOME"
+unzip -q "$targetFile" -d "$HOME"
 sudo rm "$targetFile"
 
 # devtoolset is needed when running configuration
@@ -77,8 +77,15 @@ fi
 
 if uname -a |grep -q Darwin; then
     extraCMakeArgs="-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=11"
-    extraOpenSslArg=-DOPENSSL_ROOT_DIR=$OPENSSL_DIR
     SetEnvVar PATH "\$PATH:$installPrefix/bin"
+fi
+
+# MacOS
+if [[ -n "$OPENSSL_DIR" ]]; then
+    extraOpenSslArg=-DOPENSSL_ROOT_DIR=$OPENSSL_DIR
+# Linux
+elif [[ -n "$OPENSSL_HOME" ]]; then
+    extraOpenSslArg=-DOPENSSL_ROOT_DIR=$OPENSSL_HOME
 fi
 
 echo "Configuring and building gRPC"
