@@ -36,7 +36,7 @@
 # This script installs OpenSSL $version.
 # Both x86 and x64 versions needed when x86 integrations are done on x64 machine
 
-$version = "1_1_1m"
+$version = "1_1_1s"
 $packagex64 = "C:\Windows\Temp\Win64OpenSSL-$version.exe"
 $packagex86 = "C:\Windows\Temp\Win32OpenSSL-$version.exe"
 
@@ -47,7 +47,7 @@ if (Is64BitWinHost) {
     $installFolder = "C:\openssl"
     $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
     $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
-    $sha1 = "16d83bd6d36be7b3ea85f822135352fa8f8d8134"
+    $sha1 = "741bef779f3e88da4da0640d9372f576fe7902e8"
 
     Write-Host "Fetching from URL ..."
     Download $externalUrl $internalUrl $packagex64
@@ -74,7 +74,7 @@ if (Is64BitWinHost) {
 
 $externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
 $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
-$sha1 = "1d7146e56b201404ce67f1e636eab360211c175a"
+$sha1 = "a0cbe573244b4f9117e92abb27d8ceeadbd07c60"
 
 Write-Host "Fetching from URL ..."
 Download $externalUrl $internalUrl $packagex86
@@ -108,9 +108,8 @@ function InstallStaticOpenssl {
     Remove-Item -Path $static_openssl_package
 }
 
-# opensslx86_static.7z is same package as opensslx86_static-1-1.1d
-InstallStaticOpenssl "opensslx86_static" "x86"
-InstallStaticOpenssl "opensslx64_static-1_1_1l_msvc2019" "x64"
+InstallStaticOpenssl "opensslx86_static-1_1_1s_msvc2015" "x86"
+InstallStaticOpenssl "opensslx64_static-1_1_1s_msvc2019" "x64"
 
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
