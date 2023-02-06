@@ -10,4 +10,4 @@ cat <<EOT | sudo tee /etc/mdns.allow
 .local
 EOT
 
-sudo sed -i '/^hosts:/s/.*/hosts:          files mdns_minimal [NOTFOUND=return] dns mdns4/'   /etc/nsswitch.conf
+sudo sed -i '/^hosts:/s/.*/hosts:          files mdns_minimal [NOTFOUND=return] mdns4 dns/'   /etc/nsswitch.conf
