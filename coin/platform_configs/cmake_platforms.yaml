@@ -7,23 +7,37 @@ Include: [
     macos.yaml
     ]
 Configurations:
+# Build on Ubuntu 22.04 and test on both X11 and Wayland later
 -
     Id: 'ubuntu-22.04-documentation'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure']
+    Features: ['Sccache', 'Documentation', 'TestDocs', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
     Id: 'ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
+# Test on Ubuntu 22.04 X11
+-
+    Id: 'ubuntu-22.04-documentation-x11-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly']
+    Platform dependency: 'ubuntu-22.04-documentation'
+-
+    Id: 'ubuntu-22.04-x11-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly']
+    Platform dependency: 'ubuntu-22.04'
 -
     Id: 'opensuse-15.4-developer-build'
     Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
