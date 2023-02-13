@@ -144,6 +144,7 @@ installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(virtualenv)
 installPackages+=(python3-wheel)
+installPackages+=(python-is-python3)
 # python2 development package
 installPackages+=(python2-dev)
 # Automates interactive applications (Needed by RTA to automate configure testing)
