@@ -1,5 +1,6 @@
 Version: 2
 Configurations:
+# QTQAINFRA-5404
 -
     Id: 'ubuntu-20.04-c++17'
     Template: 'qtci-linux-Ubuntu-20.04-x86_64-50'
