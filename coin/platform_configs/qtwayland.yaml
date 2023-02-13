@@ -3,4 +3,17 @@ Include: [
     cmake_platforms.yaml,
     cmake_platforms_target_android_12.yaml
     ]
-Configurations: []
+Configurations:
+# Test on Ubuntu 22.04 Wayland
+-
+    Id: 'ubuntu-22.04-documentation-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Platform dependency: 'ubuntu-22.04-documentation'
+-
+    Id: 'ubuntu-22.04-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Platform dependency: 'ubuntu-22.04'
