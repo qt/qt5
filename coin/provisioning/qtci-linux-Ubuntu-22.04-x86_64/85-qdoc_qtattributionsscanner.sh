@@ -48,9 +48,8 @@ set -e
 "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
-version="39fad60085501729985888d3f546c7b8d897a394"
-sha1="c66e3984cd647c8e32977dee72fe9d06f1b2ea28"
-
+version="6781b63c31a3088b7029e272179be5765f8e61c7"
+sha1="096a80f0f01268aa239580c031753f7c23918438"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
 url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
 
