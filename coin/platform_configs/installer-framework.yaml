@@ -30,4 +30,4 @@ Configurations:
 -
     Template: 'qtci-linux-Ubuntu-18.04-x86_64'
     Compiler: 'GCC'
-    Features: ['TestOnly', 'LicenseCheck']
+    Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
