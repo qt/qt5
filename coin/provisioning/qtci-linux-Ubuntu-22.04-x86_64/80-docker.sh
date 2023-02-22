@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2022 The Qt Company Ltd.
+## Copyright (C) 2023 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -78,6 +78,17 @@ rm ./docker-compose*
 
 # Install Avahi to discover Docker containers in the test network
 sudo apt-get install avahi-daemon -y
+
+# Add registry mirror for docker images
+sudo tee -a /etc/docker/daemon.json <<"EOF"
+{
+  "registry-mirrors": ["http://repo-clones.ci.qt.io:5000"]
+}
+EOF
+
+echo "Restart Docker"
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 
 # Start testserver provisioning
 sudo "$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../common/shared/testserver/docker_testserver.sh"
