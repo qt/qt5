@@ -93,7 +93,16 @@ echo "Configuring and building gRPC"
 buildDir="$HOME/build-grpc-$version"
 mkdir -p "$buildDir"
 cd "$buildDir"
-cmake $targetDir -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" -DCMAKE_INSTALL_PREFIX=$installPrefix $extraCMakeArgs $extraOpenSslArg -DgRPC_BUILD_TESTS=OFF -DgRPC_PROTOBUF_PROVIDER="package" -DgRPC_SSL_PROVIDER="package" -DgRPC_ZLIB_PROVIDER="package"
+cmake $targetDir -G"Ninja Multi-Config" \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" \
+    -DCMAKE_INSTALL_PREFIX=$installPrefix \
+    $extraCMakeArgs \
+    $extraOpenSslArg \
+    -DgRPC_BUILD_TESTS=OFF \
+    -DgRPC_PROTOBUF_PROVIDER="package" \
+    -DgRPC_SSL_PROVIDER="package" \
+    -DgRPC_ZLIB_PROVIDER="package"
 ninja all
 
 sudo env "PATH=$PATH" ninja install

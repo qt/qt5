@@ -84,7 +84,18 @@ fi
 buildDir="$HOME/build-protobuf-$version"
 mkdir "$buildDir"
 cd "$buildDir"
-cmake $targetDir -G"Ninja Multi-Config" -DCMAKE_INSTALL_PREFIX=$installPrefix $extraCMakeArgs -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF -Dprotobuf_BUILD_PROTOC_BINARIES=ON -DBUILD_SHARED_LIBS=OFF -Dprotobuf_WITH_ZLIB=OFF -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" -DCMAKE_CROSS_CONFIGS=all -DCMAKE_DEFAULT_CONFIGS=all
+cmake $targetDir -G"Ninja Multi-Config" \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DCMAKE_INSTALL_PREFIX=$installPrefix \
+    $extraCMakeArgs \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    -Dprotobuf_BUILD_EXAMPLES=OFF \
+    -Dprotobuf_BUILD_PROTOC_BINARIES=ON \
+    -DBUILD_SHARED_LIBS=OFF \
+    -Dprotobuf_WITH_ZLIB=OFF \
+    -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" \
+    -DCMAKE_CROSS_CONFIGS=all \
+    -DCMAKE_DEFAULT_CONFIGS=all
 ninja all:all
 sudo env "PATH=$PATH" ninja install:all
 
