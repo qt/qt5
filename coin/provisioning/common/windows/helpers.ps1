@@ -274,3 +274,12 @@ function DeleteSchedulerTask {
     Write-Host "Disabling $Task from Task Scheduler"
     SCHTASKS /DELETE /TN "Microsoft\Windows\$Task" /F
 }
+
+function GetVSPath {
+    Param (
+        [string]$VSWhere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe",
+        [string]$Component = "Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+    )
+
+    return (& $VSWhere -nologo -latest -products * -requires $Component -property installationPath)
+}

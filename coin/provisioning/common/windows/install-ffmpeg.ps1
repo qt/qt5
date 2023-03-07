@@ -107,8 +107,7 @@ function InstallMingwFfmpeg {
 
 
 function InstallMsvcFfmpeg {
-    $vsPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional"
-    #$vsPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional"
+    $vsPath = GetVSPath
 
     Write-Host "Enter VisualStudio developer shell"
     try {
