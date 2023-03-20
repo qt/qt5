@@ -49,7 +49,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="0.13"
 sha1="21e6d5878bb84ac6c9ad07b00ed248d8c547bc7d"
-internalUrl="http://ci-files01-hki.intra.qt.io/input/centos/dwz-$version.tar.xz"
+internalUrl="http://ci-files01-hki.ci.qt.io/input/centos/dwz-$version.tar.xz"
 externalUrl="https://www.sourceware.org/ftp/dwz/releases/dwz-$version.tar.xz"
 
 targetDir="$HOME/dwz"

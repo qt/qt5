@@ -44,7 +44,7 @@
 
 set -ex
 
-cache="http://ci-files01-hki.intra.qt.io/input"
+cache="http://ci-files01-hki.ci.qt.io/input"
 cacheSigningTools="$cache/mac/sign_tools"
 targetFolder="/Users/qt"
 keychains="$targetFolder/Library/Keychains"

@@ -50,7 +50,7 @@ param(
 $basename = "sccache-" + $version + "-" + $arch
 $zipfile = $basename + ".tar.gz"
 $tempfile = "C:\Windows\Temp\" + $zipfile
-$urlCache = "http://ci-files01-hki.intra.qt.io/input/sccache/" + $zipfile
+$urlCache = "http://ci-files01-hki.ci.qt.io/input/sccache/" + $zipfile
 $urlOfficial = "https://github.com/mozilla/sccache/releases/download/" + $version + "/" + $zipfile
 $targetFolder = "C:\Program Files\"
 

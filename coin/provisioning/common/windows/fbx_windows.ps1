@@ -46,7 +46,7 @@ $version = "2016.1.2"
 $name = "fbx20161_2_fbxsdk_vs2015_win_nospace"
 $packageName = "$name.7z"
 $installerName = "$name.exe"
-$cacheUrl = "\\ci-files01-hki.intra.qt.io\provisioning\fbx\$packageName"
+$cacheUrl = "\\ci-files01-hki.ci.qt.io\provisioning\fbx\$packageName"
 $sha1 = "de80edc255ffd5ce86ba25869dad72b4c809fd41"
 
 # The executable is an interactive installer only. We can't run it in a script silently.

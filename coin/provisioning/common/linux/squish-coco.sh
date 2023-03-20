@@ -52,7 +52,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 version="4.2.2"
 sha1="a44f0f039f3712c715eea63c4021d08bf17a44c6"
 package="SquishCocoSetup_${version}_Linux_x86_64.run"
-url="http://ci-files01-hki.intra.qt.io/input/coco//$package"
+url="http://ci-files01-hki.ci.qt.io/input/coco//$package"
 
 echo "Enable license for  Coco"
 

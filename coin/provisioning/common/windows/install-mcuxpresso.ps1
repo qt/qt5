@@ -43,7 +43,7 @@
 # MCUXpresso IDE provides the tools for flashing and onboard debugging
 
 $version = "11.2.0_4120"
-$url = "http://ci-files01-hki.intra.qt.io/input/windows/MCUXpressoIDE_$version.zip"
+$url = "http://ci-files01-hki.ci.qt.io/input/windows/MCUXpressoIDE_$version.zip"
 $zip = "C:\Windows\Temp\MCUXpressoIDE_$version.zip"
 
 Download $url $url $zip

@@ -56,13 +56,13 @@ function InstallGCC() {
 
     tmpFolder="/tmp"
 
-    prebuiltGCC="http://ci-files01-hki.intra.qt.io/input/gcc/gcc-$version-prebuilt.tar.gz"
+    prebuiltGCC="http://ci-files01-hki.ci.qt.io/input/gcc/gcc-$version-prebuilt.tar.gz"
     prebuiltTarget="$tmpFolder/gcc-$version-prebuilt.tar.gz"
     installPrefix="/usr/local"
 
     suffixVersion=$(echo "$version" | cut -d "." -f1,2)
     sourceFile="gcc-$version.tar.xz"
-    cachedUrl="http://ci-files01-hki.intra.qt.io/input/gcc/$sourceFile"
+    cachedUrl="http://ci-files01-hki.ci.qt.io/input/gcc/$sourceFile"
     officialUrl="https://gcc.gnu.org/pub/gcc/releases/gcc-$version/gcc-$version.tar.xz"
 
     targetFile="$tmpFolder/$sourceFile"

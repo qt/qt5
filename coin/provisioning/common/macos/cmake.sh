@@ -50,7 +50,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 majorminorversion="3.24.2"
 version="3.24.2"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-macos-universal.tar.gz"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/cmake/cmake-$version-macos-universal.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-macos-universal.tar.gz"
 SHA1="19b1473e6ded2d234256b6aac90eb22616c5ab5e"
 appPrefix="cmake-$version-macos-universal"

@@ -99,7 +99,7 @@ Find-Tool -Name "ninja.exe" -Path "C:\Utils\Ninja"
 
 $version="1.50.1"
 $sha1="be1b0c3dbfbc9714824921f50dffb7cf044da5ab"
-$internalUrl="http://ci-files01-hki.intra.qt.io/input/automotive_suite/grpc-all-$version.zip"
+$internalUrl="http://ci-files01-hki.ci.qt.io/input/automotive_suite/grpc-all-$version.zip"
 $externalUrl=""
 
 $basedir = "$env:HOMEDRIVE\$env:HOMEPATH\grpc"

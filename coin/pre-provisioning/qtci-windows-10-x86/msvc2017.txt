@@ -42,7 +42,7 @@
 $version = "2017"
 # Current version was manually upgraded from the installer
 $version_number = "15.9.21"
-$installer = "http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__1312218103.1526017942.exe"
+$installer = "http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__1312218103.1526017942.exe"
 
 # Following components were selected from installer:
 # Microsoft.Net.Component.4.5.TargetingPack (.NET Framework 4.5 targeting pack)

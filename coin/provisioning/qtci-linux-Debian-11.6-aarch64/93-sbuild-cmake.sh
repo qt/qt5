@@ -45,7 +45,7 @@
 
 mkdir -p /home/qt/debian_packages
 cd /home/qt/debian_packages
-wget https://ci-files01-hki.intra.qt.io/input/debian/cmake/amd64-focal/cmake-3.24-deb.tar.gz
+wget https://ci-files01-hki.ci.qt.io/input/debian/cmake/amd64-focal/cmake-3.24-deb.tar.gz
 tar xzf cmake-3.24-deb.tar.gz
 #git clone git@gitlab.ics.com:qt6_packaging/tqtc/cmake.git
 #wget https://github.com/Kitware/CMake/releases/download/v3.24.3/cmake-3.24.3.tar.gz -O cmake_3.24.3.orig.tar.gz

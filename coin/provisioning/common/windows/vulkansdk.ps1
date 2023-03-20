@@ -45,7 +45,7 @@
 $version = "1.2.182.0"
 $vulkanPackage = "C:\Windows\Temp\vulkan-installer-$version.exe"
 $sha1 = "1b662f338bfbfdd00fb9b0c09113eacb94f68a0e"
-Download "https://sdk.lunarg.com/sdk/download/1.2.182.0/windows/VulkanSDK-$version-Installer.exe" "\\ci-files01-hki.intra.qt.io\provisioning\windows\VulkanSDK-$version-Installer.exe" $vulkanPackage
+Download "https://sdk.lunarg.com/sdk/download/1.2.182.0/windows/VulkanSDK-$version-Installer.exe" "\\ci-files01-hki.ci.qt.io\provisioning\windows\VulkanSDK-$version-Installer.exe" $vulkanPackage
 Verify-Checksum "$vulkanPackage" "$sha1"
 
 Run-Executable $vulkanPackage "/S"

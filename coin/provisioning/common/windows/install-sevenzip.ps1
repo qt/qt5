@@ -52,7 +52,7 @@ if (Is64BitWinHost) {
     $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
 }
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\7z" + $nonDottedVersion + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\7z" + $nonDottedVersion + $arch + ".exe"
 $url_official = "http://www.7-zip.org/a/7z" + $nonDottedVersion + $arch + ".exe"
 $7zPackage = "C:\Windows\Temp\7zip-$nonDottedVersion.exe"
 $7zTargetLocation = "C:\Utils\sevenzip\"

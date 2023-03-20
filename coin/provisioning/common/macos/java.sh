@@ -47,7 +47,7 @@ echo "Installing Java Development Kit"
 version=11.0.12
 targetFile=jdk-${version}_osx-x64_bin.dmg
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
+url=ci-files01-hki.ci.qt.io:/hdd/www/input/mac
 # url_alt=https://www.oracle.com/java/technologies/downloads/#java11-linux
 
 echo "Mounting $targetFile"

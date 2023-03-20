@@ -15,4 +15,4 @@ $installer = "en_visual_studio_professional_2015_with_update_3_x86_x64_web_insta
 #   -Visual Studio Extensibility Tools Update 3
 
 # NOTE! Windows SDK 10.0.14393 installation failed through visual studio installer so it was installed using $sdk_installer
-$sdk_installer = "http://ci-files01-hki.intra.qt.io/input/windows/sdksetup.exe"
+$sdk_installer = "http://ci-files01-hki.ci.qt.io/input/windows/sdksetup.exe"

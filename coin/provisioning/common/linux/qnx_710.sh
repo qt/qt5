@@ -80,7 +80,7 @@ if [ ! -d "$targetFolder" ]; then
 fi
 
 # QNX SDP
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx710-windows-linux-20220405.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20220405.tar.xz"
 targetFile="qnx710.tar.xz"
 sha1="134af2e0f75d7b7c516f824fafee265b89e51d48"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
@@ -93,7 +93,7 @@ cp -R $QNX_qemu_bld_files_dir $qemuTargetPath
 # Download code-only package from https://www.iana.org/time-zones and follow README
 # to build tools for QNX x86_64. If need to build new tool create new qnx_qemu_utils
 # package which contains it and update required info below
-sourceFile="http://ci-files01-hki.intra.qt.io/input/qnx/qnx_qemu_utils_20211208.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx_qemu_utils_20211208.tar.xz"
 targetFile="qnx_qemu_utils.tar.xz"
 targetFolder="$qemuTargetPath/local/misc_files"
 sha1="7653f5d50f61f1591d7785c3ec261228ecc9dd22"

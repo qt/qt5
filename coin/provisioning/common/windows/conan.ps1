@@ -51,8 +51,8 @@ Set-EnvironmentVariable "CONAN_V2_MODE" "1"
 
 # This is temporary solution for installing packages provided by Conan until we have fixed Conan setup for this
 
-$url_conan = "\\ci-files01-hki.intra.qt.io\provisioning\windows\.conan.zip"
-$url_conan_home = "\\ci-files01-hki.intra.qt.io\provisioning\windows\.conanhome.zip"
+$url_conan = "\\ci-files01-hki.ci.qt.io\provisioning\windows\.conan.zip"
+$url_conan_home = "\\ci-files01-hki.ci.qt.io\provisioning\windows\.conanhome.zip"
 $sha1_conan_compressed = "1abbe43e7a29ddd9906328702b5bc5231deeb721"
 $sha1_conanhome_compressed = "f44c2ae21cb1c7dc139572e399b7b0eaf492af03"
 $conan_compressed = "C:\.conan.zip"

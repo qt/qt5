@@ -47,7 +47,7 @@ PROVISIONING_DIR="$(dirname "$0")/../../"
 . "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
 
 
-localRepo=http://ci-files01-hki.intra.qt.io/input/docker
+localRepo=http://ci-files01-hki.ci.qt.io/input/docker
 upstreamRepo=https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/
 
 echo '

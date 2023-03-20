@@ -58,7 +58,7 @@ set -ex
 
 # shellcheck source=../common/macos/InstallPKGFromURL.sh
 source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_11.0_big_sur_arm/xz-arm64.pkg"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/macos_11.0_big_sur_arm/xz-arm64.pkg"
 # SourceUrl="https://tukaani.org/xz/xz-5.2.5.tar.gz"
 
 SHA1="1afc327965d4af33399ae28f22c4b8e5a9e98dc2"

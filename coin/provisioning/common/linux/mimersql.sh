@@ -48,7 +48,7 @@ PROVISIONING_DIR="$(dirname "$0")/../../"
 . "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
 
 
-localRepo=http://ci-files01-hki.intra.qt.io/input/docker
+localRepo=http://ci-files01-hki.ci.qt.io/input/docker
 upstreamRepo=http://install.mimer.com/qt
 if [ "$SSL_VER" = "openssl-3" ]; then
     if [ "$PACK_TYPE" = "rpm" ]; then

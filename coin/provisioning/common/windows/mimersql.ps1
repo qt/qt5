@@ -44,7 +44,7 @@
 
 $version = "1107b"
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\MimerSqlX64Windows" + $version + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\MimerSqlX64Windows" + $version + ".exe"
 $url_official = "https://download.mimer.com/pub/dist/windows/MimerSqlX64Windows" + $version + ".exe"
 $mimersqlPackage = "C:\Windows\Temp\MimerSqlX64Windows" + $version + ".exe"
 $sha1 = "e27bb6bdbd5cbd895a64b70051e3e5346f738957"

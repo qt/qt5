@@ -51,8 +51,8 @@ $folder = "msys64"
 $package_prebuilt = $folder + "_" + $version + "_prebuilt.7z"
 $package = $prog + "-base-" + $arch + "-" + $version + ".tar.xz"
 
-$url_cache_prebuilt = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package_prebuilt"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package"
+$url_cache_prebuilt = "\\ci-files01-hki.ci.qt.io\provisioning\windows\$package_prebuilt"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\$package"
 $url_official = "http://repo.msys2.org/distrib/$arch/$package"
 $TargetLocation = "C:\Utils"
 

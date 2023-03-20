@@ -51,7 +51,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
-basePath="/net/ci-files01-hki.intra.qt.io/hdd/www/input/android"
+basePath="/net/ci-files01-hki.ci.qt.io/hdd/www/input/android"
 
 toolsVersion="2.1"
 # toolsFile dertermines tools version

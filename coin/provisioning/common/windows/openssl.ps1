@@ -52,7 +52,7 @@ if (Is64BitWinHost) {
     $architecture = "x64"
     $installFolder = "C:\openssl"
     $externalUrl = "https://slproweb.com/download/Win64OpenSSL-$version.exe"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
+    $internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\openssl\Win64OpenSSL-$version.exe"
     $sha1 = "2fb73f233bc565939312782b8157bebc26a5e17b"
 
     Write-Host "Fetching from URL ..."
@@ -80,7 +80,7 @@ if (Is64BitWinHost) {
 }
 
 $externalUrl = "https://slproweb.com/download/Win32OpenSSL-$version.exe"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
+$internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\openssl\Win32OpenSSL-$version.exe"
 $sha1 = "ddead693fa279ad6b1baf123b3af51a9ef289dc1"
 
 Write-Host "Fetching from URL ..."

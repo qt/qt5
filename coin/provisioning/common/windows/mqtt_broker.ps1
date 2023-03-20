@@ -44,7 +44,7 @@ $zip = Get-DownloadLocation "pahotest.zip"
 $commitSHA = "20bad2475c27a6e1d24a56d90a9fceb40963261e"
 $sha1 = "a0ac88715c2aebb9573a113dc13925a90da19233"
 
-$internalUrl = "http://ci-files01-hki.intra.qt.io/input/mqtt_broker/paho.mqtt.testing-$commitSHA.zip"
+$internalUrl = "http://ci-files01-hki.ci.qt.io/input/mqtt_broker/paho.mqtt.testing-$commitSHA.zip"
 $externalUrl = "https://github.com/eclipse/paho.mqtt.testing/archive/$commitSHA.zip"
 
 Download $externalUrl $internalUrl $zip

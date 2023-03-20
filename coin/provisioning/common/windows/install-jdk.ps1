@@ -53,7 +53,7 @@ if (Is64BitWinHost) {
 
 $installdir = "C:\Program Files\Java\jdk-$version"
 
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\jdk-" + $version + "-windows-" + $arch + ".exe"
 # NOTE! Official URL is behind login portal. It can't be used whit this script instead it need to be fetched to $url_cache first
 # java 11: https://www.oracle.com/java/technologies/downloads/#java11-windows
 # java 8: $official_url = "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-" + $version + "-windows-" + $arch + ".exe"

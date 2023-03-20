@@ -44,7 +44,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="2.36.1"
 officialUrl="https://github.com/git/git/archive/refs/tags/v$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/git/git-$version.tar.gz"
+cachedUrl="http://ci-files01-hki.ci.qt.io/input/git/git-$version.tar.gz"
 targetFile="/tmp/git-$version.tar.gz"
 sha="a17c11da2968f280a13832d97f48e9039edac354"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"

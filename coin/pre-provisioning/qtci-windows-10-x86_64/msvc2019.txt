@@ -7,7 +7,7 @@ $installer = "http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__5050
 
 MSVC 2019 build tools (default installation, no additional selections).
     * Install after MSVC2019 is installed!
-    * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
+    * Installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
     * Version: 16.8.1
 
 Installed MSVC-2019 Components:

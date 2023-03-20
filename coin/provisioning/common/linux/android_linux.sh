@@ -57,7 +57,7 @@ sdkTargetFolder="$targetFolder/sdk"
 
 sudo mkdir -p $sdkTargetFolder
 
-basePath="http://ci-files01-hki.intra.qt.io/input/android"
+basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"

@@ -56,12 +56,12 @@
 
 $breakpad_commit_sha="b988fa74ec18de6214b18f723e48331d9a7802ae"
 $breakpad_tar="breakpad_$breakpad_commit_sha.tar.gz"
-$breakpad_tar_url="http://ci-files01-hki.intra.qt.io/input/breakpad/$breakpad_tar"
+$breakpad_tar_url="http://ci-files01-hki.ci.qt.io/input/breakpad/$breakpad_tar"
 $breakpad_tar_sha="a2d404d2aebc947cdac5840a9bccd65dfafae24c"
 
 $linux_syscall_support_commit_sha1="93426bda6535943ff1525d0460aab5cc0870ccaf"
 $linux_syscall_support_tar="linux-syscall-support_$linux_syscall_support_commit_sha1.tar.gz"
-$linux_syscall_support_tar_url="http://ci-files01-hki.intra.qt.io/input/linux-syscall-support/$linux_syscall_support_tar"
+$linux_syscall_support_tar_url="http://ci-files01-hki.ci.qt.io/input/linux-syscall-support/$linux_syscall_support_tar"
 $linux_syscall_support_tar_sha="62565be0920f3661e138d68026b79fbbdc2a11e4"
 
 $targetBreakpad="$env:tmp\$breakpad_tar"

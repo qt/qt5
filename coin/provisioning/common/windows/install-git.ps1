@@ -49,7 +49,7 @@ if (Is64BitWinHost) {
     $sha1 = "1bbe040254c236607ccb84e14a3f608b1a4e959a"
 }
 $gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
 $url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
 
 Write-Host "Fetching Git $version..."

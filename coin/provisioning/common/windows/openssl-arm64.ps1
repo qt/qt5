@@ -46,7 +46,7 @@
 # From Visual studio 'C++ Universal Windows Platform support for v142 build tools (ARM64)' and 'Windows Universal C Runtime' were installed
 # cd C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build
 # call vcvarsamd64_arm64
-# curl -o C:\Utils\openssl-3.0.7.zip http://ci-files01-hki.intra.qt.io/input/openssl/openssl-3.0.7.zip
+# curl -o C:\Utils\openssl-3.0.7.zip http://ci-files01-hki.ci.qt.io/input/openssl/openssl-3.0.7.zip
 # cd C:\Utils
 # C:\Utils\sevenzip\7z.exe x C:\Utils\openssl-3.0.7.zip
 # cd C:\Utils\openssl-3.0.7
@@ -60,7 +60,7 @@
 #################################################################################################################################################
 
 $version = "3_0_7"
-$url = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-$version-arm64.zip"
+$url = "\\ci-files01-hki.ci.qt.io\provisioning\openssl\openssl-$version-arm64.zip"
 $sha1 = "19be15069d981b4a96f5715f039df7aaa7456d52"
 $installFolder = "C:\openssl_arm64"
 $zip_package = "C:\Windows\Temp\$version.zip"

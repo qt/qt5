@@ -55,7 +55,7 @@ if (Is64BitWinHost) {
 
 $filename = "telegraf-" + $version + "_windows_" + $arch + ".zip"
 
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/telegraf/" + $filename
+$url_cache = "http://ci-files01-hki.ci.qt.io/input/telegraf/" + $filename
 $url_official = "https://dl.influxdata.com/telegraf/releases/" + $filename
 $tempfile = "C:\Windows\Temp\" + $filename
 

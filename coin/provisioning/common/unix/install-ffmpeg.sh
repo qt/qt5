@@ -51,7 +51,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 version="n6.0"
 url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
 sha1="78435ec71cc2227017a99c030e858719b8c7c74d"
-url_cached="http://ci-files01-hki.intra.qt.io/input/ffmpeg/$version.tar.gz"
+url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
 ffmpeg_name="FFmpeg-$version"
 
 target_dir="$HOME"

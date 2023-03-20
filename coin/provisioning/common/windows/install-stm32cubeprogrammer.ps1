@@ -43,7 +43,7 @@
 # Official donwload from https://www.st.com/en/development-tools/stm32cubeprog.html
 
 $version ="2_5_0"
-$url = "http://ci-files01-hki.intra.qt.io/input/windows/STMicroelectronics_v${version}.zip"
+$url = "http://ci-files01-hki.ci.qt.io/input/windows/STMicroelectronics_v${version}.zip"
 $zip = "C:\Windows\Temp\STMicroelectronics_v${version}.zip"
 
 Download $url $url $zip

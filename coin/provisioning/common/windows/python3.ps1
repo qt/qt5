@@ -55,10 +55,10 @@ $package = "C:\Windows\temp\python-$version.exe"
 if ( $archVer -eq 64 ) {
     Write-Host "Installing 64 bit Python"
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
-    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version-amd64.exe"
+    $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version-amd64.exe"
 } else {
     $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
-    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/python-$version.exe"
+    $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version.exe"
 }
 
 Write-Host "Fetching from URL..."

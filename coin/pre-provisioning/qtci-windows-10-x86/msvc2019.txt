@@ -3,11 +3,11 @@
 $version = "2019"
 # Current version was manually upgraded from the installer
 $version_number = "16.4.6"
-$installer = "http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__505064367.1547034421.exe"
+$installer = "http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__505064367.1547034421.exe"
 
 MSVC 2019 build tools (default installation, no additional selections).
     * Install after MSVC2019 is installed!
-    * Installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
+    * Installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
     * Version: 16.4.6
 
 Installed MSVC-2019 Components:

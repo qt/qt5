@@ -55,7 +55,7 @@ if ( $archVer -eq 64 ) {
 }
 $package = "C:\Windows\temp\python-$version.msi"
 $externalUrl = "https://www.python.org/ftp/python/$version/python-$version" + $arch + ".msi"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\python-$version" + $arch + ".msi"
+$internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\python-$version" + $arch + ".msi"
 
 Write-Host "Fetching from URL..."
 Download $externalUrl $internalUrl $package

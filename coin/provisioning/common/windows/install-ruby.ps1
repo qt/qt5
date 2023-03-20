@@ -49,7 +49,7 @@ if (Is64BitWinHost) {
     $arch = "-x86"
     $sha1 = "2639a481c3b5ad11f57d5523cc41ca884286089e"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\rubyinstaller-" + $version + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\rubyinstaller-" + $version + $arch + ".exe"
 $url_official = "https://github.com/oneclick/rubyinstaller2/releases/download/rubyinstaller-" + $version + "/rubyinstaller-" + $version + $arch + ".exe"
 $rubyPackage = "C:\Windows\Temp\rubyinstaller-$version.exe"
 

@@ -48,7 +48,7 @@ source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-primaryBaseUrlPath="http://ci-files01-hki.intra.qt.io/input/boot2qt/gatesgarth"
+primaryBaseUrlPath="http://ci-files01-hki.ci.qt.io/input/boot2qt/gatesgarth"
 altBaseUrlPath="http://download.qt.io/development_releases/prebuilt/boot2qt/gatesgarth"
 
 echo "Installing Yocto toolchain for 32-bit b2qt ARMV7..."

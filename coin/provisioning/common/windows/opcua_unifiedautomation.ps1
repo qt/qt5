@@ -50,7 +50,7 @@ function DownloadAndInstallUA
     $zip = Get-DownloadLocation "uasdkcpp.zip"
 
     Write-Host "UACPPSDK: Downloading Unified Automation CPP installer..."
-    $internalUrl = "http://ci-files01-hki.intra.qt.io/input/opcua_uacpp/$InstallerFileName.zip"
+    $internalUrl = "http://ci-files01-hki.ci.qt.io/input/opcua_uacpp/$InstallerFileName.zip"
     # No public download link exists
     $externalUrl = $internalUrl
 

@@ -70,7 +70,7 @@ function InstallPython {
 
     #Download Source code
     DownloadURL  \
-        http://ci-files01-hki.intra.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz  \
+        http://ci-files01-hki.ci.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz  \
         https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz  \
         $PACKAGE_SHA
     tar -xf "Python-${PACKAGE_VERSION}.tar.xz"

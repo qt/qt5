@@ -50,7 +50,7 @@ if (Is64BitWinHost) {
     $sha1 = "6ad89c6358a174c048f113bfd274d2d0378d60aa"
 }
 $installer_name = "strawberry-perl-" + $version + $arch + ".msi"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\" + $installer_name
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\" + $installer_name
 $url_official = "http://strawberryperl.com/download/" + $version + "/" + $installer_name
 $strawberryPackage = "C:\Windows\Temp\" + $installer_name
 

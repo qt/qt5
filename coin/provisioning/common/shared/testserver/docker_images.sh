@@ -70,20 +70,20 @@ SERVER_PATH="$PROVISIONING_DIR/common/shared/testserver"
 echo 'Downloading support files for the docker images'
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/docker/rfc3252.txt  \
+    http://ci-files01-hki.ci.qt.io/input/docker/rfc3252.txt  \
     https://tools.ietf.org/rfc/rfc3252.txt  \
     50c323dedce95e4fdc2db35cd1b8ebf9d74711bf5296ef438b88d186d7dd082d
 cp rfc3252.txt "$SERVER_PATH/vsftpd/"
 cp rfc3252.txt "$SERVER_PATH/apache2/"
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/docker/dante-server_1.4.1-1_amd64.deb  \
+    http://ci-files01-hki.ci.qt.io/input/docker/dante-server_1.4.1-1_amd64.deb  \
     http://ppa.launchpad.net/dajhorn/dante/ubuntu/pool/main/d/dante/dante-server_1.4.1-1_amd64.deb  \
     674a06f356cebd92c64920cec38a6687650a6f880198fbbad05aaaccca5c0a21
 mv dante-server_1.4.1-1_amd64.deb "$SERVER_PATH/danted/"
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/docker/FreeCoAP-0.7.tar.gz  \
+    http://ci-files01-hki.ci.qt.io/input/docker/FreeCoAP-0.7.tar.gz  \
     https://github.com/keith-cullen/FreeCoAP/archive/v0.7.tar.gz  \
     fa6602e27dc8eaee6e34ff53400c0519da0c5c7cd47bf6f13acb564f52a693ee  \
     FreeCoAP-0.7.tar.gz
@@ -91,7 +91,7 @@ mv FreeCoAP-0.7.tar.gz "$SERVER_PATH/freecoap/"
 
 # Custom fork of Eclipse Californium with changes not upstream
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/docker/californium-secure-test-server.tar.gz  \
+    http://ci-files01-hki.ci.qt.io/input/docker/californium-secure-test-server.tar.gz  \
     https://github.com/sonakur/californium/archive/secure-test-server.tar.gz  \
     0ee7f5d4366b9e31f6d2d42e389cb7a66d2db54987b700a38a3a31e8f38a7a19  \
     californium-secure-test-server.tar.gz

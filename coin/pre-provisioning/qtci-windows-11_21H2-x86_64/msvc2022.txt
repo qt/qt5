@@ -1,7 +1,7 @@
 ### Visual Studio 2022 Preview ###
-Visual Studio 2022 version 17.0.0 preview 7.0 was installed manually using installer: http://ci-files01-hki.intra.qt.io/input/windows/vs_professional_2022_preview.exe
+Visual Studio 2022 version 17.0.0 preview 7.0 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional_2022_preview.exe
 ### Visual Studio 2022 Official release ###
-Visual Studio 2022 version 17.0.1 was installed manually using installer: http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__msvc2022_1339502178.1525841376.exe
+Visual Studio 2022 version 17.0.1 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__msvc2022_1339502178.1525841376.exe
 
 Installed MSVC-2022 Components:
 
@@ -62,10 +62,10 @@ Windows Universal C Runtime
 ############################################################
 ### Visual Studio 2022 build tools ###
 
-Visual studio 2022 build tools version 17.0.0 preview 7.0 was installed manually using installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__msvc2022_preview.exe"
+Visual studio 2022 build tools version 17.0.0 preview 7.0 was installed manually using installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_buildtools__msvc2022_preview.exe"
  * Only default installation, no additional selections
 
- Visual studio 2022 build tools version 17.0.1 was installed manually using installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_BuildTools_msvc2022.exe"
+ Visual studio 2022 build tools version 17.0.1 was installed manually using installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_BuildTools_msvc2022.exe"
   * Only default installation, no additional selections
 
 ############################################################

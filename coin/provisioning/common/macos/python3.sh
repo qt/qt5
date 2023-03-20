@@ -49,7 +49,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # shellcheck source=./pip.sh
 source "${BASH_SOURCE%/*}/pip.sh"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/python-3.9.6-macos11.pkg"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/python-3.9.6-macos11.pkg"
 AltUrl="https://www.python.org/ftp/python/3.9.6/python-3.9.6-macos11.pkg"
 SHA1="2af5277c2e197719eb4b820430dee5d89e2577b6"
 DestDir="/"

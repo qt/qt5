@@ -43,7 +43,7 @@
 
 $version = "5.2.4"
 $sha1 = "71df4474a5e94918728b62d1f6bc036674ef0e96"
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\VirtualBox-" + $version + "-119785-Win.exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\VirtualBox-" + $version + "-119785-Win.exe"
 $url_official = "http://download.virtualbox.org/virtualbox/" + $version + "/VirtualBox-" + $version + "-119785-Win.exe"
 $virtualboxPackage = "C:\Windows\Temp\virtualbox-$version.exe"
 

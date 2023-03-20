@@ -4,7 +4,7 @@
 
 $package = "DXSDK_Jun10.exe"
 
-$cachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\$package"
+$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\$package"
 $officialUrl = "https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/$package"
 $sdkChecksumSha1 = "8fe98c00fde0f524760bb9021f438bd7d9304a69"
 $package_path = "C:\Windows\Temp\$package"

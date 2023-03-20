@@ -62,7 +62,7 @@ Find-Tool -Name "ninja.exe" -Path "C:\Utils\Ninja"
 
 $version = "21.9"
 $sha1 = "3226a0e49d048759b702ae524da79387c59f05cc"
-$internalUrl = "http://ci-files01-hki.intra.qt.io/input/protobuf/protobuf-all-$version.zip"
+$internalUrl = "http://ci-files01-hki.ci.qt.io/input/protobuf/protobuf-all-$version.zip"
 $externalUrl = "https://github.com/protocolbuffers/protobuf/releases/download/v$version/protobuf-all-$version.zip"
 
 $targetDir = "$env:HOMEDRIVE\$env:HOMEPATH\protobuf-$version"

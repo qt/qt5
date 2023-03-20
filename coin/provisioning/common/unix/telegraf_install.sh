@@ -67,7 +67,7 @@ is_script_executed telegraf_install.sh  \
 [ "$PROVISIONING_OS" = linux ]  \
     && ioping_sha256=259abf04bcb84f4126ff97c04b6651e1cf5ea6d8a9ff364c769a26c95b6eeb44  \
     || ioping_sha256=55de6a2f1a5343e0ce8df31d82d47a9e79c7e612edbc6dfb39b5fc6fb358b2e3
-DownloadURL "http://ci-files01-hki.intra.qt.io/input/ioping/ioping.${PROVISIONING_OS}-${PROVISIONING_ARCH}"  \
+DownloadURL "http://ci-files01-hki.ci.qt.io/input/ioping/ioping.${PROVISIONING_OS}-${PROVISIONING_ARCH}"  \
     ''  "$ioping_sha256"  ioping
 $CMD_INSTALL -m 755 ./ioping /usr/bin/
 rm -f ioping
@@ -84,7 +84,7 @@ package_sha256_list="$PROVISIONING_DIR"/common/shared/telegraf/telegraf_packages
 package_sha256=$(sed -n "s/.*$package_filename *//p" "$package_sha256_list")
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/telegraf/"$package_filename"  \
+    http://ci-files01-hki.ci.qt.io/input/telegraf/"$package_filename"  \
     https://dl.influxdata.com/telegraf/releases/"$package_filename"  \
     "$package_sha256"  \
     telegraf.tar.gz

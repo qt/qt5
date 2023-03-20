@@ -49,7 +49,7 @@ if (Is64BitWinHost) {
     $arch = "_x86"
     $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\depends22" + $arch + ".zip"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\depends22" + $arch + ".zip"
 $url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
 $dependsPackage = "C:\Windows\Temp\depends-$version.zip"
 

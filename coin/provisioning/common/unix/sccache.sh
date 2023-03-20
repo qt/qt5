@@ -50,7 +50,7 @@ function installSccache {
     targetVersion=$2
     sha1=$3
     targetFile=sccache-$targetVersion-$targetArch.tar.gz
-    primaryUrl=http://ci-files01-hki.intra.qt.io/input/sccache/$targetFile
+    primaryUrl=http://ci-files01-hki.ci.qt.io/input/sccache/$targetFile
     cacheUrl=https://github.com/mozilla/sccache/releases/download/$targetVersion/$targetFile
     DownloadURL "$primaryUrl" "$cacheUrl" "$sha1" "$targetFile"
 

@@ -74,7 +74,7 @@ fi
 export ANDROID_NDK_ROOT=/opt/android/android-ndk-r25b
 
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/openssl/openssl-$version.tar.gz"
+cachedUrl="http://ci-files01-hki.ci.qt.io/input/openssl/openssl-$version.tar.gz"
 targetFile="/tmp/openssl-$version.tar.gz"
 sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
 opensslHome="${HOME}/openssl/android/openssl-${version}"
@@ -98,7 +98,7 @@ function InstallPrebuiltOpenssl() {
     os=$3
 
     if [[ ! -d ${HOME}/openssl_android_ndk_${ndkVersion}/android/openssl-${version} ]]; then
-        prebuiltUrl="http://ci-files01-hki.intra.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
+        prebuiltUrl="http://ci-files01-hki.ci.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
         targetFile="/tmp/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}-${os}.tar.gz"
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$nkdSha" "$targetFile"

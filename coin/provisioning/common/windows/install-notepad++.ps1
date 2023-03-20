@@ -49,7 +49,7 @@ if (Is64BitWinHost) {
     $arch = ""
     $sha1 = "d4c403675a21cc381f640b92e596bae3ef958dc6"
 }
-$url_cache = "\\ci-files01-hki.intra.qt.io\provisioning\windows\npp." + $version + ".Installer" + $arch + ".exe"
+$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\npp." + $version + ".Installer" + $arch + ".exe"
 $url_official = "https://notepad-plus-plus.org/repository/7.x/" + $version + "/npp." + $version + ".Installer" + $arch + ".exe"
 $nppPackage = "C:\Windows\Temp\npp-$version.exe"
 

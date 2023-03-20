@@ -2,7 +2,7 @@
 
 # Create Ubuntu 20.04 and install virt-manager:
 Create e.g. Ubuntu 20.04 VM
-Connect to machine and download the ISO-image and virtio-drivers (http://ci-files01-hki.intra.qt.io/input/windows/virtio/virtio-win-0.1.204.iso or https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.204-1/)
+Connect to machine and download the ISO-image and virtio-drivers (http://ci-files01-hki.ci.qt.io/input/windows/virtio/virtio-win-0.1.204.iso or https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.204-1/)
 sudo apt update
 sudo apt install virt-manager
 sudo systemctl start libvirtd

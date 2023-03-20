@@ -54,7 +54,7 @@ else
     tarBallPackage="emsdk_linux_${tarBallVersion}.tar.gz"
     sha="7280f68da2cb232d8b5dca843706cb10e49ab901"
 fi
-cacheUrl="https://ci-files01-hki.intra.qt.io/input/emsdk/${tarBallPackage}"
+cacheUrl="https://ci-files01-hki.ci.qt.io/input/emsdk/${tarBallPackage}"
 target="/tmp/${tarBallPackage}"
 
 mkdir -p /opt

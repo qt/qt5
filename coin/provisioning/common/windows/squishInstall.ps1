@@ -46,8 +46,8 @@ $version = "7.0.1"
 $qtBranch = "63x"
 $targetDir = "C:\Utils\squish"
 $squishPackage = "C:\Utils\rta_squish"
-$squishUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\jenkins_build\stable"
-$licenseUrl = "\\ci-files01-hki.intra.qt.io\provisioning\squish\coin\$qtBranch"
+$squishUrl = "\\ci-files01-hki.ci.qt.io\provisioning\squish\jenkins_build\stable"
+$licenseUrl = "\\ci-files01-hki.ci.qt.io\provisioning\squish\coin\$qtBranch"
 
 # Squish license
 $licensePackage = ".squish-license"

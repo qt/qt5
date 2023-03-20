@@ -49,11 +49,11 @@ set -ex
 icuVersion="56.1"
 icuLocation="/usr/lib64"
 sha1="6dd9ca6b185681a7ddc4bb94fd7fced27647a21c"
-baseBinaryPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+baseBinaryPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
 baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
 
 sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
-develPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+develPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
 develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"

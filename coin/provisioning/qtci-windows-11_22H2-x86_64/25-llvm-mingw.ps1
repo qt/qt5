@@ -43,7 +43,7 @@
 # https://github.com/mstorsjo/llvm-mingw/releases/tag/20220323
 
 $zip = Get-DownloadLocation "llvm-mingw-20220323-ucrt-x86_64.zip"
-$url_cache = "http://ci-files01-hki.intra.qt.io/input/windows/llvm-mingw-20220323-ucrt-x86_64.zip"
+$url_cache = "http://ci-files01-hki.ci.qt.io/input/windows/llvm-mingw-20220323-ucrt-x86_64.zip"
 $url_official = "https://github.com/mstorsjo/llvm-mingw/releases/download/20220323/llvm-mingw-20220323-ucrt-x86_64.zip"
 
 Download $url_official $url_cache $zip

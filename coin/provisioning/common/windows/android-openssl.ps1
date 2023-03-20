@@ -69,7 +69,7 @@ function Install($1, $2) {
         $ndk_path = "/c/Utils/Android/android-ndk-${ndk_version}"
         $cc_path = "$ndk_path/toolchains/llvm/prebuilt/windows-x86_64/bin"
 
-        $prebuilt_url_ndk = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${openssl_version}-for-android-used-ndk-${ndk_version}-windows.zip"
+        $prebuilt_url_ndk = "\\ci-files01-hki.ci.qt.io\provisioning\openssl\prebuilt-openssl-${openssl_version}-for-android-used-ndk-${ndk_version}-windows.zip"
         $prebuilt_zip_ndk = Get-DownloadLocation ("prebuilt-openssl-${openssl_version}-for-android-used-ndk-${ndk_version}-windows.zip")
 
     if ((Test-Path $prebuilt_url_ndk)) {
@@ -81,7 +81,7 @@ function Install($1, $2) {
     } else {
         Write-Host "Build OpenSSL for Android from sources"
         # openssl-${openssl_version}_fixes-ndk_root.tar.gz package includes fixes from https://github.com/openssl/openssl/pull/17322 and string ANDROID_NDK_HOME is replaced with ANDROID_NDK_ROOT in Configurations/15-android.conf
-        Download \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz \\ci-files01-hki.intra.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz $openssl_compressed
+        Download \\ci-files01-hki.ci.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz \\ci-files01-hki.ci.qt.io\provisioning\openssl\openssl-${openssl_version}.tar.gz $openssl_compressed
         Verify-Checksum $openssl_compressed $openssl_sha1
 
         Extract-7Zip $openssl_compressed C:\Utils\tmp

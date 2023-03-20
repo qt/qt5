@@ -49,7 +49,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 set -e
 tarballName="fbx20161_2_fbxsdk_linux.tar.gz"
 targetFolder="/opt/fbx"
-cachedUrl="http://ci-files01-hki.intra.qt.io/input/fbx/$tarballName"
+cachedUrl="http://ci-files01-hki.ci.qt.io/input/fbx/$tarballName"
 officialUrl="http://download.autodesk.com/us/fbx_release_older/2016.1.2/$tarballName"
 sha1="b0a08778de025e2c6e90d6fbdb6531f74a3da605"
 tmpFolder="/tmp"

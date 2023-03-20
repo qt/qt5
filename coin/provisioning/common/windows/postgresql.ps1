@@ -51,7 +51,7 @@ if (Is64BitWinHost) {
     $architecture = "x64"
     $installFolder = "C:\Utils\postgresql"
     $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-x64-binaries.zip"
-    $internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
+    $internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\postgresql-$version-windows-x64-binaries.zip"
     $sha1 = "5dd604f91973112209362b5abbbd1220c026f645"
 
     Write-Host "Fetching from URL ..."
@@ -73,7 +73,7 @@ if (Is64BitWinHost) {
 # Install x86 bit version
 $architecture = "x86"
 $externalUrl = "http://get.enterprisedb.com/postgresql/postgresql-$version-windows-binaries.zip"
-$internalUrl = "\\ci-files01-hki.intra.qt.io\provisioning\windows\postgresql-$version-windows-binaries.zip"
+$internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\postgresql-$version-windows-binaries.zip"
 $sha1 = "46309190e60eead99c2d39c1dd18a91f2104d000"
 if (Is64BitWinHost) {
     $installFolder = "C:\Utils\postgresql$architecture"

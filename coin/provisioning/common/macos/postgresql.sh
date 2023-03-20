@@ -55,7 +55,7 @@ psqlVersion="14"
 
 packageName="Postgres-$psqlAppVersion-$psqlVersion.dmg"
 
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/$packageName"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/macos_10.12_sierra/$packageName"
 AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/v$psqlAppVersion/$packageName"
 SHA1="04cb6939704c5ede5646c1da8a686da3ded98a26"
 appPrefix=""

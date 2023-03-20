@@ -49,12 +49,12 @@ set -e
 
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/mac/homebrew/a822f0d0f1838c07e86b356fcd2bf93c7a11c2aa/install.sh  \
+    http://ci-files01-hki.ci.qt.io/input/mac/homebrew/a822f0d0f1838c07e86b356fcd2bf93c7a11c2aa/install.sh  \
     https://raw.githubusercontent.com/Homebrew/install/c744a716f9845988d01e6e238eee7117b8c366c9/install  \
     3210da71e12a699ab3bba43910a6d5fc64b92000  \
     /tmp/homebrew_install.sh
 
-DownloadURL "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
+DownloadURL "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
 { pw=$(cat "/Users/qt/pw"); } 2> /dev/null
 sudo chmod 755 /tmp/homebrew_install.sh
 { (echo $pw | /tmp/homebrew_install.sh); } 2> /dev/null

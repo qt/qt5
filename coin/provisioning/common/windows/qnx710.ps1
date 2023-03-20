@@ -64,7 +64,7 @@ $folderName = "qnx710"
 $targetPath = "$targetFolder$folderName"
 
 # QNX SDP
-$cachedUrl = "\\ci-files01-hki.intra.qt.io\provisioning\qnx\qnx710-windows-linux-20220405.tar.xz"
+$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\qnx\qnx710-windows-linux-20220405.tar.xz"
 $sourceFile = "http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20220405.tar.xz"
 $targetFile = "qnx710.tar.xz"
 $sha1 = "134af2e0f75d7b7c516f824fafee265b89e51d48"

@@ -51,7 +51,7 @@ source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 version="b3630c567cf2ed22a4b200b4aa72eeb23ba08dfb"
 sha1="0ff608d33773ffc7c904e18dc57065750f66291b"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
-url_cached="http://ci-files01-hki.intra.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
+url_cached="http://ci-files01-hki.ci.qt.io/input/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu22.04-gcc11.3-x86_64.7z"
 
 zip="/tmp/qdoc-qtattributionsscanner.7z"
 destination="/opt/qt-doctools"

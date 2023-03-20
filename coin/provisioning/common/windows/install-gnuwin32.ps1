@@ -43,7 +43,7 @@
 $prog = "gnuwin32"
 $zipPackage = "$prog.zip"
 $temp = "$env:tmp"
-$internalUrl = "http://ci-files01-hki.intra.qt.io/input/windows/$prog/$zipPackage"
+$internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/$prog/$zipPackage"
 $externalUrl = "http://download.qt.io/development_releases/$prog/$zipPackage"
 Download $externalUrl $internalUrl "$temp\$zipPackage"
 Verify-Checksum "$temp\$zipPackage" "d7a34a385ccde2374b8a2ca3369e5b8a1452c5a5"

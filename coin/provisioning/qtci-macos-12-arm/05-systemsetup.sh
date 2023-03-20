@@ -46,7 +46,7 @@ set -ex
 targetFile="$HOME/vncpw.txt"
 
 # Fetch password
-curl --retry 5 --retry-delay 10 --retry-max-time 60 "http://ci-files01-hki.intra.qt.io/input/semisecure/vncpw.txt" -o "$targetFile"
+curl --retry 5 --retry-delay 10 --retry-max-time 60 "http://ci-files01-hki.ci.qt.io/input/semisecure/vncpw.txt" -o "$targetFile"
 shasum "$targetFile" |grep "a795fccaa8f277e62ec08e6056c544b8b63924a0"
 
 { VNCPassword=$(cat "$targetFile"); } 2> /dev/null
@@ -107,7 +107,7 @@ sudo systemsetup setusingnetworktime on
 sudo rm -f "$targetFile"
 
 # Enable automount for nfs shares
-sudo sed -i'.orig' -e 's:^#/net:/net:' -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master || sudo curl -o /etc/auto_master http://ci-files01-hki.intra.qt.io/input/mac/arm/auto_master
+sudo sed -i'.orig' -e 's:^#/net:/net:' -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master || sudo curl -o /etc/auto_master http://ci-files01-hki.ci.qt.io/input/mac/arm/auto_master
 sudo automount -cv
 
 # Disable multicast advertisements

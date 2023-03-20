@@ -25,7 +25,7 @@ function install() {
     $zip = "c:\users\qt\downloads\libclang.7z"
 
     $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_$libclang_version-based-windows-$toolchain`_$archVer.7z"
-    $script:CachedUrl = "http://ci-files01-hki.intra.qt.io/input/libclang/qt/libclang-release_$libclang_version-based-windows-$toolchain`_$archVer.7z"
+    $script:CachedUrl = "http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_$libclang_version-based-windows-$toolchain`_$archVer.7z"
 
     Download $OfficialUrl $CachedUrl $zip
     Verify-Checksum $zip $sha1

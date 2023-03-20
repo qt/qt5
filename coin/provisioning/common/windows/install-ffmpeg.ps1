@@ -46,7 +46,7 @@ $version = "n6.0"
 $ffmpeg_name = "ffmpeg-" + $version;
 $sha1 = "5DDDE739FF966A7EEE810D65D7290860A52709D7"
 
-$url_cached = "http://ci-files01-hki.intra.qt.io/input/ffmpeg/" + $version + ".zip"
+$url_cached = "http://ci-files01-hki.ci.qt.io/input/ffmpeg/" + $version + ".zip"
 $url_public = "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/" +$version + ".zip"
 $download_location = "C:\Windows\Temp\" + $ffmpeg_name + ".zip"
 $unzip_location = "C:\"

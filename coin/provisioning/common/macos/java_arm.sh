@@ -47,7 +47,7 @@ echo "Installing Java Development Kit"
 
 targetFile=zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.dmg
 
-url=ci-files01-hki.intra.qt.io:/hdd/www/input/mac
+url=ci-files01-hki.ci.qt.io:/hdd/www/input/mac
 # url_alt=https://cdn.azul.com/zulu/bin/zulu15.29.15-ca-jdk15.0.2-macosx_aarch64.dmg
 
 echo "Mounting $targetFile"

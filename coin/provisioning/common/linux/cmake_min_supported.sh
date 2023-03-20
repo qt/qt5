@@ -48,7 +48,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 majorminorversion="3.16"
 version="3.16.8"
-PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/cmake/cmake-$version-Linux-x86_64.tar.gz"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/cmake/cmake-$version-Linux-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-Linux-x86_64.tar.gz"
 SHA1="a4d2f96f475ccc8e1ae1d97cf6c8ce39abaa9d7c"
 targetFolder="/opt/cmake-$version"

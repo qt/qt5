@@ -42,7 +42,7 @@
 
 # Signing tools are needed to sign offline installers when releasing
 
-$url = "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/sign.zip"
+$url = "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/sign.zip"
 $destination = "C:\Windows\temp\sign.zip"
 
 Download $url $url $destination
