@@ -96,6 +96,9 @@ sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 # OpenSSL 3
 sudo zypper -nq install openssl-3
 
+# Valgrind (Needed for testlib selftests)
+sudo zypper -nq install valgrind-devel
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 
