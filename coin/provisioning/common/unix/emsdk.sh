@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2023 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -41,15 +41,38 @@
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
+# shellcheck source=./DownloadURL.sh
+source "${BASH_SOURCE%/*}/DownloadURL.sh"
+
 version="3.1.25"
 versionNode="v14.18.2"
+tarBallVersion=$(sed "s/\./\_/g" <<<"$version")
+if uname -a |grep -q Darwin; then
+    tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
+    sha="33a3d1227e1409cfcb42d40c3e50108469bd5930"
+else
+    tarBallPackage="emsdk_linux_${tarBallVersion}.tar.gz"
+    sha="7280f68da2cb232d8b5dca843706cb10e49ab901"
+fi
+cacheUrl="https://ci-files01-hki.intra.qt.io/input/emsdk/${tarBallPackage}"
+target="/tmp/${tarBallPackage}"
 
 mkdir -p /opt
 cd /opt
-sudo git clone https://github.com/emscripten-core/emsdk.git
-cd emsdk
-sudo ./emsdk install $version
-sudo ./emsdk activate $version
+echo "URL: $cacheUrl"
+DownloadURL "$cacheUrl" "" "$sha" "$target" || (
+    echo "Emsdk isn't cached. Cloning it"
+    sudo git clone https://github.com/emscripten-core/emsdk.git
+)
+
+if [ -f "$target" ]; then
+    sudo tar -xzf "$target" -C /opt/
+    sudo rm -f "$target"
+else
+    cd emsdk
+    sudo ./emsdk install "$version"
+    sudo ./emsdk activate "$version"
+fi
 
 # platform-specific toolchain and node binaries. urls obtained from "emsdk install"
 if uname -a |grep -q Darwin; then
