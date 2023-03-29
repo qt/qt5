@@ -4,7 +4,7 @@
 
 set -ex
 
-[ -x "$(command -v realpath)" ] && FILE=$(realpath ${BASH_SOURCE[0]}) || FILE=${BASH_SOURCE[0]}
+[ -x "$(command -v realpath)" ] && FILE=$(realpath "${BASH_SOURCE[0]}") || FILE="${BASH_SOURCE[0]}"
 case $FILE in
     */*) SERVER_PATH="${FILE%/*}" ;;
     *) SERVER_PATH="." ;;
@@ -23,4 +23,4 @@ esac
 docker info
 
 # Create images
-$SERVER_PATH/docker_images.sh
+"$SERVER_PATH/docker_images.sh"

@@ -59,7 +59,7 @@ defaults write -g KeyRepeat -int 2
 
 set +x
 echo "Enable remote desktop sharing"
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw $VNCPassword -restart -agent -privs -all
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw "$VNCPassword" -restart -agent -privs -all
 set -x
 
 echo "Set Network Test Server address to $NTS_IP in /etc/hosts"

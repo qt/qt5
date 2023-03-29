@@ -7,10 +7,11 @@
 
 set -e
 
-# shellcheck source=./check_and_set_proxy.sh
+# shellcheck source=../common/unix/check_and_set_proxy.sh
 "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
-# shellcheck source=./DownloadURL.sh
+# shellcheck source=../common/unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
+
 version="39fad60085501729985888d3f546c7b8d897a394"
 sha1="b3bc413866951807fe2e87e84394cd6f69904718"
 url="https://download.qt.io/development_releases/prebuilt/qdoc/qt/qdoc-qtattributionsscanner_${version//\./}-based-linux-Ubuntu20.04-gcc9.3-x86_64.7z"
@@ -19,15 +20,15 @@ url_cached="http://ci-files01-hki.ci.qt.io/input/qdoc/qt/qdoc-qtattributionsscan
 zip="/tmp/qdoc-qtattributionsscanner.7z"
 destination="/opt/qt-doctools"
 
-sudo mkdir -p $destination
-sudo chmod 755 $destination
-DownloadURL $url_cached $url $sha1 $zip
+sudo mkdir -p "$destination"
+sudo chmod 755 "$destination"
+DownloadURL "$url_cached" "$url" "$sha1" "$zip"
 if command -v 7zr &> /dev/null; then
-    sudo 7zr x $zip -o$destination/
+    sudo 7zr x "$zip" "-o$destination/"
 else
-    sudo 7z x $zip -o$destination/
+    sudo 7z x "$zip" "-o$destination/"
 fi
-sudo chown -R qt:users $destination
-rm -rf $zip
+sudo chown -R qt:users "$destination"
+rm -rf "$zip"
 
 echo -e "qdoc = $version\nqtattributionsscanner = $version" >> ~/versions.txt

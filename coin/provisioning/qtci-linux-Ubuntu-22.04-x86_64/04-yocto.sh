@@ -99,9 +99,11 @@ else
     exit 1
 fi
 
-echo "Yocto ARMv7 toolchain = $versionARM" >> ~/versions.txt
-echo "Yocto ARM64 toolchain = $versionARM64" >> ~/versions.txt
-echo "Yocto MIPS64 toolchain = $versionMIPS64" >> ~/versions.txt
+cat << EOB >> ~/versions.txt
+Yocto ARMv7 toolchain = $versionARM
+Yocto ARM64 toolchain = $versionARM64
+Yocto MIPS64 toolchain = $versionMIPS64
+EOB
 
 # List qt user in qemu toolchain sysroots
 sudo sh -c "grep ^qt /etc/passwd >> $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/passwd"

@@ -7,6 +7,6 @@ set -ex
 
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 brew install pkgconfig
-read -r -a arr <<< $(brew list --versions pkgconfig)
+read -r -a arr <<< "$(brew list --versions pkgconfig)"
 version=${arr[1]}
 echo "pkgconfig = $version" >> ~/versions.txt

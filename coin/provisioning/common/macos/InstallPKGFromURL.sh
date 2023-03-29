@@ -11,7 +11,7 @@ function InstallPKGFromURL {
     targetDirectory=$4
 
     echo "Creating temporary file"
-    package_basename=$(echo "$url" | sed 's|^.*/||')
+    package_basename="${url/*\//}"
     tmpdir=$(mktemp -d)
     targetFile="$tmpdir/$package_basename"
     echo "Downloading PKG from primary URL '$url'"

@@ -32,16 +32,16 @@ sudo mkdir "$mountFolder"
 # Check which platform
 if uname -a |grep -q Darwin; then
     usersGroup="staff"
-    squishLicenseDir="/Users/qt"
+#    squishLicenseDir="/Users/qt"
 elif uname -a |grep -q "el7"; then
     usersGroup="qt"
-    squishLicenseDir="/root"
+#    squishLicenseDir="/root"
 elif uname -a |grep -q "Ubuntu"; then
     usersGroup="users"
-    squishLicenseDir="/home/qt"
+#    squishLicenseDir="/home/qt"
 else
     usersGroup="users"
-    squishLicenseDir="/root"
+#    squishLicenseDir="/root"
 fi
 
 targetFileMount="$mountFolder"/"$compressedFolder"

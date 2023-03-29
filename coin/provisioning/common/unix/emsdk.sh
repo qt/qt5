@@ -10,7 +10,7 @@ source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
 version="3.1.37"
 versionNode="v14.18.2"
-tarBallVersion=$(sed "s/\./\_/g" <<<"$version")
+tarBallVersion="${version//./_}"
 if uname -a |grep -q Darwin; then
     tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
     sha="fe9900b0f27ada608f25552dbd4a58bf62c6f05b"

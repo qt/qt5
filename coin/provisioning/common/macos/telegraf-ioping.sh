@@ -24,5 +24,5 @@ renice  -n -10 -p $$  >/dev/null 2>&1 ||  true
 rlatency="$(/usr/local/bin/ioping -B -k -c 3 -i 0.1     "$1" | cut -d " " -f 5)"
 wlatency="$(/usr/local/bin/ioping -B -k -c 3 -i 0.1 -W  "$1" | cut -d " " -f 5)"
 
-printf "ioping,path=$1 read_latency_ns=%u,write_latency_ns=%u\n"  \
-       "$rlatency"  "$wlatency"
+printf "ioping,path=$1 read_latency_ns=%u,write_latency_ns=%u\n" \
+       "$rlatency" "$wlatency"

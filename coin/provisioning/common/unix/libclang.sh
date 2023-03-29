@@ -17,7 +17,8 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
 PROVISIONING_DIR="$(dirname "$0")/../../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+# shellcheck source=./common.sourced.sh
+source "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
 libclang_version="15.0.0"
 
@@ -26,7 +27,7 @@ if uname -a |grep -q Darwin; then
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-mac.7z"
     url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-mac.7z"
     sha1="6d916a17459c81551dde47580ae3f071e93338a5"
-elif test -f /etc/redhat-release && cat /etc/redhat-release | grep "Red Hat" | grep -v "8" ; then
+elif test -f /etc/redhat-release && grep "Red Hat" /etc/redhat-release | grep -v "8" ; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Rhel8.4-gcc10.0-x86_64.7z"
     url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Rhel8.4-gcc10.0-x86_64.7z"

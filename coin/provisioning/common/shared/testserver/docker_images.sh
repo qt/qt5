@@ -4,11 +4,11 @@
 
 set -e
 
-
 PROVISIONING_DIR="$(dirname "$0")/../../../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
-. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
-
+# shellcheck source=../../../common/unix/common.sourced.sh
+source "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+# shellcheck source=../../../common/unix/DownloadURL.sh
+source "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
 
 # Sort files by their SHA-1, and then return the accumulated result
 sha1tree () {
@@ -16,14 +16,14 @@ sha1tree () {
     [ -x "$(command -v sha1sum)" ] || SHASUM=shasum
 
     find "$@" -type f -print0 | \
-        xargs -0 ${SHASUM-sha1sum} | cut -d ' ' -f 1 | \
-        sort | ${SHASUM-sha1sum} | cut -d ' ' -f 1
+        xargs -0 "${SHASUM-sha1sum}" | cut -d ' ' -f 1 | \
+        sort | "${SHASUM-sha1sum}" | cut -d ' ' -f 1
 }
 
 
 SERVER_PATH="$PROVISIONING_DIR/common/shared/testserver"
 
-. "$SERVER_PATH/settings.sh"
+source "$SERVER_PATH/settings.sh"
 
 
 # Download all necessary dependencies outside of the dockerfiles, so that we
@@ -87,10 +87,10 @@ do
     # backwards-incompatible changes across repositories.
 
     context="$SERVER_PATH/$server"
-    tag=$(sha1tree $context)
-    docker build -t qt-test-server-$server:latest  \
-                 -t qt-test-server-$server:$tag    \
-        $context
+    tag=$(sha1tree "$context")
+    docker build -t "qt-test-server-$server:latest"  \
+                 -t "qt-test-server-$server:$tag"    \
+        "$context"
 done
 
 docker images

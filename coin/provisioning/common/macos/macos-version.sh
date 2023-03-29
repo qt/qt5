@@ -7,14 +7,14 @@
 set -ex
 
 # Print all build machines versions to provision log
-echo "*********************************************" >> ~/versions.txt
-echo "***** macOS version *****" >> ~/versions.txt
-sw_vers >> ~/versions.txt
-echo "***** All installed packages *****" >> ~/versions.txt
-echo "***** HomeBrew *****" >> ~/versions.txt
-brew list --versions >> ~/versions.txt
-echo "***** Apple's installer *****" >> ~/versions.txt
-pkgutil --pkgs >> ~/versions.txt
-echo "*********************************************" >> ~/versions.txt
-
+( echo "*********************************************"
+  echo "***** macOS version *****"
+  sw_vers
+  echo "***** All installed packages *****"
+  echo "***** HomeBrew *****"
+  brew list --versions
+  echo "***** Apple's installer *****"
+  pkgutil --pkgs
+  echo "*********************************************"
+) >> ~/versions.txt
 "$(dirname "$0")/version.sh"

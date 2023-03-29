@@ -17,7 +17,7 @@ ndkVersionDefault=$ndkVersionLatest
 prebuiltOpensslNdkShaLatest="17085b1ef76ba116466213703e38a9d2274ec859"
 prebuiltOpensslNdkShaDefault=$prebuiltOpensslNdkShaLatest
 
-: ' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
+: <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
 # Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
@@ -50,7 +50,7 @@ fi
 cd "$opensslHome"
 PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
 PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
-'
+EOB
 
 function InstallPrebuiltOpenssl() {
 
@@ -64,7 +64,7 @@ function InstallPrebuiltOpenssl() {
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
         unzip -o "$targetFile" -d "${HOME}"
-        sudo rm -f $targetFile
+        sudo rm -f "$targetFile"
     fi
 }
 

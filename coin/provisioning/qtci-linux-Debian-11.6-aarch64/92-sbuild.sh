@@ -36,7 +36,7 @@ tee ~/.sbuildrc << EOF
 EOF
 
 # Add user group
-sudo sbuild-adduser $LOGNAME
+sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
 # Create chroot

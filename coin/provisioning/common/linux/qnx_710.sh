@@ -18,9 +18,9 @@ DownloadAndExtract () {
     folder=$4
 
     DownloadURL "$url" "$url" "$sha" "$file"
-    sudo tar -C $folder -Jxf $file
+    sudo tar -C "$folder" -Jxf "$file"
 
-    rm -rf $file
+    rm -rf "$file"
 }
 
 aarch64le_toolchain="${BASH_SOURCE%/*}/../shared/cmake_toolchain_files/qnx-toolchain-aarch64le.cmake"
@@ -33,13 +33,13 @@ folderName="qnx710"
 targetPath="$targetFolder$folderName"
 qemuTargetPath="$HOME/QNX"
 qemuIpAddress="172.31.1.10"
-qemuNetwork="172.31.1.1"
+export qemuNetwork="172.31.1.1"
 qemuSSHuser="root"
 qemuSSHurl="$qemuSSHuser@$qemuIpAddress"
 qemuLDpath="/proc/boot:/system/lib:/system/lib/dll:/home/qt/work/install/target/lib"
 
 if [ ! -d "$targetFolder" ]; then
-    mkdir -p $targetFolder
+    mkdir -p "$targetFolder"
 fi
 
 # QNX SDP
@@ -48,10 +48,10 @@ targetFile="qnx710.tar.xz"
 sha1="134af2e0f75d7b7c516f824fafee265b89e51d48"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
-sudo cp $aarch64le_toolchain $targetPath
-sudo cp $armv7le_toolchain $targetPath
-sudo cp $x8664_toolchain $targetPath
-cp -R $QNX_qemu_bld_files_dir $qemuTargetPath
+sudo cp "$aarch64le_toolchain" "$targetPath"
+sudo cp "$armv7le_toolchain" "$targetPath"
+sudo cp "$x8664_toolchain" "$targetPath"
+cp -R "$QNX_qemu_bld_files_dir" "$qemuTargetPath"
 # fc-match tool is missing from QNX SDP and tst_qfont requires it to work corretly
 # Download code-only package from https://www.iana.org/time-zones and follow README
 # to build tools for QNX x86_64. If need to build new tool create new qnx_qemu_utils
@@ -60,9 +60,9 @@ sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx_qemu_utils_20211208.tar
 targetFile="qnx_qemu_utils.tar.xz"
 targetFolder="$qemuTargetPath/local/misc_files"
 sha1="7653f5d50f61f1591d7785c3ec261228ecc9dd22"
-if [ ! -d "$targetFolder" ]; then
-    mkdir -p $targetFolder
-fi
+
+mkdir -p "$targetFolder"
+
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
 # Add ssl certificates. Expects Ubuntu 20.04 LTS with ca-certificates package installed
@@ -73,10 +73,10 @@ cp -PR /etc/ssl/certs/* "$targetFolder/etc/ssl/certs"
 sudo chown -R qt:users "$targetPath"
 
 # Verify that we have last files in tars
-if [ ! -f $targetPath/qnxsdp-env.sh ] || [ ! -f $targetPath/qnx-toolchain-x8664.cmake ]
+if [ ! -f "$targetPath/qnxsdp-env.sh" ] || [ ! -f "$targetPath/qnx-toolchain-x8664.cmake" ]
 then
     echo "QNX toolchain installation failed!"
-    exit -1
+    exit 1
 fi
 
 # Set env variables

@@ -12,12 +12,15 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
 # Extract cmake path from the environment
 if uname -a |grep -q "Ubuntu"; then
-    if lsb_release -a |grep "Ubuntu 22.04"; then
+    if lsb_release -a |grep -q "Ubuntu 22.04"; then
+# shellcheck source=/dev/null
         source ~/.bash_profile
     else
+# shellcheck source=/dev/null
         source ~/.profile
     fi
 else
+# shellcheck source=/dev/null
     source ~/.bashrc
 fi
 
@@ -39,7 +42,7 @@ if uname -a |grep -qv "Darwin"; then
 fi
 
 if uname -a |grep -q Darwin; then
-    extraCMakeArgs="-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=11"
+    extraCMakeArgs=("-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11)
     SetEnvVar PATH "\$PATH:$installPrefix/bin"
 fi
 
@@ -56,12 +59,12 @@ echo "Configuring and building gRPC"
 buildDir="$HOME/build-grpc-$version"
 mkdir -p "$buildDir"
 cd "$buildDir"
-cmake $targetDir -G"Ninja Multi-Config" \
+cmake "$targetDir" -G"Ninja Multi-Config" \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" \
-    -DCMAKE_INSTALL_PREFIX=$installPrefix \
-    $extraCMakeArgs \
-    $extraOpenSslArg \
+    -DCMAKE_INSTALL_PREFIX="$installPrefix" \
+    "${extraCMakeArgs[@]}" \
+    "$extraOpenSslArg" \
     -DgRPC_BUILD_TESTS=OFF \
     -DgRPC_PROTOBUF_PROVIDER="package" \
     -DgRPC_SSL_PROVIDER="package" \

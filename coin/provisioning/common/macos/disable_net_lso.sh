@@ -2,7 +2,8 @@
 # Copyright (C) 2021 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-echo """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+sudo tee -a /Library/LaunchDaemons/net_tcp_tso_off.plist > /dev/null <<EOB
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
 <dict>
@@ -30,4 +31,4 @@ echo """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     <true/>
 </dict>
 </plist>
-""" | sudo tee -a /Library/LaunchDaemons/net_tcp_tso_off.plist
+EOB

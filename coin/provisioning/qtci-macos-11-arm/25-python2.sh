@@ -6,11 +6,11 @@ set -ex
 
 # This script installs python2
 
-# shellcheck source=./InstallPKGFromURL.sh
+# shellcheck source=../common/macos/InstallPKGFromURL.sh
 source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
-# shellcheck source=../unix/SetEnvVar.sh
+# shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-# shellcheck source=./pip.sh
+# shellcheck source=../common/macos/pip.sh
 source "${BASH_SOURCE%/*}/../common/macos/pip.sh"
 
 InstallPip python2.7
@@ -20,4 +20,3 @@ InstallPip python2.7
 SetEnvVar "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin/:\$PATH"
 
 echo "python2 = 2.7.16" >> ~/versions.txt
-

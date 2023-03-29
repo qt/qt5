@@ -5,4 +5,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/macos/set-locale.sh
+"$BASEDIR/../common/macos/set-locale.sh"

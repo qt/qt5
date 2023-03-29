@@ -25,7 +25,7 @@ function InstallXCode() {
         cd /Applications/ && sudo tar -zxf "$sourceFile"
     elif [[ $sourceFile =~ "xip" ]]; then
         if [[ $sourceFile =~ "http" ]]; then
-            Download $sourceFile /Applications/Xcode_$version.xip
+            Download "$sourceFile" "/Applications/Xcode_$version.xip"
             cd /Applications/ && xip -x "Xcode_$version.xip"
         else
             cd /Applications/ && xip -x "$sourceFile"
@@ -35,12 +35,12 @@ function InstallXCode() {
     fi
 
     echo "Versioning application bundle"
-    majorVersion=$(echo $version | cut -d '.' -f 1)
+    majorVersion=$(echo "$version" | cut -d '.' -f 1)
     versionedAppBundle="/Applications/Xcode${majorVersion}.app"
-    sudo mv /Applications/Xcode*.app ${versionedAppBundle}
+    sudo mv /Applications/Xcode*.app "${versionedAppBundle}"
 
     echo "Selecting Xcode"
-    sudo xcode-select --switch ${versionedAppBundle}
+    sudo xcode-select --switch "${versionedAppBundle}"
 
     echo "Accept license"
     sudo xcodebuild -license accept

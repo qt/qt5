@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright (C) 2019 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
@@ -21,9 +21,12 @@ Download () {
     url="$1"
     targetFile="$2"
 
-    command -v curl >/dev/null  \
-        && curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url"  \
-        || wget --tries 5 -O "$targetFile" "$url"
+    if command -v curl >/dev/null
+    then
+      curl --fail -L --retry 5 --retry-delay 5 -o "$targetFile" "$url"
+    else
+      wget --tries 5 -O "$targetFile" "$url"
+    fi
 }
 
 VerifyHash () {
@@ -61,10 +64,10 @@ DownloadURL () {
     url2=$2
     expectedHash=$3
     # Optional argument $4: destination filename
-    if [ x"$4" = x ]
+    if [ -z "$4" ]
     then
         # defaults to the last component of $url
-        targetFile=$(echo $url | sed 's|^.*/||')
+        targetFile="${url/*\//}"
     else
         targetFile=$4
     fi

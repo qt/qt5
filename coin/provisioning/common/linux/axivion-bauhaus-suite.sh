@@ -17,9 +17,9 @@ DownloadAndExtract () {
     file=$3
 
     DownloadURL "$url" "$url" "$sha" "$file"
-    tar -xzvf $file
+    tar -xzvf "$file"
 
-    rm -rf $file
+    rm -rf "$file"
 }
 
 
@@ -27,13 +27,13 @@ DownloadAndExtract () {
 sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/bauhaus-suite-7_6_0-wavefront-2023-03-16-x86_64-gnu_linux.tar.gz"
 targetFile="bauhaus-suite-7_6_0-wavefront-2023-03-16-x86_64-gnu_linux.tar.gz"
 sha1="20bfa8872b90ff11394098a833d536229425535e"
-cd $HOME
+cd "$HOME"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$HOME"
 
-mkdir $HOME/.bauhaus
+mkdir "$HOME/.bauhaus"
 cd "$HOME/.bauhaus"
 wget http://ci-files01-hki.ci.qt.io/input/axivion/Qt_Evaluation_20231231.key
-cd $HOME
+cd "$HOME"
 
 #Axivion configuration
 configurationFile="http://ci-files01-hki.ci.qt.io/input/axivion/axivion_config.tar.gz"

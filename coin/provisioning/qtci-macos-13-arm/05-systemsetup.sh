@@ -59,7 +59,9 @@ defaults write -g KeyRepeat -int 2
 
 set +x
 echo "Enable remote desktop sharing"
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw $VNCPassword -restart -agent -privs -all
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart \
+  -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts \
+  -setvncpw -vncpw "$VNCPassword" -restart -agent -privs -all
 set -x
 
 echo "Set Network Test Server address to $NTS_IP in /etc/hosts"
@@ -70,7 +72,9 @@ sudo systemsetup setusingnetworktime on
 sudo rm -f "$targetFile"
 
 # Enable automount for nfs shares
-sudo sed -i'.orig' -e 's:^#/net:/net:' -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master || sudo curl -o /etc/auto_master http://ci-files01-hki.ci.qt.io/input/mac/arm/auto_master
+sudo sed -i'.orig' -e 's:^#/net:/net:' \
+     -e 's:hidefromfinder,nosuid:hidefromfinder,nosuid,locallocks,nocallback:' /etc/auto_master \
+     || sudo curl -o /etc/auto_master http://ci-files01-hki.ci.qt.io/input/mac/arm/auto_master
 sudo automount -cv
 
 # Disable multicast advertisements

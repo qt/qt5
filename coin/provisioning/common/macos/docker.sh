@@ -19,7 +19,7 @@ echo "Installing Docker for $chip chip"
 urlOccifical="https://desktop.docker.com/mac/main/${chip}/Docker.dmg?utm_source=docker"
 urlCache="http://ci-files01-hki.ci.qt.io/input/mac/Docker_${chip}.dmg"
 
-DownloadURL $urlCache $urlOccifical $sha "/tmp/Docker_${chip}.dmg"
+DownloadURL "$urlCache" "$urlOccifical" "$sha" "/tmp/Docker_${chip}.dmg"
 
 sudo hdiutil attach "/tmp/Docker_${chip}.dmg"
 sudo /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --user qt
@@ -27,7 +27,7 @@ sudo hdiutil detach /Volumes/Docker
 
 # Add registry mirror for docker images
 mkdir "$HOME/.docker"
-sudo tee -a $HOME/.docker/daemon.json <<"EOF"
+sudo tee -a "$HOME/.docker/daemon.json" <<"EOF"
 {
         "builder": { "gc": { "defaultKeepStorage": "20GB", "enabled": true } },
         "experimental": false,

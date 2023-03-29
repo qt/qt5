@@ -40,17 +40,17 @@ echo "Configuring and building protobuf"
 
 installPrefix="/usr/local"
 if uname -a |grep -q Darwin; then
-    extraCMakeArgs="-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=11"
+    extraCMakeArgs=("-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11)
     SetEnvVar PATH "\$PATH:$installPrefix/bin"
 fi
 
 buildDir="$HOME/build-protobuf-$version"
 mkdir "$buildDir"
 cd "$buildDir"
-cmake $targetDir -G"Ninja Multi-Config" \
+cmake "$targetDir" -G"Ninja Multi-Config" \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DCMAKE_INSTALL_PREFIX=$installPrefix \
-    $extraCMakeArgs \
+    "${extraCMakeArgs[@]}" \
     -Dprotobuf_BUILD_TESTS=OFF \
     -Dprotobuf_BUILD_EXAMPLES=OFF \
     -Dprotobuf_BUILD_PROTOC_BINARIES=ON \

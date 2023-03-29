@@ -20,7 +20,7 @@ DownloadURL  \
 DownloadURL "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
 { pw=$(cat "/Users/qt/pw"); } 2> /dev/null
 sudo chmod 755 /tmp/homebrew_install.sh
-{ (echo $pw | /tmp/homebrew_install.sh); } 2> /dev/null
+{ (echo "$pw" | /tmp/homebrew_install.sh); } 2> /dev/null
 rm -f "/Users/qt/pw"
 
 # No need to manually do `brew update`, the homebrew installer script does it.

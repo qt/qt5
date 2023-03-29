@@ -18,7 +18,7 @@ if grep -q "^$QT_USER:" /etc/passwd; then
 else
     echo "(WW) user $QT_USER not found."
     echo "---- skipping cache cleanup."
-    exit 0;
+    exit 0
 fi
 
 # assume /home/qt as ~ won't expand into sudo
@@ -32,12 +32,11 @@ if sudo [ -d "$CACHEDIR" ]; then
        echo "---- removing content:"
 
        # List files and delete in a loop as wildcard won't expand into sudo
-       FILES=`sudo ls -A1 $CACHEDIR`
-       while read FILE;
-           do
+       sudo ls -A1 "$CACHEDIR" | while read -r FILE
+       do
            echo "--- rm -rf $FILE"
            sudo rm -rf "$CACHEDIR/$FILE"
-       done <<< $FILES
+       done
     else
        echo "(**) cache in $CACHEDIR is empty."
     fi
@@ -46,7 +45,7 @@ else
         # replace a cache file with a directory
         echo "(WW) $CACHEDIR is a file."
         echo "---- removing $CACHEDIR."
-        sudo rm -rf "$CACHEDIR"
+        sudo rm -r "$CACHEDIR"
     else
         echo "(WW) cache directory $CACHEDIR not found."
     fi

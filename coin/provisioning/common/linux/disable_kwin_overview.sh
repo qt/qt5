@@ -7,7 +7,7 @@ set -f
 QT_USER="qt"
 CONFDIR=".config"
 KWINRC="kwinrc"
-KWC5=`which kwriteconfig5`
+KWC5=$(which kwriteconfig5)
 
 if [ -z "$KWC5" ]; then
     echo "(WW) kwriteconfig5 script not found."

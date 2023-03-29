@@ -9,11 +9,11 @@ set -ex
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-brew install --formula ${BASH_SOURCE%/*}/libiodbc.rb $*
+brew install --formula "${BASH_SOURCE%/*}/libiodbc.rb" "$@"
 
 # CPLUS_INCLUDE_PATH is set so clang and configure can find libiodbc
 
-read -r -a arr <<< $(brew list --versions libiodbc)
+read -r -a arr <<< "$(brew list --versions libiodbc)"
 version=${arr[1]}
 
 SetEnvVar "CPLUS_INCLUDE_PATH" "/usr/local/Cellar/libiodbc/$version/include${CPLUS_INCLUDE_PATH:+:}${CPLUS_INCLUDE_PATH}"

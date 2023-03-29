@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright (C) 2019 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
@@ -6,9 +6,9 @@
 ######################## BOILERPLATE ###########################
 set -e
 
-
 PROVISIONING_DIR="$(dirname "$0")/../../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
+# shellcheck source=./common.sourced.sh
+source "${BASH_SOURCE%/*}/common.sourced.sh"
 
 is_script_executed telegraf_password.sh  \
     || fatal "Script telegraf_password.sh should be executed, not sourced, to avoid leaking secrets in the logs"

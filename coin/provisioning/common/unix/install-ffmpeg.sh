@@ -21,7 +21,7 @@ target_dir="$HOME"
 app_prefix=""
 ffmpeg_source_dir="$target_dir/$ffmpeg_name"
 
-if [ ! -d "$ffmpeg_source_dir" ];
+if [ ! -d "$ffmpeg_source_dir" ]
 then
    InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$target_dir" "$app_prefix"
 fi
@@ -35,7 +35,7 @@ install_ff_nvcodec_headers() {
   nv_codec_sha1="bfaa2801725a2eea476939f2177ab50817c3a6ad"
   #nv_codec_sha1="4f30539f8dd31945da4c3da32e66022f9ca59c08" // 12.0
   nv_codec_dir="$target_dir/nv-codec-headers-sdk-$nv_codec_version"
-  if [ ! -d  "$nv_codec_dir" ];
+  if [ ! -d  "$nv_codec_dir" ]
   then
     InstallFromCompressedFileFromURL "$nv_codec_url_cached" "$nv_codec_url_public" "$nv_codec_sha1" "$target_dir" ""
   fi
@@ -62,11 +62,12 @@ build_ffmpeg() {
   then cc="clang -arch $arch"
   fi
 
+  # shellcheck disable=SC2086
   if [ -n "$arch" ]
-  then $ffmpeg_source_dir/configure $ffmpeg_config_options --prefix="$prefix" --enable-cross-compile --arch=$arch --cc="$cc"
-  else $ffmpeg_source_dir/configure $ffmpeg_config_options --prefix="$prefix"
+  then "$ffmpeg_source_dir/configure" $ffmpeg_config_options --prefix="$prefix" --enable-cross-compile --arch="$arch" --cc="$cc"
+  else "$ffmpeg_source_dir/configure" $ffmpeg_config_options --prefix="$prefix"
   fi
-  make install DESTDIR=$build_dir/installed -j4
+  make install DESTDIR="$build_dir/installed" -j4
   popd
 }
 

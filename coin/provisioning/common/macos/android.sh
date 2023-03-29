@@ -8,7 +8,7 @@
 
 set -ex
 
-# shellcheck source=../common/unix/SetEnvVar.sh
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 targetFolder="/opt/android"
@@ -58,7 +58,7 @@ sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 (echo "y"; echo "y") | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" "--sdk_root=$sdkTargetFolder" \
     "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
-    | eval $sdkmanager_no_progress_bar_cmd
+    | eval "$sdkmanager_no_progress_bar_cmd"
 
 echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
@@ -69,7 +69,9 @@ SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest
 SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
-echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
-echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
-echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
-echo "Android NDK = $ndkVersionDefault" >> ~/versions.txt
+cat << EOT >>~/versions.txt
+Android SDK tools = $toolsVersion
+Android SDK Build Tools = $sdkBuildToolsVersion
+Android SDK API level = $sdkApiLevel
+Android NDK = $ndkVersionDefault
+EOT

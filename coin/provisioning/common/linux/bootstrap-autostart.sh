@@ -11,10 +11,10 @@ set -ex
 wrapper="${HOME}/bootstrap-agent.sh"
 autostart_folder="${HOME}/.config/autostart"
 # This directory should exist. Created in base image (tier 1)
-mkdir -p ${autostart_folder}
+mkdir -p "${autostart_folder}"
 
 # Create autostart desktop file and shell wrapper
-sudo tee ${autostart_folder}/coin-bootstrap-agent.desktop <<"EOF"
+sudo tee "${autostart_folder}/coin-bootstrap-agent.desktop" <<"EOF"
 [Desktop Entry]
 Type=Application
 Exec=/home/qt/bootstrap-agent.sh
@@ -23,7 +23,7 @@ X-GNOME-Autostart-enabled=true
 Name=Coin
 EOF
 
-sudo tee $wrapper <<"EOF"
+sudo tee "$wrapper" <<"EOF"
 #!/bin/sh
 # Wait for network to come up
 x=0
@@ -85,5 +85,5 @@ fi
 EOF
 
 # set owner and permissions
-sudo chown qt:users $wrapper
-sudo chmod 755 $wrapper
+sudo chown qt:users "$wrapper"
+sudo chmod 755 "$wrapper"

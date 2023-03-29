@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright (C) 2019 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
@@ -11,16 +11,16 @@
 set -e
 
 PROVISIONING_DIR="$(dirname "$0")/../../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
-
+# shellcheck source=../unix/common.sourced.sh
+source "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
 echo "Current limits are:"
 ulimit -a
 launchctl limit
 
 $CMD_INSTALL -m 644 -o root -g wheel  \
-    $PROVISIONING_DIR/common/macos/limit.maxfiles.plist  \
-    $PROVISIONING_DIR/common/macos/limit.maxproc.plist   \
+    "$PROVISIONING_DIR/common/macos/limit.maxfiles.plist"  \
+    "$PROVISIONING_DIR/common/macos/limit.maxproc.plist"   \
     /Library/LaunchDaemons/
 
 # Activate the new limits immediately (not for the current session though)

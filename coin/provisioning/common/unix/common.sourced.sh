@@ -37,7 +37,7 @@ fatal () {
 # Takes one argument which should be the filename of this script. Returns true
 # if the script is being sourced, false if the script is being executed.
 is_script_executed () {
-    [ x"$(basename $(echo "$0" | sed s/^-//))" = x"$1" ]
+    [ "$(basename "$(echo "$0" | sed s/^-//)")" = "$1" ]
 }
 
 
@@ -48,6 +48,7 @@ is_script_executed  common.sourced.sh  \
 _detect_linux_OS_ID () {
     if [ -f /etc/os-release ]
     then
+        # shellcheck source=/dev/null
         . /etc/os-release
         PROVISIONING_OS_ID="$ID"
     elif [ -f /etc/redhat-release ]
@@ -69,7 +70,7 @@ set_common_environment () {
     # script in a portable way
     # PROVISIONING_DIR="$(dirname "$0")/../../"
 
-    [ x"$PROVISIONING_DIR" = x ]  \
+    [ -z "$PROVISIONING_DIR" ]  \
         &&  fatal  "PROVISIONING_DIR variable needs to be set before calling set_common_environment"
 
     uname_s="$(uname -s)"

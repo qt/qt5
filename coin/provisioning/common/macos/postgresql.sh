@@ -8,9 +8,9 @@
 
 set -ex
 
-# shellcheck source=../common/unix/SetEnvVar.sh
+# shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
-# shellcheck source=../common/unix/DownloadURL.sh
+# shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
 psqlAppVersion="2.5"
@@ -21,7 +21,6 @@ packageName="Postgres-$psqlAppVersion-$psqlVersion.dmg"
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/macos_10.12_sierra/$packageName"
 AltUrl="https://github.com/PostgresApp/PostgresApp/releases/download/v$psqlAppVersion/$packageName"
 SHA1="04cb6939704c5ede5646c1da8a686da3ded98a26"
-appPrefix=""
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp/$packageName"
 

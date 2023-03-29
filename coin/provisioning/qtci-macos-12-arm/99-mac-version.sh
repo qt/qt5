@@ -5,4 +5,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-$BASEDIR/../common/macos/macos-version.sh
+"$BASEDIR/../common/macos/macos-version.sh"

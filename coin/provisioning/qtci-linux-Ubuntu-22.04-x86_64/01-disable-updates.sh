@@ -6,4 +6,4 @@ set -ex
 
 # Disalbe updates
 echo "Disabling auto-upgrades"
-sudo sed -i "s/"1"/"0"/g" /etc/apt/apt.conf.d/20auto-upgrades
+sudo sed -i 's/"1"/"0"/g' /etc/apt/apt.conf.d/20auto-upgrades

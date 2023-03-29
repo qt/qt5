@@ -26,7 +26,7 @@ InstallFromCompressedFileFromURL "$urlToolchainEs7" "$urlToolchainEs7" "$SHA1_to
 echo "Install Integrity toolchain addons"
 DownloadURL "$urlLibeglmegapack" "$urlLibeglmegapack" "$SHA1_Libeglmegapack" "/tmp/integrity_libeglmegapack.zip"
 unzip "/tmp/integrity_libeglmegapack.zip" -d "/tmp"
-mv /tmp/toolchain/* $targetFolder/toolchain
-mv $targetFolder/toolchain $targetFolder/integrity_toolchain
-cp $toolchain_file "$targetFolder/integrity_toolchain/toolchain.cmake"
+mv /tmp/toolchain/* "$targetFolder/toolchain"
+mv "$targetFolder/toolchain" "$targetFolder/integrity_toolchain"
+cp "$toolchain_file" "$targetFolder/integrity_toolchain/toolchain.cmake"
 sudo rm -fr /tmp/toolchain

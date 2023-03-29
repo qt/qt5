@@ -46,7 +46,7 @@ sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 (echo "y"; echo "y") | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" "--sdk_root=$sdkTargetFolder" \
     "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
-    | eval $sdkmanager_no_progress_bar_cmd
+    | eval "$sdkmanager_no_progress_bar_cmd"
 
 echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
@@ -56,7 +56,9 @@ SetEnvVar "ANDROID_NDK_ROOT" "$targetFolder/android-ndk-$ndkVersion"
 SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
-echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
-echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
-echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
-echo "Android NDK = $ndkVersion" >> ~/versions.txt
+cat << EOB >> ~/versions.txt
+Android SDK tools = $toolsVersion
+Android SDK Build Tools = $sdkBuildToolsVersion
+Android SDK API level = $sdkApiLevel
+Android NDK = $ndkVersion
+EOB

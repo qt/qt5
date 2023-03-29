@@ -18,16 +18,16 @@ targetFile="/tmp/git-$version.tar.gz"
 sha="a17c11da2968f280a13832d97f48e9039edac354"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 sourceDir="/tmp/git-$version-source"
-mkdir $sourceDir
-tar -xzf "$targetFile" -C $sourceDir
+mkdir "$sourceDir"
+tar -xzf "$targetFile" -C "$sourceDir"
 
 cd "$sourceDir/git-$version"
 installDir="$HOME/git"
 make configure
-./configure --prefix=$installDir
+./configure --prefix="$installDir"
 make all
 sudo make install
 
 SetEnvVar "PATH" "\"$installDir/bin:\$PATH\""
 
-$installDir/bin/git --version
+"$installDir/bin/git" --version

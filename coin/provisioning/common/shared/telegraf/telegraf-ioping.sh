@@ -14,7 +14,7 @@
 
 set -e
 
-[ x"$1" = x ] && echo "$0 takes a path as a first argument" && exit 1
+[ -z "$1" ] && echo "$0 takes a path as a first argument" && exit 1
 
 # Try to run in high priority to avoid slow-downs because of
 # factors other than I/O.
@@ -25,4 +25,4 @@ rlatency="$(ioping -B -k -c 3 -i 0.1     "$1" | cut -d " " -f 5)"
 wlatency="$(ioping -B -k -c 3 -i 0.1 -W  "$1" | cut -d " " -f 5)"
 
 printf "ioping,path=$1 read_latency_ns=%u,write_latency_ns=%u\n"  \
-       $rlatency  $wlatency
+       "$rlatency" "$wlatency"

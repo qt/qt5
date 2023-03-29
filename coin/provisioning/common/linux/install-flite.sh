@@ -16,11 +16,11 @@ gitUrl="https://github.com/festvox/$repName.git"
 tmpdir="/tmp"
 repDir="$tmpdir/$repName"
 prefix="/usr"
-rm -rf $repDir
-cd $tmpdir
-git clone $gitUrl >/dev/null
-cd $repDir
-git checkout v2.2 > /dev/null
-./configure --with-pic --enable-shared --prefix=$prefix > /dev/null
-make -j$(nproc) > /dev/null && sudo make install > /dev/null
-rm -rf $repDir
+rm -rf "$repDir"
+cd "$tmpdir"
+git clone -q "$gitUrl"
+cd "$repDir"
+git checkout -q v2.2
+./configure --with-pic --enable-shared --prefix="$prefix" > /dev/null
+make "-j$(nproc)" > /dev/null && sudo make install > /dev/null
+rm -rf "$repDir"

@@ -38,7 +38,7 @@ fi
 zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-dynlibs-$version"
 
-DownloadURL $url_cached $url $sha1 $zip
+DownloadURL "$url_cached" "$url" "$sha1" "$zip"
 if command -v 7zr &> /dev/null; then
     sudo 7zr x $zip -o/usr/local/
 else

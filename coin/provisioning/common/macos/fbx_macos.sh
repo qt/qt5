@@ -9,7 +9,7 @@ set -ex
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="2016.1.2"
+#version="2016.1.2"
 fileName="fbx20161_2_fbxsdk_clang_mac.pkg_nospace.tgz"
 cachedUrl="/net/ci-files01-hki.ci.qt.io/hdd/www/input/fbx/$fileName"
 # officialUrl="http://download.autodesk.com/us/fbx_release_older/$version/fbx20161_2_fbxsdk_clang_mac.pkg.tgz"
@@ -18,7 +18,7 @@ targetFolder="/tmp"
 echo "Extracting '$cachedUrl'"
 tar -xzf "$cachedUrl" -C "$targetFolder"
 
-rm -rf "$targetFolder/$fileName"
+rm -rf "${targetFolder:?}/${fileName}"
 echo "Copying preinstalled FBX SDK to Applications"
 sudo cp -r "$targetFolder/Autodesk" /Applications
 

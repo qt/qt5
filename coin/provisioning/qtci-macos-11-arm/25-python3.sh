@@ -5,10 +5,10 @@
 
 # This script installs python3
 
-# shellcheck source=../unix/SetEnvVar.sh
+# shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-brew install --formula ${BASH_SOURCE%/*}/pyenv.rb
+brew install --formula "${BASH_SOURCE%/*}/pyenv.rb"
 
 pyenv install 3.9.7
 

@@ -40,7 +40,7 @@
 
 # Get required deb files for sbuild to build qt debian packages for Ubuntu focal
 mkdir -p /home/qt/debian_packages
-cd /home/qt/debian_packages
+cd /home/qt/debian_packages || exit
 # Backported cmake 3.24
 wget https://ci-files01-hki.intra.qt.io/input/debian/cmake/amd64-focal/cmake-3.24-deb.tar.gz
 tar xzf cmake-3.24-deb.tar.gz

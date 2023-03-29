@@ -15,12 +15,10 @@ source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-emulator_script="${BASH_SOURCE%/*}/android_emulator_launcher.sh"
-
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
-sudo mkdir -p $sdkTargetFolder
+sudo mkdir -p "$sdkTargetFolder"
 
 basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
@@ -54,7 +52,7 @@ function InstallNdk() {
     ndkVersion=$1
     ndkSha1=$2
 
-    if [[ ! -d $targetFolder/android-ndk-$ndkVersion ]]; then
+    if [[ ! -d "$targetFolder/android-ndk-$ndkVersion" ]]; then
 
         ndkFile="android-ndk-$ndkVersion-linux.zip"
         ndkTargetFile="/tmp/$ndkFile"
@@ -97,11 +95,11 @@ if [ "$http_proxy" != "" ]; then
     echo "y" | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" --sdk_root=$sdkTargetFolder  \
                    --no_https --proxy=http --proxy_host="$proxy_host" --proxy_port="$proxy_port"  \
                    "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
-        | eval $sdkmanager_no_progress_bar_cmd
+        | eval "$sdkmanager_no_progress_bar_cmd"
 else
     echo "y" | "$sdkTargetFolder/cmdline-tools/tools/bin/sdkmanager" --sdk_root=$sdkTargetFolder  \
                    "platforms;$sdkApiLevel" "platform-tools" "build-tools;$sdkBuildToolsVersion"  \
-        | eval $sdkmanager_no_progress_bar_cmd
+        | eval "$sdkmanager_no_progress_bar_cmd"
 fi
 
 echo "Checking the contents of Android SDK..."
@@ -112,19 +110,22 @@ SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
 # shellcheck disable=SC2129
-echo "Android SDK tools = $toolsVersion" >> ~/versions.txt
-echo "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
-echo "Android SDK API level = $sdkApiLevel" >> ~/versions.txt
-echo "Android NDK = $ndkVersion" >> ~/versions.txt
+cat <<EOB >>~/versions.txt
+Android SDK tools = $toolsVersion
+Android SDK Build Tools = $sdkBuildToolsVersion
+Android SDK API level = $sdkApiLevel
+Android NDK = $ndkVersion
+EOB
 
 cd "$sdkTargetFolder/cmdline-tools/tools/bin"
-./sdkmanager --install "emulator" --sdk_root=$sdkTargetFolder \
-    | eval $sdkmanager_no_progress_bar_cmd
-echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" | eval $sdkmanager_no_progress_bar_cmd
-
-echo "y" | ./sdkmanager --install "system-images;android-33;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
-
-echo "y" | ./sdkmanager --install "system-images;android-34;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
+./sdkmanager --install "emulator" --sdk_root="$sdkTargetFolder" \
+    | eval "$sdkmanager_no_progress_bar_cmd"
+echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" \
+    | eval "$sdkmanager_no_progress_bar_cmd"
+echo "y" | ./sdkmanager --install "system-images;android-33;google_apis;x86_64" \
+    | eval "$sdkmanager_no_progress_bar_cmd"
+echo "y" | ./sdkmanager --install "system-images;android-34;google_apis;x86_64" \
+    | eval "$sdkmanager_no_progress_bar_cmd"
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
@@ -141,7 +142,7 @@ echo "no" | ./avdmanager create avd -n emulator_x86_64_api_34 -c 2048M -f \
 echo "Install $sdkApiLevelAutomotive $androidAutomotive"
 DownloadURL "$androidAutomotive12Url" "$androidAutomotive12Url" "$androidAutomotive12Sha" \
     "/tmp/${sdkApiLevelAutomotive}_automotive.tar.gz"
-sudo tar -xzf "/tmp/${sdkApiLevelAutomotive}_automotive.tar.gz" -C $sdkTargetFolder/system-images
+sudo tar -xzf "/tmp/${sdkApiLevelAutomotive}_automotive.tar.gz" -C "$sdkTargetFolder/system-images"
 echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_31 -c 2048M -f \
     -k "system-images;${sdkApiLevelAutomotive};${androidAutomotive};x86_64"
 
@@ -150,6 +151,6 @@ echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_31 -c 2048
 
 # To be used by the VMs to start the emulator for tests
 emulator_script_filename="android_emulator_launcher.sh"
-cp "$(dirname "$(readlink -f "$BASH_SOURCE")")/${emulator_script_filename}" ${HOME}
+cp "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/${emulator_script_filename}" "${HOME}"
 ANDROID_EMULATOR_RUNNER="${HOME}/${emulator_script_filename}"
 SetEnvVar "ANDROID_EMULATOR_RUNNER" "$ANDROID_EMULATOR_RUNNER"
