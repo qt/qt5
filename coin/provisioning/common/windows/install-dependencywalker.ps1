@@ -62,6 +62,10 @@ Verify-Checksum $dependsPackage $sha1
 
 Extract-7Zip $dependsPackage $TARGETDIR
 
+# Copy the content also into the cache location of nuitka
+# This makes it usable without the need to download it again
+Copy-Item -Path $TARGETDIR -Destination "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64" -Recurse
+
 Write-Host "Cleaning $dependsPackage.."
 Remove "$dependsPackage"
 
