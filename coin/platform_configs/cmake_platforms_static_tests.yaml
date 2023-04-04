@@ -23,7 +23,7 @@ Configurations:
     ]
 -
     Id: 'macos-11-minimal-static'
-    Template: 'qtci-macos-11-x86_64-105'
+    Template: 'qtci-macos-11-x86_64-106'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'

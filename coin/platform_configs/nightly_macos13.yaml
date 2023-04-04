@@ -8,7 +8,7 @@ Include: [
 Configurations:
 -
     Id: 'macos-13-x86_64-developer-build-tests'
-    Template: 'qtci-macos-13-x86_64-102'
+    Template: 'qtci-macos-13-x86_64-103'
     Compiler: 'Clang'
     Features: ['TestOnly']
     Platform dependency: 'macos-12-x86_64-developer-build'

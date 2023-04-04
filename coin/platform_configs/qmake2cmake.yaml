@@ -6,7 +6,7 @@ Configurations:
     Compiler: 'MSVC2019'
     Features: ['DisableTests']
 -
-    Template: 'qtci-macos-12-x86_64-105'
+    Template: 'qtci-macos-12-x86_64-106'
     Compiler: 'Clang'
     Features: ['DisableTests']
 -
