@@ -1,6 +1,6 @@
 ############################################################################
 ##
-## Copyright (C) 2021 The Qt Company Ltd.
+## Copyright (C) 2023 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -42,16 +42,30 @@
 # This script will install emscripten needed by WebAssembly
 
 $version = "3.1.25"
+$zipVersion = $version -replace '\.', "_"
+$temp = "$env:tmp"
+$cacheUrl = "https://ci-files01-hki.ci.qt.io/input/emsdk/emsdk_windows_${zipVersion}.zip"
+$sha = "cd180cae757e75316d50f2edc2f99a9d2eb83d5b"
 
 # Make sure python is in the path
 Prepend-Path "C:\Python27"
 
 cd "C:\\Utils"
-C:\PROGRA~1\Git\bin\git clone https://github.com/emscripten-core/emsdk.git
 $installLocationEmsdk = "C:\\Utils\\emsdk"
-cd $installLocationEmsdk
-.\emsdk install $version
-.\emsdk activate $version
+try {
+    Write-Host "Fetching from cached location"
+    Download $cacheUrl $cacheUrl ${temp}\${zipVersion}.zip
+    Verify-Checksum ${temp}\${zipVersion}.zip $sha
+    Extract-7Zip ${temp}\${zipVersion}.zip C:\Utils\
+    cd $installLocationEmsdk
+    .\emsdk activate $version
+} catch {
+    Write-Host "Can't find cached emsdk. Cloning it"
+    C:\PROGRA~1\Git\bin\git clone https://github.com/emscripten-core/emsdk.git
+    cd $installLocationEmsdk
+    .\emsdk install $version
+    .\emsdk activate $version
+}
 
 $versionWinPython = $($Env:EMSDK_PYTHON -split ('python\\') -split ('_64bit'))[1]
 $versionNode = $($Env:EMSDK_NODE -split ('node\\') -split ('_64bit'))[1]
