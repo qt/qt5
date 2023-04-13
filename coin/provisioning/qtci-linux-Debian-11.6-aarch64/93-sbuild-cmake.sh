@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,16 +39,21 @@
 ##
 #############################################################################
 
-set -ex
+# build cmake for the debian packgaes
+# Create chroot for Ubuntu focal
+#mk-sbuild --arch=amd64 --name=focal --debootstrap-mirror="http://archive.ubuntu.com/ubuntu/" --distro=ubuntu focal
 
-echo "Disable Network Time Protocol (NTP)"
+mkdir -p /home/qt/debian_packages
+cd /home/qt/debian_packages
+wget https://ci-files01-hki.intra.qt.io/input/debian/cmake/amd64-focal/cmake-3.24-deb.tar.gz
+tar xzf cmake-3.24-deb.tar.gz
+#git clone git@gitlab.ics.com:qt6_packaging/tqtc/cmake.git
+#wget https://github.com/Kitware/CMake/releases/download/v3.24.3/cmake-3.24.3.tar.gz -O cmake_3.24.3.orig.tar.gz
+#dpkg-source -b cmake
+#sbuild --build-dep-resolver=aptitude -sAd focal -c focal-amd64 cmake_3.24.3-1~bpo1.dsc
 
-if uname -a |grep -q "Ubuntu\|Debian" ; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release | grep "PRETTY_NAME" | grep -q "Leap 15"; then
-    (sudo systemctl stop chronyd && sudo systemctl disable chronyd)
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    sudo systemctl disable ntpd || sudo /sbin/chkconfig ntpd off
-fi
+
+
+
+
+

@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2018 The Qt Company Ltd.
+## Copyright (C) 2021 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,16 +39,52 @@
 ##
 #############################################################################
 
-set -ex
+# Setups sbuild environment
 
-echo "Disable Network Time Protocol (NTP)"
+tee ~/.sbuildrc << EOF
+##############################################################################
+# PACKAGE BUILD RELATED (additionally produce _source.changes)
+##############################################################################
+# -d
+\$distribution = 'stable';
+# -A
+\$build_arch_all = 1;
+# -s
+\$build_source = 1;
+# -v
+\$verbose = 1;
+# parallel build
+\$ENV{'DEB_BUILD_OPTIONS'} = 'parallel=8';
+##############################################################################
+# POST-BUILD RELATED (turn off functionality by setting variables to 0)
+##############################################################################
+\$run_lintian = 1;
+\$lintian_opts = ['-i', '-I'];
+\$run_piuparts = 0;
+\$piuparts_opts = ['--schroot', 'stable-arm64-sbuild', '--no-eatmydata'];
+\$run_autopkgtest = 0;
+\$autopkgtest_root_args = '';
+\$autopkgtest_opts = [ '--', 'schroot', '%r-%a-sbuild' ];
 
-if uname -a |grep -q "Ubuntu\|Debian" ; then
-    sudo timedatectl set-ntp false
-elif cat /etc/os-release | grep "PRETTY_NAME" | grep -q "Leap 15"; then
-    (sudo systemctl stop chronyd && sudo systemctl disable chronyd)
-elif cat /etc/os-release |grep "SUSE Linux Enterprise Server 15"; then
-    sudo timedatectl set-ntp false
-else
-    sudo systemctl disable ntpd || sudo /sbin/chkconfig ntpd off
-fi
+##############################################################################
+# PERL MAGIC
+##############################################################################
+1;
+EOF
+
+# Add user group
+sudo sbuild-adduser $LOGNAME
+newgrp sbuild
+
+# Create chroot
+#sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-arm64-sbuild http://127.0.0.1:3142/deb.debian.org/debian
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-arm64-sbuild
+
+# Update chroot
+sudo sbuild-update -udcar stable
+
+
+
+
+
+
