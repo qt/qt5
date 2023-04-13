@@ -329,3 +329,9 @@
 	url = ../qtquickeffectmaker.git
 	branch = dev
 	status = addon
+[submodule "qtgraphs"]
+	depends = qtbase qtdeclarative qtquick3d
+	path = qtgraphs
+	url = ../qtgraphs.git
+	branch = dev
+	status = preview
