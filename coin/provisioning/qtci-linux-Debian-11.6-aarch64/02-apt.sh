@@ -93,8 +93,8 @@ installPackages+=(libxkbfile-dev)
 installPackages+=(libxshmfence-dev)
 installPackages+=(libxss-dev)
 ## installPackages+=(nodejs-mozilla) # use nodejs-mozilla because nodejs is outdated
-#installPackages+=(nodejs)
-#installPackages+=(python3-html5lib)
+installPackages+=(nodejs)
+installPackages+=(python3-html5lib)
 #
 ## Common event loop handling
 installPackages+=(libglib2.0-dev)
