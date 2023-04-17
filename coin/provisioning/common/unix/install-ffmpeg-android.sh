@@ -63,53 +63,77 @@ then
    InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$target_dir" "$app_prefix"
 fi
 
-ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
+build_ffmpeg_android() {
 
+  target_arch=$1
+  target_dir=$2
 
-build_ffmpeg() {
-  local arch="$1"
-  local prefix="$2"
-  local build_dir="$ffmpeg_source_dir/build/$arch"
-  mkdir -p "$build_dir"
+  sudo mkdir -p "$target_dir"
+
+  if [ "$target_arch" == "x86_64" ]; then
+    target_toolchain_arch="x86_64-linux-android"
+    target_arch=x86_64
+    target_cpu=x86_64
+  elif [ "$target_arch" == "x86" ]; then
+    target_toolchain_arch="i686-linux-android"
+    target_arch=x86
+    target_cpu=i686
+  elif [ "$target_arch" == "arm64" ]; then
+    target_toolchain_arch="aarch64-linux-android"
+    target_arch=aarch64
+    target_cpu=armv8-a
+  fi
+
+  api_version=24
+
+  ndk_root=/opt/android/android-ndk-r25b
+  if uname -a |grep -q "Darwin"; then
+    ndk_host=darwin-x86_64
+  else
+    ndk_host=linux-x86_64
+  fi
+
+  toolchain=${ndk_root}/toolchains/llvm/prebuilt/${ndk_host}
+  toolchain_bin=${toolchain}/bin
+  sysroot=${toolchain}/sysroot
+  cxx=${toolchain_bin}/${target_toolchain_arch}${api_version}-clang++
+  cc=${toolchain_bin}/${target_toolchain_arch}${api_version}-clang
+  ld=${toolchain_bin}/ld
+  ar=${toolchain_bin}/llvm-ar
+  ranlib=${toolchain_bin}/llvm-ranlib
+  nm=${toolchain_bin}/llvm-nm
+  strip=${toolchain_bin}/llvm-strip
+
+  ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
+  ffmpeg_config_options+=" --disable-vulkan --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+  ffmpeg_config_options+=" --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
+  ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
+
+  local build_dir="$ffmpeg_source_dir/build/$target_arch"
+  sudo mkdir -p "$build_dir"
   pushd "$build_dir"
 
-  if [ -z  "$prefix" ]
-  then prefix="/usr/local/$ffmpeg_name"
-  fi
+  sudo $ffmpeg_source_dir/configure $ffmpeg_config_options --prefix="$target_dir"
 
-  if [ -n "$arch" ]
-  then cc="clang -arch $arch"
-  fi
-
-  if [ -n "$arch" ]
-  then $ffmpeg_source_dir/configure $ffmpeg_config_options --prefix="$prefix" --enable-cross-compile --arch=$arch --cc="$cc"
-  else $ffmpeg_source_dir/configure $ffmpeg_config_options --prefix="$prefix"
-  fi
-  make install DESTDIR=$build_dir/installed -j4
+  sudo make install -j4
   popd
 }
 
-if [ "$os" == "linux" ]; then
-  ffmpeg_config_options="$ffmpeg_config_options --enable-openssl"
-  build_ffmpeg
-  sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
-  SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
+if  [ "$os" == "android-x86" ]; then
+  target_arch=x86
+  target_dir="/usr/local/android/ffmpeg-x86"
 
-elif [ "$os" == "macos" ]; then
-  brew install yasm
-  export MACOSX_DEPLOYMENT_TARGET=11
-  build_ffmpeg
-  sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
-  SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
+  SetEnvVar "FFMPEG_DIR_ANDROID_X86" "$target_dir"
+elif  [ "$os" == "android-x86_64" ]; then
+  target_arch=x86_64
+  target_dir="/usr/local/android/ffmpeg-x86_64"
 
-elif [ "$os" == "macos-universal" ]; then
-  brew install yasm
-  export MACOSX_DEPLOYMENT_TARGET=11
-  build_ffmpeg "arm64"
-  build_ffmpeg "x86_64"
+  SetEnvVar "FFMPEG_DIR_ANDROID_X86_64" "$target_dir"
+elif  [ "$os" == "android-arm64" ]; then
+  target_arch=arm64
+  target_dir="/usr/local/android/ffmpeg-arm64"
 
-  sudo "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$ffmpeg_source_dir/build/arm64/installed" "$ffmpeg_source_dir/build/x86_64/installed"
-  SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
-
+  SetEnvVar "FFMPEG_DIR_ANDROID_ARM64" "$target_dir"
 fi
 
+build_ffmpeg_android "$target_arch" "$target_dir"
