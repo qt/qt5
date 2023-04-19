@@ -28,7 +28,7 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-macos-10.15-x86_64-102'
+    Template: 'qtci-macos-11-x86_64-106'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''
