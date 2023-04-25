@@ -134,13 +134,44 @@ function InstallLlvmMingwFfmpeg {
     return InstallFfmpeg -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin"
 }
 
+function InstallAndroidArmv7 {
+
+    $target_toolchain_arch="armv7a-linux-androideabi"
+    $target_arch="armv7-a"
+    $target_cpu="armv7-a"
+    $api_version="24"
+
+    $ndkVersionLatest = "r25b"
+    $ndkFolderLatest = "/c/Utils/Android/android-ndk-$ndkVersionLatest"
+
+    $toolchain="${ndkFolderLatest}/toolchains/llvm/prebuilt/windows-x86_64"
+    $toolchain_bin="${toolchain}/bin"
+    $sysroot="${toolchain}/sysroot"
+    $cxx="${toolchain_bin}/${target_toolchain_arch}${api_version}-clang++"
+    $cc="${toolchain_bin}/${target_toolchain_arch}${api_version}-clang"
+    $ld="${toolchain_bin}/ld.exe"
+    $ar="${toolchain_bin}/llvm-ar.exe"
+    $ranlib="${toolchain_bin}/llvm-ranlib.exe"
+    $nm="${toolchain_bin}/llvm-nm.exe"
+    $strip="${toolchain_bin}/llvm-strip.exe"
+
+    $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
+    $config += " --disable-vulkan --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+    $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
+    $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
+
+    return InstallFfmpeg -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7"
+}
+
 $mingwRes = InstallMingwFfmpeg
 $msvcRes = InstallMsvcFfmpeg
 $llvmMingwRes = InstallLlvmMingwFfmpeg
+$androidArmV7Res = InstallAndroidArmv7
 
 Write-Host "Ffmpeg installation results:"
 Write-Host "  mingw:" $(if ($mingwRes) { "OK" } else { "FAIL" })
 Write-Host "  msvc:" $(if ($msvcRes) { "OK" } else { "FAIL" })
 Write-Host "  llvm-mingw:" $(if ($llvmMingwRes) { "OK" } else { "FAIL" })
+Write-Host "  android-armv7:" $(if ($androidArmV7Res) { "OK" } else { "FAIL" })
 
-exit $(if ($mingwRes -and $msvcRes -and $llvmMingwRes) { 0 } else { 1 })
+exit $(if ($mingwRes -and $msvcRes -and $llvmMingwRes -and $androidArmV7Res) { 0 } else { 1 })
