@@ -1,24 +1,56 @@
 Version: 2
+Include: [
+  macos.yaml: [
+     "macos-universal-on-x86_64",
+     "macos-12-x86_64-tests",
+     "macos-12-arm-on-arm64-tests"
+  ],
+  cmake_platforms.yaml: [
+    "ubuntu-22.04",
+    "ubuntu-22.04-documentation",
+    "opensuse-15.4-developer-build",
+    "sles-15_sp4-static",
+    "windows-10_22h2-msvc2019",
+    "windows-10_22h2-msvc2022",
+    "rhel-8.4",
+    "windows-10_22h2-mingw11",
+    "windows-10_22h2-llvm",
+    "windows-11_22h2-msvc2019"
+  ],
+  cmake_platforms_qemu_qnx710.yaml: [
+    "qnx-710-x86_64-developer-build-on-linux",
+    "qnx-710-arm64-on-linux",
+    "qnx-710-armv7-on-linux"
+  ]
+]
+# Static build configurations for tools
 Configurations:
 -
-    Template: 'qtci-windows-10_22H2-x86_64-50'
-    Compiler: 'Mingw'
-    Environment variables: ['PATH=C:\MINGW1120\mingw64\bin;$PATH']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -developer-build -nomake tests -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -plugin-sql-psql -I %POSTGRESQL_INCLUDE_x64% -L %POSTGRESQL_LIB_x64% -platform win32-g++'
-    Features: ['UseLegacyInstructions']
+    Id: 'macos-latest-xcode-universal-static-build'
+    Template: 'qtci-macos-12-x86_64-106'
+    Compiler: 'Clang'
+    Target arch: 'x86_64-arm64'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
+    Configure arguments: '-static -nomake examples -release -no-framework -no-icu -qt-doubleconversion -no-sql-mysql'
+    Environment variables: [
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"'
+    ]
 -
-    Template: 'qtci-windows-10_22H2-x86_64-50'
-    Compiler: 'Mingw'
-    Environment variables: ['PATH=C:\MINGW1120\mingw64\bin;$PATH']
-    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix c:\Users\qt\work\install -release -static -nomake tests -nomake examples -no-icu -opengl dynamic -openssl -I %OPENSSL_INCLUDE_x64% -L %OPENSSL_LIB_x64% -plugin-sql-mysql -plugin-sql-sqlite -plugin-sql-odbc -I %MYSQL_INCLUDE_x64% -L %MYSQL_LIB_x64% -platform win32-g++'
--
+    Id: 'Linux-RHEL_8_4_Static'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-icu -no-fontconfig -qt-freetype -no-opengl -qpa offscreen -no-xcb -qt-libpng -no-vulkan'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
+    Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
+    ]
 -
-    Template: 'qtci-linux-Ubuntu-18.04-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'DisableTests', 'UseLegacyInstructions']
-    Configure arguments: '-qmake -opensource -confirm-license -verbose -prefix /home/qt/work/install -release -static -nomake tests -nomake examples -no-use-gold-linker -no-icu -no-fontconfig -qt-freetype -no-opengl -qpa offscreen -no-xcb -qt-libpng -no-vulkan'
+    Id: 'Windows-MSVC2019_Static'
+    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Compiler: 'MSVC2019'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
+    Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql -plugin-sql-sqlite -plugin-sql-odbc'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}']
