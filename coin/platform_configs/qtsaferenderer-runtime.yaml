@@ -1,0 +1,32 @@
+Version: 2
+Include: [
+  macos.yaml: [
+     "macos-universal-on-x86_64",
+     "macos-12-x86_64-tests",
+     "macos-12-arm-on-arm64-tests"
+  ],
+  cmake_platforms.yaml: [
+    "ubuntu-22.04",
+    "ubuntu-22.04-documentation",
+    "opensuse-15.4-developer-build",
+    "sles-15_sp4-static",
+    "windows-10_22h2-msvc2019",
+    "windows-10_22h2-msvc2022",
+    "windows-10_22h2-msvc2019-developer-build",
+    "rhel-8.4",
+    "windows-10_22h2-mingw11",
+    "windows-10_22h2-mingw11-developer-build",
+    "windows-10_22h2-llvm",
+    "windows-11_22h2-msvc2019"
+  ],
+  cmake_platforms_qemu_qnx710.yaml: [
+    "qnx-710-x86_64-developer-build-on-linux",
+    "qnx-710-arm64-on-linux",
+    "qnx-710-armv7-on-linux"
+  ],
+  integrity.yaml: [
+    "integrity-arm64"
+  ]
+]
+Configurations: []
+
