@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2022 The Qt Company Ltd.
+## Copyright (C) 2023 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,13 +39,21 @@
 ##
 #############################################################################
 
+# This script installs Xcode
+# Prerequisites: Have Xcode prefetched to local cache as xz compressed.
+# This can be achieved by fetching Xcode_9.xip from Apple Store.
+# Uncompress it with 'xar -xf Xcode_9.xip'
+# Then get https://gist.githubusercontent.com/pudquick/ff412bcb29c9c1fa4b8d/raw/24b25538ea8df8d0634a2a6189aa581ccc6a5b4b/parse_pbzx2.py
+# with which you can run 'python parse_pbzx2.py Content'.
+# This will give you five files called "Content.part<00..05>.cpio.xz".
+# Extract those that have the extension .xz with xz.
+# "cat" together all the content files "cat file1, file2, file3, file4, file5 >file_new"
+# Compress the new file with xz back to something like Xcode_9.xz
+# Upload the file to temporary storage for this script to use.
+
 set -ex
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="14.3"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
-sha1="bd255759d8733c7ea820ebc6ad8f65114e42d36d"
+# shellcheck source=../common/macos/install_xcode.sh
+source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
-InstallCommandLineTools $url $url $sha1 $packageName $version
+InstallXCode /net/ci-files01-hki.intra.qt.io/hdd/www/input/mac/Xcode_14.3.xip 14.3
