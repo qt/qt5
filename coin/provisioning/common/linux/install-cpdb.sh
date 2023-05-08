@@ -46,7 +46,7 @@ repDir="$tmpdir/$repName"
 prefix="/usr"
 rm -rf $repDir
 cd $tmpdir
-git clone --depth 1 $gitUrl >/dev/null
+git clone $gitUrl >/dev/null
 cd $repDir
 # cpdb-libs v2.0b4 with build bug fixed
 git checkout ce848f1571a82ec03881fce127ff28bec8da239e > /dev/null
