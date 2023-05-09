@@ -1,7 +1,6 @@
 Version: 2
 Include: [
-    cmake_platforms.yaml,
-    cmake_platforms_target_android_12.yaml
+    cmake_platforms.yaml
     ]
 Configurations:
 # Test on Ubuntu 22.04 Wayland
