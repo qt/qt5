@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2022 The Qt Company Ltd.
+## Copyright (C) 2023 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -252,7 +252,7 @@ waitLoop
 sudo apt-get update
 echo "Installing packages"
 waitLoop
-sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
+sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y -o DPkg::Lock::Timeout=300 install "${installPackages[@]}"
 
 # Install all needed packages in a special wheel cache directory
 pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
