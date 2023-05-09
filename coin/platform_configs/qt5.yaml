@@ -1,3 +1,5 @@
 Version: 2
-Include: [cmake_platforms.yaml]
+Include: [
+    cmake_platforms.yaml
+]
 Configurations: []
