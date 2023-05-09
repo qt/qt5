@@ -100,7 +100,7 @@ echo "Uncompress $compressedFolder"
 sudo tar -xzf "$targetFileMount" --directory "$installFolder"
 
 echo "Unmounting $mountFolder"
-sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder"
+sudo diskutil unmount force "$mountFolder" || sudo umount -f "$mountFolder" || true
 
 sudo mv "$installFolder/rta_squish_$qtBranch" "$squishFolder"
 if uname -a |grep -q Darwin; then
