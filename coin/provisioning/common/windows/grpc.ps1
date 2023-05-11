@@ -144,31 +144,7 @@ $env:Path = $oldPath
 
 ### MSVC
 
-# Add cl to path if it is not already there
-if (!(Get-Command cl.exe -ErrorAction SilentlyContinue)) {
-    $vswhere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
-    $vc_component = "Microsoft.VisualStudio.Component.VC.CoreIde"
-    # We pick the oldest build tools we can find and use that to be compatible with it and any newer version:
-    # If MSVC has an ABI break this will stop working, and yet another build must be added.
-    $vs_location = (& $vswhere -nologo -products * -requires $vc_component -sort -format value -property installationPath | Select-Object -Last 1)
-    $vcvars_location = Join-Path $vs_location "VC\Auxiliary\Build\"
-
-    Push-Location $vcvars_location
-
-    # This snippet was stolen from https://stackoverflow.com/a/2124759
-    # Grabs all the environment variables that the script has set and assigns it
-    # to environment variables in PowerShell (calling batch files creates a
-    # cmd.exe instance which does not propagate environment variables)
-    cmd /c "vcvarsall.bat $env:PROCESSOR_ARCHITECTURE & set" |
-    ForEach-Object {
-        if ($_ -match "=") {
-            $v = $_.Split("=");
-            Set-Item -Force -Path "ENV:\$($v[0])" -Value "$($v[1])"
-        }
-    }
-
-    Pop-Location
-}
+EnterVSDevShell
 
 build-install-grpc -CC "cl" -CXX "cl" -BuildType "Release" -Postfix "msvc"
 

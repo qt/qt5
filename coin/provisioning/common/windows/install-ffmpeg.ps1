@@ -107,15 +107,8 @@ function InstallMingwFfmpeg {
 
 
 function InstallMsvcFfmpeg {
-    $vsPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional"
-    #$vsPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional"
-
-    Write-Host "Enter VisualStudio developer shell"
-    try {
-        Import-Module "$vsPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-        Enter-VsDevShell -VsInstallPath $vsPath -DevCmdArguments "-arch=x64 -no_logo"
-    } catch {
-        Write-Host "Failed to enter VisualStudio DevShell"
+    $result = EnterVSDevShell
+    if (-Not $result) {
         return $false
     }
 

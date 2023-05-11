@@ -274,3 +274,35 @@ function DeleteSchedulerTask {
     Write-Host "Disabling $Task from Task Scheduler"
     SCHTASKS /DELETE /TN "Microsoft\Windows\$Task" /F
 }
+
+function GetVSPath {
+    Param (
+        [string]$VSWhere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe",
+        [string]$Component = "Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+    )
+
+    return (& $VSWhere -nologo -latest -products * -requires $Component -property installationPath)
+}
+
+function EnterVSDevShell {
+    # Add cl to path if it is not already there.
+    if (Get-Command cl.exe -ErrorAction SilentlyContinue) {
+        return $true
+    }
+
+    $vsWere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
+    $vcComponent = "Microsoft.VisualStudio.Component.VC.CoreIde"
+    # We pick the oldest build tools we can find and use that to be compatible with it and any newer version:
+    # If MSVC has an ABI break this will stop working, and yet another build must be added.
+    $VSPath = (& $vsWere -nologo -products * -requires $vcComponent -sort -format value -property installationPath | Select-Object -Last 1)
+
+    Write-Host "Enter VisualStudio developer shell"
+    try {
+        Import-Module "$VSPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+        Enter-VsDevShell -VsInstallPath $VSPath -DevCmdArguments "-arch=x64 -no_logo"
+    } catch {
+        Write-Host "Failed to enter VisualStudio DevShell"
+        return $false
+    }
+    return $true
+}
