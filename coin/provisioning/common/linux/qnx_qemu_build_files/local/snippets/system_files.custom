@@ -45,6 +45,14 @@ lib/dll/img_codec_tif.so=lib/dll/img_codec_tif.so
 # for inotify
 xbin/fsevmgr=sbin/fsevmgr
 
+##############################################
+### MM support
+##############################################
+lib/libstrm.so.1=usr/lib/libstrm.so.1
+lib/libcamapi.so.1=usr/lib/libcamapi.so.1
+lib/libmmrndclient.so.1=usr/lib/libmmrndclient.so.1
+lib/libscreen.so.1=usr/lib/libscreen.so.1
+
 # for fontconfig
 lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
 xbin/fc-cache=bin/fc-cache
