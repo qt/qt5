@@ -29,7 +29,7 @@ Configurations:
     ]
 -
     Id: 'webassembly-macos-thread'
-    Template: 'qtci-macos-12-x86_64-106'
+    Template: 'qtci-macos-13-x86_64-103'
     Target os: 'WebAssembly'
     Compiler: 'Clang'
     Target compiler: 'Clang'
