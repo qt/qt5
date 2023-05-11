@@ -107,14 +107,8 @@ function InstallMingwFfmpeg {
 
 
 function InstallMsvcFfmpeg {
-    $vsPath = GetVSPath
-
-    Write-Host "Enter VisualStudio developer shell"
-    try {
-        Import-Module "$vsPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-        Enter-VsDevShell -VsInstallPath $vsPath -DevCmdArguments "-arch=x64 -no_logo"
-    } catch {
-        Write-Host "Failed to enter VisualStudio DevShell"
+    $result = EnterVSDevShell
+    if (-Not $result) {
         return $false
     }
 
