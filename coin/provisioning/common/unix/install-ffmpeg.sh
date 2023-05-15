@@ -90,7 +90,6 @@ build_ffmpeg() {
 }
 
 if [ "$os" == "linux" ]; then
-  ffmpeg_config_options="$ffmpeg_config_options --enable-openssl"
   build_ffmpeg
   sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
   SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
