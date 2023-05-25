@@ -8,7 +8,7 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-universal-on-x86_64'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis arm64-v8a',
         'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
@@ -23,7 +23,7 @@ Configurations:
     Compiler: 'Mingw'
     Target compiler: 'Clang'
     Platform dependency: 'windows-10_22h2-mingw11'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis armeabi-v7a -no-feature-pkg-config',
@@ -39,7 +39,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Platform dependency: 'rhel-8.6'
-    Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',
         'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
@@ -71,7 +71,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'Clang'
     Platform dependency: 'rhel-8.6'
-    Features: ['Packaging', 'Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86_64',
         'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
