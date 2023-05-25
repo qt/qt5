@@ -1,4 +1,4 @@
 Version: 2
 Module only: True
-Include: [meta-boot2qt.yaml]
+Include: [yocto.yaml]
 Configurations: []
