@@ -8,8 +8,6 @@ set -ex
 # Remove update notifications and packagekit running in the background
 sudo yum -y remove PackageKit gnome-software
 
-sudo yum -y update
-
 installPackages=()
 installPackages+=(git)
 installPackages+=(zlib-devel)
@@ -138,6 +136,8 @@ installPackages+=(open-vm-tools)
 sudo yum -y install "${installPackages[@]}"
 
 sudo dnf -y module install nodejs:16
+
+sudo /usr/bin/pip3 install dataclasses
 
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
