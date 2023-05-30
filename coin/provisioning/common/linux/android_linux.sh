@@ -124,6 +124,7 @@ echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" | e
 
 echo "y" | ./sdkmanager --install "system-images;android-33;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
 
+echo "y" | ./sdkmanager --install "system-images;android-34;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
@@ -133,6 +134,9 @@ echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -c 2048M -f \
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_33 -c 2048M -f \
     -k "system-images;android-33;google_apis;x86_64"
+
+echo "no" | ./avdmanager create avd -n emulator_x86_64_api_34 -c 2048M -f \
+    -k "system-images;android-34;google_apis;x86_64"
 
 echo "Install $sdkApiLevelAutomotive $androidAutomotive"
 DownloadURL "$androidAutomotive12Url" "$androidAutomotive12Url" "$androidAutomotive12Sha" \
