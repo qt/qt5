@@ -83,7 +83,11 @@ function InstallMsvcFfmpeg {
         Write-Host "Rename libraries lib*.a -> *.lib"
         try {
             $msvcDir = [System.Environment]::GetEnvironmentVariable("FFMPEG_DIR_MSVC", [System.EnvironmentVariableTarget]::Machine)
-            Get-ChildItem "$msvcDir\lib\lib*.a" | Rename-Item -NewName { $_.Name -replace 'lib(\w+).a$', '$1.lib' }
+            Get-ChildItem "$msvcDir\lib\lib*.a" | ForEach-Object {
+                $NewName = $_.Name -replace 'lib(\w+).a$', '$1.lib'
+                $Destination = Join-Path -Path $_.Directory.FullName -ChildPath $NewName
+                Move-Item -Path $_.FullName -Destination $Destination -Force
+            }
         } catch {
             Write-Host "Failed to rename libraries lib*.a -> *.lib"
             return $false
