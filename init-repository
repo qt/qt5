@@ -666,7 +666,7 @@ sub run
 
     chomp(my $url = `git config remote.origin.url`);
     die("Have no origin remote.\n") if (!$url);
-    $url =~ s,\.git$,,;
+    $url =~ s,\.git/?$,,;
     $url =~ s/((?:tqtc-)?qt5)$//;
     my $qtrepo = $1 || 'qt5';
     $self->{'base-url'} = $url;
