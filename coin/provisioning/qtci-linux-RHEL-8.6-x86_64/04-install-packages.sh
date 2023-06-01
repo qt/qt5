@@ -143,7 +143,9 @@ sudo yum -y install "${installPackages[@]}"
 
 sudo ln -s /usr/bin/python2 /usr/bin/python
 
-sudo dnf -y module install nodejs:12
+sudo dnf -y module install nodejs:16
+
+sudo /usr/bin/pip3 install dataclasses
 
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip

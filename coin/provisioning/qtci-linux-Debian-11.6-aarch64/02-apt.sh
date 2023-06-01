@@ -92,8 +92,7 @@ installPackages+=(libgbm-dev)
 installPackages+=(libxkbfile-dev)
 installPackages+=(libxshmfence-dev)
 installPackages+=(libxss-dev)
-## installPackages+=(nodejs-mozilla) # use nodejs-mozilla because nodejs is outdated
-installPackages+=(nodejs)
+# installPackages+=(nodejs) too old
 installPackages+=(python3-html5lib)
 #
 ## Common event loop handling
