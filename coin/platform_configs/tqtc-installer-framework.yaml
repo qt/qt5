@@ -1,0 +1,28 @@
+Version: 2
+Module only: True
+Include: [ installer-framework.yaml ]
+Configurations:
+-
+    Template: 'qtci-windows-10-x86_64-52'
+    Compiler: 'MSVC2019'
+    Target arch: 'x86_64'
+    Features: ['Packaging', 'QtInstaller', 'UseConfigure', 'DoNotBuildTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -no-icu -static -no-sql-sqlite -openssl-linked -static-runtime OPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    Environment variables: ['TARGET_ARCHITECTURE=x86_64', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;', 'LLVM_INSTALL_DIR=', 'LLVM_INSTALL_DIR_msvc=', 'QDOC_USE_STATIC_LIBCLANG=']
+    Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
+-
+    Template: 'qtci-macos-12-x86_64-106'
+    Compiler: 'Clang'
+    Features: ['Packaging', 'QtInstaller', 'UseConfigure', 'DoNotBuildTests']
+    Configure arguments: '-opensource -confirm-license -static -confirm-license -nomake examples -nomake tests -accessibility -qt-zlib -qt-libpng -no-cups -no-freetype -no-sql-sqlite'
+-
+    Template: 'qtci-linux-RHEL-8.4-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'QtInstaller', 'UseConfigure', 'DoNotBuildTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-feature-gssapi -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked -bundled-xcb-xinput -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz OPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+-
+    Template: 'qtci-macos-11-x86_64-104'
+    Compiler: 'Clang'
+    Target arch: 'x86_64-arm64'
+    Features: ['Packaging', 'QtInstaller', 'UseConfigure', 'DoNotBuildTests']
+    Configure arguments: '-opensource -confirm-license -static -confirm-license -nomake examples -nomake tests -accessibility -qt-zlib -qt-libpng -no-cups -no-freetype -no-sql-sqlite QMAKE_APPLE_DEVICE_ARCHS="x86_64 arm64"'
