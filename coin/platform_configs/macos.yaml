@@ -17,8 +17,7 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}}',
-            'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
-            'CONAN_PROFILE=coin/conan/profiles/ci-macos-universal-clang'
+            'Protobuf_ROOT=/usr/local/lib/cmake/protobuf'
         ]
 
     -
