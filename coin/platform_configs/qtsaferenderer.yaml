@@ -42,8 +42,7 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
     ]
 -
     Id: 'Windows-MSVC2019_Static'

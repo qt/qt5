@@ -1,5 +1,0 @@
-include(./linux-x86_64-gcc-debug-developer)
-
-[options]
-qtbase:cmake_args_qtbase="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
-*:cmake_args_leaf_module="-DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache"
