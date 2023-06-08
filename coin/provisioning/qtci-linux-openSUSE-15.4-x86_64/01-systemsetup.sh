@@ -24,6 +24,7 @@ echo 'export DISPLAY=":0"' >> ~/.bashrc
 echo "Disabling file indexing."
 sudo balooctl disable
 
+sudo systemctl enable sshd
 sudo systemctl stop packagekit
 sudo systemctl disable packagekit
 sudo systemctl mask packagekit
