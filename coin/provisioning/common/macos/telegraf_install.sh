@@ -1,5 +1,5 @@
-#!/bin/sh
-# Copyright (C) 2019 The Qt Company Ltd.
+#!/bin/bash
+# Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 
@@ -15,11 +15,12 @@
 ######################## BOILERPLATE ###########################
 set -e
 
-
 PROVISIONING_DIR="$(dirname "$0")/../../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
-. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
+# shellcheck source=../unix/common.sourced.sh
+source "${BASH_SOURCE%/*}/../unix/common.sourced.sh"
+# shellcheck source=../unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
 is_script_executed telegraf_install.sh  \
     || fatal "Script telegraf_install.sh should be executed, not sourced"
@@ -41,8 +42,8 @@ $CMD_INSTALL -m 755  "$PROVISIONING_DIR"/common/macos/telegraf-ioping.sh  /usr/l
 
 # 3. Download and install telegraf
 
-[ x"$PROVISIONING_OS"   = xmacos ] && os=darwin || os=linux
-[ x"$PROVISIONING_ARCH" = xx86   ] && arch=i386 || arch=amd64
+[ "$PROVISIONING_OS"   = macos ] && os=darwin || os=linux
+[ "$PROVISIONING_ARCH" = x86   ] && arch=i386 || arch=amd64
 package_filename=telegraf-1.12.6_${os}_${arch}.tar.gz
 package_sha256_list="$PROVISIONING_DIR"/common/shared/telegraf/telegraf_packages.sha256.txt
 package_sha256=$(sed -n "s/.*$package_filename *//p" "$package_sha256_list")
