@@ -187,8 +187,8 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF'
     ]
 -
-    Id: 'rhel-9.0'
-    Template: 'qtci-linux-RHEL-9.0-x86_64-50'
+    Id: 'rhel-9.2'
+    Template: 'qtci-linux-RHEL-9.2-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
