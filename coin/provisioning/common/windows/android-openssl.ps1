@@ -56,9 +56,9 @@ $ndk_version_latest = "r25b"
 $ndk_version_default = "$ndk_version_latest"
 $openssl_compressed = Get-DownloadLocation ("openssl-${openssl_version}.tar.gz")
 $openssl_sha1 = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
-$prebuilt_sha1_ndk_latest = "d4348812054a88b5b672a8ceae62bf30c564869b"
+$prebuilt_sha1_ndk_latest = "17085b1ef76ba116466213703e38a9d2274ec859"
 $prebuilt_sha1_ndk_default = "$prebuilt_sha1_ndk_latest"
-$destination = "C:\Utils\openssl-android-master"
+$destination_prefix = "C:\Utils\prebuilt-openssl-${openssl_version}-for-android-ndk"
 
 function Install($1, $2) {
         $ndk_version = $1
@@ -69,15 +69,15 @@ function Install($1, $2) {
         $ndk_path = "/c/Utils/Android/android-ndk-${ndk_version}"
         $cc_path = "$ndk_path/toolchains/llvm/prebuilt/windows-x86_64/bin"
 
-        $prebuilt_url_ndk = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${openssl_version}-for-android-used-ndk-${ndk_version}-windows.zip"
-        $prebuilt_zip_ndk = Get-DownloadLocation ("prebuilt-openssl-${openssl_version}-for-android-used-ndk-${ndk_version}-windows.zip")
+        $prebuilt_url_openssl = "\\ci-files01-hki.intra.qt.io\provisioning\openssl\prebuilt-openssl-${openssl_version}-for-android-ndk-${ndk_version}.zip"
+        $prebuilt_zip_openssl = Get-DownloadLocation ("prebuilt-openssl-${openssl_version}-for-android-ndk-${ndk_version}.zip")
 
-    if ((Test-Path $prebuilt_url_ndk)) {
+    if ((Test-Path $prebuilt_url_openssl)) {
         Write-Host "Install prebuilt OpenSSL for Android"
-        Download $prebuilt_url_ndk $prebuilt_url_ndk $prebuilt_zip_ndk
-        Verify-Checksum $prebuilt_zip_ndk $prebuilt_sha1
-        Extract-7Zip $prebuilt_zip_ndk C:\Utils
-        Remove $prebuilt_zip_ndk
+        Download $prebuilt_url_openssl $prebuilt_url_openssl $prebuilt_zip_openssl
+        Verify-Checksum $prebuilt_zip_openssl $prebuilt_sha1
+        Extract-7Zip $prebuilt_zip_openssl C:\Utils
+        Remove $prebuilt_zip_openssl
     } else {
         Write-Host "Build OpenSSL for Android from sources"
         # openssl-${openssl_version}_fixes-ndk_root.tar.gz package includes fixes from https://github.com/openssl/openssl/pull/17322 and string ANDROID_NDK_HOME is replaced with ANDROID_NDK_ROOT in Configurations/15-android.conf
@@ -126,13 +126,13 @@ function Install($1, $2) {
 # Install NDK Default version
 Install $ndk_version_default $prebuilt_sha1_ndk_default
 
-if (Test-Path -Path ${destination}-${ndk_version_latest}) {
+if (Test-Path -Path ${destination_prefix}-${ndk_version_latest}) {
     Write-Host "OpenSSL for Android Latest version is the same than Default. Installation done."
 } else {
     # Install NDK Latest version
     Install $ndk_version_latest $prebuilt_sha1_ndk_latest
 }
 
-Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_DEFAULT" "${destination}-${ndk_version_default}"
-Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_LATEST" "${destination}-${ndk_version_latest}"
+Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_DEFAULT" "${destination_prefix}-${ndk_version_default}"
+Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_LATEST" "${destination_prefix}-${ndk_version_latest}"
 Write-Output "Android OpenSSL = $openssl_version" >> ~/versions.txt
