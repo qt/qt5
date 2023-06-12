@@ -8,7 +8,7 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-version="3.1.25"
+version="3.1.37"
 versionNode="v14.18.2"
 tarBallVersion=$(sed "s/\./\_/g" <<<"$version")
 if uname -a |grep -q Darwin; then
@@ -24,15 +24,13 @@ target="/tmp/${tarBallPackage}"
 mkdir -p /opt
 cd /opt
 echo "URL: $cacheUrl"
-DownloadURL "$cacheUrl" "" "$sha" "$target" || (
-    echo "Emsdk isn't cached. Cloning it"
-    sudo git clone https://github.com/emscripten-core/emsdk.git
-)
 
-if [ -f "$target" ]; then
+if DownloadURL "$cacheUrl" "" "$sha" "$target"; then
     sudo tar -xzf "$target" -C /opt/
     sudo rm -f "$target"
 else
+    echo "Emsdk isn't cached. Cloning it"
+    sudo git clone https://github.com/emscripten-core/emsdk.git
     cd emsdk
     sudo ./emsdk install "$version"
     sudo ./emsdk activate "$version"

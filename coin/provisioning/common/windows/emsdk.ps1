@@ -5,7 +5,7 @@
 
 # This script will install emscripten needed by WebAssembly
 
-$version = "3.1.25"
+$version = "3.1.37"
 $zipVersion = $version -replace '\.', "_"
 $temp = "$env:tmp"
 $cacheUrl = "https://ci-files01-hki.ci.qt.io/input/emsdk/emsdk_windows_${zipVersion}.zip"
