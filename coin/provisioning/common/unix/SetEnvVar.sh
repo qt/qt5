@@ -12,7 +12,7 @@ function SetEnvVar {
 
     echo "Setting environment variable $name to $path."
 
-    if uname -a |grep -q "Ubuntu"; then
+    if uname -a |grep -q -E "Ubuntu|Debian"; then
         if lsb_release -a |grep "Ubuntu 22.04"; then
             echo "export $name=$path" >> ~/.bashrc
             echo "export $name=$path" >> ~/.bash_profile
