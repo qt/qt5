@@ -205,13 +205,13 @@ Configurations:
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
     ]
 -
-    Id: 'windows-10_22h2-mingw11'
+    Id: 'windows-10_22h2-mingw13'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
     Environment variables: [
-        'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
+        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DFEATURE_native_grpc=OFF -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
@@ -244,26 +244,26 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
     ]
 -
-    Id: 'windows-10_22h2-mingw11-developer-build'
+    Id: 'windows-10_22h2-mingw13-developer-build'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples'
     Environment variables: [
-        'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
+        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
-    Id: 'windows-11_22h2-mingw11-developer-build'
+    Id: 'windows-11_22h2-mingw13-developer-build'
     Template: 'qtci-windows-11_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples'
     Environment variables: [
-        'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
+        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',

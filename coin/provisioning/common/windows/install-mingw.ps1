@@ -10,14 +10,18 @@ function InstallMinGW
         [string] $sha1    = $(BadParam("SHA1 checksum of the file"))
     )
 
-    $null, $null, $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
+    if ($release -like "*11.2.0*") {
+        $null, $null, $arch, $version, $null, $threading, $ex_handling, $build_ver, $revision = $release.split('-')
+        $url_original = "https://github.com/cristianadam/mingw-builds/releases/download/v" + $version + "-" + $revision + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $build_ver + "-" + $revision + ".7z"
+    }
+    else {
+        $null, $null, $arch, $version, $null, $threading, $ex_handling, $runtime_library, $build_ver, $revision = $release.split('-')
+        $url_original = "https://github.com/niXman/mingw-builds-binaries/releases/download/" + $version + "-" + $build_ver + "-" + $revision + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $runtime_library + "-" + $build_ver + "-" + $revision + ".7z"
+    }
 
     if ($arch -eq "x86_64") { $win_arch = "Win64" }
-    $envvar = "MINGW$version"
-    $envvar = $envvar -replace '["."]'
+    $envvar = "MINGW_PATH"
     $targetdir = "C:\$envvar"
-
-    $url_original = "https://github.com/cristianadam/mingw-builds/releases/download/v" + $version + "-" + $revision + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $build_ver + "-" + $revision + ".7z"
     $url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/" + $release + ".7z"
     $mingwPackage = "C:\Windows\Temp\MinGW-$version.zip"
     Download $url_original $url_cache $mingwPackage

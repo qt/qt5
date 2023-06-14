@@ -82,7 +82,7 @@ Push-Location $targetDir
 ### MinGW
 
 # Check if mingw is where we expect it to be and add it to path:
-$mingwPath = "C:\MINGW1120\mingw64\bin"
+$mingwPath = [System.Environment]::GetEnvironmentVariable("MINGW_PATH", [System.EnvironmentVariableTarget]::Machine) + "\bin"
 if (!(Test-Path $mingwPath)) {
     throw "Cannot find mingw in $mingwPath, something is configured wrong"
 }
