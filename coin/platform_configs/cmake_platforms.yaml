@@ -194,16 +194,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
-    Id: 'debian-11.6-arm64'
-    Template: 'qtci-linux-Debian-11.6-aarch64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'InsignificantTests']
-    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
-    ]
-
--
     Id: 'ios-universal'
     Template: 'qtci-macos-12-x86_64-106'
     Target os: 'IOS_ANY'
