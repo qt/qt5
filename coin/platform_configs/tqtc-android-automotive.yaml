@@ -11,8 +11,8 @@ Include: [
     cmake_platforms_target_android.yaml: [
         'android-arm64-on-macos',
         'android-armv7-on-windows',
-        'android-x86-on-linux',
-        'android-x86_64-on-linux'
+        'android-6-x86-on-linux',
+        'android-13-x86_64-on-linux'
     ]
 ]
 Configurations:
