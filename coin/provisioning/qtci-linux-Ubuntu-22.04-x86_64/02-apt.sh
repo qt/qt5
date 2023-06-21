@@ -212,6 +212,8 @@ sudo dpkg --add-architecture i386
 installPackages+=(nfs-kernel-server)
 installPackages+=(net-tools)
 installPackages+=(bridge-utils)
+# For Debian packaging
+installPackages+=(sbuild)
 
 echo "Running update for apt"
 waitLoop
