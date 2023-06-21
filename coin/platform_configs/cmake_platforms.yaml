@@ -288,3 +288,12 @@ Configurations:
         'DEBIAN_RULES_REF=6.6_dev',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
     ]
+-
+    Id: 'focal-amd64-debian-pkg-packaging'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
+    Environment variables: [
+        'DEBIAN_RULES_REF=6.6_dev',
+        'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
+    ]
