@@ -128,7 +128,7 @@
 	status = addon
 [submodule "qt3d"]
 	depends = qtbase
-	recommends = qtdeclarative qtshadertools
+	recommends = qtdeclarative qtshadertools qtmultimedia
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
