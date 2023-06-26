@@ -9,8 +9,8 @@ System requirements
 -------------------
 
 * C++ compiler supporting the C++17 standard
-* CMake 3.16 or newer
-* Ninja 1.8 or newer
+* CMake
+* Ninja
 * Python 3
 
 For more details, see also https://doc.qt.io/qt-6/build-sources.html
