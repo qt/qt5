@@ -61,7 +61,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -87,7 +87,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2022'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -113,7 +113,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019-developer-build'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
@@ -125,7 +125,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019-arm64'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
@@ -208,7 +208,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-mingw11'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -222,7 +222,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-llvm'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
@@ -250,7 +250,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-mingw11-developer-build'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg -unity-build'
