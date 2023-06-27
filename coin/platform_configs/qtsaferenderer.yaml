@@ -48,7 +48,7 @@ Configurations:
     ]
 -
     Id: 'Windows-MSVC2019_Static'
-    Template: 'qtci-windows-10_22H2-x86_64-50'
+    Template: 'qtci-windows-10_22H2-x86_64-51'
     Target os: 'Windows_10_Static'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
