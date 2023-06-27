@@ -10,6 +10,7 @@ Include: [
     "ubuntu-22.04-documentation",
     "opensuse-15.4-developer-build",
     "sles-15_sp4-static",
+    "sles-15_sp5-static",
     "windows-10_22h2-msvc2019",
     "windows-10_22h2-msvc2022",
     "rhel-8.4",
