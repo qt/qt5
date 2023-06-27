@@ -225,11 +225,11 @@ Configurations:
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
-    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg -unity-build'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_UNITY_BUILD=OFF',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
@@ -239,11 +239,11 @@ Configurations:
     Template: 'qtci-windows-11_22H2-x86_64-50'
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure']
-    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg -unity-build'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_UNITY_BUILD=OFF',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
