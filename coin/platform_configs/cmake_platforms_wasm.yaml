@@ -2,11 +2,11 @@ Version: 2
 Configurations:
 -
     Id: 'webassembly-linux-thread-asyncify'
-    Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
+    Template: 'qtci-linux-openSUSE-15.5-x86_64-51'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
-    Platform dependency: 'opensuse-15.4-developer-build'
-    Features: ['Sccache', 'DisableTests', 'UseConfigure']
+    Platform dependency: 'opensuse-15.5-developer-build'
+    Features: ['Sccache', 'DoNotRunTests', 'UseConfigure']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         "TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread \

@@ -39,8 +39,8 @@ Configurations:
     Features: ['Sccache', 'TestOnly']
     Platform dependency: 'ubuntu-22.04'
 -
-    Id: 'opensuse-15.4-developer-build'
-    Template: 'qtci-linux-openSUSE-15.4-x86_64-50'
+    Id: 'opensuse-15.5-developer-build'
+    Template: 'qtci-linux-openSUSE-15.5-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-nomake examples -developer-build'
