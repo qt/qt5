@@ -28,6 +28,7 @@ Configurations:
 -
     Id: 'macos-latest-xcode-universal-static-build'
     Template: 'qtci-macos-12-x86_64-106'
+    Target os: 'MacOS_12_Static'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
@@ -38,6 +39,7 @@ Configurations:
 -
     Id: 'Linux-RHEL_8_4_Static'
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
+    Target os: 'RHEL_8_4_Static'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
@@ -47,6 +49,7 @@ Configurations:
 -
     Id: 'Windows-MSVC2019_Static'
     Template: 'qtci-windows-10_22H2-x86_64-50'
+    Target os: 'Windows_10_Static'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql -plugin-sql-sqlite -plugin-sql-odbc'
