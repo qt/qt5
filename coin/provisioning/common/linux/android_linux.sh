@@ -15,6 +15,8 @@ source "${BASH_SOURCE%/*}/../unix/check_and_set_proxy.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
+emulator_script="${BASH_SOURCE%/*}/android_emulator_launcher.sh"
+
 targetFolder="/opt/android"
 sdkTargetFolder="$targetFolder/sdk"
 
@@ -141,3 +143,9 @@ echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_31 -c 2048
 
 # Purely informative, show the list of avd devices
 ./avdmanager list avd
+
+# To be used by the VMs to start the emulator for tests
+emulator_script_filename="android_emulator_launcher.sh"
+cp "$(dirname "$(readlink -f "$BASH_SOURCE")")/${emulator_script_filename}" ${HOME}
+ANDROID_EMULATOR_RUNNER="${HOME}/${emulator_script_filename}"
+SetEnvVar "ANDROID_EMULATOR_RUNNER" "$ANDROID_EMULATOR_RUNNER"
