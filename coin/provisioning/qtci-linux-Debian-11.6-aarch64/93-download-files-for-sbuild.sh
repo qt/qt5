@@ -39,18 +39,27 @@
 ##
 #############################################################################
 
-# build cmake for the debian packgaes
-# Create chroot for Ubuntu focal
-#mk-sbuild --arch=amd64 --name=focal --debootstrap-mirror="http://archive.ubuntu.com/ubuntu/" --distro=ubuntu focal
-
+# Get required deb files for sbuild to build qt debian packages for Ubuntu focal
 mkdir -p /home/qt/debian_packages
 cd /home/qt/debian_packages
+# Backported cmake 3.24
 wget https://ci-files01-hki.intra.qt.io/input/debian/cmake/amd64-focal/cmake-3.24-deb.tar.gz
 tar xzf cmake-3.24-deb.tar.gz
-#git clone git@gitlab.ics.com:qt6_packaging/tqtc/cmake.git
-#wget https://github.com/Kitware/CMake/releases/download/v3.24.3/cmake-3.24.3.tar.gz -O cmake_3.24.3.orig.tar.gz
-#dpkg-source -b cmake
-#sbuild --build-dep-resolver=aptitude -sAd focal -c focal-amd64 cmake_3.24.3-1~bpo1.dsc
+# get rest of ready made Ubuntu focal arm debian packages
+# so that sbuild can find those
+# QtWebEngine dependencies
+wget http://ci-files01-hki.ci.qt.io/input/debian/libuv1/arm64-focal/libuv1_1.43.0.tar.gz
+tar -xzf libuv1_1.43.0.tar.gz
+rm -rf libuv1_1.43.0.tar.gz
+wget http://ci-files01-hki.ci.qt.io/input/debian/nghttp2/arm64-focal/nghttp2_1.43.0.tar.gz
+tar -xzf nghttp2_1.43.0.tar.gz
+rm -rf nghttp2_1.43.0.tar.gz
+wget http://ci-files01-hki.ci.qt.io/input/debian/nodejs/arm64-focal/nodejs_12.22.9.tar.gz
+tar -xzf nodejs_12.22.9.tar.gz
+rm -rf nodejs_12.22.9.tar.gz
+# get ICU
+wget http://ci-files01-hki.ci.qt.io/input/debian/icu/arm64-focal/libicu-56.1-qt_56.1-1_arm64.deb
+wget http://ci-files01-hki.ci.qt.io/input/debian/icu/arm64-focal/libicu-56.1-qt-dev_56.1-1_arm64.deb
 
 
 
