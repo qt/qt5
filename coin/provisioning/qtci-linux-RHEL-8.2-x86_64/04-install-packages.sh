@@ -167,12 +167,6 @@ sudo pip3 install --upgrade pip
 sudo pip3 install virtualenv wheel
 
 sudo /usr/bin/pip3 install wheel
-# Install all needed packages in a special wheel cache directory
-/usr/bin/pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
-
-# shellcheck source=../common/unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
 
 OpenSSLVersion="$(openssl version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
