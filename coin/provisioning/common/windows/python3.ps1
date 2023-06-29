@@ -62,17 +62,6 @@ Run-Executable "$install_path\python.exe" "-m pip install --upgrade pip"
 
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel html5lib"
 
-# Install all needed packages in a special wheel cache directory
-$python3_wheel_dir="$install_path\python3-wheels"
-Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args wheel --wheel-dir $python3_wheel_dir -r $PSScriptRoot\..\shared\requirements.txt"
-
-Set-EnvironmentVariable "PYTHON3_WHEEL_CACHE-$version-$archVer" "$python3_wheel_dir"
-# PYTHON3_WHEEL_CACHE is already in use so we should keep it pointing to 64 bit default
-# wheel cache
-if (($setDefault) -And ($archVer -eq 64)) {
-    Set-EnvironmentVariable "PYTHON3_WHEEL_CACHE" "$python3_wheel_dir"
-}
-
 # Install PyPDF2 for QSR documentation
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install PyPDF2"
 

@@ -71,10 +71,6 @@ python3 --version | fgrep "$python3Version"
 pip3 install --user wheel
 pip3 install --user virtualenv
 
-# Install all needed packages in a special wheel cache directory
-pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
-
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "PYTHON3_PATH" "/usr/local/bin"
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
