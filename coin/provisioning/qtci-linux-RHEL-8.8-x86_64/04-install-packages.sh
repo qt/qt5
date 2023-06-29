@@ -1,48 +1,14 @@
 #!/usr/bin/env bash
 
-#############################################################################
-##
-## Copyright (C) 2022 The Qt Company Ltd.
-## Contact: https://www.qt.io/licensing/
-##
-## This file is part of the provisioning scripts of the Qt Toolkit.
-##
-## $QT_BEGIN_LICENSE:LGPL$
-## Commercial License Usage
-## Licensees holding valid commercial Qt licenses may use this file in
-## accordance with the commercial license agreement provided with the
-## Software or, alternatively, in accordance with the terms contained in
-## a written agreement between you and The Qt Company. For licensing terms
-## and conditions see https://www.qt.io/terms-conditions. For further
-## information use the contact form at https://www.qt.io/contact-us.
-##
-## GNU Lesser General Public License Usage
-## Alternatively, this file may be used under the terms of the GNU Lesser
-## General Public License version 3 as published by the Free Software
-## Foundation and appearing in the file LICENSE.LGPL3 included in the
-## packaging of this file. Please review the following information to
-## ensure the GNU Lesser General Public License version 3 requirements
-## will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-##
-## GNU General Public License Usage
-## Alternatively, this file may be used under the terms of the GNU
-## General Public License version 2.0 or (at your option) the GNU General
-## Public license version 3 or any later version approved by the KDE Free
-## Qt Foundation. The licenses are as published by the Free Software
-## Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-## included in the packaging of this file. Please review the following
-## information to ensure the GNU General Public License requirements will
-## be met: https://www.gnu.org/licenses/gpl-2.0.html and
-## https://www.gnu.org/licenses/gpl-3.0.html.
-##
-## $QT_END_LICENSE$
-##
-#############################################################################
+# Copyright (C) 2023 The Qt Company Ltd.
+# SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 set -ex
 
 # Remove update notifications and packagekit running in the background
 sudo yum -y remove PackageKit gnome-software
+
+sudo yum -y update
 
 installPackages=()
 installPackages+=(git)
@@ -62,9 +28,20 @@ installPackages+=(ninja-build)
 installPackages+=(pcre2-devel)
 installPackages+=(double-conversion-devel)
 installPackages+=(zstd)
+# update kernel
+installPackages+=(kernel)
+installPackages+=(kernel-tools)
+installPackages+=(kernel-devel)
+installPackages+=(kernel-core)
+installPackages+=(kernel-modules)
+installPackages+=(kernel-headers)
 # EGL support
-installPackages+=(mesa-libEGL-devel)
-installPackages+=(mesa-libGL-devel)
+# mesa-libraries need to use older version than 22.1.5-2 which cause Xorg to crash
+installPackages+=(mesa-libEGL-devel-21.3.4-1.el8)
+installPackages+=(mesa-libGL-devel-21.3.4-1.el8)
+installPackages+=(mesa-dri-drivers-21.3.4-1.el8.x86_64)
+installPackages+=(mesa-libgbm-21.3.4-1.el8.x86_64)
+installPackages+=(mesa-vulkan-drivers-21.3.4-1.el8.x86_64)
 installPackages+=(libxkbfile-devel)
 # Xinput2
 installPackages+=(libXi-devel)
@@ -87,11 +64,6 @@ installPackages+=(gtk3-devel)
 installPackages+=(libusbx-devel)
 # speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
 installPackages+=(speech-dispatcher-devel)
-# Python 2 devel and pip. python-pip requires the EPEL repository to be added
-installPackages+=(python2-devel python2-pip)
-# Python 3 with python-devel, pip and virtualenv
-installPackages+=(python36)
-installPackages+=(python36-devel)
 # Python 3.8 for pyside. Qt for Python support for Python 3.6 will be deprecated in within pyside6.3
 installPackages+=(python38)
 installPackages+=(python38-devel)
@@ -102,14 +74,11 @@ installPackages+=(gperftools-libs)
 installPackages+=(gperf)
 installPackages+=(alsa-lib-devel)
 installPackages+=(pulseaudio-libs-devel)
-installPackages+=(libdrm-devel)
-installPackages+=(libva-devel)
 installPackages+=(libXtst-devel)
 installPackages+=(libxshmfence-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 installPackages+=(python3-html5lib)
-installPackages+=(mesa-libgbm-devel)
 # For Android builds
 installPackages+=(java-11-openjdk-devel)
 # For receiving shasum
@@ -126,8 +95,8 @@ installPackages+=(libxslt-devel)
 # For building Wayland from source
 installPackages+=(libffi-devel)
 # QtWayland
-installPackages+=(mesa-libwayland-egl)
-installPackages+=(mesa-libwayland-egl-devel)
+#installPackages+=(mesa-libwayland-egl)
+#installPackages+=(mesa-libwayland-egl-devel)
 installPackages+=(libwayland-client)
 installPackages+=(libwayland-cursor)
 installPackages+=(libwayland-server)
@@ -167,9 +136,7 @@ installPackages+=(open-vm-tools)
 
 sudo yum -y install "${installPackages[@]}"
 
-sudo ln -s /usr/bin/python2 /usr/bin/python
-
-sudo dnf -y module install nodejs:12
+sudo dnf -y module install nodejs:16
 
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip

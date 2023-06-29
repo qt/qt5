@@ -63,10 +63,6 @@ InstallPip python3.9
 SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"
 SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"
 
-# Install all needed packages in a special wheel cache directory
-/Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 wheel --wheel-dir $HOME/python3-wheels -r ${BASH_SOURCE%/*}/../shared/requirements.txt
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
-
 # Install Python certificates. Required at least for emsdk installation
 open /Applications/Python\ 3.9/Install\ Certificates.command
 
