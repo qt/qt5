@@ -7,6 +7,10 @@ set -ex
 echo "set WritePreparedUpdates=false" | sudo tee -a /etc/PackageKit/PackageKit.conf
 sudo systemctl stop packagekit
 sudo systemctl disable packagekit
+while sudo fuser /usr/libexec/packagekitd >/dev/null 2>&1; do
+    echo "Waiting for PackageKit to finish..."
+    sleep 1
+done
 sudo yum -y remove PackageKit gnome-software
 
 sudo subscription-manager config --rhsm.manage_repos=1
