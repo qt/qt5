@@ -1,5 +1,6 @@
 ### Visual Studio 2019 ###
-Visual Studio 2019 version 16.11.19 was installed manually using installer: http://ci-files01-hki.intra.qt.io/input/windows/vs_professional__505064367.1547034421.exe
+Visual Studio 2019 version 16.11.19 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__505064367.1547034421.exe
+Visual Studio 2019 was updated to version 16.11.27 with Visual Studio Installer
 
 Installed MSVC-2019 Components:
 
@@ -68,6 +69,7 @@ Windows 11 SDK (10.0.22000.0)
 
 Visual studio 2019 build tools version 16.11.19 was installed manually using installer: "http://ci-files01-hki.intra.qt.io/input/windows/vs_buildtools__251503345.1575372514.exe"
  * Only default installation, no additional selections
+Visual studio 2019 build tools were updated to version 16.11.27 with Visual Studio Installer
 
 ############################################################
 ### Debugging tools ###
