@@ -100,10 +100,10 @@ Configurations:
         Template: 'qtci-macos-13-x86_64-103'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
-        Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
+        Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples -unity-build'
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
-            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}',
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_UNITY_BUILD=OFF',
             'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
         ]
     -
@@ -111,10 +111,10 @@ Configurations:
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
-        Configure arguments: '-developer-build -nomake examples -release -force-debug-info -separate-debug-info -framework'
+        Configure arguments: '-developer-build -nomake examples -release -force-debug-info -separate-debug-info -framework -unity-build'
         Environment variables: [
             'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
-            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}',
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_UNITY_BUILD=OFF',
         ]
         # Note: We do not include OpenSSL or PostgreSQL in this build,
         # as the M1 CI machines are not provisioned for that yet.
