@@ -68,7 +68,7 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
@@ -80,7 +80,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
@@ -133,6 +133,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
@@ -161,6 +162,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
@@ -172,7 +174,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF'
     ]
 -
     Id: 'rhel-9.0'
@@ -194,7 +196,8 @@ Configurations:
     Platform dependency: 'macos-universal-on-x86_64'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang'
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
     ]
 -
     Id: 'windows-10_22h2-mingw11'
@@ -205,7 +208,7 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
