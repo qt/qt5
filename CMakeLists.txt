@@ -12,7 +12,12 @@ include("${__qt6_qtbase_src_path}/.cmake.conf")
 
 # Run platform auto-detection /before/ the first project() call and thus
 # before the toolchain file is loaded.
-include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
+# Don't run auto-detection when doing standalone tests. In that case, the detection
+# results are taken from either QtBuildInternals or the qt.toolchain.cmake file.
+
+if(NOT QT_BUILD_STANDALONE_TESTS)
+    include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
+endif()
 
 project(Qt
     VERSION "${QT_REPO_MODULE_VERSION}"
