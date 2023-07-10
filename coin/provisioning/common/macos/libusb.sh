@@ -18,6 +18,7 @@ case $(sw_vers -productVersion) in
     11*) codename=big_sur;;
     12*) codename=monterey;;
     13*) codename=ventura;;
+    14*) codename=sonoma;;
 esac
 
 brew fetch --bottle-tag=arm64_${codename} libusb

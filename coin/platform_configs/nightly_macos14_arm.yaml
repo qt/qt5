@@ -1,0 +1,20 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Id: 'macos-14-arm64-developer-build'
+    Template: 'qtci-macos-14-arm64'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
+    Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}',
+        'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
+    ]
+-
+    Id: 'macos-14-arm64-developer-build-tests'
+    Template: 'qtci-macos-14-arm64'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly']
+    Platform dependency: 'macos-14-arm64-developer-build'
