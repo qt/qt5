@@ -2,4 +2,9 @@ Makefile
 .qmake.cache
 .qmake.super
 *.pro.user*
+CMakeLists.txt.user*
 CMakeUserPresets.json
+.vscode
+build
+build-*
+.DS_Store
