@@ -12,11 +12,10 @@ EMULATOR_EXEC="$ANDROID_SDK_ROOT/emulator/emulator"
 ADB_EXEC="$ANDROID_SDK_ROOT/platform-tools/adb"
 if [ -z "${ANDROID_EMULATOR}" ]
 then
-    EMULATOR_NAME="@emulator_x86_api_23"
+    EMULATOR_NAME="emulator_x86_api_23"
 else
     EMULATOR_NAME="$ANDROID_EMULATOR"
 fi
-
 
 function check_for_android_device
 {
@@ -59,7 +58,7 @@ do
     fi
 
     echo "Starting emulator, try ${counter}/${EMULATOR_MAX_RETRIES}"
-    $EMULATOR_EXEC $EMULATOR_NAME  \
+    $EMULATOR_EXEC -avd $EMULATOR_NAME  \
         -gpu swiftshader_indirect -no-audio -partition-size 4096  \
         -cores 4 -memory 16000 -no-snapshot-load -no-snapshot-save \
         </dev/null  >$HOME/emulator.log 2>&1  &
