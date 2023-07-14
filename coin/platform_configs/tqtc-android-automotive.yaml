@@ -29,8 +29,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
     Environment variables: [
         'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF',
-        'CONAN_PROFILE=coin/conan/profiles/macos-universal-clang'
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF'
     ]
 -
     Id: 'rhel-8.4'
@@ -39,8 +38,7 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'CONAN_PROFILE=coin/conan/profiles/linux-x86_64-gcc'
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
     ]
 -
     Id: "automotive-android-x86-on-linux"
