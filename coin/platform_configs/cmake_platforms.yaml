@@ -217,8 +217,8 @@ Configurations:
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DFEATURE_native_grpc=OFF',
+        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DFEATURE_native_grpc=OFF -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
@@ -231,8 +231,8 @@ Configurations:
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
@@ -245,8 +245,8 @@ Configurations:
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
@@ -259,8 +259,8 @@ Configurations:
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
+        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
@@ -273,8 +273,8 @@ Configurations:
     Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
+        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
