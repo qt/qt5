@@ -146,6 +146,7 @@ sudo pip3 install virtualenv wheel
 sudo python3.8 -m pip install virtualenv wheel
 
 sudo /usr/bin/pip3 install wheel
+sudo /usr/bin/pip3 install dataclasses
 
 OpenSSLVersion="$(openssl3 version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt

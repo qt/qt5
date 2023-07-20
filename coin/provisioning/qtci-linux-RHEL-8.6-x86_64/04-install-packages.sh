@@ -145,8 +145,6 @@ sudo ln -s /usr/bin/python2 /usr/bin/python
 
 sudo dnf -y module install nodejs:16
 
-sudo /usr/bin/pip3 install dataclasses
-
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
 sudo pip3 install --upgrade pip
@@ -155,6 +153,7 @@ sudo pip3 install virtualenv wheel
 sudo python3.8 -m pip install virtualenv wheel
 
 sudo /usr/bin/pip3 install wheel
+sudo /usr/bin/pip3 install dataclasses
 
 OpenSSLVersion="$(openssl3 version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
