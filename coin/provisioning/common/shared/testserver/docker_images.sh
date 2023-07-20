@@ -89,13 +89,14 @@ DownloadURL  \
     FreeCoAP-0.7.tar.gz
 mv FreeCoAP-0.7.tar.gz "$SERVER_PATH/freecoap/"
 
-# Custom fork of Eclipse Californium with changes not upstream
+# Eclipse Californium 3.8.0, requires to apply a custom patch from
+# $SERVER_PATH/californium/ before usage
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/docker/californium-secure-test-server.tar.gz  \
-    https://github.com/sonakur/californium/archive/secure-test-server.tar.gz  \
-    0ee7f5d4366b9e31f6d2d42e389cb7a66d2db54987b700a38a3a31e8f38a7a19  \
-    californium-secure-test-server.tar.gz
-mv californium-secure-test-server.tar.gz "$SERVER_PATH/californium/"
+    http://ci-files01-hki.intra.qt.io/input/docker/californium-3.8.0.tar.gz \
+    https://github.com/eclipse-californium/californium/archive/refs/tags/3.8.0.tar.gz \
+    24f8ca393f26c922739462e4586b8ced1ff75f99bfa795defa34a967b5a4a5a0  \
+    californium-3.8.0.tar.gz
+mv californium-3.8.0.tar.gz "$SERVER_PATH/californium/"
 
 
 echo 'Building the docker images...'
