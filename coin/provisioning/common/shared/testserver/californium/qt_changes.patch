@@ -1,0 +1,43 @@
+diff -ruN californium_3.8.0/demo-apps/cf-plugtest-server/src/main/java/org/eclipse/californium/plugtests/PlugtestServer.java californium/demo-apps/cf-plugtest-server/src/main/java/org/eclipse/californium/plugtests/PlugtestServer.java
+--- californium_3.8.0/demo-apps/cf-plugtest-server/src/main/java/org/eclipse/californium/plugtests/PlugtestServer.java	2023-07-21 11:16:21.142201240 +0200
++++ californium/demo-apps/cf-plugtest-server/src/main/java/org/eclipse/californium/plugtests/PlugtestServer.java	2023-07-21 11:16:51.074210378 +0200
+@@ -100,6 +100,14 @@
+ import org.eclipse.californium.unixhealth.NetSocketHealthLogger;
+ import org.eclipse.californium.unixhealth.NetStatLogger;
+ 
++import org.eclipse.californium.scandium.DTLSConnector;
++import org.eclipse.californium.scandium.config.DtlsConnectorConfig;
++import org.eclipse.californium.scandium.dtls.pskstore.AdvancedSinglePskStore;
++import org.eclipse.californium.core.network.CoapEndpoint;
++
++import java.net.InetSocketAddress;
++import java.net.InetAddress;
++
+ import picocli.CommandLine;
+ import picocli.CommandLine.ArgGroup;
+ import picocli.CommandLine.Command;
+@@ -437,7 +445,23 @@
+ 			// server.addEndpoint(new CoAPEndpoint(new InetSocketAddress("127.0.0.1", port)));
+ 			// server.addEndpoint(new CoAPEndpoint(new InetSocketAddress("2a01:c911:0:2010::10", port)));
+ 			// server.addEndpoint(new CoAPEndpoint(new InetSocketAddress("10.200.1.2", port)));
+-			server.addEndpoints(config);
++			// server.addEndpoints(config);
++
++			CoapEndpoint.Builder endpointBuilder = new CoapEndpoint.Builder();
++			endpointBuilder.setPort(5683);
++			server.addEndpoint(endpointBuilder.build());
++
++			AdvancedSinglePskStore pskStore = new AdvancedSinglePskStore("Client_identity", "secretPSK".getBytes());
++
++			DtlsConnectorConfig.Builder builder = new DtlsConnectorConfig.Builder(new Configuration());
++			builder.setAddress(new InetSocketAddress(5684));
++			builder.setAdvancedPskStore(pskStore);
++			DTLSConnector dtlsConnector = new DTLSConnector(builder.build());
++
++			endpointBuilder = new CoapEndpoint.Builder();
++			endpointBuilder.setConnector(dtlsConnector);
++			server.addEndpoint(endpointBuilder.build());
++
+ 			if (server.getEndpoints().isEmpty()) {
+ 				System.err.println("no endpoint available!");
+ 				System.exit(ERR_INIT_FAILED);
