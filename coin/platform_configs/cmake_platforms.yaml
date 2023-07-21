@@ -256,11 +256,11 @@ Configurations:
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg -unity-build'
+    Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_UNITY_BUILD=OFF',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
@@ -270,11 +270,11 @@ Configurations:
     Template: 'qtci-windows-11_22H2-x86_64-51'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg -unity-build'
+    Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples -qt-zlib -qt-freetype -qt-libjpeg'
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_UNITY_BUILD=OFF',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_system_tiff=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
