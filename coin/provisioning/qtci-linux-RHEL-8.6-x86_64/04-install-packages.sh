@@ -85,7 +85,7 @@ installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 installPackages+=(python3-html5lib)
 # For Android builds
-installPackages+=(java-11-openjdk-devel)
+installPackages+=(java-11-openjdk-devel-11.0.19.0.7)
 # For receiving shasum
 installPackages+=(perl-Digest-SHA)
 # INTEGRITY requirements
