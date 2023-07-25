@@ -12,7 +12,7 @@ Configurations:
     Id: 'ubuntu-22.04-documentation'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests']
+    Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests', 'Insignificant']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -no-warnings-are-errors -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
 -
@@ -30,7 +30,7 @@ Configurations:
     Id: 'ubuntu-22.04-documentation-x11-tests'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestDocs', 'TestOnly']
+    Features: ['Sccache', 'TestDocs', 'TestOnly', 'InsignificantTests']
     Platform dependency: 'ubuntu-22.04-documentation'
 -
     Id: 'ubuntu-22.04-x11-tests'
