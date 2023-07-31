@@ -1,0 +1,12 @@
+Version: 2
+Module only: true
+Include: [
+  cmake_platforms.yaml: [
+    "windows-10_22h2-msvc2019",
+    "rhel-8.4"
+  ],
+  macos.yaml: [
+    "macos-universal-on-x86_64"
+  ]
+]
+Configurations: []
