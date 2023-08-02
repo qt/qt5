@@ -72,6 +72,9 @@ sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
          mozilla-nspr-devel mozilla-nss-devel nodejs12 glproto-devel \
          libxshmfence-devel libXdamage-devel
 
+# qtmultimedia+ffmpeg
+sudo zypper -nq install libva-devel
+
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
 

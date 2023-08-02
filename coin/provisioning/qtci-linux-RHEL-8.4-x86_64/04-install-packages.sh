@@ -79,8 +79,9 @@ installPackages+=(dbus-devel)
 installPackages+=(gstreamer1-plugins-bad-free)
 installPackages+=(gstreamer1-devel)
 installPackages+=(gstreamer1-plugins-base-devel)
-# yasm for QtMultimedia
+# for QtMultimedia, ffmpeg
 installPackages+=(yasm)
+installPackages+=(libva-devel)
 # gtk3 style for QtGui/QStyle
 installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb

@@ -94,6 +94,9 @@ sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
          mozilla-nspr-devel mozilla-nss-devel glproto-devel libxshmfence-devel
 
+# qtwebengine, qtmultimedia+ffmpeg
+sudo zypper -nq install libva-devel
+
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
 
