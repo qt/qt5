@@ -137,6 +137,7 @@ installPackages+=(libgstreamer-gl1.0-0)
 installPackages+=(gir1.2-gst-plugins-base-1.0)
 installPackages+=(gir1.2-gst-plugins-bad-1.0)
 installPackages+=(yasm)
+installPackages+=(libva-dev)
 
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 installPackages+=(g++-multilib)
