@@ -57,7 +57,7 @@ sudo zypper -nq install --force-resolution libxcb-cursor0 xcb-util-cursor-devel
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel libdrm-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
          mozilla-nspr-devel mozilla-nss-devel glproto-devel libxshmfence-devel \
-         libgbm-devel Mesa-dri-devel
+         libgbm-devel Mesa-dri-devel vulkan-devel
 
 # qtwebengine, qtmultimedia+ffmpeg
 sudo zypper -nq install libva-devel
