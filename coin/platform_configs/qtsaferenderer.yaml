@@ -12,7 +12,7 @@ Include: [
     "sles-15_sp4-static",
     "windows-10_22h2-msvc2019",
     "windows-10_22h2-msvc2022",
-    "rhel-8.4",
+    "rhel-8.6",
     "windows-10_22h2-mingw11",
     "windows-10_22h2-llvm",
     "windows-11_22h2-msvc2019"
