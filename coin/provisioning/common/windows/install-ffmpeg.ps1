@@ -124,7 +124,7 @@ function InstallAndroidArmv7 {
     $strip="${toolchain_bin}/llvm-strip.exe"
 
     $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
-    $config += " --disable-vulkan --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+    $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
 
