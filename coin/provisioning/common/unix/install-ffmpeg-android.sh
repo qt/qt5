@@ -105,7 +105,7 @@ build_ffmpeg_android() {
   strip=${toolchain_bin}/llvm-strip
 
   ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
-  ffmpeg_config_options+=" --disable-vulkan --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+  ffmpeg_config_options+=" --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
   ffmpeg_config_options+=" --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
   ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
 
