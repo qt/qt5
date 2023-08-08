@@ -5,15 +5,15 @@
 
 # This script installs 7-Zip
 
-$version = "16.04"
-$nonDottedVersion = "1604"
+$version = "23.01"
+$nonDottedVersion = "2301"
 
 if (Is64BitWinHost) {
     $arch = "-x64"
-    $sha1 = "338A5CC5200E98EDD644FC21807FDBE59910C4D0"
+    $sha1 = "7DF28D340D7084647921CC25A8C2068BB192BDBB"
 } else {
     $arch = ""
-    $sha1 = "dd1cb1163c5572951c9cd27f5a8dd550b33c58a4"
+    $sha1 = "D5D00E6EA8B8E68CE7A704FD478DC950E543C25C"
 }
 
 $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\7z" + $nonDottedVersion + $arch + ".exe"
