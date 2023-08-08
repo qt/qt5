@@ -1,1 +1,1 @@
---disable-programs --disable-doc --disable-debug --enable-network --disable-lzma --enable-pic
+--disable-programs --disable-doc --disable-debug --enable-network --disable-lzma --enable-pic --disable-vulkan --disable-v4l2-m2m
