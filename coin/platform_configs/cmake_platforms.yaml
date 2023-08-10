@@ -71,7 +71,6 @@ Configurations:
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'windows-11_22h2-msvc2019'
@@ -84,7 +83,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'windows-10_22h2-msvc2022'
@@ -94,10 +92,9 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'windows-11_22h2-msvc2022'
@@ -107,10 +104,9 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'windows-10_22h2-msvc2019-developer-build'
@@ -139,7 +135,6 @@ Configurations:
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'windows-11_22h2-msvc2019-developer-build'
@@ -165,7 +160,6 @@ Configurations:
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
     Id: 'rhel-8.8'
@@ -222,7 +216,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DFEATURE_native_grpc=OFF -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
 -
     Id: 'windows-10_22h2-llvm'
@@ -236,7 +229,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
     ]
 -
     Id: 'windows-11_22h2-llvm'
@@ -250,7 +242,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_llvm_mingw}}',
     ]
 -
     Id: 'windows-10_22h2-mingw11-developer-build'
@@ -261,10 +252,9 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
 -
     Id: 'windows-11_22h2-mingw11-developer-build'
@@ -275,10 +265,9 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW1120}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
 -
     Id: 'focal-arm64-debian-pkg-packaging'

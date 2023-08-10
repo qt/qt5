@@ -28,14 +28,16 @@ function build-install-protobuf {
     $env:CXX = $CXX
     mkdir build
     Push-Location build
-    cmake .. -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="$BuildType" -DCMAKE_INSTALL_PREFIX="$installPath" -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_WITH_ZLIB=OFF $ExtraArguments
+    cmake .. -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="$BuildType" -DCMAKE_INSTALL_PREFIX="$installPath" -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_WITH_ZLIB=OFF -DCMAKE_DEBUG_POSTFIX="d" -DCMAKE_RELWITHDEBINFO_POSTFIX="rd" $ExtraArguments
     # ninja install:all # This is broken and does not work
     foreach ($config in $BuildType.split(";")) {
         ninja -f "build-$config.ninja" install
     }
     $env:CC = $oldCC
     $env:CXX = $oldCXX
-    Set-EnvironmentVariable "Protobuf_ROOT_$Postfix" "$InstallPath"
+    Set-EnvironmentVariable "Protobuf_ROOT_$Postfix" "$installPath"
+    # Set environment variable without "Machine" scope to be used by grpc.ps1 script
+    [Environment]::SetEnvironmentVariable("Protobuf_ROOT_$Postfix", "$installPath")
     Pop-Location
     Remove build
 }
@@ -87,7 +89,7 @@ if (!(Test-Path $mingwPath)) {
 
 $oldPath = $env:Path
 $env:Path = "$mingwPath;$env:Path"
-build-install-protobuf -CC "gcc" -CXX "g++" -BuildType "Release" -Postfix "mingw"
+build-install-protobuf -CC "gcc" -CXX "g++" -BuildType "Release;RelWithDebInfo;Debug" -Postfix "mingw"
 $env:Path = $oldPath
 
 ### LLVM MinGW
@@ -99,7 +101,7 @@ if (!(Test-Path $llvmMingwPath)) {
 
 $oldPath = $env:Path
 $env:Path = "$llvmMingwPath\bin;$env:Path"
-build-install-protobuf -CC "clang" -CXX "clang++" -BuildType "Release" -Postfix "llvm_mingw"
+build-install-protobuf -CC "clang" -CXX "clang++" -BuildType "Release;RelWithDebInfo;Debug" -Postfix "llvm_mingw"
 $env:Path = $oldPath
 
 ### MSVC
@@ -107,7 +109,7 @@ $env:Path = $oldPath
 EnterVSDevShell
 
 # We pass along an extra argument to stop protobuf linking with the static runtime
-build-install-protobuf -CC "cl" -CXX "cl" -BuildType "Release" -Postfix "msvc" -ExtraArguments @("-Dprotobuf_MSVC_STATIC_RUNTIME=OFF")
+build-install-protobuf -CC "cl" -CXX "cl" -BuildType "Release;RelWithDebInfo;Debug" -Postfix "msvc" -ExtraArguments @("-Dprotobuf_MSVC_STATIC_RUNTIME=OFF")
 
 $env:Path = $oldPath
 Pop-Location

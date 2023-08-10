@@ -20,23 +20,20 @@ function build-install-grpc {
     )
     $installPrefix = "C:\Utils\grpc"
     $installPath = "${installPrefix}-$Postfix"
+    $envVariableName = "Protobuf_ROOT_$Postfix"
+    $protobufRoot = (Get-Item -Path "Env:$envVariableName").Value
     Write-Output "Configuring and building gRPC for $CXX"
     $oldCC = $env:CC
     $oldCXX = $env:CXX
     $env:CC = $CC
     $env:CXX = $CXX
-    $Protobuf_ROOT="C:\Utils\protobuf-$Postfix"
-    if (!(Test-Path $Protobuf_ROOT -ErrorAction SilentlyContinue)) {
-        throw "Protobuf is missing, expected at `"$Protobuf_ROOT`"."
-    }
-    $OPENSSL_ROOT_DIR="C:\openssl"
-    if (!(Test-Path $OPENSSL_ROOT_DIR -ErrorAction SilentlyContinue)) {
-        throw "OpenSSL is missing, expected at `"$OPENSSL_ROOT_DIR`"."
-    }
     Remove build-grpc
     mkdir build-grpc
     Push-Location build-grpc
     $configureOptions = @(
+        # add postfix for multi-config
+        "-DCMAKE_DEBUG_POSTFIX=d"
+        "-DCMAKE_RELWITHDEBINFO_POSTFIX=rd"
         # plugins
         "-DgRPC_BUILD_GRPC_CSHARP_PLUGIN=OFF"
         "-DgRPC_BUILD_GRPC_NODE_PLUGIN=OFF"
@@ -48,12 +45,11 @@ function build-install-grpc {
         "-DgRPC_BUILD_CSHARP_EXT=OFF"
         # general
         "-DgRPC_BUILD_TESTS=OFF"
-        "-DgRPC_PROTOBUF_PROVIDER=`"package`""
-        "-DgRPC_SSL_PROVIDER=`"package`""
-        "-DOPENSSL_ROOT_DIR=`"$OPENSSL_ROOT_DIR`""
+        "-DgRPC_PROTOBUF_PROVIDER=package"
+        "-DgRPC_SSL_PROVIDER=package"
         # protobuf
         "-DProtobuf_USE_STATIC_LIBS=ON"
-        "-DProtobuf_ROOT=`"$Protobuf_ROOT`""
+        "-DCMAKE_PREFIX_PATH=$protobufRoot"
     )
     cmake .. -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="$BuildType" -DCMAKE_INSTALL_PREFIX="$installPath" $extraCMakeArgs $configureOptions
     $result = $LASTEXITCODE
@@ -66,7 +62,7 @@ function build-install-grpc {
     }
     $env:CC = $oldCC
     $env:CXX = $oldCXX
-    Set-EnvironmentVariable "gRPC_ROOT_$Postfix" "$InstallPath"
+    Set-EnvironmentVariable "gRPC_ROOT_$Postfix" "$installPath"
     Pop-Location
     Remove build-grpc
     if ($result -ne 0) {
@@ -111,44 +107,15 @@ Verify-Checksum $targetFile $sha1
 Extract-7Zip $targetFile $basedir
 Remove $targetFile
 
-Push-Location $basedir
+Push-Location $targetDir
 
-# Create a new top-level CMakeLists.txt file so we can set a modern policy
-# for find_package calls
-Write-Output "cmake_minimum_required(VERSION 3.5.1)`nproject(grpc LANGUAGES C CXX)`ncmake_policy(SET CMP0074 NEW)`nadd_subdirectory(grpc-$version)" | Out-File CMakeLists.txt -Encoding utf8
-
-### MinGW
-
-# Check if mingw is where we expect it to be and add it to path:
-$mingwPath = "C:\MINGW1120\mingw64\bin"
-if (!(Test-Path $mingwPath)) {
-    throw "Cannot find mingw in $mingwPath, something is configured wrong"
-}
-
-$oldPath = $env:Path
-$env:Path = "$mingwPath;$env:Path"
-build-install-grpc -CC "gcc" -CXX "g++" -BuildType "Release" -Postfix "mingw"
-$env:Path = $oldPath
-
-### LLVM MinGW
-
-# $llvmMingwPath = "C:\llvm-mingw"
-# if (!(Test-Path $llvmMingwPath)) {
-#     throw "Cannot find llvm-mingw in $llvmMingwPath, something is configured wrong"
-# }
-
-$oldPath = $env:Path
-$env:Path = "$llvmMingwPath\bin;$env:Path"
-# build-install-grpc -CC "clang" -CXX "clang++" -BuildType "Release" -Postfix "llvm_mingw"
-$env:Path = $oldPath
-
-### MSVC
+### gRPC supports only MSVC compiler
 
 EnterVSDevShell
 
-build-install-grpc -CC "cl" -CXX "cl" -BuildType "Release" -Postfix "msvc"
+# We pass along an extra argument to stop gRPC linking with the static runtime to match Protobuf config
+build-install-grpc -CC "cl" -CXX "cl" -BuildType "Release;RelWithDebInfo;Debug" -Postfix "msvc" -ExtraArguments @("-DgRPC_MSVC_STATIC_RUNTIME=OFF")
 
-$env:Path = $oldPath
 Pop-Location
 Remove $basedir
 
