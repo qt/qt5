@@ -45,7 +45,7 @@ $version = "3.1.37"
 $zipVersion = $version -replace '\.', "_"
 $temp = "$env:tmp"
 $cacheUrl = "https://ci-files01-hki.ci.qt.io/input/emsdk/emsdk_windows_${zipVersion}.zip"
-$sha = "cd180cae757e75316d50f2edc2f99a9d2eb83d5b"
+$sha = "5e5c0f50a940be09b82bf8256434f4510270e208"
 
 # Make sure python is in the path
 Prepend-Path "C:\Python27"
