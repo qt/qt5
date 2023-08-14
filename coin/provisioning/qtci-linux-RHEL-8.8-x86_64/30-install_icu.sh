@@ -10,15 +10,15 @@ set -ex
 
 # This script will install ICU
 
-icuVersion="56.1"
+icuVersion="73.2"
 icuLocation="/usr/lib64"
-sha1="6dd9ca6b185681a7ddc4bb94fd7fced27647a21c"
-baseBinaryPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
-baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64.7z"
+sha1="78332b78ce8d7c42a41a30e0293171885d632b39"
+baseBinaryPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel8.6-x64.7z"
+baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel8.6-x64.7z"
 
-sha1Dev="bffde26cdea752bee0edd281820c57f1adac3864"
-develPackageURL="http://ci-files01-hki.intra.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
-develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel7.2-x64-devel.7z"
+sha1Dev="edc9cba31ffeac28bf7360c52b85b5e4d2f39043"
+develPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Rhel8.6-x64-devel.7z"
+develPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Rhel8.6-x64-devel.7z"
 
 echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
