@@ -65,6 +65,24 @@ fi
 
 ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
 
+install_ff_nvcodec_headers() {
+  nv_codec_version="11.1" # use 11.1 to ensure compatibility with 470 nvidia drivers; might be upated to 12.0
+  nv_codec_url_public="https://github.com/FFmpeg/nv-codec-headers/archive/refs/heads/sdk/$nv_codec_version.zip"
+  nv_codec_url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/nv-codec-headers/$nv_codec_version.zip"
+  nv_codec_sha1="bfaa2801725a2eea476939f2177ab50817c3a6ad"
+  #nv_codec_sha1="4f30539f8dd31945da4c3da32e66022f9ca59c08" // 12.0
+  nv_codec_dir="$target_dir/nv-codec-headers-sdk-$nv_codec_version"
+  if [ ! -d  "$nv_codec_dir" ];
+  then
+    InstallFromCompressedFileFromURL "$nv_codec_url_cached" "$nv_codec_url_public" "$nv_codec_sha1" "$target_dir" ""
+  fi
+
+  sudo make -C "$nv_codec_dir" install -j
+
+  # Might be not detected by default on RHEL
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
+}
+
 
 build_ffmpeg() {
   local arch="$1"
@@ -90,6 +108,7 @@ build_ffmpeg() {
 }
 
 if [ "$os" == "linux" ]; then
+  install_ff_nvcodec_headers
   build_ffmpeg
   sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
   SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
