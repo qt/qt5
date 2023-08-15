@@ -7,6 +7,6 @@
 set -ex
 
 curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
-sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main'
+sudo apt-add-repository 'deb https://packagecloud.io/github/git-lfs/ubuntu/ focal main'
 sudo apt update
 sudo apt install git-lfs
