@@ -306,3 +306,18 @@ function EnterVSDevShell {
     }
     return $true
 }
+
+function Invoke-MtCommand {
+  param(
+    [String] $vcVarsScript,
+    [String] $arch,
+    [String] $manifest,
+    [String] $executable
+  )
+  $tempFile = [IO.Path]::GetTempFileName()
+  Add-Content -Path $tempFile -Value $manifest
+  $cmdLine = """$vcVarsScript"" $arch &  mt.exe -manifest ""$tempFile"" -outputresource:""$executable"";1"
+  Write-Output Executing $cmdLine
+  & $Env:SystemRoot\system32\cmd.exe /c $cmdLine | Write-Output
+  Remove-Item $tempFile
+}
