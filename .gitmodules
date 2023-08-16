@@ -318,6 +318,7 @@
 	status = addon
 [submodule "qtgrpc"]
 	depends = qtbase
+	recommends = qtdeclarative
 	path = qtgrpc
 	url = ../qtgrpc.git
 	branch = 6.6
