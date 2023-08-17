@@ -279,3 +279,12 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
         'gRPC_ROOT={{.Env.gRPC_ROOT_mingw}}',
     ]
+-
+    Id: 'focal-arm64-debian-pkg-packaging'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
+    Environment variables: [
+        'DEBIAN_RULES_REF=6.6_dev',
+        'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
+    ]
