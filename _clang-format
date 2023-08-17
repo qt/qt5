@@ -106,3 +106,9 @@ AlignEscapedNewlines: Left
 # initializer list in list-initialization.
 SpaceBeforeCpp11BracedList: false
 
+---
+# Use the Google-based style for .proto files.
+Language: Proto
+BasedOnStyle: Google
+IndentWidth: 4
+ColumnLimit: 100
