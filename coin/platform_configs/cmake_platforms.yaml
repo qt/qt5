@@ -167,16 +167,6 @@ Configurations:
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
-    Id: 'rhel-8.6'
-    Template: 'qtci-linux-RHEL-8.6-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies']
-    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF'
-    ]
--
     Id: 'rhel-8.8'
     Template: 'qtci-linux-RHEL-8.8-x86_64-50'
     Compiler: 'GCC'
