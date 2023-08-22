@@ -37,9 +37,9 @@ Configurations:
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
     Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR']
-    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Configure arguments: '-nomake examples -release -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd -qtlibinfix TestInfix',
+        'TARGET_CONFIGURE_ARGS=-release -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd -qtlibinfix TestInfix',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FORCE_BUILD_TOOLS=ON',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARM64_TOOLCHAIN_ENVSETUP}}',
         "QT_CMAKE_DIR=/opt/cmake-3.24.2/bin",
@@ -47,5 +47,17 @@ Configurations:
         'GST_PLUGIN_SCANNER={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
         'QT_QUICK_BACKEND=software',
     ]
-
+-
+    Id: 'Axivion-qnx-710-arm64-on-linux'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Target os: 'QNX_710'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'ubuntu-22.04'
+    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-release -no-dbus -nomake examples -qtlibinfix TestInfix',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+    ]
 
