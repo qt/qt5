@@ -18,7 +18,7 @@ function InstallMinGW
     $targetdir = "C:\$envvar"
 
     $url_original = "https://github.com/cristianadam/mingw-builds/releases/download/v" + $version + "-" + $revision + "/" + $arch + "-" + $version + "-release-" + $threading + "-" + $ex_handling + "-" + $build_ver + "-" + $revision + ".7z"
-    $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\" + $release + ".7z"
+    $url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/" + $release + ".7z"
     $mingwPackage = "C:\Windows\Temp\MinGW-$version.zip"
     Download $url_original $url_cache $mingwPackage
     Verify-Checksum $mingwPackage $sha1

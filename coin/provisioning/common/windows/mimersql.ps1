@@ -8,7 +8,7 @@
 
 $version = "1107b"
 
-$url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\MimerSQLInstaller_x64_" + $version + ".exe"
+$url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/MimerSQLInstaller_x64_" + $version + ".exe"
 $url_official = "https://install.mimer.com/qt/windows_" + $version + "/MimerSQLInstaller_x64.exe"
 $mimersqlPackage = "C:\Windows\Temp\MimerSQLInstaller_x64_" + $version + ".exe"
 $sha1 = "A709A06EA1D897B13FA10DBDD4BE3BD0FEB04B28"
