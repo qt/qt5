@@ -2,22 +2,15 @@
 # 3.16 is the absolute minimum though.
 cmake_minimum_required(VERSION 3.16...3.21)
 
-
 # set QT_SUPERBUILD early, so that qtbase/.cmake.conf can check it
 set(QT_SUPERBUILD TRUE)
 
 # Include qtbase's .cmake.conf for access to QT_REPO_MODULE_VERSION
 set(__qt6_qtbase_src_path "${CMAKE_CURRENT_SOURCE_DIR}/qtbase")
 include("${__qt6_qtbase_src_path}/.cmake.conf")
+include("${__qt6_qtbase_src_path}/cmake/QtBaseTopLevelHelpers.cmake")
 
-# Run platform auto-detection /before/ the first project() call and thus
-# before the toolchain file is loaded.
-# Don't run auto-detection when doing standalone tests. In that case, the detection
-# results are taken from either QtBuildInternals or the qt.toolchain.cmake file.
-
-if(NOT QT_BUILD_STANDALONE_TESTS)
-    include("${__qt6_qtbase_src_path}/cmake/QtAutoDetect.cmake")
-endif()
+qt_internal_top_level_setup_autodetect()
 
 project(Qt
     VERSION "${QT_REPO_MODULE_VERSION}"
@@ -26,24 +19,15 @@ project(Qt
     LANGUAGES CXX C ASM
 )
 
-# Required so we can call ctest from the root build directory
-enable_testing()
+qt_internal_top_level_setup_after_project()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-if (NOT QT_BUILD_STANDALONE_TESTS)
-    list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake")
-    list(APPEND CMAKE_MODULE_PATH
-        "${__qt6_qtbase_src_path}/cmake/3rdparty/extra-cmake-modules/find-modules")
-    list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake/3rdparty/kwin")
-endif()
+qt_internal_top_level_setup_cmake_module_path()
 
 include(QtTopLevelHelpers)
 include(ECMOptionalAddSubdirectory)
 
-# Also make sure the CMake config files do not recreate the already-existing targets
-if (NOT QT_BUILD_STANDALONE_TESTS)
-    set(QT_NO_CREATE_TARGETS TRUE)
-endif()
+qt_internal_top_level_before_build_submodules()
 
 # Get submodule list if not already defined
 if(NOT QT_BUILD_SUBMODULES)
@@ -112,18 +96,7 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
     message(STATUS "Configuring submodule '${module}'")
     ecm_optional_add_subdirectory("${module}")
 
-    if(module STREQUAL "qtbase")
-        if (NOT QT_BUILD_STANDALONE_TESTS)
-            list(APPEND CMAKE_PREFIX_PATH "${QtBase_BINARY_DIR}/${INSTALL_LIBDIR}/cmake")
-            list(APPEND CMAKE_FIND_ROOT_PATH "${QtBase_BINARY_DIR}")
-        endif()
-    endif()
+    qt_internal_top_level_after_add_subdirectory()
 endforeach()
 
-if(NOT QT_BUILD_STANDALONE_TESTS)
-    # Display a summary of everything
-    include(QtBuildInformation)
-    include(QtPlatformSupport)
-    qt_print_feature_summary()
-    qt_print_build_instructions()
-endif()
+qt_internal_top_level_end()
