@@ -145,6 +145,10 @@ sudo dnf -y module install nodejs:16
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
 sudo pip3 install --upgrade pip
+# Configure pip
+sudo pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+sudo pip config --user set global.extra-index-url https://pypi.org/simple/
+
 sudo pip3 install virtualenv wheel
 # Just make sure we have virtualenv to run with python3.8 -m virtualenv
 sudo python3.8 -m pip install virtualenv wheel

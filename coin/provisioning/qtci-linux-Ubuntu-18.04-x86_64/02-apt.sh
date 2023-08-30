@@ -169,6 +169,9 @@ echo "Installing packages"
 waitLoop
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 
+# Configure pip
+pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+pip config --user set global.extra-index-url https://pypi.org/simple/
+
 OpenSSLVersion="$(openssl version |cut -b 9-14)"
 echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
-

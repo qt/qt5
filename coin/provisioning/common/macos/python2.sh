@@ -20,6 +20,10 @@ InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
 InstallPip python2.7
 
+echo "Configure pip"
+/Library/Frameworks/Python.framework/Versions/2.7/bin/pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+/Library/Frameworks/Python.framework/Versions/2.7/bin/pip config --user set global.extra-index-url https://pypi.org/simple/
+
 /Library/Frameworks/Python.framework/Versions/2.7/bin/pip install virtualenv
 
 SetEnvVar "PATH" "/Library/Frameworks/Python.framework/Versions/2.7/bin/:\$PATH"

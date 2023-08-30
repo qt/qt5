@@ -69,6 +69,10 @@ InstallPython "$python3Version" "$python3Sha"
 
 python3 --version | grep -F "$python3Version"
 
+# Configure pip
+pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+pip config --user set global.extra-index-url https://pypi.org/simple/
+
 pip3 install --user wheel
 pip3 install --user virtualenv
 

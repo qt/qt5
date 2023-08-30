@@ -12,3 +12,6 @@ sudo zypper -nq install python-devel python-xml
 # install python3
 sudo zypper -nq install python3-base python3 python3-pip python3-devel python3-virtualenv python3-wheel
 
+# Configure pip
+pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+pip config --user set global.extra-index-url https://pypi.org/simple/

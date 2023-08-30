@@ -69,6 +69,10 @@ Run-Executable "$targetDir\python.exe" "-m ensurepip"
 Write-Host "Upgrade pip to the latest version available."
 Run-Executable "$targetDir\python.exe" "-m pip install --upgrade pip"
 
+Write-Host "Configure pip"
+Run-Executable "$targetDir\python.exe" "-m pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache"
+Run-Executable "$targetDir\python.exe" "-m pip config --user set global.extra-index-url https://pypi.org/simple/"
+
 # Install python virtual env
 if (IsProxyEnabled) {
     $proxy = Get-Proxy

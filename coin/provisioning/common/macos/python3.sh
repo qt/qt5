@@ -21,6 +21,10 @@ InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
 
 InstallPip python3.9
 
+echo "Configure pip"
+/Library/Frameworks/Python.framework/Versions/3.9/bin/pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
+/Library/Frameworks/Python.framework/Versions/3.9/bin/pip config --user set global.extra-index-url https://pypi.org/simple/
+
 /Library/Frameworks/Python.framework/Versions/3.9/bin/pip3 install virtualenv wheel html5lib
 
 SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.9/bin"
