@@ -13,7 +13,7 @@ versionNode="v14.18.2"
 tarBallVersion=$(sed "s/\./\_/g" <<<"$version")
 if uname -a |grep -q Darwin; then
     tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
-    sha="e9369deda4013fc24e085affc9975833cb2d9872"
+    sha="fe9900b0f27ada608f25552dbd4a58bf62c6f05b"
 else
     tarBallPackage="emsdk_linux_${tarBallVersion}.tar.gz"
     sha="000bbd5666d8fc1afbf2dce1a7938ef0efeeab3f"
