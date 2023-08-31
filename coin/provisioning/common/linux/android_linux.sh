@@ -38,11 +38,14 @@ android14SystemZipName="android14system_UPB5_230623_003.tar.gz"
 android14SystemZipSha="9680db449516ad6212525cc53f2bc027cf8b3322"
 android14SystemPath="$basePath/$android14SystemZipName"
 
-# Android automotive
-sdkApiLevelAutomotive="android-33"
-androidAutomotive13Url="$basePath/${sdkApiLevelAutomotive}_automotive.tar.gz"
-androidAutomotive="android-automotive"
-androidAutomotive13Sha="b020a938ec46af2510047284406e9bed608cad03"
+# Android Automotive max SDK level image
+sdkApiLevelAutomotiveMax="android-33"
+androidAutomotiveMaxUrl="$basePath/${sdkApiLevelAutomotiveMax}_automotive.tar.gz"
+androidAutomotiveMaxSha="b020a938ec46af2510047284406e9bed608cad03"
+# Android Automotive min SDK level image
+sdkApiLevelAutomotiveMin="android-29"
+androidAutomotiveMinUrl="$basePath/${sdkApiLevelAutomotiveMin}_automotive.tar.gz"
+androidAutomotiveMinSha="e6092585c00f87eb3b20a2eb7fdf6add42342d2f"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
@@ -148,12 +151,19 @@ echo "no" | ./avdmanager create avd -n emulator_x86_64_api_33 -c 2048M -f \
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_34 -c 2048M -f \
     -k "system-images;android-34;google_apis;x86_64"
 
-echo "Install $sdkApiLevelAutomotive $androidAutomotive"
-DownloadURL "$androidAutomotive13Url" "$androidAutomotive13Url" "$androidAutomotive13Sha" \
-    "/tmp/${sdkApiLevelAutomotive}_automotive.tar.gz"
-sudo tar -xzf "/tmp/${sdkApiLevelAutomotive}_automotive.tar.gz" -C "$sdkTargetFolder/system-images"
+echo "Install maximum supported SDK level image for Android Automotive $sdkApiLevelAutomotiveMax"
+DownloadURL "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxSha" \
+    "/tmp/${sdkApiLevelAutomotiveMax}_automotive.tar.gz"
+sudo tar -xzf "/tmp/${sdkApiLevelAutomotiveMax}_automotive.tar.gz" -C "$sdkTargetFolder/system-images"
 echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_33 -c 2048M -f \
-    -k "system-images;${sdkApiLevelAutomotive};${androidAutomotive};x86_64"
+    -k "system-images;${sdkApiLevelAutomotiveMax};android-automotive;x86_64"
+
+echo "Install minimum supported SDK level image for Android Automotive $sdkApiLevelAutomotiveMin"
+DownloadURL "$androidAutomotiveMinUrl" "$androidAutomotiveMinUrl" "$androidAutomotiveMinSha" \
+    "/tmp/${sdkApiLevelAutomotiveMin}_automotive.tar.gz"
+sudo tar -xzf "/tmp/${sdkApiLevelAutomotiveMin}_automotive.tar.gz" -C $sdkTargetFolder/system-images
+echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_29 -c 2048M -f \
+    -k "system-images;${sdkApiLevelAutomotiveMin};android-automotive;x86_64"
 
 # Purely informative, show the list of avd devices
 ./avdmanager list avd
