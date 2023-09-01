@@ -29,8 +29,6 @@ project(Qt
 # Required so we can call ctest from the root build directory
 enable_testing()
 
-set(qt_module_prop_prefix "__qt_prop_")
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (NOT QT_BUILD_STANDALONE_TESTS)
     list(APPEND CMAKE_MODULE_PATH "${__qt6_qtbase_src_path}/cmake")
