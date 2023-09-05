@@ -1,6 +1,6 @@
 Version: 2
 Include: [
-  cmake_platforms.yaml,
-  cmake_platforms_qemu_vxworks.yaml
+    cmake_platforms.yaml,
+    cmake_platforms_qemu_vxworks.yaml
 ]
 Configurations: []
