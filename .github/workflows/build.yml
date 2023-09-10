@@ -26,6 +26,9 @@ jobs:
         run: |
           git config --global user.email "builder@nothing.com"
           git config --global user.name "Builder"
+          if [ -z "$(git remote -v | grep origin)" ]; then
+             git remote add origin https://github.com/SanderVocke/qt-wasix.git
+          fi
 
       - name: Submodules
         run: |
