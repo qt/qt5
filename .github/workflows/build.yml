@@ -33,7 +33,9 @@ jobs:
 
       - name: Submodules
         run: |
-          ./init-repository --module-subset="qtbase,qtdeclarative"
+          git submodule init --recursive -- qtbase
+          git submodule init --recursive -- qdeclarative
+          git submodule update
       
       - name: Install WASIX sysroot
         run: |
