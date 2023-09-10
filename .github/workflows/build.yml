@@ -26,6 +26,7 @@ jobs:
         run: |
           git config --global user.email "builder@nothing.com"
           git config --global user.name "Builder"
+          git config --global --add safe.directory /__w/qt-wasix/qt-wasix
           if [ -z "$(git remote -v | grep origin)" ]; then
              git remote add origin https://github.com/SanderVocke/qt-wasix.git
           fi
