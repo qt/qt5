@@ -30,6 +30,7 @@ jobs:
           if [ -z "$(git remote -v | grep origin)" ]; then
              git remote add origin https://github.com/SanderVocke/qt-wasix.git
           fi
+          git fetch origin original
 
       - name: Submodules
         run: |
@@ -60,8 +61,10 @@ jobs:
       - name: Configure Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
         run: |
+          git clone -b original . hostsrc
           mkdir -p qt6-build-host
-          cd qt6-build-host && ../configure -prefix /opt/qt6 -shared -no-opengl
+          cd hostsrc && ./init-repository --module-subset="qtbase,qtdeclarative"
+          cd qt6-build-host && ../hostsrc/configure -prefix /opt/qt6 -shared -no-opengl
       
       - name: Build and install Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
