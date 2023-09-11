@@ -63,7 +63,11 @@ jobs:
         run: |
           git clone -b original . hostsrc
           mkdir -p qt6-build-host
-          cd hostsrc && ./init-repository --module-subset="qtbase,qtdeclarative"
+          cd hostsrc
+          git remote rename origin local
+          git fetch local original
+          git remote add origin https://github.com/qt/qt5.git
+          ./init-repository --module-subset="qtbase,qtdeclarative"
           cd qt6-build-host && ../hostsrc/configure -prefix /opt/qt6 -shared -no-opengl
       
       - name: Build and install Qt6 (host)
