@@ -1,6 +1,6 @@
 [submodule "qtbase"]
 	path = qtbase
-	url = git@github.com:SanderVocke/qtbase-wasix.git
+	url = https://github.com/SanderVocke/qtbase-wasix.git
 	branch = dev
 	status = essential
 [submodule "qtsvg"]
@@ -13,7 +13,7 @@
 	depends = qtbase
 	recommends = qtimageformats qtshadertools qtsvg qtlanguageserver
 	path = qtdeclarative
-	url = git@github.com:SanderVocke/qtdeclarative-wasix.git
+	url = https://github.com/SanderVocke/qtdeclarative-wasix.git
 	branch = dev
 	status = essential
 [submodule "qtactiveqt"]
