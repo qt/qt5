@@ -61,12 +61,14 @@ jobs:
       - name: Configure Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
         run: |
-          git clone -b original . hostsrc
+          git clone . hostsrc
           mkdir -p qt6-build-host
           cd hostsrc
           git remote rename origin local
-          git fetch local original
+          git remote add github https://github.com/SanderVocke/qt-wasix.git
           git remote add origin https://github.com/qt/qt5.git
+          git fetch github original
+          git checkout github/original
           ./init-repository --module-subset="qtbase,qtdeclarative"
           cd qt6-build-host && ../hostsrc/configure -prefix /opt/qt6 -shared -no-opengl
       
