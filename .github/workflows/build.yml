@@ -55,8 +55,8 @@ jobs:
         id: cache-qt-build-host
         if: ${{ !env.ACT }}
         with:
-          path: qt6-build-host
-          key: qt6-build-host-${{ env.QT_REV }}-1
+          path: /opt/qt6
+          key: qt6-build-host-${{ env.QT_REV }}-2
 
       - name: Configure Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
@@ -84,8 +84,8 @@ jobs:
         id: cache-save-qt-build-host
         if: ${{ !env.ACT }}
         with:
-          path: qt6-build-host
-          key: qt6-build-host-${{ env.QT_REV }}-1
+          path: /opt/qt6
+          key: qt6-build-host-${{ env.QT_REV }}-2
 
       - name: Configure Qt6 (WASIX)
         run: >
