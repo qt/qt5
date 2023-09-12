@@ -77,6 +77,7 @@ jobs:
         run: |
           cd qt6-build-host && cmake --build . --parallel 4
           cmake --install .
+          rm -rf ../hostsrc
       
       - name: Cache save Qt host build
         uses: actions/cache/save@v3
