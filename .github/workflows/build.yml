@@ -87,6 +87,13 @@ jobs:
           path: /opt/qt6
           key: qt6-build-host-${{ env.QT_REV }}-2
 
+      - name: Upload host build
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: qt6-host
+          path: /opt/qt6
+
       - name: Configure Qt6 (WASIX)
         run: >
           mkdir -p qt6-build &&
@@ -105,5 +112,11 @@ jobs:
         with:
           name: qt6-wasix
           path: qt6-build
+
+      - name: Setup failure upterm session
+        uses: lhotari/action-upterm@v1
+        if: ${{ failure() }}
+        with:
+          wait-timeout-minutes: 15
 
             
