@@ -17,7 +17,7 @@ jobs:
       - name: Update and install dependencies
         run: |
           pacman -Syu --noconfirm
-          pacman -Sy --noconfirm coreutils nodejs npm wget git cmake mesa ninja llvm clang rsync cargo rust lld unzip make wasmer
+          pacman -Sy --noconfirm coreutils nodejs npm wget git cmake mesa ninja llvm clang rsync cargo rust lld unzip make wasmer tmux
 
       - name: Checkout
         uses: actions/checkout@v3
