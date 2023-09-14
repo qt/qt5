@@ -17,7 +17,7 @@ jobs:
       - name: Update and install dependencies
         run: |
           pacman -Syu --noconfirm
-          pacman -Sy --noconfirm coreutils nodejs npm wget git cmake mesa ninja llvm clang rsync cargo rust lld unzip make wasmer
+          pacman -Sy --noconfirm coreutils nodejs npm wget git cmake mesa ninja llvm clang rsync cargo rust lld unzip make wasmer tmux
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,10 +26,17 @@ jobs:
         run: |
           git config --global user.email "builder@nothing.com"
           git config --global user.name "Builder"
+          git config --global --add safe.directory /__w/qt-wasix/qt-wasix
+          if [ -z "$(git remote -v | grep origin)" ]; then
+             git remote add origin https://github.com/SanderVocke/qt-wasix.git
+          fi
+          git fetch origin original
 
       - name: Submodules
         run: |
-          ./init-repository --module-subset="qtbase,qtdeclarative"
+          git submodule init -- qtbase
+          git submodule init -- qtdeclarative
+          git submodule update
       
       - name: Install WASIX sysroot
         run: |
@@ -48,34 +55,43 @@ jobs:
         id: cache-qt-build-host
         if: ${{ !env.ACT }}
         with:
-          path: qt6-build-host
-          key: qt6-build-host-${{ env.QT_REV }}-1
+          path: /opt/qt6
+          key: qt6-build-host-${{ env.QT_REV }}-2
 
       - name: Configure Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
         run: |
+          git clone . hostsrc
           mkdir -p qt6-build-host
-          cd qt6-build-host && ../configure -prefix /opt/qt6 -shared -no-opengl
+          cd hostsrc
+          git remote rename origin local
+          git remote add github https://github.com/SanderVocke/qt-wasix.git
+          git remote add origin https://github.com/qt/qt5.git
+          git fetch github original
+          git checkout github/original
+          ./init-repository --module-subset="qtbase,qtdeclarative"
+          cd ../qt6-build-host && ../hostsrc/configure -prefix /opt/qt6 -shared -no-opengl
       
       - name: Build and install Qt6 (host)
         if: steps.cache-qt-build-host.outputs.cache-hit != 'true'
         run: |
           cd qt6-build-host && cmake --build . --parallel 4
           cmake --install .
+          rm -rf ../hostsrc
       
       - name: Cache save Qt host build
         uses: actions/cache/save@v3
         id: cache-save-qt-build-host
         if: ${{ !env.ACT }}
         with:
-          path: qt6-build-host
-          key: qt6-build-host-${{ env.QT_REV }}-1
+          path: /opt/qt6
+          key: qt6-build-host-${{ env.QT_REV }}-2
 
       - name: Configure Qt6 (WASIX)
         run: >
           mkdir -p qt6-build &&
           cd qt6-build &&
-          export COMPILEFLAGS="-D__linux__ -DQT_NO_VERSION_TAGGING -DQT_NO_EXCEPTIONS -I$(pwd)/../qt6-wasm/qtbase/mkspecs/common/posix -D_WASI_EMULATED_PROCESS_CLOCKS -DQT_LINUXBASE -DWASIX --sysroot=/opt/wasix-sysroot" &&
+          export COMPILEFLAGS="-D__linux__ -DQT_NO_VERSION_TAGGING -DQT_NO_EXCEPTIONS -I$(pwd)/../qtbase/mkspecs/common/posix -D_WASI_EMULATED_PROCESS_CLOCKS -DQT_LINUXBASE -DWASIX --sysroot=/opt/wasix-sysroot" &&
           ../configure -prefix /opt/qt6-wasm -static -no-opengl -platform unsupported -qt-host-path /opt/qt6 -no-feature-brotli -no-feature-qml-network -no-feature-networkproxy -no-feature-networkinterface -no-feature-networklistmanager -no-feature-evdev -no-feature-topleveldomain -no-feature-linux-netlink -no-feature-dnslookup -no-feature-networkdiskcache -no-feature-library -no-feature-localserver -no-feature-libudev -- --fresh -DCMAKE_TOOLCHAIN_FILE=/opt/wasix-sysroot/clang-wasix.cmake_toolchain -DCMAKE_SYSROOT=/opt/wasix-sysroot -DCMAKE_CXX_FLAGS="$COMPILEFLAGS" -DCMAKE_C_FLAGS="$COMPILEFLAGS" -DUNIX=1 -DQT_FORCE_BUILD_TOOLS=OFF
       
       - name: Build Qt6 (WASIX)
