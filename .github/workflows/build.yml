@@ -1,7 +1,9 @@
 name: Build curated targets against WASIX
 
 on:
-  workflow_dispatch
+  - push
+  - pull_request
+  - workflow_dispatch
 
 permissions:
   contents: read
