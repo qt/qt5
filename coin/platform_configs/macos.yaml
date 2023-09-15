@@ -55,6 +55,12 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
+    -
+        Id: 'macos-14-x86_64-tests'
+        Template: 'qtci-macos-14-x86_64-105'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging', 'Insignificant']
+        Platform dependency: 'macos-universal-on-x86_64'
 
     # And arm64
 
@@ -76,6 +82,12 @@ Configurations:
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
+    -
+        Id: 'macos-14-arm64-tests'
+        Template: 'qtci-macos-14-arm64'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging', 'Insignificant']
+        Platform dependency: 'macos-universal-on-x86_64'
 
     # Test the universal packaging built on arm64
 
@@ -96,6 +108,12 @@ Configurations:
         Template: 'qtci-macos-13-x86_64-103'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
+        Platform dependency: 'macos-universal-on-arm64'
+    -
+        Id: 'macos-14-arm-on-x86_64-tests'
+        Template: 'qtci-macos-14-x86_64-105'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Insignificant']
         Platform dependency: 'macos-universal-on-arm64'
 
     # =========================================================================
@@ -164,4 +182,16 @@ Configurations:
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
+        Platform dependency: 'macos-13-arm64-developer-build'
+    -
+        Id: 'macos-14-x86_64-developer-build-tests'
+        Template: 'qtci-macos-14-x86_64-105'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'Insignificant']
+        Platform dependency: 'macos-13-x86_64-developer-build'
+    -
+        Id: 'macos-14-arm64-developer-build-tests'
+        Template: 'qtci-macos-14-arm64'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'Insignificant']
         Platform dependency: 'macos-13-arm64-developer-build'
