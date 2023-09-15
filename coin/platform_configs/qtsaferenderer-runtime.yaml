@@ -61,4 +61,22 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-release -no-dbus -nomake examples -qtlibinfix TestInfix',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
     ]
+-
+    Id: "Axivion-integrity-arm64"
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Target os: 'INTEGRITY'
+    Platform dependency: 'ubuntu-22.04'
+    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR', 'VMSize16']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql -no-feature-brotli',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64 -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DUNIX=ON --debug-trycompile',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_system_webp=OFF -DQT_FEATURE_timezone=OFF',
+        'INTEGRITY_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/integrity',
+        'INTEGRITY_BSP=platform-sa8155', 'INTEGRITY_BUILD_TARGET=rel',
+        'QC_MULTIMEDIA_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/include/amss/multimedia',
+        'GL_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/include/public',
+        'GL_LIB_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/base:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/display:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/graphics:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/platform/:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt/',
+        'PATH=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/comp:$PATH',
+    ]
 
