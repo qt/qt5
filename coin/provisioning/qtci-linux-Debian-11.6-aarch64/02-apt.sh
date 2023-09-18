@@ -173,6 +173,7 @@ installPackages+=(net-tools)
 installPackages+=(bridge-utils)
 ## For debian building debian packages
 installPackages+=(sbuild)
+installPackages+=(ubuntu-dev-tools)
 installPackages+=(apt-cacher-ng)
 installPackages+=(devscripts)
 installPackages+=(piuparts)

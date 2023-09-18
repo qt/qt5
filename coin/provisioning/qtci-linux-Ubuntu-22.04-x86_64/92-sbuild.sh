@@ -77,12 +77,15 @@ sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
 # Create chroot
-#sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-amd64-sbuild http://127.0.0.1:3142/deb.debian.org/debian
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-amd64-sbuild
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-amd64
+# For ubuntu 20.04
+echo "Create chroot for Ubuntu Focal"
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates focal /srv/chroot/focal-amd64 http://archive.ubuntu.com/ubuntu/
+echo "Done creating chroot for Ubuntu Focal"
 
 # Update chroot
 sudo sbuild-update -udcar stable
-
+sudo sbuild-update -udcar focal
 
 
 
