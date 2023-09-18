@@ -251,6 +251,7 @@ installPackages+=(net-tools)
 installPackages+=(bridge-utils)
 # For Debian packaging
 installPackages+=(sbuild)
+installPackages+=(ubuntu-dev-tools)
 
 echo "Running update for apt"
 waitLoop
