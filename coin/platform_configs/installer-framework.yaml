@@ -6,8 +6,18 @@ Configurations:
     Compiler: 'MSVC2019'
     Target arch: 'x86_64'
     Features: ['Packaging', 'UseConfigure', 'DoNotBuildTests']
-    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -no-icu -static -release -no-sql-sqlite -openssl-linked -static-runtime OPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
-    Environment variables: ['TARGET_ARCHITECTURE=x86_64', 'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;', 'LLVM_INSTALL_DIR=', 'LLVM_INSTALL_DIR_msvc=', 'QDOC_USE_STATIC_LIBCLANG=', 'INCLUDE={{.Env.ZLIB}};{{.Env.XZ}}\src\liblzma\api;{{.Env.BZIP2}};{{.Env.INCLUDE}}', 'LIB={{.Env.ZLIB}};{{.Env.XZ}}\windows\vs2019\ReleaseMT\x64\liblzma{{.Env.BZIP2}};{{.Env.LIB}}']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -no-icu -static -release -no-sql-sqlite -openssl-linked -static-runtime'
+    Environment variables: [
+        'TARGET_ARCHITECTURE=x86_64',
+        'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;',
+        'LLVM_INSTALL_DIR=',
+        'LLVM_INSTALL_DIR_msvc=',
+        'QDOC_USE_STATIC_LIBCLANG=',
+        'INCLUDE={{.Env.ZLIB}};{{.Env.XZ}}\src\liblzma\api;{{.Env.BZIP2}};{{.Env.INCLUDE}}',
+        'LIB={{.Env.ZLIB}};{{.Env.XZ}}\windows\vs2019\ReleaseMT\x64\liblzma{{.Env.BZIP2}};{{.Env.LIB}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_MSVC_STATIC_RT=TRUE',
+        'NON_QTBASE_CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_MSVC_STATIC_RT=TRUE',
+    ]
     Environment script: ['%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
     Template: 'qtci-macos-12-x86_64-105'
