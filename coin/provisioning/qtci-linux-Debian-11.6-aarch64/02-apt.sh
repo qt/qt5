@@ -236,6 +236,7 @@ installPackages+=(pkg-config)
 installPackages+=(pkg-kde-tools)
 installPackages+=(unixodbc-dev)
 installPackages+=(zlib1g-dev)
+installPackages+=(libusb-1.0-0-dev)
 # For IFW
 installPackages+=(libbz2-dev)
 
