@@ -29,7 +29,11 @@ Configurations:
     Template: 'qtci-linux-RHEL-8.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'QtInstaller', 'UseConfigure', 'DoNotBuildTests']
-    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-feature-gssapi -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked -bundled-xcb-xinput -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz OPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-feature-gssapi -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked -bundled-xcb-xinput -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DOPENSSL_USE_STATIC_LIBS=TRUE',
+        'NON_QTBASE_CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.STATIC_OPENSSL_HOME}} -DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_CRYPTO_LIBRARY={{.Env.STATIC_OPENSSL_HOME}}/lib64/libcrypto.a -DOPENSSL_SSL_LIBRARY={{.Env.STATIC_OPENSSL_HOME}}/lib64/libssl.a',
+    ]
 -
     Template: 'qtci-macos-11-x86_64-104'
     Compiler: 'Clang'
