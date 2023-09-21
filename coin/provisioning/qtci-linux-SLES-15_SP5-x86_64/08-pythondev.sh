@@ -9,9 +9,10 @@
 set -ex
 
 PROVISIONING_DIR="$(dirname "$0")/../"
-. "$PROVISIONING_DIR"/common/unix/common.sourced.sh
-. "$PROVISIONING_DIR"/common/unix/DownloadURL.sh
-
+# shellcheck source=../common/unix/common.sourced.sh
+source "${BASH_SOURCE%/*}/../common/unix/common.sourced.sh"
+# shellcheck source=../common/unix/DownloadURL.sh
+source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 # Selected installation instructions coming from:
 # https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/build_python3.sh
@@ -33,9 +34,9 @@ function InstallPython {
 
     #Download Source code
     DownloadURL  \
-        http://ci-files01-hki.ci.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz  \
-        https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz  \
-        $PACKAGE_SHA
+        "http://ci-files01-hki.ci.qt.io/input/python/Python-${PACKAGE_VERSION}.tar.xz"  \
+        "https://www.python.org/ftp/${PACKAGE_NAME}/${PACKAGE_VERSION}/Python-${PACKAGE_VERSION}.tar.xz"  \
+        "$PACKAGE_SHA"
     tar -xf "Python-${PACKAGE_VERSION}.tar.xz"
 
     #Configure and Build
@@ -52,7 +53,7 @@ function InstallPython {
 
     #Verify python installation
     export PATH="/usr/local/bin:${PATH}"
-    if command -V "$PACKAGE_NAME"${PACKAGE_VERSION:0:1} >/dev/null
+    if command -V "$PACKAGE_NAME${PACKAGE_VERSION:0:1}" >/dev/null
     then
         printf -- "%s installation completed. Please check the Usage to start the service.\n" "$PACKAGE_NAME"
     else
@@ -66,7 +67,7 @@ function InstallPython {
 InstallPython "$python2Version" "$python2Sha"
 InstallPython "$python3Version" "$python3Sha"
 
-python3 --version | fgrep "$python3Version"
+python3 --version | grep -F "$python3Version"
 
 pip3 install --user wheel
 pip3 install --user virtualenv
