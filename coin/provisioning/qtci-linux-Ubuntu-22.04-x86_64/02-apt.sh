@@ -221,6 +221,8 @@ installPackages+=(ubuntu-dev-tools)
 # cifs-utils, for mounting smb drive
 installPackages+=(keyutils)
 installPackages+=(cifs-utils)
+# VxWorks QEMU network setup (tunctl)
+installPackages+=(uml-utilities)
 
 echo "Running update for apt"
 waitLoop

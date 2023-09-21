@@ -1,0 +1,11 @@
+Version: 2
+Module only: True
+Include: [
+    cmake_platforms.yaml: [
+        "ubuntu-22.04"
+    ],
+    cmake_platforms_qemu_vxworks.yaml: [
+        "vxworks-imx6"
+    ]
+]
+Configurations: []
