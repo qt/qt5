@@ -505,3 +505,41 @@ function(qt_internal_foreach_repo_run)
     )
     message("Successes: ${count_success}")
 endfunction()
+
+# The function collects repos and dependencies that are required to build
+# repos listed in ARGN. If the BUILD_<repo> is defined the 'repo' will be
+# excluded from the list.
+function(qt_internal_collect_modules_only out_repos)
+    set(initial_modules "${ARGN}")
+    get_filename_component(qt5_repo_dir "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+    # Overriding CMAKE_CURRENT_SOURCE_DIR is ugly but works
+    set(CMAKE_CURRENT_SOURCE_DIR "${qt5_repo_dir}")
+    if(NOT initial_modules)
+        qt_internal_find_modules(initial_modules)
+    endif()
+
+    qt_internal_sort_module_dependencies("${initial_modules}" ${out_repos})
+    foreach(module IN LISTS ${out_repos})
+        # Check for unmet dependencies
+        if(DEFINED BUILD_${module} AND NOT BUILD_${module})
+            list(REMOVE_ITEM ${out_repos} ${module})
+            continue()
+        endif()
+        get_property(required_deps GLOBAL PROPERTY QT_REQUIRED_DEPS_FOR_${module})
+        get_property(dependencies GLOBAL PROPERTY QT_DEPS_FOR_${module})
+        foreach(dep IN LISTS dependencies)
+            set(required FALSE)
+            if(dep IN_LIST required_deps)
+                set(required TRUE)
+            endif()
+            if(required AND DEFINED BUILD_${dep} AND NOT BUILD_${dep})
+                set(BUILD_${module} FALSE)
+                list(REMOVE_ITEM ${out_repos} ${module})
+                break()
+            endif()
+        endforeach()
+    endforeach()
+
+    set(${out_repos} "${${out_repos}}" PARENT_SCOPE)
+endfunction()
