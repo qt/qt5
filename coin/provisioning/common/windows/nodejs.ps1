@@ -42,13 +42,13 @@
 # This script will install Node.js
 # Needed by QtWebengine
 
-$version = "18.16.0"
+$version = "20.7.0"
 if (Is64BitWinHost) {
     $arch = "x64"
-    $sha256 = "007848640ba414f32d968d303e75d9841ecd2cd95d6fdd81f80bc3dcbd74ae44"
+    $sha256 = "b3e5cbf8e247c75f9ddd235d49cfe40f25dde65bdd0eec4cefbca2805d80376b"
 } else {
     $arch = "x86"
-    $sha256 = "681be28e0acd057b4798f357d21eec5f49e21bc803bbbefeb1072bb4f166025a"
+    $sha256 = "d6a3c63a5ae71374c144a33c418ab96be497b08df0e9f51861a78127db03aeb5"
 }
 
 $package = "C:\Windows\temp\nodejs-$version.7z"
