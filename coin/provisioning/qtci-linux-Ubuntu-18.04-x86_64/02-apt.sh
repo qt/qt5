@@ -119,6 +119,9 @@ installPackages+=(libgstreamer-plugins-good1.0-dev)
 installPackages+=(libgstreamer-plugins-bad1.0-dev)
 installPackages+=(yasm)
 installPackages+=(libva-dev)
+# for QtMultimedia streaming tests
+installPackages+=(vlc-bin)
+installPackages+=(vlc-plugin-base)
 
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 installPackages+=(g++-multilib)
