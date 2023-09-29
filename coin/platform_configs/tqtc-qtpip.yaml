@@ -1,12 +1,78 @@
 Version: 2
-Module only: true
-Include: [
-  cmake_platforms.yaml: [
-    "windows-10_22h2-msvc2019",
-    "rhel-9.6"
-  ],
-  macos.yaml: [
-    "macos-universal-on-arm64"
-  ]
-]
-Configurations: []
+Module only: True
+Configurations:
+-
+    Id: 'win-on-x86_64'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'MSVC2022'
+    Target arch: 'x86_64'
+    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -no-icu -static -release -no-sql-sqlite -openssl-linked -static-runtime'
+    Environment variables: [
+        'TARGET_ARCHITECTURE=x86_64',
+        'PATH=%PATH%;%CI_JOM_PATH%;C:\Utils\gnuwin32\bin;',
+        'LLVM_INSTALL_DIR=',
+        'LLVM_INSTALL_DIR_msvc=',
+        'QDOC_USE_STATIC_LIBCLANG=',
+        'VCPKG_HOST_TRIPLET=x64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=x64-windows-qt',
+        'INCLUDE={{.Env.ZLIB_PATH_AMD64}};{{.Env.XZ}}\src\liblzma\api;{{.Env.BZIP2}};{{.Env.INCLUDE}}',
+        'LIB={{.Env.ZLIB_PATH_AMD64}};{{.Env.XZ}}\windows\vs2019\ReleaseMT\x64\liblzma;{{.Env.BZIP2}};{{.Env.LIB}}',
+        'CMAKE_ARGS=-DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_MSVC_STATIC_RT=TRUE -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded',
+        'NON_QTBASE_CMAKE_ARGS=-DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_MSVC_STATIC_RT=TRUE -DCMAKE_BUILD_TYPE=Release -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+    ]
+-
+    Id: 'win-on-arm64'
+    Template: 'qtci-windows-11_23H2-aarch64-53'
+    Compiler: 'MSVC2022'
+    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
+        'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+        'VCPKG_HOST_TRIPLET=arm64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
+    ]
+-
+    Id: 'linux-on-x86_64'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-feature-gssapi -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked -bundled-xcb-xinput -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR=/home/qt/vcpkg-2025.09.17/installed/x64-linux/ -DOPENSSL_USE_STATIC_LIBS=TRUE',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+    ]
+-
+    Id: 'linux-on-arm64'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'UseConfigure', 'InsignificantTests', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -nomake examples -nomake tests -accessibility -static -release -no-sql-sqlite -no-feature-gssapi -qt-zlib -qt-libpng -qt-libjpeg -no-cups -openssl-linked -bundled-xcb-xinput -no-icu -no-libudev -qt-pcre -no-glib -no-egl -no-sm -qt-harfbuzz'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DOPENSSL_USE_STATIC_LIBS=TRUE',
+        'NON_QTBASE_CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.STATIC_OPENSSL_HOME}} -DOPENSSL_USE_STATIC_LIBS=TRUE -DOPENSSL_CRYPTO_LIBRARY=/home/qt/openssl-3.5.4/lib/libcrypto.a -DOPENSSL_SSL_LIBRARY=/home/qt/openssl-3.5.4/lib/libssl.a',
+    ]
+-
+    Id: 'mac-on-arm64'
+    Template: 'qtci-macos-15-arm-105'
+    Compiler: 'Clang'
+    Target arch: 'arm64'
+    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -static -confirm-license -nomake examples -nomake tests -accessibility -qt-zlib -qt-libpng -no-cups -no-freetype -no-sql-sqlite QMAKE_APPLE_DEVICE_ARCHS="x86_64 arm64"'
+    Environment variables: [
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="arm64"',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="arm64" -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}} -DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+    ]
+-
+    Id: 'mac-on-x86_64'
+    Template: 'qtci-macos-15-x86_64-103'
+    Compiler: 'Clang'
+    Target arch: 'x86_64'
+    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Configure arguments: '-opensource -confirm-license -static -confirm-license -nomake examples -nomake tests -accessibility -qt-zlib -qt-libpng -no-cups -no-freetype -no-sql-sqlite QMAKE_APPLE_DEVICE_ARCHS="x86_64"'
+    Environment variables: [
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64"',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64" -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}} -DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+    ]
