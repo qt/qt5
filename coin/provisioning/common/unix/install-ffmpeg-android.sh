@@ -70,18 +70,23 @@ build_ffmpeg_android() {
 
   sudo mkdir -p "$target_dir"
 
+  openssl_include="$OPENSSL_ANDROID_HOME_DEFAULT/include"
+  openssl_libs=""
   if [ "$target_arch" == "x86_64" ]; then
     target_toolchain_arch="x86_64-linux-android"
     target_arch=x86_64
     target_cpu=x86_64
+    openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/x86_64"
   elif [ "$target_arch" == "x86" ]; then
     target_toolchain_arch="i686-linux-android"
     target_arch=x86
     target_cpu=i686
+    openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/x86"
   elif [ "$target_arch" == "arm64" ]; then
     target_toolchain_arch="aarch64-linux-android"
     target_arch=aarch64
     target_cpu=armv8-a
+    openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/arm64-v8a"
   fi
 
   api_version=24
@@ -105,9 +110,10 @@ build_ffmpeg_android() {
   strip=${toolchain_bin}/llvm-strip
 
   ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
-  ffmpeg_config_options+=" --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+  ffmpeg_config_options+=" --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
   ffmpeg_config_options+=" --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
   ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
+  ffmpeg_config_options+=" --extra-cflags=-I${openssl_include} --extra-ldflags=-L${openssl_libs}"
 
   local build_dir="$ffmpeg_source_dir/build/$target_arch"
   sudo mkdir -p "$build_dir"

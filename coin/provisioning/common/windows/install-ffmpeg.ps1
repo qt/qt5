@@ -158,11 +158,15 @@ function InstallAndroidArmv7 {
     $ranlib="${toolchain_bin}/llvm-ranlib.exe"
     $nm="${toolchain_bin}/llvm-nm.exe"
     $strip="${toolchain_bin}/llvm-strip.exe"
+    $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_DEFAULT", [System.EnvironmentVariableTarget]::Machine)
+    $openssl_path = $openssl_path.Replace("\", "/")
 
     $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
-    $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
+    $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
+    $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_DEFAULT/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_DEFAULT/armeabi-v7a"
+    $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
 
     return InstallFfmpeg -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7"
 }
