@@ -50,16 +50,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
-    Id: 'sles-15_sp4-static'
-    Template: 'qtci-linux-SLES-15_SP4-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Sccache', 'DisableTests', 'UseConfigure']
-    Configure arguments: '-nomake examples -static -no-sql-mysql'
-    Environment variables: [
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
-    ]
--
     Id: 'sles-15_sp5-static'
     Template: 'qtci-linux-SLES-15_SP5-x86_64-50'
     Compiler: 'GCC'
