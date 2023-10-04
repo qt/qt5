@@ -8,7 +8,7 @@
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-brew install "${BASH_SOURCE%/*}/pyenv.rb"
+brew install pyenv
 
 pyenv install 3.9.7
 
@@ -19,13 +19,4 @@ SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
 # Use 3.9 as a default python
 SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
 
-# Install all needed packages in a special wheel cache directory
-/Users/qt/.pyenv/versions/3.9.7/bin/pip3 wheel --wheel-dir "$HOME/python3-wheels" -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
-SetEnvVar "PYTHON3_WHEEL_CACHE" "$HOME/python3-wheels"
-
-# QtWebengine still requires python2
-pyenv install 2.7.18
-SetEnvVar "PYTHON2_PATH" "/Users/qt/.pyenv/versions/2.7.18/bin/"
-
 echo "python3 = 3.9.7" >> ~/versions.txt
-echo "python2 = 2.7.18" >> ~/versions.txt
