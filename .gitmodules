@@ -222,8 +222,8 @@
 	branch = dev
 	status = addon
 [submodule "qtspeech"]
-	depends = qtbase
-	recommends = qtdeclarative qtmultimedia
+	depends = qtbase qtmultimedia
+	recommends = qtdeclarative
 	path = qtspeech
 	url = ../qtspeech.git
 	branch = dev
