@@ -12,3 +12,21 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
     ]
+-
+    Id: 'Ubuntu-22.04-arm64-x11'
+    Template: 'qtci-linux-Ubuntu-22.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+    ]
+-
+    Id: 'Ubuntu-22.04-arm64-wayland'
+    Template: 'qtci-linux-Ubuntu-22.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+    ]
