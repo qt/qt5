@@ -7,21 +7,25 @@
 # Mimer SQL is needed for Qt to be able to support Mimer SQL
 
 set -ex
+os="$1"
 
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
-arch=$(uname -m)
-
 mimerSqlVersion="11.0.7G"
-if [ "$arch" = "x86_64" ]; then
-    mimerSqlPackageName="mimersql-${mimerSqlVersion}-x86.pkg"
-    SHA1="e8129e66cef8a1cf6639895963ce6155e0acfa90"
+if [ "$os" = "macos" ]; then
+    arch=$(uname -m)
+    if [ "$arch" = "x86_64" ]; then
+        mimerSqlPackageName="mimersql-110_x86_64.tgz"
+        SHA1="d748f87b72e7188c527f131db2590f552f18f544"
+    else
+        mimerSqlPackageName="mimersql-110_arm64.tgz"
+        SHA1="f209c97074d096e50e637441073e8aa355c5116e"
+    fi
 else
-    mimerSqlPackageName="mimersql-${mimerSqlVersion}-macosarm_64.pkg"
-    SHA1="82ded8637e5ba79532b552dcfb385d158d6abf74"
+    mimerSqlPackageName="mimersql-110_universal.tgz"
+    SHA1="eab32be623f1cbde7c29cea0f0ca4332b8ca502b"
 fi
-
 
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/$mimerSqlPackageName"
 AltUrl="https://install.mimer.com/qt/macOS/$mimerSqlPackageName"
@@ -30,7 +34,7 @@ appPrefix=""
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp/$mimerSqlPackageName"
 
 echo "Installing $mimerSqlPackageName"
-sudo installer -pkg /tmp/$mimerSqlPackageName -target /
+tar -C /usr/local -zxf /tmp/$mimerSqlPackageName
 
 echo "Removing $mimerSqlPackageName"
 rm "/tmp/$mimerSqlPackageName"
