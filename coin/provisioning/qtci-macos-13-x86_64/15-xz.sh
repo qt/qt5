@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2023 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,13 +39,20 @@
 ##
 #############################################################################
 
+# This script installs XZ-Utils
+
+# XZ-Utils are needed for uncompressing xz-compressed files
+
 set -ex
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="14.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
-sha1="f9d18da696bc54755bd85fb4f42c0a8866bdade6"
+# shellcheck source=../common/macos/InstallPKGFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallPKGFromURL.sh"
 
-InstallCommandLineTools $url $url $sha1 $packageName $version
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/XZ.pkg"
+AltUrl="http://sourceforge.net/projects/macpkg/files/XZ/5.0.7/XZ.pkg"
+SHA1="f0c1f82ebcffe0bd4b8b57b6a77805db56b2de67"
+DestDir="/"
+
+InstallPKGFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$DestDir"
+
+echo "XZ = 5.0.7" >> ~/versions.txt

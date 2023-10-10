@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2023 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,13 +39,26 @@
 ##
 #############################################################################
 
+# This script installs MySQL
+
+# MySQL is needed for Qt to be able to support MySQL
+
 set -ex
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="14.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
-sha1="f9d18da696bc54755bd85fb4f42c0a8866bdade6"
+# shellcheck source=../common/macos/InstallAppFromCompressedFileFromURL.sh
+source "${BASH_SOURCE%/*}/../common/macos/InstallAppFromCompressedFileFromURL.sh"
+# shellcheck source=../common/unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-InstallCommandLineTools $url $url $sha1 $packageName $version
+PrimaryUrl="http://ci-files01-hki.intra.qt.io/input/mac/macos_10.12_sierra/mysql-5.7.15-osx10.11-x86_64.tar.gz"
+AltUrl="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.15-osx10.11-x86_64.tar.gz"
+SHA1="07949bd42f350b0504a1536b8830b809b4a34fca"
+appPrefix=""
+targetDir="/opt/mysql57/"
+
+sudo mkdir -p "/opt"
+
+InstallAppFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$appPrefix" "$targetDir"
+
+SetEnvVar "MYSQLBINPATH" "/opt/mysql57/bin"
+echo "MySQL = 5.7.15" >> ~/versions.txt

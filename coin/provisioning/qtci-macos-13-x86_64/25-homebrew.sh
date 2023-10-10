@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2023 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,13 +39,27 @@
 ##
 #############################################################################
 
-set -ex
+# Will install homebrew package manager for macOS.
+#     WARNING: Requires commandlinetools
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="14.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
-sha1="f9d18da696bc54755bd85fb4f42c0a8866bdade6"
 
-InstallCommandLineTools $url $url $sha1 $packageName $version
+set -e
+
+. "$(dirname "$0")"/../common/unix/DownloadURL.sh
+
+
+DownloadURL  \
+    http://ci-files01-hki.intra.qt.io/input/mac/homebrew/a822f0d0f1838c07e86b356fcd2bf93c7a11c2aa/install.sh  \
+    https://raw.githubusercontent.com/Homebrew/install/c744a716f9845988d01e6e238eee7117b8c366c9/install  \
+    3210da71e12a699ab3bba43910a6d5fc64b92000  \
+    /tmp/homebrew_install.sh
+
+DownloadURL "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
+{ pw=$(cat "/Users/qt/pw"); } 2> /dev/null
+sudo chmod 755 /tmp/homebrew_install.sh
+{ (echo $pw | /tmp/homebrew_install.sh); } 2> /dev/null
+rm -f "/Users/qt/pw"
+
+# No need to manually do `brew update`, the homebrew installer script does it.
+### brew update
+

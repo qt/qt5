@@ -2,7 +2,7 @@
 
 #############################################################################
 ##
-## Copyright (C) 2023 The Qt Company Ltd.
+## Copyright (C) 2022 The Qt Company Ltd.
 ## Contact: https://www.qt.io/licensing/
 ##
 ## This file is part of the provisioning scripts of the Qt Toolkit.
@@ -39,13 +39,9 @@
 ##
 #############################################################################
 
+#!/usr/bin/env bash
+
 set -ex
 
-# shellcheck source=../common/macos/install-commandlinetools.sh
-source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="14.2"
-packageName="Command_Line_Tools_for_Xcode_$version.dmg"
-url="http://ci-files01-hki.intra.qt.io/input/mac/$packageName"
-sha1="f9d18da696bc54755bd85fb4f42c0a8866bdade6"
-
-InstallCommandLineTools $url $url $sha1 $packageName $version
+# shellcheck source=../common/macos/sha1sum-compatibility.sh
+source "${BASH_SOURCE%/*}/../common/macos/sha1sum-compatibility.sh"
