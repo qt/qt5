@@ -32,6 +32,12 @@ sdkApiLevel="android-34"
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
 ndkSha1Latest="e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
 ndkSha1Default=$ndkSha1Latest
+
+# Android 14 avd zip
+android14SystemZipName="android14system_UPB5_230623_003.tar.gz"
+android14SystemZipSha="9680db449516ad6212525cc53f2bc027cf8b3322"
+android14SystemPath="$basePath/$android14SystemZipName"
+
 # Android automotive
 sdkApiLevelAutomotive="android-33"
 androidAutomotive13Url="$basePath/${sdkApiLevelAutomotive}_automotive.tar.gz"
@@ -124,8 +130,11 @@ echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" \
     | eval "$sdkmanager_no_progress_bar_cmd"
 echo "y" | ./sdkmanager --install "system-images;android-33;google_apis;x86_64" \
     | eval "$sdkmanager_no_progress_bar_cmd"
-echo "y" | ./sdkmanager --install "system-images;android-34;google_apis;x86_64" \
-    | eval "$sdkmanager_no_progress_bar_cmd"
+
+echo "Extract stored Android 14 Beta $android14SystemZipName"
+DownloadURL "$android14SystemPath" "$android14SystemPath" "$android14SystemZipSha" \
+    "/tmp/$android14SystemZipName"
+sudo tar -xzf "/tmp/$android14SystemZipName" -C "$sdkTargetFolder/system-images"
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
