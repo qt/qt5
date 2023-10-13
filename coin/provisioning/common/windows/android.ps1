@@ -10,17 +10,15 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
-$ndkVersionLatest = "r25b"
+$ndkVersionLatest = "r26b"
 $ndkVersionDefault = $ndkVersionLatest
-$ndkChecksumLatest = "b2e9b5ab2e1434a65ffd85780891878cf5c6fd92"
+$ndkChecksumLatest = "17453c61a59e848cffb8634f2c7b322417f1732e"
 $ndkChecksumDefault = $ndkChecksumLatest
 $ndkCachedUrlLatest = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionLatest-windows.zip"
 $ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$ndkVersionLatest-windows.zip"
 $ndkCachedUrlDefault = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionDefault-windows.zip"
 $ndkOfficialUrlDefault = "https://dl.google.com/android/repository/android-ndk-$ndkVersionDefault-windows.zip"
-$ndkFolderLatest = "c:\Utils\Android\android-ndk-$ndkVersionLatest"
-$ndkFolderDefault = "c:\Utils\Android\android-ndk-$ndkVersionDefault"
-$ndkZip = "c:\Windows\Temp\android_ndk.zip"
+$ndkZip = "C:\Windows\Temp\android_ndk.zip"
 
 # SDK
 $toolsVersion = "2.1"
@@ -31,7 +29,7 @@ $sdkBuildToolsVersion = "34.0.0"
 $toolsCachedUrl= "\\ci-files01-hki.ci.qt.io\provisioning\android\$toolsFile"
 $toolsOfficialUrl = "https://dl.google.com/android/repository/$toolsFile"
 $toolsChecksum = "e2e19c2ff584efa87ef0cfdd1987f92881323208"
-$toolsFolder = "c:\Utils\Android\cmdline-tools"
+$cmdFolder = "c:\Utils\Android\cmdline-tools"
 
 $sdkZip = "c:\Windows\Temp\$toolsFile"
 
@@ -40,28 +38,35 @@ function Install($1, $2, $3, $4) {
     $zip = $2
     $checksum = $3
     $offcialUrl = $4
+    $tempExtractDir = "C:\Windows\Temp\android_extract"
 
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
-    Extract-7Zip $zip C:\Utils\Android
+    Extract-7Zip $zip $tempExtractDir
+    $baseDirectory = (Get-ChildItem $tempExtractDir -Attributes D | Select-Object -First 1).Name
+    Move-Item -Path ($tempExtractDir + "\" + $baseDirectory) -Destination "C:\Utils\Android\$baseDirectory" -Force
     Remove $zip
+
+    return "C:\Utils\Android\$baseDirectory"
 }
 
+New-Item -ItemType Directory -Path C:\Utils\Android\
+New-Item -ItemType Directory -Path C:\Windows\Temp\android_extract
 Write-Host "Installing Android NDK $ndkVersionDefault"
-Install $ndkCachedUrlDefault $ndkZip $ndkChecksumDefault $ndkOfficialUrlDefault
+$ndkFolderDefault = Install $ndkCachedUrlDefault $ndkZip $ndkChecksumDefault $ndkOfficialUrlDefault
 Set-EnvironmentVariable "ANDROID_NDK_ROOT_DEFAULT" $ndkFolderDefault
 
-if (Test-Path -Path $ndkFolderLatest) {
+if ($ndkVersionDefault -eq $ndkVersionLatest) {
     Write-Host "Android Latest version is the same than Default. NDK installation done."
 } else {
     Write-Host "Installing Android NDK $nkdVersionLatest"
-    Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
+    $ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
     Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
 }
 
-Install $toolsCachedUrl $sdkZip $toolsChecksum $sdkOfficialUrl
-New-Item -ItemType directory -Path $toolsFolder
-Move-Item -Path C:\Utils\Android\tools -Destination $toolsFolder\
+$toolsFolder = Install $toolsCachedUrl $sdkZip $toolsChecksum $toolsOfficialUrl
+New-Item -ItemType directory -Path $cmdFolder
+Move-Item -Path $toolsFolder -Destination $cmdFolder\
 Set-EnvironmentVariable "ANDROID_SDK_ROOT" "C:\Utils\Android"
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
@@ -84,7 +89,7 @@ Out-File -FilePath C:\Utils\Android\licenses\android-sdk-license -Encoding utf8 
 # Attempt to catch all errors of sdkmanager.bat, even when hidden behind a pipeline.
 $ErrorActionPreference = "Stop"
 
-cd $toolsFolder\tools\bin\
+cd $cmdFolder\tools\bin\
 $sdkmanager_args += "platforms;$sdkApiLevel", "platform-tools", "build-tools;$sdkBuildToolsVersion", "--sdk_root=C:\Utils\Android"
 $command = 'for($i=0;$i -lt 6;$i++) { $response += "y`n"}; $response | .\sdkmanager.bat @sdkmanager_args | Out-Null'
 Invoke-Expression $command

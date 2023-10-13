@@ -54,7 +54,7 @@ build_ffmpeg_android() {
 
   api_version=24
 
-  ndk_root=/opt/android/android-ndk-r25b
+  ndk_root=$ANDROID_NDK_ROOT_DEFAULT
   if uname -a |grep -q "Darwin"; then
     ndk_host=darwin-x86_64
   else

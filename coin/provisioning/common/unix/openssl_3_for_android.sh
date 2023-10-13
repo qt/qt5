@@ -12,9 +12,9 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="3.0.7"
-ndkVersionLatest="r25b"
+ndkVersionLatest="r26b"
 ndkVersionDefault=$ndkVersionLatest
-prebuiltOpensslNdkShaLatest="17085b1ef76ba116466213703e38a9d2274ec859"
+prebuiltOpensslNdkShaLatest="ea925d5a5b696916fb3650403a2eb3189c52b5ce"
 prebuiltOpensslNdkShaDefault=$prebuiltOpensslNdkShaLatest
 
 : <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK 25
@@ -32,7 +32,7 @@ else
 fi
 
 # ANDROID_NDK_ROOT is required during Configure
-export ANDROID_NDK_ROOT=/opt/android/android-ndk-r25b
+export ANDROID_NDK_ROOT=/opt/android/android-ndk-r26b
 
 officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
 cachedUrl="http://ci-files01-hki.ci.qt.io/input/openssl/openssl-$version.tar.gz"

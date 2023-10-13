@@ -24,13 +24,13 @@ basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
-ndkVersionLatest="r25b"
+ndkVersionLatest="r26b"
 ndkVersionDefault=$ndkVersionLatest
 sdkBuildToolsVersion="34.0.0"
 sdkApiLevel="android-34"
 
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
-ndkSha1Latest="e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+ndkSha1Latest="fdf33d9f6c1b3f16e5459d53a82c7d2201edbcc4"
 ndkSha1Default=$ndkSha1Latest
 
 # Android 14 avd zip
@@ -61,24 +61,26 @@ function InstallNdk() {
     ndkVersion=$1
     ndkSha1=$2
 
-    if [[ ! -d "$targetFolder/android-ndk-$ndkVersion" ]]; then
+    ndkFile="android-ndk-$ndkVersion-linux.zip"
+    ndkTargetFile="/tmp/$ndkFile"
+    ndkSourceFile="$basePath/$ndkFile"
 
-        ndkFile="android-ndk-$ndkVersion-linux.zip"
-        ndkTargetFile="/tmp/$ndkFile"
-        ndkSourceFile="$basePath/$ndkFile"
-
-        DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
-        echo "Unzipping Android NDK to '$targetFolder'"
-        sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
-        rm "$ndkTargetFile"
-    fi
-
+    DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
+    echo "Unzipping Android NDK to '$targetFolder'"
+    # Get the package base directory name as string
+    zipBase=$(sudo zipinfo -1 "$ndkTargetFile" 2>/dev/null | awk '!seen {sub("/.*",""); print; seen=1}')
+    sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
+    rm "$ndkTargetFile"
+    androidNdkRoot="${targetFolder}/${zipBase}"
 }
 
 InstallNdk $ndkVersionDefault $ndkSha1Default
-SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$targetFolder/android-ndk-$ndkVersionDefault"
-InstallNdk $ndkVersionLatest $ndkSha1Latest
-SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
+SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$androidNdkRoot"
+
+if [ "$ndkVersionDefault" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionLatest $ndkSha1Latest
+fi
+SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$androidNdkRoot"
 
 echo "Changing ownership of Android files."
 if uname -a |grep -q "el7"; then
