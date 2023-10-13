@@ -16,11 +16,11 @@ if (Is64BitWinHost) {
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
 $openssl_version = "3.0.7"
-$ndk_version_latest = "r25b"
+$ndk_version_latest = "r26b"
 $ndk_version_default = "$ndk_version_latest"
 $openssl_compressed = Get-DownloadLocation ("openssl-${openssl_version}.tar.gz")
 $openssl_sha1 = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
-$prebuilt_sha1_ndk_latest = "17085b1ef76ba116466213703e38a9d2274ec859"
+$prebuilt_sha1_ndk_latest = "ea925d5a5b696916fb3650403a2eb3189c52b5ce"
 $prebuilt_sha1_ndk_default = "$prebuilt_sha1_ndk_latest"
 $destination_prefix = "C:\Utils\prebuilt-openssl-${openssl_version}-for-android-ndk"
 
@@ -70,7 +70,7 @@ function Install($1, $2) {
         }
 
         # ANDROID_NDK_ROOT needs to be in environment variables before running this script
-        # Set-EnvironmentVariable "ANDROID_NDK_ROOT" "C:\Utils\Android\android-ndk-r25b"
+        # Set-EnvironmentVariable "ANDROID_NDK_ROOT" "C:\Utils\Android\android-ndk-r26b"
 
         $make_install = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys_bash" -ArgumentList ("-lc", "`"yes | pacman -S make`"")
         CheckExitCode $make_install

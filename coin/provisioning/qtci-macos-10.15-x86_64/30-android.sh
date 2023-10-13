@@ -20,7 +20,7 @@ toolsVersion="2.1"
 # toolsFile dertermines tools version
 toolsFile="commandlinetools-mac-6609375_latest.zip"
 
-ndkVersion="r25b"
+ndkVersion="r26b"
 ndkFile="android-ndk-$ndkVersion-darwin.zip"
 sdkBuildToolsVersion="34.0.0"
 # this is compile sdk version
