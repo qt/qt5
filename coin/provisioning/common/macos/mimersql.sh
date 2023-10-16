@@ -34,9 +34,24 @@ appPrefix=""
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp/$mimerSqlPackageName"
 
 echo "Installing $mimerSqlPackageName"
-tar -C /usr/local -zxf /tmp/$mimerSqlPackageName
-
+if [ -e /tmp/mimersql_${mimerSqlVersion} ]; then
+    rm -r /tmp/mimersql_${mimerSqlVersion}
+fi
+mkdir /tmp/mimersql_${mimerSqlVersion}
+tar -C /tmp/mimersql_${mimerSqlVersion} -zxf /tmp/$mimerSqlPackageName
+if [ ! -e /usr/local/include ]; then
+    sudo mkdir -p /usr/local/include
+    sudo chmod 777 /usr/local/include
+fi
+if [ ! -e /usr/local/lib ]; then
+    sudo mkdir -p /usr/local/lib
+    sudo chmod 777 /usr/local/lib
+fi
+sudo cp /tmp/mimersql_${mimerSqlVersion}/include/*.h /usr/local/include/
+sudo chmod 755 /usr/local/include/mimer*.h
+sudo cp /tmp/mimersql_${mimerSqlVersion}/lib/libmimerapi.dylib /usr/local/lib/
+sudo chmod 755 /usr/local/lib/libmimerapi.dylib
 echo "Removing $mimerSqlPackageName"
 rm "/tmp/$mimerSqlPackageName"
-
+rm -r /tmp/mimersql_${mimerSqlVersion}
 echo "Mimer SQL = $mimerSqlVersion" >> ~/versions.txt
