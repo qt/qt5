@@ -78,6 +78,7 @@ installPackages+=(libxshmfence-devel)
 installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 installPackages+=(python3-html5lib)
+installPackages+=(libatomic)
 # For Android builds
 installPackages+=(java-11-openjdk-devel)
 # For receiving shasum

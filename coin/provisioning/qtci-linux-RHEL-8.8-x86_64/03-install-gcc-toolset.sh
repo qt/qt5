@@ -5,6 +5,6 @@
 
 set -ex
 
-sudo yum -y install gcc-toolset-10
+sudo yum -y install gcc-toolset-10 gcc-toolset-10-libatomic-devel
 
 echo "source /opt/rh/gcc-toolset-10/enable" >> ~/.bashrc
