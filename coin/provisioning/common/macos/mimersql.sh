@@ -29,7 +29,6 @@ fi
 
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/$mimerSqlPackageName"
 AltUrl="https://install.mimer.com/qt/macOS/$mimerSqlPackageName"
-appPrefix=""
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp/$mimerSqlPackageName"
 
