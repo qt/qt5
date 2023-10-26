@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script will build and install FFmpeg static libs
@@ -11,10 +11,13 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="n6.0"
-url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-sha1="78435ec71cc2227017a99c030e858719b8c7c74d"
-url_cached="http://ci-files01-hki.intra.qt.io/input/ffmpeg/$version.tar.gz"
+# Commit c5039e158d20e85d4d8a2dee3160533d627b839a is the latest one in 6.0 branch. 
+# When using the latest commit we will also get fix for https://fftrac-bg.ffmpeg.org/ticket/10405
+# Should be changed to official release as soon as possible!
+version="c5039e158d20e85d4d8a2dee3160533d627b839a"
+url_public="https://github.com/FFmpeg/FFmpeg/archive/$version.tar.gz"
+sha1="4e13a26d3be7ac4d69201a6aa0accd734b24b3c4"
+url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
 ffmpeg_name="FFmpeg-$version"
 
 target_dir="$HOME"
@@ -95,4 +98,3 @@ elif [ "$os" == "macos-universal" ]; then
   SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
 
 fi
-
