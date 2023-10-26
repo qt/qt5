@@ -27,22 +27,19 @@ echo "Set DISPLAY"
 echo 'export DISPLAY=":0"' >> ~/.bashrc
 
 echo "Checking packagekit status"
-sudo systemctl status packagekit
+sudo systemctl status packagekit || true
 
-# This can be optimized in future if some sleep steps or even stop -command is not needed
-# SP5 finally worked with this setup and would've needed new provisioning to optimize more
-echo "Packagekit needs waiting with proper order for disposal.."
-sudo systemctl disable packagekit
-sudo sleep 2m
+while sudo systemctl is-active packagekit >/dev/null 2>&1 ; do
+    echo "Waiting for PackageKit to finish..."
+    sudo systemctl is-active packagekit
+    sleep 5
+done
+
 sudo systemctl stop packagekit
-sudo sleep 2m
+sudo systemctl disable packagekit # With --now this could stop and disable
 sudo systemctl mask packagekit
-sudo sleep 2m
-# This caused failing, commented out if possible to take this approach back later
-#while sudo fuser /usr/lib/packagekitd >/dev/null 2>&1 ; do
-#    echo "Waiting for PackageKit to finish..."
-#    sleep 5
-#done
+sudo systemctl status packagekit || true
+
 sudo zypper -nq remove gnome-software
 
 # shellcheck disable=SC2031
