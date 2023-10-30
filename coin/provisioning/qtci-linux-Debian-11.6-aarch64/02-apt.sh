@@ -125,6 +125,7 @@ installPackages+=(gir1.2-gst-plugins-bad-1.0)
 ## python3 development package
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
+installPackages+=(python3-venv)
 installPackages+=(virtualenv)
 ## Automates interactive applications (Needed by RTA to automate configure testing)
 installPackages+=(expect)
