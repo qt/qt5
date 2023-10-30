@@ -133,6 +133,9 @@ installPackages+=(make)
 installPackages+=(open-vm-tools)
 # nfs-utils is needed to make mount work with ci-files01
 installPackages+=(nfs-utils)
+# cifs-utils, for mounting smb drive
+installPackages+=(keyutils)
+installPackages+=(cifs-utils)
 
 
 sudo yum -y install "${installPackages[@]}"

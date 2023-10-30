@@ -218,6 +218,9 @@ installPackages+=(bridge-utils)
 # For Debian packaging
 installPackages+=(sbuild)
 installPackages+=(ubuntu-dev-tools)
+# cifs-utils, for mounting smb drive
+installPackages+=(keyutils)
+installPackages+=(cifs-utils)
 
 echo "Running update for apt"
 waitLoop

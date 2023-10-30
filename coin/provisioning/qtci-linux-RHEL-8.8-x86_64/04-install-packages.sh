@@ -134,6 +134,9 @@ installPackages+=(gcc-c++)
 installPackages+=(make)
 # Open source VMware Tools
 installPackages+=(open-vm-tools)
+# cifs-utils, for mounting smb drive
+installPackages+=(keyutils)
+installPackages+=(cifs-utils)
 
 sudo yum -y install "${installPackages[@]}"
 
