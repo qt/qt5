@@ -65,12 +65,6 @@ Configurations:
     # And arm64
 
     -
-        Id: 'macos-11-arm64-tests'
-        Template: 'qtci-macos-11.0-arm64'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging']
-        Platform dependency: 'macos-universal-on-x86_64'
-    -
         Id: 'macos-12-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
@@ -147,12 +141,6 @@ Configurations:
 
     # Test on all supported macOS versions (deployment targets)
 
-    -
-        Id: 'macos-11-x86_64-developer-build-tests'
-        Template: 'qtci-macos-11-x86_64-106'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-13-x86_64-developer-build'
     -
         Id: 'macos-11-arm64-developer-build-tests'
         Template: 'qtci-macos-11.0-arm64'
