@@ -133,6 +133,17 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
+    Id: 'windows-11_22h2-arm64-msvc2022'
+    Template: 'qtci-windows-11_22H2-aarch64-51'
+    Compiler: 'MSVC2022'
+    Features: ['DebugAndRelease', 'UseConfigure', 'InsignificantTests']
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+    ]
+-
     Id: 'windows-10_22h2-msvc2019-developer-build'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'

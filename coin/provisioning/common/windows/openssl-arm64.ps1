@@ -35,10 +35,29 @@ Verify-Checksum $zip_package $sha1
 Extract-7Zip $zip_package C:\
 Remove $zip_package
 
-Set-EnvironmentVariable "OPENSSL_ROOT_DIR_x64_arm64" "$installFolder"
-Set-EnvironmentVariable "OPENSSL_CONF_x64_arm64" "$installFolder\bin\openssl.cfg"
-Set-EnvironmentVariable "OPENSSL_INCLUDE_x64_arm64" "$installFolder\include"
-Set-EnvironmentVariable "OPENSSL_LIB_x64_arm64" "$installFolder\lib"
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    arm64 {
+        # For native arm64
+        Set-EnvironmentVariable "OPENSSL_ROOT_DIR_arm64" "$installFolder"
+        Set-EnvironmentVariable "OPENSSL_CONF_arm64" "$installFolder\bin\openssl.cfg"
+        Set-EnvironmentVariable "OPENSSL_INCLUDE_arm64" "$installFolder\include"
+        Set-EnvironmentVariable "OPENSSL_LIB_arm64" "$installFolder\lib"
+        Break
+    }
+    x64 {
+        # For cross-compiling x64_arm64
+        Set-EnvironmentVariable "OPENSSL_ROOT_DIR_x64_arm64" "$installFolder"
+        Set-EnvironmentVariable "OPENSSL_CONF_x64_arm64" "$installFolder\bin\openssl.cfg"
+        Set-EnvironmentVariable "OPENSSL_INCLUDE_x64_arm64" "$installFolder\include"
+        Set-EnvironmentVariable "OPENSSL_LIB_x64_arm64" "$installFolder\lib"
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
+}
+
+Prepend-Path "$installFolder\bin"
 
 # Store version information to ~/versions.txt, which is used to print version information to provision log.
 Write-Output "OpenSSL ARM= $version" >> ~/versions.txt
