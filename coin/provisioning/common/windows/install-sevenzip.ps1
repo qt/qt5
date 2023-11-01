@@ -8,12 +8,26 @@
 $version = "23.01"
 $nonDottedVersion = "2301"
 
-if (Is64BitWinHost) {
-    $arch = "-x64"
-    $sha1 = "7DF28D340D7084647921CC25A8C2068BB192BDBB"
-} else {
-    $arch = ""
-    $sha1 = "D5D00E6EA8B8E68CE7A704FD478DC950E543C25C"
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    arm64 {
+        $arch = "-arm64"
+        $sha1 = "be65c2ea6119c04945c66b13413892f2bb03d9a7"
+        Break
+    }
+    x64 {
+        $arch = "-x64"
+        $sha1 = "7DF28D340D7084647921CC25A8C2068BB192BDBB"
+        Break
+    }
+    x86 {
+        $arch = ""
+        $sha1 = "D5D00E6EA8B8E68CE7A704FD478DC950E543C25C"
+        Break
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
 }
 
 $url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/7z" + $nonDottedVersion + $arch + ".exe"

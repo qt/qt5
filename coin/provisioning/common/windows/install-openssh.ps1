@@ -7,19 +7,31 @@
 $version = "v9.2.2.0p1-Beta"
 
 $temp = "$env:tmp"
-if (Is64BitWinHost) {
-    $zipPackage = "OpenSSH-Win64"
-    $url_cache = "http://ci-files01-hki.ci.qt.io/input/windows/" + $zipPackage + ".zip"
-    $url_official = "https://github.com/PowerShell/Win32-OpenSSH/releases/download/" + $version + "/" + $zipPackage
-    $sha1 = "D3EA57408C0D3CF83167DF39639FED5397358B79"
-} else {
-    $zipPackage = "OpenSSH-Win32"
-    $url_cache = "http://ci-files01-hki.ci.qt.io/input/windows/openssh/" + $version + "/" + $zipPackage + ".zip"
-    $url_official = "https://github.com/PowerShell/Win32-OpenSSH/releases/download/" + $version + "/" + $zipPackage
-    $sha1 = "4642C62F72C108C411E27CE282A863791B63329B"
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    arm64 {
+        $zipPackage = "OpenSSH-ARM64"
+        $sha1 = "ca3e8f44a550b7ae71c8e122acd4ed905d66feb0"
+        Break
+    }
+    x64 {
+        $zipPackage = "OpenSSH-Win64"
+        $sha1 = "1397d40d789ae0911b3cc818b9dcd9321fed529b"
+        Break
+    }
+    x86 {
+        $zipPackage = "OpenSSH-Win32"
+        $sha1 = "4642C62F72C108C411E27CE282A863791B63329B"
+        Break
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
 }
 
 Write-Host "Fetching $zipPackage $version..."
+$url_cache = "http://ci-files01-hki.ci.qt.io/input/windows/openssh/" + $version + "/" + $zipPackage + ".zip"
+$url_official = "https://github.com/PowerShell/Win32-OpenSSH/releases/download/" + $version + "/" + $zipPackage + ".zip"
 Download $url_official $url_cache "$temp\$zipPackage"
 Verify-Checksum "$temp\$zipPackage" $sha1
 
