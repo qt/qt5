@@ -12,7 +12,7 @@ set -ex
 icuVersion="73.2"
 icuLocationLib="/opt/icu/lib64"
 icuLocationInclude="/opt/icu/include"
-sha1="cb00d9594eea82e7164e3c2311307ad364e19ce8"
+sha1="5699987afcceb0390e52fb860bb3b4ab8b39cabe"
 baseBinaryPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Ubuntu22.04-x64.7z"
 baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Ubuntu22.04-x64.7z"
 
