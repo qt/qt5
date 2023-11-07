@@ -91,8 +91,7 @@ sudo zypper -nq update open-vm-tools
 sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 
 # Nodejs - required by QtWebengine
-# Skip this and use commonly installed nodejs 18.16.0 version as it's available
-#sudo zypper -nq install nodejs16
+sudo zypper -nq install nodejs18
 
 # OpenSSL 3
 sudo zypper -nq install openssl-3
