@@ -285,7 +285,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
     Environment variables: [
-        'DEBIAN_RULES_REF=6.6_dev',
+        'DEBIAN_RULES_REF=6.7_dev',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
         'COIN_SBUILD_CHROOT=focal-arm64-sbuild',
         'COIN_EXTRA_DEBIAN_REPO=deb http://ports.ubuntu.com/ubuntu-ports/ focal main universe multiverse',
@@ -296,7 +296,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
     Environment variables: [
-        'DEBIAN_RULES_REF=6.6_dev',
+        'DEBIAN_RULES_REF=6.7_dev',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
         'COIN_SBUILD_CHROOT=focal-amd64-sbuild',
         'COIN_EXTRA_DEBIAN_REPO=deb http://archive.ubuntu.com/ubuntu/ focal main universe multiverse',
