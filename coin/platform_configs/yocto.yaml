@@ -41,3 +41,18 @@ Configurations:
         Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
         Compiler: 'Yocto'
         Target arch: 'TARGET10'
+    -
+        Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+        Compiler: 'Yocto'
+        Features: ['Insignificant']
+        Target arch: 'INSIGNIFICANT_TARGET1'
+    -
+        Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+        Compiler: 'Yocto'
+        Features: ['Insignificant']
+        Target arch: 'INSIGNIFICANT_TARGET2'
+    -
+        Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+        Compiler: 'Yocto'
+        Features: ['Insignificant']
+        Target arch: 'INSIGNIFICANT_TARGET3'
