@@ -1,2 +1,2 @@
-"$PSScriptRoot\..\common\windows\longpath.ps1"
+. "$PSScriptRoot\..\common\windows\longpath.ps1"
 
