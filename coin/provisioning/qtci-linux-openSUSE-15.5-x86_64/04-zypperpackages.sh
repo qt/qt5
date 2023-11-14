@@ -63,6 +63,9 @@ sudo zypper -nq install make
 # Tools to build Git
 sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 
+# zip, needed for vcpkg caching
+sudo zypper -nq install zip
+
 # OpenSSL 3
 sudo zypper -nq install openssl-3
 

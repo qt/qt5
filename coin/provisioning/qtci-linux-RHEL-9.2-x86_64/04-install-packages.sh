@@ -148,6 +148,8 @@ installPackages+=(keyutils)
 installPackages+=(cifs-utils)
 # used for reading vcpkg packages version, from vcpkg.json
 installPackages+=(jq)
+# zip, needed for vcpkg caching
+installPackages+=(zip)
 
 sudo yum -y install "${installPackages[@]}"
 

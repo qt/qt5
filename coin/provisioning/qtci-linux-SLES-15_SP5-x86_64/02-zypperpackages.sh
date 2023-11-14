@@ -93,6 +93,9 @@ sudo zypper -nq install autoconf libcurl-devel libexpat-devel
 # used for reading vcpkg packages version, from vcpkg.json
 sudo zypper -nq install jq
 
+# zip, needed for vcpkg caching
+sudo zypper -nq install zip
+
 # Nodejs - required by QtWebengine
 sudo zypper -nq install nodejs18
 
