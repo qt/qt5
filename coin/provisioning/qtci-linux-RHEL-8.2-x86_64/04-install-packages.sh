@@ -7,6 +7,9 @@ set -ex
 # Remove update notifications and packagekit running in the background
 sudo yum -y remove PackageKit gnome-software
 
+# CI: All platforms should have up-to-date packages when new provision is made
+sudo yum -y update
+
 installPackages=()
 installPackages+=(git)
 installPackages+=(zlib-devel)

@@ -7,6 +7,9 @@ set -ex
 # Remove update notifications and packagekit running in the background
 sudo yum -y remove PackageKit gnome-software
 
+# CI: All platforms should have up-to-date packages when new provision is made
+sudo yum -y update
+
 installPackages=()
 installPackages+=(git)
 installPackages+=(zlib-devel)
@@ -177,3 +180,6 @@ sudo ln -s /usr/bin/python3 /usr/local/bin/python3
 
 OpenSSLVersion="$(openssl version |cut -b 9-14)"
 echo "System's OpenSSL = $OpenSSLVersion" >> ~/versions.txt
+
+# List all available updates
+sudo yum -y list updates
