@@ -148,35 +148,17 @@ Configurations:
         Features: ['TestOnly']
         Platform dependency: 'macos-13-arm64-developer-build'
     -
-        Id: 'macos-12-x86_64-developer-build-tests'
-        Template: 'qtci-macos-12-x86_64-106'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-13-x86_64-developer-build'
-    -
         Id: 'macos-12-arm64-developer-build-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-13-arm64-developer-build'
     -
-        Id: 'macos-13-x86_64-developer-build-tests'
-        Template: 'qtci-macos-13-x86_64-103'
-        Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly']
-        Platform dependency: 'macos-13-x86_64-developer-build'
-    -
         Id: 'macos-13-arm64-developer-build-tests'
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-13-arm64-developer-build'
-    -
-        Id: 'macos-14-x86_64-developer-build-tests'
-        Template: 'qtci-macos-14-x86_64-105'
-        Compiler: 'Clang'
-        Features: ['TestOnly']
-        Platform dependency: 'macos-13-x86_64-developer-build'
     -
         Id: 'macos-14-arm64-developer-build-tests'
         Template: 'qtci-macos-14-arm64'
