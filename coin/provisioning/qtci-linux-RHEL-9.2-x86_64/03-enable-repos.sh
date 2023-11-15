@@ -16,6 +16,11 @@ sudo yum -y remove PackageKit gnome-software
 sudo subscription-manager config --rhsm.manage_repos=1
 sudo subscription-manager refresh
 
+# List available RHEL versions and bind with correct one
+sudo subscription-manager release --list
+sudo subscription-manager release --set=9.2
+sudo yum clean all
+
 # sudo yum config-manager --enable 'rhceph-4-tools-for-rhel-8-x86_64-rpms'
 sudo yum config-manager --enable 'codeready-builder-for-rhel-9-x86_64-rpms'
 sudo yum config-manager --enable 'rhel-9-for-x86_64-baseos-rpms'
