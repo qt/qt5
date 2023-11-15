@@ -64,8 +64,9 @@ installPackages+=(libusbx-devel)
 # speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
 installPackages+=(speech-dispatcher-devel)
 # Python 3.8 for pyside. Qt for Python support for Python 3.6 will be deprecated in within pyside6.3
-installPackages+=(python38)
-installPackages+=(python38-devel)
+installPackages+=(python3.11)
+installPackages+=(python3.11-pip)
+installPackages+=(python3.11-devel)
 # WebEngine
 installPackages+=(bison)
 installPackages+=(flex)
@@ -145,7 +146,7 @@ sudo /usr/bin/pip3 install dataclasses
 sudo pip3 install --upgrade pip
 sudo pip3 install virtualenv wheel
 # Just make sure we have virtualenv to run with python3.8 -m virtualenv
-sudo python3.8 -m pip install virtualenv wheel
+sudo python3.11 -m pip install virtualenv wheel
 
 sudo /usr/bin/pip3 install wheel
 
