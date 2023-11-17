@@ -8,15 +8,15 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-version="3.1.37"
-versionNode="v14.18.2"
+version="3.1.50"
+versionNode="v16.20.0"
 tarBallVersion="${version//./_}"
 if uname -a |grep -q Darwin; then
     tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
-    sha="fe9900b0f27ada608f25552dbd4a58bf62c6f05b"
+    sha="c12169ec8d22fc7a9ef1ba98027435bdf3b72729"
 else
     tarBallPackage="emsdk_linux_${tarBallVersion}.tar.gz"
-    sha="000bbd5666d8fc1afbf2dce1a7938ef0efeeab3f"
+    sha="5d81a8f1ddcb8d74c70ba5608efd4266c857944a"
 fi
 cacheUrl="https://ci-files01-hki.ci.qt.io/input/emsdk/${tarBallPackage}"
 target="/tmp/${tarBallPackage}"
