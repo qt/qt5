@@ -195,7 +195,7 @@ Configurations:
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'LLVM_INSTALL_DIR=C:\llvm-mingw',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_llvm_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
     ]
 -
