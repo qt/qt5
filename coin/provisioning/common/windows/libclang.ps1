@@ -5,7 +5,7 @@ param(
 )
 . "$PSScriptRoot\helpers.ps1"
 
-$libclang_version="15.0.0"
+$libclang_version="17.0.6"
 Write-Output "libClang = $libclang_version" >> ~/versions.txt
 
 # PySide versions following 5.6 use a C++ parser based on Clang (http://clang.org/).
@@ -38,7 +38,7 @@ $toolchainSuffix = ""
 
 if ( $toolchain -eq "vs2019" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "e7c2d27f0e99d63e49225cb1be18c76a1e2a124b"
+        $sha1 = "7e3e474081d2e1d5d95c9743532de01b8e59b9aa"
     }
     else {
         $sha1 = ""
@@ -48,13 +48,25 @@ if ( $toolchain -eq "vs2019" ) {
 
 if ( $toolchain -eq "mingw" ) {
     if ( $archVer -eq 64 ) {
-        $sha1 = "6c9300051533d5648ffe3e8ae1eb00decae8e6bf"
+        $sha1 = "b9e65f617cd8d6e8fb8ae734383f03f6a7b202ed"
     }
     else {
         $sha1 = ""
     }
     $toolchainSuffix = "mingw"
 }
+
+if ( $toolchain -eq "llvm-mingw" ) {
+    if ( $archVer -eq 64 ) {
+        $sha1 = "1844f107d067b69deabf375fc024848c1c8b015d"
+    }
+    else {
+        $sha1 = ""
+    }
+    # Due to COIN-1137 forced to use a '_' instead of '-'
+    $toolchainSuffix = "llvm_mingw"
+}
+
 
 install $sha1 $baseDestination-$archVer
 
