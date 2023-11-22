@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
+  "default-registry": {
+    "kind": "git",
+    "repository": "https://git.qt.io/mrmsdbdl/vcpkg-mirror",
+    "baseline": "8eb57355a4ffb410a2e94c07b4dca2dffbee8e50"
+  },
+  "overlay-triplets": [ "./../../shared/triplets" ]
+}

@@ -1,0 +1,1 @@
+vcpkg_tool_release_tag=2023-11-16
