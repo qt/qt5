@@ -8,6 +8,8 @@ Include: [
     linux_android_tests_multi_abi.yaml,
     wasm_qtbase_tests.yaml,
     cmake_platforms_qemu_vxworks_buildtest.yaml,
+    cmake_platforms_qemu_vxworks.yaml,
+    cmake_platforms_qemu_vxworks_tests.yaml,
     qtlite.yaml,
     qtbase-linux-arm64-offscreen.yaml,
     qtbase-new-compiler-testing.yaml

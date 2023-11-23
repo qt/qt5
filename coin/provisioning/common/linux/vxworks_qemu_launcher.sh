@@ -6,24 +6,24 @@
 if ! ip link show br0 >/dev/null 2>&1; then
     sudo brctl addbr br0
     sudo brctl stp br0 off
-    sudo ifconfig br0 10.0.2.1 netmask 255.255.255.0 promisc up
+    sudo ifconfig br0 172.31.1.1 netmask 255.255.255.0 promisc up
     sudo tunctl -u qt -t tap0
     sudo ifconfig tap0 promisc up
     sudo brctl addif br0 tap0
 fi
 
 QEMU_LOG_PATH="/home/qt/work/vxworks_qemu_log.txt"
-qemu-system-arm \
+$VXWORKS_QEMU/qemu-system-arm \
     -machine sabrelite \
     -smp 4 \
     -m 1G \
     -nographic \
     -monitor none \
     -serial null \
-    -serial stdio \
+    -serial pipe:/tmp/guest \
     -kernel /opt/fsl_imx6_2_0_6_2_VIP_QEMU/default/uVxWorks \
     -dtb /opt/fsl_imx6_2_0_6_2_VIP_QEMU/default/imx6q-sabrelite.dtb \
-    -append "enet(0,0)host:vxWorks h=10.0.2.1 g=10.0.2.1 e=10.0.2.4 u=target pw=vxTarget s=/romfs/startup_script_arm.txt" \
+    -append "enet(0,0)host:vxWorks h=172.31.1.1 g=172.31.1.1 e=172.31.1.10 u=target pw=vxTarget s=/romfs/startup_script_arm.txt" \
     -nic "tap,ifname=tap0,script=no" >"${QEMU_LOG_PATH}" 2>&1 &
 
 for _ in $(seq 30)

@@ -14,37 +14,50 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 VXWORKS_VER="23_09"
 ######### VXworks libs #########
 # Installs to /opt/vxworks
-PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_no_source_patched_$VXWORKS_VER.tar.gz"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_libs_2403.tar.gz"
 AltUrl=""
-sha1="35a457999b310a6128e3bd7de3103c2235063071"
-targetFolder="/opt/"
+sha1="8152c527ca489b1e51f2954e6e88c6daa22d88f6"
+targetFolder="/opt"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "VXWORKS_HOME" "/opt/vxworks"
 
-VXWORKS_BUILD_VER="20240326"
+VXWORKS_BUILD_VER="20240522"
 ######### VXworks toolchain #########
 # Installs to /opt/fsl_imx6_2_0_6_2_VSB
-PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_vsb_${VXWORKS_BUILD_VER}_2.tar.gz"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="415359ac124e11198a3911c9c4b923269d8da83a"
+sha1="b8fd1203aaa0976dbd68ddc94ce0af1b8f89e26f"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_2_VSB"
 
+VXWORKS_BUILD_VER="20240619"
 ######### VXworks VIP kernel #########
 # Installs to /opt/fsl_imx6_2_0_6_2_VIP_QEMU
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_vip_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="a6019012a8c7af760469959e2df89875f5ff4e9a"
+sha1="d66aee4054638df50c8be003fecb010374524f14"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
+SetEnvVar "VXWORKS_SSH" "WindRiver@172.31.1.10"
 
-SetEnvVar "VXWORKS_SSH" "WindRiver@10.0.2.4"
+######### VXworks fonts and certs #########
+# Installs to /opt/fsl_imx6_2_0_6_2_VIP_QEMU
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_misc.tar.gz"
+AltUrl=""
+sha1="1bc529b90b35b0b249f219e47d5798225a9b68d8"
+targetFolder="/opt/fsl_imx6_2_0_6_2_VSB/"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 # Setup NFS exports that are needed by VxWorks qemu
-sudo bash -c "echo '/home/qt/work 10.0.2.4/24(rw,sync,root_squash,no_subtree_check,anonuid=1000,anongid=1000)' >> /etc/exports"
-sudo bash -c "echo '/opt/fsl_imx6_2_0_6_2_VSB 10.0.2.4/24(rw,sync,root_squash,no_subtree_check,anonuid=1000,anongid=1000)' >> /etc/exports"
+sudo bash -c "echo '/home/qt/work 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+sudo bash -c "echo '/opt/fsl_imx6_2_0_6_2_VSB 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
 sudo exportfs -a
+
+# Enable ipv4 routing from vxWorks to Qt DNS
+sudo sed -i s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g /etc/sysctl.conf
+sudo iptables -I FORWARD 1 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
 
 # Copy start script in place
 cp "${BASH_SOURCE%/*}/../linux/vxworks_qemu_launcher.sh" "${HOME}"
