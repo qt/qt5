@@ -8,8 +8,9 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['UseConfigure', 'DoNotRunTests', 'DoNotUploadTests']
+    Features: ['VMSize8', 'UseConfigure', 'DoNotRunTests', 'DoNotUploadTests']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-release -developer-build -force-debug-info -qpa offscreen -nomake examples',
+        'WIND_CC_SYSROOT=/opt/fsl_imx6_2_0_6_2_VSB',
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -qpa offscreen -nomake examples',
         'TARGET_CMAKE_ARGS=-DBUILD_SHARED_LIBS=ON -DWARNINGS_ARE_ERRORS=OFF -DCMAKE_TOOLCHAIN_FILE="{{.Env.WIND_CC_SYSROOT}}/mk/rtp.toolchain.cmake" -DFEATURE_vulkan=OFF -DQT_QMAKE_TARGET_MKSPEC=vxworks-clang -DQT_HOST_PATH=/home/qt/work/install -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_STAGING_PREFIX:PATH=/home/qt/work/install/target'
     ]
