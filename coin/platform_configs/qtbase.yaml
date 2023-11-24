@@ -6,6 +6,7 @@ Include: [
     ios-tests.yaml,
     address_sanitizer_platforms.yaml,
     linux_android_tests_multi_abi.yaml,
-    wasm_qtbase_tests.yaml
+    wasm_qtbase_tests.yaml,
+    cmake_platforms_qemu_vxworks.yaml
 ]
 Configurations: []
