@@ -18,7 +18,7 @@ PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_no_source_patch
 AltUrl=""
 sha1="35a457999b310a6128e3bd7de3103c2235063071"
 targetFolder="/opt/"
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "VXWORKS_HOME" "/opt/vxworks"
 
 ######### VXworks toolchain #########
@@ -27,7 +27,7 @@ PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_vsb_$VXWORKS_VE
 AltUrl=""
 sha1="cd32d35e67fd6128fbfbb23207bb4d1d2d09b7d2"
 targetFolder="/opt/"
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_2_VSB"
 
 ######### VXworks VIP kernel #########
@@ -36,7 +36,7 @@ PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_vip_kernel_$VXW
 AltUrl=""
 sha1="d72bb635a00a5b1b82185e3c200078cbe5c39561"
 targetFolder="/opt/"
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFolder" "$appPrefix"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 SetEnvVar "VXWORKS_SSH" "WindRiver@10.0.2.4"
 

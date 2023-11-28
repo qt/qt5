@@ -26,9 +26,9 @@ qemu-system-arm \
     -append "enet(0,0)host:vxWorks h=10.0.2.1 g=10.0.2.1 e=10.0.2.4 u=target pw=vxTarget s=/romfs/startup_script_arm.txt" \
     -nic "tap,ifname=tap0,script=no" >"${QEMU_LOG_PATH}" 2>&1 &
 
-for counter in $(seq 30)
+for _ in $(seq 30)
 do
-    status=$(ssh -o BatchMode=yes -o HostKeyAlgorithms=+ssh-rsa -o ConnectTimeout=1 ${VXWORKS_SSH} echo emulator up)
+    status=$(ssh -o BatchMode=yes -o HostKeyAlgorithms=+ssh-rsa -o ConnectTimeout=1 "${VXWORKS_SSH}" echo emulator up)
     if [[ $status == *"emulator up"* ]] ; then
         echo "VXWORKS QEMU SSH server up"
         break
