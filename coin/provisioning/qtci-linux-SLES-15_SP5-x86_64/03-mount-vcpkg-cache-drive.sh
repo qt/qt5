@@ -4,5 +4,5 @@
 
 set -ex
 
-# shellcheck source=../common/unix/mount-vcpkg-cache-drive.sh
+# shellcheck source=../common/linux/mount-vcpkg-cache-drive.sh
 source "${BASH_SOURCE%/*}/../common/linux/mount-vcpkg-cache-drive.sh"
