@@ -47,10 +47,10 @@ VerifyHash () {
             65)  sha256sum  "$file"  ;;
             97)  sha384sum  "$file"  ;;
             129) sha512sum  "$file"  ;;
-            *) echo "FATAL! Unknown hash length:  $hashLength" 1>&2  &&  exit 1  ;;
+            *) echo "FATAL! Unknown hash length:  $hashLength" 1>&2  ;;
         esac | cut -d ' ' -f 1`
 
-    if [ ! "$expectedHash" = "$hash" ]
+    if [ -z $hash ] || [ ! "$expectedHash" = "$hash" ]
     then
         echo "FAIL! wrong file hash:  $file  $hash"  1>&2
         return 1
