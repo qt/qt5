@@ -26,8 +26,12 @@ installPackages+=(pcre2-devel)
 installPackages+=(double-conversion-devel)
 installPackages+=(zstd)
 # EGL support
-installPackages+=(mesa-libEGL-devel)
-installPackages+=(mesa-libGL-devel)
+# mesa-libraries need to use older version than 22.1.5-2 which cause Xorg to crash
+installPackages+=(mesa-libEGL-devel-21.3.4-1.el8)
+installPackages+=(mesa-libGL-devel-21.3.4-1.el8)
+installPackages+=(mesa-dri-drivers-21.3.4-1.el8.x86_64)
+installPackages+=(mesa-libgbm-21.3.4-1.el8.x86_64)
+installPackages+=(mesa-vulkan-drivers-21.3.4-1.el8.x86_64)
 installPackages+=(libxkbfile-devel)
 # Xinput2
 installPackages+=(libXi-devel)
