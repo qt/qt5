@@ -80,6 +80,10 @@ SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$targetFolder/android-ndk-$ndkVersionDefau
 InstallNdk $ndkVersionLatest $ndkSha1Latest
 SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
 
+# To be used by vcpkg
+SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersionDefault"
+export ANDROID_NDK_HOME="$targetFolder/android-ndk-$ndkVersionDefault"
+
 echo "Changing ownership of Android files."
 if uname -a |grep -q "el7"; then
     sudo chown -R qt:wheel "$targetFolder"

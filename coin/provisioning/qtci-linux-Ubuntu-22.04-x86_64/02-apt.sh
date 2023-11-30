@@ -241,4 +241,4 @@ source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 # SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
 
 OpenSSLVersion="$(openssl version |cut -b 9-14)"
-echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
+echo "System's OpenSSL = $OpenSSLVersion" >> ~/versions.txt

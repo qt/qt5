@@ -107,3 +107,6 @@ sudo zypper -nq install cifs-utils
 
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
+
+OpenSSLVersion="$(openssl-3 version |cut -b 9-14)"
+echo "System's OpenSSL = $OpenSSLVersion" >> ~/versions.txt

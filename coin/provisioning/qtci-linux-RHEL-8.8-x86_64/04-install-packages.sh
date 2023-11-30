@@ -143,6 +143,8 @@ installPackages+=(cifs-utils)
 installPackages+=(jq)
 # zip, needed for vcpkg caching
 installPackages+=(zip)
+# OpenSSL requirement, built by vcpkg
+installPackages+=(perl-IPC-Cmd)
 
 sudo yum -y install "${installPackages[@]}"
 
@@ -163,4 +165,4 @@ sudo /usr/bin/pip3 install wheel
 sudo /usr/bin/pip3 install dataclasses
 
 OpenSSLVersion="$(openssl3 version |cut -b 9-14)"
-echo "OpenSSL = $OpenSSLVersion" >> ~/versions.txt
+echo "System's OpenSSL = $OpenSSLVersion" >> ~/versions.txt
