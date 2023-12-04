@@ -67,7 +67,7 @@ do
         -gpu swiftshader_indirect -no-audio -no-window -no-boot-anim \
         -cores 4 -memory 16000 -partition-size 4096 \
         -detect-image-hang -restart-when-stalled -no-snapshot-save \
-        -no-nested-warnings -logcat *:v -logcat-output "${LOGCAT_PATH}" \
+        -no-nested-warnings -logcat '*:v' -logcat-output "${LOGCAT_PATH}" \
         </dev/null  >"${EMULATOR_RUN_LOG_PATH}" 2>&1 &
     emulator_pid=$!
     disown $emulator_pid
