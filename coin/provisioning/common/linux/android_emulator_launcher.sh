@@ -75,6 +75,14 @@ do
     echo "Waiting ${ADB_MAX_TIMEOUT} seconds for emulated device to appear..."
     timeout ${ADB_MAX_TIMEOUT} "$ADB_EXEC" wait-for-device
 
+    # Due to some bug in Coin/Go, we can't have the emulator command stream
+    # the output to the console while in the background, as Coin will continue
+    # waiting for it. So, rely on re-directing all output to a log file and
+    # then printing it out after the emulator is started.
+    echo "######## Printing out the emulator command logs ########"
+    cat "${EMULATOR_RUN_LOG_PATH}"
+    echo "########################################################"
+
     echo "Waiting a few minutes for the emulator to fully boot..."
     emulator_status=down
     for _ in $(seq ${ADB_MAX_TIMEOUT})
