@@ -22,8 +22,8 @@ Configurations:
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
     ]
 -
-    Id: 'macos-11-minimal-static'
-    Template: 'qtci-macos-11-x86_64-106'
+    Id: 'macos-minimal-static'
+    Template: 'qtci-macos-13-x86_64-103'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'
