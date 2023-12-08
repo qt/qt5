@@ -7,7 +7,12 @@
 
 set -ex
 
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+
 sudo zypper -nq install python-devel python-xml
 
 # install python3
-sudo zypper -nq install python3-base python3 python3-pip python3-devel python3-virtualenv python3-wheel
+sudo zypper -nq install python311-base python311-devel python311-pip python311-virtualenv python311-wheel
+python3.11 -m pip install selenium netifaces scache
+
+SetEnvVar "PYTHON3_EXECUTABLE" "/usr/bin/python3.11"
