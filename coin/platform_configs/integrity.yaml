@@ -6,7 +6,7 @@ Configurations:
       Compiler: 'GCC'
       Target os: 'INTEGRITY'
       Platform dependency: 'ubuntu-22.04'
-      Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16', 'UseConfigure']
+      Features: ['MinimalStaticTests', 'DoNotRunTests', 'VMSize16', 'UseConfigure', 'Insignificant']
       Environment variables: [
           'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql -no-feature-brotli',
           'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64 -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DUNIX=ON --debug-trycompile',
