@@ -34,8 +34,8 @@ ndkSha1Latest="e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
 ndkSha1Default=$ndkSha1Latest
 
 # Android 14 avd zip
-android14SystemZipName="android14system_UPB5_230623_003.tar.gz"
-android14SystemZipSha="9680db449516ad6212525cc53f2bc027cf8b3322"
+android14SystemZipName="android14system_UE1A_230829_036.tar.gz"
+android14SystemZipSha="ede80c6901e8fad1895c97a86542b8e072bb1ee5"
 android14SystemPath="$basePath/$android14SystemZipName"
 
 # Android Automotive max SDK level image
