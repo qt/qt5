@@ -1,40 +1,38 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/v2.2.0.tar.gz"
-  sha256 "ef62a5d0a0d582b38497ae8d24a2a417d4a21c42811123c08082541a7092825d"
+  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.3.15.tar.gz"
+  sha256 "cf6499e1c8f18fb3473c2afdf5f14826fd42a1c4b051219faea104e38036e4bb"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git", branch: "master"
 
   livecheck do
     url :stable
-    strategy :github_latest
+    regex(/^v?(\d+(?:\.\d+)+(-\d+)?)$/i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1d326dcae6327e1a62a8026e80665a0d995eec0d26c27f417ef34a9b75a2e2a7"
-    sha256 cellar: :any,                 arm64_big_sur:  "38f17626731a50f95ce1ad71495de2d260706a1420a19f2f29e7c935525c8c01"
-    sha256 cellar: :any,                 monterey:       "b02075ca6820755aee0956795c7decbfac56562ba66fec06bea193116cef5de6"
-    sha256 cellar: :any,                 big_sur:        "880bf4a355cc3da07562b82bac1bf7d0f4bcde6c613f5ea691f50d4e013b1bf8"
-    sha256 cellar: :any,                 catalina:       "5f7f283d3029f6293a52fc5449cf6aae8be5976f605318c9afa300be3e7d88f8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fb8949a118e2b8012383fe822148778944d24fe7eab36655fad6e1f1d506e2ad"
+    sha256 cellar: :any,                 arm64_ventura:  "ff68efd633ee282abb0c0a6ba72f90d5248644f3143f40e15841b6ae7996e3cd"
+    sha256 cellar: :any,                 arm64_monterey: "af7621550cc7c005549d96218d2606a521e12595f2efc9ae9d8523cc46d318ba"
+    sha256 cellar: :any,                 arm64_big_sur:  "69d69ceeea16fe45346d8856bf213c0a0e48220097635cf17d40b98fa8e12f83"
+    sha256 cellar: :any,                 ventura:        "48fb21656dc11dc0a6ef25eb7cb5e8829485c1e1fac7d1ca596a46771a9ad91d"
+    sha256 cellar: :any,                 monterey:       "96ba1d1702b7620dd9d0d2fe030af4d31c83504afea1b119910ab2e9c9fbb08c"
+    sha256 cellar: :any,                 big_sur:        "f96dfcecefb40d4794a8ea3ef5981bdeab6e64c412f18f0c128b1d64fe87d913"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "83737a776f4828a7fb5eb289b10418b7cf829cccca3fc634d7dfe7c96aff4e7e"
   end
 
   depends_on "autoconf"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pkg-config"
   depends_on "readline"
 
+  uses_from_macos "python" => :test
   uses_from_macos "bzip2"
   uses_from_macos "libffi"
   uses_from_macos "ncurses"
   uses_from_macos "xz"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "python@3.10" => :test
-  end
 
   def install
     inreplace "libexec/pyenv", "/usr/local", HOMEBREW_PREFIX
@@ -52,13 +50,13 @@ class Pyenv < Formula
     share.install prefix/"man"
 
     # Do not manually install shell completions. See:
-    #   - https://github.com/pyenv/pyenv/issues/1056#issuecomment-356818337
-    #   - https://github.com/Homebrew/homebrew-core/pull/22727
+    #   - pyenv/pyenv#1056#issuecomment-356818337
+    #   - Homebrew/homebrew-core#22727
   end
 
   test do
     # Create a fake python version and executable.
-    pyenv_root = Pathname(shell_output("pyenv root").strip)
+    pyenv_root = Pathname(shell_output("#{bin}/pyenv root").strip)
     python_bin = pyenv_root/"versions/1.2.3/bin"
     foo_script = python_bin/"foo"
     foo_script.write "echo hello"
@@ -67,13 +65,13 @@ class Pyenv < Formula
     # Test versions.
     versions = shell_output("eval \"$(#{bin}/pyenv init --path)\" " \
                             "&& eval \"$(#{bin}/pyenv init -)\" " \
-                            "&& pyenv versions").split("\n")
+                            "&& #{bin}/pyenv versions").split("\n")
     assert_equal 2, versions.length
     assert_match(/\* system/, versions[0])
     assert_equal("  1.2.3", versions[1])
 
     # Test rehash.
-    system "pyenv", "rehash"
+    system bin/"pyenv", "rehash"
     refute_match "Cellar", (pyenv_root/"shims/foo").read
     assert_equal "hello", shell_output("eval \"$(#{bin}/pyenv init --path)\" " \
                                        "&& eval \"$(#{bin}/pyenv init -)\" " \

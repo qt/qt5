@@ -8,8 +8,6 @@
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-brew install --formula "${BASH_SOURCE%/*}/pyenv.rb"
-
 pyenv install 3.9.7
 
 /Users/qt/.pyenv/versions/3.9.7/bin/pip3 install --user install virtualenv wheel html5lib

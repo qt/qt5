@@ -8,14 +8,14 @@
 
 set -e
 
-. "$(dirname "$0")"/../common/unix/DownloadURL.sh
-. "$(dirname "$0")"/../common/unix/SetEnvVar.sh
+. "$(dirname "$0")"/../unix/DownloadURL.sh
+. "$(dirname "$0")"/../unix/SetEnvVar.sh
 
 
 DownloadURL  \
-    http://ci-files01-hki.ci.qt.io/input/mac/homebrew/a822f0d0f1838c07e86b356fcd2bf93c7a11c2aa/install.sh  \
-    https://raw.githubusercontent.com/Homebrew/install/c744a716f9845988d01e6e238eee7117b8c366c9/install  \
-    3210da71e12a699ab3bba43910a6d5fc64b92000  \
+    http://ci-files01-hki.intra.qt.io/input/mac/homebrew/be699a568315f57b65519df576d7fc5840b8a5cc/install.sh  \
+    https://raw.githubusercontent.com/Homebrew/install/be699a568315f57b65519df576d7fc5840b8a5cc/install  \
+    f20e4a577f0cafbab5a44b4d239886d725b3b985  \
     /tmp/homebrew_install.sh
 
 DownloadURL "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
