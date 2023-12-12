@@ -270,26 +270,28 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
-    Id: 'focal-arm64-debian-pkg-packaging'
+    Id: 'jammy-arm64-debian-pkg-packaging'
     Template: 'qtci-linux-Debian-11.6-aarch64-50'
     Compiler: 'GCC'
     Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
     Environment variables: [
         'DEBIAN_RULES_REF=6.7_dev',
+        'COIN_TARGET_DIST=tqtc-jammy',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
-        'COIN_SBUILD_CHROOT=focal-arm64-sbuild',
-        'COIN_EXTRA_DEBIAN_REPO=deb http://ports.ubuntu.com/ubuntu-ports/ focal main universe multiverse',
+        'COIN_SBUILD_CHROOT=jammy-arm64-sbuild',
+        'COIN_EXTRA_DEBIAN_REPO=deb http://ports.ubuntu.com/ubuntu-ports/ jammy main universe multiverse',
         'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
     ]
 -
-    Id: 'focal-amd64-debian-pkg-packaging'
+    Id: 'jammy-amd64-debian-pkg-packaging'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
     Environment variables: [
         'DEBIAN_RULES_REF=6.7_dev',
+        'COIN_TARGET_DIST=tqtc-jammy',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
-        'COIN_SBUILD_CHROOT=focal-amd64-sbuild',
-        'COIN_EXTRA_DEBIAN_REPO=deb http://archive.ubuntu.com/ubuntu/ focal main universe multiverse',
+        'COIN_SBUILD_CHROOT=jammy-amd64-sbuild',
+        'COIN_EXTRA_DEBIAN_REPO=deb http://archive.ubuntu.com/ubuntu/ jammy main universe multiverse',
         'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
     ]
