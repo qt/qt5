@@ -39,18 +39,24 @@ EOF
 sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
-# Create chroot
+# Create chroot for debian stable
 sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-arm64
-# For ubuntu 20.04
-echo "Create chroot for Ubuntu Focal"
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates focal /srv/chroot/focal-arm64 http://ports.ubuntu.com/ubuntu-ports/
-echo "Done creating chroot for Ubuntu Focal"
 
-# Update chroot
+echo "Create chroot for Ubuntu Jammy"
+# First we need update the deboostrap scripts
+mkdir -p $HOME/deboot
+cd $HOME/deboot
+# Orig url http://ftp.fi.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.134~bpo12+1.tar.gz
+# we have to update the debootstrap so that sbuild-createroot will recognize jammy code name
+wget http://ci-files01-hki.ci.qt.io/input/debian/debootstrap/debootstrap_1.0.134~bpo12+1.tar.gz
+tar xzvf debootstrap_1.0.134~bpo12+1.tar.gz
+cd debootstrap
+sudo make install
+cd
+rm -rf $HOME/deboot
+sudo sbuild-createchroot --include=gnupg,ca-certificates jammy /srv/chroot/jammy-arm64 http://ports.ubuntu.com/ubuntu-ports/
+echo "Done creating chroot for Ubuntu Jammy"
+
+# Update chroot.
 sudo sbuild-update -udcar stable
-sudo sbuild-update -udcar focal
-
-
-
-
-
+sudo sbuild-update -udcar jammy

@@ -41,14 +41,15 @@ newgrp sbuild
 
 # Create chroot
 sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-amd64
-# For ubuntu 20.04
-echo "Create chroot for Ubuntu Focal"
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates focal /srv/chroot/focal-amd64 http://archive.ubuntu.com/ubuntu/
-echo "Done creating chroot for Ubuntu Focal"
 
-# Update chroot
+# For ubuntu 22.04
+echo "Create chroot for Ubuntu Jammy"
+## ccache can't be found with Jammy
+sudo sbuild-createchroot --include=eatmydata,gnupg,ca-certificates jammy /srv/chroot/jammy-amd64 http://archive.ubuntu.com/ubuntu/
+echo "Done creating chroot for Ubuntu Jammy"
+
+# Update chroot.
 sudo sbuild-update -udcar stable
-sudo sbuild-update -udcar focal
 
 
 
