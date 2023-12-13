@@ -98,7 +98,7 @@ to your `PATH` environment variable to access them.
 Building Qt from git
 ====================
 
-See http://wiki.qt.io/Building_Qt_6_from_Git and README.git
+See http://wiki.qt.io/Building_Qt_6_from_Git and [README.git](README.git)
 for more information.
 See http://wiki.qt.io/Qt_6 for the reference platforms.
 
