@@ -1,0 +1,1 @@
+Will not reinitialize already initialized repository \(use -f to force\)!

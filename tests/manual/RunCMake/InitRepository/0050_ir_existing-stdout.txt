@@ -1,0 +1,12 @@
+\+ git submodule init qtsvg
+\+ git config commit.template .+/tests/manual/RunCMake/build/tmp.+/qt6/.commit-template
+\+ git config remote.origin.url https://code.qt.io/qt/qtsvg.git
+\+ git fetch origin
+\+ git config commit.template .+/tests/manual/RunCMake/build/tmp.+/qt6/.commit-template
+\+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtsvg.git
+\+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
+\+ git submodule update --force --no-fetch
+Submodule path 'qtsvg': checked out '[0-9a-zA-Z]+'
+\+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qt5
+\+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
+Warning: cannot find Git hooks, qtrepotools module might be absent
