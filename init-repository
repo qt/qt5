@@ -1,0 +1,24 @@
+#!/bin/sh
+# Copyright (C) 2024 The Qt Company Ltd.
+# SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
+
+set -eu
+
+script_dir_path=`dirname $0`
+script_dir_path=`(cd "$script_dir_path"; /bin/pwd)`
+
+optfile=init-repository.opt
+opttmpfile=init-repository.opt.in
+
+# Posix compatible way to truncate file
+: > "$optfile"
+: > "$opttmpfile"
+
+# For consistency, use QtWriteArgsFile.cmake to write the optfile like we do on Windows.
+# We do the same with the configure script in qtbase.
+for arg in "$@"; do echo \"$arg\" >> "$opttmpfile"; done
+
+cmake -DIN_FILE="${opttmpfile}" -DOUT_FILE="${optfile}" -P "${script_dir_path}/cmake/QtWriteArgsFile.cmake"
+
+cmake_script_path="$script_dir_path/cmake/QtIRScript.cmake"
+exec cmake -DOPTFILE="${optfile}" -P "$cmake_script_path"

@@ -8,3 +8,5 @@ CMakeUserPresets.json
 build
 build-*
 .DS_Store
+init-repository.opt
+init-repository.opt.in

@@ -1,0 +1,132 @@
+Usage:
+      ./init-repository [options]
+
+    This script may be run after an initial `git clone' of the Qt supermodule
+    in order to check out all submodules. It fetches them from canonical URLs
+    inferred from the clone's origin.
+
+Options:
+  Global options:
+
+    --force, -f
+        Force initialization (even if the submodules are already checked
+        out).
+
+    --force-hooks
+        Force initialization of hooks (even if there are already hooks in
+        checked out submodules).
+
+    --quiet, -q
+        Be quiet. Will exit cleanly if the repository is already
+        initialized.
+
+    --verbose
+        Adds a bit more output when executing processes
+
+    --no-resolve-deps
+        By default, each submodule specified via the module-subset option
+        will have its required and optional dependencies also initialized.
+        This option can be passed to disable automatic initialization of
+        dependencies, so that the exact list passed to module-subset is
+        initialized.
+
+    --no-optional-deps
+        By default, each submodule specified via the module-subset option
+        will have its optional dependencies also initialized.
+        This option can be passed to initialize only required dependencies of
+        the given module-subset.
+
+  Module options:
+
+    --module-subset=<module1>,<module2>...
+        Only initialize the specified subset of modules given as the
+        argument. Specified modules must already exist in .gitmodules. The
+        string "all" results in cloning all known modules. The strings
+        "essential", "addon", "preview", "deprecated", "obsolete",
+        "additionalLibrary", and "ignore" refer to classes of modules
+        identified by "status=" lines in the .gitmodules file.
+        You can use "existing" to to reference already initialized submodules.
+        Additionally, "qtrepotools" is implicitly always added to ensure
+        relevant git commit hooks are available. It can be excluded as described
+        below.
+        You can use "default" in the subset as a short-hand for
+        "essential,addon,preview,deprecated", which corresponds to the set of
+        maintained modules included in standard Qt releases; this is also the
+        default module subset when this option is not given when first running
+        init-repositoy. If init-repository is rerun a second time (with --force)
+        the default is to initialize the "existing" submodules, rather than the
+        default subset. Entries may be prefixed with a dash to exclude them
+        from a bigger set, e.g. "all,-ignore" or "existing,-qttools".
+
+    --no-update
+        Skip the `git submodule update' command.
+
+    --no-fetch
+        Skip the `git fetch' commands. Implied by --no-update.
+
+    --branch
+        Instead of checking out specific SHA1s, check out the submodule
+        branches that correspond with the current supermodule commit. By
+        default, this option will cause local commits in the submodules to
+        be rebased. With --no-update, the branches will be checked out, but
+        their heads will not move.
+
+    --ignore-submodules
+        Set git config to ignore submodules by default when doing operations
+        on the qt5 repo, such as `pull', `fetch', `diff' etc.
+
+        After using this option, pass `--ignore-submodules=none' to git to
+        override it as needed.
+
+  Repository options:
+
+    --berlin
+        Switch to internal URLs and make use of the Berlin git mirrors.
+        (Implies `--mirror').
+
+    --oslo
+        Switch to internal URLs and make use of the Oslo git mirrors.
+        (Implies `--mirror').
+
+    --codereview-username <Gerrit/JIRA username>
+        Specify the user name for the (potentially) writable `gerrit' remote
+        for each module, for use with the Gerrit code review tool.
+
+        If this option is omitted, the gerrit remote is created without a
+        username and port number, and thus relies on a correct SSH
+        configuration.
+
+    --alternates <path to other Qt5 repo>
+        Adds alternates for each submodule to another full qt5 checkout.
+        This makes this qt5 checkout very small, as it will use the object
+        store of the alternates before unique objects are stored in its own
+        object store.
+
+        This option has no effect when using `--no-update'.
+
+        NOTE: This will make this repo dependent on the alternate, which is
+        potentially dangerous! The dependency can be broken by also using
+        the `--copy-objects' option, or by running "git repack -a" in each
+        submodule, where required. Please read the note about the `--shared'
+        option in the documentation of `git clone' for more information.
+
+    --copy-objects
+        When `--alternates' is used, automatically do a "git repack -a" in
+        each submodule after cloning, to ensure that the repositories are
+        independent from the source used as a reference for cloning.
+
+        Note that this negates the disk usage benefits gained from the use
+        of `--alternates'.
+    --mirror <url-base>
+        Uses <url-base> as the base URL for submodule git mirrors.
+
+        For example:
+
+          --mirror user\@machine:/foo/bar/qt/
+
+        ...will use the following as a mirror for qtbase:
+
+          user\@machine:/foo/bar/qt/qtbase.git
+
+        The mirror is permitted to contain a subset of the submodules; any
+        missing modules will fall back to the canonical URLs.
