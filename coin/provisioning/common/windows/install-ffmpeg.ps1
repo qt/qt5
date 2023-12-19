@@ -32,7 +32,8 @@ function InstallFfmpeg {
         [string]$msystem,
         [string]$additionalPath,
         [string]$ffmpegDirEnvVar,
-        [string]$toolchain
+        [string]$toolchain,
+        [bool]$shared
     )
 
     Write-Host "Configure and compile ffmpeg for $buildSystem"
@@ -47,6 +48,7 @@ function InstallFfmpeg {
     $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
     $cmd += " && ../../configure --prefix=installed $config"
     if ($toolchain) { $cmd += " --toolchain=$toolchain" }
+    if ($shared) { $cmd += " --enable-shared --disable-static" }
     $cmd += " && make install -j"
 
     Write-Host "MSYS cmd:"
@@ -66,7 +68,7 @@ function InstallFfmpeg {
 
 function InstallMingwFfmpeg {
     $mingwPath = [System.Environment]::GetEnvironmentVariable("MINGW1120", [System.EnvironmentVariableTarget]::Machine)
-    return InstallFfmpeg -buildSystem "mingw" -msystem "MINGW" -additionalPath "$mingwPath\bin" -ffmpegDirEnvVar "FFMPEG_DIR_MINGW"
+    return InstallFfmpeg -buildSystem "mingw" -msystem "MINGW" -additionalPath "$mingwPath\bin" -ffmpegDirEnvVar "FFMPEG_DIR_MINGW" -shared $true
 }
 
 
@@ -76,7 +78,7 @@ function InstallMsvcFfmpeg {
         return $false
     }
 
-    $result = InstallFfmpeg -buildSystem "msvc" -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar "FFMPEG_DIR_MSVC"
+    $result = InstallFfmpeg -buildSystem "msvc" -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar "FFMPEG_DIR_MSVC" -shared $true
 
     if ($result) {
         # As ffmpeg build system creates lib*.a file we have to rename them to *.lib files to be recognized by WIN32
@@ -99,7 +101,7 @@ function InstallMsvcFfmpeg {
 
 
 function InstallLlvmMingwFfmpeg {
-    return InstallFfmpeg -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin"
+    return InstallFfmpeg -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin" -shared $true
 }
 
 function InstallAndroidArmv7 {
