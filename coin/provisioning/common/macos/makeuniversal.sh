@@ -4,22 +4,16 @@
 
 # Copies or lipos files from the given DESTDIR dirs to the respective install dir
 
-set -x
+set -e
 
 for dir in "$@"; do
     echo "Processing files in $dir ..."
     pushd "$dir" >/dev/null
-    find . -type f -or -type l | while read -r f; do
+    find . -type f | while read -r f; do
         dst="${f:1}"
         dstdir="$(dirname "$dst")"
         mkdir -p "$dstdir"
-
-        if [[ -L "$f" ]]; then
-            if [[ ! -L "$dst" ]]; then
-                echo "Copying symlink $dir/$f to $dst"
-                cp -P -n "$f" "$dst"
-            fi
-        elif [[ ! -f "$dst" ]]; then
+        if [[ ! -f "$dst" ]]; then
             echo "Copying $dir/$f to $dst"
             cp -c "$f" "$dst"
         elif lipo -info "$f" >/dev/null 2>&1; then
