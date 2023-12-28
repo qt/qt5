@@ -155,6 +155,18 @@ echo "Android NDK = $ndkVersion" >> ~/versions.txt
 cd "$sdkTargetFolder/cmdline-tools/tools/bin"
 ./sdkmanager --install "emulator" --sdk_root=$sdkTargetFolder \
     | eval $sdkmanager_no_progress_bar_cmd
+
+echo "Download and unzip Android Emulator version 32.1.15"
+emulatorFileName="emulator-linux_x64-10696886.zip"
+emulatorCiUrl="https://ci-files01-hki.ci.qt.io/input/android/$emulatorFileName"
+emulatorUrl="http://dl.google.com/android/repository/$emulatorFileName"
+emulatorTargetFile="$sdkTargetFolder/$emulatorFileName"
+emulatorSha1="b78f4d2c22d6aa5ca83d26ccb68cbf885a273888"
+DownloadURL "$emulatorCiUrl" "$emulatorUrl" "$emulatorSha1" "$emulatorTargetFile"
+echo "Unzipping the Android Emulator to '$sdkTargetFolder'"
+sudo unzip -o -q "$emulatorTargetFile" -d "$sdkTargetFolder"
+rm "$emulatorTargetFile"
+
 echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" | eval $sdkmanager_no_progress_bar_cmd
 
 echo "y" | ./sdkmanager --install "system-images;android-33;google_apis;x86_64" | eval $sdkmanager_no_progress_bar_cmd
