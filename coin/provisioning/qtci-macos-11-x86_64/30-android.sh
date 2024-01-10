@@ -36,6 +36,7 @@ sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder"
 
 echo "Changing ownership of Android files."
 sudo chown -R qt:wheel "$targetFolder"
+sudo chmod -R 755 $targetFolder
 
 # Run the following command under `eval` or `sh -c` so that the shell properly splits it
 sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
