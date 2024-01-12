@@ -40,7 +40,7 @@ echo "Configuring and building protobuf"
 
 installPrefix="/usr/local"
 if uname -a |grep -q Darwin; then
-    extraCMakeArgs=("-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11)
+    extraCMakeArgs=("-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET=12)
     SetEnvVar PATH "\$PATH:$installPrefix/bin"
 fi
 
