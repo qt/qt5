@@ -31,6 +31,36 @@ DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
 unzip "$targetFile" -d "$HOME"
 sudo rm "$targetFile"
 
+cd $targetDir
+
+if uname -a |grep -q "Ubuntu"; then
+    echo 'diff --git a/cmake/conformance.cmake b/cmake/conformance.cmake
+index d6c435ac3..d6fb3a7df 100644
+--- a/cmake/conformance.cmake
++++ b/cmake/conformance.cmake
+@@ -24,6 +24,8 @@ add_executable(conformance_test_runner
+   ${protobuf_SOURCE_DIR}/conformance/conformance.pb.cc
+   ${protobuf_SOURCE_DIR}/conformance/conformance_test.cc
+   ${protobuf_SOURCE_DIR}/conformance/conformance_test_runner.cc
++  ${protobuf_SOURCE_DIR}/conformance/conformance_test_main.cc
++  ${protobuf_SOURCE_DIR}/conformance/text_format_conformance_suite.cc
+   ${protobuf_SOURCE_DIR}/conformance/third_party/jsoncpp/json.h
+   ${protobuf_SOURCE_DIR}/conformance/third_party/jsoncpp/jsoncpp.cpp
+   ${protobuf_SOURCE_DIR}/src/google/protobuf/test_messages_proto2.pb.cc
+@@ -36,6 +38,10 @@ add_executable(conformance_cpp
+   ${protobuf_SOURCE_DIR}/src/google/protobuf/test_messages_proto2.pb.cc
+   ${protobuf_SOURCE_DIR}/src/google/protobuf/test_messages_proto3.pb.cc
+ )
++install(TARGETS conformance_test_runner
++    RUNTIME DESTINATION  COMPONENT conformance
++    LIBRARY DESTINATION  COMPONENT conformance
++    ARCHIVE DESTINATION  COMPONENT conformance)
+
+ target_include_directories(
+   conformance_test_runner' | patch -p1
+    extraCMakeArgs=("-Dprotobuf_BUILD_CONFORMANCE=ON")
+fi
+
 # devtoolset is needed when running configuration
 if uname -a |grep -qv "Darwin"; then
     export PATH="/opt/rh/devtoolset-7/root/usr/bin:$PATH"
