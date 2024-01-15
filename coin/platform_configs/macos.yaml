@@ -68,19 +68,19 @@ Configurations:
         Id: 'macos-12-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-13-arm64-tests'
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-14-arm64-tests'
         Template: 'qtci-macos-14-arm64'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
 
     # Test the universal packaging built on arm64
@@ -89,7 +89,7 @@ Configurations:
         Id: 'macos-12-arm-on-arm64-tests'
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly']
+        Features: ['TestOnly']
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-12-arm-on-x86_64-tests'
