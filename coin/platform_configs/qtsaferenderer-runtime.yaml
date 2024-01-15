@@ -36,7 +36,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR']
+    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR', 'Insignificant']
     Configure arguments: '-nomake examples -release -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd -qtlibinfix TestInfix',
@@ -55,7 +55,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR']
+    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR', 'Insignificant']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -no-dbus -nomake examples -qtlibinfix TestInfix',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
@@ -66,7 +66,7 @@ Configurations:
     Compiler: 'GCC'
     Target os: 'INTEGRITY'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR', 'VMSize16']
+    Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR', 'VMSize16', 'Insignificant']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-nomake examples -device integrity-armv8-SA8155P -no-feature-library -no-feature-printdialog -no-dbus -no-feature-gtk3 -no-feature-glib -no-feature-libudev -qt-harfbuzz -qt-pcre -no-sql-mysql -no-feature-brotli',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=/home/qt/integrity_toolchain/toolchain.cmake -DCMAKE_C_COMPILER=cxintarm64 -DCMAKE_CXX_COMPILER=cxintarm64 -DBUILD_qtdoc=OFF -DBUILD_qttranslations=OFF -DUNIX=ON --debug-trycompile',
