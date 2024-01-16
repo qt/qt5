@@ -9,7 +9,7 @@ Configurations:
     Target compiler: 'Clang'
     Platform dependency: [
         'rhel-8.8',
-        'android-6-x86-on-linux',
+        'android-8-x86-on-linux',
         'android-14-x86_64-on-linux'
     ]
     Features: [
@@ -21,8 +21,8 @@ Configurations:
     ]
     Environment variables: [
         'QT_CI_ARTIFACT_ID_PATH_Android-host=QT_CI_ARTIFACT_ID_PATH_rhel-8.8',
-        'QT_CI_ARTIFACT_ID_PATH_Android-x86=QT_CI_ARTIFACT_ID_PATH_android-6-x86-on-linux',
+        'QT_CI_ARTIFACT_ID_PATH_Android-x86=QT_CI_ARTIFACT_ID_PATH_android-8-x86-on-linux',
         'QT_CI_ARTIFACT_ID_PATH_Android-x86_64=QT_CI_ARTIFACT_ID_PATH_android-14-x86_64-on-linux',
         'COMMON_TARGET_TEST_CMAKE_ARGS=-DQT_ANDROID_ABIS="x86;x86_64"',
-        'ANDROID_EMULATOR=emulator_x86_api_23'
+        'ANDROID_EMULATOR=emulator_x86_api_26'
     ]

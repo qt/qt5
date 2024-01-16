@@ -147,7 +147,7 @@ echo "Unzipping the Android Emulator to '$sdkTargetFolder'"
 sudo unzip -o -q "$emulatorTargetFile" -d "$sdkTargetFolder"
 rm "$emulatorTargetFile"
 
-echo "y" | ./sdkmanager --install "system-images;android-23;google_apis;x86" \
+echo "y" | ./sdkmanager --install "system-images;android-26;google_apis;x86" \
     | eval "$sdkmanager_no_progress_bar_cmd"
 
 echo "Extract stored Android 14 Beta $android14SystemZipName"
@@ -158,8 +158,8 @@ sudo tar -xzf "/tmp/$android14SystemZipName" -C "$sdkTargetFolder/system-images"
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
-echo "no" | ./avdmanager create avd -n emulator_x86_api_23 -c 2048M -f \
-    -k "system-images;android-23;google_apis;x86"
+echo "no" | ./avdmanager create avd -n emulator_x86_api_26 -c 2048M -f \
+    -k "system-images;android-26;google_apis;x86"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_34 -c 2048M -f \
     -k "system-images;android-34;google_apis;x86_64"
