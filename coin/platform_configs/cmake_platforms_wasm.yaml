@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'webassembly-linux-thread-asyncify'
-    Template: 'qtci-linux-openSUSE-15.5-x86_64-51'
+    Template: 'qtci-linux-openSUSE-15.5-x86_64-52'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'opensuse-15.5-developer-build'
