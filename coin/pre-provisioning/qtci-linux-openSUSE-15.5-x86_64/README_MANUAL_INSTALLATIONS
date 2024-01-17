@@ -1,6 +1,6 @@
 ### OpenSUSE Leap 15.5 ###
 ## KDE ##
-## In qtci-linux-openSUSE-15.5-x86_64-51 > Graphics Platform: X11 (System default) ##
+## In qtci-linux-openSUSE-15.5-x86_64-52 > Graphics Platform: X11 (System default) ##
 
 # Installation #
 Language: English (US)
@@ -17,19 +17,10 @@ Time Zone: UTC
 
 ## Configurations ##
 Before coin-setup add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
-Download and run coin-setup binary - http://coin/coin/binary/linux_amd64/coin-setup
-YaST - System - Services Manager - Firewalld - Stop
-# enable ssh access
-sudo rcsshd start
+Download and run coin-setup binary - http://10.215.100.35/coin/binary/linux_amd64/coin-setup
+- If IP has changed and Coin name not visible to VM, check from Coin logs which IP works for VMs
 Workspace Behavior - Screen locking - Lock screen automatically - unselect options
 Startup and Shutdown - Behavior - Login Screen - Select Automatically log in with session (System default)
-Add below to '$HOME/.config/autostart/coin-bootstrap-agent.desktop' if missing
-    [Desktop Entry]
-    Type=Application
-    Exec=/usr/bin/gnome-terminal -e "/home/qt/bootstrap-agent /dev/ttyS0"
-    Hidden=false
-    X-GNOME-Autostart-enabled=true
-    Name=Coin
 Notifications
     Critical notifications - unselect
     Low priority notifications - unselect
@@ -39,5 +30,6 @@ Notifications
 Display and Monitor - Display Configuration - 1280x800
 Power Management: Screen Energy Saving - unselect
                   Suspend Session - unselect
+YaST - Hardware - Sound - Add Dummy soundcard
 
 Reboot
