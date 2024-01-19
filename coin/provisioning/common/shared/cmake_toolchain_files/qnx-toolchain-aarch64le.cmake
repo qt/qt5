@@ -23,4 +23,6 @@ set(CMAKE_C_COMPILER_TARGET ${_qnx_toolchain_arch})
 set(CMAKE_CXX_COMPILER q++)
 set(CMAKE_CXX_COMPILER_TARGET ${_qnx_toolchain_arch})
 
+set(CMAKE_STRIP $ENV{QNX_HOST}/usr/bin/ntoaarch64-strip)
+
 set(CMAKE_SYSROOT $ENV{QNX_TARGET})
