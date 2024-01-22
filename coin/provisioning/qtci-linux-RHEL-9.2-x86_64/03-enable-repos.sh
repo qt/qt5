@@ -6,10 +6,11 @@ set -ex
 
 echo "set WritePreparedUpdates=false" | sudo tee -a /etc/PackageKit/PackageKit.conf
 sudo systemctl stop packagekit
-sudo systemctl disable packagekit
+sudo systemctl mask --now packagekit
 while sudo fuser /usr/libexec/packagekitd >/dev/null 2>&1; do
     echo "Waiting for PackageKit to finish..."
     sleep 1
+    sudo systemctl stop packagekit
 done
 sudo yum -y remove PackageKit gnome-software
 
