@@ -1,3 +1,6 @@
+# Copyright (C) 2024 The Qt Company Ltd.
+# SPDX-License-Identifier: BSD-3-Clause
+
 # The script produces the list of qt submodules that are required to build the submodules listed
 # in the QT_BUILD_SUBMODULES variable. The resulting list preserves the required build order.
 # Usage:
