@@ -1,6 +1,58 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: BSD-3-Clause
 
+macro(qt_tl_include_all_helpers)
+    include(QtIRHelpers)
+    qt_ir_include_all_helpers()
+endmacro()
+
+function(qt_tl_run_toplevel_configure top_level_src_path)
+    # Filter out init-repository specific arguments before passing them to
+    # configure.
+    qt_ir_get_args_from_optfile_configure_filtered("${OPTFILE}" configure_args)
+
+    # Get the path to the qtbase configure script.
+    set(qtbase_dir_name "qtbase")
+    set(configure_path "${top_level_src_path}/${qtbase_dir_name}/configure")
+    if(CMAKE_HOST_WIN32)
+        string(APPEND configure_path ".bat")
+    endif()
+
+    if(NOT EXISTS "${configure_path}")
+        message(FATAL_ERROR
+            "The required qtbase/configure script was not found: ${configure_path}\n"
+            "Try re-running configure with --init-submodules")
+    endif()
+
+    # Make a build directory for qtbase in the current build directory.
+    set(qtbase_build_dir "${CMAKE_CURRENT_BINARY_DIR}/${qtbase_dir_name}")
+    file(MAKE_DIRECTORY "${qtbase_build_dir}")
+
+    qt_ir_execute_process_and_log_and_handle_error(
+        COMMAND_ARGS "${configure_path}" -top-level ${configure_args}
+        WORKING_DIRECTORY "${qtbase_build_dir}"
+        FORCE_VERBOSE
+    )
+endfunction()
+
+function(qt_tl_run_main_script)
+    if(NOT TOP_LEVEL_SRC_PATH)
+        message(FATAL_ERROR "Assertion: configure TOP_LEVEL_SRC_PATH is not set")
+    endif()
+
+    # Tell init-repository it is called from configure.
+    qt_ir_set_option_value(from-configure TRUE)
+
+    # Run init-repository in-process.
+    qt_ir_run_main_script("${TOP_LEVEL_SRC_PATH}" exit_reason)
+    if(exit_reason AND NOT exit_reason STREQUAL "ALREADY_INITIALIZED")
+        return()
+    endif()
+
+    # Then run configure out-of-process.
+    qt_tl_run_toplevel_configure("${TOP_LEVEL_SRC_PATH}")
+endfunction()
+
 # Populates $out_module_list with all subdirectories that have a CMakeLists.txt file
 function(qt_internal_find_modules out_module_list)
     set(module_list "")

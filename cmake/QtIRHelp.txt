@@ -38,7 +38,7 @@ Options:
 
   Module options:
 
-    --module-subset=<module1>,<module2>...
+    --module-subset=<module1>,<module2>... / -submodules <module1>,<module2>...
         Only initialize the specified subset of modules given as the
         argument. Specified modules must already exist in .gitmodules. The
         string "all" results in cloning all known modules. The strings
@@ -57,6 +57,8 @@ Options:
         the default is to initialize the "existing" submodules, rather than the
         default subset. Entries may be prefixed with a dash to exclude them
         from a bigger set, e.g. "all,-ignore" or "existing,-qttools".
+        For compatibility with qt's configure script, -submodules is an alias
+        of --module-subset. Note the difference in dashes and the equal sign.
 
     --no-update
         Skip the `git submodule update' command.

@@ -30,5 +30,19 @@ macro(qt_ir_set_known_command_line_options)
     qt_ir_commandline_option(resolve-deps TYPE boolean DEFAULT_VALUE yes)
     qt_ir_commandline_option(update TYPE boolean DEFAULT_VALUE yes)
     qt_ir_commandline_option(verbose TYPE boolean)
+
+    # These are used when init-repository is called from configure.
+    qt_ir_commandline_option(from-configure TYPE boolean)
+    # Implies force.
+    qt_ir_commandline_option(init-submodules TYPE boolean)
+    # We alias qtbase's submodules option to init-repository module-subset.
+    qt_ir_commandline_option(submodules ALIAS module-subset TYPE string)
+
+    set_property(GLOBAL PROPERTY _qt_ir_known_command_line_options "${commandline_known_options}")
 endmacro()
 
+# Gets list of known command line options.
+function(qt_ir_get_known_command_line_options out_var)
+    get_property(values GLOBAL PROPERTY _qt_ir_known_command_line_options)
+    set(${out_var} "${values}" PARENT_SCOPE)
+endfunction()

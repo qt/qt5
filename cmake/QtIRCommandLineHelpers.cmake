@@ -247,12 +247,29 @@ function(qt_ir_get_raw_args_from_optfile optfile_path out_var)
     set(${out_var} "${args}" PARENT_SCOPE)
 endfunction()
 
- # Reads the optfile_path, iterates over the given command line arguments,
- # sets the input for recongized options.
- #
- # IGNORE_UNKNOWN_ARGS tells the function not to fail if it encounters an unknown
- # option, needed when the script is called from the configure script with
- # configure-only-known options.
+# Reads the optfile_path, iterates over the given command line arguments,
+# sets the input for recongized options.
+#
+# Handles the following styles of CLI arguments:
+#  --no-foo / --disable-foo
+#  -no-foo / -disable-foo
+#  --foo=<values>
+#  --foo <values>
+#  -foo <values>
+#  --foo
+#  -foo
+#  --f
+#  -f
+#
+# Currently handles the following types of CLI arguments:
+#  string
+#  boolean
+#  void
+#
+# IGNORE_UNKNOWN_ARGS tells the function not to fail if it encounters an unknown
+# option, and instead append it to a global list of unknown options.
+# It is needed when the script is called from the configure script with
+# configure-only-known options.
 function(qt_ir_process_args_from_optfile optfile_path)
     set(options IGNORE_UNKNOWN_ARGS)
     set(oneValueArgs "")
@@ -286,7 +303,13 @@ function(qt_ir_process_args_from_optfile optfile_path)
             set(opt "${CMAKE_MATCH_1}")
             unset(val)
         else()
-            qt_ir_add_error("Invalid command line parameter '${arg}'.")
+            if(NOT arg_IGNORE_UNKNOWN_ARGS)
+                qt_ir_add_error("Invalid command line parameter '${arg}'.")
+            else()
+                message(DEBUG "Unknown command line parameter '${arg}'. Collecting.")
+                qt_ir_append_unknown_args("${arg}")
+                continue()
+            endif()
         endif()
 
         set(type "${commandline_option_${opt}_type}")
@@ -295,7 +318,8 @@ function(qt_ir_process_args_from_optfile optfile_path)
             if(NOT arg_IGNORE_UNKNOWN_ARGS)
                 qt_ir_add_error("Unknown command line option '${arg}'.")
             else()
-                message(DEBUG "Unknown command line option '${arg}'. Ignoring.")
+                message(DEBUG "Unknown command line option '${arg}'. Collecting.")
+                qt_ir_append_unknown_args("${arg}")
                 continue()
             endif()
         endif()
@@ -330,6 +354,17 @@ endfunction()
 # Sets the unhandled command line args.
 function(qt_ir_set_unhandled_args args)
     set_property(GLOBAL PROPERTY _qt_ir_unhandled_args "${args}")
+endfunction()
+
+# Adds to the unknown command line args.
+function(qt_ir_append_unknown_args args)
+    set_property(GLOBAL APPEND PROPERTY _qt_ir_unknown_args ${args})
+endfunction()
+
+# Gets the unhandled command line args.
+function(qt_ir_get_unknown_args out_var)
+    get_property(args GLOBAL PROPERTY _qt_ir_unknown_args)
+    set(${out_var} "${args}" PARENT_SCOPE)
 endfunction()
 
 # Gets the unsupported options that init-repository.pl supports, but the cmake port does

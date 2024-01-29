@@ -516,9 +516,21 @@ function(qt_ir_process_module_subset_values prefix)
 
     # If a module subset is not specified, either use the default list for the very first run,
     # or use the previously initialized submodules for a subsequent run.
+    #
+    # If the are no previously initialized submodules, and 'existing' is specified, default
+    # to 'default'. This handles the case when someone runs git submodule deinit --all --force,
+    # where git initrepository.initialized config key is still true, and then runs
+    # configure -init-submodules. Without defaulting to default, we would end up with an empty
+    # subset and configure would fail.
     if(NOT module_subset)
         if(arg_PREVIOUSLY_INITIALIZED)
-            set(module_subset "existing")
+            if(arg_ALREADY_INITIALIZED_SUBMODULES)
+                set(module_subset "existing")
+            else()
+                message(DEBUG "No previously initialized submodules detected even though "
+                        "'existing' was specified, defaulting to 'default'")
+                set(module_subset "default")
+            endif()
         else()
             set(module_subset "default")
         endif()
@@ -713,11 +725,12 @@ function(qt_ir_handle_if_already_initialized out_var_should_exit working_directo
     qt_ir_check_if_already_initialized(is_initialized "${working_directory}")
     qt_ir_get_option_value(force force)
     qt_ir_get_option_value(quiet quiet)
+    qt_ir_is_called_from_configure(is_called_from_configure)
 
     if(is_initialized)
         if(NOT force)
             set(should_exit TRUE)
-            if(NOT quiet)
+            if(NOT quiet AND NOT is_called_from_configure)
                 message(
                     "Will not reinitialize already initialized repository (use -f to force)!")
             endif()
@@ -821,6 +834,7 @@ function(qt_ir_install_git_hooks)
     set(options "")
     set(oneValueArgs
         PARENT_REPO_BASE_GIT_PATH
+        TOP_LEVEL_SRC_PATH
         WORKING_DIRECTORY
     )
     set(multiValueArgs "")
@@ -836,7 +850,12 @@ function(qt_ir_install_git_hooks)
     endif()
     set(parent_repo_base_git_path "${arg_PARENT_REPO_BASE_GIT_PATH}")
 
-    set(hooks_dir "${CMAKE_CURRENT_SOURCE_DIR}/qtrepotools/git-hooks")
+    if(NOT arg_TOP_LEVEL_SRC_PATH)
+        message(FATAL_ERROR "qt_ir_install_git_hooks: No TOP_LEVEL_SRC_PATH specified")
+    endif()
+    set(top_level_src_path "${arg_TOP_LEVEL_SRC_PATH}")
+
+    set(hooks_dir "${top_level_src_path}/qtrepotools/git-hooks")
     if(NOT EXISTS "${hooks_dir}")
         message("Warning: cannot find Git hooks, qtrepotools module might be absent")
         return()
@@ -882,6 +901,22 @@ function(qt_ir_install_git_hooks)
         qt_ir_ensure_link("${hooks_dir}/clang-format-pre-commit"
             "${submodule_git_dir}/hooks/pre-commit")
     endforeach()
+endfunction()
+
+# Saves the list of top-level submodules that should be included and excluded.
+# Will be used to pass these values to the top-level configure script.
+function(qt_ir_set_top_level_submodules included_submodules excluded_submodules)
+    set_property(GLOBAL PROPERTY _qt_ir_top_level_included_submodules "${included_submodules}")
+    set_property(GLOBAL PROPERTY _qt_ir_top_level_excluded_submodules "${excluded_submodules}")
+endfunction()
+
+# Gets the list of top-level submodules that should be included and excluded.
+function(qt_ir_get_top_level_submodules out_included_submodules out_excluded_submodules)
+    get_property(included GLOBAL PROPERTY _qt_ir_top_level_included_submodules)
+    get_property(excluded GLOBAL PROPERTY _qt_ir_top_level_excluded_submodules)
+
+    set(${out_included_submodules} "${included}" PARENT_SCOPE)
+    set(${out_excluded_submodules} "${excluded}" PARENT_SCOPE)
 endfunction()
 
 # Parses the .gitmodules file and proceses the submodules based on the module-subset option
@@ -976,6 +1011,7 @@ macro(qt_ir_get_submodules prefix out_var_submodules)
         endif()
 
         set(submodules "${submodules_with_deps_and_excluded}")
+        qt_ir_set_top_level_submodules("${submodules}" "${modules_to_exclude}")
     else()
         set(submodules "${processed_module_subset}")
     endif()
