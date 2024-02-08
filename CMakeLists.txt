@@ -76,9 +76,15 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
 
             if(NOT error_reason STREQUAL "")
                 if(required)
+                    if(QT_INTERNAL_CALLED_FROM_CONFIGURE)
+                        set(skip_argument "-skip ${module}")
+                    else()
+                        set(skip_argument "-DBUILD_${module}=OFF")
+                    endif()
+
                     message(FATAL_ERROR "Module '${module}' depends on '${dep}', "
                         "but ${error_reason}.\n"
-                        "Note: Use '-skip ${module}' to exclude it from the build.")
+                        "Note: Use '${skip_argument}' to exclude it from the build.")
                 else()
                     message(STATUS "Skipping optional dependency '${dep}' of '${module}', "
                         "because ${error_reason}.")
