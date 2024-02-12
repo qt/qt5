@@ -11,9 +11,9 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="n6.0"
+version="n6.1"
 url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-sha1="78435ec71cc2227017a99c030e858719b8c7c74d"
+sha1="1feb946476f3076a9b38c97ca0d8b69e1826049c"
 url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
 ffmpeg_name="FFmpeg-$version"
 
@@ -38,7 +38,7 @@ build_ffmpeg_android() {
   if [ "$target_arch" == "x86_64" ]; then
     target_toolchain_arch="x86_64-linux-android"
     target_arch=x86_64
-    target_cpu=x86_64
+    target_cpu=x86-64
     openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/x86_64"
   elif [ "$target_arch" == "x86" ]; then
     target_toolchain_arch="i686-linux-android"
