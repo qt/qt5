@@ -1,0 +1,140 @@
+# List about manual pre-installations to Tier1 image:
+
+VM Options:
+Boot options/Firmware: BIOS
+
+Language to install: English (United States)
+Time and currency format: English (United States)
+Keyboard or input method: United Kingdom
+Windows 11 Enterprise
+location: finnish
+
+
+# If note "This PC can't run Windows 11" appears
+shift + F10 - regedit - add: HKEY_LOCAL_MACHINE/SYSTEM/Setup/LabConfig
+   'regedit' to open Registry Editor
+   Go to: HKEY_LOCAL_MACHINE/SYSTEM/Setup/
+   Right click 'Setup' folder: New -> Key -> Name: LabConfig
+add DWORD value BypassTPMCheck with value 1
+   Right click 'LabConfig' folder: New -> DWORD (32-bit) -> Name: BypassTPMCheck
+   Double-click on the BypassTPMCheck, change value to 1
+add DWORD value BypassSecureBootCheck value 1
+   repeat
+Close the regedit and the installation window ('X') to start the installation again.
+
+Load driver - browse - virtio-win-0.1.204 - amd64 - w10
+
+
+Region: Finland
+Keyboard layout: United Kingdom
+Keyboard layout: English (United State)
+
+
+* Sign-in options - Domain join instead
+   - Add user & pw
+* Location - no
+* Find my device - no
+* Diagnostic data - Required only
+* Inking and typing - no
+* Tailored expreriences - no
+* Advertising ID - no
+
+Reboot
+After reboot and startup, go to 'This PC' -> virtio-win-0.1.204 and run virtio-win-qt-x64
+
+# Register the image to OpenNebula now
+# After registering the image and opening a persistent VM out of it in ON, continue to these steps
+
+* Using Windows Remote Desktop Connection (RDP) is recommended
+   - Connect to the tier-1 VM with VNC in OpenNebula
+   - Open CMD, run: ipconfig
+   - Input the IP to RDP. Click "Show options" -> add username. Connect.
+   - You can now copy&paste paths and .ps1 scripts later
+* Resolution set to 1280x800
+   - If 1280x800 is not listed in the settings, select a 1280 width (e.g. 1280x960) and:
+      - regedit -> HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration
+      - Select a key/folder and its subkeys (00/00) that has the resolution you just selected
+      - Change every height value (e.g. 960) to 800
+      - Restart Windows
+* Coin-setup:
+* Download the agent executable from the IP that is used in Qt5 dev COIN_DOWNLOAD_URL (check from a build log):
+   http://[COIN IP]/coin/binary/windows_amd64/agent.exe
+* Run the executable. It should do the following configurations to Windows but you should check them.
+   - Installing Bootstrap agent
+   - Disabling fast boot
+      - No related settings in control panel.
+      - Make sure it's disabled: gpedit -> Computer Configuration\Administrative Templates\System\Shutdown\
+         - Require use of fast startup -> set to "Disabled".
+   - Disabling firewall
+   - Disabling UAC
+   - Enabling autologin
+      - regedit -> HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device
+         - DevicePasswordLessBuildVersion: 2 -> 0
+      - netplwiz -> uncheck: "Users must enter a user name and password...", apply
+   - Disabling windows updates
+      - gpedit -> Computer Configuration\Administrative Templates\Windows Components\Windows Update\Manage end user experience
+         - "Configure Automatic Updates" -> "Disabled"
+   - Bootstrap agent CMD window should now pop-up at every Windows start up.
+* Turn off Windows defender:
+   - Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+      - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
+   - Reboot on Safe mode:
+      - Open msconfig - Boot tab - enable “Safe boot“ - apply - restart
+      - In Safe mode:
+         - Take Ownership of Defender:
+            - Open properties - Right click "C:\Program Files\Windows Defender\Platform" and select 'Properties'
+            - Open Security tab - Advanced - Owner: Change - Advanced - Find now - Select Administrators - Ok - Ok
+            - Remove all Permissions: Permissions tab
+            - Select 'Disable inheritance'
+            - Remove all entries
+            - Select 'Replace all child object permi…' - Apply
+         - Disable Windows defender also from RegEdit:
+            - Open regedit - Navigate to 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services'
+            - Change the following folders the key Start to 4
+               - Sense (Windows defender advanced threat protection)
+               - WdBoot (Windows defender boot)
+               - WdFilter (Microsoft antimalware file system filter driver)
+               - WdNisDrv (Windows Defender Network Inspection Driver)
+               - WdNisSvc (Windows Defender Network Inspection Service)
+               - WinDefend (Windows Defender Antivirus Service)
+               - mpssvc (Windows Defender Firewall)
+   - NOTE! Without these step windows defender can't be disabled!
+   - Reboot back to normal mode
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+* Time:
+   - Settings - Time & language - Date & time - Time zone: 'Coordinated Universal Time'
+   - Settings - System - Date & time - "Set the time automatically: Off"
+* Regional format:
+   - Settings - Time & language - Language and region - regional format - English (United States)
+* Power saver:
+   - Settings - System - Power - Screen and sleep: set 'When plugged in, turn off my screen after' to 'never'
+* Windows search disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Windows Tools\Services'
+      - 'Windows search' - properties - stop & Startup type: disabled
+* Sysmain disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Windows Tools\Services' - 'SysMain' - stop & disable
+* Windows update:
+   - Settings - Windows Update - run available updates (Windows update2024-02 Cumulative Update for Windows 11 Version 23H2 for x64-based Systems (KB5034765))
+   - After reboot disable windows updates:
+      - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Windows Tools\Services' - 'Windows updates' - stop & disable
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+* Allow running scripts by all users
+   - Open PowerShell, type: Set-ExecutionPolicy -ExecutionPolicy Bypass
+* (Restart Windows)
+* Google Chrome installed for RTA
+* Virus & threat protection settings:
+   * Check that there's no active antivirus providers
+* Disable useless startup apps with Task manager
+   - OneDrive
+   - SecurityHealthSystray
+   - Microsoft Edge
+      - Open Edge and turn off all boosts and background tasks. Task manager should not show Edge processes when Edge is off.
+* Disable clean manager
+   - Settings: System -> Storage -> Storage management -> Storage Sense: Off
+* Run the disable/enable .ps1 scripts
+   - Copy&paste the scripts (+helpers.ps1) to the VM, run them.
+* Install msvc2019 and msvc2022 (follow the msvc2019.txt and msvc2022.txt files)
+   - Open Task Scheduler: Task Scheduler Library > Microsoft > VisualStudio > Updates > right-click: BackgroundDownload > disable
+* Activate Windows
+* When everything seems ready: shut down Windows, Select 'Power off' in OpenNebula.
