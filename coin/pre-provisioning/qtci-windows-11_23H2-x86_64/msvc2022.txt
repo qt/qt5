@@ -1,0 +1,74 @@
+### Visual Studio 2022 Official release ###
+Visual Studio 2022 version 17.9.1 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__msvc2022_1339502178.1525841376.exe
+
+Installed MSVC-2022 Components:
+
+.NET Framework 4.6.1 SDK
+.NET Framework 4.6.1 targeting pack
+.NET Framework 4.6.2 SDK
+.NET Framework 4.6.2 targeting pack
+.NET Framework 4.8 SDK
+.NET Framework 4.8 targeting pack
+.NET Native
+.NET Portable Library targeting pack
+CLR data types for SQL Sever
+Connectivity and publishing tools
+Data sources for SQL Server support
+SQL Server Command Linne Utilities
+SQL Server Data Tools
+SQL Server Express 2019 LocalDB
+SQL Server ODBC Driver
+ClickOnce Publishing
+Developer Analytics tools
+NuGet package manager
+Text Template Transformation
+C# and Visual Basic Roslyn compilers
+C++ 2022 Redistributable Update
+C++ Cmake tools for Windows
+C++/CLI support for v143 build tools (14.30-17.0)
+C++/CLI support for v143 build tools (Latest)
+MSBuild
+MSVC v143 - VS 2022 C++ ARM build tools (Latest)
+MSVC v143 - VS 2022 C++ ARM build tools (v14.30-17.0)
+MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools (Latest)
+MSVC v143 - VS 2022 C++ ARM64 build tools (v14.30-17.0)
+MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.30-17.0)
+.NET profiling tools
+C++ profiling tools
+JavaScript diagnostics
+Just-In-Time debugger
+C# and Visual Basic
+C++ core features
+JavaSript and TypeScript language support
+Razor Language Services
+Graphics debugger and GPU profiler for DirectX
+Image and 3D model editors
+C++ ATL for latest v143 build tools (ARM)
+C++ ATL for latest v143 build tools (ARM64/ARM64EC)
+C++ ATL for latest v143 build tools (x86 & x64)
+TypeScript 4.7 SDK - Deprecated, was not in components anymore. Downloaded 4.7.4 from VS marketplace
+https://marketplace.visualstudio.com/items?itemName=TypeScriptTeam.typescript-474
+TypeScript Server
+Windows 10 SDK (10.0.18362.0)
+Windows 10 SDK (10.0.19041.0)
+Windows 10 SDK (10.0.20348.0)
+Windows 11 SDK (10.0.22000.0)
+Windows 11 SDK (10.0.22621.0)
+Windows Universal C Runtime
+
+# NOTE! Work loads were added during installation!
+
+############################################################
+### Visual Studio 2022 build tools ###
+
+ Visual studio 2022 build tools version 17.9.1 was installed manually using installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_BuildTools_msvc2022.exe"
+  * Only default installation, no additional selections
+
+############################################################
+### Debugging tools ###
+
+* Check that debugging tools are installed
+    * Modify 'Windows Software Development Kit - Windows 10.0.18362.1' from 'Add or remove programs'
+        - Add feature 'Debugging Tools for Windows'
+############################################################
