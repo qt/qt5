@@ -13,7 +13,7 @@ set -e
 
 
 DownloadURL  \
-    http://ci-files01-hki.intra.qt.io/input/mac/homebrew/be699a568315f57b65519df576d7fc5840b8a5cc/install.sh  \
+    http://ci-files01-hki.ci.qt.io/input/mac/homebrew/be699a568315f57b65519df576d7fc5840b8a5cc/install.sh  \
     https://raw.githubusercontent.com/Homebrew/install/be699a568315f57b65519df576d7fc5840b8a5cc/install  \
     f20e4a577f0cafbab5a44b4d239886d725b3b985  \
     /tmp/homebrew_install.sh

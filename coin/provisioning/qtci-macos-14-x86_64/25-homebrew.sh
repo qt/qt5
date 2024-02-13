@@ -16,7 +16,7 @@ DownloadURL  \
     d8f6c666d20a3d42e007ceec161a06651ad92ba331a24a3de62912edb129a522  \
     /tmp/homebrew_install.sh
 
-DownloadURL "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.intra.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
+DownloadURL "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
 { pw=$(cat "/Users/qt/pw"); } 2> /dev/null
 sudo chmod 755 /tmp/homebrew_install.sh
 { (echo "$pw" | /tmp/homebrew_install.sh); } 2> /dev/null
