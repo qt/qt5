@@ -28,11 +28,11 @@ vcpkgToolSourceFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag"
 vcpkgToolBuildFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag/build"
 
 InstallFromCompressedFileFromURL "$vcpkgToolCacheUrl" "$vcpkgToolOfficialUrl" "$vcpkgToolSHA1" "$HOME" ""
-cmake -S $vcpkgToolSourceFolder -B $vcpkgToolBuildFolder -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DVCPKG_DEVELOPMENT_WARNINGS=OFF
-cmake --build $vcpkgToolBuildFolder --parallel
+cmake -S "$vcpkgToolSourceFolder" -B "$vcpkgToolBuildFolder" -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DVCPKG_DEVELOPMENT_WARNINGS=OFF
+cmake --build "$vcpkgToolBuildFolder" --parallel
 
-cp $vcpkgToolBuildFolder/vcpkg $vcpkgRoot/
-rm -rf $vcpkgToolSourceFolder
+cp "$vcpkgToolBuildFolder/vcpkg" "$vcpkgRoot/"
+rm -rf "$vcpkgToolSourceFolder"
 
 if [ ! -f "$vcpkgRoot/vcpkg" ]
 then

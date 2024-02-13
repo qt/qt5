@@ -86,7 +86,7 @@ elif [ "$os" == "macos" ] || [ "$os" == "macos-universal" ]; then
   fix_relative_dependencies="${BASH_SOURCE%/*}/../macos/fix_relative_dependencies.sh"
 
   xcode_major_version=$(xcodebuild -version | awk 'NR==1 {split($2, a, "."); print a[1]}')
-  if [ $xcode_major_version -ge 15 ]; then
+  if [ "$xcode_major_version" -ge 15 ]; then
     # fix the error: duplicate symbol '_av_ac3_parse_header'
     ffmpeg_config_options+=" --extra-ldflags=-Wl,-ld_classic"
   fi

@@ -8,6 +8,7 @@
 
 
 PROVISIONING_DIR="$(dirname "$0")/../.."
+# shellcheck source=../unix/common.sourced.sh
 source "$PROVISIONING_DIR/common/unix/common.sourced.sh"
 
 
@@ -21,8 +22,7 @@ then
 fi
 
 # Verify that yama.ptrace_scope = 0, if it's supported by the kernel.
-ptrace_scope_value=`sudo sysctl kernel.yama.ptrace_scope 2>/dev/null \
-    | sed -E 's/.*([0-9])$/\1/'`
+ptrace_scope_value=$(sudo sysctl kernel.yama.ptrace_scope 2>/dev/null | sed -E 's/.*([0-9])$/\1/')
 if [ -n "$ptrace_scope_value" ] && [ "$ptrace_scope_value" != 0 ]
 then
     fatal "kernel.yama.ptrace_scope = $ptrace_scope_value \

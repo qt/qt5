@@ -27,10 +27,10 @@ DownloadAndExtract () {
 sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/bauhaus-suite-7_7_4-x86_64-gnu_linux.tar.gz"
 targetFile="bauhaus-suite-7_7_4-x86_64-gnu_linux.tar.gz"
 sha1="df17ac0521864a7f1c0b5b3bfded1817cbf47bae"
-cd $HOME
+cd "$HOME"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$HOME"
 
-mkdir $HOME/.bauhaus
+mkdir "$HOME/.bauhaus"
 cd "$HOME/.bauhaus"
 wget http://ci-files01-hki.ci.qt.io/input/axivion/Qt_Evaluation_QSR_INTERN_20250118.key
 cd "$HOME"

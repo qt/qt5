@@ -36,16 +36,12 @@ sudo mkdir "$testSuiteLocal"
 # Check which platform
 if uname -a |grep -q Darwin; then
     usersGroup="staff"
-    squishLicenseDir="/Users/qt"
 elif uname -a |grep -q "el7"; then
     usersGroup="qt"
-    squishLicenseDir="/root"
 elif uname -a |grep -q "Ubuntu"; then
     usersGroup="users"
-    squishLicenseDir="/home/qt"
 else
     usersGroup="users"
-    squishLicenseDir="/root"
 fi
 
 targetFileMount="$mountFolder"/"$compressedFolder"

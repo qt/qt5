@@ -50,7 +50,7 @@ VerifyHash () {
             *) echo "FATAL! Unknown hash length:  $hashLength" 1>&2  ;;
         esac | cut -d ' ' -f 1`
 
-    if [ -z $hash ] || [ ! "$expectedHash" = "$hash" ]
+    if [ -z "$hash" ] || [ ! "$expectedHash" = "$hash" ]
     then
         echo "FAIL! wrong file hash:  $file  $hash"  1>&2
         return 1

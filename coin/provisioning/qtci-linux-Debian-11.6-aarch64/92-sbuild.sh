@@ -2,6 +2,8 @@
 # Copyright (C) 2021 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
+set -ex
+
 # Setups sbuild environment
 
 tee ~/.sbuildrc << EOF
@@ -44,8 +46,8 @@ sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable
 
 echo "Create chroot for Ubuntu Jammy"
 # First we need update the deboostrap scripts
-mkdir -p $HOME/deboot
-cd $HOME/deboot
+mkdir -p "$HOME"/deboot
+cd "$HOME"/deboot
 # Orig url http://ftp.fi.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.134~bpo12+1.tar.gz
 # we have to update the debootstrap so that sbuild-createroot will recognize jammy code name
 wget http://ci-files01-hki.ci.qt.io/input/debian/debootstrap/debootstrap_1.0.134~bpo12+1.tar.gz
@@ -53,7 +55,7 @@ tar xzvf debootstrap_1.0.134~bpo12+1.tar.gz
 cd debootstrap
 sudo make install
 cd
-rm -rf $HOME/deboot
+rm -rf "$HOME"/deboot
 sudo sbuild-createchroot --include=gnupg,ca-certificates jammy /srv/chroot/jammy-arm64 http://ports.ubuntu.com/ubuntu-ports/
 echo "Done creating chroot for Ubuntu Jammy"
 

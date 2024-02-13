@@ -22,7 +22,7 @@ prefix="/usr/local/ios/ffmpeg"
 
 if [ ! -d "$ffmpeg_source_dir" ];
 then
-   InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$target_dir" "$app_prefix"
+   InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$target_dir"
 fi
 
 ffmpeg_config_options=$(cat "${BASH_SOURCE%/*}/../shared/ffmpeg_config_options.txt")
@@ -44,7 +44,8 @@ build_ffmpeg_ios() {
   sudo mkdir -p "$build_dir"
   pushd "$build_dir"
 
-  sudo $ffmpeg_source_dir/configure $ffmpeg_config_options \
+  # shellcheck disable=SC2086
+  sudo "$ffmpeg_source_dir/configure" $ffmpeg_config_options \
     --sysroot="$(xcrun --sdk "$target_sdk" --show-sdk-path)" \
   --enable-cross-compile \
   --enable-optimizations \

@@ -12,13 +12,13 @@ dir_length=${#dir}
 dylib_regex="^$dir/.*\.dylib$"
 
 find "$dir" -type f -name '*.dylib' | while read -r library_path; do
-    install_name=$(otool -D "$library_path" | sed -n '2p' | egrep "$dylib_regex" )
+    install_name=$(otool -D "$library_path" | sed -n '2p' | grep -E "$dylib_regex" )
     if [ -n "$install_name" ]; then
         fixed_install_name="@rpath${install_name:dir_length}"
         install_name_tool -id "$fixed_install_name" "$library_path"
     fi
 
-    otool -L "$library_path" | awk '/\t/ {print $1}' | egrep "$dylib_regex" | while read -r dependency_path; do
+    otool -L "$library_path" | awk '/\t/ {print $1}' | grep -E "$dylib_regex" | while read -r dependency_path; do
         fixed_dependency_path="@loader_path${dependency_path:dir_length}"
         install_name_tool -change "$dependency_path" "$fixed_dependency_path" "$library_path"
     done
