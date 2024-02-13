@@ -82,6 +82,12 @@ Configurations:
         Compiler: 'Clang'
         Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
+    -
+        Id: 'macos-14-arm64-tart-tests'
+        Template: 'qtci-macos-14-arm-106'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'Packaging', 'InsignificantTests']
+        Platform dependency: 'macos-universal-on-x86_64'
 
     # Test the universal packaging built on arm64
 
@@ -164,4 +170,10 @@ Configurations:
         Template: 'qtci-macos-14-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
+        Platform dependency: 'macos-13-arm64-developer-build'
+    -
+        Id: 'macos-14-arm64-tart-developer-build-tests'
+        Template: 'qtci-macos-14-arm-106'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'InsignificantTests']
         Platform dependency: 'macos-13-arm64-developer-build'
