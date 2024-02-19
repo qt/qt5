@@ -62,5 +62,5 @@ sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
 
 
-echo "export LLVM_INSTALL_DIR=$destination" >> ~/.bash_profile
+SetEnvVar "LLVM_INSTALL_DIR" "$destination"
 echo "libClang = $version" >> ~/versions.txt
