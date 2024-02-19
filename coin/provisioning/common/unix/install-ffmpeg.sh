@@ -11,9 +11,9 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="n6.1"
+version="n6.1.1"
 url_public="https://github.com/FFmpeg/FFmpeg/archive/$version.tar.gz"
-sha1="1feb946476f3076a9b38c97ca0d8b69e1826049c"
+sha1="59e0c3c4cc48e9c60073495f8c045329bb21f446"
 url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
 ffmpeg_name="FFmpeg-$version"
 
