@@ -48,5 +48,5 @@ sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
 
 
-echo "export LLVM_DYNAMIC_LIBS_100=$destination" >> ~/.bash_profile
+SetEnvVar "LLVM_DYNAMIC_LIBS_100" "$destination"
 echo "libClang for QtForPython= $version" >> ~/versions.txt
