@@ -5,10 +5,10 @@
 
 # This script will installs msys2
 
-$version = "20220319"
+$version = "20240113"
 $prog = "msys2"
 $arch = "x86_64"
-$sha1 = "d3d05090c09c08a47efbffe469142b45231cbc89"
+$sha1 = "b46c08fd901da0fdba1dc30422a322766d7d03c6"
 $sha1_prebuilt = "d86d45d72228f53f7ae060771bc95b6f54c703c8"
 $folder = "msys64"
 
