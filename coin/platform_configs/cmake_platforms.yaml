@@ -181,16 +181,27 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
+# Build on Debian-11.6 and split test on Wayland and offscreen later
 -
     Id: 'debian-11.6-arm64'
     Template: 'qtci-linux-Debian-11.6-aarch64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'InsignificantTests']
+    Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-doubleconversion -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
     ]
-
+# Test on Debian-11.6 offscreen
+-
+    Id: 'debian-11.6-arm64-offscreen-tests'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'InsignificantTests', 'TestOnly']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_PLATFORM=offscreen'
+    ]
+    Platform dependency: 'debian-11.6-arm64'
 -
     Id: 'ios-universal'
     Template: 'qtci-macos-13-x86_64-103'
