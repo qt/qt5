@@ -25,8 +25,7 @@ echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /e
 echo "deb-src http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
 
 # Make sure needed ca-certificates are available
-sudo apt-get install --reinstall ca-certificates
-
+installPackages+=(ca-certificates)
 # Git is not needed by builds themselves, but is nice to have
 # immediately as one starts debugging
 installPackages+=(git)
