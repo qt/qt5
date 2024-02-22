@@ -3,4 +3,14 @@ Include: [
     cmake_platforms.yaml,
     address_sanitizer_platforms.yaml
 ]
-Configurations: []
+Configurations:
+# Test on Debian-11.6 Wayland
+-
+    Id: 'debian-11.6-arm64-wayland-tests'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+    ]
+    Platform dependency: 'debian-11.6-arm64'
