@@ -14,6 +14,7 @@ Configurations:
         -reduce-exports
         -gc-binaries
         -feature-linuxfb
+        -disable-deprecated-up-to 0x070000
         -no-feature-abstractbutton
         -no-feature-abstractslider
         -no-feature-accessibility
