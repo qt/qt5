@@ -188,6 +188,23 @@ echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_29 -c 2048
 
 # To be used by the VMs to start the emulator for tests
 emulator_script_filename="android_emulator_launcher.sh"
-cp "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/${emulator_script_filename}" "${HOME}"
+scripts_dir_name="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+cp "${scripts_dir_name}/${emulator_script_filename}" "${HOME}"
 ANDROID_EMULATOR_RUNNER="${HOME}/${emulator_script_filename}"
 SetEnvVar "ANDROID_EMULATOR_RUNNER" "$ANDROID_EMULATOR_RUNNER"
+
+# Gradle Caching
+cp -r "${scripts_dir_name}/android/gradle_project" /tmp/gradle_project
+cd /tmp/gradle_project
+# Get Gradle files from qtbase
+qtbaseGradleUrl="https://code.qt.io/cgit/qt/qtbase.git/plain/src/3rdparty/gradle"
+commit_sha="0d91cc866f2799d56911bcdadabebb137eafcea8"
+curl "$qtbaseGradleUrl"/gradle.properties\?h\=$commit_sha > gradle.properties
+curl "$qtbaseGradleUrl"/gradlew\?h\=$commit_sha > gradlew
+curl "$qtbaseGradleUrl"/gradlew.bat\?h\=$commit_sha > gradlew.bat
+mkdir -p gradle/wrapper
+curl "$qtbaseGradleUrl"/gradle/wrapper/gradle-wrapper.jar\?h\=$commit_sha > gradle/wrapper/gradle-wrapper.jar
+curl "$qtbaseGradleUrl"/gradle/wrapper/gradle-wrapper.properties\?h\=$commit_sha > gradle/wrapper/gradle-wrapper.properties
+# Run Gradle
+chmod +x gradlew
+ANDROID_SDK_ROOT="$sdkTargetFolder" sh gradlew build
