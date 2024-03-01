@@ -1,0 +1,16 @@
+[versions]
+agp = "7.4.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+constraintlayout = "2.1.4"
+
+[libraries]
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+
+[bundles]
+
