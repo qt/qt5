@@ -7,10 +7,14 @@ macro(qt_tl_include_all_helpers)
 endmacro()
 
 function(qt_tl_run_toplevel_configure top_level_src_path)
+    cmake_parse_arguments(arg "ALREADY_INITIALIZED" "" "" ${ARGV})
+
+    qt_ir_get_cmake_flag(ALREADY_INITIALIZED arg_ALREADY_INITIALIZED)
+
     # Filter out init-repository specific arguments before passing them to
     # configure.
-    qt_ir_get_args_from_optfile_configure_filtered("${OPTFILE}" configure_args)
-
+    qt_ir_get_args_from_optfile_configure_filtered("${OPTFILE}" configure_args
+        ${arg_ALREADY_INITIALIZED})
     # Get the path to the qtbase configure script.
     set(qtbase_dir_name "qtbase")
     set(configure_path "${top_level_src_path}/${qtbase_dir_name}/configure")
@@ -50,7 +54,7 @@ function(qt_tl_run_main_script)
     endif()
 
     # Then run configure out-of-process.
-    qt_tl_run_toplevel_configure("${TOP_LEVEL_SRC_PATH}")
+    qt_tl_run_toplevel_configure("${TOP_LEVEL_SRC_PATH}" ${exit_reason})
 endfunction()
 
 # Populates $out_module_list with all subdirectories that have a CMakeLists.txt file

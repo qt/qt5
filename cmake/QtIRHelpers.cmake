@@ -102,6 +102,8 @@ endfunction()
 # into the final list of submodules to be included and excluded, which are then translated
 # to configure -submodules and -skip options.
 function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
+    cmake_parse_arguments(arg "ALREADY_INITIALIZED" "" "" ${ARGV})
+
     # Get args unknown to init-repository, and pass them to configure as-is.
     qt_ir_get_unknown_args(unknown_args)
 
@@ -114,6 +116,9 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
     qt_ir_get_option_value(module-subset submodules)
     if(submodules)
         qt_ir_get_top_level_submodules(include_submodules exclude_submodules)
+        if(NOT include_submodules AND arg_ALREADY_INITIALIZED)
+            set(include_submodules "${submodules}")
+        endif()
 
         # qtrepotools is always implicitly cloned, but it doesn't actually
         # have a CMakeLists.txt, so remove it.
