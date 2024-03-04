@@ -195,6 +195,12 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         endif()
     endif()
 
+    # Pass --help if it was requested.
+    qt_ir_is_help_requested(show_help)
+    if(show_help)
+        list(APPEND filtered_args "-help")
+    endif()
+
     set(${out_var} "${filtered_args}" PARENT_SCOPE)
 endfunction()
 
