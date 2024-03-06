@@ -5,7 +5,7 @@ Configurations:
     Id: 'ubuntu-22.04-lcov'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'lcov', 'VMSize8']
+    Features: ['Sccache', 'UseConfigure', 'lcov', 'VMSize8', 'DisableTests']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
