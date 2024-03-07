@@ -238,7 +238,7 @@ Configurations:
     Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-doubleconversion -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
     ]
 # Test on Debian-11.6 offscreen
 -
