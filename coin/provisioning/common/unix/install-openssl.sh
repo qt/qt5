@@ -25,15 +25,16 @@ cd "$opensslSource"
 pwd
 
 if [[ "$os" == "linux" ]]; then
-    ./Configure --prefix="$opensslHome" shared enable-ec_nistp_64_gcc_128 linux-x86_64 "-Wa,--noexecstack"
+    if [ $(uname -m) = aarch64 ]; then
+        arch=$(uname -m)
+    else
+        arch="x86_64"
+    fi
+    ./Configure --prefix="$opensslHome" shared enable-ec_nistp_64_gcc_128 "linux-$arch" "-Wa,--noexecstack"
     make && make install_sw install_ssldirs
     SetEnvVar "OPENSSL_HOME" "$opensslHome"
     SetEnvVar "PATH" "\"$opensslHome/bin:\$PATH\""
-    if uname -a |grep -q "Ubuntu"; then
-        echo "export LD_LIBRARY_PATH=$opensslHome/lib64:$LD_LIBRARY_PATH" >> ~/.bash_profile
-    else
-        echo "export LD_LIBRARY_PATH=$opensslHome/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
-    fi
+    SetEnvVar "LD_LIBRARY_PATH" "\"$opensslHome/lib64:$LD_LIBRARY_PATH\""
 
 elif [ "$os" == "macos" -o "$os" == "macos-universal" ]; then
     # Below target location has been hard coded into Coin.
