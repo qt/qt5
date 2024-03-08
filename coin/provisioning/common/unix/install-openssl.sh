@@ -34,8 +34,11 @@ if [[ "$os" == "linux" ]]; then
     make && make install_sw install_ssldirs
     SetEnvVar "OPENSSL_HOME" "$opensslHome"
     SetEnvVar "PATH" "\"$opensslHome/bin:\$PATH\""
-    SetEnvVar "LD_LIBRARY_PATH" "\"$opensslHome/lib64:$LD_LIBRARY_PATH\""
-
+    if uname -a |grep -q "Debian"; then
+        SetEnvVar "LD_LIBRARY_PATH" "\"$opensslHome/lib:$LD_LIBRARY_PATH\""
+    else
+        SetEnvVar "LD_LIBRARY_PATH" "\"$opensslHome/lib64:$LD_LIBRARY_PATH\""
+    fi
 elif [ "$os" == "macos" ] || [ "$os" == "macos-universal" ]; then
     # Below target location has been hard coded into Coin.
     # QTQAINFRA-1195
