@@ -114,7 +114,7 @@ Configurations:
         Id: 'macos-14-x86_64-developer-build'
         Template: 'qtci-macos-14-x86_64-105'
         Compiler: 'Clang'
-        Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
+        Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
         Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
