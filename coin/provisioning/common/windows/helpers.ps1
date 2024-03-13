@@ -307,10 +307,10 @@ function GetVSPath {
 }
 
 function EnterVSDevShell {
-    # Add cl to path if it is not already there.
-    if (Get-Command cl.exe -ErrorAction SilentlyContinue) {
-        return $true
-    }
+    Param (
+        [string]$HostArch = "amd64",
+        [string]$Arch = "amd64"
+    )
 
     $vsWere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
     $vcComponent = "Microsoft.VisualStudio.Component.VC.CoreIde"
@@ -318,10 +318,10 @@ function EnterVSDevShell {
     # If MSVC has an ABI break this will stop working, and yet another build must be added.
     $VSPath = (& $vsWere -nologo -products * -requires $vcComponent -sort -format value -property installationPath | Select-Object -Last 1)
 
-    Write-Host "Enter VisualStudio developer shell"
+    Write-Host "Enter VisualStudio developer shell (-host_arch=$HostArch -arch=$Arch)"
     try {
         Import-Module "$VSPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-        Enter-VsDevShell -VsInstallPath $VSPath -DevCmdArguments "-arch=x64 -no_logo"
+        Enter-VsDevShell -VsInstallPath $VSPath -DevCmdArguments "-host_arch=$HostArch -arch=$Arch -no_logo"
     } catch {
         Write-Host "Failed to enter VisualStudio DevShell"
         return $false

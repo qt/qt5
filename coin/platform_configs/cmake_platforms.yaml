@@ -129,7 +129,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
@@ -157,7 +157,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
