@@ -100,7 +100,7 @@ Configurations:
     Template: 'qtci-windows-11_22H2-x86_64-51'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF',
@@ -140,7 +140,7 @@ Configurations:
     Template: 'qtci-windows-11_22H2-x86_64-51'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib -c++std c++20'
+    Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE',
