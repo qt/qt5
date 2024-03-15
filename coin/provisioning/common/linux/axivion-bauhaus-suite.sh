@@ -36,9 +36,9 @@ wget http://ci-files01-hki.ci.qt.io/input/axivion/Qt_Evaluation_20240331.key
 cd "$HOME"
 
 #Axivion configuration
-configurationFile="http://ci-files01-hki.ci.qt.io/input/axivion/axivion_config_771.tar.gz"
+configurationFile="http://ci-files01-hki.ci.qt.io/input/axivion/axivion_config_771_new.tar.gz"
 configurationTargetFile="axivion_config.tar.gz"
-configSha1="4730e3dd661055f51a97817b6e5a13060d609ae5"
+configSha1="db77f376e0b3ee0f7a74701790d1c8abe792bebe"
 DownloadAndExtract "$configurationFile" "$configSha1" "$configurationTargetFile" "$HOME"
 
 echo "Axivion Bauhaus Suite = 7.7.1" >> ~/versions.txt
