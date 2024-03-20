@@ -29,15 +29,25 @@ include(ECMOptionalAddSubdirectory)
 
 qt_internal_top_level_before_build_submodules()
 
+qt_internal_find_modules(known_submodules)
 # Get submodule list if not already defined
 if(NOT QT_BUILD_SUBMODULES)
     if(DEFINED ENV{QT_BUILD_SUBMODULES})
         set(QT_BUILD_SUBMODULES "$ENV{QT_BUILD_SUBMODULES}")
     else()
-        qt_internal_find_modules(QT_BUILD_SUBMODULES)
+        set(QT_BUILD_SUBMODULES "${known_submodules}")
     endif()
 endif()
 set(QT_BUILD_SUBMODULES "${QT_BUILD_SUBMODULES}" CACHE STRING "Submodules to build")
+
+# Preliminary check if module should be skipped since -skip <module> or BUILD_<module>
+# are provided.
+set(explicitly_skipped_modules "")
+foreach(module IN LISTS known_submodules)
+    if(DEFINED BUILD_${module} AND NOT BUILD_${module})
+        list(APPEND explicitly_skipped_modules ${module})
+    endif()
+endforeach()
 
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
     if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${module}/CMakeLists.txt)
@@ -48,7 +58,8 @@ foreach(module IN LISTS QT_BUILD_SUBMODULES)
     endif()
 endforeach()
 
-qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES)
+qt_internal_sort_module_dependencies("${QT_BUILD_SUBMODULES}" QT_BUILD_SUBMODULES
+    SKIP_MODULES ${explicitly_skipped_modules})
 
 foreach(module IN LISTS QT_BUILD_SUBMODULES)
     # Check for unmet dependencies

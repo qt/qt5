@@ -111,10 +111,12 @@ endfunction()
 #
 # NORMALIZE_REPO_NAME_IF_NEEDED Will remove 'tqtc-' from the beginning of submodule dependencies
 # if a tqtc- named directory does not exist.
+#
+# SKIP_MODULES Modules that should be skipped from evaluation completely.
 function(qt_internal_resolve_module_dependencies module out_ordered out_revisions)
     set(options IN_RECURSION NORMALIZE_REPO_NAME_IF_NEEDED)
     set(oneValueArgs REVISION SKIPPED_VAR)
-    set(multiValueArgs PARSED_DEPENDENCIES)
+    set(multiValueArgs PARSED_DEPENDENCIES SKIP_MODULES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     # Clear the property that stores the repositories we've already seen.
@@ -122,10 +124,10 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
         set_property(GLOBAL PROPERTY _qt_internal_seen_repos)
     endif()
 
-    # Bail out if we've seen the module already.
+    # Bail out if we've seen the module already or it was skipped explicitly from command line.
     qt_internal_resolve_module_dependencies_set_skipped(FALSE)
     get_property(seen GLOBAL PROPERTY _qt_internal_seen_repos)
-    if(module IN_LIST seen)
+    if(module IN_LIST seen OR module IN_LIST arg_SKIP_MODULES)
         qt_internal_resolve_module_dependencies_set_skipped(TRUE)
         return()
     endif()
@@ -171,11 +173,17 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             set_property(GLOBAL APPEND PROPERTY QT_REQUIRED_DEPS_FOR_${module} ${dependency})
         endif()
 
+        set(extra_options "")
+        if(arg_SKIP_MODULES)
+            list(extra_options APPEND SKIP_MODULES ${arg_SKIP_MODULES})
+        endif()
+
         qt_internal_resolve_module_dependencies(${dependency} dep_ordered dep_revisions
             REVISION "${revision}"
             SKIPPED_VAR skipped
             IN_RECURSION
             ${normalize_arg}
+            ${extra_options}
         )
         if(NOT skipped)
             list(APPEND ordered ${dep_ordered})
@@ -198,8 +206,14 @@ endfunction()
 # modules is the initial list of repos.
 # out_all_ordered is the variable name where the result is stored.
 #
+# SKIP_MODULES Modules that should be skipped from evaluation completely.
+#
 # See qt_internal_resolve_module_dependencies for side effects.
 function(qt_internal_sort_module_dependencies modules out_all_ordered)
+    set(options "")
+    set(oneValueArgs "")
+    set(multiValueArgs SKIP_MODULES)
+    cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     # Create a fake repository "all_selected_repos" that has all repositories from the input as
     # required dependency. The format must match what qt_internal_parse_dependencies produces.
@@ -208,9 +222,15 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
         list(APPEND all_selected_repos_as_parsed_dependencies "${module}/HEAD/FALSE")
     endforeach()
 
+    set(extra_args "")
+    if(arg_SKIP_MODULES)
+        set(extra_args SKIP_MODULES ${arg_SKIP_MODULES})
+    endif()
+
     qt_internal_resolve_module_dependencies(all_selected_repos ordered unused_revisions
         PARSED_DEPENDENCIES ${all_selected_repos_as_parsed_dependencies}
         NORMALIZE_REPO_NAME_IF_NEEDED
+        ${extra_args}
     )
 
     # Drop "all_selected_repos" from the output. It depends on all selected repos, thus it must be
