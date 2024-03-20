@@ -145,6 +145,7 @@ installPackages+=(perl-Data-Dumper)
 installPackages+=(gcc)
 installPackages+=(gcc-c++)
 installPackages+=(make)
+installPackages+=(gcc-toolset-12)
 # Open source VMware Tools
 installPackages+=(open-vm-tools)
 # nfs-utils is needed to make mount work with ci-files01

@@ -1,0 +1,14 @@
+Version: 2
+Configurations:
+# Test gcc-12 on RHEL 9.2
+-
+    Id: 'rhel-9.2-gcc12'
+    Template: 'qtci-linux-RHEL-9.2-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
+    Configure arguments: '-developer-build -nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-pcre -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'PATH=/opt/rh/gcc-toolset-12/root/usr/bin/:{{.Env.PATH}}',
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+    ]
