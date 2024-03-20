@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'Mingw'
     Environment variables: ['PATH=C:\MINGW1120_i686\mingw32\bin;$PATH']
     Features: ['Packaging', UseLegacyInstructions']

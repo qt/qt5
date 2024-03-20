@@ -84,7 +84,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2022'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -174,7 +174,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-mingw13'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'

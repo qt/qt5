@@ -11,7 +11,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-minimal-static'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib'
