@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Configurations:
 -
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['DisableTests']
 -

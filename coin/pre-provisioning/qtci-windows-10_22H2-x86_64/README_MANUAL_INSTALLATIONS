@@ -74,11 +74,17 @@ Reboot
 * Sysmain disabled:
    - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'SysMain' - stop & disable
 # Don't disable Windows Update before running '01-enable-dotnet-framework.ps1'. Script requires Windows update to be enabled!
+* Install msvc2019 and msvc2022 (follow the msvc2019.txt and msvc2022.txt files)
+   - After installation: Open Task Scheduler: Task Scheduler Library > Microsoft > VisualStudio > Updates > right-click: BackgroundDownload > disable
 * Windows update:
    - Settings - Windows Update - run available updates (Windows update2022-09 Cumulative Update for Windows 11 Version 22H2 for x64-based Systems (KB5017321))
    - After reboot disable windows updates:
       - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows updates' - stop & disable
 * Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+* Disable Edge update/installer
+   - Open services.msc: search 'Microsoft Edge Update Service (edgeupdate)' > stop and disable
+* Disable Onedrive
+   - Open Task Manager: startup tab > Microsoft OneDrive > Disabled
 * (Restart Windows)
 * Google Chrome installed for RTA
 * Virus & threat protection settings:
