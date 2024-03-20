@@ -184,11 +184,13 @@ endfunction()
 #
 # NORMALIZE_REPO_NAME_IF_NEEDED Will remove 'tqtc-' from the beginning of submodule dependencies
 # if a tqtc- named directory does not exist.
+#
+# SKIP_MODULES Modules that should be skipped from evaluation completely.
 function(qt_internal_resolve_module_dependencies module out_ordered out_revisions)
     set(options IN_RECURSION NORMALIZE_REPO_NAME_IF_NEEDED PARSE_GITMODULES
                 EXCLUDE_OPTIONAL_DEPS)
     set(oneValueArgs REVISION SKIPPED_VAR GITMODULES_PREFIX_VAR)
-    set(multiValueArgs PARSED_DEPENDENCIES)
+    set(multiValueArgs PARSED_DEPENDENCIES SKIP_MODULES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     # Clear the property that stores the repositories we've already seen.
@@ -196,10 +198,10 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
         set_property(GLOBAL PROPERTY _qt_internal_seen_repos)
     endif()
 
-    # Bail out if we've seen the module already.
+    # Bail out if we've seen the module already or it was skipped explicitly from command line.
     qt_internal_resolve_module_dependencies_set_skipped(FALSE)
     get_property(seen GLOBAL PROPERTY _qt_internal_seen_repos)
-    if(module IN_LIST seen)
+    if(module IN_LIST seen OR module IN_LIST arg_SKIP_MODULES)
         qt_internal_resolve_module_dependencies_set_skipped(TRUE)
         return()
     endif()
@@ -287,6 +289,11 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             set(exclude_optional_deps "EXCLUDE_OPTIONAL_DEPS")
         endif()
 
+        set(extra_options "")
+        if(arg_SKIP_MODULES)
+            list(extra_options APPEND SKIP_MODULES ${arg_SKIP_MODULES})
+        endif()
+
         qt_internal_resolve_module_dependencies(${dependency} dep_ordered dep_revisions
             REVISION "${revision}"
             SKIPPED_VAR skipped
@@ -295,6 +302,7 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             ${parse_gitmodules}
             ${exclude_optional_deps}
             GITMODULES_PREFIX_VAR ${arg_GITMODULES_PREFIX_VAR}
+            ${extra_options}
         )
         if(NOT skipped)
             list(APPEND ordered ${dep_ordered})
@@ -321,11 +329,13 @@ endfunction()
 # EXCLUDE_OPTIONAL_DEPS is a keyword argument that excludes optional dependencies from the result.
 # See qt_internal_resolve_module_dependencies for details.
 #
+# SKIP_MODULES Modules that should be skipped from evaluation completely.
+#
 # See qt_internal_resolve_module_dependencies for side effects.
 function(qt_internal_sort_module_dependencies modules out_all_ordered)
     set(options PARSE_GITMODULES EXCLUDE_OPTIONAL_DEPS)
     set(oneValueArgs GITMODULES_PREFIX_VAR)
-    set(multiValueArgs "")
+    set(multiValueArgs SKIP_MODULES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     set(parse_gitmodules "")
@@ -345,12 +355,18 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
         list(APPEND all_selected_repos_as_parsed_dependencies "${module}/HEAD/FALSE")
     endforeach()
 
+    set(extra_args "")
+    if(arg_SKIP_MODULES)
+        set(extra_args SKIP_MODULES ${arg_SKIP_MODULES})
+    endif()
+
     qt_internal_resolve_module_dependencies(all_selected_repos ordered unused_revisions
         PARSED_DEPENDENCIES ${all_selected_repos_as_parsed_dependencies}
         NORMALIZE_REPO_NAME_IF_NEEDED
         ${exclude_optional_deps}
         ${parse_gitmodules}
         GITMODULES_PREFIX_VAR ${arg_GITMODULES_PREFIX_VAR}
+        ${extra_args}
     )
 
     # Drop "all_selected_repos" from the output. It depends on all selected repos, thus it must be
