@@ -62,7 +62,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
@@ -97,7 +97,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019-developer-build'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
@@ -109,7 +109,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-msvc2019-arm64'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
@@ -179,7 +179,7 @@ Configurations:
     ]
 -
     Id: 'windows-10_22h2-mingw11'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'

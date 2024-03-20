@@ -17,7 +17,7 @@ Configurations:
     ]
 -
     Id: 'android-armv7-on-windows'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Target os: 'Android_ANY'
     Target arch: 'armv7'
     Compiler: 'Mingw'

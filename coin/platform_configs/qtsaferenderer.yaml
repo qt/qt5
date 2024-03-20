@@ -46,7 +46,7 @@ Configurations:
     ]
 -
     Id: 'Windows-MSVC2019_Static'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
+    Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2019'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql -plugin-sql-sqlite -plugin-sql-odbc'
