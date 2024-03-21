@@ -238,6 +238,8 @@ installPackages+=(uml-utilities)
 # used for reading vcpkg packages version, from vcpkg.json
 installPackages+=(jq)
 
+installPackages+=(patchelf)
+
 echo "Running update for apt"
 waitLoop
 sudo apt-get update

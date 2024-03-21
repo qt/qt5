@@ -14,7 +14,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
-    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
+    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE']
 -
     Id: 'ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
@@ -23,7 +23,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 # Test on Ubuntu 22.04 X11
 -
@@ -68,7 +68,7 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
-    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
+    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE']
 -
     Id: 'ubuntu-24.04-x64'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
@@ -77,7 +77,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
     ]
 # Test on Ubuntu 24.04 x64 X11
 -
@@ -101,7 +101,7 @@ Configurations:
     Environment variables: [
         'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 -
     Id: 'sles-15_sp5-static'

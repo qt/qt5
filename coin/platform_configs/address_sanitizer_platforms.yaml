@@ -8,5 +8,5 @@ Configurations:
     Configure arguments: '-nomake examples -developer-build'
     Environment variables: [
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]

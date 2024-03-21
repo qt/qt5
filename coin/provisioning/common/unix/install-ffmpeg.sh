@@ -71,11 +71,31 @@ build_ffmpeg() {
 }
 
 if [ "$os" == "linux" ]; then
+      # TODO: install patchelf on RHEL and remove the force "static"
+  if [ -f "/etc/redhat-release" ]; then
+    build_type="static"
+  else
+    build_type="$2"
+  fi
+
   install_ff_nvcodec_headers
 
   ffmpeg_config_options+=" --enable-openssl"
+
+  if [ "$build_type" != "static" ]; then
+    ffmpeg_config_options+=" --enable-shared --disable-static"
+  fi
+
   build_ffmpeg
-  sudo mv "$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name" "/usr/local"
+
+  output_dir="$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name"
+
+  if [ "$build_type" != "static" ]; then
+    fix_dependencies="${BASH_SOURCE%/*}/../linux/fix_ffmpeg_dependencies.sh"
+    "$fix_dependencies" "$output_dir"
+  fi
+
+  sudo mv "$output_dir" "/usr/local"
   SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
 
 elif [ "$os" == "macos" ] || [ "$os" == "macos-universal" ]; then
@@ -111,3 +131,5 @@ elif [ "$os" == "macos" ] || [ "$os" == "macos-universal" ]; then
 
   SetEnvVar "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
 fi
+
+
