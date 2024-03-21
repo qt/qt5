@@ -6,9 +6,9 @@ set -ex
 
 # shellcheck source=../common/macos/install-commandlinetools.sh
 source "${BASH_SOURCE%/*}/../common/macos/install-commandlinetools.sh"
-version="15"
+version="15.3"
 packageName="Command_Line_Tools_for_Xcode_$version.dmg"
 url="http://ci-files01-hki.ci.qt.io/input/mac/$packageName"
-sha1="f83aedc844c829e989a83a85b074585eb1959964"
+sha1="e7149414aff0e3d6c85245683e77ddde2f410ec0"
 
 InstallCommandLineTools $url $url $sha1 $packageName $version
