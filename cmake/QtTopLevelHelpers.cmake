@@ -175,7 +175,7 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
 
         set(extra_options "")
         if(arg_SKIP_MODULES)
-            list(extra_options APPEND SKIP_MODULES ${arg_SKIP_MODULES})
+            list(APPEND extra_options SKIP_MODULES ${arg_SKIP_MODULES})
         endif()
 
         qt_internal_resolve_module_dependencies(${dependency} dep_ordered dep_revisions
