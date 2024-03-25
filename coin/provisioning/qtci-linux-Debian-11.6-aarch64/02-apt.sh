@@ -247,6 +247,9 @@ waitLoop
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install cmake apt-cacher-ng -t bullseye-backports
 
+# Disable keyring password prompt
+keyring --disable
+
 # SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
 
 #OpenSSLVersion="$(openssl version |cut -b 9-14)"
