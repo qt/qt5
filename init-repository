@@ -10,6 +10,12 @@ script_dir_path=`(cd "$script_dir_path"; /bin/pwd)`
 optfile=init-repository.opt
 opttmpfile=init-repository.opt.in
 
+# check whether cmake exists
+if ! [ -x "$(command -v cmake)" ]; then
+    echo "Error: cmake was not found. You need to install it before configuring Qt."
+    exit 1
+fi
+
 # Posix compatible way to truncate file
 : > "$optfile"
 : > "$opttmpfile"
