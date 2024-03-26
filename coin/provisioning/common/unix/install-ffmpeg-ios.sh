@@ -61,6 +61,9 @@ build_ffmpeg_ios() {
   --extra-cflags="$minos" \
   --extra-cxxflags="$minos" \
   --enable-cross-compile \
+  --enable-shared \
+  --disable-static \
+  --install-name-dir='@rpath/Frameworks' \
   --enable-swscale \
   --enable-pthreads \
   --disable-audiotoolbox
@@ -69,8 +72,37 @@ build_ffmpeg_ios() {
   popd
 }
 
+install_ffmpeg() {
+    for dir in "$@"; do
+        echo "Processing files in $dir ..."
+        pushd "$dir" >/dev/null
+        find . -type l -name '*.*.dylib' | while read -r f; do
+            dst="${f:1}"
+            dstdir="$(dirname "$dst")"
+            sudo mkdir -p "$dstdir"
+
+            if [[ ! -f "$dst" ]]; then
+                echo "<Copying $dir/$f to $dst"
+                sudo cp -c "$f" "$dst"
+                symlinkname="$(tmp=${f/*\/}; echo ${tmp/\.*}).dylib"
+                sudo ln -s "$(basename -- "$f")" $dstdir/"$symlinkname"
+            elif lipo -info "$f" >/dev/null 2>&1; then
+                echo "Lipoing $dir/$f into $dst"
+                sudo lipo -create -output "$dst" "$dst" "$f"
+            elif ! diff "$f" "$dst"; then
+                echo "Error: File $f in $dir doesn't match destination $dst"
+                exit 1
+            fi
+        done
+        echo "LS"
+        popd >/dev/null
+    done
+    sudo cp -r $1$prefix/include $prefix
+    echo "LS done."
+}
+
 build_ffmpeg_ios "x86_64"
 build_ffmpeg_ios "arm64"
-sudo "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$ffmpeg_source_dir/build_ios/x86_64/installed" "$ffmpeg_source_dir/build_ios/arm64/installed"
-SetEnvVar "FFMPEG_DIR_IOS" $prefix
 
+install_ffmpeg "$ffmpeg_source_dir/build_ios/x86_64/installed" "$ffmpeg_source_dir/build_ios/arm64/installed"
+SetEnvVar "FFMPEG_DIR_IOS" $prefix
