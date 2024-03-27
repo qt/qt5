@@ -9,7 +9,7 @@ Configurations:
 
     -
         Id: 'macos-universal-on-x86_64'
-        Template: 'qtci-macos-13-x86_64-103'
+        Template: 'qtci-macos-14-x86_64-105'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
         Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
@@ -22,7 +22,7 @@ Configurations:
 
     -
         Id: 'macos-universal-on-arm64'
-        Template: 'qtci-macos-13-arm64'
+        Template: 'qtci-macos-14-arm-106'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
@@ -111,8 +111,8 @@ Configurations:
     # Build on recent macOS version with latest Xcode
 
     -
-        Id: 'macos-13-x86_64-developer-build'
-        Template: 'qtci-macos-13-x86_64-103'
+        Id: 'macos-14-x86_64-developer-build'
+        Template: 'qtci-macos-14-x86_64-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
@@ -122,8 +122,8 @@ Configurations:
             'Protobuf_ROOT=/usr/local/lib/cmake/protobuf',
         ]
     -
-        Id: 'macos-13-arm64-developer-build'
-        Template: 'qtci-macos-13-arm64'
+        Id: 'macos-14-arm64-developer-build'
+        Template: 'qtci-macos-14-arm-106'
         Compiler: 'Clang'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -nomake examples -release -force-debug-info -separate-debug-info -framework'
@@ -139,16 +139,16 @@ Configurations:
         Template: 'qtci-macos-12-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-13-arm64-developer-build'
+        Platform dependency: 'macos-14-arm64-developer-build'
     -
         Id: 'macos-13-arm64-developer-build-tests'
         Template: 'qtci-macos-13-arm64'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-13-arm64-developer-build'
+        Platform dependency: 'macos-14-arm64-developer-build'
     -
         Id: 'macos-14-arm64-developer-build-tests'
         Template: 'qtci-macos-14-arm-106'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-13-arm64-developer-build'
+        Platform dependency: 'macos-14-arm64-developer-build'

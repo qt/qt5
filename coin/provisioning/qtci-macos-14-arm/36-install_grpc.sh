@@ -5,5 +5,6 @@
 set -ex
 
 # shellcheck source=../common/unix/install_grpc.sh
-source "${BASH_SOURCE%/*}/../common/unix/install_grpc.sh"
+# Temporarily disabled due to OpenSSL linking errors
+#source "${BASH_SOURCE%/*}/../common/unix/install_grpc.sh"
 
