@@ -1004,7 +1004,9 @@ macro(qt_ir_get_submodules prefix out_var_submodules)
 
         # Then remove any explicitly specified submodules.
         set(submodules_with_deps_and_excluded "${submodules_with_deps}")
-        list(REMOVE_ITEM submodules_with_deps_and_excluded ${modules_to_exclude})
+        if(modules_to_exclude)
+            list(REMOVE_ITEM submodules_with_deps_and_excluded ${modules_to_exclude})
+        endif()
 
         if(NOT perl_identical_output_for_tests AND modules_to_exclude)
             message(DEBUG "Repos that will be excluded after dependency handling: ${modules_to_exclude}")
