@@ -6,9 +6,10 @@ TCC_DATABASE="$HOME/Library/Application Support/com.apple.TCC/TCC.db"
 if touch "$TCC_DATABASE"; then
     # We can write to the TCC database
     BOOTSTRAP_AGENT="$HOME/bootstrap-agent"
-    REQ_STR=$(codesign -d -r- $BOOTSTRAP_AGENT 2>&1 | awk -F ' => ' '/designated/{print $2}')
+    REQ_STR=$(codesign -d -r- "$BOOTSTRAP_AGENT" 2>&1 | awk -F ' => ' '/designated/{print $2}')
     REQ_HEX=$(echo "$REQ_STR" | csreq -r- -b >(xxd -p | tr -d '\n'))
 
+    # shellcheck disable=SC2043
     for service in kTCCServiceMicrophone; do
         sqlite3 -echo "$TCC_DATABASE" <<EOF
             DELETE from access WHERE client = '$BOOTSTRAP_AGENT' AND service = '$service';
