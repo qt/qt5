@@ -29,7 +29,7 @@ Windows:
 
 1. Open a command prompt.
 2. Ensure that the following tools can be found in the path:
- * Supported compiler (Visual Studio 2019 or later, or MinGW-builds gcc 8.1 or later)
+ * Supported compiler (Visual Studio 2019 or later, or MinGW-builds gcc 11.2 or later)
  * Python 3 ([https://www.python.org/downloads/windows/] or from Microsoft Store)
 
 ```
