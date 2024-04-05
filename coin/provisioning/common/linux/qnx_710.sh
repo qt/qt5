@@ -43,9 +43,9 @@ if [ ! -d "$targetFolder" ]; then
 fi
 
 # QNX SDP
-sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20220405.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20240417.tar.xz"
 targetFile="qnx710.tar.xz"
-sha1="134af2e0f75d7b7c516f824fafee265b89e51d48"
+sha1="cd2d35004fb2798089e29d9e1226691426632da0"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
 sudo cp "$aarch64le_toolchain" "$targetPath"
