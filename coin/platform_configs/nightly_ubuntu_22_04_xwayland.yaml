@@ -13,7 +13,8 @@ Configurations:
     Features: ['Sccache', 'UseConfigure', 'InsignificantTests']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY'
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DINPUT_headersclean=ON'
     ]
 -
     # default.yaml

@@ -10,5 +10,5 @@ Configurations:
     Environment variables: [
         'PATH=/opt/rh/gcc-toolset-12/root/usr/bin/:{{.Env.PATH}}',
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
     ]
