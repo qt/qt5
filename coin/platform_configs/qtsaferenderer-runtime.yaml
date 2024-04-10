@@ -17,7 +17,7 @@ Include: [
     "windows-10_22h2-mingw13",
     "windows-10_22h2-mingw13-developer-build",
     "windows-10_22h2-llvm",
-    "windows-11_22h2-msvc2019"
+    "windows-11_23H2-msvc2019"
   ],
   cmake_platforms_qemu_qnx710.yaml: [
     "qnx-710-x86_64-developer-build-on-linux",
