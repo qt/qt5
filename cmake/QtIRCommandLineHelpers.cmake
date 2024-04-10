@@ -244,6 +244,7 @@ endfunction()
 # Reads the command line arguments from the optfile_path.
 function(qt_ir_get_raw_args_from_optfile optfile_path out_var)
     file(STRINGS "${optfile_path}" args)
+    qt_ir_escape_semicolons(args "${args}")
     set(${out_var} "${args}" PARENT_SCOPE)
 endfunction()
 

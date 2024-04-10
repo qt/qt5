@@ -225,7 +225,7 @@ endfunction()
 # to run the perly script manually.
 function(qt_ir_show_error_how_to_run_perl opt_file unsupported_option_name)
     qt_ir_get_raw_args_from_optfile("${opt_file}" args)
-    string(REPLACE ";" " " args "${args}")
+    qt_ir_prettify_command_args(args "${args}")
 
     set(perl_cmd "perl ./init-repository.pl ${args}")
 

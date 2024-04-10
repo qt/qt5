@@ -53,10 +53,11 @@ function(qt_ir_execute_process)
             endif()
         endif()
 
-        string(REPLACE ";" " " command_args_string "${arg_COMMAND_ARGS}")
+        qt_ir_prettify_command_args(command_args_string "${arg_COMMAND_ARGS}")
         message("+ ${command_args_string}${working_dir_message}")
     endif()
 
+    qt_ir_unescape_semicolons(arg_COMMAND_ARGS "${arg_COMMAND_ARGS}")
     execute_process(
         COMMAND ${arg_COMMAND_ARGS}
         ${working_dir}
@@ -74,6 +75,25 @@ function(qt_ir_execute_process)
     if(arg_OUT_ERROR_VAR)
         set(${arg_OUT_ERROR_VAR} "${proc_error}" PARENT_SCOPE)
     endif()
+endfunction()
+
+# Guards the escaped semicolon sequences with square brackets.
+function(qt_ir_escape_semicolons out_var input_string)
+    string(REPLACE "\;" "[[;]]" ${out_var} "${input_string}")
+    set(${out_var} "${${out_var}}" PARENT_SCOPE)
+endfunction()
+
+# Removes the square bracket guards around semicolons and escape them.
+function(qt_ir_unescape_semicolons out_var input_string)
+    string(REPLACE "[[;]]" "\;" ${out_var} "${input_string}")
+    set(${out_var} "${${out_var}}" PARENT_SCOPE)
+endfunction()
+
+# Converts the command line arguments to a nice bash runnable string
+function(qt_ir_prettify_command_args output args)
+    list(JOIN args " " ${output})
+    qt_ir_unescape_semicolons(${output} "${${output}}")
+    set(${output} "${${output}}" PARENT_SCOPE)
 endfunction()
 
 # A higher level execute_process wrapper that can be used to execute a single command
@@ -142,7 +162,7 @@ function(qt_ir_execute_process_and_log_and_handle_error)
             set(error_message "${arg_ERROR_MESSAGE}\n")
         endif()
 
-        string(REPLACE ";" " " cmd "${arg_COMMAND_ARGS}")
+        qt_ir_prettify_command_args(cmd "${arg_COMMAND_ARGS}")
         string(APPEND error_message "${cmd} exited with status: ${proc_result}\n")
         if(proc_output)
             string(APPEND error_message "stdout: ${proc_output}\n")
