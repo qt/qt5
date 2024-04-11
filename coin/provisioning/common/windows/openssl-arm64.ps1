@@ -1,31 +1,28 @@
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 . "$PSScriptRoot\helpers.ps1"
 
-# This script installs OpenSSL ARM64 $version.
+# This script installs OpenSSL ARM64 (debug version)
 
-##### OpenSSL ARM64 has been pre-built with following commands #####
-# Two different builds were done to the same folder C:\openssl_arm64\. One with '--debug' and one with '--release' parameter
-# From Visual studio 'C++ Universal Windows Platform support for v142 build tools (ARM64)' and 'Windows Universal C Runtime' were installed
-# cd C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build
-# call vcvarsamd64_arm64
-# curl -o C:\Utils\openssl-3.0.7.zip http://ci-files01-hki.ci.qt.io/input/openssl/openssl-3.0.7.zip
+##### OpenSSL ARM64 and x64-arm64 has been pre-built with following commands #####
+# From Visual studio 'C++ Universal Windows Platform support for v143 build tools' and 'Windows Universal C Runtime' were installed
+# cd C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build
+# call vcvarsamd64_arm64 (or vcvarsarm64 in Windows 11 arm64 OS)
+# curl -o C:\Utils\openssl-3.5.4.zip http://ci-files01-hki.ci.qt.io/input/openssl/openssl-3.5.4.zip
+# (or https://github.com/openssl/openssl/releases/download/openssl-3.5.4/openssl-3.5.4.tar.gz)
 # cd C:\Utils
-# C:\Utils\sevenzip\7z.exe x C:\Utils\openssl-3.0.7.zip
-# cd C:\Utils\openssl-3.0.7
-# perl Configure no-asm VC-WIN64-ARM --debug --prefix=C:\openssl_arm64\ --openssldir=C:\openssl_arm64\
+# C:\Utils\sevenzip\7z.exe x C:\Utils\openssl-3.5.4.zip
+# cd C:\Utils\openssl-3.5.4
+# perl Configure no-asm VC-WIN64-ARM --debug --prefix=C:\openssl_arm64\
 # nmake
 # nmake install
-#
-# perl Configure no-asm VC-WIN64-ARM --release --prefix=C:\openssl_arm64\ --openssldir=C:\openssl_arm64\
-# nmake
-# nmake install
-#################################################################################################################################################
+##################################################################################
 
-$version = "3_0_7"
-$url = "\\ci-files01-hki.ci.qt.io\provisioning\openssl\openssl-$version-arm64.zip"
-$sha1 = "19be15069d981b4a96f5715f039df7aaa7456d52"
+$version = "3.5.4"
+
+$url = "https://ci-files01-hki.ci.qt.io/input/openssl/openssl-$version-prebuild-windows-msvc2022-arm64.zip"
+$sha1 = "e5fdf5c565e7c275fdfe877f31b387eb48da5d96"
 $installFolder = "C:\openssl_arm64"
 $zip_package = "C:\Windows\Temp\$version.zip"
 
@@ -38,9 +35,8 @@ Remove $zip_package
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
     arm64 {
-        # For native arm64
+        # Native arm64
         Set-EnvironmentVariable "OPENSSL_ROOT_DIR_arm64" "$installFolder"
-        Set-EnvironmentVariable "OPENSSL_CONF_arm64" "$installFolder\bin\openssl.cfg"
         Set-EnvironmentVariable "OPENSSL_INCLUDE_arm64" "$installFolder\include"
         Set-EnvironmentVariable "OPENSSL_LIB_arm64" "$installFolder\lib"
         Break
@@ -48,7 +44,6 @@ switch ($cpu_arch) {
     x64 {
         # For cross-compiling x64_arm64
         Set-EnvironmentVariable "OPENSSL_ROOT_DIR_x64_arm64" "$installFolder"
-        Set-EnvironmentVariable "OPENSSL_CONF_x64_arm64" "$installFolder\bin\openssl.cfg"
         Set-EnvironmentVariable "OPENSSL_INCLUDE_x64_arm64" "$installFolder\include"
         Set-EnvironmentVariable "OPENSSL_LIB_x64_arm64" "$installFolder\lib"
     }

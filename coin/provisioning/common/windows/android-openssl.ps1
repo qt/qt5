@@ -15,15 +15,15 @@ if (Is64BitWinHost) {
 # Msys need to be installed to target machine
 # More info and building instructions can be found from http://doc.qt.io/qt-5/opensslsupport.html
 
-$openssl_version_latest = "3.0.7"
-$ndk_version_latest = "r27c"
-$prebuilt_ssl_sha1_latest = "733cff853b6ee7738e78b90f46b5f028c8490e1e"
-$openssl_sha1_latest = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
+$openssl_version_latest = "3.5.4"
+$ndk_version_latest = "r27c_16kb"
+$prebuilt_ssl_sha1_latest = "a76cd9ec719d4e71473dcf451d648a9766247081"
+$openssl_sha1_latest = "b75daac8e10f189abe28a076ba5905d363e4801f"
 
-$openssl_version_preview = "3.0.7"
-$ndk_version_preview = "r29-beta2"
-$prebuilt_ssl_sha1_preview = "c2cf8fabfb7e00b31abcc554e6e306dafd99ae1b"
-$openssl_sha1_preview = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
+$openssl_version_preview = "3.5.4"
+$ndk_version_preview = "r29-beta2_16kb"
+$prebuilt_ssl_sha1_preview = "664bab8b4f5e01c8bb87ab0ea8333b2ef1af703d"
+$openssl_sha1_preview = "b75daac8e10f189abe28a076ba5905d363e4801f"
 
 $openssl_version_nightly1 = $openssl_version_latest
 $ndk_version_nightly1 = $ndk_version_latest
