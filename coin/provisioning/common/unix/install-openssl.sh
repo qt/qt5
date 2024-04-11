@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script install OpenSSL from sources.
 # Requires GCC and Perl to be in PATH.
 set -ex
 os="$1"
-version=${2:-"3.0.7"}
-sha=${3:-"f20736d6aae36bcbfa9aba0d358c71601833bf27"}
+version=${2:-"3.5.4"}
+sha=${3:-"b75daac8e10f189abe28a076ba5905d363e4801f"}
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # shellcheck source=../unix/DownloadURL.sh
@@ -103,6 +103,18 @@ elif [ "$os" == "macos" ] || [ "$os" == "macos-universal" ]; then
     SetEnvVar "OPENSSL_DIR" "\"$openssl_install_dir\""
     SetEnvVar "OPENSSL_INCLUDE" "\"$openssl_install_dir/include\""
     SetEnvVar "OPENSSL_LIB" "\"$openssl_install_dir/lib\""
+
+    # Set runtime loader (dyld) and OpenSSL providers for SSL tests (QTBUG-142392)
+    SetEnvVar "DYLD_LIBRARY_PATH" "\"$opensslTargetLocation/lib:\$DYLD_LIBRARY_PATH\""
+    SetEnvVar "OPENSSL_MODULES" "\"$opensslTargetLocation/lib/ossl-modules\""
+    # Check that the versioned dylibs exists and ML-DSA is available
+    test -f "$opensslTargetLocation/lib/libcrypto.3.dylib"
+    test -f "$opensslTargetLocation/lib/libssl.3.dylib"
+    test -d "$opensslTargetLocation/lib/ossl-modules"
+
+    OPENSSL_MODULES="$opensslTargetLocation/lib/ossl-modules" \
+    "$opensslTargetLocation/bin/openssl" list -signature-algorithms | \
+    grep -q -i 'ML-DSA' || { echo "ML-DSA not available"; exit 1; }
 
     security find-certificate -a -p /Library/Keychains/System.keychain | sudo tee -a "$opensslTargetLocation/ssl/cert.pem" > /dev/null
     security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | sudo tee -a "$opensslTargetLocation/ssl/cert.pem" > /dev/null

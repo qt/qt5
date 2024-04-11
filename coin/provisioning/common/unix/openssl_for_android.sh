@@ -13,15 +13,15 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 outputPathBase="${HOME}"
 
-sslVersionForLatest="3.0.7"
+sslVersionForLatest="3.5.4"
 ndkVersionLatest="r27c"
-featureSuffixLatest="_16kb"
-prebuiltOpensslShaLatest="2cc15dd990460c2c7157ab257a47071fbd9e0ac8"
+featureSuffixLatest="_16kb_fixed_symversions"
+prebuiltOpensslShaLatest="b9dc30ed77bfd26e526e81d558d6964585b27283"
 
-sslVersionForPreview="3.0.7"
+sslVersionForPreview="3.5.4"
 ndkVersionPreview="r29-beta2"
-featureSuffixPreview="_16kb"
-prebuiltOpensslShaPreview="76c9788216440111be97ea1a63c4d8cd807baacd"
+featureSuffixPreview="_16kb_fixed_symversions"
+prebuiltOpensslShaPreview="89b6692e983c7e9678dcd9fc03da623fb75593d3"
 
 ndkVersionNightly1=$ndkVersionLatest
 sslVersionForNightly1=$sslVersionForLatest
@@ -33,36 +33,20 @@ sslVersionForNightly2=$sslVersionForLatest
 featureSuffixNightly2=""
 prebuiltOpensslShaNightly2=$prebuiltOpensslShaLatest
 
-: <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK r29-beta2
-# Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
-exports_file="/tmp/export.sh"
-# source previously made environmental variables.
-if uname -a |grep -q "Ubuntu"; then
-    # shellcheck disable=SC1090
-    grep -e "^export" "$HOME/.profile" > $exports_file && source $exports_file
-    rm -rf "$exports_file"
-else
-    # shellcheck disable=SC1090
-    grep -e "^export" "$HOME/.bashrc" > $exports_file && source $exports_file
-    rm -rf "$exports_file"
-fi
+: <<'EOB' SOURCE BUILD INSTRUCTIONS
+Openssl 3.5.4 prebuilt was made using Android NDK r27c Revision 27.2.12479018
+and r29-beta2 Revision 29.0.13599879
 
-officialUrl="https://www.openssl.org/source/openssl-$sslVersionForLatest.tar.gz"
-cachedUrl="http://ci-files01-hki.ci.qt.io/input/openssl/openssl-$sslVersionForLatest.tar.gz"
-targetFile="/tmp/openssl-$sslVersionForLatest.tar.gz"
-sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
-opensslHome="${HOME}/openssl/android/openssl-${sslVersionForLatest}"
-DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
-mkdir -p "${HOME}/openssl/android/"
-tar -xzf "$targetFile" -C "${HOME}/openssl/android/"
-if uname -a |grep -q "Darwin"; then
-    TOOLCHAIN=${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/darwin-x86_64/bin
-else
-    TOOLCHAIN=${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin
-fi
-cd "$opensslHome"
-PATH=$TOOLCHAIN:$PATH CC=clang ./Configure android-arm
-PATH=$TOOLCHAIN:$PATH CC=clang make build_generated
+By using a helpful (build_ssl.sh) script from:
+Android OpenSSL support for Qt
+https://github.com/KDAB/android_openssl/commit/b71f1470962019bd89534a2919f5925f93bc5779
+
+Download the same NDK version that the Qt branch supports
+https://developer.android.com/ndk/downloads
+
+Modify the script to your liking: set a path to NDK root, set OpenSSL version
+(script will download needed OpenSSL packages)
+Set ANDROID_API to the lowest version of Android which will be used.
 EOB
 
 function BuildOutputPath() {

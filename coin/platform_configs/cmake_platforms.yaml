@@ -190,7 +190,7 @@ Configurations:
     Features: ['Sccache', 'Packaging', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'VCPKG_HOST_TRIPLET=x64-windows-qt',
@@ -224,9 +224,9 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}} -DQT_FORCE_BUILD_TOOLS=ON',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
-        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
+        'OPENSSL_INCLUDE={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
+        'OPENSSL_LIB={{.Env.OPENSSL_LIB_x64_arm64}}',
+        'OPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc_arm64}}',
         'VCPKG_HOST_TRIPLET=x64-windows-qt',
         'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
