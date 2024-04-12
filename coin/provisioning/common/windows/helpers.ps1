@@ -196,6 +196,28 @@ function Is64BitWinHost
     return [environment]::Is64BitOperatingSystem
 }
 
+enum CpuArch {
+    x64
+    x86
+    arm64
+    unknown
+}
+
+function Get-CpuArchitecture
+{
+    # Possible values are "AMD64", "IA64", "ARM64", and "x86"
+    $arch = [System.Environment]::GetEnvironmentVariable('PROCESSOR_ARCHITECTURE', 'Machine')
+    if ($arch -eq "AMD64") {
+        return [CpuArch]::x64
+    } elseif ($arch -eq "x86") {
+        return [CpuArch]::x86
+    } elseif ($arch -eq "ARM64") {
+        return [CpuArch]::arm64
+    }
+
+    return [CpuArch]::unknown
+}
+
 function IsProxyEnabled {
     return (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').proxyEnable
 }
