@@ -32,7 +32,7 @@ Configurations:
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}'
     ]
 -
-    Id: 'android-8-x86-on-linux'
+    Id: 'android-9-x86-on-linux'
     Template: 'qtci-linux-RHEL-8.8-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86'
@@ -45,7 +45,7 @@ Configurations:
         'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_X86}} -DFEATURE_native_grpc=OFF -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}',
-        'ANDROID_EMULATOR=emulator_x86_api_26'
+        'ANDROID_EMULATOR=emulator_x86_api_28'
     ]
 -
     Id: 'android-14-x86_64-on-linux'
