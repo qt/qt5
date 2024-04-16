@@ -160,7 +160,7 @@ Configurations:
     Template: 'qtci-linux-Debian-11.6-aarch64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
-    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-doubleconversion -qt-harfbuzz -no-libudev -bundled-xcb-xinput'
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-doubleconversion -qt-harfbuzz -no-libudev -bundled-xcb-xinput -qpa offscreen\;xcb'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
     ]
