@@ -111,6 +111,7 @@ installPackages+=(g++-multilib)
 # python3 development package
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
+installPackages+=(python3-venv)
 installPackages+=(virtualenv)
 installPackages+=(python3-wheel)
 installPackages+=(python-is-python3)
