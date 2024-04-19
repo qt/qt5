@@ -71,12 +71,7 @@ build_ffmpeg() {
 }
 
 if [ "$os" == "linux" ]; then
-      # TODO: install patchelf on RHEL and remove the force "static"
-  if [ -f "/etc/redhat-release" ]; then
-    build_type="static"
-  else
-    build_type="$2"
-  fi
+  build_type="$2"
 
   install_ff_nvcodec_headers
 
