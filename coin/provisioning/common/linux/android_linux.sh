@@ -194,12 +194,12 @@ cd /tmp/gradle_project
 # Get Gradle files from qtbase
 qtbaseGradleUrl="https://code.qt.io/cgit/qt/qtbase.git/plain/src/3rdparty/gradle"
 commit_sha="0d91cc866f2799d56911bcdadabebb137eafcea8"
-curl "$qtbaseGradleUrl"/gradle.properties\?h\=$commit_sha > gradle.properties
-curl "$qtbaseGradleUrl"/gradlew\?h\=$commit_sha > gradlew
-curl "$qtbaseGradleUrl"/gradlew.bat\?h\=$commit_sha > gradlew.bat
+curl "$qtbaseGradleUrl/gradle.properties?h=$commit_sha" > gradle.properties
+curl "$qtbaseGradleUrl/gradlew?h=$commit_sha" > gradlew
+curl "$qtbaseGradleUrl/gradlew.bat?h=$commit_sha" > gradlew.bat
 mkdir -p gradle/wrapper
-curl "$qtbaseGradleUrl"/gradle/wrapper/gradle-wrapper.jar\?h\=$commit_sha > gradle/wrapper/gradle-wrapper.jar
-curl "$qtbaseGradleUrl"/gradle/wrapper/gradle-wrapper.properties\?h\=$commit_sha > gradle/wrapper/gradle-wrapper.properties
+curl "$qtbaseGradleUrl/gradle/wrapper/gradle-wrapper.jar?h=$commit_sha" > gradle/wrapper/gradle-wrapper.jar
+curl "$qtbaseGradleUrl/gradle/wrapper/gradle-wrapper.properties?h=$commit_sha" > gradle/wrapper/gradle-wrapper.properties
 # Run Gradle
 chmod +x gradlew
 ANDROID_SDK_ROOT="$sdkTargetFolder" sh gradlew build
