@@ -125,7 +125,7 @@ SetEnvVar "ANDROID_NDK_HOST" "linux-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
 # shellcheck disable=SC2129
-cat <<EOB >>~/versions.txt
+cat >>~/versions.txt <<EOB
 Android SDK tools = $toolsVersion
 Android SDK Build Tools = $sdkBuildToolsVersion
 Android SDK API level = $sdkApiLevel
