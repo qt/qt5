@@ -5,3 +5,8 @@ Configurations:
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']
+-
+    Id: 'ubuntu-24.04-x64-license-check'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'LicenseCheck', 'UseLegacyInstructions']

@@ -30,6 +30,19 @@ Configurations:
     Compiler: 'GCC'
     Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
     Platform dependency: 'ubuntu-24.04-arm64'
+# Test on Ubuntu 24.04 x64 Wayland
+-
+    Id: 'ubuntu-24.04-x64-documentation-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Platform dependency: 'ubuntu-24.04-x64-documentation'
+-
+    Id: 'ubuntu-24.04-x64-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Platform dependency: 'ubuntu-24.04-x64'
 # Test on Debian-11.6 Wayland
 -
     Id: 'debian-11.6-arm64-wayland-tests'

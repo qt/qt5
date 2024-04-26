@@ -78,6 +78,37 @@ Configurations:
         'QT_QPA_PLATFORM=offscreen'
     ]
     Platform dependency: 'ubuntu-24.04-arm64'
+# Build on Ubuntu 24.04 x64 Wayland and test on both X11 and Wayland (Wayland=default)
+-
+    Id: 'ubuntu-24.04-x64-documentation'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
+    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
+-
+    Id: 'ubuntu-24.04-x64'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+    ]
+# Test on Ubuntu 24.04 x64 X11
+-
+    Id: 'ubuntu-24.04-x64-documentation-x11-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+    Platform dependency: 'ubuntu-24.04-x64-documentation'
+-
+    Id: 'ubuntu-24.04-x64-x11-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+    Platform dependency: 'ubuntu-24.04-x64'
 -
     Id: 'opensuse-15.5-developer-build'
     Template: 'qtci-linux-openSUSE-15.5-x86_64-52'
