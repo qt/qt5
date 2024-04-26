@@ -1,0 +1,60 @@
+### Ubuntu 24.04 ###
+Hard Disk: 1TB
+
+Language: English (United States)
+Time & Date: Etc/Coordinated Universal Time
+Software Selection: Desktop image, minimal install
+
+Language: English (US)
+Typing: English (US)
+Privacy: Location Services: OFF
+Connect Your Online Accounts: Skip
+
+
+# Configure Settings
+ Notifications:
+    * Notification Popups: OFF
+    * Lock Screen Notifications: OFF
+ Privacy:
+    * Screen Lock: OFF
+    * File History & Rubbish Bin:
+       * File History: Off
+    * Diagnostics:
+       * Send error reports to Canonical: Never
+ Power:
+    * Blank screen: Never
+    * Automatic suspend: Off
+ Appearance:
+    * Auto-hide the dock: Off
+ Devices:
+    * Displays: Resolution 1280 x 800
+ Details:
+    * Time Zone: UTC
+       * run "sudo timedatectl set-timezone UTC"
+    * Users: Automatic login on
+
+ Software & Updates:
+    * Updates:
+       * Subscribed to: Security updates only
+       * Automatically check for updates: Never
+       * Notify me of a new Ubuntu version: Never
+
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+
+Add 'GRUB_GFXMODE=1280x800' to /etc/default/grub
+run 'sudo grub-mkconfig'
+
+# Install ssh server
+run 'sudo apt install openssh-server'
+
+# Disable firewall
+run 'sudo ufw disable'
+
+# Fetch and run coin-setup (in Opennebula)
+Download http://coin/coin/binary/linux_amd64/coin-setup
+run 'chmod +x ./coin-setup' to make it executable
+run './coin-setup'
+
+Reboot
+

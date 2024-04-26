@@ -9,9 +9,10 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # Note! Python3 is required for Conan installation
 
 os="$1"
+params="$2"
 
 # Install Conan to Python user install directory (typically ~./local/)
-pip3 install conan --user
+pip3 install conan --user $params
 
 SetEnvVar "CONAN_REVISIONS_ENABLED" "1"
 SetEnvVar "CONAN_V2_MODE" "1"
