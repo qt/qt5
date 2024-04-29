@@ -4,7 +4,7 @@ Configurations:
     Id: 'debian-11.6-static-qtlite-arm64'
     Template: 'qtci-linux-Debian-11.6-aarch64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'UseConfigure', 'DisableTests']
+    Features: ['UseConfigure', 'DisableTests']
     Configure arguments: >
         -nomake examples
         -release
