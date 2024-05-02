@@ -38,6 +38,24 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Sccache', 'TestOnly']
     Platform dependency: 'ubuntu-22.04'
+# Build on Ubuntu 24.04 ARM64 and test on both X11 and Wayland later
+-
+    Id: 'ubuntu-24.04-arm64'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+    ]
+# Test on Ubuntu 24.04 ARM64 X11
+-
+    Id: 'ubuntu-24.04-arm64-x11-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'InsignificantTests']
+    Platform dependency: 'ubuntu-24.04-arm64'
 -
     Id: 'opensuse-15.5-developer-build'
     Template: 'qtci-linux-openSUSE-15.5-x86_64-52'
