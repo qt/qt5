@@ -44,6 +44,12 @@ installPackages+=(p7zip-full)
 # Packages needed for RTA and Squish
 installPackages+=(default-jdk)
 installPackages+=(gcc)
+installPackages+=(curl)
+installPackages+=(libicu-dev)
+installPackages+=(python3-dev)
+installPackages+=(python3-pip)
+installPackages+=(python3-venv)
+installPackages+=(virtualenv)
 
 echo "Running update for apt"
 waitLoop
