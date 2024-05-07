@@ -113,8 +113,9 @@ sudo sh -c "grep ^qt /etc/group >> $yoctoLocationARM64/sysroots/$sysrootARM64/et
 
 # Fix mdns to support both docker and network tests
 # See also https://bugreports.qt.io/browse/QTBUG-106013
-sudo sh -c "sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'   $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/nsswitch.conf"
-sudo sh -c "sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'   $yoctoLocationARM64/sysroots/$sysrootARM64/etc/nsswitch.conf"
+sudo sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'  \
+    $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/nsswitch.conf \
+    $yoctoLocationARM64/sysroots/$sysrootARM64/etc/nsswitch.conf
 
 # Install qemu binfmt for 32bit and 64bit arm architectures
 sudo update-binfmts --package qemu-arm --install arm $yoctoLocationARMv7/sysroots/x86_64-pokysdk-linux/usr/bin/qemu-arm \
