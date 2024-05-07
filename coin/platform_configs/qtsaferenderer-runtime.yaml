@@ -26,6 +26,11 @@ Include: [
   ],
   integrity.yaml: [
     "integrity-arm64"
+  ],
+  cmake_platforms_qemu.yaml: [
+    "qemu-arm64-developer-build",
+    "qemu-armv7-developer-build",
+    "qemu-mips64-developer-build"
   ]
 ]
 Configurations:
@@ -37,11 +42,9 @@ Configurations:
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
     Features: ['UseConfigure', 'DoNotRunTests', 'DisableTests', 'Axivion_QSR']
-    Configure arguments: '-nomake examples -release -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd -qtlibinfix TestInfix',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FORCE_BUILD_TOOLS=ON',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DINPUT_headersclean=ON',
         'QT_YOCTO_ENVSETUP={{.Env.QEMUARM64_TOOLCHAIN_ENVSETUP}}',
         "QT_CMAKE_DIR=/opt/cmake-3.27.7/bin",
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}',
