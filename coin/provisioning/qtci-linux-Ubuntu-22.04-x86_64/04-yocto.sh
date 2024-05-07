@@ -113,7 +113,7 @@ sudo sh -c "grep ^qt /etc/group >> $yoctoLocationARM64/sysroots/$sysrootARM64/et
 
 # Fix mdns to support both docker and network tests
 # See also https://bugreports.qt.io/browse/QTBUG-106013
-sudo sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'  \
+sudo sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] mdns4 dns/'  \
     $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/nsswitch.conf \
     $yoctoLocationARM64/sysroots/$sysrootARM64/etc/nsswitch.conf
 
