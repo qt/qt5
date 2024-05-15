@@ -81,7 +81,7 @@ Configurations:
     Id: 'windows-10_22h2-msvc2019'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
+    Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
@@ -93,7 +93,7 @@ Configurations:
     Id: 'windows-11_23H2-msvc2019'
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'MSVC2019'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure']
+    Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
@@ -129,7 +129,7 @@ Configurations:
     Id: 'windows-11_22h2-arm64-msvc2022'
     Template: 'qtci-windows-11_22H2-aarch64-51'
     Compiler: 'MSVC2022'
-    Features: ['DebugAndRelease', 'UseConfigure', 'InsignificantTests']
+    Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
@@ -153,7 +153,7 @@ Configurations:
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'UseConfigure']
     Platform dependency: 'windows-10_22h2-msvc2019-developer-build'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
@@ -181,7 +181,7 @@ Configurations:
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'MSVC2019'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure']
+    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'UseConfigure']
     Platform dependency: 'windows-11_23H2-msvc2019-developer-build'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
