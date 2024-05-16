@@ -71,6 +71,7 @@ python3 --version | grep -F "$python3Version"
 
 pip3 install --user wheel
 pip3 install --user virtualenv
+pip3 install --user -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt"
 
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
