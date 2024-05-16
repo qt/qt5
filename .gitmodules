@@ -132,7 +132,7 @@
 	path = qt3d
 	url = ../qt3d.git
 	branch = dev
-	status = addon
+	status = deprecated
 [submodule "qtimageformats"]
 	depends = qtbase
 	path = qtimageformats
