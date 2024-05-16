@@ -256,6 +256,8 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install cmake apt-cacher-ng -t
 # Disable keyring password prompt
 keyring --disable
 
+pip install --user -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt"
+
 # SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
 
 #OpenSSLVersion="$(openssl version |cut -b 9-14)"

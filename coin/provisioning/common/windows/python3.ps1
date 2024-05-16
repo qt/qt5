@@ -78,6 +78,12 @@ Run-Executable "$install_path\python.exe" "-m pip config --user set global.index
 Run-Executable "$install_path\python.exe" "-m pip config --user set global.extra-index-url https://pypi.org/simple/"
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wheel html5lib"
 
+# Check if python version is higher than 3.8.
+# ntia-conformance-checker requires at least 3.8
+if ([version]::Parse($version) -gt [version]::Parse("3.8")) {
+    Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install -r $PSScriptRoot\..\shared\sbom_requirements.txt"
+}
+
 # Install PyPDF2 for QSR documentation
 Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install PyPDF2"
 

@@ -239,6 +239,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y -o DPkg::Lock::Timeout=300 ins
 # Configure pip
 pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
 pip config --user set global.extra-index-url https://pypi.org/simple/
+# Ubuntu 24.04 comes with a newer pip that disallows installing into the system site-packages,
+# so we explicitly ask it to allow it.
+pip install --user -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt" --break-system-packages
 
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 # SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
