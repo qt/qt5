@@ -1,0 +1,72 @@
+Version: 2
+Configurations:
+
+-
+    Id: 'windows-11_23H2-msvc2022-minimal-static-test'
+    Template: 'qtci-windows-11_23H2-x86_64-53'
+    Compiler: 'MSVC2022'
+    Features: ['Sccache', 'UseConfigure', 'Packaging', 'MinimalStaticTests']
+    Configure arguments: '-static -release -headersclean -nomake examples -qt-libjpeg -no-icu -qt-doubleconversion -qt-zlib -c++std c++20 -no-feature-sql-psql'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+    ]
+-
+    Id: 'windows-11_22h2-arm64-msvc2022-minimal-static-test'
+    Template: 'qtci-windows-11_22H2-aarch64-53'
+    Compiler: 'MSVC2022'
+    Features: ['UseConfigure', 'InsignificantTests', 'Packaging', 'MinimalStaticTests']
+    Configure arguments: '-static -release -headersclean -nomake examples -qt-libjpeg -no-icu -qt-doubleconversion -qt-zlib -c++std c++17 -no-sql-psql'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+    ]
+-
+    Id: 'rhel-8.10-minimal-static-test'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'MinimalStaticTests']
+    Configure arguments: '-static -nomake examples -release -qt-libjpeg -no-icu -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF'
+    ]
+-
+    Id: 'ubuntu-24.04-arm64'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
+    Configure arguments: '-static -nomake examples -release -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput -no-icu -qt-doubleconversion'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release'
+    ]
+
+-
+    Id: 'macos-universal-on-x86_64-minimal-static-test'
+    Template: 'qtci-macos-14-x86_64-105'
+    Compiler: 'Clang'
+    Target arch: 'x86_64-arm64'
+    Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'MinimalStaticTests']
+    Configure arguments: '-static -nomake examples -release -no-framework -no-icu -qt-doubleconversion -no-feature-sql-psql'
+    Environment variables: [
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF',
+        'Protobuf_ROOT=/usr/local/lib/cmake/protobuf'
+    ]
+
+-
+    Id: 'macos-14-minimal-static-tests-x86_64'
+    Template: 'qtci-macos-14-x86_64-105'
+    Compiler: 'Clang'
+    Features: ['TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-x86_64-minimal-static-test'
+-
+    Id: 'macos-14-minimal-static-tests-arm64'
+    Template: 'qtci-macos-14-arm-106'
+    Compiler: 'Clang'
+    Features: ['TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-x86_64-minimal-static-test'
