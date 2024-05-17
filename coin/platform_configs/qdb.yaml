@@ -1,3 +1,4 @@
 Version: 2
-Include: [cmake_platforms.yaml]
+Module only: True
+Include: [cmake_platforms_static_release.yaml]
 Configurations: []
