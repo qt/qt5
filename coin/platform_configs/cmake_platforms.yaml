@@ -89,7 +89,7 @@ Configurations:
     Template: 'qtci-windows-11_22H2-aarch64-51'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql'
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
