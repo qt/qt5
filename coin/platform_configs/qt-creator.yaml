@@ -22,12 +22,6 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-linux-RHEL-9.2-x86_64-51'
-    Compiler: 'GCC'
-    Features: ['Qt5', 'Sccache', 'DebugAndRelease']
-    Configure arguments: ''
-    Environment variables: []
--
     Template: 'qtci-macos-12-x86_64-106'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
