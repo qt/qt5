@@ -19,7 +19,7 @@ Configurations:
     Compiler: 'Mingw'
     Target compiler: 'Clang'
     Platform dependency: 'windows-10_22h2-mingw13'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
     Environment variables: [
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
@@ -33,7 +33,7 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'opensuse-15.5-developer-build'
-    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure']
+    Features: ['Packaging', 'Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
         'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
