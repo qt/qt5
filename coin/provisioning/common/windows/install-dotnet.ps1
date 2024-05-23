@@ -4,15 +4,30 @@
 
 # This script will install Dotnet SDK which is required for Azure installation
 
-$version = "2.1"
-if (Is64BitWinHost) {
-    $urlCache = "http://ci-files01-hki.ci.qt.io/input/windows/dotnet-sdk-2.1.809-win-x64.exe"
-    $urlOfficial = "https://download.visualstudio.microsoft.com/download/pr/c980b6fb-e570-4c73-b344-e4dae6573777/f844ac1a4c6ea5de7227a701786126fd/dotnet-sdk-2.1.809-win-x64.exe"
-    $sha1 = "343e80c2ab558a30696dbe03ad2288bf435d5cd8"
-} else {
-    $urlCache = "http://ci-files01-hki.ci.qt.io/input/windows/dotnet-sdk-2.1.809-win-x86.exe"
-    $urlOfficial = "https://download.visualstudio.microsoft.com/download/pr/cf86a2f3-f6b2-4959-8e41-cf84b0d2f294/a61e834f56abe2dc2e12599e1a60c10b/dotnet-sdk-2.1.809-win-x86.exe"
-    $sha1 = "b38a4e1392f17aed110508a1687f1c65b9d86161"
+$version = "8.0.300"
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    arm64 {
+        $sha1 = "3e68f606b205beeb0a557dad5b01e31d4d833459"
+        $urlCache = "http://ci-files01-hki.ci.qt.io/input/windows/dotnet-sdk-$version-win-arm64.exe"
+        $urlOfficial = "https://download.visualstudio.microsoft.com/download/pr/e195e4f5-00ee-4df3-8736-199aacf00b2a/1663c4f5dc168d390aa4507f09200423/dotnet-sdk-$version-win-arm64.exe"
+        Break
+    }
+    x64 {
+        $urlCache = "http://ci-files01-hki.ci.qt.io/input/windows/dotnet-sdk-$version-win-x64.exe"
+        $urlOfficial = "https://download.visualstudio.microsoft.com/download/pr/90486d8a-fb5a-41be-bfe4-ad292c06153f/6673965085e00f5b305bbaa0b931cc96/dotnet-sdk-$version-win-x64.exe"
+        $sha1 = "527321c1eeea964a7c50f6a24473f37400514cd1"
+        Break
+    }
+    x86 {
+        $urlCache = "http://ci-files01-hki.ci.qt.io/input/windows/dotnet-sdk-$version-win-x86.exe"
+        $urlOfficial = "https://download.visualstudio.microsoft.com/download/pr/9736c2dc-c21d-4df6-8cb7-9365ed5461a9/4c360dc61c7cb6d26b48d2718341c68e/dotnet-sdk-$version-win-x86.exe"
+        $sha1 = "f8857b5e06de5c33aee2fb2242f7781f1a65c4ef"
+        Break
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
 }
 $installer = "C:\Windows\Temp\dotnet-sdk-$version.exe"
 
