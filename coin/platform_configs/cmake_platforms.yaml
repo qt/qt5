@@ -127,7 +127,7 @@ Configurations:
     ]
 -
     Id: 'windows-11_22h2-arm64-msvc2022'
-    Template: 'qtci-windows-11_22H2-aarch64-51'
+    Template: 'qtci-windows-11_22H2-aarch64-52'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql'
