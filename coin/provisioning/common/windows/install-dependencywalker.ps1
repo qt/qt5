@@ -6,12 +6,28 @@
 # This script will install Dependency Walker 2.2.6000
 
 $version = "2.2.6000"
-if (Is64BitWinHost) {
-    $arch = "_x64"
-    $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
-} else {
-    $arch = "_x86"
-    $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    x64 {
+        $arch = "_x64"
+        $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
+        $nuitka_arch = "x86_64"
+    }
+    arm64 {
+        # There is no ARM64 version of Dependency Walker
+        # just use the x64 version
+        $arch = "_x64"
+        $sha1 = "4831D2A8376D64110FF9CD18799FE6C69509D3EA"
+        $nuitka_arch = "arm64"
+    }
+    x86 {
+        $arch = "_x86"
+        $sha1 = "bfec714057e8449b0246051be99ba46a7760bab9"
+        $nuitka_arch = "x86"
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
 }
 $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\depends22" + $arch + ".zip"
 $url_official = "http://www.dependencywalker.com/depends22" + $arch + ".zip"
@@ -28,7 +44,7 @@ Extract-7Zip $dependsPackage $TARGETDIR
 
 # Copy the content also into the cache location of nuitka
 # This makes it usable without the need to download it again
-Copy-Item -Path $TARGETDIR -Destination "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64" -Recurse
+Copy-Item -Path $TARGETDIR -Destination "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\$nuitka_arch" -Recurse
 
 Write-Host "Cleaning $dependsPackage.."
 Remove "$dependsPackage"
