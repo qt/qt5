@@ -5,5 +5,5 @@
 #  - version
 #  - Optional true/false if set as default with PYTHON3/PIP3_PATH variables, default false
 
-# Downloading https://www.python.org/ftp/python/3.12.3/python-3.12.3-arm64.exe
-. "$PSScriptRoot\..\common\windows\python3.ps1" 64 "a7fe973fd406c0db2b982d83e9feb30f8fde704f" "C:\Python312_64" "3.12.3" $true
+# Downloading https://www.python.org/ftp/python/3.11.9/python-3.11.9-arm64.exe
+. "$PSScriptRoot\..\common\windows\python3.ps1" 64 "9e0487af5f0472978b7b6d4f4d3d8fd56865ff97" "C:\Python311_64" "3.11.9" $true
