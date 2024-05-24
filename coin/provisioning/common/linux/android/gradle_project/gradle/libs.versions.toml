@@ -1,10 +1,12 @@
 [versions]
-agp = "7.4.1"
+agp = "8.4.0"
+core = "1.13.1"
 appcompat = "1.6.1"
 material = "1.11.0"
 constraintlayout = "2.1.4"
 
 [libraries]
+core = { group = 'androidx.core', name = "core", version.ref = "core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
