@@ -5,6 +5,6 @@
 # This script will install Azure singtool using Dotnet SDK
 $dotnet = "C:\Program Files\dotnet\dotnet.exe"
 
-$version = "2.0.17"
+$version = "5.0.0"
 Run-Executable "$dotnet" "tool install --global AzureSignTool --version $version"
 
