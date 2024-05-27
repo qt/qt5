@@ -59,7 +59,7 @@ endfunction()
 
 # Helper macro to parse the arguments for the command line options.
 macro(qt_ir_commandline_option_parse_arguments)
-    set(options UNSUPPORTED)
+    set(options UNSUPPORTED COMMON)
     set(oneValueArgs TYPE NAME SHORT_NAME ALIAS VALUE DEFAULT_VALUE)
     set(multiValueArgs VALUES MAPPING)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
@@ -81,6 +81,7 @@ endmacro()
 #    same value when retrieved.
 #  DEFAULT_VALUE - the default value to be set for the option when it's not specified
 #    on the command line
+#  COMMON - the argument is common for init-repository and configure scripts
 #
 # NOTE: Make sure to update the SHORT_NAME code path when adding new options.
 function(qt_ir_commandline_option_helper name)
@@ -96,6 +97,14 @@ function(qt_ir_commandline_option_helper name)
 
     set(commandline_known_options
         "${commandline_known_options};${name}" PARENT_SCOPE)
+
+    if(arg_COMMON)
+        set(commandline_option_${name}_common "true" PARENT_SCOPE)
+        if(NOT "${arg_TYPE}" STREQUAL "boolean")
+            message(FATAL_ERROR "${name} is '${arg_TYPE}', but COMMON arguments can be"
+                " 'boolean' only.")
+        endif()
+    endif()
 
     set(commandline_option_${name}_type "${arg_TYPE}" PARENT_SCOPE)
 
@@ -140,6 +149,11 @@ macro(qt_ir_commandline_option name)
             set(unsupported "UNSUPPORTED")
         endif()
 
+        set(common "")
+        if(arg_COMMON)
+            set(common "COMMON")
+        endif()
+
         qt_ir_commandline_option_helper("${arg_SHORT_NAME}"
             TYPE "${arg_TYPE}"
             ALIAS "${name}"
@@ -148,6 +162,7 @@ macro(qt_ir_commandline_option name)
             MAPPING ${arg_MAPPING}
             DEFAULT_VALUE ${arg_DEFAULT_VALUE}
             ${unsupported}
+            ${common}
         )
     endif()
 endmacro()
@@ -323,6 +338,9 @@ function(qt_ir_process_args_from_optfile optfile_path)
                 qt_ir_append_unknown_args("${arg}")
                 continue()
             endif()
+        elseif(commandline_option_${opt}_common AND arg_IGNORE_UNKNOWN_ARGS)
+            message(DEBUG "Common command line option '${arg}'. Collecting.")
+            qt_ir_append_unknown_args("${arg}")
         endif()
 
         if(NOT COMMAND "qt_ir_commandline_${type}")
