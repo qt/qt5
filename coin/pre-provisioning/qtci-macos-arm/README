@@ -1,0 +1,40 @@
+# List of manual pre-installation steps for Tier1 image creation
+
+* Use local Apple Silicon Mac (preferred), or Opennebula Tart Host
+  - If the latter, set host as DISABLED in Opennebula and open KVM connection to the host
+
+* Download IPSW restore image
+  - Find IPSW download URL from https://appledb.dev/device/identifier/VirtualMac2,1
+  - Download IPSW file from Apple's CDN
+
+* Create virtual machine from IPSW file and start it
+  - /Users/oneadmin/tart.app/Contents/MacOS/tart create --from-ipsw=<downloaded ipsw file> <macos-version> --disk-size 200
+  - /Users/oneadmin/tart.app/Contents/MacOS/tart run <macos-version>
+
+* Do following things in the virtual machine
+  - Install updates
+  - Enable autologin for qt user
+  - Enable remote login and remote management
+  - Add qt user to sudoers
+    - Edit sudoers file: sudo visudo
+    - Add a line for qt user: qt ALL=(ALL) NOPASSWD: ALL
+  - Download and run coin setup binaries from http://coin/coin/setup
+    - Check /Users/qt folder for bootstrap agent
+  - Add COIN bootstrap agent, terminal and ssh keygen wrapper to full disk access
+  - Add access for COIN bootstrap agent to bluetooth
+  - Shutdown the virtual machine
+
+* Enable backtraces (https://bugreports.qt.io/browse/QTQAINFRA-5933)
+  - Start VM in recovery mode
+    - /Users/oneadmin/tart.app/Contents/MacOS/tart run --recovery <macos-version>
+  - Start terminal and run command: csrutil enable --without fs
+  - Shutdown the virtual machine
+
+* Push virtual machine to Tart registry with tags latest and CI
+  - /Users/oneadmin/tart.app/Contents/MacOS/tart push "<macos-version>" "tart-registry.ci.qt.io/<macos-version>:latest" "tart-registry.ci.qt.io/<macos-version>:CI"
+
+* Add Tier1 image to Opennebula by logging getting into Opennebula container
+  - Create a dummy file to correct datastore in NFS
+  - Register virtual machine to Opennebula by running register_images.sh
+
+* Re-enable Tart host in Opennebula if not using local Apple Silicon Mac
