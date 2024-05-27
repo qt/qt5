@@ -137,7 +137,7 @@ macro(qt_ir_commandline_option name)
         AND "${commandline_option_${arg_SHORT_NAME}_type}" STREQUAL "")
         set(unsupported "")
         if(arg_UNSUPPORTED)
-            set(unsupported "${arg_UNSUPPORTED}")
+            set(unsupported "UNSUPPORTED")
         endif()
 
         qt_ir_commandline_option_helper("${arg_SHORT_NAME}"
