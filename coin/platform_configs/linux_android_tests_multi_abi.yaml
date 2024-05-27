@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Id: 'rhel_8.8_android_multi'
+    Id: 'android-9-multi-abi'
     Template: 'qtci-linux-RHEL-8.8-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'multi'
