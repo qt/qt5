@@ -29,7 +29,7 @@ macro(qt_ir_set_known_command_line_options)
     qt_ir_commandline_option(quiet SHORT_NAME q TYPE boolean)
     qt_ir_commandline_option(resolve-deps TYPE boolean DEFAULT_VALUE yes)
     qt_ir_commandline_option(update TYPE boolean DEFAULT_VALUE yes)
-    qt_ir_commandline_option(verbose TYPE boolean)
+    qt_ir_commandline_option(verbose TYPE boolean COMMON)
 
     # These are used when init-repository is called from configure.
     qt_ir_commandline_option(from-configure TYPE boolean)
