@@ -134,6 +134,7 @@ function InstallLlvmMingwFfmpeg {
 }
 
 function InstallAndroidArmv7 {
+    $shared=$false
     $target_toolchain_arch="armv7a-linux-androideabi"
     $target_arch="armv7-a"
     $target_cpu="armv7-a"
@@ -155,14 +156,49 @@ function InstallAndroidArmv7 {
     $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_DEFAULT", [System.EnvironmentVariableTarget]::Machine)
     $openssl_path = $openssl_path.Replace("\", "/")
 
+    New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libcrypto.so -Target ${openssl_path}/armeabi-v7a/libcrypto_3.so
+    New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libssl.so -Target ${openssl_path}/armeabi-v7a/libssl_3.so
+
     $config = GetFfmpegDefaultConfiguration
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
     $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_DEFAULT/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_DEFAULT/armeabi-v7a"
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
+    $config += " --strip=$strip"
 
-    return InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7"
+
+    $result= InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7" -shared $shared
+
+    Remove-Item -Path ${openssl_path}/armeabi-v7a/libcrypto.so
+    Remove-Item -Path ${openssl_path}/armeabi-v7a/libssl.so
+
+    if (-not $shared) {
+        return $result
+    }
+
+    # For Shared ffmpeg we need to change dependencies to stubs
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm binutils`"")
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm autoconf`"")
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm automake`"")
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm libtool`"")
+
+    $patchelf_sha1 = "7EB974172DE73B7B452EE376237AD78601603C45"
+    $patchelf_sources = "https://ci-files01-hki.intra.qt.io/input/android/patchelf/0.18.0.tar.gz"
+    $patchelf_download_location = "C:\Windows\Temp\0.18.0.tar.gz"
+
+    Invoke-WebRequest -UseBasicParsing $patchelf_sources -OutFile $patchelf_download_location
+    Verify-Checksum $patchelf_download_location $patchelf_sha1
+    Extract-tar_gz $patchelf_download_location $unzip_location
+    Remove $patchelf_download_location
+
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.18.0 && ./bootstrap.sh && ./configure && make install`"")
+
+    $command = "${PSScriptRoot}/../shared/fix_ffmpeg_dependencies.sh C:/${ffmpeg_name}/build/android-arm/installed/ _armeabi-v7a no"
+    $command = $command.Replace("\", "/")
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"$command`"")
+
+    return $result
 }
 
 $mingwRes = InstallMingwFfmpeg
