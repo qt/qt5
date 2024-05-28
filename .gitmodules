@@ -335,4 +335,4 @@
 	path = qtgraphs
 	url = ../qtgraphs.git
 	branch = dev
-	status = preview
+	status = addon
