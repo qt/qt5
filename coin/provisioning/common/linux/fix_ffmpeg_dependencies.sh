@@ -5,6 +5,7 @@
 set -x
 
 lib_dir="$1/lib"
+additional_suffix="${2:-}"
 
 ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
 
@@ -23,8 +24,15 @@ for lib_name in "${ffmpeg_libs[@]}"; do
     fi
 
     while read -r line; do
-        if [[ $line =~ .*\[(lib((ssl|crypto|va|va-x11|va-drm)\.so(\.[0-9]+)*))\].* ]]; then
-            patchelf --replace-needed "${BASH_REMATCH[1]}" "libQt6FFmpegStub-${BASH_REMATCH[2]}" $lib_path
+        if [[ $line =~ .*\[(lib((ssl|crypto|va|va-x11|va-drm)(_3)?\.so(\.[0-9]+)*))\].* ]]; then
+            stub_name="libQt6FFmpegStub-${BASH_REMATCH[2]}"
+            if [[ ${BASH_REMATCH[4]} == "_3" ]]; then
+                stub_name="${stub_name/_3/}"  # Remove "_3" from stub_name
+            fi
+            if [[ -n "$additional_suffix" ]]; then
+                stub_name="${stub_name%%.*}${additional_suffix}.${stub_name#*.}" # Add additional_suffix
+            fi
+            patchelf --replace-needed "${BASH_REMATCH[1]}" "${stub_name}" $lib_path
         fi
     done <<< "$(readelf -d $lib_path | grep '(NEEDED)' )"
 
