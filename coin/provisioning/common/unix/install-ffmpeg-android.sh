@@ -99,7 +99,7 @@ build_ffmpeg_android() {
   rm -f "${openssl_libs}/libssl.so"
 
   if [[ "$shared" == "yes" ]]; then
-      fix_dependencies="${BASH_SOURCE%/*}/../linux/fix_ffmpeg_dependencies.sh"
+      fix_dependencies="${BASH_SOURCE%/*}/../shared/fix_ffmpeg_dependencies.sh"
       sudo "${fix_dependencies}" "${target_dir}" "${libs_prefix}" "no"
   fi
 

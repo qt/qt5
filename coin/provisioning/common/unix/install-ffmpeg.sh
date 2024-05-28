@@ -86,7 +86,7 @@ if [ "$os" == "linux" ]; then
   output_dir="$ffmpeg_source_dir/build/installed/usr/local/$ffmpeg_name"
 
   if [ "$build_type" != "static" ]; then
-    fix_dependencies="${BASH_SOURCE%/*}/../linux/fix_ffmpeg_dependencies.sh"
+    fix_dependencies="${BASH_SOURCE%/*}/../shared/fix_ffmpeg_dependencies.sh"
     "$fix_dependencies" "$output_dir"
   fi
 
