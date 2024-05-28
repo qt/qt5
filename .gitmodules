@@ -322,7 +322,7 @@
 	path = qtgrpc
 	url = ../qtgrpc.git
 	branch = 6.8
-	status = preview
+	status = addon
 [submodule "qtquickeffectmaker"]
 	depends = qtbase qtdeclarative qtshadertools
 	recommends = qtquick3d
