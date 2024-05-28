@@ -309,7 +309,7 @@
 	path = qthttpserver
 	url = ../qthttpserver.git
 	branch = 6.8
-	status = preview
+	status = addon
 [submodule "qtquick3dphysics"]
 	depends = qtbase qtdeclarative qtquick3d qtshadertools
 	path = qtquick3dphysics
