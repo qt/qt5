@@ -297,13 +297,52 @@ function DeleteSchedulerTask {
     SCHTASKS /DELETE /TN "Microsoft\Windows\$Task" /F
 }
 
-function GetVSPath {
+function GetVsProperty {
     Param (
-        [string]$VSWhere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe",
-        [string]$Component = "Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+        [string]$Component = 'Microsoft.VisualStudio.Component.VC.CoreIde',
+        [string]$Property,
+        [switch]$Latest
     )
 
-    return (& $VSWhere -nologo -latest -products * -requires $Component -property installationPath)
+    $vsWhereProcessInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $vsWhereProcessInfo.FileName = "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    $vsWhereProcessInfo.RedirectStandardError = $true
+    $vsWhereProcessInfo.RedirectStandardOutput = $true
+    $vsWhereProcessInfo.UseShellExecute = $false
+
+    # -sort: sorts the instances from newest version and last installed to oldest
+    $vsWhereProcessInfo.Arguments = " -nologo -sort -products * -requires $Component -property $Property"
+    if ($Latest) {
+        # -latest: return only the newest version and last installed
+        $vsWhereProcessInfo.Arguments += ' -latest'
+    }
+
+    $vsWhereProcess = New-Object System.Diagnostics.Process
+    $vsWhereProcess.StartInfo = $vsWhereProcessInfo
+
+    $vsWhereProcess.Start() | Out-Null
+    $vsWhereProcess.WaitForExit()
+
+    $standardOutput = $vsWhereProcess.StandardOutput.ReadToEnd()
+    if ([string]::IsNullOrEmpty($standardOutput)) {
+        throw "vswhere could not find property '$Property'"
+    }
+
+    $exitCode = $vsWhereProcess.ExitCode
+    if ($exitCode -ne 0) {
+        $standardError = $vsWhereProcess.StandardError.ReadToEnd()
+        throw "vswhere failed with exit code $exitCode ($standardError)"
+    }
+
+    return $standardOutput.Split([Environment]::NewLine, [StringSplitOptions]::RemoveEmptyEntries) | Select-Object -Last 1
+}
+
+function GetVsInstallationPath {
+    Param (
+        [switch]$Latest
+    )
+
+    return GetVsProperty -Property 'installationPath' @PSBoundParameters
 }
 
 function EnterVSDevShell {
@@ -312,13 +351,11 @@ function EnterVSDevShell {
         [string]$Arch = "amd64"
     )
 
-    $vsWere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
-    $vcComponent = "Microsoft.VisualStudio.Component.VC.CoreIde"
     # We pick the oldest build tools we can find and use that to be compatible with it and any newer version:
     # If MSVC has an ABI break this will stop working, and yet another build must be added.
-    $VSPath = (& $vsWere -nologo -products * -requires $vcComponent -sort -format value -property installationPath | Select-Object -Last 1)
+    $VSPath = GetVsInstallationPath
 
-    Write-Host "Enter VisualStudio developer shell (-host_arch=$HostArch -arch=$Arch)"
+    Write-Host "Enter VisualStudio developer shell (-host_arch=$HostArch -arch=$Arch -VsInstallPath='$VSPath')"
     try {
         Import-Module "$VSPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
         Enter-VsDevShell -VsInstallPath $VSPath -DevCmdArguments "-host_arch=$HostArch -arch=$Arch -no_logo"
