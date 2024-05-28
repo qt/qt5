@@ -6,6 +6,7 @@ set -x
 
 lib_dir="$1/lib"
 additional_suffix="${2:-}"
+set_rpath="${3:-yes}"
 
 ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
 
@@ -37,5 +38,7 @@ for lib_name in "${ffmpeg_libs[@]}"; do
     done <<< "$(readelf -d $lib_path | grep '(NEEDED)' )"
 
     sed -i -E "/^Libs.private:/s/ -l(va|va-x11|va-drm|ssl|crypto)/ -lQt6FFmpegStub-\\1/g;" $pkg_config_file_path
-    patchelf --set-rpath '$ORIGIN' $lib_path
+    if [[ "$set_rpath" == "yes" ]]; then
+        patchelf --set-rpath '$ORIGIN' $lib_path
+    fi
 done
