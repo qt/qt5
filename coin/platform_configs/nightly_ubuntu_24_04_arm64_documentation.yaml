@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 # cmake_platforms.yaml
-# Build on Ubuntu 24.04 ARM64 and test on both X11 and Wayland later
+# Build on Ubuntu 24.04 ARM64 Wayland and test on both offscreen and Wayland later
 -
     Id: 'ubuntu-24.04-arm64-documentation'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
@@ -9,10 +9,14 @@ Configurations:
     Features: ['Documentation', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}']
-# Test on Ubuntu 24.04 ARM64 X11
+# Test on Ubuntu 24.04 ARM64 offscreen
 -
-    Id: 'ubuntu-24.04-arm64-documentation-x11-tests'
+    Id: 'ubuntu-24.04-arm64-documentation-offscreen-tests'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
     Compiler: 'GCC'
     Features: ['TestDocs', 'TestOnly', 'InsignificantTests']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_PLATFORM=offscreen'
+    ]
     Platform dependency: 'ubuntu-24.04-arm64-documentation'
