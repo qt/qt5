@@ -123,4 +123,4 @@ elif  [ "$os" == "android-arm64" ]; then
   SetEnvVar "FFMPEG_DIR_ANDROID_ARM64" "$target_dir"
 fi
 
-build_ffmpeg_android "$target_arch" "$target_dir"
+build_ffmpeg_android "$target_arch" "$target_dir" "yes"
