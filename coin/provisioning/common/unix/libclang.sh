@@ -32,16 +32,16 @@ elif test -f /etc/redhat-release && grep "Red Hat" /etc/redhat-release | grep "9
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Rhel9.2-gcc10.0-x86_64.7z"
     url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Rhel9.2-gcc10.0-x86_64.7z"
     sha1="102374379af906bd26085fcd18047cac4d0fb7bf"
+elif test "$PROVISIONING_ARCH" == "arm64" ; then
+    version=$libclang_version
+    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Debian11.6-gcc10.0-arm64.7z"
+    url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Debian11.6-gcc10.0-arm64.7z"
+    sha1="b5ff982738dbb6efe1a34ed26ff47fca2b1b3b93"
 elif test "$PROVISIONING_OS_ID" == "ubuntu" ; then
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
     url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Ubuntu22.04-gcc11.2-x86_64.7z"
     sha1="4a793c9da9a02bd23c163c74dbc5565164a00c3f"
-elif test "$PROVISIONING_OS_ID" == "debian" && test "$PROVISIONING_ARCH" == "arm64" ; then
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Debian11.6-gcc10.0-arm64.7z"
-    url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-release_${version}-based-linux-Debian11.6-gcc10.0-arm64.7z"
-    sha1="b5ff982738dbb6efe1a34ed26ff47fca2b1b3b93"
 else
     version=$libclang_version
     url="https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-release_${version}-based-linux-Rhel8.8-gcc10.0-x86_64.7z"
