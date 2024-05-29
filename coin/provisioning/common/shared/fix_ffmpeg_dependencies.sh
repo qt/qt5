@@ -8,6 +8,12 @@ lib_dir="$1/lib"
 additional_suffix="${2:-}"
 set_rpath="${3:-yes}"
 
+if uname -a |grep -q "Darwin"; then
+    readelf() {
+        /usr/local/opt/binutils/bin/readelf "$@"
+    }
+fi
+
 ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
 
 for lib_name in "${ffmpeg_libs[@]}"; do
@@ -37,7 +43,7 @@ for lib_name in "${ffmpeg_libs[@]}"; do
         fi
     done <<< "$(readelf -d $lib_path | grep '(NEEDED)' )"
 
-    sed -i -E "/^Libs.private:/s/ -l(va|va-x11|va-drm|ssl|crypto)/ -lQt6FFmpegStub-\\1/g;" $pkg_config_file_path
+    sed -i.bak -E '/^Libs.private:/s/ -l(va|va-x11|va-drm|ssl|crypto)/ -lQt6FFmpegStub-\1/g;' $pkg_config_file_path && rm -f ${pkg_config_file_path}.bak
     if [[ "$set_rpath" == "yes" ]]; then
         patchelf --set-rpath '$ORIGIN' $lib_path
     fi
