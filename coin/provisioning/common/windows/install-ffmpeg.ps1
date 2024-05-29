@@ -134,7 +134,7 @@ function InstallLlvmMingwFfmpeg {
 }
 
 function InstallAndroidArmv7 {
-    $shared=$false
+    $shared=$true
     $target_toolchain_arch="armv7a-linux-androideabi"
     $target_arch="armv7-a"
     $target_cpu="armv7-a"
