@@ -60,27 +60,15 @@ Configurations:
 
     -
         Id: 'macos-12-arm64-tests'
-        Template: 'qtci-macos-12-arm64'
-        Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging']
-        Platform dependency: 'macos-universal-on-x86_64'
-    -
-        Id: 'macos-12-arm64-tart-tests'
         Template: 'qtci-macos-12-arm-102'
         Compiler: 'Clang'
-        Features: ['TestOnly']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-13-arm64-tests'
-        Template: 'qtci-macos-13-arm64'
-        Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging']
-        Platform dependency: 'macos-universal-on-x86_64'
-    -
-        Id: 'macos-13-arm64-tart-tests'
         Template: 'qtci-macos-13-arm-107'
         Compiler: 'Clang'
-        Features: ['TestOnly']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
     -
         Id: 'macos-14-arm64-tests'
@@ -93,12 +81,6 @@ Configurations:
 
     -
         Id: 'macos-12-arm-on-arm64-tests'
-        Template: 'qtci-macos-12-arm64'
-        Compiler: 'Clang'
-        Features: ['TestOnly']
-        Platform dependency: 'macos-universal-on-arm64'
-    -
-        Id: 'macos-12-arm-on-arm64-tart-tests'
         Template: 'qtci-macos-12-arm-102'
         Compiler: 'Clang'
         Features: ['TestOnly']
@@ -154,24 +136,12 @@ Configurations:
     # Test on all supported macOS versions (deployment targets)
     -
         Id: 'macos-12-arm64-developer-build-tests'
-        Template: 'qtci-macos-12-arm64'
-        Compiler: 'Clang'
-        Features: ['TestOnly']
-        Platform dependency: 'macos-14-arm64-developer-build'
-    -
-        Id: 'macos-12-arm64-tart-developer-build-tests'
         Template: 'qtci-macos-12-arm-102'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-14-arm64-developer-build'
     -
         Id: 'macos-13-arm64-developer-build-tests'
-        Template: 'qtci-macos-13-arm64'
-        Compiler: 'Clang'
-        Features: ['TestOnly']
-        Platform dependency: 'macos-14-arm64-developer-build'
-    -
-        Id: 'macos-13-arm64-tart-developer-build-tests'
         Template: 'qtci-macos-13-arm-107'
         Compiler: 'Clang'
         Features: ['TestOnly']
