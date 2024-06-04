@@ -113,30 +113,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'
     ]
 -
-    Id: 'windows-10_22h2-msvc2019'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DINPUT_headersclean=ON',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
-    Id: 'windows-11_23H2-msvc2019'
-    Template: 'qtci-windows-11_23H2-x86_64-52'
-    Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DINPUT_headersclean=ON',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
     Id: 'windows-10_22h2-msvc2022'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2022'
@@ -169,59 +145,6 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
-    Id: 'windows-10_22h2-msvc2019-developer-build'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
-    ]
--
-    Id: 'windows-10_22h2-msvc2019-arm64'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'MSVC2019'
-    Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'UseConfigure']
-    Platform dependency: 'windows-10_22h2-msvc2019-developer-build'
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
-        'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
-        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
-    Id: 'windows-11_23H2-msvc2019-developer-build'
-    Template: 'qtci-windows-11_23H2-x86_64-52'
-    Compiler: 'MSVC2019'
-    Features: ['Sccache', "DebugAndRelease", 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-debug-and-release -make examples -developer-build -force-debug-info -qt-zlib'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
-    ]
--
-    Id: 'windows-11_23H2-msvc2019-arm64'
-    Template: 'qtci-windows-11_23H2-x86_64-52'
-    Compiler: 'MSVC2019'
-    Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'UseConfigure']
-    Platform dependency: 'windows-11_23H2-msvc2019-developer-build'
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc',
-        'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
@@ -292,19 +215,6 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
-    Id: 'windows-10_22h2-llvm'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'Clang'
-    Features: ['Sccache', 'UseConfigure']
-    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
-    Environment variables: [
-        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'LLVM_INSTALL_DIR=C:\llvm-mingw',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-    ]
--
     Id: 'windows-11_23H2-llvm'
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'Clang'
@@ -316,19 +226,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR=C:\llvm-mingw',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-    ]
--
-    Id: 'windows-10_22h2-mingw13-developer-build'
-    Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'Mingw'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-developer-build -release -force-debug-info -separate-debug-info -make examples'
-    Environment variables: [
-        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
     Id: 'windows-11_23H2-mingw13-developer-build'
