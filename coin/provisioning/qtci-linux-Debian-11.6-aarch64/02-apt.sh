@@ -81,6 +81,8 @@ installPackages+=(libgstreamer-plugins-bad1.0-dev)
 installPackages+=(libgstreamer-gl1.0-0)
 installPackages+=(gir1.2-gst-plugins-base-1.0)
 installPackages+=(gir1.2-gst-plugins-bad-1.0)
+installPackages+=(libpipewire-0.3-dev)
+installPackages+=(libspa-0.2-dev)
 
 ## Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 #installPackages+=(g++-multilib)

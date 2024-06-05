@@ -57,6 +57,8 @@ installPackages+=(dbus-devel)
 installPackages+=(gstreamer1-plugins-bad-free)
 installPackages+=(gstreamer1-devel)
 installPackages+=(gstreamer1-plugins-base-devel)
+# pipewire for QtMultimedia
+installPackages+=(pipewire-devel)
 # for QtMultimedia, ffmpeg
 installPackages+=(yasm)
 installPackages+=(libva-devel)
