@@ -106,6 +106,8 @@ installPackages+=(gstreamer1.0-plugins-rtp)
 installPackages+=(gstreamer1.0-plugins-ugly)
 installPackages+=(gir1.2-gst-plugins-base-1.0)
 installPackages+=(gir1.2-gst-plugins-bad-1.0)
+installPackages+=(libpipewire-0.3-dev)
+installPackages+=(libspa-0.2-dev)
 installPackages+=(yasm)
 installPackages+=(libva-dev)
 # for QtMultimedia streaming tests
