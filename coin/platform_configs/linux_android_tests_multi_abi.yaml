@@ -26,3 +26,30 @@ Configurations:
         'COMMON_TARGET_TEST_CMAKE_ARGS=-DQT_ANDROID_ABIS="x86;x86_64"',
         'ANDROID_EMULATOR=emulator_x86_api_28'
     ]
+-
+    Id: 'android-9-multi-abi-rhel-8.10'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Target os: 'Android_ANY'
+    Target arch: 'multi'
+    Compiler: 'GCC'
+    Target compiler: 'Clang'
+    Platform dependency: [
+        'rhel-8.10',
+        'android-9-x86-on-linux-rhel-8.10',
+        'android-14-x86_64-on-linux-rhel-8.10'
+    ]
+    Features: [
+        'Sccache',
+        'InsignificantTests',
+        'WarningsAreErrors',
+        'AndroidTestRun',
+        'MinimalAndroidMultiABITests',
+        'InstallDepsPerPlatformSubdir'
+    ]
+    Environment variables: [
+        'QT_CI_ARTIFACT_ID_PATH_Android-host=QT_CI_ARTIFACT_ID_PATH_rhel-8.10',
+        'QT_CI_ARTIFACT_ID_PATH_Android-x86=QT_CI_ARTIFACT_ID_PATH_android-9-x86-on-linux-rhel-8.10',
+        'QT_CI_ARTIFACT_ID_PATH_Android-x86_64=QT_CI_ARTIFACT_ID_PATH_android-14-x86_64-on-linux-rhel-8.10',
+        'COMMON_TARGET_TEST_CMAKE_ARGS=-DQT_ANDROID_ABIS="x86;x86_64"',
+        'ANDROID_EMULATOR=emulator_x86_api_28'
+    ]
