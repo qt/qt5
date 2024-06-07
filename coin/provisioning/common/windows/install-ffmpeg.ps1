@@ -22,11 +22,16 @@ Verify-Checksum $download_location $sha1
 Extract-7Zip $download_location $unzip_location
 Remove $download_location
 
-$config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
-Write-Host "FFmpeg configuration $config"
+function GetFfmpegDefaultConfiguration {
+    $defaultConfiguration = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
+    Write-Host "FFmpeg default configuration: $defaultConfiguration"
+
+    return $defaultConfiguration
+}
 
 function InstallFfmpeg {
     Param (
+        [string]$config,
         [string]$buildSystem,
         [string]$msystem,
         [string]$additionalPath,
@@ -35,19 +40,25 @@ function InstallFfmpeg {
         [bool]$shared
     )
 
-    Write-Host "Configure and compile ffmpeg for $buildSystem"
+    Write-Host "Configure and compile FFmpeg for $buildSystem with configuration: $config"
 
     $oldPath = $env:PATH
 
-    if ($additionalPath) { $env:PATH = "$additionalPath;$env:PATH" }
+    if ($additionalPath) {
+        $env:PATH = "$additionalPath;$env:PATH"
+    }
     $env:MSYS2_PATH_TYPE = "inherit"
     $env:MSYSTEM = $msystem
 
     $cmd = "cd /c/$ffmpeg_name"
     $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
     $cmd += " && ../../configure --prefix=installed $config"
-    if ($toolchain) { $cmd += " --toolchain=$toolchain" }
-    if ($shared) { $cmd += " --enable-shared --disable-static" }
+    if ($toolchain) {
+        $cmd += " --toolchain=$toolchain"
+    }
+    if ($shared) {
+        $cmd += " --enable-shared --disable-static"
+    }
     $cmd += " && make install -j"
 
     Write-Host "MSYS cmd:"
@@ -57,7 +68,7 @@ function InstallFfmpeg {
     $env:PATH = $oldPath
 
     if ($buildResult.ExitCode) {
-        Write-Host "Failed to build ffmpeg for $buildSystem"
+        Write-Host "Failed to build FFmpeg for $buildSystem"
         return $false
     }
 
@@ -66,8 +77,9 @@ function InstallFfmpeg {
 }
 
 function InstallMingwFfmpeg {
+    $config = GetFfmpegDefaultConfiguration
     $mingwPath = [System.Environment]::GetEnvironmentVariable("MINGW_PATH", [System.EnvironmentVariableTarget]::Machine)
-    return InstallFfmpeg -buildSystem "mingw" -msystem "MINGW" -additionalPath "$mingwPath\bin" -ffmpegDirEnvVar "FFMPEG_DIR_MINGW" -shared $true
+    return InstallFfmpeg -config $config -buildSystem "mingw" -msystem "MINGW" -additionalPath "$mingwPath\bin" -ffmpegDirEnvVar "FFMPEG_DIR_MINGW" -shared $true
 }
 
 
@@ -80,7 +92,7 @@ function InstallMsvcFfmpeg {
     $buildSystem = "msvc"
     $ffmpegDirEnvVar = "FFMPEG_DIR_MSVC"
 
-    $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
+    $config = GetFfmpegDefaultConfiguration
 
     if ($isArm64) {
         $arch = "arm64"
@@ -94,7 +106,7 @@ function InstallMsvcFfmpeg {
         return $false
     }
 
-    $result = InstallFfmpeg -buildSystem $buildSystem -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar $ffmpegDirEnvVar -shared $true
+    $result = InstallFfmpeg -config $config -buildSystem $buildSystem -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar $ffmpegDirEnvVar -shared $true
 
     if ($result) {
         # As ffmpeg build system creates lib*.a file we have to rename them to *.lib files to be recognized by WIN32
@@ -117,11 +129,11 @@ function InstallMsvcFfmpeg {
 
 
 function InstallLlvmMingwFfmpeg {
-    return InstallFfmpeg -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin" -shared $true
+    $config = GetFfmpegDefaultConfiguration
+    return InstallFfmpeg -config $config -buildSystem "llvm-mingw" -msystem "CLANG64" -ffmpegDirEnvVar "FFMPEG_DIR_LLVM_MINGW" -additionalPath "C:\llvm-mingw\bin" -shared $true
 }
 
 function InstallAndroidArmv7 {
-
     $target_toolchain_arch="armv7a-linux-androideabi"
     $target_arch="armv7-a"
     $target_cpu="armv7-a"
@@ -143,14 +155,14 @@ function InstallAndroidArmv7 {
     $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_DEFAULT", [System.EnvironmentVariableTarget]::Machine)
     $openssl_path = $openssl_path.Replace("\", "/")
 
-    $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
+    $config = GetFfmpegDefaultConfiguration
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
     $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_DEFAULT/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_DEFAULT/armeabi-v7a"
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
 
-    return InstallFfmpeg -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7"
+    return InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7"
 }
 
 $mingwRes = InstallMingwFfmpeg
