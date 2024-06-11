@@ -109,6 +109,8 @@ installPackages+=(libva-dev)
 # for QtMultimedia streaming tests
 installPackages+=(vlc-bin)
 installPackages+=(vlc-plugin-base)
+# for tst_qfloat16format, see also QTQAINFRA-6390
+installPackages+=(locales-all)
 
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 #installPackages+=(g++-multilib)
