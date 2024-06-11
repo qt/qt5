@@ -16,7 +16,7 @@ $mimer_dir="c:\MimerSQL"
 
 Download $url_official $url_cache $mimersqlPackage
 Verify-Checksum $mimersqlPackage $sha1
-Run-Executable "$mimersqlPackage" "/install InstallFolder=$mimer_dir /passive"
+Run-Executable "$mimersqlPackage" "/install InstallFolder=$mimer_dir /passive ExcludeDbVisualizer=1 ExcludeJava=1 ExcludeServer=1 ExcludeDocumentation=1 ExcludeReplication=1"
 
 Set-EnvironmentVariable "MIMERSQL_DEV_ROOT" "$mimer_dir\dev"
 
