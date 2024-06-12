@@ -8,7 +8,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Packaging', 'VMSize8', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Packaging', 'VMSize8', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
@@ -24,7 +24,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Packaging', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Packaging', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
@@ -38,7 +38,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Packaging', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Packaging', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',

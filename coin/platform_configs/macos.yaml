@@ -12,7 +12,7 @@ Configurations:
         Template: 'qtci-macos-14-x86_64-105'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
-        Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM']
+        Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
         Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
         Environment variables: [
             'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DODBC_ROOT=/usr/local/opt/libiodbc -DPostgreSQL_ROOT={{.Env.POSTGRESQLBINPATH}}/.. -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',

@@ -41,7 +41,7 @@ Configurations:
     Target arch: 'mips64'
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUMIPS64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUMIPS64_TOOLCHAIN_FILE}} -DQT_FORCE_BUILD_TOOLS=ON',
