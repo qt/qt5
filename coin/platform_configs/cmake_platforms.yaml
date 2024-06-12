@@ -19,7 +19,7 @@ Configurations:
     Id: 'ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'GenerateSBOM']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
@@ -124,7 +124,7 @@ Configurations:
     Id: 'sles-15_sp5-static'
     Template: 'qtci-linux-SLES-15_SP5-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -static -no-sql-mysql'
     Environment variables: [
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
@@ -134,7 +134,7 @@ Configurations:
     Id: 'windows-10_22h2-msvc2022'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM']
+    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
@@ -146,7 +146,7 @@ Configurations:
     Id: 'windows-11_23H2-msvc2022'
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'Packaging', 'GenerateSBOM']
+    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'Packaging', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
@@ -158,7 +158,7 @@ Configurations:
     Id: 'windows-11_22h2-arm64-msvc2022'
     Template: 'qtci-windows-11_22H2-aarch64-52'
     Compiler: 'MSVC2022'
-    Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests', 'GenerateSBOM']
+    Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
@@ -169,7 +169,7 @@ Configurations:
     Id: 'rhel-8.8'
     Template: 'qtci-linux-RHEL-8.8-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
@@ -179,7 +179,7 @@ Configurations:
     Id: 'rhel-9.2'
     Template: 'qtci-linux-RHEL-9.2-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM']
+    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
@@ -215,7 +215,7 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'macos-universal-on-x86_64'
-    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM']
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include -DFFMPEG_DIR={{.Env.FFMPEG_DIR_IOS}} -DQT_DEPLOY_FFMPEG=TRUE',
@@ -224,7 +224,7 @@ Configurations:
     Id: 'windows-10_22h2-mingw13'
     Template: 'qtci-windows-10_22H2-x86_64-51'
     Compiler: 'Mingw'
-    Features: ['Packaging', 'Sccache', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
@@ -237,7 +237,7 @@ Configurations:
     Id: 'windows-11_23H2-llvm'
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'Clang'
-    Features: ['Packaging','Sccache', 'UseConfigure', 'GenerateSBOM']
+    Features: ['Packaging','Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
