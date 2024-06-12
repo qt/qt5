@@ -57,6 +57,7 @@ Configurations:
     Features: ['TestOnly', 'InsignificantTests']
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_OFFSCREEN_NO_GLX=1',
         'QT_QPA_PLATFORM=offscreen'
     ]
     Platform dependency: 'ubuntu-24.04-arm64'
@@ -154,6 +155,7 @@ Configurations:
     Features: ['Sccache', 'InsignificantTests', 'TestOnly']
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_OFFSCREEN_NO_GLX=1',
         'QT_QPA_PLATFORM=offscreen'
     ]
     Platform dependency: 'debian-11.6-arm64'
