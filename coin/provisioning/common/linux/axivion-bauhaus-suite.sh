@@ -24,9 +24,9 @@ DownloadAndExtract () {
 
 
 # Axivion Bauhaus Suite
-sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/bauhaus-suite-7_7_4-x86_64-gnu_linux.tar.gz"
-targetFile="bauhaus-suite-7_7_4-x86_64-gnu_linux.tar.gz"
-sha1="df17ac0521864a7f1c0b5b3bfded1817cbf47bae"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/bauhaus-suite-7_8_0-x86_64-gnu_linux.tar.gz"
+targetFile="bauhaus-suite-7_8_0-x86_64-gnu_linux.tar.gz"
+sha1="bae1a7091ab9582822bfcd00b826e07d9b467a04"
 cd "$HOME"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$HOME"
 
@@ -36,9 +36,9 @@ wget http://ci-files01-hki.ci.qt.io/input/axivion/Qt_Evaluation_QSR_INTERN_20250
 cd "$HOME"
 
 #Axivion configuration
-configurationFile="http://ci-files01-hki.ci.qt.io/input/axivion/axivion_config_771_new.tar.gz"
+configurationFile="http://ci-files01-hki.ci.qt.io/input/axivion/axivion_config_780_2506.tar.gz"
 configurationTargetFile="axivion_config.tar.gz"
-configSha1="db77f376e0b3ee0f7a74701790d1c8abe792bebe"
+configSha1="a27c4db94e8b875e756dc820259fffdd7afc19b6"
 DownloadAndExtract "$configurationFile" "$configSha1" "$configurationTargetFile" "$HOME"
 
-echo "Axivion Bauhaus Suite = 7.7.4" >> ~/versions.txt
+echo "Axivion Bauhaus Suite = 7.8.0" >> ~/versions.txt
