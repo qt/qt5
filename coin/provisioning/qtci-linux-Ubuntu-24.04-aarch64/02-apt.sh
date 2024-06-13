@@ -231,6 +231,8 @@ installPackages+=(jq)
 installPackages+=(cmake)
 # extra linkers
 installPackages+=(lld)
+# Fix dependencies in shared ffmpeg libs
+installPackages+=(patchelf)
 
 echo "Running update for apt"
 waitLoop
