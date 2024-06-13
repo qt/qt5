@@ -234,6 +234,8 @@ installPackages+=(cifs-utils)
 installPackages+=(uml-utilities)
 # used for reading vcpkg packages version, from vcpkg.json
 installPackages+=(jq)
+# To save iptables rules
+installPackages+=(iptables-persistent)
 
 installPackages+=(patchelf)
 
