@@ -5,11 +5,11 @@
 
 # This script will install emscripten needed by WebAssembly
 
-$version = "3.1.50"
+$version = "3.1.56"
 $zipVersion = $version -replace '\.', "_"
 $temp = "$env:tmp"
 $cacheUrl = "https://ci-files01-hki.ci.qt.io/input/emsdk/emsdk_windows_${zipVersion}.zip"
-$sha = "40dc636688166ecdb476da40d02c491ee5032f7b"
+$sha = "ab376d218f1a66302c36770977948f74f0576a42"
 
 # Make sure python is in the path
 Prepend-Path "C:\Python27"
