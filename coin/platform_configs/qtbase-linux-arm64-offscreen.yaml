@@ -1,0 +1,26 @@
+Version: 2
+Configurations:
+# Test on Ubuntu 24.04 ARM64 offscreen
+-
+    Id: 'ubuntu-24.04-arm64-offscreen-qtbase-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['TestOnly']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_OFFSCREEN_NO_GLX=1',
+        'QT_QPA_PLATFORM=offscreen'
+    ]
+    Platform dependency: 'ubuntu-24.04-arm64'
+# Test on Debian-11.6 offscreen
+-
+    Id: 'debian-11.6-arm64-offscreen-qtbase-tests'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_OFFSCREEN_NO_GLX=1',
+        'QT_QPA_PLATFORM=offscreen'
+    ]
+    Platform dependency: 'debian-11.6-arm64'
