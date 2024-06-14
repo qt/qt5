@@ -9,6 +9,7 @@ Include: [
     wasm_qtbase_tests.yaml,
     cmake_platforms_qemu_vxworks.yaml,
     qtlite.yaml,
+    qtbase-linux-arm64-offscreen.yaml,
     qtbase-new-compiler-testing.yaml
 ]
 Configurations: []
