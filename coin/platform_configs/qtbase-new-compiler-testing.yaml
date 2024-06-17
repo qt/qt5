@@ -12,3 +12,15 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
     ]
+# Test gcc-14 on Ubuntu 24.04 ARM64 Wayland
+-
+    Id: 'ubuntu-24.04-arm64-gcc14'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-developer-build -nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-pcre -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'COMMON_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14',
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+    ]

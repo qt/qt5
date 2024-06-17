@@ -115,6 +115,8 @@ installPackages+=(locales-all)
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 #installPackages+=(g++-multilib)
 installPackages+=(g++-multilib-powerpc-linux-gnu)
+installPackages+=(gcc-14)
+installPackages+=(g++-14)
 
 # python3 development package
 installPackages+=(python3-dev)
