@@ -19,3 +19,4 @@ profile bwrap /usr/bin/bwrap flags=(unconfined) {
 }
 EOF
 
+sudo apparmor_parser -r /etc/apparmor.d/bwrap
