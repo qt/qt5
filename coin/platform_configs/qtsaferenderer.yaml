@@ -10,12 +10,13 @@ Include: [
     "ubuntu-22.04-documentation",
     "opensuse-15.5-developer-build",
     "sles-15_sp5-static",
-    "windows-10_22h2-msvc2019",
     "windows-10_22h2-msvc2022",
     "rhel-8.8",
     "windows-10_22h2-mingw13",
     "windows-10_22h2-llvm",
-    "windows-11_23H2-msvc2019"
+    "windows-11_23H2-mingw13-developer-build",
+    "windows-11_23H2-llvm",
+    "windows-11_22h2-arm64-msvc2022"
   ],
   cmake_platforms_qemu_qnx710.yaml: [
     "qnx-710-x86_64-developer-build-on-linux",
@@ -46,9 +47,9 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DINPUT_headersclean=ON'
     ]
 -
-    Id: 'Windows-MSVC2019_Static'
+    Id: 'Windows-MSVC2022_Static'
     Template: 'qtci-windows-10_22H2-x86_64-51'
-    Compiler: 'MSVC2019'
+    Compiler: 'MSVC2022'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql -plugin-sql-sqlite -plugin-sql-odbc'
     Environment variables: [
