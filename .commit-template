@@ -10,10 +10,13 @@
 # ==[ Footers: Uncomment and edit where applicable ]===================|
 #
 # One task per entry. Add a space after the colon.
-# Use Fixes to automatically close an issue, and Task-number to
-# reference it without further action.
-# You do not need both for the same issue.
+# Use Fixes to automatically close an issue, Reopens to automatically
+# reopen an issue, and Task-number to reference it without further
+# action.
+# You do not need to include Task-Number where Fixes or Reopens is
+# specified for the same issue.
 #Fixes: 
+#Reopens: 
 #Task-number: 
 #Coverity-Id: 
 #
