@@ -6,7 +6,12 @@ set -ex
 
 source "${BASH_SOURCE%/*}/../unix/sccache.sh"
 
-targetArch=x86_64-apple-darwin
 targetVersion=0.2.14
-sha1=764bc1664c0ff616d9980a6d127175d0a2041781
+if [[ `arch` == arm* ]]; then
+    targetArch=aarch64-apple-darwin
+    sha1=ad10cd4b8889fa08e193a4165ac664876a27c0dc
+else
+    targetArch=x86_64-apple-darwin
+    sha1=764bc1664c0ff616d9980a6d127175d0a2041781
+fi
 installSccache "$targetArch" "$targetVersion" "$sha1"
