@@ -9,8 +9,16 @@ if touch "$TCC_DATABASE"; then
     REQ_STR=$(codesign -d -r- "$BOOTSTRAP_AGENT" 2>&1 | awk -F ' => ' '/designated/{print $2}')
     REQ_HEX=$(echo "$REQ_STR" | csreq -r- -b >(xxd -p | tr -d '\n'))
 
+    SERVICES=()
+
+    # Qt Multimedia tests need microphone access
+    SERVICES+=('kTCCServiceMicrophone')
+
+    # Qt Connectivity tests need Bluetooth access
+    SERVICES+=('kTCCServiceBluetoothAlways')
+
     # shellcheck disable=SC2043
-    for service in kTCCServiceMicrophone; do
+    for service in "${SERVICES[@]}"; do
         sqlite3 -echo "$TCC_DATABASE" <<EOF
             DELETE from access WHERE client = '$BOOTSTRAP_AGENT' AND service = '$service';
             INSERT INTO access (service, client, client_type, auth_value, auth_reason, auth_version, csreq, flags) VALUES (
