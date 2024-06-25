@@ -6,20 +6,20 @@
 # This script will install FFmpeg
 $msys = "C:\Utils\msys64\usr\bin\bash"
 
-$version = "n7.0"
-$ffmpeg_name = "ffmpeg-" + $version;
-$sha1 = "CC948A547113469E284CA085B9A236F1ECC50843"
+$version="n7.0"
+$url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
+$sha1="042260ec5013eb29c89c13443a0f42cbe6fbceaa"
+$url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
+$ffmpeg_name="FFmpeg-$version"
 
-$url_cached = "https://ci-files01-hki.ci.qt.io/input/ffmpeg/" + $version + ".zip"
-$url_public = "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/" +$version + ".zip"
-$download_location = "C:\Windows\Temp\" + $ffmpeg_name + ".zip"
+$download_location = "C:\Windows\Temp\$ffmpeg_name.tar.gz"
 $unzip_location = "C:\"
 
 Write-Host "Fetching FFmpeg $version..."
 
 Download $url_public $url_cached $download_location
 Verify-Checksum $download_location $sha1
-Extract-7Zip $download_location $unzip_location
+Extract-tar_gz $download_location $unzip_location
 Remove $download_location
 
 function GetFfmpegDefaultConfiguration {
