@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 src_path=`dirname $0`
-src_path=`(cd "$src_path"; /bin/pwd)`
+src_path=`(cd "$src_path"; pwd)`
 
 optfile=config.tl.opt
 opttmpfile=config.tl.opt.in
