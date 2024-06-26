@@ -99,7 +99,7 @@ Configurations:
     Template: 'qtci-windows-11_23H2-x86_64-52'
     Compiler: 'MSVC2022'
     Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'Packaging']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20'
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
@@ -111,7 +111,7 @@ Configurations:
     Template: 'qtci-windows-11_22H2-aarch64-51'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -c++std c++20 -no-sql-psql -no-opengl'
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
