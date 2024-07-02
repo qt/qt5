@@ -6,8 +6,8 @@
 # This script will pre-installed squish package for Windows.
 # Squish is need by Release Test Automation (RTA)
 
-$version = "7.2.1"
-$qtBranch = "66x"
+$version = "8.0.0"
+$qtBranch = "67x"
 $targetDir = "C:\Utils\squish"
 $squishPackage = "C:\Utils\rta_squish"
 $squishUrl = "\\ci-files01-hki.ci.qt.io\provisioning\squish\jenkins_build\stable"
@@ -33,7 +33,7 @@ if (($OSVersion -eq "Windows 10 Enterprise") -or ($OSVersion -eq "Windows 10 Pro
     # In Windows 11 case $OSVersion is 'Windows 10 Pro'
     $winVersion = "win10"
     if (Is64BitWinHost) {
-        $sha1 = "eed4ed4936fbbacb11e0d8a00ff190e1ea808eeb"
+        $sha1 = "0f863c261f854ec38032815298f5636e99779bff"
     }
 } else {
     $winVersion = "n/a"
