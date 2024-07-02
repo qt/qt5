@@ -2,16 +2,17 @@
 # Copyright (C) 2020 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-# shellcheck source=./DownloadURL.sh
+PROVISIONING_DIR="$(dirname "$0")/../../"
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
+source "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
 set -ex
 
 # This script will fetch and extract pre-buildt squish package for Linux and Mac.
 # Squish is need by Release Test Automation (RTA)
 
-version="7.2.1"
-qtBranch="66x"
+version="8.0.0"
+qtBranch="67x"
 installFolder="/opt"
 squishFolder="$installFolder/squish"
 preBuildCacheUrl="ci-files01-hki.ci.qt.io:/hdd/www/input/squish/jenkins_build/stable"
@@ -22,11 +23,16 @@ licenseSHA="e84b499a2011f9bb1a6eefc7b2338d7ae770927a"
 testSuiteUrl="ci-files01-hki.ci.qt.io:/hdd/www/input/squish/coin/suite_test_squish"
 testSuiteLocal="/tmp/squish_test_suite"
 if uname -a |grep -q Darwin; then
-    compressedFolder="prebuild-squish-$version-$qtBranch-mac.tar.gz"
-    sha1="7467c974b65255c86b8fccaeca90e0590d4f7c96"
+    compressedFolder="prebuild-squish-$version-$qtBranch-mac-x64.tar.gz"
+    sha1="8ae422b44af9b8e5f0d15cdca08df99973b8699a"
 else
-     compressedFolder="prebuild-squish-$version-$qtBranch-linux64.tar.gz"
-     sha1="950a6035c777c8ce0a50a0b3ad468044d07f898b"
+    if [ "$PROVISIONING_ARCH" = arm64 ] ; then
+        compressedFolder="prebuild-squish-$version-$qtBranch-linux-arm64.tar.gz"
+        sha1="06d542579271f88b1527d6ddca2bfd4eaf2dade5"
+    else
+        compressedFolder="prebuild-squish-$version-$qtBranch-linux-x64.tar.gz"
+        sha1="db5c48f359b46a460551cdf9362c63f557cbc04f"
+    fi
 fi
 
 mountFolder="/tmp/squish"
@@ -67,14 +73,6 @@ sudo tar -xzf "$targetFileMount" --directory "$installFolder"
 
 if uname -a |grep -q Darwin; then
     sudo xattr -r -c "$squishFolder"
-fi
-
-if uname -a |grep -q "Ubuntu"; then
-    if [ ! -e "/usr/lib/tcl8.6" ]; then
-        sudo mkdir /usr/lib/tcl8.6
-        #this needs to be copied only to squish_for_qt65
-        sudo cp "$squishFolder/squish_for_qt66/tcl/lib/tcl8.6/init.tcl" /usr/lib/tcl8.6/
-    fi
 fi
 
 echo "Download Squish license"
