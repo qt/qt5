@@ -1,4 +1,5 @@
 Version: 2
+Module only: True
 Include: [
     cmake_platforms.yaml,
     qt-creator.yaml
