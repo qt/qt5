@@ -1,0 +1,13 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Id: 'macos-15-arm64-developer-build'
+    Template: 'qtci-macos-15-arm-103'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
+    Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -nomake examples -nomake tests'
+    Environment variables: [
+        # FIXME: macOS 15 ARM VMs have trouble attaching to test via lldb
+        'QTEST_DISABLE_STACK_DUMP=1'
+    ]
