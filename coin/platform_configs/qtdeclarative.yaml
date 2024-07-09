@@ -5,7 +5,7 @@ Include: [
     ios-tests.yaml,
     address_sanitizer_platforms.yaml,
     cmake_platforms_static_tests.yaml,
-    cmake_platforms_qemu_vxworks.yaml,
+    cmake_platforms_qemu_vxworks_buildtest.yaml,
     qtlite.yaml
 ]
 Configurations: []
