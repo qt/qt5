@@ -2,52 +2,52 @@ Version: 2
 Module only: true
 Configurations:
   - Id: 'webos-emulator-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_EMULATOR=enabled']
   - Id: 'webos-emulator-qtbase-tests'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtbase']
     Platform dependency: 'webos-emulator-build'
   - Id: 'webos-emulator-qtdeclarative-tests'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtdeclarative']
     Platform dependency: 'webos-emulator-build'
   - Id: 'webos-emulator-qtwayland-tests'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtwayland']
     Platform dependency: 'webos-emulator-build'
   - Id: 'webos-emulator-qtshadertools-tests'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtshadertools']
     Platform dependency: 'webos-emulator-build'
   - Id: 'webos-emulator-qtgraphicaleffects-tests'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Environment variables: ['MODULE=qtgraphicaleffects']
     Platform dependency: 'webos-emulator-build'
   - Id: 'webos-raspberry-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_RASPBERRY=enabled']
   - Id: 'webos-ndk-installer-build'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['DoNotRunTests']
     Environment variables: ['BUILD_NDK_INSTALLER=enabled']
   - Id: 'webos-ndk-install'
-    Template: 'qtci-linux-Ubuntu-20.04-x86_64-52'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-52'
     Compiler: 'GCC'
     Features: ['TestOnly']
     Platform dependency: ['webos-raspberry-build', 'webos-ndk-installer-build']
