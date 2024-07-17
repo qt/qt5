@@ -12,7 +12,7 @@ brew install pyenv
 
 pyenv install 3.9.7
 
-/Users/qt/.pyenv/versions/3.9.7/bin/pip3 install --user install virtualenv wheel html5lib
+/Users/qt/.pyenv/versions/3.9.7/bin/pip3 install --user virtualenv wheel html5lib
 
 SetEnvVar "PYTHON3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
 SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
