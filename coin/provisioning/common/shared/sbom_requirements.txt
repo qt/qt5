@@ -3,3 +3,4 @@ spdx-tools>=0.8.0
 ntia-conformance-checker
 sbomaudit
 sbom2doc
+reuse
