@@ -123,7 +123,7 @@ Configurations:
     Template: 'qtci-linux-SLES-15_SP5-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-nomake examples -static -no-sql-mysql'
+    Configure arguments: '-nomake examples -static -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
     Environment variables: [
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}}'

@@ -5,7 +5,7 @@ Configurations:
     Template: 'qtci-linux-SLES-15_SP5-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
-    Configure arguments: '-nomake examples -static -no-sql-mysql'
+    Configure arguments: '-nomake examples -static -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
     Environment variables: [
         'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}'
     ]
@@ -14,7 +14,7 @@ Configurations:
     Template: 'qtci-windows-11_23H2-x86_64-53'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
-    Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib'
+    Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
