@@ -90,7 +90,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
@@ -102,7 +102,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
@@ -114,7 +114,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
+        'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
@@ -125,7 +125,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
     ]
 -
     Id: 'rhel-9.2'
@@ -170,7 +170,7 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include -DFFMPEG_DIR={{.Env.FFMPEG_DIR_IOS}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include -DFFMPEG_DIR={{.Env.FFMPEG_DIR_IOS}} -DQT_DEPLOY_FFMPEG=TRUE',
     ]
 -
     Id: 'windows-10_22h2-mingw13'
@@ -181,7 +181,7 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
@@ -207,7 +207,7 @@ Configurations:
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DFEATURE_native_grpc=OFF',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
