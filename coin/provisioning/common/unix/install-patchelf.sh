@@ -4,11 +4,11 @@
 
 
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
-patchelf_version="0.18.0"
+patchelf_version="0.17.2"
 
-url_cached="http://ci-files01-hki.ci.qt.io/input/patchelf/$patchelf_version.tar.gz"
+url_cached="https://ci-files01-hki.intra.qt.io/input/android/patchelf/$patchelf_version.tar.gz"
 url_public="https://github.com/NixOS/patchelf/archive/refs/tags/$patchelf_version.tar.gz"
-sha1="7eb974172de73b7b452ee376237ad78601603c45"
+sha1="ddd46a2e2a16a308245c008721d877455b23bba8"
 
 target_source_dir="$HOME/patchelf-$patchelf_version"
 
