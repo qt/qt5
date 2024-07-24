@@ -3,6 +3,6 @@ Include: [
     cmake_platforms.yaml,
     address_sanitizer_platforms.yaml,
     integrity.yaml,
-    cmake_platforms_qemu_vxworks.yaml
+    cmake_platforms_qemu_vxworks_buildtest.yaml
 ]
 Configurations: []
