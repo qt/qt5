@@ -183,16 +183,16 @@ function InstallAndroidArmv7 {
     Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm automake`"")
     Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"pacman -Sy --noconfirm libtool`"")
 
-    $patchelf_sha1 = "7EB974172DE73B7B452EE376237AD78601603C45"
-    $patchelf_sources = "https://ci-files01-hki.intra.qt.io/input/android/patchelf/0.18.0.tar.gz"
-    $patchelf_download_location = "C:\Windows\Temp\0.18.0.tar.gz"
+    $patchelf_sha1 = "DDD46A2E2A16A308245C008721D877455B23BBA8"
+    $patchelf_sources = "https://ci-files01-hki.intra.qt.io/input/android/patchelf/0.17.2.tar.gz"
+    $patchelf_download_location = "C:\Windows\Temp\0.17.2.tar.gz"
 
     Invoke-WebRequest -UseBasicParsing $patchelf_sources -OutFile $patchelf_download_location
     Verify-Checksum $patchelf_download_location $patchelf_sha1
     Extract-tar_gz $patchelf_download_location $unzip_location
     Remove $patchelf_download_location
 
-    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.18.0 && ./bootstrap.sh && ./configure && make install`"")
+    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.17.2 && ./bootstrap.sh && ./configure && make install`"")
 
     $command = "${PSScriptRoot}/../shared/fix_ffmpeg_dependencies.sh C:/${ffmpeg_name}/build/android-arm/installed/ _armeabi-v7a no"
     $command = $command.Replace("\", "/")
