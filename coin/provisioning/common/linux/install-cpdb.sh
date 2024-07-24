@@ -17,8 +17,7 @@ rm -rf "$repDir"
 cd "$tmpdir"
 git clone -q "$gitUrl"
 cd "$repDir"
-# cpdb-libs v2.0b4 with build bug fixed
-git checkout -q ce848f1571a82ec03881fce127ff28bec8da239e
+git checkout -q tags/2.0b6
 ./autogen.sh > /dev/null
 ./configure --prefix="$prefix" > /dev/null
 make "-j$(nproc)" > /dev/null && sudo make install > /dev/null
