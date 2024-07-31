@@ -27,6 +27,7 @@ installPackages+=(ninja-build)
 installPackages+=(pcre2-devel)
 installPackages+=(double-conversion-devel)
 installPackages+=(zstd)
+installPackages+=(libzstd-devel)
 # EGL support
 installPackages+=(mesa-libEGL-devel)
 installPackages+=(mesa-libGL-devel)
