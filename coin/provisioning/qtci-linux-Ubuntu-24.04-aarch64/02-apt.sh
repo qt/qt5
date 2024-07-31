@@ -209,6 +209,7 @@ installPackages+=(ssh)
 installPackages+=(diffstat)
 installPackages+=(binfmt-support)
 installPackages+=(zstd)
+installPackages+=(libzstd-dev)
 installPackages+=(lz4)
 # Vulkan is needed for examples
 installPackages+=(libvulkan-dev)
