@@ -169,6 +169,7 @@ installPackages+=(ssh)
 installPackages+=(diffstat)
 installPackages+=(binfmt-support)
 installPackages+=(zstd)
+installPackages+=(libzstd-dev)
 # Vulkan is needed for examples
 installPackages+=(libvulkan-dev)
 # Needed for qtdltlogging

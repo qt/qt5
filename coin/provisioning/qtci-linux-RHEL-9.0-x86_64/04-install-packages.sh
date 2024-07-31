@@ -29,6 +29,7 @@ installPackages+=(ninja-build)
 installPackages+=(pcre2-devel)
 installPackages+=(double-conversion-devel)
 installPackages+=(zstd)
+installPackages+=(libzstd-devel)
 # EGL support
 # mesa-libEGL-devel need to use older version than 22.1.5-2.el9 which cause Xorg to crash
 installPackages+=(mesa-libEGL-devel-21.3.4-2.el9)
