@@ -7,7 +7,7 @@ Configurations:
     Target arch: 'armv7'
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Sccache', 'UseConfigure', 'Insignificant']
+    Features: ['Sccache', 'UseConfigure', 'InsignificantTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -make examples -qt-harfbuzz -device linux-imx7-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARMV7_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=hard-float boot2qt" -no-feature-forkfd_pidfd',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARMV7_TOOLCHAIN_FILE}} -DQT_FORCE_BUILD_TOOLS=ON',
@@ -24,7 +24,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'GCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Sccache', 'UseConfigure', 'Insignificant']
+    Features: ['Sccache', 'UseConfigure', 'InsignificantTests']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE={{.Env.QEMUARM64_TOOLCHAIN_CROSS_COMPILE}}" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QEMUARM64_TOOLCHAIN_FILE}} -DQT_FORCE_BUILD_TOOLS=ON',
