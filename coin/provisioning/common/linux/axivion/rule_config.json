@@ -1,0 +1,210 @@
+{
+    "Analysis": {
+        "CloneDetection": {
+            "_active": true,
+            "excludes": [
+                "$(splitpath:EXCLUDE_FILES)"
+            ]
+        },
+        "Frameworks-QtSupport": {
+            "_active": true,
+            "exclude_qt_generated_files": true,
+            "qtdir": "/home/qt/work/install"
+        },
+        "Qt-AutoUnexpectedQStringbuilder": {
+            "_active": true
+        },
+        "Qt-BaseClassEvent": {
+            "_active": true
+        },
+        "Qt-ChildEventQObjectCast": {
+            "_active": true
+        },
+        "Qt-Connect3argLambda": {
+            "_active": true
+        },
+        "Qt-ConnectByName": {
+            "_active": true
+        },
+        "Qt-ConnectNonSignal": {
+            "_active": true
+        },
+        "Qt-ConstSignalOrSlot": {
+            "_active": true
+        },
+        "Qt-CtorMissingParentArgument": {
+            "_active": true
+        },
+        "Qt-DetachingTemporary": {
+            "_active": true
+        },
+        "Qt-FullyQualifiedMocTypes": {
+            "_active": true
+        },
+        "Qt-FunctionArgsByValueRef": {
+            "_active": true
+        },
+        "Qt-Generic-DuplicateIncludeGuard": {
+            "_active": true
+        },
+        "Qt-Generic-FormatSpecifier": {
+            "_active": true
+        },
+        "Qt-Generic-InitializeAllFieldsInConstructor": {
+            "_active": true
+        },
+        "Qt-Generic-MissingBaseCopy": {
+            "_active": true
+        },
+        "Qt-Generic-MissingIncludeGuard": {
+            "_active": true
+        },
+        "Qt-Generic-NoAbsoluteInclude": {
+            "_active": true
+        },
+        "Qt-Generic-NoFunctionDefinitionInHeader": {
+            "_active": true
+        },
+        "Qt-Generic-NoIrregularInclude": {
+            "_active": true
+        },
+        "Qt-Generic-NoMixOfClassStruct": {
+            "_active": true
+        },
+        "Qt-Generic-NoOverloadedOperators": {
+            "_active": true
+        },
+        "Qt-Generic-NoReferenceToLocalVariable": {
+            "_active": true
+        },
+        "Qt-Generic-QNetworkReplyDeleteLater": {
+            "_active": true
+        },
+        "Qt-Generic-ThrowByValueCatchByReference": {
+            "_active": true
+        },
+        "Qt-Generic-TypedefCheck": {
+            "_active": true
+        },
+        "Qt-Generic-WrongIncludeCasing": {
+            "_active": true
+        },
+        "Qt-GlobalConstCharPointer": {
+            "_active": true
+        },
+        "Qt-IncorrectEmit": {
+            "_active": true
+        },
+        "Qt-InstallEventFilter": {
+            "_active": true
+        },
+        "Qt-LambdaInConnect": {
+            "_active": true
+        },
+        "Qt-LambdaUniqueConnection": {
+            "_active": true
+        },
+        "Qt-LowercaseQmlTypeName": {
+            "_active": true
+        },
+        "Qt-MissingQObjectMacro": {
+            "_active": true
+        },
+        "Qt-MutableContainerKey": {
+            "_active": true
+        },
+        "Qt-NonPodGlobalStatic": {
+            "_active": true
+        },
+        "Qt-OldStyleConnect": {
+            "_active": true
+        },
+        "Qt-OverloadedSignal": {
+            "_active": true
+        },
+        "Qt-OverriddenSignal": {
+            "_active": true
+        },
+        "Qt-PostEvent": {
+            "_active": true
+        },
+        "Qt-QDateTimeUTC": {
+            "_active": true
+        },
+        "Qt-QEnums": {
+            "_active": true
+        },
+        "Qt-QLatin1StringNonAscii": {
+            "_active": true
+        },
+        "Qt-QMapWithPointerKey": {
+            "_active": true
+        },
+        "Qt-QPropertyWithoutNotify": {
+            "_active": true
+        },
+        "Qt-QStringArg": {
+            "_active": true
+        },
+        "Qt-QStringComparisonToImplicitChar": {
+            "_active": true
+        },
+        "Qt-QhashNamespace": {
+            "_active": true
+        },
+        "Qt-QtMacros": {
+            "_active": true
+        },
+        "Qt-RangeLoopDetach": {
+            "_active": false
+        },
+        "Qt-RangeLoopReference": {
+            "_active": true
+        },
+        "Qt-ReturningDataFromTemporary": {
+            "_active": true
+        },
+        "Qt-RuleOfThree": {
+            "_active": true
+        },
+        "Qt-RuleOfTwoSoft": {
+            "_active": true
+        },
+        "Qt-SkippedBaseMethod": {
+            "_active": true
+        },
+        "Qt-StrictIterators": {
+            "_active": true
+        },
+        "Qt-TemporaryIterator": {
+            "_active": true
+        },
+        "Qt-UnusedNonTrivialVariable": {
+            "_active": true
+        },
+        "Qt-VirtualSignal": {
+            "_active": true
+        },
+        "Qt-WritingToTemporary": {
+            "_active": true
+        },
+        "Qt-WrongQEventCast": {
+            "_active": true
+        },
+        "Qt-WrongQGlobalStatic": {
+            "_active": true
+        },
+        "Stylechecks": {
+            "excludes": [
+                "$(splitpath:EXCLUDE_FILES)"
+            ]
+        }
+    },
+    "_Format": "1.0",
+    "_VersionNum": [
+        7,
+        8,
+        0,
+        15004
+    ]
+}

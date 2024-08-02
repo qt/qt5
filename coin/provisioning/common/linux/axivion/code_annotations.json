@@ -1,0 +1,32 @@
+{
+    "Analysis": {
+        "CatchMalformedComments": {
+            "_active": true
+        },
+        "EnableDisable": {
+            "_active": true
+        },
+        "NextLine": {
+            "_active": true
+        },
+        "ReportUnclosedRestOfFileComments": {
+            "_active": true
+        },
+        "ReportUnusedComments": {
+            "_active": true
+        }
+    },
+    "Results": {
+        "Dashboard": {
+            "import_suppressed_issues": true
+        }
+    },
+    "_Format": "1.0",
+    "_Version": "trunk-d23a11ca62e",
+    "_VersionNum": [
+        7,
+        8,
+        0,
+        14394
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "Project": {
+        "Git": {
+            "_active": true,
+            "sourceserver_gitdir": "/data/axivion/databases/$(env:TESTED_MODULE_COIN).git"
+        },
+        "Project-GlobalOptions": {
+            "ci_mode": {
+                "clean_before": false
+            },
+            "directory": "../work/qt/$(env:TESTED_MODULE_COIN)",
+            "ir": "$(env:IRNAME)",
+            "name": "qt_$(env:PACKAGE)_$(env:MODULE)_dev_$(env:TARGET_OS_COIN)"
+        }
+    },
+    "Results": {
+        "Dashboard": {
+            "ci_mode": {
+                "directory": "/data/axivion/databases"
+            },
+            "dashboard_url": "https://axivion-srv.ci.qt.io/axivion/"
+        }
+    },
+    "_Format": "1.0",
+    "_Version": "7.6.2",
+    "_VersionNum": [
+        7,
+        6,
+        2,
+        12725
+    ]
+}
