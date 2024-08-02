@@ -5,6 +5,9 @@ $n = Get-Content "$PSScriptRoot\..\shared\http_proxy.txt"
 $n = $n.Split('=')
 New-Variable -Name $n[0] -Value $n[1]
 
+Write-Host "Temporarily not setting proxy" # QTQAINFRA-6473
+$proxy = ""
+
 if ([string]::IsNullOrEmpty($proxy)) {
     Write-Host "No proxy is defined."
 } else {
