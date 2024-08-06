@@ -50,7 +50,7 @@ Configurations:
     Id: 'Linux-RHEL_8_10_Static'
     Template: 'qtci-linux-RHEL-8.10-x86_64-50'
     Compiler: 'GCC'
-    Features: ['InsignificantTests', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',

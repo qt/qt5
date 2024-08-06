@@ -40,7 +40,6 @@ Configurations:
     ]
     Features: [
         'Sccache',
-        'InsignificantTests',
         'WarningsAreErrors',
         'AndroidTestRun',
         'MinimalAndroidMultiABITests',
