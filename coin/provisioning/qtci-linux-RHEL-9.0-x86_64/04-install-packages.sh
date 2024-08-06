@@ -140,6 +140,8 @@ installPackages+=(nfs-utils)
 # cifs-utils, for mounting smb drive
 installPackages+=(keyutils)
 installPackages+=(cifs-utils)
+# password management support for Qt Creator
+installPackages+=(libsecret-devel)
 
 
 sudo yum -y install "${installPackages[@]}"

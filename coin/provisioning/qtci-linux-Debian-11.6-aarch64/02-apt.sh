@@ -246,7 +246,8 @@ installPackages+=(pkg-kde-tools)
 installPackages+=(unixodbc-dev)
 installPackages+=(zlib1g-dev)
 installPackages+=(libusb-1.0-0-dev)
-
+# password management support for Qt Creator
+installPackages+=(libsecret-1-dev)
 
 echo "Running update for apt"
 waitLoop

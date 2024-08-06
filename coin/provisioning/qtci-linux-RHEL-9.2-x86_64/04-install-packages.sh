@@ -162,6 +162,8 @@ installPackages+=(jq)
 installPackages+=(zip)
 # OpenSSL requirement, built by vcpkg
 installPackages+=(perl-IPC-Cmd)
+# password management support for Qt Creator
+installPackages+=(libsecret-devel)
 
 sudo yum -y install "${installPackages[@]}"
 
