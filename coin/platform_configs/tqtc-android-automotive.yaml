@@ -1,7 +1,6 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
-        'rhel-8.8',
         "rhel-8.10",
         'windows-10_22h2-mingw13',
         'ubuntu-22.04-documentation',
@@ -14,30 +13,12 @@ Include: [
         'android-arm64-on-macos',
         'android-armv7-on-windows',
         'android-9-x86-on-linux',
-        'android-9-x86-on-linux-rhel-8.10',
-        'android-14-x86_64-on-linux',
-        'android-14-x86_64-on-linux-rhel-8.10'
+        'android-14-x86_64-on-linux'
     ]
 ]
 Configurations:
 -
     Id: "automotive-android-14-x86_64-on-linux"
-    Template: 'qtci-linux-RHEL-8.8-x86_64-50'
-    Target os: 'Android_ANY'
-    Target arch: 'x86_64'
-    Compiler: 'GCC'
-    Target compiler: 'Clang'
-    Platform dependency: 'rhel-8.8'
-    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86_64',
-        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID}}',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
-        'ANDROID_EMULATOR=automotive_emulator_x86_64_api_34'
-    ]
--
-    Id: "automotive-android-14-x86_64-on-linux-rhel-8.10"
     Template: 'qtci-linux-RHEL-8.10-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86_64'
@@ -54,22 +35,6 @@ Configurations:
     ]
 -
     Id: "automotive-android-10-x86_64-on-linux"
-    Template: 'qtci-linux-RHEL-8.8-x86_64-50'
-    Target os: 'Android_ANY'
-    Target arch: 'x86_64'
-    Compiler: 'GCC'
-    Target compiler: 'Clang'
-    Platform dependency: 'rhel-8.8'
-    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'AndroidTestRun', 'VMSize8', 'UseConfigure']
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86_64',
-        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID}}',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
-        'ANDROID_EMULATOR=automotive_emulator_x86_64_api_29'
-    ]
--
-    Id: "automotive-android-10-x86_64-on-linux-rhel-8.10"
     Template: 'qtci-linux-RHEL-8.10-x86_64-50'
     Target os: 'Android_ANY'
     Target arch: 'x86_64'
