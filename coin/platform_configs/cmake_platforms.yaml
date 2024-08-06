@@ -169,7 +169,7 @@ Configurations:
     Id: 'rhel-8.10'
     Template: 'qtci-linux-RHEL-8.10-x86_64-50'
     Compiler: 'GCC'
-    Features: ['InsignificantTests', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',

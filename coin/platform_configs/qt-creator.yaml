@@ -24,7 +24,7 @@ Configurations:
 -
     Template: 'qtci-linux-RHEL-8.10-x86_64-50'
     Compiler: 'GCC'
-    Features: ['InsignificantTests', 'Sccache', 'DebugAndRelease']
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''
     Environment variables: []
 -
