@@ -12,7 +12,6 @@ Include: [
     "sles-15_sp5-static",
     "windows-10_22h2-msvc2019",
     "windows-10_22h2-msvc2022",
-    "rhel-8.8",
     "rhel-8.10",
     "windows-10_22h2-mingw13",
     "windows-10_22h2-llvm",
@@ -35,16 +34,6 @@ Configurations:
     Configure arguments: '-static -nomake examples -release -no-framework -no-icu -qt-doubleconversion -no-sql-mysql'
     Environment variables: [
         'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"'
-    ]
--
-    Id: 'Linux-RHEL_8_8_Static'
-    Template: 'qtci-linux-RHEL-8.8-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
-    Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DINPUT_headersclean=ON'
     ]
 -
     Id: 'Linux-RHEL_8_10_Static'

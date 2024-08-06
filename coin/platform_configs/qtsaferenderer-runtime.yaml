@@ -13,7 +13,6 @@ Include: [
     "windows-10_22h2-msvc2019",
     "windows-10_22h2-msvc2022",
     "windows-10_22h2-msvc2019-developer-build",
-    "rhel-8.8",
     "rhel-8.10",
     "windows-10_22h2-mingw13",
     "windows-10_22h2-mingw13-developer-build",
