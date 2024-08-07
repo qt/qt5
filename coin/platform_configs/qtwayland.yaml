@@ -6,11 +6,11 @@ Include: [
 Configurations:
 # Test on Ubuntu 22.04 Wayland
 -
-    Id: 'ubuntu-22.04-documentation-wayland-tests'
+    Id: 'ubuntu-22.04-developer-build-wayland-tests'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestDocs', 'TestOnly', 'RunDependencyTests', 'InsignificantTests']
-    Platform dependency: 'ubuntu-22.04-documentation'
+    Features: ['Sccache', 'TestOnly', 'RunDependencyTests', 'InsignificantTests']
+    Platform dependency: 'ubuntu-22.04-developer-build'
 -
     Id: 'ubuntu-22.04-wayland-tests'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-50'
@@ -19,11 +19,11 @@ Configurations:
     Platform dependency: 'ubuntu-22.04'
 # Test on Ubuntu 24.04 ARM64 Wayland
 -
-    Id: 'ubuntu-24.04-arm64-documentation-wayland-tests'
+    Id: 'ubuntu-24.04-arm64-developer-build-wayland-tests'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
     Compiler: 'GCC'
     Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
-    Platform dependency: 'ubuntu-24.04-arm64-documentation'
+    Platform dependency: 'ubuntu-24.04-arm64-developer-build'
 -
     Id: 'ubuntu-24.04-arm64-wayland-tests'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
@@ -32,11 +32,11 @@ Configurations:
     Platform dependency: 'ubuntu-24.04-arm64'
 # Test on Ubuntu 24.04 x64 Wayland
 -
-    Id: 'ubuntu-24.04-x64-documentation-wayland-tests'
+    Id: 'ubuntu-24.04-x64-developer-build-wayland-tests'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
-    Platform dependency: 'ubuntu-24.04-x64-documentation'
+    Platform dependency: 'ubuntu-24.04-x64-developer-build'
 -
     Id: 'ubuntu-24.04-x64-wayland-tests'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'

@@ -9,10 +9,10 @@ Include: [
 Configurations:
 # Build on Ubuntu 22.04 and test on both X11 and Wayland later
 -
-    Id: 'ubuntu-22.04-documentation'
+    Id: 'ubuntu-22.04-developer-build'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE']
 -
@@ -27,11 +27,11 @@ Configurations:
     ]
 # Test on Ubuntu 22.04 X11
 -
-    Id: 'ubuntu-22.04-documentation-x11-tests'
+    Id: 'ubuntu-22.04-developer-build-x11-tests'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestDocs', 'TestOnly']
-    Platform dependency: 'ubuntu-22.04-documentation'
+    Features: ['Sccache', 'TestOnly']
+    Platform dependency: 'ubuntu-22.04-developer-build'
 -
     Id: 'ubuntu-22.04-x11-tests'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
@@ -40,10 +40,10 @@ Configurations:
     Platform dependency: 'ubuntu-22.04'
 # Build on Ubuntu 24.04 ARM64 Wayland and test on offscreen and Wayland later
 -
-    Id: 'ubuntu-24.04-arm64-documentation'
+    Id: 'ubuntu-24.04-arm64-developer-build'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
     Compiler: 'GCC'
-    Features: ['Documentation', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
+    Features: ['UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace -qpa offscreen\;xcb'
     Environment variables: [
         'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
@@ -74,10 +74,10 @@ Configurations:
     Platform dependency: 'ubuntu-24.04-arm64'
 # Build on Ubuntu 24.04 x64 Wayland and test on both X11 and Wayland (Wayland=default)
 -
-    Id: 'ubuntu-24.04-x64-documentation'
+    Id: 'ubuntu-24.04-x64-developer-build'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'Documentation', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
     Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
     Environment variables: [
         'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
@@ -96,11 +96,11 @@ Configurations:
     ]
 # Test on Ubuntu 24.04 x64 X11
 -
-    Id: 'ubuntu-24.04-x64-documentation-x11-tests'
+    Id: 'ubuntu-24.04-x64-developer-build-x11-tests'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'TestOnly', 'InsignificantTests']
-    Platform dependency: 'ubuntu-24.04-x64-documentation'
+    Platform dependency: 'ubuntu-24.04-x64-developer-build'
 -
     Id: 'ubuntu-24.04-x64-x11-tests'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
@@ -284,3 +284,17 @@ Configurations:
         'COIN_EXTRA_DEBIAN_REPO=deb http://archive.ubuntu.com/ubuntu/ jammy main universe multiverse',
         'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
     ]
+
+-
+    # This configuration runs for every submodule, using externally
+    # built qdoc and qattributionscanner binaries, to ensure that no
+    # new qdoc warnings are introduced. The resulting documentation
+    # is not used for anything (neither online or offline docs). See
+    # qt5.yaml for a config that builds offline docs.
+    # FIXME: Add feature flag that avoids running the Qt auto tests
+    Id: 'documentation-warnings'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly', 'TestDocs']
+    Platform dependency: 'ubuntu-22.04'
+

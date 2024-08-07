@@ -7,7 +7,7 @@ Include: [
   ],
   cmake_platforms.yaml: [
     "ubuntu-22.04",
-    "ubuntu-22.04-documentation",
+    "ubuntu-22.04-developer-build",
     "opensuse-15.5-developer-build",
     "sles-15_sp5-static",
     "windows-10_22h2-msvc2022",

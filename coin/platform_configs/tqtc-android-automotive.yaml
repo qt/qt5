@@ -3,8 +3,8 @@ Include: [
     cmake_platforms.yaml: [
         "rhel-8.10",
         'windows-10_22h2-mingw13',
-        'ubuntu-22.04-documentation',
-        'ubuntu-22.04-documentation-x11-tests'
+        'ubuntu-22.04-developer-build',
+        'ubuntu-22.04-developer-build-x11-tests'
     ],
     macos.yaml: [
         'macos-universal-on-x86_64'

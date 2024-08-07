@@ -3,8 +3,8 @@ Module only: True
 Include: [
   cmake_platforms.yaml: [
     "ubuntu-22.04",
-    "ubuntu-22.04-documentation",
-    "ubuntu-22.04-documentation-x11-tests",
+    "ubuntu-22.04-developer-build",
+    "ubuntu-22.04-developer-build-x11-tests",
     "windows-11_23H2-msvc2022",
     "ios-universal"
   ],
