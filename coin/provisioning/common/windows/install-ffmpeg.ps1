@@ -6,9 +6,9 @@
 # This script will install FFmpeg
 $msys = "C:\Utils\msys64\usr\bin\bash"
 
-$version="n7.0.1"
+$version="n7.0.2"
 $url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-$sha1="6bfb65c18516e95249942f34ef664c94c0768722"
+$sha1="e017c72dd84a9bac1519eaa33c203b82dd850bc0"
 $url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
 $ffmpeg_name="FFmpeg-$version"
 
