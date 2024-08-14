@@ -19,13 +19,14 @@ sha1="8152c527ca489b1e51f2954e6e88c6daa22d88f6"
 targetFolder="/opt"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "VXWORKS_HOME" "/opt/vxworks"
+SetEnvVar "VXWORKS_SSH" "WindRiver@172.31.1.10"
 
-VXWORKS_BUILD_VER="19-08-2024"
+VXWORKS_BUILD_VER="26-08-2024"
 ######### VXworks toolchain #########
 # Installs to /opt/fsl_imx6_2_0_6_2_VSB
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_arm_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="9c1abcc066aff40230a7f432e1f076bac8c6912a"
+sha1="e3c7db136e25d2ef31f5f8d2fecb10191793fdf0"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_2_VSB"
@@ -34,10 +35,22 @@ SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_2_VSB"
 # Installs to /opt/fsl_imx6_2_0_6_2_VIP_QEMU
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_arm_vip_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="db48525d9f5b105f9da632f0c3f557247c1fd041"
+sha1="787555c2fb2571afac7c6706b8bc2ddc65effdf8"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
-SetEnvVar "VXWORKS_SSH" "WindRiver@172.31.1.10"
+
+# Installs to /opt/itl_generic_skylake_VSB
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vsb_${VXWORKS_BUILD_VER}.tar.gz"
+AltUrl=""
+sha1="0ffcbde47d5d95c90db68addd0f534f2aee41df1"
+targetFolder="/opt/"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
+# Installs to /opt/itl_generic_skylake_VIP_QEMU
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vip_${VXWORKS_BUILD_VER}.tar.gz"
+AltUrl=""
+sha1="29afd81568bb647c778d622c997f4bd9ccb7e595"
+targetFolder="/opt/"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 ######### VXworks fonts and certs #########
 # Installs to /opt/fsl_imx6_2_0_6_2_VSB
@@ -46,10 +59,19 @@ AltUrl=""
 sha1="1bc529b90b35b0b249f219e47d5798225a9b68d8"
 targetFolder="/opt/fsl_imx6_2_0_6_2_VSB/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
+######### VXworks fonts and certs #########
+# Installs to /opt/itl_generic_skylake_VSB
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_misc.tar.gz"
+AltUrl=""
+sha1="1bc529b90b35b0b249f219e47d5798225a9b68d8"
+targetFolder="/opt/itl_generic_skylake_VSB/"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 # Setup NFS exports that are needed by VxWorks qemu
 sudo bash -c "echo '/home/qt/work 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
 sudo bash -c "echo '/opt/fsl_imx6_2_0_6_2_VSB 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+sudo bash -c "echo '/opt/itl_generic_skylake_VSB 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+
 sudo exportfs -a
 
 # Enable ipv4 routing from vxWorks to Qt DNS

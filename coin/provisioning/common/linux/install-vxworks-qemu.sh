@@ -18,11 +18,11 @@ InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp" "$appPre
 targetFolder=/tmp/qemu-${QEMU_VER}
 mkdir -p "$targetFolder/build"
 cd "$targetFolder/build"
-../configure --target-list=arm-softmmu
-make -j8
+../configure --target-list=arm-softmmu,x86_64-softmmu --prefix=/opt/qemu-${QEMU_VER}
+make -j8 -s
+sudo make -s install
 sudo mkdir -p /usr/share/qemu/keymaps
 sudo cp -r "$targetFolder/build/pc-bios/keymaps" "/usr/share/qemu/"
-sudo mv "$targetFolder/build" "/opt/qemu-$QEMU_VER"
 rm -rf $targetFolder
 
 SetEnvVar "VXWORKS_QEMU" "/opt/qemu-$QEMU_VER"

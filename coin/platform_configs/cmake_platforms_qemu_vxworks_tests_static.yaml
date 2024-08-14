@@ -15,3 +15,18 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -qpa offscreen -nomake examples',
         'TARGET_CMAKE_ARGS=-DBUILD_SHARED_LIBS=OFF -DWARNINGS_ARE_ERRORS=OFF -DCMAKE_TOOLCHAIN_FILE="{{.Env.WIND_CC_SYSROOT}}/mk/rtp.toolchain.cmake" -DFEATURE_vulkan=OFF -DQT_QMAKE_TARGET_MKSPEC=vxworks-clang -DQT_HOST_PATH=/home/qt/work/install -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_STAGING_PREFIX:PATH=/home/qt/work/install/target'
     ]
+-
+    Id: 'vxworks-x86_64-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Target os: 'VxWorks'
+    Target arch: 'ARMv7'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Platform dependency: 'vxworks-x86_64-buildtest'
+    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly', 'InsignificantTests']
+    Environment variables: [
+        'WIND_CC_SYSROOT=/opt/itl_generic_skylake_VSB',
+        'VXWORKS_TEST_LIBS_PATH=/opt/itl_generic_skylake_VSB/usr/lib/common;/opt/itl_generic_skylake_VSB/usr/root/llvm/bin;/opt/itl_generic_skylake_VSB/usr/3pp/develop/usr/lib;/home/qt/work/install/target/lib',
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -qpa offscreen -nomake examples',
+        'TARGET_CMAKE_ARGS=-DBUILD_SHARED_LIBS=OFF -DWARNINGS_ARE_ERRORS=OFF -DCMAKE_TOOLCHAIN_FILE="{{.Env.WIND_CC_SYSROOT}}/mk/rtp.toolchain.cmake" -DFEATURE_vulkan=OFF -DQT_QMAKE_TARGET_MKSPEC=vxworks-clang -DQT_HOST_PATH=/home/qt/work/install -DCMAKE_AUTOGEN_VERBOSE=ON -DCMAKE_STAGING_PREFIX:PATH=/home/qt/work/install/target'
+    ]
