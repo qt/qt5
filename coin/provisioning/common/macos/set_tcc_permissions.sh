@@ -36,6 +36,11 @@ SERVICES+=("kTCCServiceMicrophone|$HOME")
 # Qt Connectivity tests need Bluetooth access
 SERVICES+=("kTCCServiceBluetoothAlways|$HOME")
 
+# Qt Multimedia might need screen capture, and it can
+# also be useful for capturing the state of the VM when
+# a test fails.
+SERVICES+=("kTCCServiceScreenCapture|/")
+
 # ------ Implementation ------
 
 function add_permission_for_client() {
@@ -81,6 +86,21 @@ function add_permission_for_client() {
           0 -- flags
         );
 EOF
+
+    if [[ "$service" == "kTCCServiceScreenCapture" ]]; then
+        # macOS 15 will nag the user every month about applications
+        # that are permitted to capture the screen. We don't want this
+        # popup to come in the way of tests, so we manually extend
+        # the permission.
+        replayd_dir="$HOME/Library/Group Containers/group.com.apple.replayd"
+        mkdir -p "$replayd_dir"
+        approvals_file="$replayd_dir/ScreenCaptureApprovals.plist"
+        if [[ ! -f $approvals_file ]]; then
+            plutil -create xml1 "$approvals_file"
+        fi
+        key=${executable//\./\\.}
+        plutil -replace "$key" -date "2100-01-01T00:00:00Z" "$approvals_file"
+    fi
 }
 
 # shellcheck disable=SC2043
