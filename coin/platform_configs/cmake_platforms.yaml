@@ -157,7 +157,7 @@ Configurations:
     Template: 'qtci-windows-11_22H2-aarch64-54'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-opengl -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
@@ -171,7 +171,7 @@ Configurations:
     Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Platform dependency: 'windows-11_23H2-msvc2022'
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -no-sql-ibase',
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer',
         'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
