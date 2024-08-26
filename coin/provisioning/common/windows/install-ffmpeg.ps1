@@ -85,6 +85,7 @@ function InstallMingwFfmpeg {
 
 function InstallMsvcFfmpeg {
     Param (
+        [string]$hostArch,
         [bool]$isArm64
     )
 
@@ -98,10 +99,13 @@ function InstallMsvcFfmpeg {
         $arch = "arm64"
         $buildSystem += "-arm64"
         $ffmpegDirEnvVar += "_ARM64"
-        $config += " --enable-cross-compile --arch=arm64 --disable-asm"
+        $config += " --arch=arm64 --disable-asm"
+        if ($hostArch -eq "amd64") {
+            $config += " --enable-cross-compile"
+        }
     }
 
-    $result = EnterVSDevShell -Arch $arch
+    $result = EnterVSDevShell -HostArch $hostArch -Arch $arch
     if (-Not $result) {
         return $false
     }
@@ -112,7 +116,7 @@ function InstallMsvcFfmpeg {
         # As ffmpeg build system creates lib*.a file we have to rename them to *.lib files to be recognized by WIN32
         Write-Host "Rename libraries lib*.a -> *.lib"
         try {
-            $msvcDir = [System.Environment]::GetEnvironmentVariable("FFMPEG_DIR_MSVC", [System.EnvironmentVariableTarget]::Machine)
+            $msvcDir = [System.Environment]::GetEnvironmentVariable($ffmpegDirEnvVar, [System.EnvironmentVariableTarget]::Machine)
             Get-ChildItem "$msvcDir\lib\lib*.a" | ForEach-Object {
                 $NewName = $_.Name -replace 'lib(\w+).a$', '$1.lib'
                 $Destination = Join-Path -Path $_.Directory.FullName -ChildPath $NewName
@@ -201,17 +205,45 @@ function InstallAndroidArmv7 {
     return $result
 }
 
-$mingwRes = InstallMingwFfmpeg
-$llvmMingwRes = InstallLlvmMingwFfmpeg
-$androidArmV7Res = InstallAndroidArmv7
-$msvcRes = InstallMsvcFfmpeg -isArm64 $false
-$msvcArm64Res = InstallMsvcFfmpeg -isArm64 $true
+function InstallFfmpegsAMD64 {
+    $hostArch = "amd64"
+    $mingwRes = InstallMingwFfmpeg
+    $llvmMingwRes = InstallLlvmMingwFfmpeg
+    $androidArmV7Res = InstallAndroidArmv7
+    $msvcRes = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $false
+    $msvcArm64Res = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $true
 
-Write-Host "Ffmpeg installation results:"
-Write-Host "  mingw:" $(if ($mingwRes) { "OK" } else { "FAIL" })
-Write-Host "  msvc:" $(if ($msvcRes) { "OK" } else { "FAIL" })
-Write-Host "  msvc-arm64:" $(if ($msvcArm64Res) { "OK" } else { "FAIL" })
-Write-Host "  llvm-mingw:" $(if ($llvmMingwRes) { "OK" } else { "FAIL" })
-Write-Host "  android-armv7:" $(if ($androidArmV7Res) { "OK" } else { "FAIL" })
+    Write-Host "Ffmpeg installation results:"
+    Write-Host "  mingw:" $(if ($mingwRes) { "OK" } else { "FAIL" })
+    Write-Host "  llvm-mingw:" $(if ($llvmMingwRes) { "OK" } else { "FAIL" })
+    Write-Host "  android-armv7:" $(if ($androidArmV7Res) { "OK" } else { "FAIL" })
+    Write-Host "  msvc:" $(if ($msvcRes) { "OK" } else { "FAIL" })
+    Write-Host "  msvc-arm64:" $(if ($msvcArm64Res) { "OK" } else { "FAIL" })
 
-exit $(if ($mingwRes -and $msvcRes -and $msvcArm64Res -and $llvmMingwRes -and $androidArmV7Res) { 0 } else { 1 })
+    exit $(if ($mingwRes -and $msvcRes -and $msvcArm64Res -and $llvmMingwRes -and $androidArmV7Res) { 0 } else { 1 })
+}
+
+function InstallFfmpegsARM64 {
+    $hostArch = "arm64"
+    $msvcArm64Res = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $true
+
+    Write-Host "Ffmpeg installation results:"
+    Write-Host "  msvc-arm64:" $(if ($msvcArm64Res) { "OK" } else { "FAIL" })
+
+    exit $(if ($msvcArm64Res) { 0 } else { 1 })
+}
+
+$cpu_arch = Get-CpuArchitecture
+switch ($cpu_arch) {
+    arm64 {
+        InstallFfmpegsARM64
+        Break
+    }
+    x64 {
+        InstallFfmpegsAMD64
+        Break
+    }
+    default {
+        throw "Unknown architecture $cpu_arch"
+    }
+}

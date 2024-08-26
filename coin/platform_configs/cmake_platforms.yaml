@@ -160,7 +160,7 @@ Configurations:
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
-        'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
+        'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
