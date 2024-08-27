@@ -1,0 +1,13 @@
+Version: 2
+Include: []
+Configurations:
+-
+    # This configuration builds offline documentation for use in
+    # e.g. Qt Creator. It uses qdoc and qtattributionscanner from
+    # the same build. See also the 'documentation-warnings' config.
+    # FIXME: Add dependency on existing build for tools
+    Id: 'offline-documentation'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'DoNotRunTests', 'Documentation', 'UseConfigure']
+    Configure arguments: '-developer-build -nomake examples -nomake tests -linker gold'
