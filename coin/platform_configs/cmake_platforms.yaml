@@ -297,10 +297,9 @@ Configurations:
     # new qdoc warnings are introduced. The resulting documentation
     # is not used for anything (neither online or offline docs). See
     # qt5.yaml for a config that builds offline docs.
-    # FIXME: Add feature flag that avoids running the Qt auto tests
     Id: 'documentation-warnings'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestOnly', 'TestDocs']
+    Features: ['Sccache', 'TestOnly', 'TestDocs', 'DoNotRunTestsButCreateTestWorkItem']
     Platform dependency: 'ubuntu-22.04'
 
