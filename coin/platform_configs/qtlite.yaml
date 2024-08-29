@@ -1,8 +1,8 @@
 Version: 2
 Configurations:
 -
-    Id: 'debian-11.6-static-qtlite-arm64'
-    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Id: 'ubuntu-24.04-arm64-static-qtlite'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
     Compiler: 'GCC'
     Features: ['UseConfigure', 'DoNotRunTests', 'MinimalStaticTests']
     Configure arguments: >
