@@ -50,7 +50,7 @@ Configurations:
     Template: 'qtci-windows-10_22H2-x86_64-52'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
-    Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql -plugin-sql-sqlite -plugin-sql-odbc'
+    Configure arguments: '-release -headersclean -nomake examples -qt-zlib -static -no-icu -no-sql-mysql -no-sql-odbc -no-sql-psql'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
