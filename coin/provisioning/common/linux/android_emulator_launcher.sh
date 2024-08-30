@@ -7,8 +7,8 @@
 
 set -e
 
-EMULATOR_MAX_RETRIES=5
-ADB_MAX_TIMEOUT=300
+EMULATOR_MAX_RETRIES=3
+ADB_MAX_TIMEOUT=180
 EMULATOR_EXEC="$ANDROID_SDK_ROOT/emulator/emulator"
 ADB_EXEC="$ANDROID_SDK_ROOT/platform-tools/adb"
 LOGCAT_PATH="$COIN_CTEST_RESULTSDIR/emulator_logcat_%iter.txt"
@@ -85,7 +85,11 @@ do
 
     echo "Waiting a few minutes for the emulator to fully boot..."
     emulator_status=down
-    for _ in $(seq ${ADB_MAX_TIMEOUT})
+
+    time_start=${SECONDS}
+    duration=0
+
+    while [ $duration -lt ${ADB_MAX_TIMEOUT} ]
     do
         sleep 1
 
@@ -94,6 +98,7 @@ do
             emulator_status=up
             break
         fi
+        duration=$(( SECONDS - time_start ))
     done
 
     # If emulator status is still offline after timeout period,
