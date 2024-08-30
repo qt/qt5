@@ -194,18 +194,6 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
     ]
-# Test on Debian-11.6 offscreen
--
-    Id: 'debian-11.6-arm64-offscreen-tests'
-    Template: 'qtci-linux-Debian-11.6-aarch64-50'
-    Compiler: 'GCC'
-    Features: ['Sccache', 'InsignificantTests', 'TestOnly']
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'QT_QPA_OFFSCREEN_NO_GLX=1',
-        'QT_QPA_PLATFORM=offscreen'
-    ]
-    Platform dependency: 'debian-11.6-arm64'
 -
     Id: 'ios-universal'
     Template: 'qtci-macos-13-x86_64-103'
