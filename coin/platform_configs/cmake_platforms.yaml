@@ -156,7 +156,7 @@ Configurations:
     Id: 'windows-11_22h2-arm64-msvc2022'
     Template: 'qtci-windows-11_22H2-aarch64-54'
     Compiler: 'MSVC2022'
-    Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'InsignificantTests', 'GenerateSBOM', 'VerifySBOM']
+    Features: ['Packaging', 'DebugAndRelease', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib -no-sql-psql -no-opengl'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
