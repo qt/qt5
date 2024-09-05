@@ -16,26 +16,13 @@ param(
 $package = "C:\Windows\temp\python-$version.exe"
 
 # check bit version
-$cpu_arch = Get-CpuArchitecture
-Write-Host "Installing $cpu_arch Python"
-switch ($cpu_arch) {
-    arm64 {
-        $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-arm64.exe"
-        $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version-arm64.exe"
-        Break
-    }
-    x64 {
-        if ($archVer -eq "64") {
-            $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
-            $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version-amd64.exe"
-        } else {
-            $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
-            $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version.exe"
-        }
-    }
-    default {
-        throw "Unknown architecture $cpu_arch"
-    }
+if ( $archVer -eq 64 ) {
+    Write-Host "Installing 64 bit Python"
+    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version-amd64.exe"
+    $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version-amd64.exe"
+} else {
+    $externalUrl = "https://www.python.org/ftp/python/$version/python-$version.exe"
+    $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/python-$version.exe"
 }
 
 Write-Host "Fetching from URL..."

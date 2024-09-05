@@ -25,6 +25,7 @@ Remove $download_location
 $config = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
 Write-Host "FFmpeg configuration $config"
 
+
 function InstallFfmpeg {
     Param (
         [string]$buildSystem,
