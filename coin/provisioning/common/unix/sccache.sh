@@ -19,6 +19,7 @@ function installSccache {
 
     sudo mkdir -p /usr/local/sccache
     sudo tar -C /usr/local/sccache -x -z --totals --strip-components=1 --file="$targetFile"
+    sudo chmod +x /usr/local/sccache/sccache
 
     # add sccache __before__ the real compiler
     SetEnvVar "PATH" "/usr/local/sccache:\$PATH"
@@ -32,4 +33,7 @@ function installSccache {
     chmod 755 "$HOME/sccache_wrapper/sccache"
     SetEnvVar "PATH" "$HOME/sccache_wrapper:\$PATH"
 
+    # Prevents some random network I/O errors from failing compilation
+    # Does not seem to affect much though
+    SetEnvVar "SCCACHE_IGNORE_SERVER_IO_ERROR" "1"
 }
