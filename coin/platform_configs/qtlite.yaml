@@ -4,7 +4,7 @@ Configurations:
     Id: 'ubuntu-24.04-arm64-static-qtlite'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
     Compiler: 'GCC'
-    Features: ['UseConfigure', 'DoNotRunTests', 'MinimalStaticTests']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'MinimalStaticTests']
     Configure arguments: >
         -nomake examples
         -release
