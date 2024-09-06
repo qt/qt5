@@ -12,20 +12,11 @@ os="$1"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
-mimerSqlVersion="11.0.7G"
-if [ "$os" = "macos" ]; then
-    arch=$(uname -m)
-    if [ "$arch" = "x86_64" ]; then
-        mimerSqlPackageName="mimersql-110_x86_64.tgz"
-        SHA1="d748f87b72e7188c527f131db2590f552f18f544"
-    else
-        mimerSqlPackageName="mimersql-110_arm64.tgz"
-        SHA1="f209c97074d096e50e637441073e8aa355c5116e"
-    fi
-else
-    mimerSqlPackageName="mimersql-110_universal.tgz"
-    SHA1="eab32be623f1cbde7c29cea0f0ca4332b8ca502b"
-fi
+mimerSqlVersion="11.0.8E"
+
+mimerSqlPackageName="mimersql-1108E_universal.tgz"
+SHA1="8077db02be2b54147eb4a48ce4a7a2ff1159fb4d"
+
 
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/mac/$mimerSqlPackageName"
 AltUrl="https://install.mimer.com/qt/macOS/$mimerSqlPackageName"
