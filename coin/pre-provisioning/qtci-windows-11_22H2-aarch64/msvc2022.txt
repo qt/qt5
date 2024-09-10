@@ -1,6 +1,7 @@
 ### Visual Studio Professional 2022 Official release ###
 Visual Studio Professional 2022 version 17.3.5 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__msvc2022_1339502178.1525841376.exe
 Visual Studio Professional 2022 was updated to 17.8.2 vith Visual Studio Installer
+Visual Studio Professional 2022 was updated to 17.11.2 with Visual Studio Installer
 
 Installed MSVC-2022 Components:
 
