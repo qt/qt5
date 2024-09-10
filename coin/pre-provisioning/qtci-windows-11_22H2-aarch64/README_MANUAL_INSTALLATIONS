@@ -54,10 +54,16 @@
    - After reboot disable windows updates:
       - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows updates' - stop & disable
 * Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+* Disable Windows Restore Points: Search 'Create a restore point' -> 'System Protection' tab -> Configure C: drive -> Disable & Delete restore points.
+* Disable widgets: Right click the task bar -> 'Taskbar settings' -> toggle off anything related to widgets.
 * (Restart Windows)
 * Google Chrome installed for RTA
 * Virus & threat protection settings:
    * Check that there's no active antivirus providers
+* Run .NET runtime optimization service: open terminal and run:
+   Start-Process -NoNewWindow -FilePath "C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319\ngen.exe" -ArgumentList ExecuteQueuedItems -Wait
+   - It may be needed to rerun after installing Visual Studio. Just run it until it prints:
+      "All compilation targets are up to date."
 * Activate Windows
 
 # Next
