@@ -1,7 +1,8 @@
 Version: 2
 Include: [
     cmake_platforms.yaml,
-    address_sanitizer_platforms.yaml
+    address_sanitizer_platforms.yaml,
+    offline_documentation.yaml
     ]
 Configurations:
 -
