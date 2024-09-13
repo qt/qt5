@@ -229,6 +229,8 @@ installPackages+=(uml-utilities)
 installPackages+=(jq)
 # For building
 installPackages+=(cmake)
+# extra linkers
+installPackages+=(lld)
 
 echo "Running update for apt"
 waitLoop
