@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2023 The Qt Company Ltd.
+# Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script installs Xcode
@@ -19,4 +19,4 @@ set -ex
 # shellcheck source=../common/macos/install_xcode.sh
 source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
-InstallXCode /net/ci-files01-hki.ci.qt.io/hdd/www/input/mac/Xcode_16_beta_3.xip 16_beta_3
+InstallXCode /net/ci-files01-hki.ci.qt.io/hdd/www/input/mac/Xcode_16.xip 16
