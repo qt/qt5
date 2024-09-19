@@ -200,16 +200,6 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
     ]
-# Build on Debian-11.6 and split test on Wayland and offscreen later
--
-    Id: 'debian-11.6-arm64'
-    Template: 'qtci-linux-Debian-11.6-aarch64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-doubleconversion -qt-harfbuzz -no-libudev -bundled-xcb-xinput -qpa offscreen\;xcb'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-    ]
 -
     Id: 'ios-universal'
     Template: 'qtci-macos-13-x86_64-103'
