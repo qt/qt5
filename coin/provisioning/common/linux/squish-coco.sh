@@ -25,5 +25,4 @@ echo 1 | sudo "/tmp/$package" "--nox11"
 
 /opt/SquishCoco/bin/cocolic --license-server=Qt-SRV-33.intra.qt.io:49344
 
-echo "export PATH=/opt/SquishCoco/bin/:$PATH" >> ~/.bashrc
-
+SetEnvVar "PATH" "/opt/SquishCoco/bin/:\$PATH"
