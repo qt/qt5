@@ -162,6 +162,9 @@ echo "Unzipping the Android 9 to $minVersionDestination"
 sudo unzip -o -q "$minVersionFilePath" -d "$minVersionDestination"
 rm "$minVersionFilePath"
 
+echo "y" | ./sdkmanager --install "system-images;android-35;google_apis;x86_64" \
+    | eval "$sdkmanager_no_progress_bar_cmd"
+
 echo "Extract stored Android 14 Beta $android14SystemZipName"
 DownloadURL "$android14SystemPath" "$android14SystemPath" "$android14SystemZipSha" \
     "/tmp/$android14SystemZipName"
@@ -175,6 +178,9 @@ echo "no" | ./avdmanager create avd -n emulator_x86_api_28 -c 2048M -f \
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_34 -c 2048M -f \
     -k "system-images;android-34;google_apis;x86_64"
+
+echo "no" | ./avdmanager create avd -n emulator_x86_64_api_35 -c 2048M -f \
+    -k "system-images;android-35;google_apis;x86_64"
 
 echo "Install maximum supported SDK level image for Android Automotive $sdkApiLevelAutomotiveMax"
 DownloadURL "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxSha" \

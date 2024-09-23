@@ -63,3 +63,20 @@ Configurations:
         'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}',
         'ANDROID_EMULATOR=emulator_x86_64_api_34'
     ]
+-
+    Id: 'android-15-x86_64-on-linux'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Target os: 'Android_ANY'
+    Target arch: 'x86_64'
+    Compiler: 'GCC'
+    Target compiler: 'Clang'
+    Platform dependency: 'rhel-8.10'
+    Features: ['Packaging', 'Sccache', 'WarningsAreErrors', 'AndroidTestRun', 'VMSize8', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_DEFAULT}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86_64',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_DEFAULT}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_X86_64}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_DEFAULT}}',
+        'ANDROID_EMULATOR=emulator_x86_64_api_35'
+    ]
+
