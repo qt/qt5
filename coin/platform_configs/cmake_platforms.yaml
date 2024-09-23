@@ -132,6 +132,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_x64}}',
     ]
 -
     Id: 'windows-11_24H2-msvc2022'
