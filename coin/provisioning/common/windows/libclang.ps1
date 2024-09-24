@@ -1,5 +1,5 @@
 param(
-    [Int32]$archVer=32,
+    [string]$archVer="32",
     [string]$toolchain="vs2019",
     [bool]$setDefault=$true
 )
@@ -36,8 +36,21 @@ function install() {
 
 $toolchainSuffix = ""
 
+if ( $toolchain -eq "vs2022" ) {
+    if ( $archVer -eq "64" ) {
+        $sha1 = "7e51f0eabdfe8eea17aaf1dce7b2ffe1ea064f66"
+    }
+    elseif ( $archVer -eq "arm64" ) {
+        $sha1 = "986d4d0f253de505ef499345238c101dac1ca3a6"
+    }
+    else {
+        $sha1 = ""
+    }
+    $toolchainSuffix = "msvc"
+}
+
 if ( $toolchain -eq "vs2019" ) {
-    if ( $archVer -eq 64 ) {
+    if ( $archVer -eq "64" ) {
         $sha1 = "8e0862386caef7e4537599ef980eeb6ebee8767f"
     }
     else {
@@ -47,7 +60,7 @@ if ( $toolchain -eq "vs2019" ) {
 }
 
 if ( $toolchain -eq "mingw" ) {
-    if ( $archVer -eq 64 ) {
+    if ( $archVer -eq "64" ) {
         $sha1 = "a23cbb0822cf2eb8d1cecf26e8614ef37a7611e3"
     }
     else {
@@ -58,7 +71,7 @@ if ( $toolchain -eq "mingw" ) {
 
 
 if ( $toolchain -eq "llvm-mingw" ) {
-    if ( $archVer -eq 64 ) {
+    if ( $archVer -eq "64" ) {
         $sha1 = "9c34f99eb575b42c2befe27829c08e6d3f01ae58"
     }
     else {
