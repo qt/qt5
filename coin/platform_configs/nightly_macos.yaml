@@ -3,7 +3,7 @@ Module only: True
 Configurations:
 -
     Id: 'macos-15-arm64-developer-build'
-    Template: 'qtci-macos-15-arm-103'
+    Template: 'qtci-macos-15-arm-104'
     Compiler: 'Clang'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -nomake examples -nomake tests'
