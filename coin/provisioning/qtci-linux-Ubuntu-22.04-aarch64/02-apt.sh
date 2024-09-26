@@ -50,6 +50,8 @@ installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(python3-venv)
 installPackages+=(virtualenv)
+# For mounting ci-files01 for Squish
+installPackages+=(nfs-common)
 
 echo "Running update for apt"
 waitLoop
