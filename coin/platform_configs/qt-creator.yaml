@@ -22,6 +22,12 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'Sccache', 'DebugAndRelease']
+    Configure arguments: ''
+    Environment variables: []
+-
     Template: 'qtci-macos-14-arm-106'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
