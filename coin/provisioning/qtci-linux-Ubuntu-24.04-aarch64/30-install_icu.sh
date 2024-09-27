@@ -10,8 +10,8 @@ set -ex
 # This script will install ICU
 
 icuVersion="73.2"
-icuLocationLib="/opt/icu/lib64"
-icuLocationInclude="/opt/icu/include"
+icuLocationLib="/usr/local/lib"
+icuLocationInclude="/usr/local/include"
 sha1="82f3ed54fd7ea8ff469d9000164e4dc23378fc8c"
 baseBinaryPackageURL="http://ci-files01-hki.ci.qt.io/input/icu/$icuVersion/icu-linux-g++-Ubuntu24.04-aarch64.7z"
 baseBinaryPackageExternalURL="http://master.qt.io/development_releases/prebuilt/icu/prebuilt/$icuVersion/icu-linux-g++-Ubuntu24.04-aarch64.7z"
@@ -38,7 +38,7 @@ DownloadURL "$develPackageURL" "$develPackageExternalURL" "$sha1Dev" "$targetFil
 7z x -y -o"$tempDir" "$targetFile"
 
 sudo cp -a "$tempDir"/lib/* "$icuLocationLib"
-sudo cp -a "$tempDir"/* /opt/icu/
+sudo cp -a "$tempDir"/include/* "$icuLocationInclude"
 
 sudo rm "$targetFile"
 sudo rm -fr "$tempDir"
