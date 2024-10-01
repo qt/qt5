@@ -15,7 +15,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 version=5.0.1
 fullversion=Firebird-${version}.1469-0-linux-x64
 instpath=/opt/Firebird
-localRepo=http://ci-files01-hki.ci.qt.io/input/docker
+localRepo=http://ci-files01-hki.ci.qt.io/input/firebird
 upstreamRepo=https://github.com/FirebirdSQL/firebird/releases/download/v${version}
 packageFile=${fullversion}.tar.gz
 sha=369e9187913c6e1bc8a0f79f9e1826c0e35dd72f

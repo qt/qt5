@@ -12,7 +12,7 @@ $packagex64 = "C:\Windows\temp\Firebird-$fullversion-windows-x64.zip"
 # Install x64 bit versions
 $installFolder = "C:\Utils\firebird"
 $externalUrl = "https://github.com/FirebirdSQL/firebird/releases/download/v$version/Firebird-$fullversion-windows-x64.zip"
-$internalUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\Firebird-$fullversion-windows-x64.zip"
+$internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/firebird/Firebird-$fullversion-windows-x64.zip"
 $sha1 = "7b56ea692215b128415ef9599e18c40bef12152f"
 
 Write-Host "Fetching from URL ..."
