@@ -23,6 +23,6 @@ DownloadURL  "$url" "$url" "$sha1" "/tmp/$package"
 sudo chmod 755 "/tmp/$package"
 echo 1 | sudo "/tmp/$package" "--nox11"
 
-/opt/SquishCoco/bin/cocolic --license-server=Qt-SRV-33.intra.qt.io:49344
+/opt/SquishCoco/bin/cocolic --license-server=Qt-SRV-19.intra.qt.io:49344
 
 SetEnvVar "PATH" "/opt/SquishCoco/bin/:\$PATH"
