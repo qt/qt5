@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'android-9-multi-abi'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Target os: 'Android_ANY'
     Target arch: 'multi'
     Compiler: 'GCC'

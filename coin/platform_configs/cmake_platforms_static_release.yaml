@@ -26,7 +26,7 @@ Configurations:
     ]
 -
     Id: 'rhel-8.10-minimal-static-test'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'MinimalStaticTests']
     Configure arguments: '-static -nomake examples -release -qt-libjpeg -no-icu -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'

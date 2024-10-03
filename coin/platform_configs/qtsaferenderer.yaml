@@ -37,7 +37,7 @@ Configurations:
     ]
 -
     Id: 'Linux-RHEL_8_10_Static'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'

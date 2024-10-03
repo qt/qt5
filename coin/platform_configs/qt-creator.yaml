@@ -16,7 +16,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease']
     Configure arguments: ''

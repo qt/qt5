@@ -33,7 +33,7 @@ Configurations:
     ]
 -
     Id: 'android-9-x86-on-linux'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Target os: 'Android_ANY'
     Target arch: 'x86'
     Compiler: 'GCC'
@@ -49,7 +49,7 @@ Configurations:
     ]
 -
     Id: 'android-14-x86_64-on-linux'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
     Target os: 'Android_ANY'
     Target arch: 'x86_64'
     Compiler: 'GCC'
