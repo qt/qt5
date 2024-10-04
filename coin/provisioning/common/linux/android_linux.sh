@@ -147,8 +147,20 @@ echo "Unzipping the Android Emulator to '$sdkTargetFolder'"
 sudo unzip -o -q "$emulatorTargetFile" -d "$sdkTargetFolder"
 rm "$emulatorTargetFile"
 
-echo "y" | ./sdkmanager --install "system-images;android-28;google_apis;x86" \
-    | eval "$sdkmanager_no_progress_bar_cmd"
+echo "Download and unzip Android 9 System Image"
+minVersionFileName="x86-28_r08.zip"
+minVersionDestination="$sdkTargetFolder/system-images/android-28/google_apis/"
+minVersionFilePath="$minVersionDestination/$minVersionFileName"
+minVersionCiUrl="$basePath/system-images/google_apis/$minVersionFileName"
+minVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$minVersionFileName"
+minVersionSha1="41e3b854d7987a3d8b7500631dae1f1d32d3db4e"
+
+mkdir -p "$minVersionDestination"
+DownloadURL "$minVersionCiUrl" "$minVersionUrl" "$minVersionSha1" "$minVersionFilePath"
+
+echo "Unzipping the Android 9 to $minVersionDestination"
+sudo unzip -o -q "$minVersionFilePath" -d "$minVersionDestination"
+rm "$minVersionFilePath"
 
 echo "y" | ./sdkmanager --install "system-images;android-35;google_apis;x86_64" \
     | eval "$sdkmanager_no_progress_bar_cmd"
