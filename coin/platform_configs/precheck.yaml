@@ -5,11 +5,12 @@ Include: [
     "ubuntu-22.04",
     "ubuntu-22.04-documentation",
     "ubuntu-22.04-documentation-x11-tests",
-    "windows-11_23H2-msvc2022",
+    "windows-11_23H2-msvc2022-developer-build",
     "ios-universal"
   ],
   macos.yaml: [
-    "macos-14-x86_64-tests",
+    "macos-14-arm64-developer-build",
+    "macos-14-arm64-developer-build-tests",
   ],
   cmake_platforms_target_android.yaml: [
     "android-arm64-on-macos"
