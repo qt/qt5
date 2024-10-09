@@ -39,7 +39,7 @@ Configurations:
 
     -
         Id: 'macos-12-x86_64-tests'
-        Template: 'qtci-macos-12-x86_64-106'
+        Template: 'qtci-macos-12-x86_64-107'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-x86_64'
@@ -93,7 +93,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-12-arm-on-x86_64-tests'
-        Template: 'qtci-macos-12-x86_64-106'
+        Template: 'qtci-macos-12-x86_64-107'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly']
         Platform dependency: 'macos-universal-on-arm64'

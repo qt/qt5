@@ -27,7 +27,7 @@ Include: [
 Configurations:
 -
     Id: 'macos-latest-xcode-universal-static-build'
-    Template: 'qtci-macos-12-x86_64-106'
+    Template: 'qtci-macos-12-x86_64-107'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
