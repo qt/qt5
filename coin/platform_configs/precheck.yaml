@@ -9,6 +9,7 @@ Include: [
     "ios-universal"
   ],
   macos.yaml: [
+    "macos-14-arm64-developer-build",
     "macos-14-arm64-developer-build-tests",
   ],
   cmake_platforms_target_android.yaml: [
