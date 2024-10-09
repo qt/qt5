@@ -39,16 +39,17 @@ sha1="787555c2fb2571afac7c6706b8bc2ddc65effdf8"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
+VXWORKS_BUILD_VER="11-10-2024"
 # Installs to /opt/itl_generic_skylake_VSB
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="0ffcbde47d5d95c90db68addd0f534f2aee41df1"
+sha1="52a3d774d247aa4abb1942fa6c3ac7eaa625babe"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 # Installs to /opt/itl_generic_skylake_VIP_QEMU
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vip_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="29afd81568bb647c778d622c997f4bd9ccb7e595"
+sha1="3dc7c2be5f5194c3cc4b9d7d0c1bc8c6c1a37c93"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
