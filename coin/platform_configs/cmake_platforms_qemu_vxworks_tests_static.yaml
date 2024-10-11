@@ -8,7 +8,7 @@ Configurations:
     Compiler: 'Clang'
     Target compiler: 'Clang'
     Platform dependency: 'vxworks-imx6-buildtest'
-    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly', 'InsignificantTests']
+    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly']
     Environment variables: [
         'WIND_CC_SYSROOT=/opt/fsl_imx6_2_0_6_2_VSB',
         'VXWORKS_TEST_LIBS_PATH=/opt/fsl_imx6_2_0_6_2_VSB/usr/lib/common;/opt/fsl_imx6_2_0_6_2_VSB/usr/root/llvm/bin;/opt/fsl_imx6_2_0_6_2_VSB/usr/3pp/develop/usr/lib;/home/qt/work/install/target/lib',

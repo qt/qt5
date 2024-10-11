@@ -13,3 +13,8 @@ Include: [
     qtbase-new-compiler-testing.yaml
 ]
 Configurations: []
+Overrides:
+# Make VxWorks imx6 tests insignificant.
+-
+    Id: 'vxworks-imx6-tests'
+    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly', 'InsignificantTests']

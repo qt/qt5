@@ -7,3 +7,8 @@ Include: [
     cmake_platforms_qemu_vxworks_tests_static.yaml
 ]
 Configurations: []
+Overrides:
+# Make VxWorks imx6 tests insignificant.
+-
+    Id: 'vxworks-imx6-tests'
+    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly', 'InsignificantTests']
