@@ -164,6 +164,8 @@ installPackages+=(zip)
 installPackages+=(perl-IPC-Cmd)
 # password management support for Qt Creator
 installPackages+=(libsecret-devel)
+# For Firebird in RTA
+installPackages+=(libtommath-devel)
 
 sudo yum -y install "${installPackages[@]}"
 

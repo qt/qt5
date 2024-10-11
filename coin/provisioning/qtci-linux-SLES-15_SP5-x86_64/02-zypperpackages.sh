@@ -106,6 +106,9 @@ sudo zypper -nq install openssl-3
 # cifs-utils, for mounting smb drive
 sudo zypper -nq install cifs-utils
 
+# For Firebird in RTA
+sudo zypper -nq install libtommath-devel
+
 gccVersion="$(gcc --version |grep gcc |cut -b 17-23)"
 echo "GCC = $gccVersion" >> versions.txt
 

@@ -17,6 +17,8 @@ sudo SUSEConnect -p sle-module-development-tools/15.5/x86_64
 sudo SUSEConnect -p sle-module-python3/15.5/x86_64
 # sle-module-web-scripting is required for Nodejs
 sudo SUSEConnect -p sle-module-web-scripting/15.5/x86_64
+# For Firebird in RTA - libtommath-devel
+sudo SUSEConnect -p PackageHub/15.5/x86_64
 
 sudo zypper lr -u
 

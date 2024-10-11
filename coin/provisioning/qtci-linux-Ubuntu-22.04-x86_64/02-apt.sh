@@ -240,6 +240,9 @@ installPackages+=(iptables-persistent)
 
 installPackages+=(patchelf)
 
+# For Firebird in RTA
+installPackages+=(libtommath-dev)
+
 echo "Running update for apt"
 waitLoop
 sudo apt-get update
