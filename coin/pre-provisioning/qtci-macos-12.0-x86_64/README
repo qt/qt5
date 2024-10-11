@@ -18,6 +18,7 @@
 * Download and run coin setup binaries from http://coin/coin/setup
    - Check /Users/qt folder for bootstrap agent
 * Create /etc/sudoers.d/qt with a line of qt ALL=(ALL) NOPASSWD: ALL
+* Enable VNC remote access
 * Poweroff VM
 * Enlarge disk space
    - Parallels Control center :: VM settings :: Hardware :: Hard Disk :: 300GB

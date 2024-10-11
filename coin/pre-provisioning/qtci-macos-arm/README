@@ -22,6 +22,7 @@
     - Check /Users/qt folder for bootstrap agent
   - Add COIN bootstrap agent, terminal and ssh keygen wrapper to full disk access
   - Add access for COIN bootstrap agent to bluetooth
+  - Enable VNC renmote access
   - Shutdown the virtual machine
 
 * Enable backtraces (https://bugreports.qt.io/browse/QTQAINFRA-5933)
