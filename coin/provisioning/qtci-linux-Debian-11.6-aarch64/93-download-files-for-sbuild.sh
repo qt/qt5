@@ -6,7 +6,7 @@
 mkdir -p /home/qt/debian_packages
 cd /home/qt/debian_packages || exit
 # Backported cmake 3.24
-wget https://ci-files01-hki.intra.qt.io/input/debian/cmake/arm64-jammy/cmake-3.24-deb.tar.gz
+wget https://ci-files01-hki.ci.qt.io/input/debian/cmake/arm64-jammy/cmake-3.24-deb.tar.gz
 tar xzf cmake-3.24-deb.tar.gz
 # get rest of ready made Ubuntu arm debian packages
 # so that sbuild can find those
