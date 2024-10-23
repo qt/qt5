@@ -73,7 +73,7 @@ sudo zypper -nq install openssl-3
 sudo zypper -nq install valgrind-devel
 
 # Java
-sudo zypper -nq install java-17-openjdk
+sudo zypper -nq install java-21-openjdk-devel-21.0.9.0-150600.3.18.2
 
 gccVersion="$(gcc --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "GCC = $gccVersion" >> versions.txt

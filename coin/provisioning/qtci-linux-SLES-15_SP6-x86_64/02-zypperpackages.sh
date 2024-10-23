@@ -86,7 +86,7 @@ sudo zypper -nq install unixODBC-devel unixODBC
 sudo zypper -nq install sqlite3 sqlite3-devel
 
 # Java - needed by RTA jenkins
-sudo zypper -nq install java java-17-openjdk-devel
+sudo zypper -nq install java java-21-openjdk-devel-21.0.9.0-150600.3.18.2
 
 # open-vm-tools requires update. Version in tier1 is broken and causes segfault on boot.
 sudo zypper -nq update open-vm-tools

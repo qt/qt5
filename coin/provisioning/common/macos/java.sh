@@ -9,12 +9,12 @@ set -ex
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
 echo "Installing Java Development Kit"
-version=17.0.12
+version=21.0.9
 targetFile=jdk-${version}_macos-x64_bin.dmg
-expectedHash="6fba2fbe5d181bd2ef7fd79e0335278c13f611cb"
+expectedHash="3df8761bfba8d6a4633ecc92f1eff0a58d79c304"
 
 url=ci-files01-hki.ci.qt.io:/hdd/www/input/mac
-# url_alt=https://www.oracle.com/java/technologies/downloads/#jdk17-mac
+# url_alt=https://download.oracle.com/java/21/archive/jdk-21.0.8_macos-x64_bin.dmg
 
 echo "Mounting $targetFile"
 sudo mkdir -p /Volumes/files
