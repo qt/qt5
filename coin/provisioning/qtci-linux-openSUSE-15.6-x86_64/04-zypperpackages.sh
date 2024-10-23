@@ -82,7 +82,7 @@ sudo zypper -nq install cifs-utils
 sudo zypper -nq install libtommath-devel
 
 # Java
-sudo zypper -nq install java-17-openjdk java-17-openjdk-devel
+sudo zypper -nq install java-21-openjdk-devel-21.0.9.0-150600.3.18.2
 
 # For tst_license.pl with all the machines generating SBOM
 sudo zypper -nq install perl-JSON

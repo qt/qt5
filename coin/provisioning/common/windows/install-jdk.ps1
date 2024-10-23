@@ -4,31 +4,31 @@
 . "$PSScriptRoot\helpers.ps1"
 
 # This script will install Java SE
-# https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-$version_major = "17"
+# https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
+$version_major = "21"
 
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
     arm64 {
-        $version = "17.0.11"
+        $version = "21.0.9"
         $arch = "aarch64"
-        $sha1 = "1c5984a185778ad91498b746e677d84e153d5918"
-        # Using Microsoft build version of OpenJDK from: https://learn.microsoft.com/en-us/java/openjdk/download
-        # as there are no available Windows ARM64 versions of JDK from Oracle
-        $url_official = "https://aka.ms/download-jdk/microsoft-jdk-${version}-windows-${arch}.msi"
-        $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\microsoft-jdk-${version}-windows-${arch}.msi"
-        $javaPackage = "C:\Windows\Temp\jdk-$version.msi"
+        $sha1 = "293cca7b76e3280573061f53dbe41ced527e3b4d"
+        # Using Microsoft build https://aka.ms/download-jdk/ - no .msi available
+        $url_official = "https://aka.ms/download-jdk/microsoft-jdk-${version}-windows-${arch}.exe"
+        $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\microsoft-jdk-${version}-windows-${arch}.exe"
+        $javaPackage = "C:\Windows\Temp\jdk-$version.exe"
         # Microsoft installer does not allow to override the installation path using the regular
         # TARGETDIR or INSTALLDIR properties, so just hardcode the path that it uses
-        $installdir = "C:\Program Files\Microsoft\jdk-17.0.11.9-hotspot"
+        $installdir = "C:\Program Files\Microsoft\jdk-$version-hotspot"
         Break
     }
     x64 {
-        $version = "17.0.10"
+        $version = "21.0.9"
         $arch = "x64"
-        $sha1 = "d573091930076c3ffa9f74273cb41cb5c75c5400"
-        $url_official = "https://download.oracle.com/java/17/archive/jdk-${version}_windows-${arch}_bin.exe"
-        $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\jdk-$version-windows-$arch.exe"
+        $sha1 = "b4b10fd43993650053c41f377af37b37a2267b74"
+        # Downloading from https://aka.ms/download-jdk/microsoft-jdk-21.0.9-windows-x64.exe
+        $url_official = "https://aka.ms/download-jdk/microsoft-jdk-${version}_windows-${arch}.exe"
+        $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\microsoft-jdk-$version-windows-$arch.exe"
         $javaPackage = "C:\Windows\Temp\jdk-$version.exe"
         $installdir = "C:\Program Files\Java\jdk-$version_major"
         Break
@@ -44,7 +44,7 @@ Download $url_official $url_cache $javaPackage
 Verify-Checksum $javaPackage $sha1
 
 if ($javaPackage.EndsWith(".exe")) {
-    Run-Executable "$javaPackage" "/s SPONSORS=0"
+    Run-Executable "$javaPackage" "/SILENT /SUPPRESSMSGBOXES /ALLUSERS /DIR=`"$installdir`""
 } else {
     Run-Executable "msiexec" "/quiet /i $javaPackage"
 }

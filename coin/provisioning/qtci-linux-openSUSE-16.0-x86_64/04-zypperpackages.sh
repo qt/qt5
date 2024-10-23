@@ -12,7 +12,7 @@ sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-15 1 
 # Make sure needed ca-certificates are available
 sudo zypper -nq install ca-certificates
 
-sudo zypper -nq install bison flex gperf \
+sudo zypper -nq install bison flex gperf libgio-2_0-0=2.84.4\
         zlib-devel \
         systemd-devel \
         glib2-devel \
@@ -82,7 +82,7 @@ sudo zypper -nq install cifs-utils
 sudo zypper -nq install libtommath-devel
 
 # Java
-sudo zypper -nq install java-17-openjdk
+sudo zypper -nq install java-21-openjdk-devel-21.0.9.0-160000.1.1
 
 # For tst_license.pl with all the machines generating SBOM
 sudo zypper -nq install perl-JSON

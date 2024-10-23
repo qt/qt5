@@ -83,7 +83,7 @@ installPackages+=(python3-html5lib)
 installPackages+=(mesa-libgbm-devel-21.3.4-2.el9)
 installPackages+=(libstdc++-static)
 # For Android builds
-installPackages+=(java-17-openjdk-devel-17.0.9.0.9)
+installPackages+=(java-21-openjdk-devel-21.0.9.0.10-1.el9)
 # For receiving shasum
 installPackages+=(perl-Digest-SHA)
 # INTEGRITY requirements
