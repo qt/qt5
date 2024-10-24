@@ -7,7 +7,6 @@
 # Mimer SQL is needed for Qt to be able to support Mimer SQL
 
 set -ex
-os="$1"
 
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
