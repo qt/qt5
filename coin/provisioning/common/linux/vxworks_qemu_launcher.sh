@@ -35,6 +35,7 @@ elif [ "$TYPE" = "intel" ]; then
         -smp 8 \
         -m 16G \
         -cpu "Skylake-Client" \
+        -enable-kvm \
         -monitor none \
         -nographic \
         -serial null \
