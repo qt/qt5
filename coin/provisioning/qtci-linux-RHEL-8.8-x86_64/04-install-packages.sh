@@ -148,8 +148,6 @@ installPackages+=(open-vm-tools)
 # cifs-utils, for mounting smb drive
 installPackages+=(keyutils)
 installPackages+=(cifs-utils)
-# used for reading vcpkg packages version, from vcpkg.json
-installPackages+=(jq)
 # zip, needed for vcpkg caching
 installPackages+=(zip)
 # OpenSSL requirement, built by vcpkg

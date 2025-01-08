@@ -72,9 +72,6 @@ sudo zypper -nq install zip
 # OpenSSL 3
 sudo zypper -nq install openssl-3
 
-# used for reading vcpkg packages version, from vcpkg.json
-sudo zypper -nq install jq
-
 # Valgrind (Needed for testlib selftests)
 sudo zypper -nq install valgrind-devel
 

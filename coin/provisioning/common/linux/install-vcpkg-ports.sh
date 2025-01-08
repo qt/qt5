@@ -7,15 +7,19 @@ echo "Installing vcpkg ports"
 pushd "${BASH_SOURCE%/*}/vcpkg" || exit
 cp "${BASH_SOURCE%/*}/../shared/vcpkg-configuration.json" .
 
-"$VCPKG_ROOT/vcpkg" install --triplet x64-linux-qt --x-install-root x64-linux-qt-tmp --debug
+install_root=x64-linux-qt-tmp
+
+"$VCPKG_ROOT/vcpkg" install --triplet x64-linux-qt --x-install-root $install_root --debug
+
+cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
+    "-DVCPKG_INSTALL_ROOT=$PWD/$install_root"\
+    "-DOUTPUT=$HOME/versions.txt"\
+    -P\
+    "${BASH_SOURCE%/*}/../shared/vcpkg_parse_packages.cmake"
 
 mkdir -p "$VCPKG_ROOT/installed"
-cp -R x64-linux-qt-tmp/* "$VCPKG_ROOT/installed/"
+cp -R $install_root/* "$VCPKG_ROOT/installed/"
 
-versions=$(jq -r '.overrides[] | "vcpkg \(.name) = \(.version)"' vcpkg.json)
-versions="${versions//vcpkg/\\nvcpkg}"
-echo "$versions" >> ~/versions.txt
-
-rm -rf x64-linux-qt-tmp
+rm -rf $install_root
 
 popd || exit

@@ -14,9 +14,17 @@ mkdir -p "$VCPKG_ROOT/installed"
 cp -R x86-android-qt-tmp/* "$VCPKG_ROOT/installed/"
 cp -R x86_64-android-qt-tmp/* "$VCPKG_ROOT/installed/"
 
-versions=$(jq -r '.overrides[] | "vcpkg \(.name) for android = \(.version)"' vcpkg.json)
-versions="${versions//vcpkg/\\nvcpkg}"
-echo "$versions" >> ~/versions.txt
+cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
+    "-DVCPKG_INSTALL_ROOT=$PWD/x86-android-qt-tmp"\
+    "-DOUTPUT=~/versions.txt"\
+    -P\
+    "${BASH_SOURCE%/*}/../shared/vcpkg_parse_packages.cmake"
+
+cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
+    "-DVCPKG_INSTALL_ROOT=$PWD/x86_64-android-qt-tmp"\
+    "-DOUTPUT=$HOME/versions.txt"\
+    -P\
+    "${BASH_SOURCE%/*}/../shared/vcpkg_parse_packages.cmake"
 
 rm -rf x86-android-qt-tmp
 rm -rf x86_64-android-qt-tmp
