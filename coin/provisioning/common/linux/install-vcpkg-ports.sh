@@ -2,6 +2,9 @@
 # Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
+# shellcheck source=../unix/SetEnvVar.sh
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+
 echo "Installing vcpkg ports"
 
 pushd "${BASH_SOURCE%/*}/vcpkg" || exit
@@ -19,6 +22,8 @@ cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
 
 mkdir -p "$VCPKG_ROOT/installed"
 cp -R $install_root/* "$VCPKG_ROOT/installed/"
+
+SetEnvVar "VCPKG_INSTALLED_DIR" "$VCPKG_ROOT/installed/"
 
 rm -rf $install_root
 

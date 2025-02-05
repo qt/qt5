@@ -20,6 +20,8 @@ Copy-Item -Path "$vcpkginstallroot\*" -Destination "$vcpkgRoot\installed" -Recur
 
 Run-Executable "cmake" "-DVCPKG_EXECUTABLE=$vcpkgExe -DVCPKG_INSTALL_ROOT=$vcpkgInstallRoot -DOUTPUT=$env:USERPROFILE\versions.txt -P $PSScriptRoot\..\shared\vcpkg_parse_packages.cmake"
 
+Set-EnvironmentVariable "VCPKG_INSTALLED_DIR" "$vcpkgRoot\installed"
+
 Remove-Item -Path "$vcpkginstallroot" -Recurse -Force
 
 Set-Location "$PSScriptRoot"

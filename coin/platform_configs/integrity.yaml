@@ -17,4 +17,6 @@ Configurations:
           'GL_INC_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/include/public',
           'GL_LIB_DIR=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/base:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/display:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/multimedia/graphics:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/out/rel/libs/platform/:/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/qc_bsp/AMSS/multimedia/graphics/opengl/esx/build/integrity/prebuilt/',
           'PATH=/home/qt/integrity_toolchain/hlos_dev_boot/apps/ghs_apps_proc/comp:$PATH',
+          'VCPKG_HOST_TRIPLET=x64-linux-qt',
+          'VCPKG_TARGET_TRIPLET=arm64-integrity-qt',
       ]

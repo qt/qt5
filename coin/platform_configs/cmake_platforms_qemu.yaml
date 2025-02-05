@@ -16,6 +16,8 @@ Configurations:
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}',
         'GST_PLUGIN_SCANNER={{.Env.QEMUARMV7_TOOLCHAIN_SYSROOT}}/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
         'QT_QUICK_BACKEND=software',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=armv7-linux-qt',
     ]
 -
     Id: 'qemu-arm64-developer-build'
@@ -33,6 +35,8 @@ Configurations:
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}',
         'GST_PLUGIN_SCANNER={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
         'QT_QUICK_BACKEND=software',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
     ]
 -
     Id: 'qemu-mips64-developer-build'
@@ -50,4 +54,6 @@ Configurations:
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUMIPS64_TOOLCHAIN_SYSROOT}}',
         'GST_PLUGIN_SCANNER={{.Env.QEMUMIPS64_TOOLCHAIN_SYSROOT}}/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
         'QT_QUICK_BACKEND=software',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=mips64-linux-qt',
     ]

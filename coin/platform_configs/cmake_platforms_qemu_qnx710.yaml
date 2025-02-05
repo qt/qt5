@@ -16,6 +16,8 @@ Configurations:
         'QNX_TEST_ENV=LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
         'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'QNX_QEMU={{.Env.QNX_710_QEMU}}',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-qnx-qt',
     ]
 -
     Id: 'qnx-710-arm64-on-linux'
@@ -30,6 +32,8 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-qnx-qt',
     ]
 -
     Id: 'qnx-710-armv7-on-linux'
@@ -44,4 +48,6 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=armv7-qnx-qt',
     ]

@@ -11,6 +11,8 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'VCPKG_HOST_TRIPLET=x64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=x64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
@@ -34,6 +36,8 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFEATURE_native_grpc=OFF -DFEATURE_clangcpp=OFF -DFEATURE_qdoc=OFF',
+        'VCPKG_HOST_TRIPLET=arm64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
@@ -44,7 +48,9 @@ Configurations:
     Configure arguments: '-static -nomake examples -release -qt-libjpeg -no-icu -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF'
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
 -
     Id: 'ubuntu-24.04-arm64'
@@ -54,7 +60,9 @@ Configurations:
     Configure arguments: '-static -nomake examples -release -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput -no-icu -qt-doubleconversion'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release'
+        'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release',
+        'VCPKG_HOST_TRIPLET=arm64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
     ]
 
 -
