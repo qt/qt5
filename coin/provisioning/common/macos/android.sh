@@ -74,5 +74,5 @@ cat << EOT >>~/versions.txt
 Android SDK tools = $toolsVersion
 Android SDK Build Tools = $sdkBuildToolsVersion
 Android SDK API level = $sdkApiLevel
-Android NDK = $ndkVersionDefault
+Android NDK = $ndkVersion
 EOT
