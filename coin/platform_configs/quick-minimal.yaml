@@ -151,7 +151,7 @@ Configurations:
     Platform dependency: 'macos-quick-minimal'
 -
     Id: 'linux-quick-minimal'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Configure arguments: >

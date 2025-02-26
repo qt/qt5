@@ -53,6 +53,17 @@ run 'sudo ufw disable'
 
 run 'sudo apt install qemu-guest-agent'
 
+# Install no-overview gnome extension to prevent desktop overview at boot (QTBUG-132070)
+#  - https://extensions.gnome.org/extension/4099/no-overview/
+#  - Select GNOME Shell version 46 to download
+#  - Unpack extension to (mkdir): /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo chown -R root /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo chmod 755 -R /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo reboot
+gnome-extensions list
+gnome-extensions enable no-overview@fthx
+gnome-extensions info no-overview@fthx  # Check for "Active"
+
 # Fetch and run coin-setup (in Opennebula)
 Download http://coin/coin/binary/linux_amd64/coin-setup
 run 'chmod +x ./coin-setup' to make it executable
