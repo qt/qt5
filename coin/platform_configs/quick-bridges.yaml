@@ -25,7 +25,7 @@ Configurations:
     Environment variables: []
 -
     Id: 'linux-quick-bridges'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Configure arguments: >

@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'ubuntu-24.04-x64-examples-and-tests-build'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'NoSubmoduleDependencies']
     Configure arguments: '-make examples -make tests'

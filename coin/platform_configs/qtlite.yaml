@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'ubuntu-24.04-x86-static-qtlite'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'MinimalStaticTests']
     Configure arguments: >
@@ -224,7 +224,7 @@ Configurations:
     ]
 -
     Id: 'ubuntu-24.04-x86-static-qtlite-tests'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Features: ['Sccache', 'TestOnly','InsignificantTests']
     Platform dependency: 'ubuntu-24.04-x86-static-qtlite'
