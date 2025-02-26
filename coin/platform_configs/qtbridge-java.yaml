@@ -17,7 +17,7 @@ Configurations:
 
 -
     Id: 'linux-quick-bridges-java'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
     Compiler: 'GCC'
     Platform dependency: 'linux-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'RunAsPlatformDependency', 'QtBridgesJava']
