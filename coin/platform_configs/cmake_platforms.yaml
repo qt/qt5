@@ -99,7 +99,7 @@ Configurations:
     Id: 'ubuntu-24.04-x64-developer-build-x11-tests'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestOnly', 'InsignificantTests']
+    Features: ['Sccache', 'TestOnly']
     Platform dependency: 'ubuntu-24.04-x64-developer-build'
 -
     Id: 'ubuntu-24.04-x64-x11-tests'
