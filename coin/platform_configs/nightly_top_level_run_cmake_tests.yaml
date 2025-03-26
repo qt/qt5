@@ -1,0 +1,9 @@
+Version: 2
+Configurations:
+-
+    Id: 'ubuntu-24.04-x64-run-cmake-tests'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'NoSubmoduleDependencies', 'TopLevelRunCMakeTests', 'DisableTests', 'VMSize16']
+    Configure arguments: ''
+    Environment variables: []
