@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script install Android sdk and ndk.
@@ -24,14 +24,21 @@ basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
-ndkVersionLatest="r27c"
-ndkVersionDefault=$ndkVersionLatest
 sdkBuildToolsVersion="35.0.1"
 sdkApiLevel="android-35"
-
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
+
+ndkVersionLatest="r27c"
 ndkSha1Latest="090e8083a715fdb1a3e402d0763c388abb03fb4e"
-ndkSha1Default=$ndkSha1Latest
+
+# Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
+# coin/platform_configs/nightly_android.yaml
+
+ndkVersionNightly1=$ndkVersionLatest  # Same version = skip NDK install for nightly
+ndkSha1Nightly1=$ndkSha1Latest
+
+ndkVersionNightly2=$ndkVersionLatest
+ndkSha1Nightly2=$ndkSha1Latest
 
 # Android Automotive max SDK level image
 sdkApiLevelAutomotiveMax="android-34"
@@ -69,17 +76,22 @@ function InstallNdk() {
     androidNdkRoot="${targetFolder}/${zipBase}"
 }
 
-InstallNdk $ndkVersionDefault $ndkSha1Default
-SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$androidNdkRoot"
-
-if [ "$ndkVersionDefault" != "$ndkVersionLatest" ]; then
-    InstallNdk $ndkVersionLatest $ndkSha1Latest
-fi
+InstallNdk $ndkVersionLatest $ndkSha1Latest
 SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$androidNdkRoot"
 
+if [ "$ndkVersionNightly1" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionNightly1 $ndkSha1Nightly1
+    SetEnvVar "ANDROID_NDK_ROOT_NIGHTLY1" "$androidNdkRoot"
+fi
+
+if [ "$ndkVersionNightly2" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionNightly2 $ndkSha1Nightly2
+    SetEnvVar "ANDROID_NDK_ROOT_NIGHTLY2" "$androidNdkRoot"
+fi
+
 # To be used by vcpkg
-SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersionDefault"
-export ANDROID_NDK_HOME="$targetFolder/android-ndk-$ndkVersionDefault"
+SetEnvVar "ANDROID_NDK_HOME" "$targetFolder/android-ndk-$ndkVersionLatest"
+export ANDROID_NDK_HOME="$targetFolder/android-ndk-$ndkVersionLatest"
 
 echo "Changing ownership of Android files."
 if uname -a |grep -q "el7"; then

@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 . "$PSScriptRoot\helpers.ps1"
@@ -10,15 +10,25 @@
 # That's why we need to use Andoid-21 API version in Qt 5.9.
 
 # NDK
+$ndkZip = "C:\Windows\Temp\android_ndk.zip"
+
 $ndkVersionLatest = "r27c"
-$ndkVersionDefault = $ndkVersionLatest
 $ndkChecksumLatest = "ac5f7762764b1f15341094e148ad4f847d050c38"
-$ndkChecksumDefault = $ndkChecksumLatest
 $ndkCachedUrlLatest = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionLatest-windows.zip"
 $ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$ndkVersionLatest-windows.zip"
-$ndkCachedUrlDefault = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionDefault-windows.zip"
-$ndkOfficialUrlDefault = "https://dl.google.com/android/repository/android-ndk-$ndkVersionDefault-windows.zip"
-$ndkZip = "C:\Windows\Temp\android_ndk.zip"
+
+# Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
+# coin/platform_configs/nightly_android.yaml
+
+$ndkVersionNightly1 = $ndkVersionLatest  # Same version = skip NDK install for nightly
+$ndkChecksumNightly1 = $ndkChecksumLatest
+$ndkCachedUrlNightly1 = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionNightly1-windows.zip"
+$ndkOfficialUrlNightly1 = "https://dl.google.com/android/repository/android-ndk-$ndkVersionNightly1-windows.zip"
+
+$ndkVersionNightly2 = $ndkVersionLatest
+$ndkChecksumNightly2 = $ndkChecksumLatest
+$ndkCachedUrlNightly2 = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionNightly2-windows.zip"
+$ndkOfficialUrlNightly2 = "https://dl.google.com/android/repository/android-ndk-$ndkVersionNightly2-windows.zip"
 
 # SDK
 $toolsVersion = "2.1"
@@ -32,6 +42,8 @@ $toolsChecksum = "e2e19c2ff584efa87ef0cfdd1987f92881323208"
 $cmdFolder = "c:\Utils\Android\cmdline-tools"
 
 $sdkZip = "c:\Windows\Temp\$toolsFile"
+New-Item -ItemType Directory -Path C:\Utils\Android\
+New-Item -ItemType Directory -Path C:\Windows\Temp\android_extract
 
 function Install($1, $2, $3, $4) {
     $cacheUrl = $1
@@ -50,20 +62,24 @@ function Install($1, $2, $3, $4) {
     return "C:\Utils\Android\$baseDirectory"
 }
 
-New-Item -ItemType Directory -Path C:\Utils\Android\
-New-Item -ItemType Directory -Path C:\Windows\Temp\android_extract
-Write-Host "Installing Android NDK $ndkVersionDefault"
-$ndkFolderDefault = Install $ndkCachedUrlDefault $ndkZip $ndkChecksumDefault $ndkOfficialUrlDefault
-Set-EnvironmentVariable "ANDROID_NDK_ROOT_DEFAULT" $ndkFolderDefault
+Write-Host "Installing Android NDK $nkdVersionLatest"
+$ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
+Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
 # To be used by vcpkg
-Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolderDefault
+Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolderLatest
 
-if ($ndkVersionDefault -eq $ndkVersionLatest) {
-    Write-Host "Android Latest version is the same than Default. NDK installation done."
-} else {
-    Write-Host "Installing Android NDK $nkdVersionLatest"
-    $ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
-    Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
+if ($ndkVersionNightly1 -ne $ndkVersionLatest) {
+    Write-Host "Installing Android NDK $ndkVersionNightly1"
+    $ndkFolderNightly = Install $ndkCachedUrlNightly1 $ndkZip $ndkChecksumNightly1 $ndkOfficialUrlNightly1
+    Set-EnvironmentVariable "ANDROID_NDK_ROOT_NIGHTLY1" $ndkFolderNightly
+    Write-Output "Android NDK = $ndkVersionNightly1" >> ~/versions.txt
+}
+
+if ($ndkVersionNightly2 -ne $ndkVersionLatest) {
+    Write-Host "Installing Android NDK $ndkVersionNightly2"
+    $ndkFolderNightly = Install $ndkCachedUrlNightly2 $ndkZip $ndkChecksumNightly2 $ndkOfficialUrlNightly2
+    Set-EnvironmentVariable "ANDROID_NDK_ROOT_NIGHTLY2" $ndkFolderNightly
+    Write-Output "Android NDK = $ndkVersionNightly2" >> ~/versions.txt
 }
 
 $toolsFolder = Install $toolsCachedUrl $sdkZip $toolsChecksum $toolsOfficialUrl
@@ -102,4 +118,4 @@ cmd /c "dir C:\Utils\android"
 Write-Output "Android SDK tools= $toolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Build Tools = $sdkBuildToolsVersion" >> ~/versions.txt
 Write-Output "Android SDK Api Level = $sdkApiLevel" >> ~/versions.txt
-Write-Output "Android NDK = $ndkVersionDefault" >> ~/versions.txt
+Write-Output "Android NDK = $ndkVersionLatest" >> ~/versions.txt

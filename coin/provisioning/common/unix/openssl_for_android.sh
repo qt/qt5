@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2023 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script install prebuilt OpenSSL which was built against Android NDK 25.
@@ -11,11 +11,17 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="3.0.7"
+sslVersionForLatest="3.0.7"
 ndkVersionLatest="r27c"
-ndkVersionDefault=$ndkVersionLatest
-prebuiltOpensslNdkShaLatest="733cff853b6ee7738e78b90f46b5f028c8490e1e"
-prebuiltOpensslNdkShaDefault=$prebuiltOpensslNdkShaLatest
+prebuiltOpensslShaLatest="733cff853b6ee7738e78b90f46b5f028c8490e1e"
+
+ndkVersionNightly1=$ndkVersionLatest
+sslVersionForNightly1=$sslVersionForLatest
+prebuiltOpensslShaNightly1=$prebuiltOpensslShaLatest
+
+ndkVersionNightly2=$ndkVersionLatest
+sslVersionForNightly2=$sslVersionForLatest
+prebuiltOpensslShaNightly2=$prebuiltOpensslShaLatest
 
 : <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK r27c
 # Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
@@ -31,11 +37,11 @@ else
     rm -rf "$exports_file"
 fi
 
-officialUrl="https://www.openssl.org/source/openssl-$version.tar.gz"
-cachedUrl="http://ci-files01-hki.ci.qt.io/input/openssl/openssl-$version.tar.gz"
-targetFile="/tmp/openssl-$version.tar.gz"
+officialUrl="https://www.openssl.org/source/openssl-$sslVersionForLatest.tar.gz"
+cachedUrl="http://ci-files01-hki.ci.qt.io/input/openssl/openssl-$sslVersionForLatest.tar.gz"
+targetFile="/tmp/openssl-$sslVersionForLatest.tar.gz"
 sha="f20736d6aae36bcbfa9aba0d358c71601833bf27"
-opensslHome="${HOME}/openssl/android/openssl-${version}"
+opensslHome="${HOME}/openssl/android/openssl-${sslVersionForLatest}"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 mkdir -p "${HOME}/openssl/android/"
 tar -xzf "$targetFile" -C "${HOME}/openssl/android/"
@@ -53,11 +59,12 @@ function InstallPrebuiltOpenssl() {
 
     ndkVersion=$1
     sha=$2
+    sslVersion=$3
 
-    opensslHome="${HOME}/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}"
+    opensslHome="${HOME}/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}"
     if [[ ! -d ${opensslHome} ]]; then
-        prebuiltUrl="http://ci-files01-hki.ci.qt.io/input/openssl/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}.zip"
-        targetFile="/tmp/prebuilt-openssl-${version}-for-android-ndk-${ndkVersion}.zip"
+        prebuiltUrl="http://ci-files01-hki.ci.qt.io/input/openssl/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}.zip"
+        targetFile="/tmp/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}.zip"
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
         unzip -o "$targetFile" -d "${HOME}"
@@ -65,9 +72,18 @@ function InstallPrebuiltOpenssl() {
     fi
 }
 
-InstallPrebuiltOpenssl $ndkVersionDefault $prebuiltOpensslNdkShaDefault
-SetEnvVar "OPENSSL_ANDROID_HOME_DEFAULT" "$opensslHome"
-InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslNdkShaLatest
-SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+if [ "$ndkVersionNightly1" != "$ndkVersionLatest" ]; then
+    InstallPrebuiltOpenssl $ndkVersionNightly1 $prebuiltOpensslShaNightly1 $sslVersionForNightly1
+    SetEnvVar "OPENSSL_ANDROID_HOME_NIGHTLY1" "$opensslHome"
+    echo "OpenSSL for Android $ndkVersionNightly1 = $sslVersionForNightly1" >> ~/versions.txt
+fi
 
-echo "OpenSSL for Android = $version" >> ~/versions.txt
+if [ "$ndkVersionNightly2" != "$ndkVersionLatest" ]; then
+    InstallPrebuiltOpenssl $ndkVersionNightly2 $prebuiltOpensslShaNightly2 $sslVersionForNightly2
+    SetEnvVar "OPENSSL_ANDROID_HOME_NIGHTLY2" "$opensslHome"
+    echo "OpenSSL for Android $ndkVersionNightly2 = $sslVersionForNightly2" >> ~/versions.txt
+fi
+
+InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslShaLatest $sslVersionForLatest
+SetEnvVar "OPENSSL_ANDROID_HOME_LATEST" "$opensslHome"
+echo "OpenSSL for Android $ndkVersionLatest = $sslVersionForLatest" >> ~/versions.txt
