@@ -30,7 +30,7 @@ build_ffmpeg_android() {
 
     sudo mkdir -p "$target_dir"
 
-    local openssl_include="$OPENSSL_ANDROID_HOME_DEFAULT/include"
+    local openssl_include="$OPENSSL_ANDROID_HOME_LATEST/include"
     local openssl_libs
     local libs_prefix
     local target_cpu
@@ -40,19 +40,19 @@ build_ffmpeg_android() {
         target_toolchain_arch="x86_64-linux-android"
         target_arch=x86_64
         target_cpu=x86-64
-        openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/x86_64"
+        openssl_libs="$OPENSSL_ANDROID_HOME_LATEST/x86_64"
         libs_prefix="_x86_64"
     elif [ "$target_arch" == "x86" ]; then
         target_toolchain_arch="i686-linux-android"
         target_arch=x86
         target_cpu=i686
-        openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/x86"
+        openssl_libs="$OPENSSL_ANDROID_HOME_LATEST/x86"
         libs_prefix="_x86"
     elif [ "$target_arch" == "arm64" ]; then
         target_toolchain_arch="aarch64-linux-android"
         target_arch=aarch64
         target_cpu=armv8-a
-        openssl_libs="$OPENSSL_ANDROID_HOME_DEFAULT/arm64-v8a"
+        openssl_libs="$OPENSSL_ANDROID_HOME_LATEST/arm64-v8a"
         libs_prefix="_arm64-v8a"
     fi
 
@@ -61,7 +61,7 @@ build_ffmpeg_android() {
 
     local api_version=24
 
-    local ndk_root=$ANDROID_NDK_ROOT_DEFAULT
+    local ndk_root=$ANDROID_NDK_ROOT_LATEST
     local ndk_host
     if uname -a |grep -q "Darwin"; then
         ndk_host=darwin-x86_64
@@ -124,7 +124,7 @@ fi
 
 # If parameter is set, use it as the target output directory.
 if [ ! -z $target_install_dir_param ]; then
-  target_dir=$target_install_dir_param
+    target_dir=$target_install_dir_param
 fi
 
 build_ffmpeg_android "$target_arch" "$target_dir"

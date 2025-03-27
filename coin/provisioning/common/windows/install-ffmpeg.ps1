@@ -157,7 +157,7 @@ function InstallAndroidArmv7 {
     $ranlib="${toolchain_bin}/llvm-ranlib.exe"
     $nm="${toolchain_bin}/llvm-nm.exe"
     $strip="${toolchain_bin}/llvm-strip.exe"
-    $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_DEFAULT", [System.EnvironmentVariableTarget]::Machine)
+    $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_LATEST", [System.EnvironmentVariableTarget]::Machine)
     $openssl_path = $openssl_path.Replace("\", "/")
 
     New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libcrypto.so -Target ${openssl_path}/armeabi-v7a/libcrypto_3.so
@@ -167,7 +167,7 @@ function InstallAndroidArmv7 {
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
-    $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_DEFAULT/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_DEFAULT/armeabi-v7a"
+    $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_LATEST/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_LATEST/armeabi-v7a"
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
     $config += " --strip=$strip"
 
