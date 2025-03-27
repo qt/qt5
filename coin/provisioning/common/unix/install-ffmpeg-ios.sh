@@ -56,34 +56,6 @@ build_ffmpeg_ios() {
     popd
 }
 
-install_ffmpeg() {
-    for dir in "$@"; do
-        echo "Processing files in $dir ..."
-        pushd "$dir" >/dev/null
-        find . -type l -name '*.*.dylib' | while read -r f; do
-            dst="${f:1}"
-            dstdir="$(dirname "$dst")"
-            sudo mkdir -p "$dstdir"
-
-            if [[ ! -f "$dst" ]]; then
-                echo "<Copying $dir/$f to $dst"
-                sudo cp -c "$f" "$dst"
-                symlinkname="$(tmp=${f/*\/}; echo ${tmp/\.*}).dylib"
-                sudo ln -s "$(basename -- "$f")" $dstdir/"$symlinkname"
-            elif lipo -info "$f" >/dev/null 2>&1; then
-                echo "Lipoing $dir/$f into $dst"
-                sudo lipo -create -output "$dst" "$dst" "$f"
-            elif ! diff "$f" "$dst"; then
-                echo "Error: File $f in $dir doesn't match destination $dst"
-                exit 1
-            fi
-        done
-        echo "LS"
-        popd >/dev/null
-    done
-    sudo cp -r $1$prefix/include $prefix
-}
-
 build_info_plist() {
     local file_path="$1"
     local framework_name="$2"
@@ -186,6 +158,12 @@ for name in $ffmpeg_libs; do
     create_xcframework $name "arm64-iphoneos" "x86_64-simulator"
 done
 
-install_ffmpeg "$ffmpeg_source_dir/build_ios/x86_64-simulator/installed" "$ffmpeg_source_dir/build_ios/arm64-iphoneos/installed"
+# xcframeworks are already installed directly into the target output directory.
+# We need to install headers
+sudo cp -r "$ffmpeg_source_dir/build_ios/arm64-iphoneos/installed/usr/local/ios/ffmpeg/include" $prefix
+# The set_ffmpeg_dir_env_var requires the presence of the "lib" subfolder in order to validate
+# our FFmpeg install. On iOS we don't use this subfolder, we only rely on the "framework" subfolder.
+# So we create a dummy "lib" folder to pass the check.
+sudo mkdir -p "${prefix}/lib"
 
 set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" $prefix
