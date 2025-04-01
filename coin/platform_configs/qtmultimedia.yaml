@@ -7,7 +7,7 @@ Include: [
     ]
 Configurations: []
 Overrides:
-# Make VxWorks imx8 insignificant.
+# Remove imx8 tests.
 -
     Id: 'vxworks-imx8-buildtest'
-    Features: ['VMSize8', 'UseConfigure', 'DoNotRunTests', 'DoNotUploadTests', 'Insignificant']
+    Features: ['VMSize8', 'UseConfigure', 'DisableTests']
