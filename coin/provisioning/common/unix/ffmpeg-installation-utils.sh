@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 download_ffmpeg() {
-    local version="${1:-n7.1}"
-    local sha1="${2:-f008a93710a7577e3f85a90f4b632cc615164712}"
+    local version="${1:-n7.1.1}"
+    local sha1="${2:-479291e8555fe036ca760f95cea829a21e9b8365}"
 
     local ffmpeg_name="FFmpeg-$version"
     local target_dir="$HOME"
