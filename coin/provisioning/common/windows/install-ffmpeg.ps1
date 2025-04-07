@@ -37,7 +37,8 @@ function InstallFfmpeg {
         [string]$additionalPath,
         [string]$ffmpegDirEnvVar,
         [string]$toolchain,
-        [bool]$shared
+        [bool]$shared,
+        [string]$ndk_ver  # Optional param for installing each ffmpeg build with different Android NDK
     )
 
     Write-Host "Configure and compile FFmpeg for $buildSystem with configuration: $config"
@@ -50,9 +51,16 @@ function InstallFfmpeg {
     $env:MSYS2_PATH_TYPE = "inherit"
     $env:MSYSTEM = $msystem
 
+    if ($ndk_ver) {
+        $prefix = "installed-ndk-$ndk_ver"
+    } else {
+        $prefix = "installed"
+    }
+    $installDir = "C:\$ffmpeg_name\build\$buildSystem\$prefix"
+
     $cmd = "cd /c/$ffmpeg_name"
     $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
-    $cmd += " && ../../configure --prefix=installed $config"
+    $cmd += " && ../../configure --prefix=$prefix $config"
     if ($toolchain) {
         $cmd += " --toolchain=$toolchain"
     }
@@ -72,7 +80,7 @@ function InstallFfmpeg {
         return $false
     }
 
-    Set-EnvironmentVariable $ffmpegDirEnvVar "C:\$ffmpeg_name\build\$buildSystem\installed"
+    Set-EnvironmentVariable $ffmpegDirEnvVar $installDir
     return $true
 }
 
@@ -138,16 +146,21 @@ function InstallLlvmMingwFfmpeg {
 }
 
 function InstallAndroidArmv7 {
+    param (
+        [string]$ndk_root,
+        [string]$ffmpeg_dir_android_envvar_name,
+        [string]$ndk_version,
+        [string]$android_openssl_path  # OpenSSL is built for Android using NDK, NDK versions for OpenSSL+FFmpeg should match
+    )
     $shared=$true
     $target_toolchain_arch="armv7a-linux-androideabi"
     $target_arch="armv7-a"
     $target_cpu="armv7-a"
     $api_version="24"
 
-    $ndkVersionLatest = "r27c"
-    $ndkFolderLatest = "/c/Utils/Android/android-ndk-$ndkVersionLatest"
+    $ndk_dir = $ndk_root -replace '\\', '/' -replace '^C:', '/c'
 
-    $toolchain="${ndkFolderLatest}/toolchains/llvm/prebuilt/windows-x86_64"
+    $toolchain="${ndk_dir}/toolchains/llvm/prebuilt/windows-x86_64"
     $toolchain_bin="${toolchain}/bin"
     $sysroot="${toolchain}/sysroot"
     $cxx="${toolchain_bin}/${target_toolchain_arch}${api_version}-clang++"
@@ -157,8 +170,7 @@ function InstallAndroidArmv7 {
     $ranlib="${toolchain_bin}/llvm-ranlib.exe"
     $nm="${toolchain_bin}/llvm-nm.exe"
     $strip="${toolchain_bin}/llvm-strip.exe"
-    $openssl_path = [System.Environment]::GetEnvironmentVariable("OPENSSL_ANDROID_HOME_LATEST", [System.EnvironmentVariableTarget]::Machine)
-    $openssl_path = $openssl_path.Replace("\", "/")
+    $openssl_path = $android_openssl_path.Replace("\", "/")
 
     New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libcrypto.so -Target ${openssl_path}/armeabi-v7a/libcrypto_3.so
     New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libssl.so -Target ${openssl_path}/armeabi-v7a/libssl_3.so
@@ -167,12 +179,12 @@ function InstallAndroidArmv7 {
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
-    $config += " --extra-cflags=-I$envOPENSSL_ANDROID_HOME_LATEST/include --extra-ldflags=-L$env:OPENSSL_ANDROID_HOME_LATEST/armeabi-v7a"
+    $config += " --extra-cflags=-I${android_openssl_path}/include --extra-ldflags=-L${android_openssl_path}/armeabi-v7a"
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
     $config += " --strip=$strip"
 
 
-    $result= InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar "FFMPEG_DIR_ANDROID_ARMV7" -shared $shared
+    $result= InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar $ffmpeg_dir_android_envvar_name -shared $shared -ndk_ver $ndk_version
 
     Remove-Item -Path ${openssl_path}/armeabi-v7a/libcrypto.so
     Remove-Item -Path ${openssl_path}/armeabi-v7a/libssl.so
@@ -209,7 +221,20 @@ function InstallFfmpegsAMD64 {
     $hostArch = "amd64"
     $mingwRes = InstallMingwFfmpeg
     $llvmMingwRes = InstallLlvmMingwFfmpeg
-    $androidArmV7Res = InstallAndroidArmv7
+    if ($env:ANDROID_NDK_ROOT_LATEST) {
+        Write-Host "Install ffmpeg using latest supported Android NDK"
+        $androidArmV7Res = InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_LATEST -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_LATEST" -ndk_version "latest" -android_openssl_path $env:OPENSSL_ANDROID_HOME_LATEST
+    } else {
+        throw "Error: env.var ANDROID_NDK_ROOT_LATEST is not set for FFmpeg"
+    }
+    if ($env:ANDROID_NDK_ROOT_NIGHTLY1) {
+        Write-Host "Install ffmpeg using older Android NDK for nightly1"
+        InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_NIGHTLY1 -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_NIGHTLY1" -ndk_version "nightly1" -android_openssl_path $env:OPENSSL_ANDROID_HOME_NIGHTLY1
+    }
+    if ($env:ANDROID_NDK_ROOT_NIGHTLY2) {
+        Write-Host "Install ffmpeg using older Android NDK for nightly2"
+        InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_NIGHTLY2 -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_NIGHTLY2" -ndk_version "nightly2" -android_openssl_path $env:OPENSSL_ANDROID_HOME_NIGHTLY2
+    }
     $msvcRes = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $false
     $msvcArm64Res = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $true
 
