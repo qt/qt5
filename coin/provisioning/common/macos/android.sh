@@ -20,8 +20,13 @@ toolsVersion="2.1"
 # toolsFile dertermines tools version
 toolsFile="commandlinetools-mac-6609375_latest.zip"
 
+# Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
+# coin/platform_configs/nightly_android.yaml
+
 ndkVersionLatest="r27c"
-ndkVersionDefault="$ndkVersionLatest"
+ndkVersionNightly1="$ndkVersionLatest"  # If same version as latest = skip NDK install for nightly
+ndkVersionNightly2="$ndkVersionLatest"
+
 sdkBuildToolsVersion="35.0.1"
 # this is compile sdk version
 sdkApiLevel="android-35"
@@ -40,8 +45,18 @@ function InstallNdk() {
 
 }
 
-InstallNdk $ndkVersionDefault
 InstallNdk $ndkVersionLatest
+SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
+
+if [ "$ndkVersionNightly1" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionNightly1
+    SetEnvVar "ANDROID_NDK_ROOT_NIGHTLY1" "$targetFolder/android-ndk-$ndkVersionNightly1"
+fi
+
+if [ "$ndkVersionNightly2" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionNightly2
+    SetEnvVar "ANDROID_NDK_ROOT_NIGHTLY2" "$targetFolder/android-ndk-$ndkVersionNightly2"
+fi
 
 echo "Unzipping Android Tools to '$sdkTargetFolder'"
 sudo unzip -q "$toolsSourceFile" -d "$sdkTargetFolder"
@@ -65,8 +80,6 @@ echo "Checking the contents of Android SDK..."
 ls -l "$sdkTargetFolder"
 
 SetEnvVar "ANDROID_SDK_ROOT" "$sdkTargetFolder"
-SetEnvVar "ANDROID_NDK_ROOT_DEFAULT" "$targetFolder/android-ndk-$ndkVersionDefault"
-SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
 SetEnvVar "ANDROID_NDK_HOST" "darwin-x86_64"
 SetEnvVar "ANDROID_API_VERSION" "$sdkApiLevel"
 
@@ -74,5 +87,7 @@ cat << EOT >>~/versions.txt
 Android SDK tools = $toolsVersion
 Android SDK Build Tools = $sdkBuildToolsVersion
 Android SDK API level = $sdkApiLevel
-Android NDK = $ndkVersion
+Android NDK latest = $ndkVersionLatest
+Android NDK nightly1 = $ndkVersionNightly1
+Android NDK nightly2 = $ndkVersionNightly2
 EOT
