@@ -9,7 +9,7 @@ Configurations:
 
     -
         Id: 'macos-universal-on-x86_64'
-        Template: 'qtci-macos-14-x86_64-105'
+        Template: 'qtci-macos-15-x86_64-103'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
         Features: ['Packaging', 'Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
