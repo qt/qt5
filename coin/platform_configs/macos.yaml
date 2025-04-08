@@ -109,8 +109,8 @@ Configurations:
     # Build on recent macOS version with latest Xcode
 
     -
-        Id: 'macos-14-x86_64-developer-build'
-        Template: 'qtci-macos-14-x86_64-105'
+        Id: 'macos-x86_64-developer-build'
+        Template: 'qtci-macos-15-x86_64-103'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
         Configure arguments: '-developer-build -release -force-asserts -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
@@ -119,8 +119,8 @@ Configurations:
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
         ]
     -
-        Id: 'macos-14-arm64-developer-build'
-        Template: 'qtci-macos-14-arm-106'
+        Id: 'macos-arm64-developer-build'
+        Template: 'qtci-macos-15-arm-104'
         Compiler: 'Clang'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -nomake examples -debug -framework'
@@ -135,16 +135,16 @@ Configurations:
         Template: 'qtci-macos-13-arm-107'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-14-arm64-developer-build'
+        Platform dependency: 'macos-arm64-developer-build'
     -
         Id: 'macos-14-arm64-developer-build-tests'
         Template: 'qtci-macos-14-arm-106'
         Compiler: 'Clang'
         Features: ['TestOnly']
-        Platform dependency: 'macos-14-arm64-developer-build'
+        Platform dependency: 'macos-arm64-developer-build'
     -
         Id: 'macos-15-arm64-developer-build-tests'
         Template: 'qtci-macos-15-arm-104'
         Compiler: 'Clang'
         Features: ['TestOnly', 'InsignificantTests']
-        Platform dependency: 'macos-14-arm64-developer-build'
+        Platform dependency: 'macos-arm64-developer-build'
