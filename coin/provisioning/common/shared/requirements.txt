@@ -1,2 +1,4 @@
 # Requirements for running SBOM related utilities
 -r sbom_requirements.txt
+# Requirements for running Json schema validations
+-r check_schema_requirements.txt

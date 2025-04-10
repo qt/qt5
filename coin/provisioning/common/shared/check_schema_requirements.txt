@@ -1,0 +1,5 @@
+# Dependency: check-jsonschema -> regress
+# `regress` is not yet built for Windows ARM and building from scratch
+# requires cargo which is not provisioned. Disabling this on Windows ARM for now.
+check-jsonschema ; sys_platform != 'win32' or platform_machine != 'ARM64'
+click
