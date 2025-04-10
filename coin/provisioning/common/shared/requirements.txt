@@ -1,2 +1,2 @@
-# Requirements for running sbom
+# Requirements for running SBOM related utilities
 -r sbom_requirements.txt

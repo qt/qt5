@@ -177,7 +177,7 @@ sudo python3.11 -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requiremen
 
 sudo /usr/bin/pip3 install wheel
 sudo /usr/bin/pip3 install dataclasses
-# No sbom_requirements.txt, because it requires Python 3.9 for poetry_core -> spdx_tools and we have 3.8
+sudo /usr/bin/pip3 install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 gccVersion="$(gcc --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "GCC = $gccVersion" >> versions.txt
