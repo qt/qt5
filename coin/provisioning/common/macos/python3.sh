@@ -24,7 +24,7 @@ echo "Configure pip"
 /Library/Frameworks/Python.framework/Versions/3.11/bin/pip3 config --user set global.extra-index-url https://pypi.org/simple/
 
 /Library/Frameworks/Python.framework/Versions/3.11/bin/pip3 install virtualenv wheel html5lib
-/Library/Frameworks/Python.framework/Versions/3.11/bin/pip3 install -r ${BASH_SOURCE%/*}/../shared/sbom_requirements.txt
+/Library/Frameworks/Python.framework/Versions/3.11/bin/pip3 install -r ${BASH_SOURCE%/*}/../shared/requirements.txt
 
 SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin"
 SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin"

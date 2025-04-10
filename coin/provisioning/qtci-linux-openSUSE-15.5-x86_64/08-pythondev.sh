@@ -14,7 +14,7 @@ sudo zypper -nq install python-devel python-xml
 # install python3
 sudo zypper -nq install python311-base python311-devel python311-pip python311-virtualenv python311-wheel
 python3.11 -m pip install selenium netifaces scache
-python3.11 -m pip install -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt"
+python3.11 -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 SetEnvVar "PYTHON3_EXECUTABLE" "/usr/bin/python3.11"
 

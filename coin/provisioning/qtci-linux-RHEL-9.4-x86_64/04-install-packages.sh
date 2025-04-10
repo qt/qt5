@@ -188,10 +188,10 @@ sudo pip config --user set global.extra-index-url https://pypi.org/simple/
 sudo pip3 install virtualenv wheel
 # Just make sure we have virtualenv to run with python3.8 -m virtualenv
 sudo python -m pip install virtualenv wheel
-sudo python -m pip install -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt"
+sudo python -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 sudo /usr/bin/pip3 install wheel
-sudo /usr/bin/pip3 install -r "${BASH_SOURCE%/*}/../common/shared/sbom_requirements.txt"
+sudo /usr/bin/pip3 install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 # Provisioning during installation says:
 # 'The script sbom2doc is installed in '/usr/local/bin' which is not on PATH.'

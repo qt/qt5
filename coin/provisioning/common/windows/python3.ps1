@@ -85,7 +85,7 @@ Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install virtualenv wh
 # The lowest version available on all windows platforms that we currently run on that satisfies
 # these requirements is 3.10.
 if ([version]::Parse($version) -gt [version]::Parse("3.10")) {
-    Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install -r $PSScriptRoot\..\shared\sbom_requirements.txt"
+    Run-Executable "$install_path\Scripts\pip3.exe" "$pip_args install -r $PSScriptRoot\..\shared\requirements.txt"
     # Set the environment variable for the build system to know which python path to use for SBOM
     # processing.
     Set-EnvironmentVariable "SBOM_PYTHON_APPS_PATH" "$install_path\Scripts"

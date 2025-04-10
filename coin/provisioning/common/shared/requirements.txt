@@ -1,0 +1,2 @@
+# Requirements for running sbom
+-r sbom_requirements.txt
