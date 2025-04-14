@@ -75,11 +75,7 @@ Set-Content -Value "" -Path "$vcpkgRoot\vcpkg.disable-metrics" -Force
 Set-Location -Path "$vcpkgRoot"
 cmd.exe /c "$vcpkgRoot\bootstrap-vcpkg.bat"
 
-# Setting VCPKG_ROOT using Set-EnvironmentVariable makes the variable only
-# available during build time. In order to make it available during the
-# provisioning, we need to directly set it via $env:VCPKG_ROOT as well.
 Set-EnvironmentVariable "VCPKG_ROOT" "$vcpkgRoot"
-$env:VCPKG_ROOT = "$vcpkgRoot"
 
 # Set a source for vcpkg Binary and Asset Cache
 # The `coin/provisioning/common/windows/mount-vcpkg-cache-drive.ps1` script is
