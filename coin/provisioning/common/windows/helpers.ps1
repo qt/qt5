@@ -189,6 +189,8 @@ function Set-EnvironmentVariable
     Write-Host "Setting environment variable `"$($Key)`" to `"$($Value)`""
 
     [Environment]::SetEnvironmentVariable($Key, $Value, [EnvironmentVariableTarget]::Machine)
+    # Make the envvar immediately available to subsequent scripts run in the same session.
+    [Environment]::SetEnvironmentVariable($Key, $Value, [EnvironmentVariableTarget]::Process)
 }
 
 function Is64BitWinHost
