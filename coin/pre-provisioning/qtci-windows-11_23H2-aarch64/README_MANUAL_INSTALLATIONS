@@ -1,0 +1,90 @@
+# Follow manual pre-setup from intra to install Windows 11 ARM and virtio drivers:
+# "How to create a Windows 11 ARM tier1 image using Qemu"
+
+# Configure Windows after pre-setup
+* Enable Remote Desktop:
+   - Settings - System - Remote Desktop - On
+      - Note: Display settings cannot be changed by remote
+* Resolution set to 1280x800
+   - System > Display > Custom scaling > Advanced display
+   - 1024 x 768 is unchangable by default
+* Coin-setup:
+   - Download from https://[Coin_IP_from_build_logs]/coin/setup --> Windows Setup ARM64 .exe
+      - Open PowerShell as Administrator
+      - Run Windows Setup ARM64 .exe
+   - Verify from output that all these are OK
+      - Installing Boostrap agent
+      - Disabling fast boot
+      - Disabling firewall
+      - Disabling UAC
+      - Enabling autologin
+      - Automatic login
+      - Disabling windows updates
+* Turn off Windows defender:
+   - Microsoft Defender Antivirus turned off: Open 'gpedit.msc':  'Computer Configuration' - 'Administrative Templates' - 'Windows Components' - 'Microsoft Defender Antivirus'
+      - Edit 'Turn off Microsoft Defender Antivirus' > 'Enabled' > 'Apply'
+   - Reboot on Safe mode:
+      - Open msconfig - Boot tab - enable “Safe boot“ - apply - restart
+      - In Safe mode:
+         - Take Ownership of Defender:
+            - Open properties - Right click "C:\Program Files\Windows Defender\Platform" and select 'Properties'
+            - Open Security tab - Advanced - Owner: Change - Advanced - Find now - Select Administrators - Ok - Ok - Apply
+               - Close 'Platform Properties' window for actions to take effect and open 'Properties' again
+               - This should get 'Disable inheritance' available for the next step
+            - Remove all Permissions: Permissions tab - Select 'Disable inheritance'
+               - Remove all entries
+                  -Select 'Remove all inherited permissions from this object'
+                  -Select 'Replace all child object permi…' - Apply
+         - Disable Windows defender also from RegEdit:
+            - Open regedit - Navigate to 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services'
+            - Change the following folders the key Start to 4
+               - Sense (Windows defender advanced threat protection)
+               - WdBoot (Windows defender boot)
+               - WdFilter (Microsoft antimalware file system filter driver)
+               - WdNisDrv (Windows Defender Network Inspection Driver)
+               - WdNisSvc (Windows Defender Network Inspection Service)
+               - WinDefend (Windows Defender Antivirus Service)
+               - mpssvc (Windows Defender Firewall)
+   - NOTE! Without these step windows defender can't be disabled!
+   - Reboot back to normal mode
+* Background defrag disabled: 'Defragment And Optimize Drives' - 'change settings' - unchecked "run on a schedule"
+   - Run in terminal: 'schtasks /Delete /TN "Microsoft\Windows\Defrag\ScheduledDefrag"'
+   - (Running optimize drivers doesn't seem to fix the status, if there's a 10% space optimization recommended)
+* Time:
+   - Settings - System - Date & time - Time zone: '(UTC) Coordinated Universal Time'
+   - Settings - System - Date & time - "Set the time automatically: Off"
+* Regional format:
+   - Settings - Time & language - Language and region - regional format - English (United States)
+* Power saver:
+   - Settings - System - Power - Screen and sleep: set 'When plugged in, turn off my screen after' to 'never'
+* Windows search disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows search' - stop & disable
+* Sysmain disabled:
+   - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'SysMain' - stop & disable
+* Windows update:
+   - Settings - Windows Update - run available updates
+   - (Windows update2025-06 Cumulative Update for Windows 11 Version 23H2 for arm64-based Systems (KB5060999))
+   - After reboot disable windows updates:
+      - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Services' - 'Windows update' - stop & disable
+* Turn windows features on or off -> Check the "SMB 1.0/CIFS File Sharing Support"
+* Disable Windows Restore Points: Search 'Create a restore point' -> 'System Protection' tab -> Configure C: drive -> Disable & Delete restore points.
+* Disable widgets: Right click the task bar -> 'Taskbar settings' -> toggle off anything related to widgets.
+* (Restart Windows: shutdown /r)
+* Google Chrome installed for RTA
+* Virus & threat protection settings:
+   * Check that there's no active antivirus providers
+* Run .NET runtime optimization service: open terminal and run:
+   Start-Process -NoNewWindow -FilePath "C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319\ngen.exe" -ArgumentList ExecuteQueuedItems -Wait
+   - It may be needed to rerun after installing Visual Studio. Just run it until it prints:
+      "All compilation targets are up to date."
+* Activate Windows
+
+# Next
+Install Visual Studio 2022 by following msvc2022.txt
+
+Proceed to install pre-provisioning scripts manually to Tier1 image
+ * Copying scripts happens easiest via Remote Desktop
+ * Ensure to have sourced scripts e.g. helpers.ps1 included
+ * If running scripts is restricted: Use these to allow scripts in Tier1
+   * Get-ExecutionPolicy -List        # To check the status
+   * Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
