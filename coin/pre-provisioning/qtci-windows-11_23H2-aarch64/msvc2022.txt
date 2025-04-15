@@ -1,0 +1,81 @@
+### Visual Studio Professional 2022 Official release ###
+Visual Studio Professional 2022 version 17.14.7 was installed manually using installer: http://ci-files01-hki.ci.qt.io/input/windows/vs_professional__msvc2022_1339502178.1525841376.exe
+This VS installer 17.14.7 version sets (Latest) MSVC version as: 14.44.35207
+
+Installed MSVC-2022 Components:
+
+.NET Framework 4.8.1 targeting pack
+.NET Framework 4.8.1 SDK
+.NET Framework 4.8 targeting pack
+.NET Framework 4.8 SDK
+.NET Native
+.NET Portable Library targeting pack
+CLR data types for SQL Server
+Data sources for SQL Server support
+SQL Server Command Linne Utilities
+SQL Server Data Tools
+SQL Server Express 2019 LocalDB
+SQL Server ODBC Driver
+ClickOnce Publishing
+Developer Analytics tools
+NuGet package manager
+Text Template Transformation
+C# and Visual Basic Roslyn compilers
+C++ 2022 Redistributable Update
+C++ Cmake tools for Windows
+C++/CLI support for v143 build tools (14.44-17.14)
+C++/CLI support for v143 build tools (Latest)
+MSBuild
+MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools (Latest)
+MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools (v14.44-17.14)
+.NET profiling tools
+C++ profiling tools
+JavaScript diagnostics
+Just-In-Time debugger
+C# and Visual Basic
+C++ core features
+JavaScript and TypeScript language support
+Razor Language Services
+Image and 3D model editors
+C++ ATL for latest v143 build tools (ARM)
+C++ ATL for latest v143 build tools (ARM64/ARM64EC)
+TypeScript Server
+Windows 10 SDK (10.0.18362.0)
+Windows 10 SDK (10.0.19041.0)
+Windows 10 SDK (10.0.20348.0)
+Windows 11 SDK (10.0.22000.0)
+Windows 11 SDK (10.0.22621.0)
+Windows 11 SDK (10.0.26100.3916)  # This was available --> installed for COIN-1206 (see later comment)
+Windows Universal C Runtime
+
+Windows SDK (10.0.26100.1742) has been earlier downloaded for WoA 22h2 and installed from:
+https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/
+# COIN-1206
+
+These Components were not found for WoA:
+
+Connectivity and publishing tools
+Graphics debugger and GPU profiler for DirectX
+TypeScript 4.7 SDK
+
+# NOTE! Workloads were added during installation!
+
+############################################################
+### Visual Studio 2022 build tools ###
+
+ Visual studio 2022 build tools version 17.14.7 was installed manually using installer: "http://ci-files01-hki.ci.qt.io/input/windows/vs_BuildTools_msvc2022.exe"
+  * Only default installation, no additional selections
+
+# NOTE! Installing Visual Studio on ARM-powered device is not supported
+  * Otherwise Visual Studio might be slow or unusable
+  * Installer recommends "remote targeting" which is suitable for cross-platform development
+  * VS 2022 build tools has been installed as it is - VS has ARM support since 17.4, but not full support with some workloads
+  * https://learn.microsoft.com/en-us/visualstudio/install/visual-studio-on-arm-devices?view=vs-2022#supported-workloads
+
+############################################################
+### Debugging tools ###
+
+* Check that debugging tools are installed in all installed Windows SDK versions
+    * Modify 'Windows Software Development Kit - Windows <version number>' from 'Add or remove programs'
+        - Add feature 'Debugging Tools for Windows'
+############################################################
