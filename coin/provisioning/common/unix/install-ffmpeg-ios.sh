@@ -5,6 +5,10 @@
 # This script will build and install FFmpeg static libs
 set -ex
 
+# Must match or be lower than the minimum iOS version supported by the version of Qt that is
+# is currently being built.
+readonly MINIMUM_IOS_VERSION="16.0"
+
 source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 
 ffmpeg_source_dir=$(download_ffmpeg)
@@ -18,15 +22,15 @@ build_ffmpeg_ios() {
     if [ "$target_platform" == "arm64-simulator" ]; then
         target_sdk="iphonesimulator"
         target_cpu_arch="arm64"
-        minos="-mios-simulator-version-min=16.0"
+        minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
     elif [ "$target_platform" == "x86_64-simulator" ]; then
         target_sdk="iphonesimulator"
         target_cpu_arch="x86_64"
-        minos="-mios-simulator-version-min=16.0"
+        minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
     elif [ "$target_platform" == "arm64-iphoneos" ]; then
         target_sdk="iphoneos"
         target_cpu_arch="arm64"
-        minos="-miphoneos-version-min=16.0"
+        minos="-miphoneos-version-min=$MINIMUM_IOS_VERSION"
     else
         echo "Error when building FFmpeg for iOS. Unknown parameter given for target_platform: '${target_platform}'"
         exit 1
@@ -62,7 +66,6 @@ build_info_plist() {
     local framework_id="$3"
 
     local minimum_version_key="MinimumOSVersion"
-    local minimum_os_version="16.0"
     local supported_platforms="iPhoneOS"
 
     # TODO: This should be filled out with the actual version of FFmpeg that we are
@@ -90,7 +93,7 @@ build_info_plist() {
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>${minimum_version_key}</key>
-    <string>${minimum_os_version}</string>
+    <string>${MINIMUM_IOS_VERSION}</string>
     <key>CFBundleSupportedPlatforms</key>
     <array>
         <string>${supported_platforms}</string>
