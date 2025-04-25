@@ -8,8 +8,8 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-version="3.1.70"
-versionNode="v16.20.0"
+version="4.0.7"
+versionNode="v20.18.0"
 tarBallVersion="${version//./_}"
 if uname -a | grep -q Darwin; then
     tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
