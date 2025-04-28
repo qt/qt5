@@ -172,6 +172,21 @@ echo "Unzipping the Android 15 to $maxVersionDestination"
 sudo unzip -o -q "$maxVersionFilePath" -d "$maxVersionDestination"
 rm "$maxVersionFilePath"
 
+echo "Download and unzip Android 16 System Image for insignificant"
+insignificantMaxVersionFileName="x86_64-36_r06.zip"
+insignificantMaxVersionDestination="$sdkTargetFolder/system-images/android-36/google_apis/"
+insignificantMaxVersionFilePath="$insignificantMaxVersionDestination/$insignificantMaxVersionFileName"
+insignificantMaxVersionCiUrl="$basePath/system-images/google_apis/$insignificantMaxVersionFileName"
+insignificantMaxVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$insignificantMaxVersionFileName"
+insignificantMaxVersionSha1="a9b0b4a0488e0c6c380f5485507950f011388511"
+
+mkdir -p "$insignificantMaxVersionDestination"
+DownloadURL "$insignificantMaxVersionCiUrl" "$insignificantMaxVersionUrl" "$insignificantMaxVersionSha1" "$insignificantMaxVersionFilePath"
+
+echo "Unzipping the Android 16 insignicant to $insignificantMaxVersionDestination"
+sudo unzip -o -q "$insignificantMaxVersionFilePath" -d "$insignificantMaxVersionDestination"
+rm "$insignificantMaxVersionFilePath"
+
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
@@ -180,6 +195,9 @@ echo "no" | ./avdmanager create avd -n emulator_x86_api_28 -c 2048M -f \
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_35 -c 2048M -f \
     -k "system-images;android-35;google_apis;x86_64"
+
+echo "no" | ./avdmanager create avd -n emulator_x86_64_api_36 -c 2048M -f \
+    -k "system-images;android-36;google_apis;x86_64"
 
 echo "Install maximum supported SDK level image for Android Automotive $sdkApiLevelAutomotiveMax"
 DownloadURL "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxSha" \
