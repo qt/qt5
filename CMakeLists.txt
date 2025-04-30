@@ -16,8 +16,12 @@ project(Qt
     VERSION "${QT_REPO_MODULE_VERSION}"
     DESCRIPTION "Qt Libraries"
     HOMEPAGE_URL "https://qt.io/"
-    LANGUAGES CXX C ASM
+    LANGUAGES CXX C
 )
+
+if(UNIX AND NOT ANDROID)
+    enable_language(ASM)
+endif()
 
 qt_internal_top_level_setup_after_project()
 
