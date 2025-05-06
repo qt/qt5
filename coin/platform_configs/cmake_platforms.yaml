@@ -134,18 +134,6 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
-    Id: 'windows-11_23H2-msvc2022'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'MSVC2022'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'Packaging', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
     Id: 'windows-11_24H2-msvc2022'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
@@ -169,28 +157,11 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
-    Id: 'windows-11_23H2-msvc2022-arm64'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'MSVC2022'
-    Target arch: 'arm64'
-    Features: ['Sccache', 'DoNotRunTests', 'TargetBuildOnly', 'Packaging', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Platform dependency: 'windows-10_22h2-mingw13'
-    Environment variables: [
-        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer -no-feature-run-opengl-tests',
-        'TARGET_CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
-        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
-        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
-        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-    ]
--
     Id: 'windows-11_24H2-msvc2022-arm64'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
     Target arch: 'arm64'
-    Features: ['Sccache', 'Packaging', 'DisableTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Platform dependency: 'windows-10_22h2-mingw13'
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
@@ -208,19 +179,7 @@ Configurations:
     Compiler: 'MSVC2022'
     Features: ['TestOnly']
     Configure arguments: '-no-opengl -cross-compiled'
-    Platform dependency: 'windows-11_23H2-msvc2022-arm64'
--
-    Id: 'windows-11_23H2-msvc2022-developer-build'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'MSVC2022'
-    Features: ['Sccache', 'DebugAndRelease', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
-    Configure arguments: '-debug-and-release -force-asserts -make examples -developer-build -force-debug-info -qt-zlib -c++std c++20'
-    Environment variables: [
-        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
-    ]
+    Platform dependency: 'windows-11_24H2-msvc2022-arm64'
 -
     Id: 'windows-11_24H2-msvc2022-developer-build'
     Template: 'qtci-windows-11_24H2-x86_64-71'
@@ -292,19 +251,6 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
-    Id: 'windows-11_23H2-llvm'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'Clang'
-    Features: ['Packaging','Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
-    Environment variables: [
-        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_llvm_mingw}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-    ]
--
     Id: 'windows-11_24H2-llvm'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'Clang'
@@ -316,19 +262,6 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_llvm_mingw}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
-    ]
--
-    Id: 'windows-11_23H2-mingw13-developer-build'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'Mingw'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
-    Configure arguments: '-developer-build -release -force-asserts -force-debug-info -separate-debug-info -make examples'
-    Environment variables: [
-        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
-        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
-        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
-        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
     ]
 -
     Id: 'windows-11_24H2-mingw13-developer-build'

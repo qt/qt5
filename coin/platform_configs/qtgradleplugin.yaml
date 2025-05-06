@@ -12,11 +12,6 @@ Configurations:
     Compiler: 'Clang'
     Features: ['TestOnly']
 -
-    Id: 'qtgp-on-windows'
-    Template: 'qtci-windows-11_23H2-x86_64-55'
-    Compiler: 'MSVC2022'
-    Features: ['TestOnly']
--
     Id: 'qtgp-on-windows-24h2'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
