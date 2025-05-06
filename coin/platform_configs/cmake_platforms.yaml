@@ -149,7 +149,7 @@ Configurations:
     Id: 'windows-11_24H2-msvc2022'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Features: ['Sccache', 'Packaging', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
@@ -190,7 +190,7 @@ Configurations:
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
     Target arch: 'arm64'
-    Features: ['Sccache', 'DisableTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Features: ['Sccache', 'Packaging', 'DisableTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Platform dependency: 'windows-11_24H2-msvc2022'
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer',
@@ -224,7 +224,7 @@ Configurations:
     Id: 'windows-11_24H2-msvc2022-developer-build'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'DebugAndRelease', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples', 'InsignificantTests']
+    Features: ['Sccache', 'DebugAndRelease', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
     Configure arguments: '-debug-and-release -force-asserts -make examples -developer-build -force-debug-info -qt-zlib -c++std c++20'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
@@ -307,7 +307,7 @@ Configurations:
     Id: 'windows-11_24H2-llvm'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'Clang'
-    Features: ['Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Features: ['Sccache', 'Packaging', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
     Environment variables: [
         'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
@@ -333,7 +333,7 @@ Configurations:
     Id: 'windows-11_24H2-mingw13-developer-build'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'Mingw'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples', 'InsignificantTests']
+    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
     Configure arguments: '-developer-build -release -force-asserts -force-debug-info -separate-debug-info -make examples'
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
