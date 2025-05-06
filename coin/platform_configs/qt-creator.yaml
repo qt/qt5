@@ -11,7 +11,7 @@ Configurations:
 -
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'DebugAndRelease', 'InsignificantTests']
+    Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
@@ -59,7 +59,7 @@ Configurations:
 -
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'DebugAndRelease', 'OldestQt', 'InsignificantTests']
+    Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']

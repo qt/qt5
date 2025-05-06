@@ -16,7 +16,7 @@ Configurations:
     Id: 'windows-11_24H2-msvc2022-unity-build'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'Debug', 'UseConfigure', 'DoNotRunTests', 'InsignificantTests']
+    Features: ['Sccache', 'Debug', 'UseConfigure', 'DoNotRunTests']
     Configure arguments: '-debug -force-debug-info -headersclean -make examples -qt-zlib'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DQT_UNITY_BUILD=ON',

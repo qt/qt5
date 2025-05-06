@@ -29,7 +29,7 @@ Configurations:
     Id: 'windows-11_24H2-minimal-static'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure', 'InsignificantTests']
+    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\..',
