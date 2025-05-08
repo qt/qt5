@@ -13,10 +13,10 @@ versionNode="v20.18.0"
 tarBallVersion="${version//./_}"
 if uname -a | grep -q Darwin; then
     tarBallPackage="emsdk_macos_${tarBallVersion}.tar.gz"
-    sha="eafd7b96ab12d84183d2eaa62e8d39bb12c252bf"
+    sha="c3d2df45685b68e5d69e09017084d26783eda2dd"
 else
     tarBallPackage="emsdk_linux_${tarBallVersion}.tar.gz"
-    sha="047a3da9048edc71fb56af544c4bb2448d6c0644"
+    sha="20f7782ca4a9088fe91405b16c6fed630e91dcd6"
 fi
 cacheUrl="https://ci-files01-hki.ci.qt.io/input/emsdk/${tarBallPackage}"
 target="/tmp/${tarBallPackage}"
