@@ -9,7 +9,7 @@ $version = "4.0.7"
 $zipVersion = $version -replace '\.', "_"
 $temp = "$env:tmp"
 $cacheUrl = "https://ci-files01-hki.ci.qt.io/input/emsdk/emsdk_windows_${zipVersion}.zip"
-$sha = "4d05e378575cb3d74e2740b121730ba1f5822f27"
+$sha = "d433b8353df4a75ba035fc618f520790b4fb7ee2"
 
 # Python used for '.\emsdk install'
 $pythonPath = [System.Environment]::GetEnvironmentVariable("PYTHON3_PATH", "Machine")
