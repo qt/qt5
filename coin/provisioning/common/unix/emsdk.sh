@@ -53,5 +53,6 @@ SetEnvVar "PATH" "\"\$PATH:${emscriptenPath}\""
 SetEnvVar "EMSCRIPTEN" "${emscriptenPath}"
 SetEnvVar "EMSDK" "${emsdkPath}"
 SetEnvVar "EMSDK_NODE" "${emsdkPath}${pathNodeExecutable}"
+SetEnvVar "EMSDK_PYTHON" "$PYTHON3_EXECUTABLE"
 
 echo "Emsdk = $version" >> ~/versions.txt
