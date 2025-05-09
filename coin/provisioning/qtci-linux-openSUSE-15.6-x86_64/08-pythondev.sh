@@ -3,7 +3,7 @@
 
 # provides: python development libraries
 # version: provided by default Linux distribution repository
-# needed to build pyside
+# needed to build pyside and emsdk for WebAssembly
 
 set -ex
 
