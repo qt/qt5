@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Configurations:
 -
-    Template: 'qtci-windows-11_23H2-x86_64-54'
+    Template: 'qtci-windows-11_23H2-x86_64-55'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
@@ -35,7 +35,7 @@ Configurations:
     Environment variables: []
 # without tests
 -
-    Template: 'qtci-windows-11_23H2-x86_64-54'
+    Template: 'qtci-windows-11_23H2-x86_64-55'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'DebugAndRelease', 'DisableTests']
     Configure arguments: ''
@@ -50,7 +50,7 @@ Configurations:
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 # oldest Qt version
 -
-    Template: 'qtci-windows-11_23H2-x86_64-54'
+    Template: 'qtci-windows-11_23H2-x86_64-55'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''

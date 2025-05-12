@@ -20,7 +20,7 @@ Configurations:
     ]
 -
     Id: 'windows-11_23H2-minimal-static'
-    Template: 'qtci-windows-11_23H2-x86_64-54'
+    Template: 'qtci-windows-11_23H2-x86_64-55'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-release -force-debug-info -static -nomake examples -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'

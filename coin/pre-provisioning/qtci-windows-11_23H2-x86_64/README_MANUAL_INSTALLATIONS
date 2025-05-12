@@ -140,3 +140,5 @@ After reboot and startup, go to 'This PC' -> virtio-win-0.1.204 and run virtio-w
    - Open Task Scheduler: Task Scheduler Library > Microsoft > VisualStudio > Updates > right-click: BackgroundDownload > disable
 * Activate Windows
 * When everything seems ready: shut down Windows, Select 'Power off' in OpenNebula.
+
+virtio-win-0.1.271 was later installed to 23h2 -55 by running .msi installation (QTQAINFRA-6761)
