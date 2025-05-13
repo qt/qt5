@@ -47,8 +47,9 @@ if [ "$os" == "macos"  ]; then
     build_ffmpeg
 
     install_dir="$ffmpeg_source_dir/build/installed"
-    "$fix_relative_dependencies" "$install_dir/usr/local/$ffmpeg_name/lib"
-    sudo mv "$install_dir/usr/local/$ffmpeg_name" "/usr/local"
+    "$fix_relative_dependencies" "$install_dir$prefix/lib"
+    sudo mkdir -p "$prefix"
+    sudo mv "$install_dir$prefix" "$prefix/../"
 else
     build_ffmpeg "arm64"
     build_ffmpeg "x86_64"
@@ -56,11 +57,11 @@ else
     arm64_install_dir="$ffmpeg_source_dir/build/arm64/installed"
     x86_64_install_dir="$ffmpeg_source_dir/build/x86_64/installed"
 
-    "$fix_relative_dependencies" "$arm64_install_dir/usr/local/$ffmpeg_name/lib"
-    "$fix_relative_dependencies" "$x86_64_install_dir/usr/local/$ffmpeg_name/lib"
+    "$fix_relative_dependencies" "$arm64_install_dir$prefix/lib"
+    "$fix_relative_dependencies" "$x86_64_install_dir$prefix/lib"
 
-    sudo rm -rf "/usr/local/$ffmpeg_name" # lipo fails upon 2nd run
+    sudo rm -rf "$prefix" # lipo fails upon 2nd run
     sudo "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$arm64_install_dir" "$x86_64_install_dir"
 fi
 
-set_ffmpeg_dir_env_var "FFMPEG_DIR" "/usr/local/$ffmpeg_name"
+set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
