@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script builds and installs FFmpeg shared libs
+# Can take an optional final parameter to control installation directory
 
 set -ex
 
@@ -18,7 +19,8 @@ source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_name=$(basename "$ffmpeg_source_dir")
 ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
-prefix="/usr/local/$ffmpeg_name"
+default_prefix="/usr/local/$ffmpeg_name"
+prefix="${2:-$default_prefix}"
 
 build_ffmpeg() {
     local arch="$1"
