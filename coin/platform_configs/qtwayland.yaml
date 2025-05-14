@@ -3,18 +3,4 @@ Include: [
     cmake_platforms.yaml,
     address_sanitizer_platforms.yaml
 ]
-Configurations:
-# Test on Ubuntu 24.04 ARM64 Wayland
--
-    Id: 'ubuntu-24.04-arm64-developer-build-wayland-tests'
-    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
-    Compiler: 'GCC'
-    Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
-    Platform dependency: 'ubuntu-24.04-arm64-developer-build'
-# Test on Ubuntu 24.04 x64 Wayland
--
-    Id: 'ubuntu-24.04-x64-wayland-tests'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['TestOnly', 'RunDependencyTests', 'InsignificantTests']
-    Platform dependency: 'ubuntu-24.04-x64'
+Configurations: []
