@@ -78,3 +78,10 @@ chmod 755 ./coin-setup
 run ./coin-setup
 
 sudo reboot now
+
+# Select login session type
+After reboot into user qt:
+- log out
+- select session type "Gnome Classic" in session selector on the login sreen (gear wheel on bottom right)
+- reboot again with sudo reboot now
+- verify that auto login lands in normal desktop
