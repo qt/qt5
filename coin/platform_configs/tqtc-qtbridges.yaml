@@ -1,0 +1,64 @@
+Version: 2
+Include: [
+  quick-bridges.yaml: [
+     "macos-quick-bridges",
+     "linux-quick-bridges",
+     "windows-quick-bridges"
+  ]
+]
+Configurations:
+-
+    Id: 'windows-quick-bridges-dotnet'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Platform dependency: 'windows-quick-bridges'
+    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesDotnet']
+
+-
+    Id: 'windows-quick-bridges-rust'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Platform dependency: 'windows-quick-bridges'
+    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesRust']
+
+-
+    Id: 'linux-quick-bridges-python'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Platform dependency: 'linux-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
+
+-
+    Id: 'linux-quick-bridges-java'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Platform dependency: 'linux-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'RunAsPlatformDependency', 'QtBridgesJava']
+
+-
+    Id: 'linux-quick-bridges-rust'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Platform dependency: 'linux-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'RunAsPlatformDependency', 'QtBridgesRust']
+
+-
+    Id: 'macos-quick-bridges-java'
+    Template: 'qtci-macos-15-arm-104'
+    Compiler: 'Clang'
+    Platform dependency: 'macos-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesJava']
+
+-
+    Id: 'macos-quick-bridges-python'
+    Template: 'qtci-macos-15-arm-104'
+    Compiler: 'Clang'
+    Platform dependency: 'macos-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
+
+-
+    Id: 'macos-quick-bridges-swift'
+    Template: 'qtci-macos-15-arm-104'
+    Compiler: 'Clang'
+    Platform dependency: 'macos-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesSwift']
