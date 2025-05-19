@@ -22,7 +22,7 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
     Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
