@@ -48,7 +48,7 @@ Configurations:
     ]
 -
     Id: 'ubuntu-24.04-arm64'
-    Template: 'qtci-linux-Ubuntu-24.04-aarch64-50'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
     Compiler: 'GCC'
     Features: ['Packaging', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
     Configure arguments: '-static -nomake examples -release -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -no-libudev -bundled-xcb-xinput -no-icu -qt-doubleconversion'
