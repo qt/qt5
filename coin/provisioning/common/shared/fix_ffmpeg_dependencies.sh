@@ -2,16 +2,33 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-set -x
+set -euox pipefail
 
 lib_dir="$1/lib"
 additional_suffix="${2:-}"
 set_rpath="${3:-yes}"
 
+# readelf and patchelf are prerequisite tools for this script. Check
+# that they are available.
 if [ "$(uname -s)" = "Darwin" ]; then
     # Under Homebrew, binutils package is not symlinked into PATH.
     # This lets us use readelf provided by Homebrew.
-    readelf() { "$(brew --prefix binutils)/bin/readelf" "$@"; }
+    readelf_homebrew_path="$(brew --prefix binutils)/bin/readelf"
+    if [[ ! -x "$readelf_homebrew_path" ]]; then
+        echo "Found no valid readelf executable. It is possible it was not correctly installed through Homebrew."
+        exit 1
+    fi
+    readelf() { "$readelf_homebrew_path" "$@"; }
+fi
+
+if ! command -v readelf; then
+    echo "Found no valid readelf command. It is possible it was not correctly installed."
+    exit 1
+fi
+
+if ! command -v patchelf; then
+    echo "Found no valid patchelf command. It is possible it was not correctly installed."
+    exit 1
 fi
 
 ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
