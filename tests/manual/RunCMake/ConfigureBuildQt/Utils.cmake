@@ -282,23 +282,37 @@ function(setup_qt_sources)
     # Merge stdout with stderr, to avoid having stderr output from git trigger errors.
     set(RunCMake_TEST_OUTPUT_MERGE TRUE)
 
-    # Adjust its remote url not to be the local url.
-    get_repo_base_url(repo_base_url)
-    set(remote_clone_url "${repo_base_url}/qt/qt5.git")
-    run_command("${prefix}" set_remote_url git remote set-url origin "${remote_clone_url}")
+    get_cmake_or_env_or_default(use_local USE_LOCAL_SUBMODULE_SYMLINKS OFF)
+    if(use_local)
+        file(GLOB qt_submodules RELATIVE "${top_level_src_dir}" "${top_level_src_dir}/qt*")
+        foreach(submodule IN LISTS qt_submodules)
+            message(STATUS
+                "Making a symlink of submodule ${submodule} "
+                "pointing to ${top_level_src_dir}/${submodule}"
+            )
+            file(REMOVE_RECURSE "${top_level_src_dir}/${submodule}")
+            file(CREATE_LINK "${top_repo_dir_path}/${submodule}" "${top_level_src_dir}/${submodule}"
+            SYMBOLIC)
+        endforeach()
+    else()
+        # Adjust its remote url not to be the local url.
+        get_repo_base_url(repo_base_url)
+        set(remote_clone_url "${repo_base_url}/qt/qt5.git")
+        run_command("${prefix}" set_remote_url git remote set-url origin "${remote_clone_url}")
 
-    # Sync to given module.
-    run_command("${prefix}" git_sync_to_${SYNC_MODULE}
-        ${CMAKE_COMMAND}
-            "-DSYNC_TO_MODULE=${SYNC_MODULE}"
-            "-DSYNC_TO_BRANCH=${SYNC_TO_REF}"
-            -DSHOW_PROGRESS=1
-            -DVERBOSE=1
-            -DGIT_DEPTH=1
-            -P cmake/QtSynchronizeRepo.cmake
-    )
+        # Sync to given module.
+        run_command("${prefix}" git_sync_to_${SYNC_MODULE}
+                ${CMAKE_COMMAND}
+                "-DSYNC_TO_MODULE=${SYNC_MODULE}"
+                "-DSYNC_TO_BRANCH=${SYNC_TO_REF}"
+                -DSHOW_PROGRESS=1
+                -DVERBOSE=1
+                -DGIT_DEPTH=1
+                -P cmake/QtSynchronizeRepo.cmake
+        )
 
-    apply_extra_gerrit_changes()
+        apply_extra_gerrit_changes()
+    endif()
 
     file(TOUCH "${working_dir}/sources_synced.txt")
 endfunction()
