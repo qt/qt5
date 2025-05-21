@@ -8,15 +8,15 @@ sudo zypper -nq install elfutils binutils
 
 sudo zypper addrepo --no-gpgcheck https://download.opensuse.org/repositories/devel:gcc/SLE-15/devel:gcc.repo
 sudo zypper refresh
-sudo zypper -nq install --force-resolution gcc10 gcc10-c++
+sudo zypper -nq install --force-resolution gcc11 gcc11-c++
 
 # Make sure needed ca-certificates are available
 sudo zypper -nq install ca-certificates
 
-sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 1 \
-                                     --slave /usr/bin/g++ g++ /usr/bin/g++-10 \
-                                     --slave /usr/bin/cc cc /usr/bin/gcc-10 \
-                                     --slave /usr/bin/c++ c++ /usr/bin/g++-10
+sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 1 \
+                                     --slave /usr/bin/g++ g++ /usr/bin/g++-11 \
+                                     --slave /usr/bin/cc cc /usr/bin/gcc-11 \
+                                     --slave /usr/bin/c++ c++ /usr/bin/g++-11
 
 sudo zypper -nq install git ninja make patch wget tar
 
