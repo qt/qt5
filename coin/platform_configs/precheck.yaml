@@ -3,7 +3,7 @@ Module only: True
 Include: [
   cmake_platforms.yaml: [
     "ubuntu-22.04",
-    "ubuntu-22.04-developer-build",
+    "ubuntu-24.04-x64-developer-build",
     "ubuntu-24.04-x64-developer-build-x11-tests",
     "windows-11_23H2-msvc2022-developer-build",
     "windows-11_24H2-msvc2022-developer-build",
