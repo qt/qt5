@@ -18,7 +18,7 @@ Include: [
   cmake_platforms_qemu.yaml: [
     "qemu-armv7-developer-build"
   ],
-  cmake_platforms_qemu_qnx710.yaml: [
+  cmake_platforms_qemu_qnx.yaml: [
     "qnx-710-x86_64-developer-build-on-linux"
   ]
 ]

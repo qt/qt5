@@ -43,9 +43,9 @@ if [ ! -d "$targetFolder" ]; then
 fi
 
 # QNX SDP
-sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20240930.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20250612.tar.xz"
 targetFile="qnx800.tar.xz"
-sha1="a86d6e001e4ad46f50ed430fb85e8230e730751b"
+sha1="d7ca20be6867b569067a17e8b3fa633c7eadad89"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
 sudo cp "$aarch64le_toolchain" "$targetPath"
@@ -78,6 +78,10 @@ then
     echo "QNX toolchain installation failed!"
     exit 1
 fi
+
+# Target folder has been renamed on QNX8.0 SDP. Link is created to simplify environment
+# setting at qtBase
+sudo ln -s $targetPath/target/qnx $targetPath/target/qnx7
 
 # Set env variables
 SetEnvVar "QNX_800" "$targetPath"

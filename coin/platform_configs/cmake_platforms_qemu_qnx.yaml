@@ -14,7 +14,7 @@ Configurations:
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
         'QT_CMAKE_DIR=/opt/cmake-3.30.5/bin',
         'QNX_TEST_ENV=LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=710 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'QNX_QEMU={{.Env.QNX_710_QEMU}}',
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=x64-qnx-qt',
@@ -31,7 +31,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=710 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=arm64-qnx-qt',
     ]
@@ -47,7 +47,42 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-armv7le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=710 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=armv7-qnx-qt',
+    ]
+-
+    Id: 'qnx-800-x86_64-developer-build-on-linux'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Target os: 'QNX_800'
+    Target arch: 'x86_64'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'ubuntu-22.04'
+    Features: ['Packaging', 'VMSize8', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_800}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'QT_CMAKE_DIR=/opt/cmake-3.30.5/bin',
+        'QNX_TEST_ENV=LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=802 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'QNX_QEMU={{.Env.QNX_800_QEMU}}',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-qnx-qt',
+    ]
+-
+    Id: 'qnx-800-arm64-on-linux'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Target os: 'QNX_800'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Target compiler: 'QCC'
+    Platform dependency: 'ubuntu-22.04'
+    Features: ['Packaging', 'DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-release -force-debug-info -no-dbus -nomake examples',
+        'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_800}}/qnx-toolchain-aarch64le.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=802 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-qnx-qt',
     ]

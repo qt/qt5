@@ -21,7 +21,7 @@ fc-cache &
 
 echo "---> Restart ssh daemon"
 slay sshd
-/system/xbin/sshd -f /system/data/etc/ssh/sshd_config
+/system/bin/sshd -f /system/data/etc/ssh/sshd_config
 
 # Add default route so QNX knows where to send
 # requests for unknown network

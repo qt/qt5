@@ -10,7 +10,7 @@ AuthenticationMethods none
 PermitEmptyPasswords yes
 PermitRootLogin yes
 PidFile none
-Subsystem sftp /system/xbin/sftp-server
+Subsystem sftp /system/bin/sftp-server
 }
 
 # libraries Qt requires
