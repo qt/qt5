@@ -127,6 +127,7 @@ installPackages+=(libxkbcommon-devel)
 installPackages+=(libxkbcommon-x11-devel)
 # xcb-util-* libraries
 installPackages+=(xcb-util)
+installPackages+=(xcb-util-devel)
 installPackages+=(xcb-util-image-devel)
 installPackages+=(xcb-util-keysyms-devel)
 installPackages+=(xcb-util-wm-devel)
