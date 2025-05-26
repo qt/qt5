@@ -4,8 +4,6 @@ Include: [
         "documentation-warnings",
         "rhel-8.10",
         'windows-10_22h2-mingw13',
-        'ubuntu-22.04-developer-build',
-        'ubuntu-22.04-developer-build-x11-tests'
     ],
     macos.yaml: [
         'macos-universal-on-x86_64'
