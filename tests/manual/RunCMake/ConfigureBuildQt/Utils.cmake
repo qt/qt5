@@ -322,7 +322,23 @@ function(setup_list_of_repos_to_build)
     # Fake set the CMAKE_CURRENT_SOURCE_DIR so that we can parse the dependencies.
     set(CMAKE_CURRENT_SOURCE_DIR "${TOP_LEVEL_SRC_DIR}")
 
-    qt_internal_sort_module_dependencies("${SYNC_MODULE}" initial_submodules)
+    set(sort_module_args "")
+    set(optional_submodules_skipped "")
+    get_cmake_or_env_or_default(exclude_optional_deps EXCLUDE_OPTIONAL_DEPS "ON")
+    if(exclude_optional_deps)
+        list(APPEND sort_module_args
+            EXCLUDE_OPTIONAL_DEPS
+            EXCLUDE_OPTIONAL_DEPS_VAR optional_submodules_skipped
+        )
+    endif()
+
+    # TODO: hard-coding how to deal with qtdeclarative here for now
+    # We need qtshadertools to build standalone tests in qtdeclarative because of qtquick
+    if("qtdeclarative" IN_LIST SYNC_MODULE)
+        list(PREPEND SYNC_MODULE qtshadertools)
+    endif()
+
+    qt_internal_sort_module_dependencies("${SYNC_MODULE}" initial_submodules ${sort_module_args})
     set(final_submodules ${initial_submodules})
 
     get_default_repo_to_sync(default_module)
@@ -333,11 +349,8 @@ function(setup_list_of_repos_to_build)
         # Support semicolons and commas.
         string(REPLACE "," ";" skip_submodules "${skip_submodules}")
     endif()
-
-    # By default we skip some of qtdeclarative's optional dependencies.
-    if(NOT skip_submodules AND SYNC_MODULE STREQUAL "${default_module}")
-        set(skip_submodules qtsvg qtimageformats qtlanguageserver)
-    endif()
+    list(APPEND skip_submodules ${optional_submodules_skipped})
+    list(REMOVE_DUPLICATES skip_submodules)
 
     if(skip_submodules)
         list(REMOVE_ITEM final_submodules ${skip_submodules})
