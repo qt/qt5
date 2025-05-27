@@ -169,6 +169,9 @@ endfunction()
 # EXCLUDE_OPTIONAL_DEPS is a boolean that controls whether optional dependencies are excluded from
 # the final result.
 #
+# EXCLUDE_OPTIONAL_DEPS_VAR is an output variable where to save the list of optional dependencies
+# that were excluded due to EXCLUDE_OPTIONAL_DEPS.
+#
 # GITMODULES_PREFIX_VAR is the prefix of all the variables containing dependencies for the
 # PARSE_GITMODULES mode.
 # The function expects the following variables to be set in the parent scope
@@ -189,7 +192,7 @@ endfunction()
 function(qt_internal_resolve_module_dependencies module out_ordered out_revisions)
     set(options IN_RECURSION NORMALIZE_REPO_NAME_IF_NEEDED PARSE_GITMODULES
                 EXCLUDE_OPTIONAL_DEPS)
-    set(oneValueArgs REVISION SKIPPED_VAR GITMODULES_PREFIX_VAR)
+    set(oneValueArgs REVISION SKIPPED_VAR GITMODULES_PREFIX_VAR EXCLUDE_OPTIONAL_DEPS_VAR)
     set(multiValueArgs PARSED_DEPENDENCIES SKIP_MODULES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -231,6 +234,12 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
                         list(GET dependency_split 2 required)
                         if(required)
                             list(APPEND filtered_dependencies "${dependency}")
+                        elseif(arg_EXCLUDE_OPTIONAL_DEPS_VAR)
+                            # Add any potentially skipped dependency to the list and
+                            # filter out the required ones later
+                            list(GET dependency_split 0 dependency_name)
+                            list(APPEND ${arg_EXCLUDE_OPTIONAL_DEPS_VAR}
+                                "${dependency_name}")
                         endif()
                     endforeach()
                     set(dependencies "${filtered_dependencies}")
@@ -289,6 +298,12 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             set(exclude_optional_deps "EXCLUDE_OPTIONAL_DEPS")
         endif()
 
+        set(exclude_optional_deps_var "")
+        if(arg_EXCLUDE_OPTIONAL_DEPS_VAR)
+            set(exclude_optional_deps_var
+                EXCLUDE_OPTIONAL_DEPS_VAR "${arg_EXCLUDE_OPTIONAL_DEPS_VAR}")
+        endif()
+
         set(extra_options "")
         if(arg_SKIP_MODULES)
             list(APPEND extra_options SKIP_MODULES ${arg_SKIP_MODULES})
@@ -301,6 +316,7 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
             ${normalize_arg}
             ${parse_gitmodules}
             ${exclude_optional_deps}
+            ${exclude_optional_deps_var}
             GITMODULES_PREFIX_VAR ${arg_GITMODULES_PREFIX_VAR}
             ${extra_options}
         )
@@ -314,6 +330,13 @@ function(qt_internal_resolve_module_dependencies module out_ordered out_revision
     list(APPEND revisions ${arg_REVISION})
     set(${out_ordered} "${ordered}" PARENT_SCOPE)
     set(${out_revisions} "${revisions}" PARENT_SCOPE)
+    if(arg_EXCLUDE_OPTIONAL_DEPS_VAR)
+        # Filter out all dependencies that were marked as required and remove any duplicates
+        list(REMOVE_DUPLICATES ${arg_EXCLUDE_OPTIONAL_DEPS_VAR})
+        list(REMOVE_ITEM ${arg_EXCLUDE_OPTIONAL_DEPS_VAR} ${ordered})
+        set(${arg_EXCLUDE_OPTIONAL_DEPS_VAR}
+            "${${arg_EXCLUDE_OPTIONAL_DEPS_VAR}}" PARENT_SCOPE)
+    endif()
 endfunction()
 
 # Resolves the dependencies of the given modules.
@@ -329,12 +352,16 @@ endfunction()
 # EXCLUDE_OPTIONAL_DEPS is a keyword argument that excludes optional dependencies from the result.
 # See qt_internal_resolve_module_dependencies for details.
 #
+# EXCLUDE_OPTIONAL_DEPS_VAR is an output variable where to save the list of optional dependencies
+# that were excluded due to EXCLUDE_OPTIONAL_DEPS.
+# See qt_internal_resolve_module_dependencies for details.
+#
 # SKIP_MODULES Modules that should be skipped from evaluation completely.
 #
 # See qt_internal_resolve_module_dependencies for side effects.
 function(qt_internal_sort_module_dependencies modules out_all_ordered)
     set(options PARSE_GITMODULES EXCLUDE_OPTIONAL_DEPS)
-    set(oneValueArgs GITMODULES_PREFIX_VAR)
+    set(oneValueArgs GITMODULES_PREFIX_VAR EXCLUDE_OPTIONAL_DEPS_VAR)
     set(multiValueArgs SKIP_MODULES)
     cmake_parse_arguments(arg "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -346,6 +373,12 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
     set(exclude_optional_deps "")
     if(arg_EXCLUDE_OPTIONAL_DEPS)
         set(exclude_optional_deps "EXCLUDE_OPTIONAL_DEPS")
+    endif()
+
+    set(exclude_optional_deps_var "")
+    if(arg_EXCLUDE_OPTIONAL_DEPS_VAR)
+        set(exclude_optional_deps_var
+            EXCLUDE_OPTIONAL_DEPS_VAR "${arg_EXCLUDE_OPTIONAL_DEPS_VAR}")
     endif()
 
     # Create a fake repository "all_selected_repos" that has all repositories from the input as
@@ -364,6 +397,7 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
         PARSED_DEPENDENCIES ${all_selected_repos_as_parsed_dependencies}
         NORMALIZE_REPO_NAME_IF_NEEDED
         ${exclude_optional_deps}
+        ${exclude_optional_deps_var}
         ${parse_gitmodules}
         GITMODULES_PREFIX_VAR ${arg_GITMODULES_PREFIX_VAR}
         ${extra_args}
@@ -377,6 +411,10 @@ function(qt_internal_sort_module_dependencies modules out_all_ordered)
         "qt_internal_sort_module_dependencies
     input modules: ${modules}\n    topo-sorted:   ${ordered}")
     set(${out_all_ordered} "${ordered}" PARENT_SCOPE)
+    if(arg_EXCLUDE_OPTIONAL_DEPS_VAR)
+        set(${arg_EXCLUDE_OPTIONAL_DEPS_VAR}
+                "${${arg_EXCLUDE_OPTIONAL_DEPS_VAR}}" PARENT_SCOPE)
+    endif()
 endfunction()
 
 # Checks whether any unparsed arguments have been passed to the function at the call site.
