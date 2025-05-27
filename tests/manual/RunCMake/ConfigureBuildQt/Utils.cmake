@@ -20,10 +20,21 @@ endfunction()
 
 # Query the var name from the CMake cache or the environment or use a default value.
 function(get_cmake_or_env_or_default out_var var_name_to_check default_value)
+    # Load the cache variables from the build dir containing the ConfigueBuildQt test
+    # RunCMake_BINARY_DIR is not actually created at this point so we have to normalize the path
+    cmake_path(SET actual_BINARY_DIR NORMALIZE "${RunCMake_BINARY_DIR}/..")
+    load_cache("${actual_BINARY_DIR}"
+        READ_WITH_PREFIX CACHE_VAL_ "${var_name_to_check}"
+    )
     if(${var_name_to_check})
+        # This is set within the script, highest priority
         set(value "${var_name_to_check}")
     elseif(DEFINED ENV{${var_name_to_check}})
+        # This may be used to change parameters at ctest runtime
         set(value "$ENV{${var_name_to_check}}")
+    elseif(DEFINED CACHE_VAL_${var_name_to_check})
+        # These parameters are set at configure time
+        set(value "${CACHE_VAL_${var_name_to_check}}")
     else()
         set(value "${default_value}")
     endif()
