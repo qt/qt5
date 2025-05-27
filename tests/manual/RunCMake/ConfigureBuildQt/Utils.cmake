@@ -488,6 +488,7 @@ function(configure_qt)
     )
     set(single_args
         TEST_NAME
+        CMAKE_GENERATOR
         BUILD_DIR_ROOT_PATH
         REPO_NAME
         REPO_PATH
@@ -609,6 +610,7 @@ function(configure_standalone_part)
     )
     set(single_args
         TEST_NAME
+        CMAKE_GENERATOR
         BUILD_DIR_ROOT_PATH
         REPO_NAME
         REPO_PATH
@@ -689,6 +691,11 @@ function(configure_standalone_part)
         -B .
     )
     get_common_cmake_args(common_cmake_args)
+    if(arg_CMAKE_GENERATOR)
+        list(APPEND common_cmake_args -G "${arg_CMAKE_GENERATOR}")
+    else()
+        list(APPEND common_cmake_args -G "${RunCMake_GENERATOR}")
+    endif()
     list(APPEND common_cmake_args
         ${arg_CMAKE_ARGS}
     )
