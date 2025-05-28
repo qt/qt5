@@ -1214,6 +1214,39 @@ function(qt_build_helper)
             )
         endif()
     endforeach()
+
+    # Do another round of reconfigure (and in certain cases rebuild) after all submodules were built
+    # This will include any plugin navigations in the find_package calls
+    if(arg_RECONFIGURE_WITHOUT_ARGS_IMMEDIATELY
+        OR arg_RECONFIGURE_WITHOUT_ARGS_AFTER_BUILD)
+        foreach(repo_name IN LISTS repos_to_process)
+            set(repo_path "${source_dir}/${repo_name}")
+            set(test_name "${arg_TEST_NAME}_${repo_name}")
+
+            set(common_args
+                TEST_NAME "${test_name}"
+                REPO_NAME "${repo_name}"
+                REPO_PATH "${repo_path}"
+                TOP_LEVEL_SOURCE_DIR_PATH "${source_dir}"
+                BUILD_DIR_ROOT_PATH "${build_dir_root}"
+                ${extra_args}
+            )
+
+            call_cmake_in_qt_build_dir(
+                ${common_args}
+                LOG_LEVEL STATUS
+            )
+
+            if(arg_BUILD_AFTER_RECONFIGURE)
+                build_qt(
+                    IS_REBUILD
+                    BUILD_VERBOSE
+                    BUILD_NINJA_EXPLAIN
+                    ${common_args}
+                )
+            endif()
+        endforeach()
+    endif()
 endfunction()
 
 function(add_test_case)
