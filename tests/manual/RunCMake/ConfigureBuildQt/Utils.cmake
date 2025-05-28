@@ -1065,6 +1065,7 @@ function(qt_build_helper)
         RECONFIGURE_WITHOUT_ARGS_AFTER_BUILD
         RECONFIGURE_WITHOUT_ARGS_IMMEDIATELY
         BUILD_AFTER_RECONFIGURE
+        RECONFIGURE_STANDALONE_PARTS
     )
     set(single_args
         TEST_NAME
@@ -1213,6 +1214,16 @@ function(qt_build_helper)
                 BUILD_DIR_PATH "${tests_build_dir}"
                 OP_NAME "build_tests"
             )
+            if(arg_RECONFIGURE_STANDALONE_PARTS)
+                get_standalone_part_name(standalone_part_name
+                    PART_NAME "TESTS"
+                )
+                call_cmake_in_qt_build_dir(
+                    ${common_args}
+                    LOG_LEVEL STATUS
+                    STANDALONE_PART_PREFIX "${standalone_part_name}"
+                )
+            endif()
         endif()
 
         if(arg_BUILD_STANDALONE_EXAMPLES_IN_TREE AND NOT arg_SKIP_STANDALONE_PARTS)
@@ -1227,6 +1238,17 @@ function(qt_build_helper)
                 BUILD_DIR_PATH "${examples_build_dir}"
                 OP_NAME "build_examples"
             )
+            if(arg_RECONFIGURE_STANDALONE_PARTS)
+                get_standalone_part_name(standalone_part_name
+                    PART_NAME "EXAMPLES"
+                    PART_VARIANT "EXAMPLES_IN_TREE"
+                )
+                call_cmake_in_qt_build_dir(
+                    ${common_args}
+                    LOG_LEVEL STATUS
+                    STANDALONE_PART_PREFIX "${standalone_part_name}"
+                )
+            endif()
         endif()
 
         if(arg_BUILD_STANDALONE_EXAMPLES_AS_EXTERNAL_PROJECTS AND NOT arg_SKIP_STANDALONE_PARTS)
@@ -1241,6 +1263,17 @@ function(qt_build_helper)
                 BUILD_DIR_PATH "${examples_build_dir}"
                 OP_NAME "build_examples"
             )
+            if(arg_RECONFIGURE_STANDALONE_PARTS)
+                get_standalone_part_name(standalone_part_name
+                    PART_NAME "EXAMPLES"
+                    PART_VARIANT "EXAMPLES_AS_EXTERNAL_PROJECTS"
+                )
+                call_cmake_in_qt_build_dir(
+                    ${common_args}
+                    LOG_LEVEL STATUS
+                    STANDALONE_PART_PREFIX "${standalone_part_name}"
+                )
+            endif()
         endif()
     endforeach()
 
@@ -1273,6 +1306,42 @@ function(qt_build_helper)
                     BUILD_NINJA_EXPLAIN
                     ${common_args}
                 )
+            endif()
+            if(arg_RECONFIGURE_STANDALONE_PARTS AND NOT arg_SKIP_STANDALONE_PARTS)
+                if(arg_BUILD_STANDALONE_TESTS)
+                    get_standalone_part_name(standalone_part_name
+                        PART_NAME "TESTS"
+                    )
+                    call_cmake_in_qt_build_dir(
+                        ${common_args}
+                        LOG_LEVEL STATUS
+                        STANDALONE_PART_PREFIX "${standalone_part_name}"
+                    )
+                endif()
+
+                if(arg_BUILD_STANDALONE_EXAMPLES_IN_TREE)
+                    get_standalone_part_name(standalone_part_name
+                        PART_NAME "EXAMPLES"
+                        PART_VARIANT "EXAMPLES_IN_TREE"
+                    )
+                    call_cmake_in_qt_build_dir(
+                        ${common_args}
+                        LOG_LEVEL STATUS
+                        STANDALONE_PART_PREFIX "${standalone_part_name}"
+                    )
+                endif()
+
+                if(arg_BUILD_STANDALONE_EXAMPLES_AS_EXTERNAL_PROJECTS)
+                    get_standalone_part_name(standalone_part_name
+                        PART_NAME "EXAMPLES"
+                        PART_VARIANT "EXAMPLES_AS_EXTERNAL_PROJECTS"
+                    )
+                    call_cmake_in_qt_build_dir(
+                        ${common_args}
+                        LOG_LEVEL STATUS
+                        STANDALONE_PART_PREFIX "${standalone_part_name}"
+                    )
+                endif()
             endif()
         endforeach()
     endif()

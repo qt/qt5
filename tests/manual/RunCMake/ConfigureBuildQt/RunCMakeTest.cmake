@@ -23,6 +23,7 @@ macro(test_per_repo_prefix_qt)
             BUILD_STANDALONE_EXAMPLES_IN_TREE
             BUILD_STANDALONE_EXAMPLES_AS_EXTERNAL_PROJECTS
             RECONFIGURE_WITHOUT_ARGS_IMMEDIATELY
+            RECONFIGURE_STANDALONE_PARTS
     )
 endmacro()
 
@@ -37,6 +38,7 @@ macro(test_per_repo_no_prefix_qt)
             BUILD_STANDALONE_EXAMPLES_AS_EXTERNAL_PROJECTS
             RECONFIGURE_WITHOUT_ARGS_AFTER_BUILD
             BUILD_AFTER_RECONFIGURE
+            RECONFIGURE_STANDALONE_PARTS
     )
 endmacro()
 
