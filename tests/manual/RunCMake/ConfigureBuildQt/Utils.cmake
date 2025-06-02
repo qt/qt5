@@ -629,6 +629,44 @@ function(configure_qt)
     run_command("${prefix}" configure ${final_configure_args})
 endfunction()
 
+function(get_standalone_part_name out_var)
+    set(opt_args "")
+    set(single_args
+        PART_NAME
+        PART_VARIANT
+    )
+    set(multi_args "")
+    cmake_parse_arguments(PARSE_ARGV 1 arg "${opt_args}" "${single_args}" "${multi_args}")
+
+    if(NOT arg_PART_NAME)
+        message(FATAL_ERROR "PART_NAME is required.")
+    endif()
+
+    set(supported_parts TESTS EXAMPLES)
+    if(NOT arg_PART_NAME IN_LIST supported_parts)
+        message(FATAL_ERROR "PART_NAME must be one of: ${supported_parts}")
+    endif()
+    string(TOLOWER "${arg_PART_NAME}" part_name)
+
+    string(TOLOWER "${arg_PART_NAME}" part_name)
+
+    if(arg_PART_NAME STREQUAL "EXAMPLES")
+        if(NOT arg_PART_VARIANT)
+            message(FATAL_ERROR "PART_VARIANT is required for EXAMPLES")
+        endif()
+        set(supported_examples_part_variant EXAMPLES_IN_TREE EXAMPLES_AS_EXTERNAL_PROJECTS)
+        if(NOT arg_PART_VARIANT IN_LIST supported_examples_part_variant)
+            message(FATAL_ERROR "PART_VARIANT must be one of: ${supported_examples_part_variant}")
+        endif()
+        if(arg_PART_VARIANT STREQUAL "EXAMPLES_IN_TREE")
+            set(part_variant_suffix "_it")
+        elseif(arg_PART_VARIANT STREQUAL "EXAMPLES_AS_EXTERNAL_PROJECTS")
+            set(part_variant_suffix "_ep")
+        endif()
+    endif()
+    set(${out_var} "standalone_${part_name}${part_variant_suffix}" PARENT_SCOPE)
+endfunction()
+
 # Configures standalone tests or examples for a repo.
 function(configure_standalone_part)
     set(opt_args
@@ -654,37 +692,22 @@ function(configure_standalone_part)
     if(NOT arg_PART_NAME)
         message(FATAL_ERROR "PART_NAME is required.")
     endif()
-
-    set(supported_parts TESTS EXAMPLES)
-    if(NOT arg_PART_NAME IN_LIST supported_parts)
-        message(FATAL_ERROR "PART_NAME must be one of: ${supported_parts}")
+    set(standalone_part_name_args PART_NAME ${arg_PART_NAME})
+    if(arg_PART_VARIANT)
+        list(APPEND standalone_part_name_args PART_VARIANT ${arg_PART_VARIANT})
     endif()
+    get_standalone_part_name(standalone_part_name ${standalone_part_name_args})
     string(TOLOWER "${arg_PART_NAME}" part_name)
-
-    if(arg_PART_NAME STREQUAL "EXAMPLES")
-        if(NOT arg_PART_VARIANT)
-            message(FATAL_ERROR "PART_VARIANT is required for EXAMPLES")
-        endif()
-        set(supported_examples_part_variant EXAMPLES_IN_TREE EXAMPLES_AS_EXTERNAL_PROJECTS)
-        if(NOT arg_PART_VARIANT IN_LIST supported_examples_part_variant)
-            message(FATAL_ERROR "PART_VARIANT must be one of: ${supported_examples_part_variant}")
-        endif()
-        if(arg_PART_VARIANT STREQUAL "EXAMPLES_IN_TREE")
-            set(part_variant_suffix "_it")
-        elseif(arg_PART_VARIANT STREQUAL "EXAMPLES_AS_EXTERNAL_PROJECTS")
-            set(part_variant_suffix "_ep")
-        endif()
-    endif()
 
     check_and_set_common_qt_configure_options()
 
     message(STATUS "Configuring standalone parts: ${arg_TEST_NAME}:${repo_name}:${part_name}")
 
     if(arg_TOP_LEVEL)
-        set(build_dir_path "${build_dir_root}/standalone_${part_name}${part_variant_suffix}")
+        set(build_dir_path "${build_dir_root}/${standalone_part_name}")
     else()
         set(build_dir_path
-            "${build_dir_root}/standalone_${part_name}${part_variant_suffix}_${repo_name}")
+            "${build_dir_root}/${standalone_part_name}_${repo_name}")
     endif()
     file(MAKE_DIRECTORY "${build_dir_path}")
     set(${arg_OUT_VAR_BUILD_DIR} "${build_dir_path}" PARENT_SCOPE)
@@ -817,6 +840,7 @@ function(call_cmake_in_qt_build_dir)
         REPO_NAME
         REPO_PATH
         LOG_LEVEL
+        STANDALONE_PART_PREFIX
     )
     set(multi_args
         CMAKE_ARGS
@@ -825,10 +849,15 @@ function(call_cmake_in_qt_build_dir)
 
     check_and_set_common_qt_configure_options()
 
+    set(repo_prefix "")
+    if(arg_STANDALONE_PART)
+        set(repo_prefix "${arg_STANDALONE_PART_PREFIX}_")
+    endif()
+
     if(arg_TOP_LEVEL)
         set(build_dir_path "${build_dir_root}")
     else()
-        set(build_dir_path "${build_dir_root}/${repo_name}")
+        set(build_dir_path "${build_dir_root}/${repo_prefix}${repo_name}")
     endif()
 
     set(op_name "cmake_in_qt")
