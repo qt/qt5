@@ -48,7 +48,6 @@ Configurations:
         -no-feature-picture
         -no-feature-pdf
         -no-feature-accessibility
-        -no-feature-clipboard
         -no-feature-image_heuristic_mask
         -no-feature-imageformat_bmp
         -no-feature-imageformat_ppm
