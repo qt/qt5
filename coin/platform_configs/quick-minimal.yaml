@@ -136,6 +136,7 @@ Configurations:
          -DFEATURE_quick_draganddrop=off
          -DFEATURE_quick_pixmap_cache_threaded_download=off
          -DFEATURE_qml_table_model=off
+         -DFEATURE_qml_tree_model=off
          -DFEATURE_quicktemplates2_hover=off
          -DFEATURE_quicktemplates2_multitouch=off
          -DFEATURE_quicktemplates2_calendar=off
@@ -283,6 +284,7 @@ Configurations:
          -DFEATURE_quick_draganddrop=off
          -DFEATURE_quick_pixmap_cache_threaded_download=off
          -DFEATURE_qml_table_model=off
+         -DFEATURE_qml_tree_model=off
          -DFEATURE_quicktemplates2_hover=off
          -DFEATURE_quicktemplates2_multitouch=off
          -DFEATURE_quicktemplates2_calendar=off
@@ -415,6 +417,7 @@ Configurations:
          -DFEATURE_quick_draganddrop=off
          -DFEATURE_quick_pixmap_cache_threaded_download=off
          -DFEATURE_qml_table_model=off
+         -DFEATURE_qml_tree_model=off
          -DFEATURE_quicktemplates2_hover=off
          -DFEATURE_quicktemplates2_multitouch=off
          -DFEATURE_quicktemplates2_calendar=off
@@ -550,6 +553,7 @@ Configurations:
           -DFEATURE_quick_draganddrop=off
           -DFEATURE_quick_pixmap_cache_threaded_download=off
           -DFEATURE_qml_table_model=off
+          -DFEATURE_qml_tree_model=off
           -DFEATURE_quicktemplates2_hover=off
           -DFEATURE_quicktemplates2_multitouch=off
           -DFEATURE_quicktemplates2_calendar=off
@@ -683,6 +687,7 @@ Configurations:
           -DFEATURE_quick_draganddrop=off
           -DFEATURE_quick_pixmap_cache_threaded_download=off
           -DFEATURE_qml_table_model=off
+          -DFEATURE_qml_tree_model=off
           -DFEATURE_quicktemplates2_hover=off
           -DFEATURE_quicktemplates2_multitouch=off
           -DFEATURE_quicktemplates2_calendar=off
@@ -820,6 +825,7 @@ Configurations:
          -DFEATURE_quick_draganddrop=off
          -DFEATURE_quick_pixmap_cache_threaded_download=off
          -DFEATURE_qml_table_model=off
+         -DFEATURE_qml_tree_model=off
          -DFEATURE_quicktemplates2_hover=off
          -DFEATURE_quicktemplates2_multitouch=off
          -DFEATURE_quicktemplates2_calendar=off
