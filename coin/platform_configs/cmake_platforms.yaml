@@ -67,7 +67,7 @@ Configurations:
     Id: 'ubuntu-24.04-x64'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'GenerateSBOM', 'VerifySBOM', 'DocsGenerationV2']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
