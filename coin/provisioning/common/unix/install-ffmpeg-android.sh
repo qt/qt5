@@ -13,6 +13,17 @@ target_install_dir_param="$2"
 build_type=$(get_ffmpeg_build_type)
 ffmpeg_source_dir=$(download_ffmpeg)
 
+assert_envvar_is_populated_dir() {
+    local envvar="$1"
+    local value="${!envvar}"
+    if [ -z "$value" ] || [ ! -d "$value" ] || [ -z "$(find "$value" -mindepth 1 -type f | head -n 1)" ]; then
+        echo "Environment variable '$envvar' is unset, not a directory, or the directory is empty."
+        exit 1
+    fi
+}
+assert_envvar_is_populated_dir "OPENSSL_ANDROID_HOME_DEFAULT"
+assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_DEFAULT"
+
 build_ffmpeg_android() {
     local target_arch=$1
     local target_dir=$2
