@@ -132,7 +132,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
-        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_x64}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
 -
     Id: 'windows-11_24H2-msvc2022'
@@ -145,6 +145,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
 -
     Id: 'windows-11_22h2-arm64-msvc2022'
@@ -156,6 +157,7 @@ Configurations:
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_arm64}}\..',
         'NON_QTBASE_CMAKE_ARGS= -DFEATURE_clangcpp=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
 -
     Id: 'windows-11_24H2-msvc2022-arm64'
@@ -173,6 +175,7 @@ Configurations:
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
 -
     Id: 'windows-11-x86_64-arm64-tests'
