@@ -1,17 +1,6 @@
 Version: 2
 Configurations:
 -
-    Id: 'sles-15_sp5-minimal-static'
-    Template: 'qtci-linux-SLES-15_SP5-x86_64-51'
-    Compiler: 'GCC'
-    Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
-    Configure arguments: '-nomake examples -static -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer'
-    Environment variables: [
-        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'VCPKG_HOST_TRIPLET=x64-linux-qt',
-        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
-    ]
--
     Id: 'sles-15_sp6-minimal-static'
     Template: 'qtci-linux-SLES-15_SP6-x86_64-52'
     Compiler: 'GCC'
