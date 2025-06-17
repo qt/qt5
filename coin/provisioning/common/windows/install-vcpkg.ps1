@@ -83,4 +83,7 @@ Set-EnvironmentVariable "VCPKG_ROOT" "$vcpkgRoot"
 $env:VCPKG_BINARY_SOURCES = "files,V:/binaries,readwrite"
 $env:X_VCPKG_ASSET_SOURCES = "x-azurl,file:///V:/assets,,readwrite"
 
+Set-EnvironmentVariable "VCPKG_BINARY_SOURCES" $env:VCPKG_BINARY_SOURCES
+Set-EnvironmentVariable "X_VCPKG_ASSET_SOURCES" $env:X_VCPKG_ASSET_SOURCES
+
 Write-Output "vcpkg = $vcpkgVersion" >> ~/versions.txt

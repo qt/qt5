@@ -87,4 +87,7 @@ export VCPKG_ROOT="$vcpkgRoot"
 export VCPKG_BINARY_SOURCES="files,$HOME/vcpkg-cache/binaries,readwrite"
 export X_VCPKG_ASSET_SOURCES="x-azurl,file:///$HOME/vcpkg-cache/assets,,readwrite"
 
+SetEnvVar VCPKG_BINARY_SOURCES "$VCPKG_BINARY_SOURCES"
+SetEnvVar X_VCPKG_ASSET_SOURCES "$X_VCPKG_ASSET_SOURCES"
+
 echo "vcpkg = $vcpkgVersion" >> ~/versions.txt
