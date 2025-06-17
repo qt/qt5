@@ -1401,6 +1401,7 @@ function(qt_internal_foreach_repo_run)
         set(color "--red")
     endif()
 
+    set(failing_modules "")
     foreach(module IN LISTS modules)
         message("Entering '${module}'")
         execute_process(
@@ -1418,6 +1419,7 @@ function(qt_internal_foreach_repo_run)
                 ${CMAKE_COMMAND} -E cmake_echo_color "${color}"
                 "Process execution failed here ^^^^^^^^^^^^^^^^^^^^"
             )
+            list(APPEND failing_modules "${module}")
         else()
             math(EXPR count_success "${count_success}+1")
         endif()
@@ -1439,6 +1441,15 @@ function(qt_internal_foreach_repo_run)
             ${CMAKE_COMMAND} -E env CLICOLOR_FORCE=1
             ${CMAKE_COMMAND} -E cmake_echo_color "${color}" "${count_failure}"
     )
+    if(failing_modules)
+        list(JOIN failing_modules ", " failing_modules)
+        execute_process(
+            COMMAND
+                ${CMAKE_COMMAND} -E cmake_echo_color --normal
+                    "Failing submodules: ${failing_modules}"
+        )
+    endif()
+
     message("Successes: ${count_success}")
 endfunction()
 
