@@ -6,6 +6,7 @@
 
 # shellcheck source=./../unix/InstallFromCompressedFileFromURL.sh
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
+source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 version="1.10.2"
 internalUrl="http://ci-files01-hki.ci.qt.io/input/mac/ninja-mac_v${version}.zip"
@@ -14,5 +15,7 @@ SHA1="95d0ca5e7c67ab7181c87e6a6ec59d11b1ff2d30"
 DestDir="/usr/local/bin/"
 
 InstallFromCompressedFileFromURL "$internalUrl" "$externalUrl" "$SHA1" "$DestDir" ""
+
+SetEnvVar "NINJA_EXECUTABLE" "$DestDir/ninja"
 
 echo "Ninja = $version" >> ~/versions.txt

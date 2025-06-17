@@ -50,6 +50,7 @@ $manifest = @"
 </assembly>
 "@
 
+Set-EnvironmentVariable "NINJA_EXECUTABLE" "C:\Utils\Ninja\ninja.exe"
 
 $vs2019 = [System.IO.File]::Exists("C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat")
 

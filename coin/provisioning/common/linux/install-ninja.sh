@@ -38,5 +38,6 @@ installPrefix="/opt/$dirname"
 sudo mv "$HOME/$dirname" "$installPrefix"
 
 SetEnvVar "PATH" "$installPrefix:\$PATH"
+SetEnvVar "NINJA_EXECUTABLE" "$installPrefix/ninja"
 
 echo "ninja = $version" >> ~/versions.txt
