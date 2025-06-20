@@ -186,6 +186,7 @@ installPackages+=(virtualbox)
 installPackages+=(dkms)
 # Needed for qtspeech
 installPackages+=(libspeechd-dev)
+installPackages+=(flite1-dev)
 #Pypdf for PDF reading in RTA tests
 installPackages+=(python3-pypdf2)
 # Needed for b2qt

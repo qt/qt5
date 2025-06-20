@@ -74,8 +74,9 @@ installPackages+=(yasm)
 installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb
 installPackages+=(libusbx-devel)
-# speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
+# speech-dispatcher-devel / flite-devel for QtSpeech
 installPackages+=(speech-dispatcher-devel)
+installPackages+=(flite-devel)
 # Python 2 devel and pip. python-pip requires the EPEL repository to be added
 # Python 2 no longer supported
 # installPackages+=(python2-devel python2-pip)
