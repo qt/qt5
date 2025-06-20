@@ -69,8 +69,9 @@ installPackages+=(libva-devel)
 installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb
 installPackages+=(libusbx-devel)
-# speech-dispatcher-devel for QtSpeech, otherwise it has no backend on Linux
+# speech-dispatcher-devel / flite-devel for QtSpeech
 installPackages+=(speech-dispatcher-devel)
+installPackages+=(flite-devel)
 # Python 3.8 for pyside. Qt for Python support for Python 3.6 will be deprecated in within pyside6.3
 installPackages+=(python3.11)
 installPackages+=(python3.11-pip)
