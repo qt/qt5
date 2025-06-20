@@ -141,12 +141,12 @@ if [ "${ANDROID_NDK_ROOT_NIGHTLY1}" ]; then
     assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_NIGHTLY1"
     assert_envvar_is_populated_dir "OPENSSL_ANDROID_HOME_NIGHTLY1"
     build_ffmpeg_android "$target_arch" "$target_dir" "$ANDROID_NDK_ROOT_NIGHTLY1" "$OPENSSL_ANDROID_HOME_NIGHTLY1"
-    set_ffmpeg_dir_env_var "$envvar_nightly1" "$target_dir"
+    set_ffmpeg_dir_env_var "$envvar_nightly1" "$target_dir/nightly1"
 fi
 
 if [ "${ANDROID_NDK_ROOT_NIGHTLY2}" ]; then
     assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_NIGHTLY2"
     assert_envvar_is_populated_dir "OPENSSL_ANDROID_HOME_NIGHTLY2"
     build_ffmpeg_android "$target_arch" "$target_dir" "$ANDROID_NDK_ROOT_NIGHTLY2" "$OPENSSL_ANDROID_HOME_NIGHTLY2"
-    set_ffmpeg_dir_env_var "$envvar_nightly2" "$target_dir"
+    set_ffmpeg_dir_env_var "$envvar_nightly2" "$target_dir/nightly2"
 fi
