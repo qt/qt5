@@ -179,6 +179,7 @@ installPackages+=(libopenal-dev)
 installPackages+=(libbluetooth-dev)
 # Needed for qtspeech
 installPackages+=(libspeechd-dev)
+installPackages+=(flite1-dev)
 #Pypdf for PDF reading in RTA tests
 installPackages+=(python3-pypdf2)
 # Needed for b2qt
