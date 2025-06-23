@@ -7,7 +7,14 @@ Include: [
     macos.yaml
     ]
 Configurations:
-# Build on Ubuntu 22.04
+# Build on Ubuntu 22.04 and test on both X11 and Wayland later
+-
+    Id: 'ubuntu-22.04-developer-build'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
+    Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE']
 -
     Id: 'ubuntu-22.04'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
