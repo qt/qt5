@@ -52,25 +52,26 @@ $sdkZip = "c:\Windows\Temp\$toolsFile"
 New-Item -ItemType Directory -Path C:\Utils\Android\
 New-Item -ItemType Directory -Path C:\Windows\Temp\android_extract
 
-function Install($1, $2, $3, $4) {
+function Install($1, $2, $3, $4, $5) {
     $cacheUrl = $1
     $zip = $2
     $checksum = $3
     $offcialUrl = $4
+    $ndkVersion = $5
     $tempExtractDir = "C:\Windows\Temp\android_extract"
 
     Download $offcialUrl $cacheUrl $zip
     Verify-Checksum $zip "$checksum"
     Extract-7Zip $zip $tempExtractDir
     $baseDirectory = (Get-ChildItem $tempExtractDir -Attributes D | Select-Object -First 1).Name
-    Move-Item -Path ($tempExtractDir + "\" + $baseDirectory) -Destination "C:\Utils\Android\$baseDirectory" -Force
+    Move-Item -Path ($tempExtractDir + "\" + $baseDirectory) -Destination "C:\Utils\Android\$ndkVersion\$baseDirectory" -Force
     Remove $zip
 
-    return "C:\Utils\Android\$baseDirectory"
+    return "C:\Utils\Android\$ndkVersion\$baseDirectory"
 }
 
 Write-Host "Installing Android NDK $nkdVersionLatest"
-$ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest
+$ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOfficialUrlLatest $nkdVersionLatest
 Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
 # To be used by vcpkg
 Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolderLatest
@@ -84,14 +85,14 @@ if ($ndkVersionPreview -ne $ndkVersionLatest) {
 
 if ($ndkVersionNightly1 -ne $ndkVersionLatest) {
     Write-Host "Installing Android NDK $ndkVersionNightly1"
-    $ndkFolderNightly = Install $ndkCachedUrlNightly1 $ndkZip $ndkChecksumNightly1 $ndkOfficialUrlNightly1
+    $ndkFolderNightly = Install $ndkCachedUrlNightly1 $ndkZip $ndkChecksumNightly1 $ndkOfficialUrlNightly1 $ndkVersionNightly1
     Set-EnvironmentVariable "ANDROID_NDK_ROOT_NIGHTLY1" $ndkFolderNightly
     Write-Output "Android NDK = $ndkVersionNightly1" >> ~/versions.txt
 }
 
 if ($ndkVersionNightly2 -ne $ndkVersionLatest) {
     Write-Host "Installing Android NDK $ndkVersionNightly2"
-    $ndkFolderNightly = Install $ndkCachedUrlNightly2 $ndkZip $ndkChecksumNightly2 $ndkOfficialUrlNightly2
+    $ndkFolderNightly = Install $ndkCachedUrlNightly2 $ndkZip $ndkChecksumNightly2 $ndkOfficialUrlNightly2 $ndkVersionNightly2
     Set-EnvironmentVariable "ANDROID_NDK_ROOT_NIGHTLY2" $ndkFolderNightly
     Write-Output "Android NDK = $ndkVersionNightly2" >> ~/versions.txt
 }
