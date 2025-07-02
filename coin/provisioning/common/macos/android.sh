@@ -71,13 +71,16 @@ function InstallNdk() {
     ndkTargetFile="/tmp/$ndkFile"
     ndkSourceFile="$basePath/$ndkFile"
 
+    ndkTargetDir="$targetFolder/$ndkVersion"
+    sudo mkdir -p "$ndkTargetDir"
+
     DownloadURL "$ndkSourceFile" "$ndkSourceFile" "$ndkSha1" "$ndkTargetFile"
-    echo "Unzipping Android NDK to '$targetFolder'"
+    echo "Unzipping Android NDK to '$ndkTargetDir'"
     # Get the package base directory name as string
     zipBase=$(sudo zipinfo -1 "$ndkTargetFile" 2>/dev/null | awk '!seen {sub("/.*",""); print; seen=1}')
-    sudo unzip -q "$ndkTargetFile" -d "$targetFolder"
+    sudo unzip -q "$ndkTargetFile" -d "$ndkTargetDir"
     rm "$ndkTargetFile"
-    androidNdkRoot="${targetFolder}/${zipBase}"
+    androidNdkRoot="${ndkTargetDir}/${zipBase}"
 }
 
 InstallNdk $ndkVersionLatest $ndkSha1Latest
