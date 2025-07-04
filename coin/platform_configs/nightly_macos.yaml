@@ -1,5 +1,10 @@
 Version: 2
 Module only: True
+Include: [
+    macos.yaml: [
+        'macos-universal-on-arm64'
+    ],
+]
 Configurations:
 -
     Id: 'macos-26-arm64-developer-build'
