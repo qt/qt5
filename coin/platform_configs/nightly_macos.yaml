@@ -2,8 +2,8 @@ Version: 2
 Module only: True
 Configurations:
 -
-    Id: 'macos-15-arm64-developer-build'
-    Template: 'qtci-macos-15-arm-104'
+    Id: 'macos-26-arm64-developer-build'
+    Template: 'qtci-macos-26-arm-100'
     Compiler: 'Clang'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -nomake examples -nomake tests'
@@ -13,8 +13,8 @@ Configurations:
     ]
 
 -
-    Id: 'macos-15-x86_64-developer-build'
-    Template: 'qtci-macos-15-x86_64-103'
+    Id: 'macos-26-arm64-tests'
+    Template: 'qtci-macos-26-arm-100'
     Compiler: 'Clang'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -nomake examples -nomake tests'
+    Features: ['TestOnly', 'Packaging', 'Insignificant', 'Insignificant']
+    Platform dependency: 'macos-universal-on-arm64'
