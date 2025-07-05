@@ -49,6 +49,9 @@ function InstallXCode() {
     # -runFirstLaunch is valid in 9.x
     sudo xcodebuild -runFirstLaunch || true
 
+    # Metal toolchain not included by default in Xcode 26
+    xcodebuild -downloadComponent MetalToolchain || true
+
     echo "Enabling developer mode, so that using lldb does not require interactive password entry"
     sudo /usr/sbin/DevToolsSecurity -enable
 
