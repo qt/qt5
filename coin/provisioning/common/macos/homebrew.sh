@@ -75,3 +75,8 @@ fi
 SetEnvVar "HOMEBREW_NO_COLOR" "1"
 SetEnvVar "HOMEBREW_NO_EMOJI" "1"
 SetEnvVar "HOMEBREW_NO_ENV_HINTS" "1"
+
+# Update homebrew to make sure we are compatible with homebrew servers
+source ~/.zshrc
+brew update
+brew upgrade
