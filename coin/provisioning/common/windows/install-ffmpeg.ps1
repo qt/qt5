@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 . "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\zlib-helpers.ps1"
 
 # This script will install FFmpeg
 $msys = "C:\Utils\msys64\usr\bin\bash"
@@ -104,6 +105,13 @@ function InstallMsvcFfmpeg {
             $config += " --enable-cross-compile"
         }
     }
+
+    $zlibPath = GetZlibPathByString -TargetArchitecture $arch
+    $zlibPath = $zlibPath -replace '\\', '/'
+
+    $config += " --enable-zlib"
+    $config += " --extra-cflags=`"-I$zlibPath`""
+    $config += " --extra-ldflags=`"-LIBPATH:$zlibPath`""
 
     $result = EnterVSDevShell -HostArch $hostArch -Arch $arch
     if (-Not $result) {
