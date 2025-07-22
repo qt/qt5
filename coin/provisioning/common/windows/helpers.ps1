@@ -358,7 +358,7 @@ function EnterVSDevShell {
     Write-Host "Enter VisualStudio developer shell (-host_arch=$HostArch -arch=$Arch -VsInstallPath='$VSPath')"
     try {
         Import-Module "$VSPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-        Enter-VsDevShell -VsInstallPath $VSPath -DevCmdArguments "-host_arch=$HostArch -arch=$Arch -no_logo"
+        Enter-VsDevShell -SkipAutomaticLocation -VsInstallPath $VSPath -DevCmdArguments "-host_arch=$HostArch -arch=$Arch -no_logo"
     } catch {
         Write-Host "Failed to enter VisualStudio DevShell"
         return $false
