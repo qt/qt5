@@ -48,6 +48,12 @@ build_ffmpeg_android() {
         target_cpu=i686
         openssl_libs="$openssl_android_path/x86"
         libs_prefix="_x86"
+    elif [ "$target_arch" == "arm32" ]; then
+        target_toolchain_arch="armv7a-linux-androideabi"
+        target_arch=arm
+        target_cpu=armv7-a
+        openssl_libs="$openssl_android_path/armeabi-v7a"
+        libs_prefix="_arm32-v7a"
     elif [ "$target_arch" == "arm64" ]; then
         target_toolchain_arch="aarch64-linux-android"
         target_arch=aarch64
@@ -116,6 +122,12 @@ elif  [ "$os" == "android-x86_64" ]; then
     envvar_latest="FFMPEG_DIR_ANDROID_X86_64_NDK_LATEST"
     envvar_nightly1="FFMPEG_DIR_ANDROID_X86_64_NDK_NIGHTLY1"
     envvar_nightly2="FFMPEG_DIR_ANDROID_X86_64_NDK_NIGHTLY2"
+elif  [ "$os" == "android-arm32" ]; then
+    target_arch=arm32
+    target_dir="/usr/local/android/ffmpeg-arm32"
+    envvar_latest="FFMPEG_DIR_ANDROID_ARM32_NDK_LATEST"
+    envvar_nightly1="FFMPEG_DIR_ANDROID_ARM32_NDK_NIGHTLY1"
+    envvar_nightly2="FFMPEG_DIR_ANDROID_ARM32_NDK_NIGHTLY2"
 elif  [ "$os" == "android-arm64" ]; then
     target_arch=arm64
     target_dir="/usr/local/android/ffmpeg-arm64"
