@@ -21,9 +21,9 @@ done
 
 echo "Using public repositories for now. Repo-clones isn't set yet for Debian use"
 # (ping -c 3 repo-clones.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
-echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
-echo "deb-src http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
 
+echo "deb https://archive.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
+echo "deb-src https://archive.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
 # Make sure needed ca-certificates are available
 installPackages+=(ca-certificates)
 # Git is not needed by builds themselves, but is nice to have
