@@ -50,6 +50,7 @@ function Run-Executable
     $startArgs = @{
         FilePath               = $Executable
         PassThru               = $true
+        NoNewWindow            = $true
         RedirectStandardOutput = $stdoutFile
         RedirectStandardError  = $stderrFile
     }
@@ -104,50 +105,76 @@ function Run-Executable
 function Extract-tar_gz
 {
     Param (
+        [Parameter(Mandatory=$true)]
+        [ValidateScript({ Test-Path $_ -PathType Leaf })]
         [string]$Source,
+        [Parameter(Mandatory=$true)]
         [string]$Destination
     )
+
     Write-Host "Extracting '$Source' to '$Destination'..."
 
-    if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
-        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles}, ${env:ProgramW6432} -ne $null)[0] '7-zip\7z.exe'
-        if (-not (test-path $zipExe)) {
-            $zipExe = "C:\Utils\sevenzip\7z.exe"
-            if (-not (test-path $zipExe)) {
-                throw "Could not find 7-zip."
-            }
-        }
-    } else {
-        $zipExe = "7z.exe"
+    $zipExe = Get-SevenZipPath
+
+    # cmd.exe does not treat single quotes as quoting characters, so use double
+    # quotes and wrap the whole command in an extra pair that cmd /C strips.
+    # A trailing backslash (e.g. "C:\") would escape the closing quote when 7z
+    # parses its arguments, so double it.
+    $dest = $Destination -replace '\\$', '\\'
+    Run-Executable "cmd.exe" "/C `"`"$zipExe`" x -y `"$Source`" -so | `"$zipExe`" x -y -aoa -si -ttar `"-o$dest`"`""
+}
+
+function Get-SevenZipPath {
+    # Try to find 7z.exe in PATH first
+    $cmd = Get-Command "7z.exe" -ErrorAction SilentlyContinue
+    if ($cmd) {
+        return $cmd.Path
     }
-    Run-Executable "cmd.exe"  "/C $zipExe x -y `"$Source`" -so | $zipExe x -y -aoa -si -ttar `"-o$Destination`""
+
+    # List of common Program Files directories to check
+    $possibleRoots = @(
+        ${env:ProgramFiles(x86)},
+        ${env:ProgramFiles},
+        ${env:ProgramW6432}
+    ) | Where-Object { $_ -ne $null }
+
+    foreach ($root in $possibleRoots) {
+        $candidate = Join-Path $root "7-Zip\7z.exe"
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+
+    # Fallback path
+    $fallback = "C:\Utils\sevenzip\7z.exe"
+    if (Test-Path $fallback) {
+        return $fallback
+    }
+
+    throw "Could not find 7-Zip executable."
 }
 
 function Extract-7Zip
 {
     Param (
+        [Parameter(Mandatory=$true)]
+        [ValidateScript({ Test-Path $_ -PathType Leaf })]
         [string]$Source,
+        [Parameter(Mandatory=$true)]
         [string]$Destination,
         [string]$Filter
     )
+
     Write-Host "Extracting '$Source' to '$Destination'..."
 
-    if ((Get-Command "7z.exe" -ErrorAction SilentlyContinue) -eq $null) {
-        $zipExe = join-path (${env:ProgramFiles(x86)}, ${env:ProgramFiles}, ${env:ProgramW6432} -ne $null)[0] '7-zip\7z.exe'
-        if (-not (test-path $zipExe)) {
-            $zipExe = "C:\Utils\sevenzip\7z.exe"
-            if (-not (test-path $zipExe)) {
-                throw "Could not find 7-zip."
-            }
-        }
-    } else {
-        $zipExe = "7z.exe"
-    }
+    $zipExe = Get-SevenZipPath
 
+    # 7-Zip will frequently misinterpret paths that contain whitespaces
+    # unless we explicitly insert quotations.
     if ([string]::IsNullOrEmpty($Filter)) {
-        Run-Executable "$zipExe" "x -y `"-o$Destination`" `"$Source`""
+        Run-Executable "$zipExe" @("x", "-y", "-o`"$Destination`"", "`"$Source`"")
     } else {
-        Run-Executable "$zipExe" "x -y -aoa `"-o$Destination`" `"$Source`" $Filter"
+        Run-Executable "$zipExe" @("x", "-y", "-o`"$Destination`"", "`"$Source`"", $Filter)
     }
 }
 
