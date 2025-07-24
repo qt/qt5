@@ -20,6 +20,11 @@ $ndk_version_latest = "r27c"
 $prebuilt_ssl_sha1_latest = "733cff853b6ee7738e78b90f46b5f028c8490e1e"
 $openssl_sha1_latest = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
 
+$openssl_version_preview = "3.0.7"
+$ndk_version_preview = "r29-beta2"
+$prebuilt_ssl_sha1_preview = "c2cf8fabfb7e00b31abcc554e6e306dafd99ae1b"
+$openssl_sha1_preview = "f20736d6aae36bcbfa9aba0d358c71601833bf27"
+
 $openssl_version_nightly1 = $openssl_version_latest
 $ndk_version_nightly1 = $ndk_version_latest
 $prebuilt_ssl_sha1_nightly1 = $prebuilt_ssl_sha1_latest
@@ -102,6 +107,12 @@ function Install($1, $2, $3, $4) {
 $ndk_ssl_path = Install $openssl_version_latest $ndk_version_latest $prebuilt_ssl_sha1_latest $openssl_sha1_latest
 Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_LATEST" "$ndk_ssl_path"
 Write-Output "Android OpenSSL $openssl_version_latest for NDK $ndk_version_latest" >> ~/versions.txt
+
+if ($ndk_version_preview -ne $ndk_version_latest) {
+    $ndk_ssl_path = Install $openssl_version_preview $ndk_version_preview $prebuilt_ssl_sha1_preview $openssl_sha1_preview
+    Set-EnvironmentVariable "OPENSSL_ANDROID_HOME_PREVIEW" "$ndk_ssl_path"
+    Write-Output "Android OpenSSL $openssl_version_preview for NDK $ndk_version_preview" >> ~/versions.txt
+}
 
 if ($ndk_version_nightly1 -ne $ndk_version_latest) {
     $ndk_ssl_path = Install $openssl_version_nightly1 $ndk_version_nightly1 $prebuilt_ssl_sha1_nightly1 $openssl_sha1_nightly1

@@ -31,10 +31,14 @@ toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
 ndkVersionLatest="r27c"
 ndkSha1Latest="090e8083a715fdb1a3e402d0763c388abb03fb4e"
 
+# Preview NDK that is in alpha/beta/RC state
+ndkVersionPreview="r29-beta2"
+ndkSha1Preview="06c29d6764526fb51407d08fcead41247ddd3b70"
+
 # Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
 # coin/platform_configs/nightly_android.yaml
 
-ndkVersionNightly1=$ndkVersionLatest  # Same version = skip NDK install for nightly
+ndkVersionNightly1=$ndkVersionLatest  # Set as same version as latest = skip NDK install in provisioning
 ndkSha1Nightly1=$ndkSha1Latest
 
 ndkVersionNightly2=$ndkVersionLatest
@@ -78,6 +82,11 @@ function InstallNdk() {
 
 InstallNdk $ndkVersionLatest $ndkSha1Latest
 SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$androidNdkRoot"
+
+if [ "$ndkVersionPreview" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionPreview $ndkSha1Preview
+    SetEnvVar "ANDROID_NDK_ROOT_PREVIEW" "$androidNdkRoot"
+fi
 
 if [ "$ndkVersionNightly1" != "$ndkVersionLatest" ]; then
     InstallNdk $ndkVersionNightly1 $ndkSha1Nightly1

@@ -24,6 +24,7 @@ toolsFile="commandlinetools-mac-6609375_latest.zip"
 # coin/platform_configs/nightly_android.yaml
 
 ndkVersionLatest="r27c"
+ndkVersionPreview="r29-beta2"
 ndkVersionNightly1="$ndkVersionLatest"  # If same version as latest = skip NDK install for nightly
 ndkVersionNightly2="$ndkVersionLatest"
 
@@ -47,6 +48,11 @@ function InstallNdk() {
 
 InstallNdk $ndkVersionLatest
 SetEnvVar "ANDROID_NDK_ROOT_LATEST" "$targetFolder/android-ndk-$ndkVersionLatest"
+
+if [ "$ndkVersionPreview" != "$ndkVersionLatest" ]; then
+    InstallNdk $ndkVersionPreview
+    SetEnvVar "ANDROID_NDK_ROOT_PREVIEW" "$targetFolder/android-ndk-$ndkVersionPreview"
+fi
 
 if [ "$ndkVersionNightly1" != "$ndkVersionLatest" ]; then
     InstallNdk $ndkVersionNightly1

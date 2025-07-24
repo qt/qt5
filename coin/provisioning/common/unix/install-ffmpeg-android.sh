@@ -116,24 +116,28 @@ if  [ "$os" == "android-x86" ]; then
     envvar_latest="FFMPEG_DIR_ANDROID_X86_NDK_LATEST"
     envvar_nightly1="FFMPEG_DIR_ANDROID_X86_NDK_NIGHTLY1"
     envvar_nightly2="FFMPEG_DIR_ANDROID_X86_NDK_NIGHTLY2"
+    envvar_preview="FFMPEG_DIR_ANDROID_X86_NDK_PREVIEW"
 elif  [ "$os" == "android-x86_64" ]; then
     target_arch=x86_64
     target_dir="/usr/local/android/ffmpeg-x86_64"
     envvar_latest="FFMPEG_DIR_ANDROID_X86_64_NDK_LATEST"
     envvar_nightly1="FFMPEG_DIR_ANDROID_X86_64_NDK_NIGHTLY1"
     envvar_nightly2="FFMPEG_DIR_ANDROID_X86_64_NDK_NIGHTLY2"
+    envvar_preview="FFMPEG_DIR_ANDROID_X86_64_NDK_PREVIEW"
 elif  [ "$os" == "android-arm32" ]; then
     target_arch=arm32
     target_dir="/usr/local/android/ffmpeg-arm32"
     envvar_latest="FFMPEG_DIR_ANDROID_ARM32_NDK_LATEST"
     envvar_nightly1="FFMPEG_DIR_ANDROID_ARM32_NDK_NIGHTLY1"
     envvar_nightly2="FFMPEG_DIR_ANDROID_ARM32_NDK_NIGHTLY2"
+    envvar_preview="FFMPEG_DIR_ANDROID_ARM32_NDK_PREVIEW"
 elif  [ "$os" == "android-arm64" ]; then
     target_arch=arm64
     target_dir="/usr/local/android/ffmpeg-arm64"
     envvar_latest="FFMPEG_DIR_ANDROID_ARM64_NDK_LATEST"
     envvar_nightly1="FFMPEG_DIR_ANDROID_ARM64_NDK_NIGHTLY1"
     envvar_nightly2="FFMPEG_DIR_ANDROID_ARM64_NDK_NIGHTLY2"
+    envvar_preview="FFMPEG_DIR_ANDROID_ARM64_NDK_PREVIEW"
 else
     >&2 echo "Unhandled android os param: $os"
     exit 1
@@ -148,6 +152,13 @@ assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_LATEST"
 assert_envvar_is_populated_dir "OPENSSL_ANDROID_HOME_LATEST"
 build_ffmpeg_android "$target_arch" "$target_dir/latest" "$ANDROID_NDK_ROOT_LATEST" "$OPENSSL_ANDROID_HOME_LATEST"
 set_ffmpeg_dir_env_var "$envvar_latest" "$target_dir/latest"
+
+if [ "${ANDROID_NDK_ROOT_PREVIEW}" ]; then
+    assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_PREVIEW"
+    assert_envvar_is_populated_dir "OPENSSL_ANDROID_HOME_PREVIEW"
+    build_ffmpeg_android "$target_arch" "$target_dir/preview" "$ANDROID_NDK_ROOT_PREVIEW" "$OPENSSL_ANDROID_HOME_PREVIEW"
+    set_ffmpeg_dir_env_var "$envvar_preview" "$target_dir/preview"
+fi
 
 if [ "${ANDROID_NDK_ROOT_NIGHTLY1}" ]; then
     assert_envvar_is_populated_dir "ANDROID_NDK_ROOT_NIGHTLY1"

@@ -15,6 +15,10 @@ sslVersionForLatest="3.0.7"
 ndkVersionLatest="r27c"
 prebuiltOpensslShaLatest="733cff853b6ee7738e78b90f46b5f028c8490e1e"
 
+sslVersionForPreview="3.0.7"
+ndkVersionPreview="r29-beta2"
+prebuiltOpensslShaPreview="c2cf8fabfb7e00b31abcc554e6e306dafd99ae1b"
+
 ndkVersionNightly1=$ndkVersionLatest
 sslVersionForNightly1=$sslVersionForLatest
 prebuiltOpensslShaNightly1=$prebuiltOpensslShaLatest
@@ -23,7 +27,7 @@ ndkVersionNightly2=$ndkVersionLatest
 sslVersionForNightly2=$sslVersionForLatest
 prebuiltOpensslShaNightly2=$prebuiltOpensslShaLatest
 
-: <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK r27c
+: <<'EOB' SOURCE BUILD INSTRUCTIONS - Openssl prebuilt was made using Android NDK r29-beta2
 # Source built requires GCC and Perl to be in PATH. Rhel "requires yum install perl-IPC-Cmd"
 exports_file="/tmp/export.sh"
 # source previously made environmental variables.
@@ -82,6 +86,12 @@ if [ "$ndkVersionNightly2" != "$ndkVersionLatest" ]; then
     InstallPrebuiltOpenssl $ndkVersionNightly2 $prebuiltOpensslShaNightly2 $sslVersionForNightly2
     SetEnvVar "OPENSSL_ANDROID_HOME_NIGHTLY2" "$opensslHome"
     echo "OpenSSL for Android $ndkVersionNightly2 = $sslVersionForNightly2" >> ~/versions.txt
+fi
+
+if [ "$ndkVersionPreview" != "$ndkVersionLatest" ]; then
+    InstallPrebuiltOpenssl $ndkVersionPreview $prebuiltOpensslShaPreview $sslVersionForPreview
+    SetEnvVar "OPENSSL_ANDROID_HOME_PREVIEW" "$opensslHome"
+    echo "OpenSSL for Android $ndkVersionPreview = $sslVersionForPreview" >> ~/versions.txt
 fi
 
 InstallPrebuiltOpenssl $ndkVersionLatest $prebuiltOpensslShaLatest $sslVersionForLatest

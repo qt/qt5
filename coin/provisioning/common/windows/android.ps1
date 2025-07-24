@@ -17,6 +17,13 @@ $ndkChecksumLatest = "ac5f7762764b1f15341094e148ad4f847d050c38"
 $ndkCachedUrlLatest = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionLatest-windows.zip"
 $ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$ndkVersionLatest-windows.zip"
 
+# NDK in alpha/beta/RC state
+
+$ndkVersionPreview = "r29-beta2"
+$ndkChecksumPreview = "59b665f7506f1079771393f2c90f3cb29817ecfb"
+$ndkCachedUrlPreview = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionPreview-windows.zip"
+$ndkOfficialUrlPreview = "https://dl.google.com/android/repository/android-ndk-$ndkVersionPreview-windows.zip"
+
 # Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
 # coin/platform_configs/nightly_android.yaml
 
@@ -67,6 +74,13 @@ $ndkFolderLatest = Install $ndkCachedUrlLatest $ndkZip $ndkChecksumLatest $ndkOf
 Set-EnvironmentVariable "ANDROID_NDK_ROOT_LATEST" $ndkFolderLatest
 # To be used by vcpkg
 Set-EnvironmentVariable "ANDROID_NDK_HOME" $ndkFolderLatest
+
+if ($ndkVersionPreview -ne $ndkVersionLatest) {
+    Write-Host "Installing Android NDK $ndkVersionPreview"
+    $ndkFolderPreview = Install $ndkCachedUrlPreview $ndkZip $ndkChecksumPreview $ndkOfficialUrlPreview
+    Set-EnvironmentVariable "ANDROID_NDK_ROOT_PREVIEW" $ndkFolderPreview
+    Write-Output "Android NDK = $ndkVersionPreview" >> ~/versions.txt
+}
 
 if ($ndkVersionNightly1 -ne $ndkVersionLatest) {
     Write-Host "Installing Android NDK $ndkVersionNightly1"
