@@ -4,3 +4,4 @@ ntia-conformance-checker
 sbomaudit
 sbom2doc
 reuse
+cyclonedx-python-lib==11.0.0
