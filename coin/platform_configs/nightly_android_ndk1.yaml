@@ -1,0 +1,58 @@
+Version: 2
+Include: [
+    cmake_platforms.yaml: [
+        'rhel-8.10',
+        'windows-10_22h2-mingw13'
+    ],
+    cmake_platforms_target_android.yaml: [
+        'android-15-x86_64-on-linux',
+        'android-9-x86-on-linux',
+        'android-armv7-on-windows',
+        'android-arm64-on-macos'
+    ],
+    macos.yaml: [
+        'macos-universal-on-arm64'
+    ]
+]
+Configurations: []
+# Android nightly to check for older (but still supported for the branch) NDKs
+Overrides:
+-
+    Id: 'android-15-x86_64-on-linux'
+    Features: ['Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure', 'WarningsAreErrors']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_NIGHTLY1}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86_64',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_NIGHTLY1}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_X86_64_NDK_NIGHTLY1}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_NIGHTLY1}}',
+        'ANDROID_EMULATOR=emulator_x86_64_api_35'
+    ]
+-
+    Id: 'android-9-x86-on-linux'
+    Features: ['Sccache', 'AndroidTestRun', 'VMSize8', 'UseConfigure', 'WarningsAreErrors']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_NIGHTLY1}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_NIGHTLY1}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_X86_NDK_NIGHTLY1}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_NIGHTLY1}}',
+        'ANDROID_EMULATOR=emulator_x86_api_28'
+    ]
+-
+    Id: 'android-armv7-on-windows'
+    Features: ['Sccache', 'WarningsAreErrors', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_NIGHTLY1}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis armeabi-v7a -no-feature-pkg-config',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_NIGHTLY1}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH={{.Env.Protobuf_ROOT_mingw}} -DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_ARMV7_NDK_NIGHTLY1}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR={{.Env.Protobuf_ROOT_msvc}}/include',
+        'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_NIGHTLY1}}'
+    ]
+-
+    Id: 'android-arm64-on-macos'
+    Features: ['Sccache', 'WarningsAreErrors', 'DisableTests', 'UseConfigure']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -release -force-debug-info -android-ndk {{.Env.ANDROID_NDK_ROOT_NIGHTLY1}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis arm64-v8a',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_NIGHTLY1}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH=/usr/local -DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID_ARM64_NDK_NIGHTLY1}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'ANDROID_NDK_ROOT={{.Env.ANDROID_NDK_ROOT_NIGHTLY1}}'
+    ]
