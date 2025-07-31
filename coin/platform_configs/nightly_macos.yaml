@@ -8,7 +8,7 @@ Include: [
 Configurations:
 -
     Id: 'macos-26-arm64-developer-build'
-    Template: 'qtci-macos-26-arm-100'
+    Template: 'qtci-macos-26-arm-101'
     Compiler: 'Clang'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-developer-build -release -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -nomake examples -nomake tests'
@@ -19,7 +19,7 @@ Configurations:
 
 -
     Id: 'macos-26-arm64-tests'
-    Template: 'qtci-macos-26-arm-100'
+    Template: 'qtci-macos-26-arm-101'
     Compiler: 'Clang'
     Features: ['TestOnly', 'Packaging', 'Insignificant', 'Insignificant']
     Platform dependency: 'macos-universal-on-arm64'
