@@ -4,4 +4,4 @@
 
 set -ex
 
-brew install patchelf
+source "${BASH_SOURCE%/*}/../common/unix/install-patchelf.sh"
