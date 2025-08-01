@@ -31,6 +31,12 @@ if ! command -v patchelf; then
     exit 1
 fi
 
+# Get patchelf version
+patchelf_version=$(patchelf --version 2>/dev/null | awk '{print $2}')
+if [[ "$patchelf_version" == "0.18.0" ]]; then
+    echo "WARNING: patchelf version 0.18.0 is known to have issues with Android." >&2
+fi
+
 ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
 stub_prefix="Qt6FFmpegStub-"
 

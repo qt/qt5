@@ -5,6 +5,7 @@
 
 source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # version 0.18.0 doesn't work correctly for Android binaries, so we use 0.17.2
+# See patchelf bugreport: https://github.com/NixOS/patchelf/issues/576.
 patchelf_version="0.17.2"
 
 url_cached="https://ci-files01-hki.ci.qt.io/input/android/patchelf/$patchelf_version.tar.gz"
