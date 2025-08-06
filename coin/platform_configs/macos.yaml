@@ -62,6 +62,13 @@ Configurations:
         Compiler: 'Clang'
         Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
+    -
+        Id: 'macos-26-arm64-tests'
+        Template: 'qtci-macos-26-arm-101'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'Packaging']
+        Platform dependency: 'macos-universal-on-arm64'
+        Environment variables: [ 'COIN_CTEST_IGNORE_EXIT_CODE=1' ]
 
     # =========================================================================
     # Developer build. Single architecture builds.
@@ -89,6 +96,16 @@ Configurations:
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
         ]
+    -
+        Id: 'macos-26-arm64-developer-build'
+        Template: 'qtci-macos-26-arm-101'
+        Compiler: 'Clang'
+        Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'Insignificant']
+        Configure arguments: '-developer-build -nomake examples -debug -framework'
+        Environment variables: [
+            'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+            'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+        ]
 
     # Test on all supported macOS versions (deployment targets)
     -
@@ -109,3 +126,10 @@ Configurations:
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-arm64-developer-build'
+    -
+        Id: 'macos-26-arm64-developer-build-tests'
+        Template: 'qtci-macos-26-arm-101'
+        Compiler: 'Clang'
+        Features: ['TestOnly', 'InsignificantTests']
+        Platform dependency: 'macos-26-arm64-developer-build'
+        Environment variables: [ 'COIN_CTEST_IGNORE_EXIT_CODE=1' ]
