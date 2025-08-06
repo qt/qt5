@@ -10,8 +10,9 @@ echo "Installing vcpkg ports"
 pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
 
 install_root=$1-tmp
+vcpkg_extra_args=$2
 
-"$VCPKG_ROOT/vcpkg" install --triplet $1 --x-install-root $install_root --debug
+"$VCPKG_ROOT/vcpkg" install --triplet $1 --x-install-root $install_root --debug $vcpkg_extra_args
 
 cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
     "-DVCPKG_INSTALL_ROOT=$PWD/$install_root"\

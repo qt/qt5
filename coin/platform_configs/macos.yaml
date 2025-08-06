@@ -17,6 +17,8 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DQT_FEATURE_open62541_security=OFF',
+            'VCPKG_HOST_TRIPLET=universal-osx-qt',
+            'VCPKG_TARGET_TRIPLET=universal-osx-qt',
         ]
 
     # Test on all supported macOS versions (deployment targets)
@@ -91,6 +93,8 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+            'VCPKG_HOST_TRIPLET=universal-osx-qt',
+            'VCPKG_TARGET_TRIPLET=universal-osx-qt',
         ]
     -
         Id: 'macos-26-x86_64-developer-build'
@@ -111,6 +115,8 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+            'VCPKG_HOST_TRIPLET=universal-osx-qt',
+            'VCPKG_TARGET_TRIPLET=universal-osx-qt',
         ]
     -
         Id: 'macos-26-arm64-developer-build'
@@ -121,6 +127,8 @@ Configurations:
         Environment variables: [
             'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
             'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+            'VCPKG_HOST_TRIPLET=arm64-osx-qt',
+            'VCPKG_TARGET_TRIPLET=arm64-osx-qt',
         ]
 
     # Test on all supported macOS versions (deployment targets)
