@@ -1,7 +1,8 @@
 param(
     [string]$archVer="32",
     [string]$toolchain="vs2022",
-    [bool]$setDefault=$true
+    [bool]$setDefault=$true,
+    [bool]$useArchInToolchainSuffix=$false
 )
 . "$PSScriptRoot\helpers.ps1"
 
@@ -71,6 +72,9 @@ if ( $toolchain -eq "llvm-mingw" ) {
     $toolchainSuffix = "llvm_mingw"
 }
 
+if ( $useArchInToolchainSuffix ) {
+    $toolchainSuffix += "_$archVer"
+}
 
 install $sha1 $baseDestination-$archVer
 
