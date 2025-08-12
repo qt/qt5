@@ -9,9 +9,9 @@ echo "Installing vcpkg ports"
 
 pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
 
-install_root=x64-linux-qt-tmp
+install_root=$1-tmp
 
-"$VCPKG_ROOT/vcpkg" install --triplet x64-linux-qt --x-install-root $install_root --debug
+"$VCPKG_ROOT/vcpkg" install --triplet $1 --x-install-root $install_root --debug
 
 cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
     "-DVCPKG_INSTALL_ROOT=$PWD/$install_root"\

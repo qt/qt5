@@ -34,7 +34,7 @@ do
         "vcpkg_tool_release_tag")
             vcpkgToolReleaseTag=${keyValue[1]}
             ;;
-        "linux_checksum")
+        "unix_checksum")
             vcpkgToolChecksum=${keyValue[1]}
             ;;
     esac
@@ -86,7 +86,7 @@ SetEnvVar "VCPKG_ROOT" "$vcpkgRoot"
 export VCPKG_ROOT="$vcpkgRoot"
 
 # Set a source for vcpkg Binary and Asset Cache
-# The `coin/provisioning/common/linux/mount-vcpkg-cache-drive.sh` script is
+# The `coin/provisioning/common/<platform>/mount-vcpkg-cache-drive.sh` script is
 # mounting the SMB share located in `vcpkg-server.ci.qt.io/vcpkg` to
 # $HOME/vcpkg-cache/
 export VCPKG_BINARY_SOURCES="files,$HOME/vcpkg-cache/binaries,readwrite"

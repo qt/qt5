@@ -8,7 +8,7 @@ echo "ANDOID_NDK_HOME: ${ANDROID_NDK_HOME}"
 
 # Installing common ports
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/linux/install-vcpkg-ports.sh"
+"$BASEDIR/../common/unix/install-vcpkg-ports.sh" x64-linux-qt
 
 # Installing platform specific ports
 "$BASEDIR/../common/linux/install-vcpkg-ports-android.sh"
