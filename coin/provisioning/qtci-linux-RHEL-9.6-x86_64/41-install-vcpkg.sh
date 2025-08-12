@@ -3,4 +3,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/linux/install-vcpkg.sh"
+"$BASEDIR/../common/unix/install-vcpkg.sh"

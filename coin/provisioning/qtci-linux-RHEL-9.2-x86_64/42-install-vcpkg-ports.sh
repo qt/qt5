@@ -3,4 +3,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/linux/install-vcpkg-ports.sh"
+"$BASEDIR/../common/unix/install-vcpkg-ports.sh" x64-linux-qt
