@@ -19,4 +19,4 @@ set -ex
 # shellcheck source=../common/macos/install_xcode.sh
 source "${BASH_SOURCE%/*}/../common/macos/install_xcode.sh"
 
-InstallXCode /net/ci-files01-hki.ci.qt.io/hdd/www/input/mac/Xcode_26_beta_2.xip 26_beta_2
+InstallXCode /net/ci-files01-hki.ci.qt.io/hdd/www/input/mac/Xcode_26_beta_5.xip 26_beta_5
