@@ -4,9 +4,7 @@
 
 echo "Installing vcpkg android ports"
 
-pushd "${BASH_SOURCE%/*}/vcpkg" || exit
-cp "${BASH_SOURCE%/*}/../shared/vcpkg-configuration.json" .
-
+pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
 "$VCPKG_ROOT/vcpkg" install --triplet x86-android-qt --x-install-root x86-android-qt-tmp --debug
 "$VCPKG_ROOT/vcpkg" install --triplet x86_64-android-qt --x-install-root x86_64-android-qt-tmp --debug
 

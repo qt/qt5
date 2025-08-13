@@ -5,5 +5,5 @@
     "repository": "https://git.qt.io/aledelev/vcpkg",
     "baseline": "9c5c2a0ab75aff5bcd08142525f6ff7f6f7ddeee"
   },
-  "overlay-triplets": [ "./../../shared/triplets" ]
+  "overlay-triplets": [ "./../triplets" ]
 }

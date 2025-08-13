@@ -7,8 +7,7 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 echo "Installing vcpkg ports"
 
-pushd "${BASH_SOURCE%/*}/vcpkg" || exit
-cp "${BASH_SOURCE%/*}/../shared/vcpkg-configuration.json" .
+pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
 
 install_root=x64-linux-qt-tmp
 

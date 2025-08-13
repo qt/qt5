@@ -10,9 +10,7 @@ $vcpkgExe = "$env:VCPKG_ROOT\vcpkg.exe"
 $vcpkgRoot = "$env:VCPKG_ROOT"
 $vcpkgInstallRoot = "$arch-windows-qt-tmp"
 
-Set-Location -Path "$PSScriptRoot\vcpkg"
-Copy-Item "$PSScriptRoot\..\shared\vcpkg-configuration.json" -Destination "$PSScriptRoot\vcpkg"
-
+Set-Location -Path "$PSScriptRoot\..\shared\vcpkg"
 Run-Executable "$vcpkgExe" "install --triplet $arch-windows-qt --x-install-root $vcpkginstallroot --debug"
 
 New-Item -Path "$vcpkgRoot" -Name "installed" -ItemType "directory" -Force
