@@ -7,9 +7,7 @@ $vcpkgExe = "$env:VCPKG_ROOT\vcpkg.exe"
 $vcpkgRoot = "$env:VCPKG_ROOT"
 $vcpkgInstallRoot = "armeabi-v7a-android-qt-tmp"
 
-Set-Location -Path "$PSScriptRoot\vcpkg"
-Copy-Item "$PSScriptRoot\..\shared\vcpkg-configuration.json" -Destination "$PSScriptRoot\vcpkg"
-
+Set-Location -Path "$PSScriptRoot\..\shared\vcpkg"
 Run-Executable "$vcpkgExe" "install --triplet armeabi-v7a-android-qt --x-install-root $vcpkgInstallRoot --debug"
 
 New-Item -Path "$vcpkgRoot" -Name "installed" -ItemType "directory" -Force
