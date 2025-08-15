@@ -32,8 +32,6 @@ installPkg() {
         "/tmp/Homebrew-$VERSION.pkg"
 
     sudo installer -pkg "/tmp/Homebrew-$VERSION.pkg" -target /
-    # Add homebrew to PATH
-    SetEnvVar "PATH" "/opt/homebrew/bin:\$PATH"
 
     echo "Homebrew = $VERSION" >> ~/versions.txt
 }
@@ -63,6 +61,14 @@ if [ "$INSTALLTYPE" == "GIT" ]; then
     installGit
 else
     installPkg
+fi
+
+ARCH_TYPE=$(arch)
+# Add homebrew to PATH
+if [ "$ARCH_TYPE" == "arm64" ]; then
+    SetEnvVar "PATH" "/opt/homebrew/bin:\$PATH"
+else
+    SetEnvVar "PATH" "/usr/local/bin:\$PATH"
 fi
 
 # Disable non-ascii output for homebrew to make logs more readable
