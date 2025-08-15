@@ -41,8 +41,8 @@ EOF
 sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
-# Create chroot for debian stable
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-arm64
+# Create chroot for debian bookworm
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates bookworm /srv/chroot/stable-arm64
 
 echo "Create chroot for Ubuntu Jammy"
 # First we need update the deboostrap scripts
@@ -60,5 +60,5 @@ sudo sbuild-createchroot --include=gnupg,ca-certificates jammy /srv/chroot/jammy
 echo "Done creating chroot for Ubuntu Jammy"
 
 # Update chroot.
-sudo sbuild-update -udcar stable
+sudo sbuild-update -udcar bookworm
 sudo sbuild-update -udcar jammy

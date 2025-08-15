@@ -304,7 +304,7 @@ Configurations:
         'DEBIAN_RULES_REF=6.9_gles',
         'COIN_TARGET_DIST=tqtc-bookworm',
         'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
-        'COIN_SBUILD_CHROOT=stable-arm64-sbuild',
+        'COIN_SBUILD_CHROOT=bookworm-arm64-sbuild',
         'COIN_EXTRA_DEBIAN_REPO=deb http://deb.debian.org/debian/ bookworm main',
         'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
     ]
