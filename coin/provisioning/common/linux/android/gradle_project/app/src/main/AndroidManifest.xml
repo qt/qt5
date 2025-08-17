@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:label="gradle_project"
         android:supportsRtl="true"
-        tools:targetApi="34">
+        tools:targetApi="35">
         <activity
             android:name=".MainActivity"
             android:exported="true">
