@@ -9,7 +9,17 @@ set -ex
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-brew install --formula "${BASH_SOURCE%/*}/libiodbc.rb" "$@"
+# HOMEBREW_DIR depends on acrhitecture
+ARCH_TYPE=$(arch)
+if [ "$ARCH_TYPE" == "arm64" ]; then
+    HOMEBREW_DIR="/opt/homebrew/Library/Taps/local/homebrew-libiodbc/Formula"
+else
+    HOMEBREW_DIR="/usr/local/Homebrew/Library/Taps/local/homebrew-libiodbc/Formula"
+fi
+
+brew tap-new local/libiodbc
+cp "${BASH_SOURCE%/*}/libiodbc.rb" "$HOMEBREW_DIR/"
+brew install local/libiodbc/libiodbc "$@"
 
 read -r -a arr <<< "$(brew list --versions libiodbc)"
 version=${arr[1]}
