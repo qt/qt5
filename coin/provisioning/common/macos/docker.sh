@@ -23,7 +23,7 @@ DownloadURL "$urlCache" "$urlOccifical" "$sha" "/tmp/Docker_${chip}.dmg"
 
 sudo hdiutil attach "/tmp/Docker_${chip}.dmg"
 sudo /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --user qt
-sudo hdiutil detach /Volumes/Docker
+sudo hdiutil detach /Volumes/Docker -force
 
 # Add registry mirror for docker images
 mkdir "$HOME/.docker"
