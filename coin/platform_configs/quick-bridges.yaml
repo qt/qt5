@@ -1,0 +1,70 @@
+Version: 2
+Configurations:
+-
+    Id: 'macos-quick-bridges'
+    Template: 'qtci-macos-15-arm-104'
+    Compiler: 'Clang'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
+    Configure arguments: >
+        -nomake examples
+        -nomake tests
+        -release
+        -force-debug-info
+        -separate-debug-info
+        -optimize-size
+        -shared
+        -disable-deprecated-up-to 0x070000
+        -no-feature-widgets
+        -no-feature-sql
+        -no-feature-printsupport
+        -no-feature-dbus
+        -no-feature-vnc
+        -no-feature-picture
+        -no-feature-pdf
+        -no-feature-network
+    Environment variables: []
+-
+    Id: 'linux-quick-bridges'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
+    Configure arguments: >
+        -nomake examples
+        -nomake tests
+        -release
+        -force-debug-info
+        -separate-debug-info
+        -optimize-size
+        -shared
+        -disable-deprecated-up-to 0x070000
+        -no-feature-widgets
+        -no-feature-sql
+        -no-feature-printsupport
+        -no-feature-dbus
+        -no-feature-vnc
+        -no-feature-picture
+        -no-feature-pdf
+    Environment variables: []
+-
+    Id: 'windows-quick-bridges'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'Insignificant']
+    Configure arguments: >
+        -nomake examples
+        -nomake tests
+        -debug-and-release
+        -force-debug-info
+        -optimize-size
+        -shared
+        -disable-deprecated-up-to 0x070000
+        -no-feature-widgets
+        -no-feature-sql
+        -no-feature-printsupport
+        -no-feature-dbus
+        -no-feature-vnc
+        -no-feature-picture
+        -no-feature-pdf
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON',
+    ]
