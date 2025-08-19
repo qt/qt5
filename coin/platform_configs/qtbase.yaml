@@ -11,7 +11,8 @@ Include: [
     cmake_platforms_qemu_vxworks_tests_static.yaml,
     qtlite.yaml,
     qtbase-new-compiler-testing.yaml,
-    quick-minimal.yaml
+    quick-minimal.yaml,
+    quick-bridges.yaml
 ]
 Configurations: []
 Overrides:
