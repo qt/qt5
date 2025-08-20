@@ -40,7 +40,7 @@ sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
 # Create chroot
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates stable /srv/chroot/stable-amd64
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates bookworm /srv/chroot/stable-amd64 http://deb.debian.org/debian
 
 # For ubuntu 22.04
 echo "Create chroot for Ubuntu Jammy"
@@ -49,7 +49,7 @@ sudo sbuild-createchroot --include=eatmydata,gnupg,ca-certificates jammy /srv/ch
 echo "Done creating chroot for Ubuntu Jammy"
 
 # Update chroot.
-sudo sbuild-update -udcar stable
+sudo sbuild-update -udcar bookworm
 
 
 
