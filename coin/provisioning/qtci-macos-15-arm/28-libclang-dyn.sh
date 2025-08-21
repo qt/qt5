@@ -5,4 +5,4 @@
 set -ex
 
 BASEDIR=$(dirname "$0")
-"$BASEDIR/../common/unix/libclang-v100-dyn.sh"
+"$BASEDIR/../common/unix/libclang-dyn.sh"
