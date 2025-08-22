@@ -16,25 +16,23 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
-libclang_version=10.0
+version="20.1.3"
+baseUrl="https://download.qt.io/development_releases/prebuilt/libclang"
+cachedUrl="http://ci-files01-hki.ci.qt.io/input/libclang/dynamic"
 
 if uname -a |grep -q Darwin; then
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-based-mac.7z"
-    sha1="0fe1fa50b1b469d2c05acc3a3468bc93a66f1e5a"
-    url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/dynamic/libclang-release_${version//\./}-based-mac.7z"
-elif test -f /etc/redhat-release || /etc/centos-release; then
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
-    sha1="1d2e265502fc0832a854f989d757105833fbd179"
-    url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/dynamic/libclang-release_${version//\./}-based-linux-Rhel7.6-gcc5.3-x86_64.7z"
+    filename="libclang-release_20.1.3-based-macos-universal.7z"
+    sha1="21f403beec492b88a0043b90a2600f1fc60ec271"
+elif [ -f /etc/redhat-release ] || [ -f /etc/centos-release ] ; then
+    filename="libclang-release_20.1.3-based-linux-Rhel8.8-gcc10.3-x86_64.7z"
+    sha1="e91e52c82076b69bd41189afe5c1feb82ab64b64"
 else
-    version=$libclang_version
-    url="https://download.qt.io/development_releases/prebuilt/libclang/dynamic/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
-    sha1="c1580acb3a82e193acf86f18afb52427c5e67de8"
-    url_cached="http://ci-files01-hki.ci.qt.io/input/libclang/libclang-release_${version//\./}-based-linux-Ubuntu18.04-gcc9.2-x86_64.7z"
+    filename="libclang-release_20.1.3-based-linux-Ubuntu22.04-gcc11.4-x86_64.7z"
+    sha1="878a8ec09ed649635ad1707243a06a0c045b712f"
 fi
 
+url="${baseUrl}/${filename}"
+url_cached="${cachedUrl}/${filename}"
 zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-dynlibs-$version"
 
