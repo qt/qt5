@@ -30,6 +30,52 @@ function GetFfmpegDefaultConfiguration {
     return $defaultConfiguration
 }
 
+# Returns the absolute installation path of FFmpeg for this build
+# variant.
+function ResolveFFmpegInstallDir {
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$buildSystem,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ndkVer
+    )
+
+    if ($ndkVer) {
+        $prefix = "installed-ndk-$ndkVer"
+    } else {
+        $prefix = "installed"
+    }
+
+    return "C:\$ffmpeg_name\build\$buildSystem\$prefix"
+}
+
+# Returns the absolute installation path of FFmpeg for this build
+# variant. Returns a path that is compatible with MSYS.
+#
+# TODO: There is some code duplications here. Make a helper function
+# that translates native Windows paths into MSYS compatible paths.
+function ResolveFFmpegInstallDirMsys {
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$buildSystem,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [string]$ndkVer
+    )
+    if ($ndkVer) {
+        $prefix = "installed-ndk-$ndkVer"
+    } else {
+        $prefix = "installed"
+    }
+
+    return "/c/$ffmpeg_name/build/$buildSystem/$prefix"
+}
+
 function InstallFfmpeg {
     Param (
         [string]$config,
@@ -53,15 +99,16 @@ function InstallFfmpeg {
     $env:MSYSTEM = $msystem
 
     if ($ndk_ver) {
-        $prefix = "installed-ndk-$ndk_ver"
+        $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem -ndkVer $ndk_ver
+        $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem -ndkVer $ndk_ver
     } else {
-        $prefix = "installed"
+        $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem
+        $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem
     }
-    $installDir = "C:\$ffmpeg_name\build\$buildSystem\$prefix"
 
     $cmd = "cd /c/$ffmpeg_name"
     $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
-    $cmd += " && ../../configure --prefix=$prefix $config"
+    $cmd += " && ../../configure --prefix=$installDirForMsys $config"
     if ($toolchain) {
         $cmd += " --toolchain=$toolchain"
     }
@@ -191,8 +238,8 @@ function InstallAndroidArmv7 {
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
     $config += " --strip=$strip"
 
-
-    $result= InstallFfmpeg -config $config -buildSystem "android-arm" -msystem "ANDROID_CLANG" -ffmpegDirEnvVar $ffmpeg_dir_android_envvar_name -shared $shared -ndk_ver $ndk_version
+    $buildSystem = "android-arm"
+    $result= InstallFfmpeg -config $config -buildSystem $buildSystem -msystem "ANDROID_CLANG" -ffmpegDirEnvVar $ffmpeg_dir_android_envvar_name -shared $shared -ndk_ver $ndk_version
 
     Remove-Item -Path ${openssl_path}/armeabi-v7a/libcrypto.so
     Remove-Item -Path ${openssl_path}/armeabi-v7a/libssl.so
@@ -218,9 +265,14 @@ function InstallAndroidArmv7 {
 
     Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.17.2 && ./bootstrap.sh && ./configure && make install`"")
 
-    $command = "${PSScriptRoot}/../shared/fix_ffmpeg_dependencies.sh C:/${ffmpeg_name}/build/android-arm/installed/ _armeabi-v7a no"
+    $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem -ndkVer $ndk_version
+    $command = "${PSScriptRoot}/../shared/fix_ffmpeg_dependencies.sh ${installDirForMsys} _armeabi-v7a no"
     $command = $command.Replace("\", "/")
-    Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"$command`"")
+    $patchResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"$command`"")
+    if ($patchResult.ExitCode) {
+        Write-Host "fix_ffmpeg_dependencies.sh did not finish successfully"
+        return $false
+    }
 
     return $result
 }
