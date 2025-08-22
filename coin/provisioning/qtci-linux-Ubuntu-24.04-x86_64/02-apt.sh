@@ -155,6 +155,8 @@ installPackages+=(libcurl4-openssl-dev)
 installPackages+=(libicu-dev)
 installPackages+=(zlib1g-dev)
 installPackages+=(zlib1g)
+# 32-bit zlib is needed for for qemu-armv7 toolchain + WebEngine
+installPackages+=(lib32z1-dev)
 #Java 21 for Android
 installPackages+=(openjdk-21-jdk)
 installPackages+=(libgtk-3-dev)

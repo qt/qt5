@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2021 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script installs the Yocto toolchain
@@ -11,19 +11,19 @@ source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
-primaryBaseUrlPath="http://ci-files01-hki.ci.qt.io/input/boot2qt/gatesgarth"
-altBaseUrlPath="http://download.qt.io/development_releases/prebuilt/boot2qt/gatesgarth"
+primaryBaseUrlPath="http://ci-files01-hki.ci.qt.io/input/boot2qt/scarthgap"
+altBaseUrlPath="http://download.qt.io/development_releases/prebuilt/boot2qt/scarthgap"
 
 echo "Installing Yocto toolchain for 32-bit b2qt ARMV7..."
 
-versionARM="3.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm-a9d5156a.sh"
+versionARM="5.0"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm-126db6b9.sh"
 PrimaryUrl="$primaryBaseUrlPath/$package"
 AltUrl="$altBaseUrlPath/$package"
-SHA1="f9f7d51656067a1cc9d7ab92ddcddb219886ab22"
+SHA1="4ee043f851440c231a1faba3003c251cbdee9947"
 yoctoInstaller="/tmp/yocto-toolchain-ARMv7.sh"
 yoctoLocationARMv7="/opt/b2qt/$versionARM"
-sysrootARMv7="armv7vet2hf-neon-poky-linux-gnueabi"
+sysrootARMv7="cortexa15t2hf-neon-poky-linux-gnueabi"
 crosscompileARMv7="sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-"
 envSetupARMv7="environment-setup-$sysrootARMv7"
 toolchainFileARMv7="sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake"
@@ -36,11 +36,11 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt ARM64..."
 
-versionARM64="3.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm64-a9d5156a.sh"
+versionARM64="5.0"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemuarm64-126db6b9.sh"
 PrimaryUrl="$primaryBaseUrlPath/$package"
 AltUrl="$altBaseUrlPath/$package"
-SHA1="f490cbcc4e0d5a87f4e07607a71013aeeabce94a"
+SHA1="c7f8838e724f3802f68a9c9154eec8690748e8b0"
 yoctoInstaller="/tmp/yocto-toolchain-ARM64.sh"
 yoctoLocationARM64="/opt/b2qt/$versionARM64"
 sysrootARM64="cortexa57-poky-linux"
@@ -56,11 +56,11 @@ rm -rf "$yoctoInstaller"
 
 echo "Installing Yocto toolchain for 64-bit b2qt MIPS64..."
 
-versionMIPS64="3.2"
-package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemumips64-a9d5156a.sh"
+versionMIPS64="5.0"
+package="b2qt-x86_64-meta-toolchain-b2qt-ci-sdk-qemumips64-126db6b9.sh"
 PrimaryUrl="$primaryBaseUrlPath/$package"
 AltUrl="$altBaseUrlPath/$package"
-SHA1="5d3a8bb4384de273937286d275d1dab36f969951"
+SHA1="aa95da9a61910baa7f1700ce91fd9ee3cea027be"
 yoctoInstaller="/tmp/yocto-toolchain-mips64.sh"
 yoctoLocationMIPS64="/opt/b2qt/$versionMIPS64"
 sysrootMIPS64="mips64r2-poky-linux"
@@ -73,8 +73,6 @@ chmod +x "$yoctoInstaller"
 
 /bin/bash "$yoctoInstaller" -y -d "$yoctoLocationMIPS64"
 rm -rf "$yoctoInstaller"
-
-
 
 if [ -e "$yoctoLocationARMv7/sysroots/$sysrootARMv7" ] && [ -e "$yoctoLocationARMv7/${crosscompileARMv7}g++" ] && \
    [ -e "$yoctoLocationARMv7/$envSetupARMv7" ] && [ -e "$yoctoLocationARMv7/$toolchainFileARMv7" ] && \
@@ -113,8 +111,9 @@ sudo sh -c "grep ^qt /etc/group >> $yoctoLocationARM64/sysroots/$sysrootARM64/et
 
 # Fix mdns to support both docker and network tests
 # See also https://bugreports.qt.io/browse/QTBUG-106013
-sudo sh -c "sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'   $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/nsswitch.conf"
-sudo sh -c "sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] dns mdns4/'   $yoctoLocationARM64/sysroots/$sysrootARM64/etc/nsswitch.conf"
+sudo sed -i '/^hosts:/s/.*/hosts:          files myhostname mdns_minimal [NOTFOUND=return] mdns4 dns/'  \
+    $yoctoLocationARMv7/sysroots/$sysrootARMv7/etc/nsswitch.conf \
+    $yoctoLocationARM64/sysroots/$sysrootARM64/etc/nsswitch.conf
 
 # Install qemu binfmt for 32bit and 64bit arm architectures
 sudo update-binfmts --package qemu-arm --install arm $yoctoLocationARMv7/sysroots/x86_64-pokysdk-linux/usr/bin/qemu-arm \
