@@ -52,7 +52,7 @@
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
-	recommends = qtmultimedia qtshadertools qtwebengine
+	recommends = qtmultimedia qtshadertools qttasktree qtwebengine
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = dev
@@ -337,3 +337,9 @@
 	url = ../qtgraphs.git
 	branch = dev
 	status = addon
+[submodule "qttasktree"]
+	depends = qtbase
+	path = qttasktree
+	url = ../qttasktree.git
+	branch = dev
+	status = preview
