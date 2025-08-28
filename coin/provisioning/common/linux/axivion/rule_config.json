@@ -59,6 +59,9 @@
         "Qt-Generic-MissingIncludeGuard": {
             "_active": true
         },
+        "Qt-Generic-MissingTrCall": {
+            "_active": true
+        },
         "Qt-Generic-NoAbsoluteInclude": {
             "_active": true
         },
@@ -156,7 +159,7 @@
             "_active": true
         },
         "Qt-RangeLoopDetach": {
-            "_active": false
+            "_active": true
         },
         "Qt-RangeLoopReference": {
             "_active": true
@@ -168,6 +171,60 @@
             "_active": true
         },
         "Qt-RuleOfTwoSoft": {
+            "_active": true
+        },
+        "Qt-Security-QAuthenticatorSetPassword": {
+            "_active": true
+        },
+        "Qt-Security-QDataStreamOperatorRead": {
+            "_active": true
+        },
+        "Qt-Security-QDtlsIgnoreVerificationErrors": {
+            "_active": true
+        },
+        "Qt-Security-QMqttClientSetPassword": {
+            "_active": true
+        },
+        "Qt-Security-QNetworkAccessManagerConnectToHost": {
+            "_active": true
+        },
+        "Qt-Security-QNetworkReplyIgnoreSslErrors": {
+            "_active": true
+        },
+        "Qt-Security-QProcessStart": {
+            "_active": true
+        },
+        "Qt-Security-QSqlDatabaseSetPassword": {
+            "_active": true
+        },
+        "Qt-Security-QSslConfigurationSetCiphers": {
+            "_active": true
+        },
+        "Qt-Security-QSslConfigurationSetMissingCertificateIsFatal": {
+            "_active": true
+        },
+        "Qt-Security-QSslConfigurationSetPeerVerifyMode": {
+            "_active": true
+        },
+        "Qt-Security-QSslConfigurationSetProtocol": {
+            "_active": true
+        },
+        "Qt-Security-QSslSocketIgnoreSslErrors": {
+            "_active": true
+        },
+        "Qt-Security-QSslSocketSetPeerVerifyMode": {
+            "_active": true
+        },
+        "Qt-Security-QSslSocketSetProtocol": {
+            "_active": true
+        },
+        "Qt-Security-QUrlSetPassword": {
+            "_active": true
+        },
+        "Qt-Security-QWebEngineCertificateErrorAcceptCertificate": {
+            "_active": true
+        },
+        "Qt-Security-QWebengineViewLoad": {
             "_active": true
         },
         "Qt-SkippedBaseMethod": {
@@ -203,8 +260,8 @@
     "_Format": "1.0",
     "_VersionNum": [
         7,
-        8,
-        0,
-        15004
+        10,
+        2,
+        17470
     ]
 }
