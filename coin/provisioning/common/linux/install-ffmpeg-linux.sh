@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script builds and installs FFmpeg static or shared (default) libs
+# It can take an optional output parameter for installation:
+#
+# install-ffmpeg-linx.sh shared ~/my/install/path
+
 set -ex
 
 source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
@@ -12,7 +16,8 @@ build_type=$(get_ffmpeg_build_type "$1")
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_name=$(basename "$ffmpeg_source_dir")
 ffmpeg_config_options=$(get_ffmpeg_config_options "$build_type")
-prefix="/usr/local/$ffmpeg_name"
+default_prefix="/usr/local/$ffmpeg_name"
+prefix="${2:-$default_prefix}"
 pkgconfig_path="$PKG_CONFIG_PATH"
 
 install_ff_nvcodec_headers() {
@@ -95,5 +100,6 @@ if [ "$build_type" == "shared" ]; then
     "$fix_dependencies" "$output_dir"
 fi
 
-sudo mv "$output_dir" "/usr/local"
+sudo mkdir -p "$prefix"
+sudo mv "$output_dir"/* "$prefix"
 set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
