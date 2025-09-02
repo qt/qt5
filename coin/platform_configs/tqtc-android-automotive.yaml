@@ -12,7 +12,7 @@ Include: [
         'android-arm64-on-macos',
         'android-armv7-on-windows',
         'android-9-x86-on-linux',
-        'android-15-x86_64-on-linux'
+        'android-16-x86_64-on-linux'
     ],
     offline_documentation.yaml
 ]

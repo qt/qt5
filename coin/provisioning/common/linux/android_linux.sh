@@ -169,44 +169,26 @@ echo "Unzipping the Android 9 to $minVersionDestination"
 sudo unzip -o -q "$minVersionFilePath" -d "$minVersionDestination"
 rm "$minVersionFilePath"
 
-echo "Download and unzip Android 15 System Image"
-maxVersionFileName="x86_64-35_r08.zip"
-maxVersionDestination="$sdkTargetFolder/system-images/android-35/google_apis/"
+echo "Download and unzip Android 16 System Image"
+maxVersionFileName="x86_64-36_r07.zip"
+maxVersionDestination="$sdkTargetFolder/system-images/android-36/google_apis/"
 maxVersionFilePath="$maxVersionDestination/$maxVersionFileName"
 maxVersionCiUrl="$basePath/system_images/google_apis/$maxVersionFileName"
 maxVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$maxVersionFileName"
-maxVersionSha1="d79169884cabc6680cb29d32c2112ad46c858c1b"
+maxVersionSha1="c6bf44bdcd885bb902b4ba752d111a073ad7a817"
 
 mkdir -p "$maxVersionDestination"
 DownloadURL "$maxVersionCiUrl" "$maxVersionUrl" "$maxVersionSha1" "$maxVersionFilePath"
 
-echo "Unzipping the Android 15 to $maxVersionDestination"
+echo "Unzipping the Android 16 to $maxVersionDestination"
 sudo unzip -o -q "$maxVersionFilePath" -d "$maxVersionDestination"
 rm "$maxVersionFilePath"
-
-echo "Download and unzip Android 16 System Image for insignificant"
-insignificantMaxVersionFileName="x86_64-36_r06.zip"
-insignificantMaxVersionDestination="$sdkTargetFolder/system-images/android-36/google_apis/"
-insignificantMaxVersionFilePath="$insignificantMaxVersionDestination/$insignificantMaxVersionFileName"
-insignificantMaxVersionCiUrl="$basePath/system_images/google_apis/$insignificantMaxVersionFileName"
-insignificantMaxVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$insignificantMaxVersionFileName"
-insignificantMaxVersionSha1="a9b0b4a0488e0c6c380f5485507950f011388511"
-
-mkdir -p "$insignificantMaxVersionDestination"
-DownloadURL "$insignificantMaxVersionCiUrl" "$insignificantMaxVersionUrl" "$insignificantMaxVersionSha1" "$insignificantMaxVersionFilePath"
-
-echo "Unzipping the Android 16 insignicant to $insignificantMaxVersionDestination"
-sudo unzip -o -q "$insignificantMaxVersionFilePath" -d "$insignificantMaxVersionDestination"
-rm "$insignificantMaxVersionFilePath"
 
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_api_28 -c 2048M -f \
     -k "system-images;android-28;google_apis;x86"
-
-echo "no" | ./avdmanager create avd -n emulator_x86_64_api_35 -c 2048M -f \
-    -k "system-images;android-35;google_apis;x86_64"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_36 -c 2048M -f \
     -k "system-images;android-36;google_apis;x86_64"
