@@ -25,13 +25,12 @@ function check_for_android_device
 }
 
 # WARNING: On the very first boot of the emulator it happens that the device
-# "finishes" booting and getprop shows bootanim=stopped and
-# boot_completed=1. But sometimes not all packages have been installed (`pm
-# list packages` shows only 16 packages installed), and after around half a
-# minute the boot animation starts spinning (bootanim=running) again despite
-# boot_completed=1 all the time. After some minutes the boot animation stops
-# again and the list of packages contains 80 packages. Only then the device is
-# fully booted, and only then is dev.bootcomplete=1.
+# "finishes" booting and getprop shows boot_completed=1. But sometimes not all
+# packages have been installed (`pm list packages` shows only 16 packages
+# installed), and after around half a minute the boot animation starts spinning
+# again despite boot_completed=1 all the time. After some minutes the boot
+# animation stops again and the list of packages contains 80 packages.
+# Only then the device is fully booted, and only then is dev.bootcomplete=1.
 #
 # To reproduce the emulator booting as the first time, you have to delete the
 # cached images found inside $HOME/.android/avd/{avd_name}.avd/ especially the
@@ -39,11 +38,10 @@ function check_for_android_device
 function check_if_fully_booted
 {
     # The "getprop" command separates lines with \r\n so we trim them
-    bootanim=$(      timeout 1 "$ADB_EXEC" shell getprop init.svc.bootanim  | tr -d '\r\n')
     boot_completed=$(timeout 1 "$ADB_EXEC" shell getprop sys.boot_completed | tr -d '\r\n')
     bootcomplete=$(  timeout 1 "$ADB_EXEC" shell getprop dev.bootcomplete   | tr -d '\r\n')
-    echo "bootanim=$bootanim boot_completed=$boot_completed bootcomplete=$bootcomplete"
-    [ "$bootanim" = stopped ] && [ "$boot_completed" = 1 ] && [ "$bootcomplete" = 1 ]
+    echo "boot_completed=$boot_completed bootcomplete=$bootcomplete"
+    [ "$boot_completed" = 1 ] && [ "$bootcomplete" = 1 ]
 }
 
 for counter in $(seq ${EMULATOR_MAX_RETRIES})
