@@ -60,6 +60,16 @@ DownloadURL  \
     24f8ca393f26c922739462e4586b8ced1ff75f99bfa795defa34a967b5a4a5a0  \
     californium-3.8.0.tar.gz
 mv californium-3.8.0.tar.gz "$SERVER_PATH/californium/"
+# Download cached maven dependencies for californium.
+# The dependency archive is built by
+# "mvn dependency:go-offline -DskipTests -Dos.detected.classifier=linux-x86_64"
+# and archived from /root/.m2
+DownloadURL  \
+    http://ci-files01-hki.ci.qt.io/input/docker/californium-m2deps-3.8.0.tar.gz \
+    http://ci-files01-hki.ci.qt.io/input/docker/californium-m2deps-3.8.0.tar.gz \
+    e2fade7dde3cca02bb910eed99a5d8b5cb8ff945240c65bf06ce50411d70d3f2  \
+    californium-m2deps-3.8.0.tar.gz
+mv californium-m2deps-3.8.0.tar.gz "$SERVER_PATH/californium/"
 
 
 echo 'Building the docker images...'
