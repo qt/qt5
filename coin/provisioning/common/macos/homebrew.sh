@@ -12,10 +12,10 @@ INSTALLTYPE="$1"
 VERSION="$2"
 CHECKSUM="$3"
 
-DEFAULT_PKG_VERSION="4.4.21"
-DEFAULT_PKG_VERSION_CHECKSUM="cd83c4123d5db7d07eb3042f1c785ed7f599183c5c542040bc6abfa722583861"
-DEFAULT_GIT_VERSION="deb02e27d99fd2cb27ae16760e3a5272b612fded"
-DEFAULT_GIT_VERSION_CHECKSUM="a30b9fbf0d5c2cff3eb1d0643cceee30d8ba6ea1bb7bcabf60d3188bd62e6ba6"
+DEFAULT_PKG_VERSION="4.6.8"
+DEFAULT_PKG_VERSION_CHECKSUM="91157b34fcc58eeaf4149f2f2b3063f2904a3d5e5cc3bf84d3c79627ba26afd9"
+DEFAULT_GIT_VERSION="bce07c53def3dbe54aa14a88adfc63eb7ba91f48"
+DEFAULT_GIT_VERSION_CHECKSUM="c95d3a95a38f9c2cb122335a2101d49af196a1c5"
 
 source "$(dirname "$0")"/../../common/unix/DownloadURL.sh
 source "$(dirname "$0")"/../../common/unix/SetEnvVar.sh
@@ -53,7 +53,7 @@ installGit() {
     DownloadURL "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "http://ci-files01-hki.ci.qt.io/input/semisecure/sign/pw" "aae58d00d0a1b179a09f21cfc67f9d16fb95ff36" "/Users/qt/pw"
     { pw=$(cat "/Users/qt/pw"); } 2> /dev/null
     sudo chmod 755 /tmp/homebrew_install.sh
-    { (echo "$pw" | /tmp/homebrew_install.sh); } 2> /dev/null
+    { (echo "$pw" | CI=1 /tmp/homebrew_install.sh); } 2> /dev/null
     rm -f "/Users/qt/pw"
 }
 
