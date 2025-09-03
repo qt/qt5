@@ -13,11 +13,11 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 sslVersionForLatest="3.0.7"
 ndkVersionLatest="r27c"
-prebuiltOpensslShaLatest="733cff853b6ee7738e78b90f46b5f028c8490e1e"
+prebuiltOpensslShaLatest="2cc15dd990460c2c7157ab257a47071fbd9e0ac8"
 
 sslVersionForPreview="3.0.7"
 ndkVersionPreview="r29-beta2"
-prebuiltOpensslShaPreview="c2cf8fabfb7e00b31abcc554e6e306dafd99ae1b"
+prebuiltOpensslShaPreview="76c9788216440111be97ea1a63c4d8cd807baacd"
 
 ndkVersionNightly1=$ndkVersionLatest
 sslVersionForNightly1=$sslVersionForLatest
@@ -65,10 +65,10 @@ function InstallPrebuiltOpenssl() {
     sha=$2
     sslVersion=$3
 
-    opensslHome="${HOME}/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}"
+    opensslHome="${HOME}/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}_16kb"
     if [[ ! -d ${opensslHome} ]]; then
-        prebuiltUrl="http://ci-files01-hki.ci.qt.io/input/openssl/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}.zip"
-        targetFile="/tmp/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}.zip"
+        prebuiltUrl="http://ci-files01-hki.ci.qt.io/input/openssl/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}_16kb.zip"
+        targetFile="/tmp/prebuilt-openssl-${sslVersion}-for-android-ndk-${ndkVersion}_16kb.zip"
 
         DownloadURL "$prebuiltUrl" "$prebuiltUrl" "$sha" "$targetFile"
         unzip -o "$targetFile" -d "${HOME}"

@@ -65,3 +65,11 @@ set_ffmpeg_dir_env_var() {
     source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
     SetEnvVar "$envvar" "$dir"
 }
+
+set_ffmpeg_env_var() {
+    local envvar="$1"
+    local value="$2"
+
+    source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+    SetEnvVar "$envvar" "$value"
+}
