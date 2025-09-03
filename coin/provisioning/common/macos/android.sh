@@ -41,9 +41,11 @@ ndkSha1Preview="09be4f8fb626a9c93415198ea8e75d8d82f528fa"
 
 ndkVersionNightly1=$ndkVersionLatest  # Set as same version as latest = skip NDK install in provisioning
 ndkSha1Nightly1=$ndkSha1Latest
-
 ndkVersionNightly2=$ndkVersionLatest
 ndkSha1Nightly2=$ndkSha1Latest
+sdkBuildToolsVersion="36.0.0"
+# this is compile sdk version
+sdkApiLevel="android-36"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
