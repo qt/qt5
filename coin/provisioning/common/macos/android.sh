@@ -27,9 +27,9 @@ ndkVersionLatest="r27c"
 ndkVersionNightly1="$ndkVersionLatest"  # If same version as latest = skip NDK install for nightly
 ndkVersionNightly2="$ndkVersionLatest"
 
-sdkBuildToolsVersion="35.0.1"
+sdkBuildToolsVersion="36.0.0"
 # this is compile sdk version
-sdkApiLevel="android-35"
+sdkApiLevel="android-36"
 
 toolsSourceFile="$basePath/$toolsFile"
 

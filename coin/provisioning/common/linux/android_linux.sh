@@ -24,8 +24,8 @@ basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
 toolsVersion="2.1"
 toolsFile="commandlinetools-linux-6609375_latest.zip"
-sdkBuildToolsVersion="35.0.1"
-sdkApiLevel="android-35"
+sdkBuildToolsVersion="36.0.0"
+sdkApiLevel="android-36"
 toolsSha1="9172381ff070ee2a416723c1989770cf4b0d1076"
 
 ndkVersionLatest="r27c"
