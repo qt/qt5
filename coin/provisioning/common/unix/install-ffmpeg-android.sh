@@ -9,7 +9,8 @@ source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 
 os="$1"
 # Optional parameter to set output installation directory. Useful for local builds.
-target_install_dir_param="$2"
+page_size="$2"
+target_install_dir_param="$3"
 build_type=$(get_ffmpeg_build_type)
 ffmpeg_source_dir=$(download_ffmpeg)
 
@@ -88,7 +89,15 @@ build_ffmpeg_android() {
     ffmpeg_config_options+=" --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
     ffmpeg_config_options+=" --extra-cflags=-I${openssl_include} --extra-ldflags=-L${openssl_libs}"
-
+    if [ $page_size == "use_16kb_page_size" ]; then
+        ffmpeg_config_options+=" --extra-ldflags=-Wl,-z,max-page-size=16384"
+        echo "FFmpeg Android using 16KB page sizes"
+    elif [ $page_size == "use_4kb_page_size" ]; then
+        echo "FFmpeg Android using 4KB page sizes"
+    else
+        echo "Error: FFmpeg Android page_size must be: use_16kb_page_size or: use_4kb_page_size got: $page_size" >&2
+        exit 1
+    fi
     local build_dir="$ffmpeg_source_dir/build_android/$target_arch"
     mkdir -p "$build_dir"
     pushd "$build_dir"
