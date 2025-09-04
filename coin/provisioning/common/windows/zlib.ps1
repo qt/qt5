@@ -42,8 +42,7 @@ function BuildZlib {
     )
 
     PrepareBuildEnvironment -HostArchitecture $HostArchitecture -TargetArchitecture $TargetArchitecture
-
-    nmake /f $MAKEFILE
+    Invoke-NMake -NmakeArgs @('/f', "$MAKEFILE")
 }
 
 function CopySource {
