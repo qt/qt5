@@ -15,6 +15,13 @@ disableSpotlight() {
     sudo mdutil -E / || return 1
 }
 
+fixUnknownIndexingState() {
+    echo "Fix unknown indexing state by enabling indexing back one by one"
+    sudo mdutil -i on / || return 1
+    sudo mdutil -i on /System/Volumes/Preboot || return 1
+    sudo mdutil -i on /System/Volumes/Data || return 1
+}
+
 # Disabling spotlight tends to be flaky, add some retry
 for i in $(seq 1 5)
 do
@@ -25,7 +32,8 @@ do
         echo "Spotlight disabled"
         break
     else
-        echo "Failed to disable spotlight, $i retry..."
+        echo "Failed to disable spotlight, $i run fix and retry..."
+        fixUnknownIndexingState
         sleep 2
     fi
 done
