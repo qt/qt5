@@ -382,3 +382,22 @@ function Invoke-MtCommand {
   & $Env:SystemRoot\system32\cmd.exe /c $cmdLine | Write-Output
   Remove-Item $tempFile
 }
+
+function Invoke-NMake {
+    param([string[]]$NmakeArgs)
+    # Temporarily remove MAKE flags for NMAKE process
+    $old = @{
+        MAKEFLAGS  = (Get-Item Env:MAKEFLAGS  -ErrorAction Ignore).Value
+        MFLAGS     = (Get-Item Env:MFLAGS     -ErrorAction Ignore).Value
+        MAKE       = (Get-Item Env:MAKE       -ErrorAction Ignore).Value
+        NMAKEFLAGS = (Get-Item Env:NMAKEFLAGS -ErrorAction Ignore).Value
+    }
+    foreach ($n in $old.Keys) {Remove-Item "Env:$n" -ErrorAction SilentlyContinue}
+    try   {& nmake @NmakeArgs}
+    finally {
+        foreach ($n in $old.Keys) {
+            if ($old[$n]) {Set-EnvironmentVariable -Key "$n" -Value $old[$n]}
+            else {Remove-Item "Env:$n" -ErrorAction SilentlyContinue}
+        }
+    }
+}
