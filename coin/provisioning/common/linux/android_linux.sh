@@ -217,6 +217,10 @@ cp "${scripts_dir_name}/${emulator_script_filename}" "${HOME}"
 ANDROID_EMULATOR_RUNNER="${HOME}/${emulator_script_filename}"
 SetEnvVar "ANDROID_EMULATOR_RUNNER" "$ANDROID_EMULATOR_RUNNER"
 
+SetEnvVar "PATH" "\$PATH:$sdkTargetFolder/emulator"
+SetEnvVar "PATH" "\$PATH:$sdkTargetFolder/platform-tools"
+SetEnvVar "PATH" "\$PATH:$sdkTargetFolder/cmdline-tools/latest/bin"
+
 # Gradle Caching
 cp -r "${scripts_dir_name}/android/gradle_project" /tmp/gradle_project
 cd /tmp/gradle_project
