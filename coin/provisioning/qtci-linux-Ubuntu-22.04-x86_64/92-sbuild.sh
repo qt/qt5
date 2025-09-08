@@ -39,8 +39,13 @@ EOF
 sudo sbuild-adduser "$LOGNAME"
 newgrp sbuild
 
+# For debian repo we need to update the bookworm release pgp key
+mkdir -p /home/qt/.debian_key_ring
+wget https://ftp-master.debian.org/keys/archive-key-12.asc -O /home/qt/.debian_key_ring/archive-key-12.asc
+gpg --no-default-keyring --keyring=/home/qt/.debian_key_ring/debian_chroot.gpg --import /home/qt/.debian_key_ring/archive-key-12.asc
+
 # Create chroot
-sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates bookworm /srv/chroot/stable-amd64 http://deb.debian.org/debian
+sudo sbuild-createchroot --include=eatmydata,ccache,gnupg,ca-certificates bookworm /srv/chroot/stable-amd64 http://deb.debian.org/debian --keyring=/home/qt/.debian_key_ring/debian_chroot.gpg
 
 # For ubuntu 22.04
 echo "Create chroot for Ubuntu Jammy"
