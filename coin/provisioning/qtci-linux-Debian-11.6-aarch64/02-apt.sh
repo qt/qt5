@@ -249,6 +249,8 @@ installPackages+=(zlib1g-dev)
 installPackages+=(libusb-1.0-0-dev)
 # password management support for Qt Creator
 installPackages+=(libsecret-1-dev)
+installPackages+=(debian-archive-keyring)
+
 
 echo "Running update for apt"
 waitLoop
