@@ -1,7 +1,5 @@
 Branch Name: qt5.12.3/universal
 
-Maintainer: shinyTang
-
 Source Repository: https://github.com/qt/qt5
 
 Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch contains modifications to Qt 5.12.3 to add native support for macOS ARM64.
