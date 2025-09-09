@@ -40,11 +40,13 @@ Build Instructions:
   Replace the System Library: Copy the newly created universal ./lib/libxcb.dylib file and overwrite the existing libxcb.dylib in the library directory on your primary build machine (e.g., /usr/local/lib/). This step is crucial for the universal Qt build to link correctly.
 
   3.Execute the Build Script: Run the script to start the compilation process for both architectures and merge the Qt libraries.
+
     cd qt5.12.3_universal
     bash build_opoensource.sh
 
   Building a Single Architecture
   If you do not require a universal library, you can modify the build_opensource.sh script to compile for only one architecture (either x86_64 or arm64). Edit the script to comment out or remove the build commands for the architecture you don't need.
+
 
 
 <!-- Original Qt README content follows -->
