@@ -4,9 +4,9 @@ Source Repository: https://github.com/qt/qt5
 
 Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch contains modifications to Qt 5.12.3 to add native support for macOS ARM64.
 
-========
+================
 
-Branch Modifications (Differences)
+Branch Modifications (Differences):
   This branch is based on the Qt dev branch at commit 8337e20fadddf, which corresponds to the Qt 5.12.3 release state. The following modifications have been applied:
 
   1. qtbase Module:
@@ -23,7 +23,7 @@ Branch Modifications (Differences)
 
   Summary: These changes ensure Qt 5.12.3 can be compiled for both Intel (x86_64) and ARM (arm64) architectures on macOS, as well as for the legacy 32-bit Intel (i386) target, creating a more universal binary build.
 
-  Build Instructions
+Build Instructions:
   ================
   This project uses the build_opensource.sh script to compile Qt libraries for both x86_64 and ARM64 architectures, subsequently merging them into a single Universal 2 (universal) binary.
 
@@ -35,7 +35,7 @@ Branch Modifications (Differences)
   On each machine, locate the libxcb.dylib file you installed (typically in /usr/local/lib or /opt/homebrew/lib).
 
   Use the lipo tool to merge the two architecture-specific libraries into one universal library:
-    - lipo -create /path/on/x86_machine/libxcb.dylib /path/on/arm_machine/libxcb.dylib -output ./lib/libxcb.dylib
+  - lipo -create /path/on/x86_machine/libxcb.dylib /path/on/arm_machine/libxcb.dylib -output ./lib/libxcb.dylib
 
   Replace the System Library: Copy the newly created universal ./lib/libxcb.dylib file and overwrite the existing libxcb.dylib in the library directory on your primary build machine (e.g., /usr/local/lib/). This step is crucial for the universal Qt build to link correctly.
 
@@ -43,7 +43,7 @@ Branch Modifications (Differences)
     cd qt5.12.3_universal
     bash build_opoensource.sh
 
-Building a Single Architecture
+  Building a Single Architecture
   If you do not require a universal library, you can modify the build_opensource.sh script to compile for only one architecture (either x86_64 or arm64). Edit the script to comment out or remove the build commands for the architecture you don't need.
 
 
