@@ -1,8 +1,6 @@
-Branch Name: qt5.12.3/universal
-
 Source Repository: https://github.com/qt/qt5
 
-Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch contains modifications to Qt 5.12.3 to add native support for macOS ARM64.
+Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch provides a patch for Qt 5.12.3 that enables compilation and native execution on macOS ARM64 systems.
 
 ================
 
@@ -23,8 +21,10 @@ Branch Modifications (Differences):
 
   Summary: These changes ensure Qt 5.12.3 can be compiled for both Intel (x86_64) and ARM (arm64) architectures on macOS, as well as for the legacy 32-bit Intel (i386) target, creating a more universal binary build.
 
+================
+
 Build Instructions:
-  ================
+ 
   This project uses the build_opensource.sh script to compile Qt libraries for both x86_64 and ARM64 architectures, subsequently merging them into a single Universal 2 (universal) binary.
 
   Building Universal Libraries (macOS)
@@ -48,7 +48,7 @@ Build Instructions:
      If you do not require a universal library, you can modify the build_opensource.sh script to compile for only one architecture (either x86_64 or arm64). Edit the script to comment out or remove the build commands for the architecture you don't need.
 
 
-
+================================================================================================================
 <!-- Original Qt README content follows -->
 HOW TO BUILD QT5
 ================
