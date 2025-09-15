@@ -1,0 +1,186 @@
+Source Repository: https://github.com/qt/qt5
+
+Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch provides a patch for Qt 5.12.3 that enables compilation and native execution on macOS ARM64 systems.
+
+================
+
+Branch Modifications (Differences):
+  This branch is based on the Qt dev branch at commit 8337e20fadddf, which corresponds to the Qt 5.12.3 release state. The following modifications have been applied:
+
+  1. qtbase Module:
+
+  Fixed a missing #include <math.h> in libpng to resolve compilation errors.
+
+  Removed the #error "32-bit builds are not supported" directives and related code in Cocoa platform plugins to enable 32-bit (i386) compilation support on macOS.
+
+  Added necessary includes (e.g., #include <CoreGraphics/CGColorSpace.h>) for the macOS graphics stack.
+
+  2. qtmultimedia Module:
+
+  Refactored code in the AVFoundation plugin to replace deprecated C++98 functional utilities (std::binary_function, std::unary_function, std::not2) with modern C++11/14 equivalents (lambda functions). This ensures compatibility with modern compilers enforcing the C++17 standard.
+
+  Summary: These changes ensure Qt 5.12.3 can be compiled for both Intel (x86_64) and ARM (arm64) architectures on macOS, as well as for the legacy 32-bit Intel (i386) target, creating a more universal binary build.
+
+================
+
+Build Instructions:
+ 
+  This project uses the build_opensource.sh script to compile Qt libraries for both x86_64 and ARM64 architectures, subsequently merging them into a single Universal 2 (universal) binary.
+
+  Building Universal Libraries (macOS)
+    1.Prerequisite - Install Identical libxcb: Before running the build script, you must install the exact same version of the libxcb library on both your x86_64 (Intel) and ARM64 (Apple Silicon) machines.
+  
+    2.Create a Merged libxcb Library:
+  
+    On each machine, locate the libxcb.dylib file you installed (typically in /usr/local/lib or /opt/homebrew/lib).
+  
+    Use the lipo tool to merge the two architecture-specific libraries into one universal library:
+    - lipo -create /path/on/x86_machine/libxcb.dylib /path/on/arm_machine/libxcb.dylib -output ./lib/libxcb.dylib
+  
+    Replace the System Library: Copy the newly created universal ./lib/libxcb.dylib file and overwrite the existing libxcb.dylib in the library directory on your primary build machine (e.g., /usr/local/lib/). This step is crucial for the universal Qt build to link correctly.
+  
+    3.Execute the Build Script: Run the script to start the compilation process for both architectures and merge the Qt libraries.
+  
+      cd qt5.12.3_universal
+      bash build_opoensource.sh
+
+  Building a Single Architecture
+     If you do not require a universal library, you can modify the build_opensource.sh script to compile for only one architecture (either x86_64 or arm64). Edit the script to comment out or remove the build commands for the architecture you don't need.
+
+
+================================================================================================================
+<!-- Original Qt README content follows -->
+HOW TO BUILD QT5
+================
+
+
+ Synopsis
+ ========
+
+   System requirements
+   ------------------
+
+    - Perl 5.8 or later
+    - Python 2.7 or later
+    - C++ compiler supporting the C++11 standard
+
+     For other platform specific requirements,
+     please see section "Setting up your machine" on:
+     http://wiki.qt.io/Get_The_Source
+
+   Licensing:
+   ----------
+
+    Opensource users:
+
+        <license>        = -opensource
+
+    Commercial users:
+
+        <license>        = -commercial
+
+   Linux, Mac:
+   -----------
+
+     cd <path>/<source_package>
+     ./configure -prefix $PWD/qtbase <license> -nomake tests
+     make -j 4
+
+   Windows:
+   --------
+
+     Open a command prompt.
+     Ensure that the following tools can be found in the path:
+     * Supported compiler (Visual Studio 2012 or later,
+        MinGW-builds gcc 4.9 or later)
+     * Perl version 5.12 or later   [http://www.activestate.com/activeperl/]
+     * Python version 2.7 or later  [http://www.activestate.com/activepython/]
+     * Ruby version 1.9.3 or later  [http://rubyinstaller.org/]
+
+     cd <path>\<source_package>
+     configure -prefix %CD%\qtbase <license> -nomake tests
+     nmake // jom // mingw32-make
+
+     To accelerate the bootstrap of qmake with MSVC, it may be useful to pass
+     "-make-tool jom" on the configure command line. If you do not use jom,
+     adding "/MP" to the CL environment variable is a good idea.
+
+ More details follow.
+
+ Build!
+ ======
+
+ A typical `configure; make' build process is used.
+
+ Some relevant configure options (see configure -help):
+
+ -release              Compile and link Qt with debugging turned off.
+ -debug                Compile and link Qt with debugging turned on.
+ -nomake tests         Disable building of tests to speed up compilation
+ -nomake examples      Disable building of examples to speed up compilation
+ -confirm-license      Automatically acknowledge the LGPL 2.1 license.
+
+ Example for a release build:
+ (adjust the `-jN' parameter as appropriate for your system)
+
+   ./configure -prefix $PWD/qtbase <license>
+   make -j4
+
+ Example for a developer build:
+ (enables more autotests, builds debug version of libraries, ...)
+
+   ./configure -developer-build <license>
+   make -j4
+
+ See output of `./configure -help' for documentation on various options to
+ configure.
+
+ The above examples will build whatever Qt5 modules have been enabled by
+ default in the build system.
+
+ It is possible to build selected modules with their dependencies by doing
+ a `make module-<foo>'.  For example, to build only qtdeclarative,
+ and the modules it depends on:
+
+   ./configure -prefix $PWD/qtbase <license>
+   make -j4 module-qtdeclarative
+
+ This can save a lot of time if you are only interested in a subset of Qt5.
+
+
+ Hints
+ =====
+
+ The submodule repository qtrepotools contains useful scripts for
+ developers and release engineers. Consider adding qtrepotools/bin
+ to your PATH environment variable to access them.
+
+ The qt5_tool in qtrepotools has some more features which may be of interest.
+ Try `qt5_tool --help'.
+
+
+ Building Qt5 from git
+ =====================
+ See http://wiki.qt.io/Building_Qt_5_from_Git and README.git
+ for more information.
+ See http://wiki.qt.io/Qt_5 for the reference platforms.
+
+
+ Documentation
+ =============
+
+ After configuring and compiling Qt, building the documentation is possible by running
+ "make docs".
+
+ After having built the documentation, you need to install it with the following
+ command:
+
+    make install_docs
+
+ The documentation is installed in the path set to $QT_INSTALL_DOCS.
+ Running "qmake -query" will list the value of QT_INSTALL_DOCS.
+
+ Information about Qt 5's documentation is located in qtbase/doc/README
+ or in the following page: http://wiki.qt.io/Qt5DocumentationProject
+
+ Note: Building the documentation is only tested on desktop platforms.
