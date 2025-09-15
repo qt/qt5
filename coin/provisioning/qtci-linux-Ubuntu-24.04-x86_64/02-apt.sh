@@ -151,6 +151,8 @@ installPackages+=(zlib1g)
 installPackages+=(openjdk-8-jdk)
 #Java 17 for Android, needed by RTA
 installPackages+=(openjdk-17-jdk)
+# Java 21 for QtBridges
+installPackages+=(openjdk-21-jdk)
 installPackages+=(libgtk-3-dev)
 installPackages+=(ninja-build)
 installPackages+=(libssl-dev)
