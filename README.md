@@ -58,7 +58,6 @@ If you **do not need** a universal library, you can modify the `build_opensource
 Edit the script to comment out or remove the lines for the other architecture.
 
 ##
-============================================================
 ## Original Qt README
 <!-- Original Qt README content follows -->
 HOW TO BUILD QT5
