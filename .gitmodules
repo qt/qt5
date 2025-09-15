@@ -305,3 +305,4 @@
 	url = https://github.com/qt/qtwebglplugin.git
 	branch = 5.12.3
 	status = addon
+

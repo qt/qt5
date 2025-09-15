@@ -58,4 +58,3 @@ python3 make_universal.py $prj_path/Qt5.12.3 $prj_path/Qt5.12.3_x86_64 $prj_path
 cp $prj_path/Qt5.12.3_x86_64/bin/macdeployqt $prj_path/Qt5.12.3/bin
 # qt.conf 用来指定当前 qmake 所依赖的的 Qt 库
 cp qt.conf $prj_path/Qt5.12.3/bin
-

@@ -8,7 +8,6 @@ success = 0
 failed = 0
 skipped = 0
 
-
 def check_arch(file_name, arch):
 #    print("lipo " + file_name + " -verify_arch " + arch)
     return os.system("lipo " + file_name + " -verify_arch " + arch)
