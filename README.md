@@ -1,52 +1,67 @@
-Source Repository: https://github.com/qt/qt5
+# Qt 5.12.3 Universal (Apple Silicon/macOS)
 
-Purpose: The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures. This branch provides a patch for Qt 5.12.3 that enables compilation and native execution on macOS ARM64 systems.
+**Source Repository:** [https://github.com/qt/qt5](https://github.com/qt/qt5)
 
-================
+---
 
-Branch Modifications (Differences):
-  This branch is based on the Qt dev branch at commit 8337e20fadddf, which corresponds to the Qt 5.12.3 release state. The following modifications have been applied:
+## Purpose
 
-  1. qtbase Module:
+> The official Qt 5.12.3 release lacks support for compilation on macOS ARM (Apple Silicon) architectures.  
+> This branch provides a patch for Qt 5.12.3 that enables compilation and native execution for both Intel (x86_64) and ARM (arm64) architectures, as well as legacy 32-bit Intel (i386).
 
-  Fixed a missing #include <math.h> in libpng to resolve compilation errors.
+---
 
-  Removed the #error "32-bit builds are not supported" directives and related code in Cocoa platform plugins to enable 32-bit (i386) compilation support on macOS.
+## 🚩 **Branch Modifications (Differences)**
 
-  Added necessary includes (e.g., #include <CoreGraphics/CGColorSpace.h>) for the macOS graphics stack.
+This branch is based on the Qt dev branch at commit `8337e20fadddf` (Qt 5.12.3 release).  
+**Key changes:**
 
-  2. qtmultimedia Module:
+### 1. `qtbase` Module:
+- **Fixed:** Missing `#include <math.h>` in libpng to resolve compilation errors.
+- **Removed:** `#error "32-bit builds are not supported"` directives and related code in Cocoa platform plugins to enable 32-bit (i386) compilation support on macOS.
+- **Added:** Necessary includes (e.g., `#include <CoreGraphics/CGColorSpace.h>`) for the macOS graphics stack.
 
-  Refactored code in the AVFoundation plugin to replace deprecated C++98 functional utilities (std::binary_function, std::unary_function, std::not2) with modern C++11/14 equivalents (lambda functions). This ensures compatibility with modern compilers enforcing the C++17 standard.
+### 2. `qtmultimedia` Module:
+- **Refactored:** AVFoundation plugin code replacing deprecated C++98 functional utilities (`std::binary_function`, `std::unary_function`, `std::not2`) with modern C++11/14 equivalents (lambda functions, etc.).
 
-  Summary: These changes ensure Qt 5.12.3 can be compiled for both Intel (x86_64) and ARM (arm64) architectures on macOS, as well as for the legacy 32-bit Intel (i386) target, creating a more universal binary build.
+**Summary:**  
+These changes ensure Qt 5.12.3 can be compiled for both Intel (x86_64) and ARM (arm64) architectures on macOS, as well as for the legacy 32-bit Intel (i386) target, creating a more universal build.
 
-================
+---
 
-Build Instructions:
- 
-  This project uses the build_opensource.sh script to compile Qt libraries for both x86_64 and ARM64 architectures, subsequently merging them into a single Universal 2 (universal) binary.
+## 🛠️ **Build Instructions**
 
-  Building Universal Libraries (macOS)
-    1.Prerequisite - Install Identical libxcb: Before running the build script, you must install the exact same version of the libxcb library on both your x86_64 (Intel) and ARM64 (Apple Silicon) machines.
-  
-    2.Create a Merged libxcb Library:
-  
-    On each machine, locate the libxcb.dylib file you installed (typically in /usr/local/lib or /opt/homebrew/lib).
-  
-    Use the lipo tool to merge the two architecture-specific libraries into one universal library:
-    - lipo -create /path/on/x86_machine/libxcb.dylib /path/on/arm_machine/libxcb.dylib -output ./lib/libxcb.dylib
-  
-    Replace the System Library: Copy the newly created universal ./lib/libxcb.dylib file and overwrite the existing libxcb.dylib in the library directory on your primary build machine (e.g., /usr/local/lib/). This step is crucial for the universal Qt build to link correctly.
-  
-    3.Execute the Build Script: Run the script to start the compilation process for both architectures and merge the Qt libraries.
-  
-      cd qt5.12.3_universal
-      bash build_opoensource.sh
+This project uses the `build_opensource.sh` script to compile Qt libraries for both x86_64 and ARM64 architectures, then merges them into a single Universal 2 binary.
 
-  Building a Single Architecture
-     If you do not require a universal library, you can modify the build_opensource.sh script to compile for only one architecture (either x86_64 or arm64). Edit the script to comment out or remove the build commands for the architecture you don't need.
+### Building Universal Libraries (macOS)
 
+1. **Prerequisite – Install Identical `libxcb`:**  
+   Before running the build script, install the **same version** of the `libxcb` library on both your x86_64 (Intel) and ARM64 (Apple Silicon) machines.
+
+2. **Create a Merged `libxcb` Library:**
+   - On each machine, locate the `libxcb.dylib` file (usually in `/usr/local/lib` or `/opt/homebrew/lib`).
+   - Use the `lipo` tool to merge:
+     ```sh
+     lipo -create /path/on/x86_machine/libxcb.dylib /path/on/arm_machine/libxcb.dylib -output ./lib/libxcb.dylib
+     ```
+   - Replace the system library: Copy the universal `./lib/libxcb.dylib` and overwrite the existing `libxcb.dylib` in your library directory (e.g., `/usr/local/lib`).
+
+3. **Execute the Build Script:**
+   ```sh
+   cd qt5.12.3_universal
+   bash build_opensource.sh
+   ```
+
+### Building a Single Architecture
+
+If you **do not need** a universal library, you can modify the `build_opensource.sh` script to compile for only one architecture (either x86_64 or arm64).  
+Edit the script to comment out or remove the lines for the other architecture.
+
+---
+
+##
+============================================================
+## Original Qt README
 
 ================================================================================================================
 <!-- Original Qt README content follows -->
