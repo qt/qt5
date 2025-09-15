@@ -57,13 +57,9 @@ This project uses the `build_opensource.sh` script to compile Qt libraries for b
 If you **do not need** a universal library, you can modify the `build_opensource.sh` script to compile for only one architecture (either x86_64 or arm64).  
 Edit the script to comment out or remove the lines for the other architecture.
 
----
-
 ##
 ============================================================
 ## Original Qt README
-
-================================================================================================================
 <!-- Original Qt README content follows -->
 HOW TO BUILD QT5
 ================
