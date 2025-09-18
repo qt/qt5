@@ -2,11 +2,12 @@
 
 # This script installs Windows App SDK
 
-$script:nugetPackage = "nuget.exe"
+$script:nugetVersion = "v6.11.0"
+$script:nugetPackage = "nuget_$nugetVersion.exe"
 $script:packageRoot = "C:\Utils\WindowsAppSdk\"
 
 $script:cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\windows\nuget\$nugetPackage"
-$script:officialUrl = "https://dist.nuget.org/win-x86-commandline/v6.11.0/nuget.exe"
+$script:officialUrl = "https://dist.nuget.org/win-x86-commandline/$nugetVersion/nuget.exe"
 $script:sdkChecksumSha1 = "5443887cfb5283da5021388d146ebb5febdc82e9"
 $script:package_path = "$packageRoot\\$nugetPackage"
 
