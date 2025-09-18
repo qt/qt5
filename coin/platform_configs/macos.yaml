@@ -64,7 +64,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-26-arm64-tests'
-        Template: 'qtci-macos-26-arm-102'
+        Template: 'qtci-macos-26-arm-104'
         Compiler: 'Clang'
         Features: ['TestOnly', 'Packaging', 'DoNotAbortTestingOnFirstFailure']
         Platform dependency: 'macos-universal-on-arm64'
@@ -98,7 +98,7 @@ Configurations:
         ]
     -
         Id: 'macos-26-arm64-developer-build'
-        Template: 'qtci-macos-26-arm-102'
+        Template: 'qtci-macos-26-arm-104'
         Compiler: 'Clang'
         Features: ['DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'Insignificant']
         Configure arguments: '-developer-build -nomake examples -debug -framework'
@@ -128,7 +128,7 @@ Configurations:
         Platform dependency: 'macos-arm64-developer-build'
     -
         Id: 'macos-26-arm64-developer-build-tests'
-        Template: 'qtci-macos-26-arm-102'
+        Template: 'qtci-macos-26-arm-104'
         Compiler: 'Clang'
         Features: ['TestOnly', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
         Platform dependency: 'macos-26-arm64-developer-build'
