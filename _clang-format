@@ -104,6 +104,9 @@ AlignEscapedNewlines: Left
 # initializer list in list-initialization.
 SpaceBeforeCpp11BracedList: false
 
+# This indents comments weirdly: QTCREATORBUG-30304
+ReflowComments: false
+
 ---
 # Use the Google-based style for .proto files.
 Language: Proto
