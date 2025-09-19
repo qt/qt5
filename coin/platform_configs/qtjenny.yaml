@@ -1,0 +1,11 @@
+Version: 2
+Module only: True
+Include: [
+    cmake_platforms.yaml: [
+        'rhel-8.10'
+    ],
+    cmake_platforms_target_android.yaml: [
+        'android-15-x86_64-on-linux'
+    ]
+]
+Configurations: []
