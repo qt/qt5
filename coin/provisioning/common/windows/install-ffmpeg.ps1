@@ -205,7 +205,8 @@ function InstallAndroidArmv7 {
         [string]$ndk_root,
         [string]$ffmpeg_dir_android_envvar_name,
         [string]$ndk_version,
-        [string]$android_openssl_path  # OpenSSL is built for Android using NDK, NDK versions for OpenSSL+FFmpeg should match
+        [string]$android_openssl_path,  # OpenSSL is built for Android using NDK, NDK versions for OpenSSL+FFmpeg should match
+        [string]$android_page_size
     )
     $shared=$true
     $target_toolchain_arch="armv7a-linux-androideabi"
@@ -227,8 +228,10 @@ function InstallAndroidArmv7 {
     $strip="${toolchain_bin}/llvm-strip.exe"
     $openssl_path = $android_openssl_path.Replace("\", "/")
 
-    New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libcrypto.so -Target ${openssl_path}/armeabi-v7a/libcrypto_3.so
-    New-Item -ItemType SymbolicLink -Path ${openssl_path}/armeabi-v7a/libssl.so -Target ${openssl_path}/armeabi-v7a/libssl_3.so
+    Write-Host "Copying _3.so's to .so's"
+    Copy-Item -Path ${openssl_path}/armeabi-v7a/libcrypto_3.so -Destination ${openssl_path}/armeabi-v7a/libcrypto.so
+    Copy-Item -Path ${openssl_path}/armeabi-v7a/libssl_3.so -Destination ${openssl_path}/armeabi-v7a/libssl.so
+
 
     $config = GetFfmpegDefaultConfiguration
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
@@ -236,6 +239,16 @@ function InstallAndroidArmv7 {
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
     $config += " --extra-cflags=-I${android_openssl_path}/include --extra-ldflags=-L${android_openssl_path}/armeabi-v7a"
     $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
+    if ($android_page_size -eq "use_16kb_page_size"){
+        $config += " --extra-ldflags=-Wl,-z,max-page-size=16384"
+        Write-Host "FFmpeg Android using 16KB page sizes"
+    } elseif ($android_page_size -eq "use_4kb_page_size") {
+        Write-Host "FFmpeg Android using 4KB page sizes"
+    } else {
+        Write-Host "Error: FFmpeg Android page_size must be: use_16kb_page_size or: use_16kb_page_size got: $android_page_size"
+        return false
+    }
+
     $config += " --strip=$strip"
 
     $buildSystem = "android-arm"
@@ -283,7 +296,7 @@ function InstallFfmpegsAMD64 {
     $llvmMingwRes = InstallLlvmMingwFfmpeg
     if ($env:ANDROID_NDK_ROOT_LATEST) {
         Write-Host "Install ffmpeg using latest supported Android NDK"
-        $androidArmV7Res = InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_LATEST -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_LATEST" -ndk_version "latest" -android_openssl_path $env:OPENSSL_ANDROID_HOME_LATEST
+        $androidArmV7Res = InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_LATEST -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_LATEST" -ndk_version "latest" -android_openssl_path $env:OPENSSL_ANDROID_HOME_LATEST -android_page_size "use_4kb_page_size"
     } else {
         throw "Error: env.var ANDROID_NDK_ROOT_LATEST is not set for FFmpeg"
     }
