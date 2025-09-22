@@ -16,7 +16,7 @@ Include: [
     "windows-11_24H2-mingw13-developer-build",
     "windows-11_24H2-llvm",
     "windows-11_24H2-msvc2022",
-    "windows-11_22h2-arm64-msvc2022"
+    "windows-11_23h2-arm64-msvc2022"
   ],
   cmake_platforms_qemu_qnx.yaml: [
     "qnx-710-x86_64-developer-build-on-linux",
