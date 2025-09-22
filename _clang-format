@@ -104,7 +104,7 @@ AlignEscapedNewlines: Left
 # initializer list in list-initialization.
 SpaceBeforeCpp11BracedList: false
 
-# This indents comments weirdly: QTCREATORBUG-30304
+# Do not reflow any comment
 ReflowComments: false
 
 ---
