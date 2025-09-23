@@ -66,9 +66,8 @@ Configurations:
         Id: 'macos-26-arm64-tests'
         Template: 'qtci-macos-26-arm-104'
         Compiler: 'Clang'
-        Features: ['TestOnly', 'Packaging', 'DoNotAbortTestingOnFirstFailure']
+        Features: ['TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
-        Environment variables: [ 'COIN_CTEST_IGNORE_EXIT_CODE=1' ]
 
     # =========================================================================
     # Developer build. Single architecture builds.
