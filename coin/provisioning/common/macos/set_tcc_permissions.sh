@@ -41,6 +41,9 @@ SERVICES+=("kTCCServiceBluetoothAlways|$HOME")
 # a test fails.
 SERVICES+=("kTCCServiceScreenCapture|/")
 
+# Squish requires kTCCServiceAccessibility
+SERVICES+=("kTCCServiceAccessibility|/")
+
 # ------ Implementation ------
 
 function add_permission_for_client() {
