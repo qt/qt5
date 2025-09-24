@@ -25,13 +25,13 @@ git.exe -C "$vcpkgRoot" checkout "tags/$vcpkgVersion"
 
 $releaseTagFileContent = Get-Content "$PSScriptRoot\..\shared\vcpkg_tool_release_tag.txt"
 $n = $releaseTagFileContent.Split("`n")
-$sha1key = "windows_" + $arch + "_sha1"
+$checksumkey = "windows_" + $arch + "_checksum"
 foreach ($keyValue in $n) {
     $keyValue = $keyValue.Split('=')
     if($keyValue[0] -eq "vcpkg_tool_release_tag") {
         $vcpkgExeReleaseTag = $keyValue[1]
-    } elseif($keyValue[0] -eq $sha1key) {
-        $vcpkgExeSHA1 = $keyValue[1]
+    } elseif($keyValue[0] -eq $checksumkey) {
+        $vcpkgExechecksum = $keyValue[1]
     }
 }
 
@@ -43,8 +43,8 @@ if(!$vcpkgExeReleaseTag) {
 }
 $nonDottedReleaseTag = $vcpkgExeReleaseTag.replace('-', "")
 
-if(!$vcpkgExeSHA1) {
-    Write-Host "Unable to read vcpkg tool SHA1 from $PSScriptRoot\..\shared\vcpkg_tool_release_tag.txt"
+if(!$vcpkgExechecksum) {
+    Write-Host "Unable to read vcpkg tool checksum from $PSScriptRoot\..\shared\vcpkg_tool_release_tag.txt"
     Write-Host "Content:"
     Write-Host "$releaseTagFileContent"
     exit 1
@@ -60,7 +60,7 @@ $vcpkgExeCacheUrl = "\\ci-files01-hki.ci.qt.io\provisioning\vcpkg\vcpkg-$nonDott
 $vcpkgExe = "C:\Windows\Temp\vcpkg.exe"
 
 Download "$vcpkgExeOfficialUrl" "$vcpkgExeCacheUrl" "$vcpkgExe"
-Verify-Checksum $vcpkgExe $vcpkgExeSHA1
+Verify-Checksum $vcpkgExe $vcpkgExechecksum "sha256"
 Move-Item "$vcpkgExe" -Destination "$vcpkgRoot" -Force
 
 if(![System.IO.File]::Exists("$vcpkgRoot\vcpkg.exe")){

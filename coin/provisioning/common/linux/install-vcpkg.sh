@@ -29,8 +29,8 @@ do
         "vcpkg_tool_release_tag")
             vcpkgToolReleaseTag=${keyValue[1]}
             ;;
-        "linux_sha1")
-            vcpkgToolSHA1=${keyValue[1]}
+        "linux_checksum")
+            vcpkgToolChecksum=${keyValue[1]}
             ;;
     esac
 done
@@ -43,9 +43,9 @@ then
     exit 1
 fi
 
-if [ -z vcpkgToolSHA1 ]
+if [ -z vcpkgToolChecksum ]
 then
-    echo "Unable to read vcpkg tool SHA1 from $releaseTagFile"
+    echo "Unable to read vcpkg tool Checksum from $releaseTagFile"
     echo "Content:"
     cat $releaseTagFile
     exit 1
@@ -58,7 +58,7 @@ vcpkgToolCacheUrl="http://ci-files01-hki.ci.qt.io/input/vcpkg/vcpkg-tool-$nonDot
 vcpkgToolSourceFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag"
 vcpkgToolBuildFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag/build"
 
-InstallFromCompressedFileFromURL "$vcpkgToolCacheUrl" "$vcpkgToolOfficialUrl" "$vcpkgToolSHA1" "$HOME" ""
+InstallFromCompressedFileFromURL "$vcpkgToolCacheUrl" "$vcpkgToolOfficialUrl" "$vcpkgToolChecksum" "$HOME" ""
 cmake -S "$vcpkgToolSourceFolder" -B "$vcpkgToolBuildFolder" -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DVCPKG_DEVELOPMENT_WARNINGS=OFF
 cmake --build "$vcpkgToolBuildFolder" --parallel
 
