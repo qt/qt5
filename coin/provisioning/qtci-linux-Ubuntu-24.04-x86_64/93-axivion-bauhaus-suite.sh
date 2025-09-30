@@ -30,7 +30,7 @@ DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$HOME"
 
 mkdir "$HOME/.bauhaus"
 cd "$HOME/.bauhaus"
-wget http://ci-files01-hki.ci.qt.io/input/axivion/QT_11427439_2025-10-07.key
+wget http://ci-files01-hki.ci.qt.io/input/axivion/QT_11427439_2026-12-31.key
 cd "$HOME"
 
 #Axivion configuration
