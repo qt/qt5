@@ -1,0 +1,28 @@
+Version: 2
+Configurations:
+-
+    Id: 'windows-11_24H2-msvc2022-developer-build-cxx23'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Features: ['Sccache', 'DebugAndRelease', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
+    Configure arguments: '-debug-and-release -force-asserts -make examples -developer-build -force-debug-info -qt-zlib -c++std c++23'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DMySQL_ROOT={{.Env.ENV_MySQL_ROOT}} -DMySQL_LIBRARY_DIR={{.Env.ENV_MySQL_LIBRARY_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'VCPKG_HOST_TRIPLET=x64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=x64-windows-qt',
+        'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
+    ]
+# Test gcc-14 on Ubuntu 24.04 ARM64 Wayland
+-
+    Id: 'ubuntu-24.04-arm64-gcc14-cxx23'
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
+    Configure arguments: '-developer-build -nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-pcre -no-libudev -bundled-xcb-xinput -c++std c++23'
+    Environment variables: [
+        'COMMON_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14',
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+    ]
