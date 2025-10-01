@@ -6,7 +6,8 @@ Include: [
     "ubuntu-22.04-developer-build",
     "ubuntu-22.04-developer-build-x11-tests",
     "windows-11_24H2-msvc2022-developer-build",
-    "ios-universal"
+    "ios-universal",
+    "documentation-warnings",
   ],
   macos.yaml: [
     "macos-arm64-developer-build",
