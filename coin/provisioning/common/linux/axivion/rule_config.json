@@ -1,5 +1,23 @@
 {
     "Analysis": {
+        "CWE-119": {
+            "_active": true
+        },
+        "CWE-125": {
+            "_active": true
+        },
+        "CWE-190": {
+            "_active": true
+        },
+        "CWE-416": {
+            "_active": true
+        },
+        "CWE-476": {
+            "_active": true
+        },
+        "CWE-787": {
+            "_active": true
+        },
         "CloneDetection": {
             "_active": true,
             "excludes": [
@@ -203,8 +221,8 @@
     "_Format": "1.0",
     "_VersionNum": [
         7,
-        8,
-        0,
-        15004
+        10,
+        4,
+        17655
     ]
 }
