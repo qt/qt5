@@ -23,9 +23,4 @@ SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
 # hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/Users/qt/.local/bin"
 
-# QtWebengine still requires python2
-pyenv install 2.7.18
-SetEnvVar "PYTHON2_PATH" "/Users/qt/.pyenv/versions/2.7.18/bin/"
-
 echo "python3 = 3.9.7" >> ~/versions.txt
-echo "python2 = 2.7.18" >> ~/versions.txt
