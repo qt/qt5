@@ -4,6 +4,7 @@ Include: [
         "documentation-warnings",
         "rhel-8.10",
         'windows-10_22h2-mingw13',
+        'windows-11_24h2-mingw13',
     ],
     macos.yaml: [
         'macos-universal-on-arm64'
@@ -11,6 +12,7 @@ Include: [
     cmake_platforms_target_android.yaml: [
         'android-arm64-on-macos',
         'android-armv7-on-windows',
+        'android-armv7-on-windows-new',
         'android-9-x86-on-linux',
         'android-15-x86_64-on-linux'
     ],
