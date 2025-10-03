@@ -14,4 +14,4 @@ curl -L https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 sudo apt-add-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-20 main'
 
 sudo apt update
-sudo apt -y install clang-20 lldb-20 lld-20
+sudo apt -y install clang-20 lldb-20 lld-20 libc++-20-dev
