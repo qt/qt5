@@ -144,6 +144,19 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
 -
+    Id: 'opensuse-16.0-developer-build'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Configure arguments: '-nomake examples -developer-build'
+    Environment variables: [
+        'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+    ]
+-
     Id: 'sles-15_sp6-static'
     Template: 'qtci-linux-SLES-15_SP6-x86_64-52'
     Compiler: 'GCC'

@@ -1,0 +1,96 @@
+### OpenSUSE Leap 16.0 ###
+## KDE ##
+## In qtci-linux-openSUSE-16.0-x86_64-50 > Graphics Platform: X11 (System default) ##
+
+# Installation #
+Language: English (US)
+Keyboard Layout: English (US)
+
+Activate online repositories during installation (yes)
+Use default selections
+(Note: openSUSE 16.0 didn't offer these)
+
+Desktop with KDE Plasma
+  - This is not available in installer in openSUSE 16.0
+  - Needs to be installed later via zypper
+
+Suggested Partitioning - default values
+
+Clock and Time Zone
+  - Region: Etc
+  - Time Zone: UTC - Coordinated Universal Time
+  - Hardware Clock Set to UTC (yes)
+
+## Configurations ##
+Before coin-setup add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+zypper update
+
+## openSUSE 16.0 ##
+#  - Doesn't have Desktop GUI etc.
+#  - Needs to install more than with previous versions
+
+# Install GNOME and KDE Plasma to get Desktops available
+sudo zypper install -t pattern GNOME
+sudo zypper install -t pattern kde
+
+# Set graphical target:
+sudo systemctl set-default graphical.target
+sudo reboot
+# After reboot continue installation from Desktop GUI
+
+# How to remove Activities overview which has issues with some tests
+  - Switch from GDM to SDDM display manager to have Plasma (X11) available
+  - Plasma (X11) is selected because it doesn't have Activities overview
+
+#sudo zypper install sddm   <-- Not needed, we have sddm-qt6 package installed
+sudo systemctl disable gdm
+sudo systemctl enable sddm
+sudo systemctl set-default graphical.target
+
+# To verify which display manager is in use:
+cat /etc/systemd/system/display-manager.service
+
+# After reboot Desktop Session: Plasma (X11) should be enabled in login screen
+sudo reboot
+
+# To have autologin enabled
+edit /etc/sysconfig/displaymanager
+DISPLAYMANAGER_AUTOLOGIN="qt"
+
+# Autologin needs SDDM configuration to keep Plasma (X11) as selected
+create /etc/sddm.conf.d/autologin.con
+
+[Autologin]
+User=qt
+Session=plasma6.desktop
+
+sudo reboot # And verify that autologin works and Desktop Session is still Plasma (X11)
+
+# Enable and start OpenSSH server
+systemctl status sshd
+systemctl enable sshd
+systemctl start sshd
+
+# Login to desktop and continue with Coin setup
+Download and run coin-setup binary - http://<Coin IP>/coin/binary/linux_amd64/coin-setup
+- If IP has changed and Coin name not visible to VM, check from Coin logs which IP works for VMs
+- chmod 755 ./coin-setup && ./coin-setup
+
+Workspace Behavior - Screen locking - Lock screen automatically - unselect options
+Startup and Shutdown - Login Screen - Behavior - Select Automatically log in with session (System default)
+Notifications
+    All & App Notifications - unselect
+    Critical notifications - unselect
+    Low priority notifications - unselect
+    Application progress: Show in task manager - unselect
+                          Show in notifications - unselect
+    Notification badges:  Show in task manager - unselect
+Display and Monitor - Display Configuration - 1280x800
+Power Management: Screen Energy Saving - unselect
+                  Suspend Session - unselect
+YaST - Hardware - Sound - Add Dummy soundcard
+  - openSUSE 16.0 already had dummy soundcard enabled again
+
+sudo zypper -nq install qemu-guest-agent
+
+Reboot

@@ -7,3 +7,10 @@ Configurations:
     Compiler: 'GCC'
     Features: ['Sccache', 'TestOnly']
     Platform dependency: 'webassembly-linux-thread-asyncify'
+-
+    Id: 'webassembly-linux-thread-asyncify-tests-new'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'TestOnly']
+    Platform dependency: 'webassembly-linux-thread-asyncify-new'

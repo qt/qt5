@@ -5,6 +5,7 @@ Include: [
   ],
   cmake_platforms.yaml: [
     "opensuse-15.6-developer-build",
+    "opensuse-16.0-developer-build",
   ]
 ]
 
@@ -565,6 +566,141 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'opensuse-15.6-developer-build'
+    Features: ['Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CMAKE_ARGS=
+          -DCMAKE_CXX_FLAGS="-flto"
+          -DCMAKE_EXE_LINKER_FLAGS="-flto"',
+        'TARGET_CONFIGURE_ARGS=
+          -release
+          -platform wasm-emscripten
+          -nomake examples
+          -nomake tests
+          -feature-thread
+          -optimize-size
+          -static
+          -ltcg
+          -feature-c++20
+          -disable-deprecated-up-to 0x070000
+          -no-feature-sql
+          -no-feature-xml
+          -no-feature-printsupport
+          -no-feature-dbus
+          -no-feature-vnc
+          -no-feature-future
+          -no-feature-concurrent
+          -no-feature-process
+          -no-feature-processenvironment
+          -no-feature-multiprocess
+          -no-feature-sharedmemory
+          -no-feature-permissions
+          -no-feature-udpsocket
+          -no-feature-localserver
+          -no-feature-picture
+          -no-feature-pdf
+          -no-feature-accessibility
+          -no-feature-clipboard
+          -no-feature-draganddrop
+          -no-feature-image_heuristic_mask
+          -no-feature-imageformat_bmp
+          -no-feature-imageformat_ppm
+          -no-feature-imageformat_xbm
+          -no-feature-cssparser
+          -no-feature-action
+          -no-feature-whatsthis
+          -no-feature-vkgen
+          -no-feature-backtrace
+          -no-feature-stack_clash_protection
+          -no-feature-mimetype
+          -no-feature-textmarkdownreader
+          -no-feature-textodfwriter
+          -no-feature-testlib
+          -no-feature-texthtmlparser
+          -no-feature-textmarkdownwriter
+          -no-feature-imageio-text-loading
+          -no-feature-image_text
+          -no-feature-proxymodel
+          -no-feature-filesystemmodel
+          -no-feature-wheelevent
+          -no-feature-tabletevent
+          -no-feature-icu
+          -no-feature-systemtrayicon
+          -no-feature-raster-64bit
+          -no-feature-raster-fp
+          -no-feature-undostack
+          -no-feature-undogroup
+          -no-feature-undocommand
+          -no-feature-sctp
+          -no-feature-dtls
+          -no-feature-networkproxy
+          -no-feature-getifaddrs
+          -no-feature-ipv6ifname
+          -no-feature-libresolv
+          -no-feature-libproxy
+          -no-feature-networkinterface
+          -no-feature-networkdiskcache
+          -no-feature-topleveldomain
+          -no-feature-gssapi
+          -no-feature-sha3-fast
+          -no-feature-systemsemaphore
+          -no-feature-gestures
+          -no-feature-jalalicalendar
+          -no-feature-hijricalendar
+          -no-feature-islamiccivilcalendar
+          -no-feature-timezone
+          -no-feature-timezone_tzdb
+          -no-feature-im
+          -no-feature-graphicsframecapture
+          -no-feature-library
+          -no-feature-filesystemwatcher
+          -no-feature-gif
+          -no-feature-ico
+          -no-feature-sessionmanager
+          -no-feature-emojisegmenter
+          -no-feature-egl
+          -no-feature-metal
+          -no-feature-vulkan
+          -no-feature-openvg
+          -no-feature-wasm-simd128
+          -no-feature-wasm-exceptions
+          -no-feature-wasm-jspi
+          -no-feature-harfbuzz',
+        'NON_QTBASE_CMAKE_ARGS=
+          -DFEATURE_qml_network=off
+          -DFEATURE_qml_ssl=off
+          -DFEATURE_qml_jit=off
+          -DFEATURE_qml_debug=off
+          -DFEATURE_qml_preview=off
+          -DFEATURE_qml_xml_http_request=off
+          -DFEATURE_qml_locale=off
+          -DFEATURE_qml_worker_script=off
+          -DFEATURE_qml_xmllistmodel=off
+          -DFEATURE_quick_canvas=off
+          -DFEATURE_quick_designer=off
+          -DFEATURE_quick_flipable=off
+          -DFEATURE_quick_gridview=off
+          -DFEATURE_quick_tableview=off
+          -DFEATURE_quick_treeview=off
+          -DFEATURE_quick_particles=off
+          -DFEATURE_quick_pathview=off
+          -DFEATURE_quick_sprite=off
+          -DFEATURE_quick_draganddrop=off
+          -DFEATURE_quick_pixmap_cache_threaded_download=off
+          -DFEATURE_qml_table_model=off
+          -DFEATURE_qml_tree_model=off
+          -DFEATURE_quicktemplates2_hover=off
+          -DFEATURE_quicktemplates2_multitouch=off
+          -DFEATURE_quicktemplates2_calendar=off
+          -DFEATURE_qdoc=off',
+        'TARGET_CMAKE_ARGS=-DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON'
+    ]
+-
+    Id: 'wasm-quick-minimal-new'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'opensuse-16.0-developer-build'
     Features: ['Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',

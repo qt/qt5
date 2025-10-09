@@ -14,6 +14,19 @@ Configurations:
         'HEADLESS_CHROME_FOR_TESTING=true'
     ]
 -
+    Id: 'webassembly-linux-thread-asyncify-new'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'opensuse-16.0-developer-build'
+    Features: ['DoNotRunTests', 'UseConfigure']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        "TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread \
+         -feature-exceptions -DQT_QMAKE_DEVICE_OPTIONS=\"QT_EMSCRIPTEN_ASYNCIFY=1\"",
+        'HEADLESS_CHROME_FOR_TESTING=true'
+    ]
+-
     Id: 'webassembly-windows'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Target os: 'WebAssembly'
@@ -42,11 +55,37 @@ Configurations:
         'TARGET_CMAKE_ARGS=-DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON'
     ]
 -
+    Id: 'webassembly-linux-thread-new'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'opensuse-16.0-developer-build'
+    Features: ['DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -nomake examples -feature-thread',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH=/usr/local -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'TARGET_CMAKE_ARGS=-DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON'
+    ]
+-
     Id: 'webassembly-linux-shared'
     Template: 'qtci-linux-openSUSE-15.6-x86_64-51'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
     Platform dependency: 'opensuse-15.6-developer-build'
+    Features: ['DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Environment variables: [
+        'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
+        'TARGET_CONFIGURE_ARGS=-release -platform wasm-emscripten -no-feature-thread -nomake tests -nomake examples -shared',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DQT_ADDITIONAL_HOST_PACKAGES_PREFIX_PATH=/usr/local -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
+        'TARGET_CMAKE_ARGS=-DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON'
+    ]
+-
+    Id: 'webassembly-linux-shared-new'
+    Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
+    Target os: 'WebAssembly'
+    Compiler: 'GCC'
+    Platform dependency: 'opensuse-16.0-developer-build'
     Features: ['DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'EM_CONFIG={{.Env.EMSDK}}/.emscripten',
