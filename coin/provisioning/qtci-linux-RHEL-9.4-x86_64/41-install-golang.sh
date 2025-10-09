@@ -4,4 +4,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/linux/install-golang.sh"
+source "${BASH_SOURCE%/*}/../common/unix/install-golang.sh" "linux"

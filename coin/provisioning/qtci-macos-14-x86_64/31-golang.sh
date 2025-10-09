@@ -4,4 +4,4 @@
 
 set -ex
 
-brew install go
+source "${BASH_SOURCE%/*}/../common/unix/install-golang.sh" "macos"
