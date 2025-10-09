@@ -11,7 +11,7 @@ Include: [
     "opensuse-15.6-developer-build",
     "sles-15_sp6-static",
     "windows-10_22h2-msvc2022",
-    "rhel-8.10",
+    "rhel-9.4",
     "windows-10_22h2-mingw13",
     "windows-11_24h2-mingw13",
     "windows-11_24H2-mingw13-developer-build",
