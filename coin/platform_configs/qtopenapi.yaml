@@ -2,6 +2,16 @@ Version: 2
 Include: [
   macos.yaml: [
     "macos-14-arm64-tests",
+    "macos-13-arm64-tests",
+    "macos-15-arm64-tests",
+    "macos-26-arm64-tests",
+    "macos-26-arm64-developer-build",
+    "macos-13-arm64-developer-build-tests",
+    "macos-14-arm64-developer-build-tests",
+    "macos-15-arm64-developer-build-tests",
+    "macos-26-arm64-developer-build-tests",
+    "macos-arm64-developer-build",
+    "macos-universal-on-arm64",
     "macos-arm64-developer-build",
   ],
   cmake_platforms.yaml: [
@@ -9,6 +19,16 @@ Include: [
     "ubuntu-24.04-x64-developer-build",
     "ubuntu-24.04-x64-x11-tests",
     "ubuntu-24.04-x64-developer-build-x11-tests",
+    "ubuntu-22.04-developer-build",
+    "ubuntu-22.04",
+    "ubuntu-22.04-developer-build-x11-tests",
+    "ubuntu-22.04-x11-tests",
+    "ubuntu-24.04-arm64-developer-build",
+    "ubuntu-24.04-arm64",
+    "ubuntu-24.04-arm64-wayland-tests",
+    "ubuntu-24.04-arm64-offscreen-tests",
+    "ubuntu-24.04-x64-developer-build",
+    "rhel-8.10",
     "rhel-9.4",
     "opensuse-15.6-developer-build",
   ]
