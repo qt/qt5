@@ -1,7 +1,6 @@
 Version: 2
 Include: [
   macos.yaml: [
-    "macos-14-x86_64-tests",
     "macos-14-arm64-tests",
     "macos-arm64-developer-build",
   ],
@@ -10,6 +9,8 @@ Include: [
     "ubuntu-24.04-x64-developer-build",
     "ubuntu-24.04-x64-x11-tests",
     "ubuntu-24.04-x64-developer-build-x11-tests",
+    "rhel-9.4",
+    "opensuse-15.6-developer-build",
   ]
 ]
 Configurations: []

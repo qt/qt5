@@ -17,7 +17,7 @@ targetFile="openapi-generator-cli.jar"
 
 DownloadURL "$PrimaryUrl" "$AltUrl" "$SHA1" "$targetFile"
 
-sudo mkdir "$targetFolder"
+sudo mkdir -p "$targetFolder"
 sudo mv "$targetFile" "$targetFolder"
 
 SetEnvVar "PATH" "$targetFolder:\$PATH"
