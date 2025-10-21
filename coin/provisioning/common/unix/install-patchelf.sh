@@ -15,14 +15,21 @@ sha1="ddd46a2e2a16a308245c008721d877455b23bba8"
 target_source_dir="$HOME/patchelf-$patchelf_version"
 
 if [ ! -d "$target_source_dir" ]; then
-   InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$HOME" ""
+    InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$HOME" ""
 fi
 
-pushd "$target_source_dir"
+pushd "$target_source_dir" || exit
 
 ./bootstrap.sh
 ./configure
 make
 sudo make install
 
-popd
+popd || exit
+
+if [[ "$(uname -s)" = "Linux" && -f /etc/redhat-release ]]; then
+    # RHEL-9 with sudo or non-interactive shells do not include /usr/local/bin/ in PATH
+    # Add a symlink so patchelf is found in later scripts
+    echo "Creating symlink for patchelf in /usr/bin"
+    sudo ln -sf /usr/local/bin/patchelf /usr/bin/patchelf
+fi
