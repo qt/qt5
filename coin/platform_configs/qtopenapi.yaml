@@ -28,6 +28,7 @@ Include: [
     "ubuntu-24.04-arm64-wayland-tests",
     "ubuntu-24.04-arm64-offscreen-tests",
     "ubuntu-24.04-x64-developer-build",
+    "sles-15_sp6-static",
     "rhel-8.10",
     "rhel-9.4",
     "opensuse-15.6-developer-build",
