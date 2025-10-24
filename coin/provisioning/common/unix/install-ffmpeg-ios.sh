@@ -12,6 +12,7 @@ readonly MINIMUM_IOS_VERSION="16.0"
 
 source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 
+ffmpeg_version=$(ffmpeg_version_default)
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
 default_prefix="/usr/local/ios/ffmpeg"
@@ -67,11 +68,23 @@ build_info_plist() {
     local framework_name="$2"
     local framework_id="$3"
 
+    # Apple plist format has a strict requirement that the version string
+    # contains up to 3 numerics separated by a dot. Meanwhile, FFmpeg versioning
+    # tends to use an 'n' prefix in their versioning. We use a regex to convert
+    # and verify the version string.
+    #
+    # https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleversion
+    local formatted_ffmpeg_version
+    if [[ $ffmpeg_version =~ ([0-9]+(\.[0-9]+){0,2}) ]]; then
+        formatted_ffmpeg_version="${BASH_REMATCH[1]}"
+    else
+        echo "Unable to format FFmpeg version string '$ffmpeg_version' into corresponding Apple Info.plist format"
+        exit 1
+    fi
+
     local minimum_version_key="MinimumOSVersion"
     local supported_platforms="iPhoneOS"
 
-    # TODO: This should be filled out with the actual version of FFmpeg that we are
-    # deploying.
     info_plist="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
@@ -89,9 +102,9 @@ build_info_plist() {
     <key>CFBundlePackageType</key>
     <string>FMWK</string>
     <key>CFBundleShortVersionString</key>
-    <string>7.0.2</string>
+    <string>${formatted_ffmpeg_version}</string>
     <key>CFBundleVersion</key>
-    <string>7.0.2</string>
+    <string>${formatted_ffmpeg_version}</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>${minimum_version_key}</key>
@@ -111,7 +124,7 @@ build_info_plist() {
 create_framework() {
     # Create a 'traditional' framework from the corresponding dylib.
     local framework_name="$1"
-    local platform="$2" # For now it's either arm64 or arm64-simulator, see below.
+    local platform="$2" # For now it's either arm64, x86_64-simulator, see below.
     local ffmpeg_library_path="$ffmpeg_source_dir/build_ios/${platform}/installed$prefix"
     local framework_complete_path="${ffmpeg_library_path}/framework/${framework_name}.framework/${framework_name}"
 
