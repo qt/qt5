@@ -4,11 +4,12 @@
 
 # Install Git
 
-$version = "2.36.1"
+$version = "2.51.1"
 if (Is64BitWinHost) {
     $arch = "-64-bit"
-    $sha1 = "594bdfc4e7704fb03fe14b7c0613087dfa3d4416"
+    $sha1 = "831c8968c709af0cbd20a634572b44293db43bec"
 } else {
+    $version = "2.36.1"
     $arch = "-32-bit"
     $sha1 = "1bbe040254c236607ccb84e14a3f608b1a4e959a"
 }

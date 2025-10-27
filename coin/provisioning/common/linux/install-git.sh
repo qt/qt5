@@ -11,11 +11,11 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-version="2.36.1"
+version="2.51.1"
 officialUrl="https://github.com/git/git/archive/refs/tags/v$version.tar.gz"
 cachedUrl="http://ci-files01-hki.ci.qt.io/input/git/git-$version.tar.gz"
 targetFile="/tmp/git-$version.tar.gz"
-sha="a17c11da2968f280a13832d97f48e9039edac354"
+sha="8a9373d536699c695a58170512983f239ac61979"
 DownloadURL "$cachedUrl" "$officialUrl" "$sha" "$targetFile"
 sourceDir="/tmp/git-$version-source"
 mkdir "$sourceDir"
