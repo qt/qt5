@@ -4,42 +4,52 @@ Configurations:
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET1'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET2'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET3'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET4'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET5'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET6'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET7'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET8'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET9'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
         Compiler: 'Yocto'
+        Features: ['Packaging']
         Target arch: 'TARGET10'
     -
         Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
