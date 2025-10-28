@@ -2,6 +2,10 @@
 # Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
+# This script will
+#   1) Clone the vcpkg repo   - https://github.com/microsoft/vcpkg/tags
+#   2) Install the vcpkg-tool - https://github.com/microsoft/vcpkg-tool/tags
+
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 # shellcheck source=../unix/DownloadURL.sh
@@ -18,6 +22,7 @@ echo "Cloning the vcpkg repo"
 git clone "$vcpkgRepo" "$vcpkgRoot"
 git -C "$vcpkgRoot" checkout "tags/$vcpkgVersion"
 
+echo "Install the vcpkg-tool"
 releaseTagFile="${BASH_SOURCE%/*}/../shared/vcpkg_tool_release_tag.txt"
 for line in $(cat "$releaseTagFile")
 do
