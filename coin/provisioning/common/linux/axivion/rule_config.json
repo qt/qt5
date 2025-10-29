@@ -60,7 +60,7 @@
             "_active": true
         },
         "Qt-FunctionArgsByValueRef": {
-            "_active": true
+            "_active": false
         },
         "Qt-Generic-DuplicateIncludeGuard": {
             "_active": true
