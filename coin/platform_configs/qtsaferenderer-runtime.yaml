@@ -11,8 +11,8 @@ Include: [
     "sles-15_sp6-static",
     "windows-10_22h2-msvc2022",
     "rhel-9.6",
-    "windows-11_24h2-mingw13",
-    "windows-11_24H2-mingw13-developer-build",
+    "windows-11_24h2-mingw15",
+    "windows-11_24H2-mingw15-developer-build",
     "windows-11_24H2-llvm",
     "windows-11_24H2-msvc2022",
     "windows-11_23h2-arm64-msvc2022"

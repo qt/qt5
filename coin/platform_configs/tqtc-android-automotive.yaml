@@ -3,7 +3,7 @@ Include: [
     cmake_platforms.yaml: [
         "documentation-warnings",
         "rhel-9.6",
-        'windows-11_24h2-mingw13',
+        'windows-11_24h2-mingw15',
     ],
     macos.yaml: [
         'macos-universal-on-arm64'

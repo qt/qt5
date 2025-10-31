@@ -19,7 +19,7 @@ Configurations:
     Target os: 'WebAssembly'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
-    Platform dependency: 'windows-11_24h2-mingw13'
+    Platform dependency: 'windows-11_24h2-mingw15'
     Features: ['Packaging','DisableTests', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'Path={{.Env.EMSDK_PATH}};{{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
