@@ -269,7 +269,7 @@ Configurations:
     Compiler: 'MSVC2022'
     Target arch: 'arm64'
     Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Platform dependency: 'windows-11_24h2-mingw13'
+    Platform dependency: 'windows-11_24h2-mingw15'
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer',
@@ -290,7 +290,7 @@ Configurations:
     Compiler: 'MSVC2026'
     Target arch: 'arm64'
     Features: ['Sccache', 'DoNotRunTests', 'TargetBuildOnly', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
-    Platform dependency: 'windows-11_24h2-mingw13'
+    Platform dependency: 'windows-11_24h2-mingw15'
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
         'TARGET_CONFIGURE_ARGS=-debug-and-release -force-debug-info -platform win32-arm64-msvc -qt-zlib -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-psql -no-sql-mimer',
@@ -420,7 +420,7 @@ Configurations:
         'TARGET_CONFIGURE_ARGS=-developer-build -no-warnings-are-errors -nomake examples -nomake tests -platform macx-visionos-clang',
     ]
 -
-    Id: 'windows-11_24h2-mingw13'
+    Id: 'windows-11_24h2-mingw15'
     Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'Mingw'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
@@ -446,7 +446,7 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
     ]
 -
-    Id: 'windows-11_24H2-mingw13-developer-build'
+    Id: 'windows-11_24H2-mingw15-developer-build'
     Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'Mingw'
     Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']

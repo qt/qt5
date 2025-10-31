@@ -1,7 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
-        'windows-11_24h2-mingw13'
+        'windows-11_24h2-mingw15'
     ]
 ]
 Configurations:
@@ -12,7 +12,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Mingw'
     Target compiler: 'QCC'
-    Platform dependency: 'windows-11_24h2-mingw13'
+    Platform dependency: 'windows-11_24h2-mingw15'
     Features: ['DisableTests', 'UseConfigure']
     Environment variables: [
         'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
