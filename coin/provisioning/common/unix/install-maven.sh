@@ -12,15 +12,15 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # This script will install maven 3.9.11
 version="3.9.11"
 
-sha256="c084cde986ba878da4370bde009ab0a0a1936343"
+sha1="c084cde986ba878da4370bde009ab0a0a1936343"
 pkgname="apache-maven-$version-bin.tar.gz"
 dirname="apache-maven-$version"
 
 internalUrl="http://ci-files01-hki.ci.qt.io/input/qtopenapi/maven/$pkgname"
-externalUrl="https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/$pkgname"
+externalUrl="https://dlcdn.apache.org/maven/maven-3/$version/binaries/$pkgname"
 
 targetFile="$HOME/$pkgname"
-DownloadURL "$internalUrl" "$externalUrl" "$sha256" "$targetFile"
+DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
 echo "Installing Maven"
 tar -xzf "$targetFile" -C "$HOME"
 rm "$targetFile"
