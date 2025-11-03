@@ -29,8 +29,8 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
-    Id: 'rhel-8.10-minimal-static-test'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
+    Id: 'rhel-9.6-minimal-static-test'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'MinimalStaticTests']
     Configure arguments: '-static -nomake examples -release -qt-libjpeg -no-icu -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
