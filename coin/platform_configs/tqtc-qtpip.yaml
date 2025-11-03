@@ -3,7 +3,7 @@ Module only: true
 Include: [
   cmake_platforms.yaml: [
     "windows-10_22h2-msvc2019",
-    "rhel-8.10"
+    "rhel-9.6"
   ],
   macos.yaml: [
     "macos-universal-on-arm64"

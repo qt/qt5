@@ -259,18 +259,6 @@ Configurations:
         'ZLIB_ROOT={{.Env.ZLIB_PATH_AMD64}}',
     ]
 -
-    Id: 'rhel-8.10'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
-    Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}}',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
-        'VCPKG_HOST_TRIPLET=x64-linux-qt',
-        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
-    ]
--
     Id: 'rhel-9.6'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'

@@ -13,8 +13,8 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
 -
-    Id: 'rhel-8.10-unity-build'
-    Template: 'qtci-linux-RHEL-8.10-x86_64-50'
+    Id: 'rhel-9.6-unity-build'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
     Configure arguments: '-make examples -debug -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
