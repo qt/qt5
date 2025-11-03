@@ -6,7 +6,6 @@
 # This script will install Java SE
 # https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 $version_major = "17"
-$installdir = "C:\Program Files\Java\jdk-$version_major"
 
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
@@ -19,6 +18,9 @@ switch ($cpu_arch) {
         $url_official = "https://aka.ms/download-jdk/microsoft-jdk-${version}-windows-${arch}.msi"
         $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\microsoft-jdk-${version}-windows-${arch}.msi"
         $javaPackage = "C:\Windows\Temp\jdk-$version.msi"
+        # Microsoft installer does not allow to override the installation path using the regular
+        # TARGETDIR or INSTALLDIR properties, so just hardcode the path that it uses
+        $installdir = "C:\Program Files\Microsoft\jdk-17.0.11.9-hotspot"
         Break
     }
     x64 {
@@ -28,6 +30,7 @@ switch ($cpu_arch) {
         $url_official = "https://download.oracle.com/java/17/archive/jdk-${version}_windows-${arch}_bin.exe"
         $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\jdk-$version-windows-$arch.exe"
         $javaPackage = "C:\Windows\Temp\jdk-$version.exe"
+        $installdir = "C:\Program Files\Java\jdk-$version_major"
         Break
     }
     default {
