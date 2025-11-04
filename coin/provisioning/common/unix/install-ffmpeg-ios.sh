@@ -158,8 +158,8 @@ create_xcframework() {
     local fw_a="$ffmpeg_source_dir/build_ios/${target_platform_a}/installed$prefix/framework/${framework_name}.framework"
     local fw_b="$ffmpeg_source_dir/build_ios/${target_platform_b}/installed$prefix/framework/${framework_name}.framework"
 
-    sudo mkdir -p "$prefix/framework/"
-    sudo xcodebuild -create-xcframework -framework $fw_a -framework $fw_b -output "${prefix}/framework/${framework_name}.xcframework"
+    sudo mkdir -p "$prefix/lib/"
+    sudo xcodebuild -create-xcframework -framework $fw_a -framework $fw_b -output "${prefix}/lib/${framework_name}.xcframework"
 }
 
 build_ffmpeg_ios "x86_64-simulator"
@@ -180,9 +180,5 @@ done
 # xcframeworks are already installed directly into the target output directory.
 # We need to install headers
 sudo cp -r "$ffmpeg_source_dir/build_ios/arm64-iphoneos/installed$prefix/include" $prefix
-# The set_ffmpeg_dir_env_var requires the presence of the "lib" subfolder in order to validate
-# our FFmpeg install. On iOS we don't use this subfolder, we only rely on the "framework" subfolder.
-# So we create a dummy "lib" folder to pass the check.
-sudo mkdir -p "${prefix}/lib"
 
 set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" $prefix
