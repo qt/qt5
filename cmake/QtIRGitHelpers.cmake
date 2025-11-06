@@ -102,18 +102,27 @@ endfunction()
 # - ../qt/qttools-litehtml.git
 function(qt_ir_add_git_remotes repo_relative_url working_directory)
     set(gerrit_ssh_base "ssh://@USER@codereview.qt-project.org@PORT@/")
-    set(gerrit_repo_url "${gerrit_ssh_base}")
+    set(gerrit_https_base "https://@USER@codereview.qt-project.org@AUTH@/")
 
     qt_ir_get_option_value(codereview-username username)
+    qt_ir_get_option_value(codereview-https https)
+
+    if(https)
+        set(gerrit_repo_url "${gerrit_https_base}")
+    else()
+        set(gerrit_repo_url "${gerrit_ssh_base}")
+    endif()
 
     # If given a username, make a "verbose" remote.
     # Otherwise, rely on proper SSH configuration.
     if(username)
         string(REPLACE "@USER@" "${username}@" gerrit_repo_url "${gerrit_repo_url}")
         string(REPLACE "@PORT@" ":29418" gerrit_repo_url "${gerrit_repo_url}")
+        string(REPLACE "@AUTH@" "/a" gerrit_repo_url "${gerrit_repo_url}")
     else()
         string(REPLACE "@USER@" "" gerrit_repo_url "${gerrit_repo_url}")
         string(REPLACE "@PORT@" "" gerrit_repo_url "${gerrit_repo_url}")
+        string(REPLACE "@AUTH@" ""   gerrit_repo_url "${gerrit_repo_url}")
     endif()
 
     set(namespace "qt")
