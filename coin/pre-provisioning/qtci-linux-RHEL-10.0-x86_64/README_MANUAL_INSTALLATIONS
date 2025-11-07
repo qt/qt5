@@ -1,0 +1,88 @@
+### RHEL 10.0 ###
+Hard Disk: 500G
+Network: CI
+Video Card: Total Video Memory: 64MB
+Boot options/Firmware: BIOS
+Language: English (United States)
+Keyboard: English (US), Norwegian (Windows), Finnish (Windows)
+Time & Date: Etc/Coordinated Universal Time
+Software Selection: Server with GUI
+Installation Destination: Automatic partitioning selected
+Root Passowrd: Set
+Network & Host..: Connected
+KDUMP enabled: Memory Reservation: automatic
+Begin Installation
+Reboot
+# Configure Settings
+ Notifications:
+    * Lock Screen Notifications: OFF
+    * Applications: Set notification off
+    * Do Not Disturb: on
+ Applications:
+    * Disable notifications from all applications
+ Privacy:
+    * Blank Screen Delay: Never
+    * Screen Lock: OFF
+ Power:
+    * Blank screen: Never
+ Displays:
+    * Resolution: 1280 x 800
+ Users:
+    * Automatic login on
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+Add 'GRUB_GFXMODE=1280x800' to /etc/default/grub
+sudo grub2-mkconfig -o /etc/grub2.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+# Add support for virtio driver
+su
+echo "add_drivers+=\" virtio-blk \"" >> /etc/dracut.conf.d/virtio.conf
+dracut -f
+
+# NOTE!
+#  - RHEL uses 'sudo subscription-manager release --set=10.0' in provisioning
+#  - Do not update Tier 1 via GUI without using this same --set before provisioning
+#  - To avoid System to have newer packages than RPMS which will cause update issues
+
+# Register RHEL before it's possible to install qemu-guest-agent
+subscription-manager register
+
+yum -y install qemu-guest-agent
+
+# Do these from Opennebula UI!
+
+# Enable network connection from right upper corner
+This is done when the VM is launched as persistent in OpenNebula.
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_amd64/coin-setup
+# run as qt user
+run './coin-setup'
+# Switch to use GNOME Classic user interface
+# GNOME Classic was selected because there's an issue with Standard (wayland display server).
+# Autotest start failing because terminal session remains in Activities Overview.
+# https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3854
+First execute script ./01-disable-automounting.sh (dconf update crash in GNOME Classic)
+logout -> Select user (without it the drop down menu won't appear) -> switch to 'GNOME Classic' -desktop session from drop down menu in login screen
+
+# If gear icon is not seen, check is 'GNOME Classic' -desktop session installed, and install if it's missing
+ls /usr/share/xsessions/
+# This should list something like these if it's installed
+gnome-classic.desktop
+gnome.desktop
+
+# To install GNOME Classic if it's missing
+sudo dnf reinstall gnome-classic-session
+
+# In RHEL 10.0 even with 'GNOME Classic' -desktop the Activities Overview is still in use
+# It can be bypassed via 'No Overview' -GNOME extension:
+#  - https://extensions.gnome.org/extension/4099/no-overview/
+#  - Select GNOME Shell version 47 to download
+#  - Unpack extension from tar.gz
+sudo mv <extension_folder> /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo chown -R root: /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo chmod 755 -R /usr/share/gnome-shell/extensions/no-overview@fthx
+sudo reboot
+gnome-extensions list
+gnome-extensions enable no-overview@fthx
+
+Reboot
