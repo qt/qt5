@@ -1,0 +1,64 @@
+### RHEL 9.6 ###
+
+Language: English (United States)
+
+# Installation Summary #
+
+Keyboard: English (US), Norwegian (Windows), Finnish (Windows)
+Language Support: English (United States)
+Time & Date: Etc/Coordinated Universal Time
+
+Connect to Red Hat: Registered
+Installation Source: Local media
+Software Selection: Server with GUI
+
+Installation Destination: Automatic partitioning selected
+KDUMP enabled: Memory Reservation: automatic
+Network & Host Name: Connected
+Security Profile: No profile selected
+
+Root Password: set
+User Creation: set. Make this user administrator. Require password.
+
+# Configure Settings
+ Notifications:
+    * Lock Screen Notifications: OFF
+    * Applications: Set notification off
+    * Do Not Disturb: on
+ Applications:
+    * Disable notifications from all applications
+ Privacy:
+    * Blank Screen Delay: Never
+    * Screen Lock: OFF
+ Power:
+    * Blank screen: Never
+ Displays:
+    * Resolution: 1280 x 800
+ Users:
+    * Automatic login on
+# Add user to sudoers
+Add 'qt ALL=NOPASSWD: ALL' to /etc/sudoers.d/qt
+Add 'GRUB_GFXMODE=1280x800' to /etc/default/grub
+sudo grub2-mkconfig -o /etc/grub2.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+# Add support for virtio driver
+su
+echo "add_drivers+=\" virtio-blk \"" >> /etc/dracut.conf.d/virtio.conf
+dracut -f
+
+yum -y install qemu-guest-agent
+
+# Do these from Opennebula UI!
+
+# Enable network connection from right upper corner
+This is done when the VM is launched as persistent in OpenNebula.
+# Fetch and run coin-setup
+Download http://coin/coin/binary/linux_amd64/coin-setup
+# run as qt user
+run './coin-setup'
+# Switch to use GNOME Classic user interface
+# GNOME Classic was selected because there's an issue with Starndard (wayland display server). Autotest start failing because terminal session remains in Activities Overview.
+# https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3854
+First execute script ./01-disable-automounting.sh (dconf update crash in GNOME Classic)
+logout -> Select user (without it the drop down menu won't appear) -> switch to 'GNOME Classic' from drop down menu in login screen
+Reboot

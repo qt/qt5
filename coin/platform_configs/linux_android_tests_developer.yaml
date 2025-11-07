@@ -15,3 +15,18 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID}}',
         'NON_QTBASE_TARGET_CMAKE_ARGS=',
         'ANDROID_EMULATOR=emulator_x86_api_28']
+-
+    Id: 'android-x86-developer-build-testrun-on-linux-rhel_9_6'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Target os: 'Android_ANY'
+    Target arch: 'x86'
+    Compiler: 'GCC'
+    Target compiler: 'Clang'
+    Platform dependency: 'rhel-9.6'
+    Features: ['Sccache', 'AndroidTestRun', 'UseConfigure', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-nomake examples -debug -developer-build -android-ndk {{.Env.ANDROID_NDK_ROOT_LATEST}} -android-sdk {{.Env.ANDROID_SDK_ROOT}} -android-abis x86',
+        'TARGET_CMAKE_ARGS=-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU -DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ANDROID_HOME_LATEST}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_ANDROID}}',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=',
+        'ANDROID_EMULATOR=emulator_x86_api_28']
