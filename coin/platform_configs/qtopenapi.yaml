@@ -31,6 +31,7 @@ Include: [
     "sles-15_sp6-static",
     "rhel-8.10",
     "rhel-9.4",
+    "rhel-9.6",
     "opensuse-15.6-developer-build",
   ]
 ]

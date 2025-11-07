@@ -14,6 +14,7 @@ Include: [
     "sles-15_sp6-static",
     "windows-10_22h2-msvc2022",
     "rhel-9.4",
+    "rhel-9.6",
     "windows-11_24h2-mingw13",
     "windows-11_24H2-mingw13-developer-build",
     "windows-11_24H2-llvm",
@@ -44,6 +45,16 @@ Configurations:
     Template: 'qtci-linux-RHEL-9.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
+    Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DINPUT_headersclean=ON'
+    ]
+-
+    Id: 'Linux-RHEL_9_6_Static'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'MinimalStaticTests', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',

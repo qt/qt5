@@ -279,6 +279,18 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
 -
+    Id: 'rhel-9.6'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+    ]
+-
     Id: 'ios-universal'
     Template: 'qtci-macos-14-arm-106'
     Target os: 'IOS_ANY'

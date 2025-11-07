@@ -12,6 +12,18 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
     ]
+# Test gcc-12 on RHEL 9.6
+-
+    Id: 'rhel-9.6-gcc12'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
+    Configure arguments: '-developer-build -nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-pcre -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'PATH=/opt/rh/gcc-toolset-12/root/usr/bin/:{{.Env.PATH}}',
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
+    ]
 # Test gcc-14 on Ubuntu 24.04 ARM64 Wayland
 -
     Id: 'ubuntu-24.04-arm64-gcc14'
