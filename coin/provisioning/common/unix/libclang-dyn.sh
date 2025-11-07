@@ -16,6 +16,7 @@ source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 # shellcheck source=./DownloadURL.sh
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 
+zswitch=$1 # Since 7z 25.01 multi-hop symbolic links are restricted with -snl switch levels
 version="20.1.3"
 baseUrl="https://download.qt.io/development_releases/prebuilt/libclang"
 cachedUrl="http://ci-files01-hki.ci.qt.io/input/libclang/dynamic"
@@ -40,7 +41,7 @@ DownloadURL "$url_cached" "$url" "$sha1" "$zip"
 if command -v 7zr &> /dev/null; then
     sudo 7zr x $zip -o/usr/local/
 else
-    sudo 7z x $zip -o/usr/local/
+    sudo 7z x $zswitch $zip -o/usr/local/
 fi
 sudo mv /usr/local/libclang "$destination"
 rm -rf $zip

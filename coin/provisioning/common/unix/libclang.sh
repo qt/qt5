@@ -20,6 +20,7 @@ PROVISIONING_DIR="$(dirname "$0")/../../"
 # shellcheck source=./common.sourced.sh
 source "$PROVISIONING_DIR"/common/unix/common.sourced.sh
 
+zswitch=$1 # Since 7z 25.01 multi-hop symbolic links are restricted with -snl switch levels
 libclang_version="20.1.0"
 
 if uname -a |grep -q Darwin; then
@@ -61,7 +62,7 @@ DownloadURL $url_cached $url $sha1 $zip
 if command -v 7zr &> /dev/null; then
     sudo 7zr x $zip -o/usr/local/
 else
-    sudo 7z x $zip -o/usr/local/
+    sudo 7z x $zswitch $zip -o/usr/local/
 fi
 sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
