@@ -343,3 +343,10 @@
 	url = ../qttasktree.git
 	branch = dev
 	status = preview
+[submodule "qtopenapi"]
+	depends = qtbase
+	recommends = qtdeclarative
+	path = qtopenapi
+	url = ../qtopenapi.git
+	branch = dev
+	status = preview
