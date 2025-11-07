@@ -21,7 +21,6 @@ Configurations:
         -no-feature-vnc
         -no-feature-picture
         -no-feature-pdf
-        -no-feature-network
     Environment variables: []
 -
     Id: 'linux-quick-bridges'
