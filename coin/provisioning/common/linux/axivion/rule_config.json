@@ -195,7 +195,7 @@
             "_active": true
         },
         "Qt-Security-QDataStreamOperatorRead": {
-            "_active": true
+            "_active": false
         },
         "Qt-Security-QDtlsIgnoreVerificationErrors": {
             "_active": true
