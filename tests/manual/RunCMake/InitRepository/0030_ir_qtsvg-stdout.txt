@@ -1,7 +1,7 @@
 \+ git submodule init qtsvg
-Submodule 'qtsvg' \(https://code.qt.io/qt/qtsvg.git\) registered for path 'qtsvg'
+Submodule 'qtsvg' \(.+/qtsvg.git\) registered for path 'qtsvg'
 \+ git config commit.template .+tmp.+/qt6/.commit-template
-\+ git clone --no-checkout https://code.qt.io/qt/qtsvg.git qtsvg
+\+ git clone --no-checkout .+/qt/qtsvg.git qtsvg
 Cloning into 'qtsvg'...
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtsvg.git

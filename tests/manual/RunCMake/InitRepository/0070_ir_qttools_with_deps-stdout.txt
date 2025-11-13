@@ -1,24 +1,24 @@
 \+ git config --get initrepository.initialized
 \+ git submodule init qtshadertools qtsvg qtactiveqt qttools
-Submodule 'qtactiveqt' \(https://code.qt.io/qt/qtactiveqt.git\) registered for path 'qtactiveqt'
-Submodule 'qttools' \(https://code.qt.io/qt/qttools.git\) registered for path 'qttools'
+Submodule 'qtactiveqt' \(.+/qt/qtactiveqt.git\) registered for path 'qtactiveqt'
+Submodule 'qttools' \(.+/qt/qttools.git\) registered for path 'qttools'
 \+ git config commit.template .+tmp.+/qt6/.commit-template
-\+ git config remote.origin.url https://code.qt.io/qt/qtshadertools.git
+\+ git config remote.origin.url .+/qt/qtshadertools.git
 \+ git fetch origin
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtshadertools.git
 \+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
-\+ git config remote.origin.url https://code.qt.io/qt/qtsvg.git
+\+ git config remote.origin.url .+/qt/qtsvg.git
 \+ git fetch origin
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtsvg.git
 \+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
-\+ git clone --no-checkout https://code.qt.io/qt/qtactiveqt.git qtactiveqt
+\+ git clone --no-checkout .+/qt/qtactiveqt.git qtactiveqt
 Cloning into 'qtactiveqt'...
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtactiveqt.git
 \+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
-\+ git clone --no-checkout https://code.qt.io/qt/qttools.git qttools
+\+ git clone --no-checkout .+/qt/qttools.git qttools
 Cloning into 'qttools'...
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qttools.git
@@ -29,8 +29,8 @@ Submodule path 'qtshadertools': checked out '[0-9a-zA-Z]+'
 Submodule path 'qtsvg': checked out '[0-9a-zA-Z]+'
 Submodule path 'qttools': checked out '[0-9a-zA-Z]+'
 \+ git submodule init src/assistant/qlitehtml
-Submodule 'src/assistant/qlitehtml' \(https://code.qt.io/playground/qlitehtml.git\) registered for path 'src/assistant/qlitehtml'
-\+ git clone --no-checkout https://code.qt.io/playground/qlitehtml.git src/assistant/qlitehtml
+Submodule 'src/assistant/qlitehtml' \(.+/playground/qlitehtml.git\) registered for path 'src/assistant/qlitehtml'
+\+ git clone --no-checkout .+/playground/qlitehtml.git src/assistant/qlitehtml
 Cloning into 'src/assistant/qlitehtml'...
 \+ git submodule update --force --no-fetch
 Submodule path 'src/assistant/qlitehtml': checked out '[0-9a-zA-Z]+'
