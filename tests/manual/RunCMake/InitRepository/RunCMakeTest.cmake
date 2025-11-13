@@ -109,13 +109,27 @@ function(run_suite)
     set(code_qt_io_mirror "https://code.qt.io/qt/qt5.git")
     set(gerrit_mirror "https://codereview.qt-project.org/qt/qt5")
 
+    set(coin_git_ip_port "$ENV{QT_COIN_GIT_DAEMON}")
+    set(ci_mirror "git://${coin_git_ip_port}/qt-project")
+    set(ci_clone_url "${ci_mirror}/qt/qt5.git")
+
+    if(coin_git_ip_port)
+        set(remote_clone_url "${ci_clone_url}")
+    else()
+        set(remote_clone_url "${code_qt_io_mirror}")
+    endif()
+
     # Make a copy of the qt6 repo on which the test will operate on.
-    # On the CI we clone it from the official mirror, because we don't have a git repo, but only
-    # a source archive.
-    # On a local build we use the current qt6 checkout.
+    # On the CI we clone qt6 from one of the following sources, in order:
+    # - the Coin CI git mirror
+    # - or from code.qt.io
+    # We do a clone, because 'local_clone_url' is usually not a git repo in the CI,
+    # but only a source archive.
+    # On a local build where a ci_ref is not specified, we use the current qt6 checkout
+    # from 'local_clone_url'.
     set(ci_ref "$ENV{TESTED_MODULE_REVISION_COIN}")
     if(ci_ref)
-        set(final_clone_url "${code_qt_io_mirror}")
+        set(final_clone_url "${remote_clone_url}")
     else()
         set(final_clone_url "${local_clone_url}")
     endif()
@@ -129,8 +143,7 @@ function(run_suite)
         run_suite_command(0012_checkout_ci_qt6_ref git checkout FETCH_HEAD --quiet)
     endif()
 
-    # Adjust its remote url to be the official mirror rather the local url.
-    set(remote_clone_url "${code_qt_io_mirror}")
+    # Adjust its remote url to be the chosen mirror rather the local url.
     run_suite_command(0020_set_qt6_remote_url git remote set-url origin "${remote_clone_url}")
 
     # Ignore certain lines

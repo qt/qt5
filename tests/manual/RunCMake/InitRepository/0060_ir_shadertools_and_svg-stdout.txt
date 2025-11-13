@@ -1,12 +1,12 @@
 \+ git submodule init qtshadertools qtsvg
-Submodule 'qtshadertools' \(https://code.qt.io/qt/qtshadertools.git\) registered for path 'qtshadertools'
+Submodule 'qtshadertools' \(.+/qt/qtshadertools.git\) registered for path 'qtshadertools'
 \+ git config commit.template .+tmp.+/qt6/.commit-template
-\+ git clone --no-checkout https://code.qt.io/qt/qtshadertools.git qtshadertools
+\+ git clone --no-checkout .+/qt/qtshadertools.git qtshadertools
 Cloning into 'qtshadertools'...
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtshadertools.git
 \+ git config remote.gerrit.fetch \+refs/heads/\*:refs/remotes/gerrit/\* /heads/
-\+ git config remote.origin.url https://code.qt.io/qt/qtsvg.git
+\+ git config remote.origin.url .+/qt/qtsvg.git
 \+ git fetch origin
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtsvg.git

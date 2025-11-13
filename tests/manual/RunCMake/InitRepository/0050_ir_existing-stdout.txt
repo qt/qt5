@@ -1,6 +1,6 @@
 \+ git submodule init qtsvg
 \+ git config commit.template .+tmp.+/qt6/.commit-template
-\+ git config remote.origin.url https://code.qt.io/qt/qtsvg.git
+\+ git config remote.origin.url .+/qt/qtsvg.git
 \+ git fetch origin
 \+ git config commit.template .+tmp.+/qt6/.commit-template
 \+ git config remote.gerrit.url ssh://codereview.qt-project.org/qt/qtsvg.git

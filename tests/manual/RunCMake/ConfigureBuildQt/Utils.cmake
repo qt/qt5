@@ -246,16 +246,22 @@ function(setup_qt_sources)
 
     set(RunCMake_TEST_COMMAND_WORKING_DIRECTORY "${working_dir}")
 
-    set(code_qt_io_mirror "https://code.qt.io/qt/qt5.git")
     set(gerrit_mirror "https://codereview.qt-project.org/qt/qt5")
+    get_repo_base_url(ci_repo_base_url)
+    set(remote_clone_url "${ci_repo_base_url}/qt/qt5.git")
 
     # Make a copy of the qt6 repo on which the test will operate on.
-    # On the CI we clone it from the official mirror, because we don't have a git repo, but only
-    # a source archive.
-    # On a local build we use the current qt6 checkout.
+    # On the CI we clone qt6 from one of the following sources, in order:
+    # - the Coin CI git mirror
+    # - or the remote specified by QT_CI_BUILD_QT_GIT_REMOTE
+    # - or from code.qt.io
+    # We do a clone, because 'local_clone_url' is usually not a git repo in the CI,
+    # but only a source archive.
+    # On a local build where a ci_ref is not specified, we use the current qt6 checkout
+    # from 'local_clone_url'.
     set(ci_ref "$ENV{TESTED_MODULE_REVISION_COIN}")
     if(ci_ref)
-        set(final_clone_url "${code_qt_io_mirror}")
+        set(final_clone_url "${remote_clone_url}")
     else()
         set(final_clone_url "${local_clone_url}")
     endif()
@@ -295,9 +301,7 @@ function(setup_qt_sources)
             SYMBOLIC)
         endforeach()
     else()
-        # Adjust its remote url not to be the local url.
-        get_repo_base_url(repo_base_url)
-        set(remote_clone_url "${repo_base_url}/qt/qt5.git")
+        # Adjust its remote url to be the chosen mirror rather the local url.
         run_command("${prefix}" set_remote_url git remote set-url origin "${remote_clone_url}")
 
         # Sync to given module.
