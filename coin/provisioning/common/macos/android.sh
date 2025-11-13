@@ -22,11 +22,12 @@ sudo mkdir -p "$sdkTargetFolder"
 
 basePath="http://ci-files01-hki.ci.qt.io/input/android"
 
-toolsVersion="2.1"
-toolsFile="commandlinetools-mac-6609375_latest.zip"
+toolsVersion="19.0"
+toolsFile="commandlinetools-mac-13114758_latest.zip"
+toolsBackupUrl="https://dl.google.com/android/repository/$toolsFile"
 sdkBuildToolsVersion="35.0.1"
 sdkApiLevel="android-35"
-toolsSha1="c0c6bb9f1970bfadeaac623dfabf22c3e56baaec"
+toolsSha1="c3e06a1959762e89167d1cbaa988605f6f7c1d24"
 
 ndkVersionLatest="r27c"
 ndkSha1Latest="0217c10ffbec496bb9fbfbb3c6fc2477c6b77297"
@@ -48,10 +49,16 @@ toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
 
 echo "Download and unzip Android SDK"
-DownloadURL "$toolsSourceFile" "$toolsSourceFile" "$toolsSha1" "$toolsTargetFile"
+DownloadURL "$toolsSourceFile" "$toolsBackupUrl" "$toolsSha1" "$toolsTargetFile"
 echo "Unzipping Android Tools to '$sdkTargetFolder'"
 sudo unzip -q "$toolsTargetFile" -d "$sdkTargetFolder"
 rm "$toolsTargetFile"
+
+# Android Command-Line Tools unpacks a directory 'cmdline-tools'. Due
+# to existing code, we need to move it into 'cmdline-tools/tools'
+sudo mv "$sdkTargetFolder/cmdline-tools" "$sdkTargetFolder/tools"
+sudo mkdir "$sdkTargetFolder/cmdline-tools"
+sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
 
 function InstallNdk() {
 
@@ -98,9 +105,6 @@ sudo chmod -R 755 $targetFolder
 sdkmanager_no_progress_bar_cmd="tr '\r' '\n'  |  grep -v '^\[[ =]*\]'"
 # But don't let the pipeline hide sdkmanager failures.
 set -o pipefail
-
-sudo mkdir "$sdkTargetFolder/cmdline-tools"
-sudo mv "$sdkTargetFolder/tools" "$sdkTargetFolder/cmdline-tools"
 
 echo "Running SDK manager for platforms;$sdkApiLevel, platform-tools and build-tools;$sdkBuildToolsVersion."
 # shellcheck disable=SC2031

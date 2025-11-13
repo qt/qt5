@@ -38,14 +38,14 @@ $ndkCachedUrlNightly2 = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-
 $ndkOfficialUrlNightly2 = "https://dl.google.com/android/repository/android-ndk-$ndkVersionNightly2-windows.zip"
 
 # SDK
-$toolsVersion = "2.1"
-$toolsFile = "commandlinetools-win-6609375_latest.zip"
+$toolsVersion = "19.0"
+$toolsFile = "commandlinetools-win-13114758_latest.zip"
 $sdkApi = "ANDROID_API_VERSION"
 $sdkApiLevel = "android-35"
 $sdkBuildToolsVersion = "35.0.1"
 $toolsCachedUrl= "\\ci-files01-hki.ci.qt.io\provisioning\android\$toolsFile"
 $toolsOfficialUrl = "https://dl.google.com/android/repository/$toolsFile"
-$toolsChecksum = "e2e19c2ff584efa87ef0cfdd1987f92881323208"
+$toolsChecksum = "54a582f3bf73e04253602f2d1c80bd5868aac115"
 $cmdFolder = "c:\Utils\Android\cmdline-tools"
 
 $sdkZip = "c:\Windows\Temp\$toolsFile"
@@ -96,9 +96,13 @@ if ($ndkVersionNightly2 -ne $ndkVersionLatest) {
     Write-Output "Android NDK = $ndkVersionNightly2" >> ~/versions.txt
 }
 
+# Android Command-Line Tools unpacks a directory 'cmdline-tools'. Due
+# to existing code, weed to move it into 'cmdline-tools/tools'
+Write-Host "Downloading Android Command-Line Tools"
 $toolsFolder = Install $toolsCachedUrl $sdkZip $toolsChecksum $toolsOfficialUrl
+Rename-Item -Path "$toolsFolder" -NewName "c:\Utils\Android\tools"
 New-Item -ItemType directory -Path $cmdFolder
-Move-Item -Path $toolsFolder -Destination $cmdFolder\
+Move-Item -Path "c:\Utils\Android\tools" -Destination "$cmdFolder\tools"
 Set-EnvironmentVariable "ANDROID_SDK_ROOT" "C:\Utils\Android"
 Set-EnvironmentVariable "ANDROID_API_VERSION" $sdkApiLevel
 
