@@ -175,19 +175,20 @@ sudo pip3 install --upgrade pip
 sudo pip config --user set global.index https://ci-files01-hki.ci.qt.io/input/python_module_cache
 sudo pip config --user set global.extra-index-url https://pypi.org/simple/
 
-sudo pip3 install virtualenv wheel
-# Just make sure we have virtualenv to run with python3.8 -m virtualenv
-sudo python -m pip install virtualenv wheel
-sudo python -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
-
-sudo /usr/bin/pip3 install wheel
-sudo /usr/bin/pip3 install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
+# Create SBOM virtual env compatible with RHEL 10.0 Python 3.12
+mkdir "/home/qt/sbom/"
+python3 -m venv /home/qt/sbom/venv
+/home/qt/sbom/venv/bin/pip install wheel
+/home/qt/sbom/venv/bin/pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 # Provisioning during installation says:
 # 'The script sbom2doc is installed in '/usr/local/bin' which is not on PATH.'
 # hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/usr/local/bin"
+
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/home/qt/sbom/venv/bin"
 
 # Make FindPython3.cmake to find python3
 sudo ln -s /usr/bin/python3 /usr/local/bin/python3
