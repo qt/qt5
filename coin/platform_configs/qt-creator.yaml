@@ -9,7 +9,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
+    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
@@ -21,7 +21,7 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-macos-14-arm-106'
+    Template: 'qtci-macos-15-arm-104'
     Compiler: 'Clang'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
@@ -43,14 +43,27 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
+    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-macos-14-arm-106'
+    Template: 'qtci-linux-RHEL-8.10-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'DebugAndRelease', 'OldestQt', 'QtC18AndEarlier']
+    Configure arguments: ''
+    Environment variables: []
+-
+    Template: 'qtci-macos-15-arm-104'
     Compiler: 'Clang'
+    Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
+    Configure arguments: ''
+    Environment variables: []
+# Tests GCC 11
+-
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''
     Environment variables: []
