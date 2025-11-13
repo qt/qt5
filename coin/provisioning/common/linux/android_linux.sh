@@ -6,7 +6,7 @@
 
 # It also runs update for SDK API, latest SDK tools, latest platform-tools and build-tools version
 
-set -e
+set -ex
 
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
@@ -145,7 +145,9 @@ cat >>~/versions.txt <<EOB
 Android SDK tools = $toolsVersion
 Android SDK Build Tools = $sdkBuildToolsVersion
 Android SDK API level = $sdkApiLevel
-Android NDK = $ndkVersion
+Android NDK latest = $ndkVersionLatest
+Android NDK nightly1 = $ndkVersionNightly1
+Android NDK nightly2 = $ndkVersionNightly2
 EOB
 
 cd "$sdkTargetFolder/cmdline-tools/tools/bin"
