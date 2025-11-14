@@ -4,6 +4,9 @@ Include: [
      "macos-quick-bridges",
      "linux-quick-bridges",
      "windows-quick-bridges"
+  ],
+  cmake_platforms.yaml: [
+     "rhel-9.4"
   ]
 ]
 Configurations:
@@ -30,9 +33,9 @@ Configurations:
 
 -
     Id: 'linux-quick-bridges-python'
-    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
     Compiler: 'GCC'
-    Platform dependency: 'linux-quick-bridges'
+    Platform dependency: 'rhel-9.4'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
 
 -
