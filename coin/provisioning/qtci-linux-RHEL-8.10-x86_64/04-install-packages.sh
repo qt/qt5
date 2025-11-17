@@ -172,11 +172,18 @@ sudo pip config --user set global.extra-index-url https://pypi.org/simple/
 sudo pip3 install virtualenv wheel
 sudo python3.11 -m pip install virtualenv wheel html5lib
 sudo python3.11 -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
-# For now we don't set QT_SBOM_PYTHON_APPS_PATH here, and rely on the build system to find the
-# system python3.11.
 
 sudo /usr/bin/pip3 install wheel
 sudo /usr/bin/pip3 install dataclasses
+
+# Provisioning during installation says:
+# 'The script sbom2doc is installed in '/usr/local/bin' which is not on PATH.'
+# hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
+source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+SetEnvVar "SBOM_PYTHON_APPS_PATH" "/usr/local/bin"
+
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/usr/bin/python3.11"
 
 gccVersion="$(gcc --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "GCC = $gccVersion" >> versions.txt

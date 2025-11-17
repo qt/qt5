@@ -196,6 +196,9 @@ sudo /usr/bin/pip3 install -r "${BASH_SOURCE%/*}/../common/shared/requirements.t
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/usr/local/bin"
 
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/usr/bin/python3"
+
 # Make FindPython3.cmake to find python3
 sudo ln -s /usr/bin/python3 /usr/local/bin/python3
 

@@ -89,6 +89,7 @@ if ([version]::Parse($version) -gt [version]::Parse("3.10")) {
     # Set the environment variable for the build system to know which python path to use for SBOM
     # processing.
     Set-EnvironmentVariable "SBOM_PYTHON_APPS_PATH" "$install_path\Scripts"
+    Set-EnvironmentVariable "SBOM_PYTHON_INTERP_PATH" "$install_path\python.exe"
 }
 
 # Install PyPDF2 for QSR documentation

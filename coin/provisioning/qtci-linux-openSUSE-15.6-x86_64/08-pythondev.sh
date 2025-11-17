@@ -22,3 +22,6 @@ SetEnvVar "PYTHON3_EXECUTABLE" "/usr/bin/python3.11"
 # 'Defaulting to user installation because normal site-packages is not writeable'
 # So it implicitly uses pip install --user, hence the path.
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/home/qt/.local/bin"
+
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/usr/bin/python3.11"

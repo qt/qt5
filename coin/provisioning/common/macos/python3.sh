@@ -30,6 +30,9 @@ SetEnvVar "PYTHON3_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin
 SetEnvVar "PIP3_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin"
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin"
 
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3"
+
 # Install Python certificates. Required at least for emsdk installation
 open /Applications/Python\ 3.11/Install\ Certificates.command
 

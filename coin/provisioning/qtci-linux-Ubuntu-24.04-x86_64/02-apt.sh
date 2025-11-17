@@ -270,6 +270,9 @@ source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 # hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/home/qt/.local/bin"
 
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/usr/bin/python3"
+
 gccVersion="$(gcc --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "GCC = $gccVersion" >> versions.txt
 

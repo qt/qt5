@@ -23,4 +23,7 @@ SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
 # hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
 SetEnvVar "SBOM_PYTHON_APPS_PATH" "/Users/qt/.local/bin"
 
+# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
+SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/python3"
+
 echo "python3 = 3.9.7" >> ~/versions.txt
