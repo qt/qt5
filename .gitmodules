@@ -350,3 +350,9 @@
 	url = ../qtopenapi.git
 	branch = dev
 	status = preview
+[submodule "qtcanvaspainter"]
+	depends = qtbase qtdeclarative qtshadertools
+	path = qtcanvaspainter
+	url = ../qtcanvaspainter.git
+	branch = dev
+	status = preview
