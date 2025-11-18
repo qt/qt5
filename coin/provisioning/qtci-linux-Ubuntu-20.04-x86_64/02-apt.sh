@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (C) 2021 The Qt Company Ltd.
+# Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # Install required packages with APT
@@ -20,17 +20,16 @@ function set_internal_repo {
     sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
 
     sudo tee "/etc/apt/sources.list" > /dev/null <<-EOC
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal main restricted universe multiverse
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-updates main restricted universe multiverse
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-backports main restricted universe
-    deb [arch=amd64] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-security main restricted universe multiverse
-    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal main restricted
-    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal-updates main restricted
-    deb [arch=i386] http://repo-clones.ci.qt.io/apt-mirror/mirror/ubuntu/ focal universe
+    deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-amd64 main restricted universe multiverse
+    deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-updates-amd64 main restricted universe multiverse
+    deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-backports-amd64 main restricted universe
+    deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-security-amd64 main restricted universe multiverse
+    deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-i386 main restricted universe
+    deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 focal-updates-i386 main restricted
 EOC
 }
 
-(ping -c 3 repo-clones.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
+(ping -c 3 repo-clones-apt.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
 
 # Make sure needed ca-certificates are available
 sudo apt-get install --reinstall ca-certificates
