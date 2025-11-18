@@ -7,4 +7,22 @@ set -ex
 # shellcheck source=../shared/http_proxy.txt
 source "${BASH_SOURCE%/*}/../shared/http_proxy.txt"
 
-{ wget -q -e "http_proxy=$proxy" --spider proxy.intra.qt.io && echo "Setting http_proxy to $proxy" && export http_proxy=$proxy; } || echo "Proxy not detected at $proxy"
+# check using wget, if not, check with curl.
+if command -v wget > /dev/null; then
+    if wget --quiet --execute "http_proxy=$proxy" --spider "proxy.intra.qt.io"; then
+        echo "Setting http_proxy to $proxy"
+        export http_proxy=$proxy
+    else
+        echo "Proxy not detected at $proxy"
+    fi
+elif command -v curl > /dev/null; then
+    if curl --silent --proxy "$proxy" --head "proxy.intra.qt.io"; then
+        echo "Setting http_proxy to $proxy"
+        export http_proxy=$proxy
+    else
+        echo "Proxy not detected at $proxy"
+    fi
+else
+    echo "Error: Neither 'wget' or 'curl' is installed. Cannot attempt to setup proxy."
+    exit 1
+fi
