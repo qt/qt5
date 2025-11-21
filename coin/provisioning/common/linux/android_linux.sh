@@ -246,7 +246,7 @@ echo "no" | ./avdmanager create avd -n automotive_emulator_x86_64_api_29 -c 2048
 # To be used by the VMs to start the emulator for tests
 emulator_script_filename="android_emulator_launcher.sh"
 scripts_dir_name="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-cp "${scripts_dir_name}/${emulator_script_filename}" "${HOME}"
+cp "${scripts_dir_name}/../unix/${emulator_script_filename}" "${HOME}"
 ANDROID_EMULATOR_RUNNER="${HOME}/${emulator_script_filename}"
 SetEnvVar "ANDROID_EMULATOR_RUNNER" "$ANDROID_EMULATOR_RUNNER"
 
