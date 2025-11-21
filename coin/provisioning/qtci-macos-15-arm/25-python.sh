@@ -8,6 +8,8 @@
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
+export PYTHON_BUILD_MIRROR_URL="https://ci-files01-hki.ci.qt.io/input/python/"
+export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
 pyenv install 3.12.11
 
 /Users/qt/.pyenv/versions/3.12.11/bin/pip3 install --user virtualenv wheel html5lib
