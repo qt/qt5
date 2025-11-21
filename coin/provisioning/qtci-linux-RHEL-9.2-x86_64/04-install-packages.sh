@@ -166,6 +166,8 @@ installPackages+=(zip)
 installPackages+=(perl-IPC-Cmd)
 # password management support for Qt Creator
 installPackages+=(libsecret-devel)
+# for license-service library
+installPackages+=(libuuid-devel)
 # For Firebird in RTA
 installPackages+=(libtommath-devel)
 
