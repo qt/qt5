@@ -3,29 +3,7 @@
 # Copyright (C) 2017 Pelagicore AG
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-# This script installs python3
+set -euox pipefail
 
-# shellcheck source=../common/unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-
-export PYTHON_BUILD_MIRROR_URL="https://ci-files01-hki.ci.qt.io/input/python/"
-export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
-pyenv install 3.12.11
-
-/Users/qt/.pyenv/versions/3.12.11/bin/pip3 install --user virtualenv wheel html5lib
-/Users/qt/.pyenv/versions/3.12.11/bin/pip3 install --user -r ${BASH_SOURCE%/*}/../common/shared/requirements.txt
-
-SetEnvVar "PYTHON3_PATH" "/Users/qt/.pyenv/versions/3.12.11/bin/"
-SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.12.11/bin/"
-# Use 3.9 as a default python
-SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
-
-# Provisioning during installation says:
-# 'The script sbom2doc is installed in '$HOME/.local/bin' which is not on PATH.'
-# hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
-SetEnvVar "SBOM_PYTHON_APPS_PATH" "/Users/qt/.local/bin"
-
-# Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
-SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/Users/qt/.pyenv/versions/3.12.11/bin/python3"
-
-echo "python3 = 3.12.11" >> ~/versions.txt
+# shellcheck source=../common/macos/python-arm.sh
+source "${BASH_SOURCE%/*}/../common/macos/python-arm.sh"
