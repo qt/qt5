@@ -3,20 +3,7 @@
 # Copyright (C) 2017 Pelagicore AG
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-# This script installs python3
+set -euox pipefail
 
-# shellcheck source=../common/unix/SetEnvVar.sh
-source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-
-export PYTHON_BUILD_MIRROR_URL="https://ci-files01-hki.ci.qt.io/input/python/"
-export PYTHON_BUILD_MIRROR_URL_SKIP_CHECKSUM=1
-pyenv install 3.9.7
-
-/Users/qt/.pyenv/versions/3.9.7/bin/pip3 install --user virtualenv wheel html5lib
-
-SetEnvVar "PYTHON3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
-SetEnvVar "PIP3_PATH" "/Users/qt/.pyenv/versions/3.9.7/bin/"
-# Use 3.9 as a default python
-SetEnvVar "PATH" "\$PYTHON3_PATH:\$PATH"
-
-echo "python3 = 3.9.7" >> ~/versions.txt
+# shellcheck source=../common/macos/python-arm.sh
+source "${BASH_SOURCE%/*}/../common/macos/python-arm.sh"
