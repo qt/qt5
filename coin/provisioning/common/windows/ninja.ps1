@@ -53,11 +53,16 @@ $manifest = @"
 Set-EnvironmentVariable "NINJA_EXECUTABLE" "C:\Utils\Ninja\ninja.exe"
 
 $vs2019 = [System.IO.File]::Exists("C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat")
+$vs2022 = [System.IO.File]::Exists("C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat")
 
 if($vs2019) {
-Invoke-MtCommand "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 $manifest "C:\Utils\Ninja\ninja.exe"
-} else {
-Invoke-MtCommand "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 $manifest "C:\Utils\Ninja\ninja.exe"
+    Invoke-MtCommand "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 $manifest "C:\Utils\Ninja\ninja.exe"
+}
+elseif($vs2022) {
+    Invoke-MtCommand "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 $manifest "C:\Utils\Ninja\ninja.exe"
+}
+else {
+    Invoke-MtCommand "C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64 $manifest "C:\Utils\Ninja\ninja.exe"
 }
 
 }

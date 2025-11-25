@@ -116,7 +116,8 @@ Reboot
 * Install R3 GlobalSign Root Certificate (QTQAINFRA-6473)
 
 * Install Visual Studio
-   - Install msvc2022 (see the msvc2022.txt file)
+   - Install individual components (see the msvc20xx.txt file)
+      - Open Visual Studio: Add 'ci_msvs' account to Visual Studio
       - Open Task Scheduler: Task Scheduler Library > Microsoft > VisualStudio > Updates > right-click: BackgroundDownload > disable
 
 # VII part: Clear out extra processes and storage

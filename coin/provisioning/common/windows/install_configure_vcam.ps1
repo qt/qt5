@@ -58,12 +58,25 @@ Write-Host "Restoring NuGet packages"
 & $nuget restore $solutionFile
 
 Write-Host "Building solution $solutionFile"
-& "$msbuildPath" $solutionFile `
+# .vcxproj files have v143 (vs2022) set by default
+$vs2026 = [System.IO.File]::Exists("C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Auxiliary\Build\vcvarsall.bat")
+if($vs2026) {
+    & "$msbuildPath" $solutionFile `
+    /t:Build `
+    /p:Configuration=$buildConfig `
+    /p:Platform=$targetPlatform `
+    /p:PlatformToolset=v145 `
+    /p:RestorePackagesConfig=true `
+    /m
+}
+else {
+    & "$msbuildPath" $solutionFile `
     /t:Build `
     /p:Configuration=$buildConfig `
     /p:Platform=$targetPlatform `
     /p:RestorePackagesConfig=true `
     /m
+}
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "Build succeeded"
