@@ -8,17 +8,17 @@ source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 # This script will install node.js 18.16.0
-version="18.16.0"
+version="22.21.1"
 
 uname_m="$(uname -m)"
 case "$uname_m" in
     x86_64|amd64)
-        sha256="44d93d9b4627fe5ae343012d855491d62c7381b236c347f7666a7ad070f26548"
+        sha256="680d3f30b24a7ff24b98db5e96f294c0070f8f9078df658da1bce1b9c9873c88"
         pkgname="node-v$version-linux-x64.tar.xz"
         dirname="node-v$version-linux-x64"
         ;;
     arm64|aarch64)
-        sha256="c81dfa0bada232cb4583c44d171ea207934f7356f85f9184b32d0dde69e2e0ea"
+        sha256="e660365729b434af422bcd2e8e14228637ecf24a1de2cd7c916ad48f2a0521e1"
         pkgname="node-v$version-linux-arm64.tar.xz"
         dirname="node-v$version-linux-arm64"
         ;;
