@@ -160,7 +160,7 @@ installPackages+=(perl-JSON)
 
 sudo yum -y install "${installPackages[@]}"
 
-sudo dnf -y module install nodejs:16
+sudo dnf -y module install nodejs:20
 
 # We shouldn't use yum to install virtualenv. The one found from package repo is not
 # working, but we can use installed pip
