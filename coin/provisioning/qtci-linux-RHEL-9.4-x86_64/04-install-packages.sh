@@ -176,7 +176,7 @@ installPackages+=(perl-JSON)
 
 sudo yum -y install "${installPackages[@]}"
 
-sudo dnf install nodejs-16.14.0-4.el9_0 -y
+sudo dnf -y module install nodejs:20
 # Required by QtCore
 sudo dnf install 'perl(English)' -y
 
