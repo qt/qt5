@@ -54,7 +54,7 @@ Configurations:
     Id: 'Linux-RHEL_9_6_Static'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'MinimalStaticTests', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'MinimalStaticTests']
     Configure arguments: '-static -no-icu -nomake examples -release -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -no-sql-mysql'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',

@@ -270,7 +270,7 @@ Configurations:
     Id: 'rhel-9.6'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
