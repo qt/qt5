@@ -271,18 +271,6 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
 -
-    Id: 'rhel-9.4'
-    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['Packaging','Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
-    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
-    Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
-        'VCPKG_HOST_TRIPLET=x64-linux-qt',
-        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
-    ]
--
     Id: 'rhel-9.6'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'

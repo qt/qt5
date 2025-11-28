@@ -2,11 +2,6 @@ Version: 2
 Include: []
 Configurations:
 -
-    Id: 'qtgp-on-linux'
-    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
-    Compiler: 'GCC'
-    Features: ['TestOnly']
--
     Id: 'qtgp-on-linux-rhel_9_6'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'

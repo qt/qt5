@@ -2,7 +2,6 @@ Version: 2
 Module only: True
 Include: [
     cmake_platforms.yaml: [
-        'rhel-9.4',
         'rhel-9.6'
     ],
     cmake_platforms_target_android.yaml: [
