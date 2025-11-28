@@ -9,7 +9,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
@@ -43,7 +43,7 @@ Configurations:
     Environment variables: []
     Environment script: ['%ProgramFiles%\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat', 'amd64']
 -
-    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''

@@ -6,7 +6,7 @@ Include: [
      "windows-quick-bridges"
   ],
   cmake_platforms.yaml: [
-     "rhel-9.4"
+     "rhel-9.6"
   ]
 ]
 Configurations:
@@ -40,9 +40,9 @@ Configurations:
 
 -
     Id: 'linux-quick-bridges-python'
-    Template: 'qtci-linux-RHEL-9.4-x86_64-50'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
-    Platform dependency: 'rhel-9.4'
+    Platform dependency: 'rhel-9.6'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
 
 -

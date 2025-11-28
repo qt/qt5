@@ -1,7 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
-        'rhel-9.4'
+        'rhel-9.6'
     ],
     cmake_platforms_target_android.yaml: [
         'android-15-x86_64-on-linux',
