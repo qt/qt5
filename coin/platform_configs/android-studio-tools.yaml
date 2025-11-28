@@ -10,4 +10,4 @@ Configurations:
     Id: 'qttas-on-linux-rhel_9_6'
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
-    Features: ['UseConfigure', 'DisableTests']
+    Features: ['UseConfigure', 'Packaging', 'DisableTests']
