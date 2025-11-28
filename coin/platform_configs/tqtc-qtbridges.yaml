@@ -32,6 +32,13 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
 
 -
+    Id: 'windows-quick-bridges-java'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Platform dependency: 'windows-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesJava']
+
+-
     Id: 'linux-quick-bridges-python'
     Template: 'qtci-linux-RHEL-9.4-x86_64-50'
     Compiler: 'GCC'
