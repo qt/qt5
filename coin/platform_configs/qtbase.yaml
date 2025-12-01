@@ -15,8 +15,3 @@ Include: [
     quick-bridges.yaml
 ]
 Configurations: []
-Overrides:
-# Make VxWorks tests insignificant.
--
-    Id: 'vxworks-x86_64-tests'
-    Features: ['VMSize8', 'UseConfigure', 'BuildTestsInTest', 'TestOnly', 'InsignificantTests']
