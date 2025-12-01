@@ -2,6 +2,8 @@
 # Copyright (C) 2021 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
+set -ex
+
 # shellcheck source=./../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
 
@@ -20,6 +22,11 @@ function InstallXCode() {
     sourceFile=$1
     version=$2
 
+    if ! [[ $version =~ ^[0-9] ]]; then
+        echo "Error: version input must start with a digit"
+        exit 1
+    fi
+
     echo "Uncompressing and installing '$sourceFile'"
     if [[ $sourceFile =~ tar ]]; then
         cd /Applications/ && sudo tar -zxf "$sourceFile"
@@ -35,7 +42,7 @@ function InstallXCode() {
     fi
 
     echo "Versioning application bundle"
-    majorVersion=$(echo "$version" | cut -d '.' -f 1)
+    majorVersion="${version%%[^0-9]*}"
     versionedAppBundle="/Applications/Xcode${majorVersion}.app"
     sudo mv /Applications/Xcode*.app "${versionedAppBundle}"
 
@@ -46,11 +53,12 @@ function InstallXCode() {
     sudo xcodebuild -license accept
 
     echo "Install packages"
-    # -runFirstLaunch is valid in 9.x
-    sudo xcodebuild -runFirstLaunch || true
+    sudo xcodebuild -runFirstLaunch
 
     # Metal toolchain not included by default in Xcode 26
-    xcodebuild -downloadComponent MetalToolchain || true
+    if ((majorVersion >= 26)); then
+        xcodebuild -downloadComponent MetalToolchain
+    fi
 
     echo "Enabling developer mode, so that using lldb does not require interactive password entry"
     sudo /usr/sbin/DevToolsSecurity -enable
