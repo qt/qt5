@@ -11,13 +11,6 @@ Include: [
 ]
 Configurations:
 -
-    Id: 'windows-quick-bridges-dotnet'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
-    Compiler: 'MSVC2022'
-    Platform dependency: 'windows-quick-bridges'
-    Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesDotnet']
-
--
     Id: 'windows-quick-bridges-rust'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
