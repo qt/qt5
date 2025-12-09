@@ -14,7 +14,7 @@ while sudo fuser /usr/libexec/packagekitd >/dev/null 2>&1; do
 done
 sudo yum -y remove PackageKit gnome-software
 
-sudo subscription-manager config --rhsm.manage_repos=1
+sudo subscription-manager config --rhsm.manage_repos=0
 sudo subscription-manager refresh
 
 # List available RHEL versions and bind with correct one
@@ -22,10 +22,35 @@ sudo subscription-manager release --list
 sudo subscription-manager release --set=8.8
 sudo yum clean all
 
-# sudo yum config-manager --enable 'rhceph-4-tools-for-rhel-8-x86_64-rpms'
-sudo yum config-manager --enable 'codeready-builder-for-rhel-8-x86_64-rpms'
-sudo yum config-manager --enable 'rhel-8-for-x86_64-baseos-rpms'
-sudo yum config-manager --enable 'rhel-8-for-x86_64-appstream-rpms'
+sudo tee "/etc/yum.repos.d/local.repo" > /dev/null <<EOC
+[rhel-8-for-x86_64-baseos-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/rhel-8-for-x86_64-baseos-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Enterprise Linux 8 Base OS (RPMs)
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+
+[rhel-8-for-x86_64-appstream-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/rhel-8-for-x86_64-appstream-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Enterprise Linux 8 Appstream (RPMs)
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+
+[codeready-builder-for-rhel-8-x86_64-rpms]
+metadata_expire = 86400
+baseurl = http://repo-clones.ci.qt.io/repos/codeready-builder-for-rhel-8-x86_64-rpms
+ui_repoid_vars = releasever basearch
+name = Qt Red Hat Enterprise Linux Codeready Builder (RPMs)
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled = 1
+gpgcheck = 1
+EOC
+
 # Epel is required for 'double-conversion-devel', 'libsqlite3x' and 'p7zip'
 sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
