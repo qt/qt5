@@ -51,13 +51,13 @@
             "_active": true
         },
         "Qt-CtorMissingParentArgument": {
-            "_active": true
+            "_active": false
         },
         "Qt-DetachingTemporary": {
             "_active": true
         },
         "Qt-FullyQualifiedMocTypes": {
-            "_active": true
+            "_active": false
         },
         "Qt-FunctionArgsByValueRef": {
             "_active": false
@@ -69,13 +69,13 @@
             "_active": true
         },
         "Qt-Generic-InitializeAllFieldsInConstructor": {
-            "_active": true
+            "_active": false
         },
         "Qt-Generic-MissingBaseCopy": {
-            "_active": true
+            "_active": false
         },
         "Qt-Generic-MissingIncludeGuard": {
-            "_active": true
+            "_active": false
         },
         "Qt-Generic-MissingTrCall": {
             "_active": true
@@ -84,7 +84,7 @@
             "_active": true
         },
         "Qt-Generic-NoFunctionDefinitionInHeader": {
-            "_active": true
+            "_active": false
         },
         "Qt-Generic-NoIrregularInclude": {
             "_active": true
@@ -114,7 +114,7 @@
             "_active": true
         },
         "Qt-IncorrectEmit": {
-            "_active": true
+            "_active": false
         },
         "Qt-InstallEventFilter": {
             "_active": true
@@ -129,16 +129,16 @@
             "_active": true
         },
         "Qt-MissingQObjectMacro": {
-            "_active": true
+            "_active": false
         },
         "Qt-MutableContainerKey": {
             "_active": true
         },
         "Qt-NonPodGlobalStatic": {
-            "_active": true
+            "_active": false
         },
         "Qt-OldStyleConnect": {
-            "_active": true
+            "_active": false
         },
         "Qt-OverloadedSignal": {
             "_active": true
@@ -162,7 +162,7 @@
             "_active": true
         },
         "Qt-QPropertyWithoutNotify": {
-            "_active": true
+            "_active": false
         },
         "Qt-QStringArg": {
             "_active": true
@@ -186,7 +186,7 @@
             "_active": true
         },
         "Qt-RuleOfThree": {
-            "_active": true
+            "_active": false
         },
         "Qt-RuleOfTwoSoft": {
             "_active": true
