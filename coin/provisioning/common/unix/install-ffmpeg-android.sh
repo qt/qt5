@@ -82,12 +82,13 @@ build_ffmpeg_android() {
     local cc=${toolchain_bin}/${target_toolchain_arch}${api_version}-clang
     local ar=${toolchain_bin}/llvm-ar
     local ranlib=${toolchain_bin}/llvm-ranlib
+    local strip=${toolchain_bin}/llvm-strip
     local ffmpeg_config_options
 
     ffmpeg_config_options=$(get_ffmpeg_config_options $build_type)
     ffmpeg_config_options+=" --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     ffmpeg_config_options+=" --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
-    ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
+    ffmpeg_config_options+=" --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib} --strip=${strip}"
     ffmpeg_config_options+=" --extra-cflags=-I${openssl_include} --extra-ldflags=-L${openssl_libs}"
     if [ $page_size == "use_16kb_page_size" ]; then
         ffmpeg_config_options+=" --extra-ldflags=-Wl,-z,max-page-size=16384"
