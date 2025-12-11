@@ -295,7 +295,7 @@ function(qt_ir_run_after_args_parsed top_level_src_path out_var_exit_reason)
         "${working_directory}")
 
     # Get some additional options to pass down.
-    qt_ir_get_option_value(alternates alternates)
+    qt_ir_get_option_as_existing_absolute_path(alternates alternates)
     qt_ir_get_option_as_cmake_flag_option(branch "CHECKOUT_BRANCH" checkout_branch_option)
 
     # The prefix for the cmake-style 'dictionary' that will be used by various functions.
