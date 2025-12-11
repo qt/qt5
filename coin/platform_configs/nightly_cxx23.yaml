@@ -26,14 +26,3 @@ Configurations:
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON'
     ]
-# Test clang-20 on Ubuntu 24.04 ARM64 Wayland
--
-    Id: 'ubuntu-24.04-arm64-clang20-cxx23'
-    Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
-    Compiler: 'Clang'
-    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
-    Configure arguments: '-developer-build -nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-pcre -no-libudev -bundled-xcb-xinput -c++std c++23'
-    Environment variables: [
-        'COMMON_CMAKE_ARGS=-DCMAKE_C_COMPILER=clang-20 -DCMAKE_CXX_COMPILER=clang++-20',
-        'CMAKE_ARGS=-DQT_FEATURE_stdlib_libcpp=ON'
-    ]
