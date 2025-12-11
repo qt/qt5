@@ -421,3 +421,17 @@ function(qt_ir_get_option_as_cmake_flag_option cli_name cmake_option_name out_va
     endif()
     set(${out_var} "${cmake_option}" PARENT_SCOPE)
 endfunction()
+
+# Get the value of a command line option as existing absolute path.
+# Yield error if the path does not exist.
+# Convert to absolute path if necessary.
+function(qt_ir_get_option_as_existing_absolute_path name value)
+    qt_ir_get_option_value("${name}" path)
+    if(NOT EXISTS "${abspath}")
+        qt_ir_add_error("The path '${path}' passed with -${name} does not exist.")
+    endif()
+    if(NOT IS_ABSOLUTE "${path}")
+        get_filename_component(path "${path}" ABSOLUTE)
+    endif()
+    set("${value}" "${path}" PARENT_SCOPE)
+endfunction()
