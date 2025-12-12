@@ -195,8 +195,6 @@ Configurations:
         'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
         'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc_arm64}}',
-        'VCPKG_HOST_TRIPLET=x64-windows-qt',
-        'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
