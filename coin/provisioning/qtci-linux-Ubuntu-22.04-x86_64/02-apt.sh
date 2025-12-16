@@ -227,6 +227,8 @@ installPackages+=(bridge-utils)
 # For Debian packaging
 installPackages+=(sbuild)
 installPackages+=(ubuntu-dev-tools)
+# To create deb package out of openapi-generator-cli.jar
+installPackages+=(debhelper-compat)
 # cifs-utils, for mounting smb drive
 installPackages+=(keyutils)
 installPackages+=(cifs-utils)
