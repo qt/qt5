@@ -12,7 +12,7 @@
             },
             "directory": "../work/qt/$(env:TESTED_MODULE_COIN)",
             "ir": "$(env:IRNAME)",
-            "name": "qt_$(env:PACKAGE)_$(env:MODULE)_(env:TESTED_MODULE_BRANCH_COIN)_$(env:TARGET_OS_COIN)"
+            "name": "qt_$(env:PACKAGE)_$(env:MODULE)_$(env:TESTED_MODULE_BRANCH_COIN)_$(env:TARGET_OS_COIN)"
         },
         "VCSIntegration": {
             "vcs_mapping": {
