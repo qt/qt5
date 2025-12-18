@@ -182,7 +182,6 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
-        'ZLIB_ROOT={{.Env.ZLIB_PATH_AMD64}}',
     ]
 -
     Id: 'windows-11_24H2-msvc2022'
@@ -198,7 +197,6 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
-        'ZLIB_ROOT={{.Env.ZLIB_PATH_AMD64}}',
     ]
 -
     Id: 'windows-11_23h2-arm64-msvc2022'
@@ -213,7 +211,6 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
         'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
-        'ZLIB_ROOT={{.Env.ZLIB_PATH_ARM64}}',
     ]
 -
     Id: 'windows-11_24H2-msvc2022-arm64'
@@ -256,7 +253,6 @@ Configurations:
         'VCPKG_HOST_TRIPLET=x64-windows-qt',
         'VCPKG_TARGET_TRIPLET=x64-windows-qt',
         'gRPC_ROOT={{.Env.gRPC_ROOT_msvc}}',
-        'ZLIB_ROOT={{.Env.ZLIB_PATH_AMD64}}',
     ]
 -
     Id: 'rhel-9.6'
