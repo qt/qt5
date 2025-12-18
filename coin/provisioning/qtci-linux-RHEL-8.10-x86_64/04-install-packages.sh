@@ -17,8 +17,6 @@ installPackages+=(ca-certificates)
 installPackages+=(git)
 installPackages+=(zlib-devel)
 installPackages+=(glib2-devel)
-installPackages+=(openssl3)
-installPackages+=(openssl3-devel)
 installPackages+=(freetype-devel)
 installPackages+=(fontconfig-devel)
 installPackages+=(curl-devel)
@@ -190,9 +188,6 @@ echo "GCC = $gccVersion" >> versions.txt
 
 glibcVersion="$(ldd --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "glibc = $glibcVersion" >> versions.txt
-
-OpenSSLVersion="$(openssl3 version |cut -b 9-14)"
-echo "System's OpenSSL = $OpenSSLVersion" >> ~/versions.txt
 
 # List all available updates
 sudo yum -y list updates
