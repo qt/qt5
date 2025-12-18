@@ -1,0 +1,15 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Id: 'ubuntu-22.04-baseline-tests'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure']
+    Configure arguments: '-developer-build -nomake examples'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CTEST_DIR=tests/baseline',
+        'QT_LANCELOT_SERVER=10.9.70.11'
+    ]
+
