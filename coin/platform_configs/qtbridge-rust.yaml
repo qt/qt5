@@ -1,0 +1,21 @@
+Version: 2
+Include: [
+  quick-bridges.yaml: [
+     "linux-quick-bridges",
+     "windows-quick-bridges"
+  ]
+]
+Configurations:
+-
+    Id: 'windows-quick-bridges-rust'
+    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Compiler: 'MSVC2022'
+    Platform dependency: 'windows-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesRust']
+
+-
+    Id: 'linux-quick-bridges-rust'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-51'
+    Compiler: 'GCC'
+    Platform dependency: 'linux-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'RunAsPlatformDependency', 'QtBridgesRust']
