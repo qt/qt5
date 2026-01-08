@@ -1,6 +1,10 @@
 FROM ubuntu:18.04
 ARG COIN_RUNS_IN_QT_COMPANY
-# Temp quick fix: Skip repo-clones usage
-#RUN  test x"$COIN_RUNS_IN_QT_COMPANY" = xtrue  \
-#  && sed -i 's;\(archive\|security\)\.ubuntu\.com;repo-clones.ci.qt.io/apt-mirror/mirror;' /etc/apt/sources.list \
-#  || echo "Internal package repository not found. Using public repositories."
+RUN test x"$COIN_RUNS_IN_QT_COMPANY" = xtrue \
+  && { printf '%s\n' \
+  'deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 bionic-amd64 main restricted universe multiverse' \
+  'deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 bionic-updates-amd64 main restricted universe multiverse' \
+  'deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 bionic-backports-amd64 main restricted universe' \
+  'deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 bionic-security-amd64 main restricted universe multiverse' \
+> /etc/apt/sources.list; \
+  } \

@@ -116,7 +116,7 @@ set_common_environment () {
     CMD_INSTALL="sudo install"
 
     COIN_RUNS_IN_QT_COMPANY=false
-    if  ping -c1 repo-clones.ci.qt.io  >/dev/null 2>&1
+    if  ping -c1 repo-clones-apt.ci.qt.io  >/dev/null 2>&1
     then
         COIN_RUNS_IN_QT_COMPANY=true
     fi
