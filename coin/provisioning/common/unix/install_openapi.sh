@@ -8,10 +8,10 @@
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
-version="7.15.0"
+version="7.18.0"
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/qtopenapi/openapi_client_generators/openapi-generator-cli-$version.jar"
 AltUrl="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/$version/openapi-generator-cli-$version.jar"
-SHA1="bb58e257f724fb46b7f2b309a9fa98e63fd7199f"
+SHA1="8bd615a50b15ebf5be30e612af112526a6e81ac4"
 targetFolder="/opt/qt-openapi/"
 targetFile="openapi-generator-cli.jar"
 
