@@ -1,0 +1,8 @@
+Version: 2
+Module only: true
+Include: [
+  cmake_platforms.yaml: [
+    "ubuntu-22.04"
+  ]
+]
+Configurations: []
