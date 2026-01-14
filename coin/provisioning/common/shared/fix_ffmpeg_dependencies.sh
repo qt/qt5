@@ -7,6 +7,7 @@ set -euox pipefail
 lib_dir="$1/lib"
 additional_suffix="${2:-}"
 set_rpath="${3:-yes}"
+page_size="${4:-}"
 
 # readelf and patchelf are prerequisite tools for this script. Check
 # that they are available.
@@ -81,7 +82,12 @@ for lib_name in "${ffmpeg_libs[@]}"; do
                 stub_name="${stub_name%%.*}${additional_suffix}.${stub_name#*.}" # Add additional_suffix
             fi
 
-            patchelf --replace-needed "${BASH_REMATCH[1]}" "${stub_name}" "$lib_path"
+            additional_command_args=""
+            if [ -n "$page_size" ]; then
+                additional_command_args+="--page-size ${page_size}"
+            fi
+
+            patchelf ${additional_command_args} --replace-needed "${BASH_REMATCH[1]}" "${stub_name}" "$lib_path"
         fi
     done <<< "$(read_needed_deps)"
 

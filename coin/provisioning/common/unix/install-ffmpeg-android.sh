@@ -115,7 +115,13 @@ build_ffmpeg_android() {
 
     if [[ "$build_type" == "shared" ]]; then
         local fix_dependencies="${BASH_SOURCE%/*}/../shared/fix_ffmpeg_dependencies.sh"
-        sudo "${fix_dependencies}" "${target_dir}" "${libs_prefix}" "no"
+
+        local page_size_arg=""
+        if [ $page_size == "use_16kb_page_size" ]; then
+            page_size_arg="16384"
+        fi
+
+        sudo "${fix_dependencies}" "${target_dir}" "${libs_prefix}" "no" "$page_size_arg"
     fi
 }
 
