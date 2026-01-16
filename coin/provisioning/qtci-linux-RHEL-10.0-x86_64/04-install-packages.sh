@@ -185,7 +185,7 @@ python3 -m venv /home/qt/sbom/venv
 # 'The script sbom2doc is installed in '/usr/local/bin' which is not on PATH.'
 # hence the explicit assignment to SBOM_PYTHON_APPS_PATH.
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
-SetEnvVar "SBOM_PYTHON_APPS_PATH" "/usr/local/bin"
+SetEnvVar "SBOM_PYTHON_APPS_PATH" "/home/qt/sbom/venv/bin"
 
 # Set SBOM_PYTHON_INTERP_PATH to Python3 instance which was used to install SBOM packages from requirements
 SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/home/qt/sbom/venv/bin"
