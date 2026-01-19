@@ -53,6 +53,9 @@ build_ffmpeg_ios() {
     --cc="xcrun --sdk ${target_sdk} clang -arch $target_cpu_arch" \
     --cxx="xcrun --sdk ${target_sdk} clang++ -arch $target_cpu_arch" \
     --target-os=darwin \
+    --extra-cflags="$minos" \
+    --extra-cxxflags="$minos" \
+    --extra-objcflags="$minos" \
     --extra-ldflags="$minos" \
     --enable-shared \
     --disable-static \
