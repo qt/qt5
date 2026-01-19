@@ -102,7 +102,6 @@ build_ffmpeg_ios() {
         --extra-ldflags="${common_arch_flags}"
         --target-os=darwin
         --install-name-dir="@rpath"
-        --disable-audiotoolbox
 
         # We perform manual stripping after generating dSYMs.
         # Make sure to skip it during FFmpeg compilation.
