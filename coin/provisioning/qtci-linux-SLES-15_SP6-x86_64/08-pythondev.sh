@@ -71,6 +71,7 @@ python3 --version | grep -F "$python3Version"
 
 pip3 install --user wheel
 pip3 install --user virtualenv
+pip3 install --user html5lib
 pip3 install --user -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
 # shellcheck source=../common/unix/SetEnvVar.sh

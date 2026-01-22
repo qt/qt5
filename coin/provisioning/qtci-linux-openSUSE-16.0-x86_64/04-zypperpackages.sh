@@ -39,11 +39,10 @@ sudo zypper -nq install xcb-util-devel xcb-util-image-devel xcb-util-keysyms-dev
 sudo zypper -nq install libicu-devel
 
 # qtwebengine
-# Removing nodejs12 as it's not available and testing with common nodejs 18.16.0
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
-         mozilla-nspr-devel mozilla-nss-devel glproto-devel \
-         libxshmfence-devel libXdamage-devel
+         mozilla-nspr-devel mozilla-nss-devel glproto-devel nodejs \
+         libxshmfence-devel libXdamage-devel cargo rust-bindgen
 
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
