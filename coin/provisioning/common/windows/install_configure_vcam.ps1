@@ -3,7 +3,7 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$script:commitSha    = "a8c4d08c9757c1689d832a33252ae465b97bfb9a"
+$script:commitSha    = "1ede7be543c1fb1e230a733d43f5ee042c72d030"
 $script:repoUrl      = "https://git.qt.io/qtmultimedia/WindowsVirtualCamera/-/archive/$commitSha/WindowsVirtualCamera-$commitSha.zip"
 $script:unzip_location    = "C:\Utils\WindowsVirtualCamera"
 $script:download_location = "C:\Windows\Temp\WindowsVirtualCamera.zip"
