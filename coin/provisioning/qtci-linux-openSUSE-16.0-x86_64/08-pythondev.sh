@@ -10,7 +10,7 @@ set -ex
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 
 # install python3
-sudo zypper -nq install python313-base python313-devel python313-pip python313-virtualenv python313-wheel
+sudo zypper -nq install python313-base python313-devel python313-pip python313-virtualenv python313-wheel libexpat1>=2.7.1-160000.3.1
 python3.13 -m pip install selenium netifaces scache brotli httpcompressionserver
 python3.13 -m pip install -r "${BASH_SOURCE%/*}/../common/shared/requirements.txt"
 
