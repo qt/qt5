@@ -10,6 +10,7 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'CTEST_DIR=tests/baseline',
+        'TESTARGS=-auto',
         'QT_LANCELOT_SERVER=10.150.153.60'
     ]
 
