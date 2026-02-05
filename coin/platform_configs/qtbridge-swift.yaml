@@ -1,7 +1,8 @@
 Version: 2
 Include: [
   quick-bridges.yaml: [
-     "macos-quick-bridges"
+     "macos-quick-bridges",
+     "linux-quick-bridges"
   ]
 ]
 Configurations:
@@ -10,4 +11,11 @@ Configurations:
     Template: 'qtci-macos-15-arm-104'
     Compiler: 'Clang'
     Platform dependency: 'macos-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesSwift']
+
+-
+    Id: 'linux-quick-bridges-swift'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
+    Compiler: 'GCC'
+    Platform dependency: 'linux-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesSwift']
