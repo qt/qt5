@@ -241,7 +241,7 @@ cp -r "${scripts_dir_name}/android/gradle_project" /tmp/gradle_project
 cd /tmp/gradle_project
 # Get Gradle files from qtbase
 qtbaseGradleUrl="https://code.qt.io/cgit/qt/qtbase.git/plain/src/3rdparty/gradle"
-commit_sha="bb12c984b2c838bdb06169ef7d659384c02c8b82"
+commit_sha="269a75dbd1262a714eb238c42e5159a0a8979818"
 curl "$qtbaseGradleUrl/gradle.properties?h=$commit_sha" > gradle.properties
 curl "$qtbaseGradleUrl/gradlew?h=$commit_sha" > gradlew
 curl "$qtbaseGradleUrl/gradlew.bat?h=$commit_sha" > gradlew.bat
