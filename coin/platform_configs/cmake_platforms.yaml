@@ -147,7 +147,7 @@ Configurations:
     Id: 'opensuse-16.0-developer-build'
     Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
     Compiler: 'GCC'
-    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
+    Features: ['Sccache', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-nomake examples -developer-build'
     Environment variables: [
         'PATH={{.Env.CMAKE_MIN_SUPPORTED_BIN_PATH}}:{{.Env.PATH}}',
