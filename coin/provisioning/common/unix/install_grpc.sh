@@ -63,6 +63,7 @@ cmake "$targetDir" -G"Ninja Multi-Config" \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DCMAKE_CONFIGURATION_TYPES="Release;Debug;RelWithDebugInfo" \
     -DCMAKE_INSTALL_PREFIX="$installPrefix" \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     "${extraCMakeArgs[@]}" \
     "$extraOpenSslArg" \
     -DgRPC_BUILD_TESTS=OFF \
