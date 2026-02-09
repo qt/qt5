@@ -22,19 +22,32 @@ prefix="${1:-$default_prefix}"
 # we care about
 ffmpeg_components="libavcodec libavformat libavutil libswresample libswscale"
 
+target_platform_to_sdk() {
+    local target_platform="$1"
+    if [[ "$target_platform" == "arm64-simulator" ]] \
+        || [[ "$target_platform" == "x86_64-simulator" ]]; then
+        echo "iphonesimulator"
+    elif [ "$target_platform" == "arm64-iphoneos" ]; then
+        echo "iphoneos"
+    else
+        echo "Error finding corresponding iOS SDK for target platform: ${target_platform}"
+        exit 1
+    fi
+}
+
 build_ffmpeg_ios() {
-    local target_platform=$1
+    local target_platform="$1"
     local target_cpu_arch=""
+    local target_sdk;
+    target_sdk="$(target_platform_to_sdk "${target_platform}")"
+
     if [ "$target_platform" == "arm64-simulator" ]; then
-        target_sdk="iphonesimulator"
         target_cpu_arch="arm64"
         minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
     elif [ "$target_platform" == "x86_64-simulator" ]; then
-        target_sdk="iphonesimulator"
         target_cpu_arch="x86_64"
         minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
     elif [ "$target_platform" == "arm64-iphoneos" ]; then
-        target_sdk="iphoneos"
         target_cpu_arch="arm64"
         minos="-miphoneos-version-min=$MINIMUM_IOS_VERSION"
     else
@@ -46,21 +59,39 @@ build_ffmpeg_ios() {
     sudo mkdir -p "$build_dir"
     pushd "$build_dir"
 
-    # shellcheck disable=SC2086
-    sudo "$ffmpeg_source_dir/configure" $ffmpeg_config_options \
-    --sysroot="$(xcrun --sdk "$target_sdk" --show-sdk-path)" \
-    --enable-cross-compile \
-    --enable-optimizations \
-    --prefix=$prefix \
-    --arch=$target_cpu_arch \
-    --cc="xcrun --sdk ${target_sdk} clang -arch $target_cpu_arch" \
-    --cxx="xcrun --sdk ${target_sdk} clang++ -arch $target_cpu_arch" \
-    --target-os=darwin \
-    --extra-ldflags="$minos" \
-    --enable-shared \
-    --disable-static \
-    --install-name-dir='@rpath' \
-    --disable-audiotoolbox
+    local sysroot;
+    sysroot="$(xcrun --sdk "${target_sdk}" --show-sdk-path)"
+    local cc;
+    cc="$(xcrun -f --sdk ${target_sdk} clang)"
+    local cxx;
+    cxx="$(xcrun -f --sdk ${target_sdk} clang++)"
+
+    # We add -g so we get debug symbols.
+    local common_arch_flags="${minos} -arch ${target_cpu_arch} -g"
+
+    local config_parameters=(
+        $ffmpeg_config_options
+        --sysroot="${sysroot}"
+        --enable-cross-compile
+        --enable-optimizations
+        --prefix="$prefix"
+        --arch="$target_cpu_arch"
+        --cc="$cc"
+        --cxx="$cxx"
+        --extra-cflags="${common_arch_flags}"
+        --extra-cxxflags="${common_arch_flags}"
+        --extra-ldflags="${common_arch_flags}"
+        --target-os=darwin
+        --enable-shared
+        --disable-static
+        --install-name-dir="@rpath"
+        --disable-audiotoolbox
+
+        # We perform manual stripping after generating dSYMs.
+        # Make sure to skip it during FFmpeg compilation.
+        --disable-stripping
+    )
+    sudo "$ffmpeg_source_dir/configure" "${config_parameters[@]}"
 
     sudo make install DESTDIR="$build_dir/installed" -j4
     popd
@@ -180,6 +211,28 @@ create_framework() {
         done
 }
 
+# dSYM symbols must be generated manually, these are required for
+# App Store deployment. We generate them from the .dylibs inside
+# our .frameworks. This has to be done after patching the runpaths.
+# At the end, we strip the dylib.
+create_dsym() {
+    local ffmpeg_component_name="$1"
+    local platform="$2"
+
+    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${platform}/installed/${prefix}"
+    local target_dylib="${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework/${ffmpeg_component_name}"
+
+    sudo dsymutil "${target_dylib}" \
+        -o "${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework.dSYM"
+
+    local target_sdk;
+    target_sdk=$(target_platform_to_sdk "${platform}")
+
+    local strip;
+    strip="$(xcrun -f --sdk ${target_sdk} strip)"
+    sudo ${strip} -x "${target_dylib}"
+}
+
 create_xcframework() {
     # Create 'traditional' framework from the corresponding dylib,
     # also creating
@@ -187,11 +240,19 @@ create_xcframework() {
     local target_platform_a="$2"
     local target_platform_b="$3"
 
-    local fw_a="$ffmpeg_source_dir/build_ios/${target_platform_a}/installed$prefix/framework/${framework_name}.framework"
-    local fw_b="$ffmpeg_source_dir/build_ios/${target_platform_b}/installed$prefix/framework/${framework_name}.framework"
+    local platform_a_build="${ffmpeg_source_dir}/build_ios/${target_platform_a}/installed/${prefix}"
+    local fw_a="${platform_a_build}/framework/${framework_name}.framework"
+    local dsym_a="${fw_a}.dSYM"
+
+    local platform_b_build="${ffmpeg_source_dir}/build_ios/${target_platform_b}/installed/${prefix}"
+    local fw_b="${platform_b_build}/framework/${framework_name}.framework"
+    local dsym_b="${fw_b}.dSYM"
 
     sudo mkdir -p "$prefix/framework/"
-    sudo xcodebuild -create-xcframework -framework $fw_a -framework $fw_b -output "${prefix}/framework/${framework_name}.xcframework"
+    sudo xcodebuild -create-xcframework \
+        -framework "$fw_a" -debug-symbols "$dsym_a" \
+        -framework $fw_b -debug-symbols "$dsym_b" \
+        -output "${prefix}/lib/${framework_name}.xcframework"
 }
 
 build_ffmpeg_ios "arm64-iphoneos"
@@ -200,6 +261,9 @@ build_ffmpeg_ios "x86_64-simulator"
 for name in $ffmpeg_components; do
     create_framework "$name" "arm64-iphoneos"
     create_framework "$name" "x86_64-simulator"
+
+    create_dsym "$name" "arm64-iphoneos"
+    create_dsym "$name" "x86_64-simulator"
 done
 
 # Create corresponding xcframeworks containing both arm64 and x86_64-simulator frameworks:
@@ -209,11 +273,11 @@ done
 
 # xcframeworks are already installed directly into the target output directory.
 # We need to install headers
-sudo cp -r "${ffmpeg_source_dir}/build_ios/arm64-iphoneos/installed${prefix}/include" "$prefix"
+sudo cp -r "${ffmpeg_source_dir}/build_ios/arm64-iphoneos/installed/${prefix}/include" "$prefix"
 
 # The set_ffmpeg_dir_env_var requires the presence of the "lib" subfolder in order to validate
 # our FFmpeg install. On iOS we don't use this subfolder, we only rely on the "framework" subfolder.
 # So we create a dummy "lib" folder to pass the check.
 sudo mkdir -p "${prefix}/lib"
 
-set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" $prefix
+set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" "$prefix"
