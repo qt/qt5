@@ -4,7 +4,7 @@
 
 # This script will build and install FFmpeg static libs
 # Can take an optional final parameter to control installation directory
-set -ex
+set -eoux pipefail
 
 # Must match or be lower than the minimum iOS version supported by the version of Qt that is
 # is currently being built.
@@ -17,7 +17,10 @@ ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
 default_prefix="/usr/local/ios/ffmpeg"
 prefix="${1:-$default_prefix}"
-dylib_regex="^@rpath/.*\.dylib$"
+
+# Qt doesn't utilize all FFmpeg components. This is a list of the ones
+# we care about
+ffmpeg_components="libavcodec libavformat libavutil libswresample libswscale"
 
 build_ffmpeg_ios() {
     local target_platform=$1
@@ -120,32 +123,61 @@ build_info_plist() {
     echo $info_plist | sudo tee ${file_path} 1>/dev/null
 }
 
-
+# Create a 'traditional' framework from the corresponding dylib.
+# This includes creating a folder for it, and inserting Info.plist
+# and dylib. We also patch runpaths in the dylib to match the
+# frameworks directory structure.
 create_framework() {
-    # Create a 'traditional' framework from the corresponding dylib.
-    local framework_name="$1"
-    local platform="$2" # For now it's either arm64, x86_64-simulator, see below.
-    local ffmpeg_library_path="$ffmpeg_source_dir/build_ios/${platform}/installed$prefix"
-    local framework_complete_path="${ffmpeg_library_path}/framework/${framework_name}.framework/${framework_name}"
+    local ffmpeg_component_name="$1"
+    local platform="$2"
 
-    sudo mkdir -p "${ffmpeg_library_path}/framework/${framework_name}.framework"
-    sudo cp "${ffmpeg_library_path}/lib/${framework_name}.dylib" "${ffmpeg_library_path}/framework/${framework_name}.framework/${framework_name}"
+    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${platform}/installed/${prefix}"
+    local ffmpeg_component_src_dylib="${ffmpeg_build_path}/lib/${ffmpeg_component_name}.dylib"
+    local ffmpeg_component_framework="${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework"
+    local ffmpeg_component_target_dylib="${ffmpeg_component_framework}/${ffmpeg_component_name}"
 
-    # Fix LC_ID_DYLIB (to be libavcodec.framework/libavcodec instead of @rpath/libavcodec.xx.yy.dylib
-    sudo install_name_tool -id @rpath/${framework_name}.framework/${framework_name} "${framework_complete_path}"
+    # Make directory for the .framework
+    sudo mkdir -p "${ffmpeg_component_framework}"
 
-    build_info_plist "${ffmpeg_library_path}/framework/${framework_name}.framework/Info.plist" "${framework_name}" "io.qt.ffmpegkit."${framework_name}
+    # Inser the Info.plist
+    build_info_plist \
+        "${ffmpeg_component_framework}/Info.plist" \
+        "${ffmpeg_component_name}" \
+        "io.qt.ffmpegkit.${ffmpeg_component_name}"
 
-    # Fix all FFmpeg-related LC_LOAD_DYLIB, similar to how we fixed LC_ID_DYLIB above:
-    otool -L "$framework_complete_path" | awk '/\t/ {print $1}' | egrep "$dylib_regex" | while read -r dependency_path; do
-        found_name=$(tmp=${dependency_path/*\/}; echo ${tmp/\.*})
-        if [ "$found_name" != "$framework_name" ]
-        then
-            sudo install_name_tool -change "$dependency_path" @rpath/${found_name}.framework/${found_name} "${framework_complete_path}"
-        fi
-    done
-    #sudo mkdir -p "$prefix/framework/"
-    #sudo cp -r "${ffmpeg_library_path}/framework/${framework_name}.framework" "$prefix/framework/"
+    # Copy in the dylib
+    sudo cp \
+        "${ffmpeg_component_src_dylib}" \
+        "${ffmpeg_component_target_dylib}"
+
+    # By default, runpaths will look for FFmpeg dependencies in
+    # '@rpath/libavcodec.xx.yy.dylib'. We want this path to be in the form
+    # '@rpath/libavcodec.framework/libavcodec.dylib'.
+
+    # Set the dylibs self-identity
+    sudo install_name_tool \
+        -id "@rpath/${ffmpeg_component_name}.framework/${ffmpeg_component_name}" \
+        "${ffmpeg_component_target_dylib}"
+
+    # Update the runpaths for each FFmpeg dependency entry
+    otool -L "$ffmpeg_component_target_dylib" \
+        | tail -n +2 \
+        | awk '{print $1}' \
+        | while read -r dep; do
+            # Go through all dependency entries of this .dylib,
+            # see if they point to a FFmpeg component. If it does,
+            # modify the entry to match the final
+            # directory structure.
+            for ffdep in $ffmpeg_components; do
+                if [[ "$dep" == */${ffdep}.* ]]; then
+                    echo "Rewriting dependency: $dep -> @rpath/${ffdep}.framework/${ffdep}"
+                    sudo install_name_tool -change \
+                        "$dep" \
+                        "@rpath/${ffdep}.framework/${ffdep}" \
+                        "$ffmpeg_component_target_dylib"
+                fi
+            done
+        done
 }
 
 create_xcframework() {
@@ -162,24 +194,23 @@ create_xcframework() {
     sudo xcodebuild -create-xcframework -framework $fw_a -framework $fw_b -output "${prefix}/framework/${framework_name}.xcframework"
 }
 
-build_ffmpeg_ios "x86_64-simulator"
 build_ffmpeg_ios "arm64-iphoneos"
+build_ffmpeg_ios "x86_64-simulator"
 
-ffmpeg_libs="libavcodec libavformat libavutil libswresample libswscale"
-
-for name in $ffmpeg_libs; do
-    create_framework $name "arm64-iphoneos"
-    create_framework $name "x86_64-simulator"
+for name in $ffmpeg_components; do
+    create_framework "$name" "arm64-iphoneos"
+    create_framework "$name" "x86_64-simulator"
 done
 
-# Create corresponding (xc)frameworks containing both arm64 and arm64-simulator frameworks:
-for name in $ffmpeg_libs; do
-    create_xcframework $name "arm64-iphoneos" "x86_64-simulator"
+# Create corresponding xcframeworks containing both arm64 and x86_64-simulator frameworks:
+for name in $ffmpeg_components; do
+    create_xcframework "$name" "arm64-iphoneos" "x86_64-simulator"
 done
 
 # xcframeworks are already installed directly into the target output directory.
 # We need to install headers
-sudo cp -r "$ffmpeg_source_dir/build_ios/arm64-iphoneos/installed$prefix/include" $prefix
+sudo cp -r "${ffmpeg_source_dir}/build_ios/arm64-iphoneos/installed${prefix}/include" "$prefix"
+
 # The set_ffmpeg_dir_env_var requires the presence of the "lib" subfolder in order to validate
 # our FFmpeg install. On iOS we don't use this subfolder, we only rely on the "framework" subfolder.
 # So we create a dummy "lib" folder to pass the check.
