@@ -2,8 +2,22 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-# This script will build and install FFmpeg static libs
-# Can take an optional final parameter to control installation directory
+# This script will build and install FFmpeg shared libraries.
+#
+# The script will package iOS and iOS-simulator binaries into one
+# single .xcframework. This .xcframework cannot contain .dylibs
+# directly. It must contain .framework files. Unlike macOS, binaries
+# should NOT be lipoed together.
+#
+# From https://developer.apple.com/documentation/xcode/creating-a-multi-platform-binary-framework-bundle
+# "Avoid using dynamic library files (.dylib files) for dynamic
+# linking. An XCFramework can include dynamic library files, but only
+# macOS supports these libraries for dynamic linking. Dynamic linking
+# on iOS, iPadOS, tvOS, visionOS, and watchOS requires the XCFramework
+# to contain .framework bundles."
+#
+# This script can take an optional final parameter to control
+# installation directory.
 set -eoux pipefail
 
 # Must match or be lower than the minimum iOS version supported by the version of Qt that is
@@ -158,6 +172,13 @@ build_info_plist() {
 # This includes creating a folder for it, and inserting Info.plist
 # and dylib. We also patch runpaths in the dylib to match the
 # frameworks directory structure.
+#
+# There is no command-line tool for generating .framework
+# files. By inspecting .frameworks generated through Xcode, we
+# have found they are primarily a directory with a very specific
+# layout. The code below generates a matching layout.
+#
+# See https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Frameworks.html
 create_framework() {
     local ffmpeg_component_name="$1"
     local platform="$2"
