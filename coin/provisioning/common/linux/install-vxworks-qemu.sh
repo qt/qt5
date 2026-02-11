@@ -13,7 +13,7 @@ QEMU_VER="8.2.3"
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/qemu/qemu-$QEMU_VER.tar.xz"
 AltUrl="https://download.qemu.org/qemu-$QEMU_VER.tar.xz"
 SHA1="1b29c8105cf8d15b9e7fb6f8e85170b6c54a1788"
-InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp" "$appPrefix"
+InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$SHA1" "/tmp" ""
 
 targetFolder=/tmp/qemu-${QEMU_VER}
 mkdir -p "$targetFolder/build"
