@@ -37,6 +37,7 @@ macro(qt_ir_set_known_command_line_options)
     qt_ir_commandline_option(init-submodules TYPE boolean)
     # We alias qtbase's submodules option to init-repository module-subset.
     qt_ir_commandline_option(submodules ALIAS module-subset TYPE string)
+    qt_ir_commandline_option(skip TYPE addString)
 
     set_property(GLOBAL PROPERTY _qt_ir_known_command_line_options "${commandline_known_options}")
 endmacro()
