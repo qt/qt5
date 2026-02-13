@@ -243,6 +243,8 @@ installPackages+=(patchelf)
 installPackages+=(libtommath-dev)
 # For tst_license.pl with all the machines generating SBOM
 installPackages+=(libjson-perl)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 echo "Running update for apt"
 waitLoop

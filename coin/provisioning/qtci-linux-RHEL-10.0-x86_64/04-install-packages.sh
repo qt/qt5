@@ -161,6 +161,8 @@ installPackages+=(perl-JSON)
 installPackages+=(perl-Test-Simple) # To install Test::More module for SBOM
 # For qtgrpc build
 installPackages+=(zlib-static)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 

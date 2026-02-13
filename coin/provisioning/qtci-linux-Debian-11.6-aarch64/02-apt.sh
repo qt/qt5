@@ -252,6 +252,8 @@ installPackages+=(libusb-1.0-0-dev)
 # password management support for Qt Creator
 installPackages+=(libsecret-1-dev)
 installPackages+=(debian-archive-keyring)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 
 echo "Running update for apt"

@@ -170,6 +170,8 @@ installPackages+=(libxml2-dev)
 installPackages+=(libhyphen-dev)
 # Fix dependencies in shared ffmpeg libs
 installPackages+=(patchelf)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 echo "Running update for apt"
 waitLoop
