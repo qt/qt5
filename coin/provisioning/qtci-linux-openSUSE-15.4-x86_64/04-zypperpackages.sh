@@ -75,6 +75,9 @@ sudo zypper -nq install valgrind-devel
 # Java
 sudo zypper -nq install java-17-openjdk
 
+# Keep zoneinfo up-to-date (COIN-1282)
+sudo zypper -nq install timezone
+
 gccVersion="$(gcc --version |grep -Eo '[0-9]+\.[0-9]+(\.[0-9]+)?' |head -n 1)"
 echo "GCC = $gccVersion" >> versions.txt
 

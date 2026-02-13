@@ -134,6 +134,8 @@ installPackages+=(gcc-c++)
 installPackages+=(make)
 # Open source VMware Tools
 installPackages+=(open-vm-tools)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 

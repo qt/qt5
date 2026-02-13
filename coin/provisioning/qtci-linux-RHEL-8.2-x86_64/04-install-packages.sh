@@ -124,6 +124,8 @@ installPackages+=(make)
 installPackages+=(open-vm-tools)
 # Install all available locales (COIN-727)
 installPackages+=(langpacks-*)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 

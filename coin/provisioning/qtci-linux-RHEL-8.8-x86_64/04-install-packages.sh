@@ -153,6 +153,8 @@ installPackages+=(zip)
 installPackages+=(perl-IPC-Cmd)
 # password management support for Qt Creator
 installPackages+=(libsecret-devel)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 

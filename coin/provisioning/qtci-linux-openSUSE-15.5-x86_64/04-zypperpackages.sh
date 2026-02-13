@@ -85,6 +85,9 @@ sudo zypper -nq install cifs-utils
 # For Firebird in RTA
 sudo zypper -nq install libtommath-devel
 
+# Keep zoneinfo up-to-date (COIN-1282)
+sudo zypper -nq install timezone
+
 # Java
 sudo zypper -nq install java-17-openjdk
 

@@ -170,6 +170,8 @@ installPackages+=(libsecret-devel)
 installPackages+=(libuuid-devel)
 # For Firebird in RTA
 installPackages+=(libtommath-devel)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 
