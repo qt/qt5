@@ -173,6 +173,8 @@ installPackages+=(libuuid-devel)
 installPackages+=(libtommath-devel)
 # For tst_license.pl with all the machines generating SBOM
 installPackages+=(perl-JSON)
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
 
 sudo yum -y install "${installPackages[@]}"
 

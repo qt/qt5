@@ -52,6 +52,9 @@ installPackages+=(virtualenv)
 # For mounting ci-files01 for Squish
 installPackages+=(nfs-common)
 
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
+
 echo "Running update for apt"
 waitLoop
 sudo apt-get update

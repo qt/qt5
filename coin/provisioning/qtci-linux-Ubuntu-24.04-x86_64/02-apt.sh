@@ -247,6 +247,9 @@ installPackages+=(uml-utilities)
 # Fix dependencies in shared ffmpeg libs
 installPackages+=(patchelf)
 
+# Keep zoneinfo up-to-date (COIN-1282)
+installPackages+=(tzdata)
+
 echo "Running update for apt"
 waitLoop
 sudo apt-get update
