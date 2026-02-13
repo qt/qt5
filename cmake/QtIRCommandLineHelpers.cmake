@@ -178,7 +178,6 @@ function(qt_ir_command_line_set_input name val)
 endfunction()
 
 # Appends a value of a command line option into a global property.
-# Currently unused
 function(qt_ir_command_line_append_input name val)
     if(NOT "${commandline_option_${name}_alias}" STREQUAL "")
         set(name "${commandline_option_${name}_alias}")
@@ -240,6 +239,22 @@ function(qt_ir_commandline_string arg val nextok)
     endif()
 endfunction()
 
+# Like string, but appends to the existing value instead of overwriting.
+# Allows repeated flags like: -skip qtwebengine -skip qtwebview
+function(qt_ir_commandline_addString arg val nextok)
+    if(nextok)
+        qt_ir_args_get_next_command_line_arg(val)
+
+        if("${val}" MATCHES "^-")
+            qt_ir_add_error("No value supplied to command line options '${arg}'.")
+        endif()
+    endif()
+    qt_ir_validate_value("${arg}" "${val}" success)
+    if(success)
+        qt_ir_command_line_append_input("${arg}" "${val}")
+    endif()
+endfunction()
+
 # Sets / handles the value of a command line void option.
 # This is an option like --force, which doesn't take any arguments.
 # Currently unused
@@ -279,6 +294,7 @@ endfunction()
 #
 # Currently handles the following types of CLI arguments:
 #  string
+#  addString (like string, but accumulates values from repeated flags)
 #  boolean
 #  void
 #
