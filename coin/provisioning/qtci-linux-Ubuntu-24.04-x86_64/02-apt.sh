@@ -246,6 +246,9 @@ installPackages+=(cifs-utils)
 installPackages+=(uml-utilities)
 # Fix dependencies in shared ffmpeg libs
 installPackages+=(patchelf)
+# For swiftly
+installPackages+=(gnupg2)
+installPackages+=(pkg-config)
 
 # Keep zoneinfo up-to-date (COIN-1282)
 installPackages+=(tzdata)
