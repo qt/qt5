@@ -40,7 +40,7 @@ if [[ "$patchelf_version" == "0.18.0" ]]; then
     echo "WARNING: patchelf version 0.18.0 is known to have issues with Android." >&2
 fi
 
-ffmpeg_libs=("avcodec" "avdevice" "avfilter" "avformat" "avutil" "swresample" "swscale")
+ffmpeg_libs=("avcodec" "avformat" "avutil" "swresample" "swscale")
 stub_prefix="Qt6FFmpegStub-"
 
 for lib_name in "${ffmpeg_libs[@]}"; do
