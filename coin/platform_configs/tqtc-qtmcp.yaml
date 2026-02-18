@@ -1,0 +1,15 @@
+Version: 2
+Include: [
+    cmake_platforms.yaml: [
+        'ubuntu-22.04',
+        'ubuntu-22.04-x11-tests',
+        'ubuntu-24.04-x64',
+        'ubuntu-24.04-x64-x11-tests',
+        'windows-11_24H2-msvc2022'
+    ],
+    macos.yaml: [
+        'macos-arm64-developer-build',
+        'macos-14-arm64-developer-build-tests'
+    ]
+]
+Configurations: []
