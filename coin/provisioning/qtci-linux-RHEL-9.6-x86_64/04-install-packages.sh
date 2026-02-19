@@ -17,6 +17,8 @@ installPackages+=(git)
 installPackages+=(zlib-devel)
 installPackages+=(glib2-devel)
 installPackages+=(openssl-devel)
+# Needed for qioring
+installPackages+=(liburing-devel)
 installPackages+=(freetype-devel)
 installPackages+=(fontconfig-devel)
 installPackages+=(curl-devel)

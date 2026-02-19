@@ -17,6 +17,7 @@ sudo zypper -nq install bison flex gperf \
         systemd-devel \
         glib2-devel \
         libopenssl-3-devel \
+        liburing-devel \
         freetype2-devel \
         fontconfig-devel \
         sqlite3-devel \

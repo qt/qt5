@@ -35,6 +35,8 @@ installPackages+=(p7zip-full)
 installPackages+=(nfs-common)
 # libssl-dev provides headers for OpenSSL
 installPackages+=(libssl-dev)
+# Needed for qioring
+installPackages+=(liburing-dev)
 # Needed libraries for X11 support accordingly to https://wiki.qt.io/Building_Qt_5_from_Git
 installPackages+=("^libxcb.*")
 installPackages+=(libxkbcommon-dev)
