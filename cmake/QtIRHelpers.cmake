@@ -130,6 +130,11 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
     set(extra_configure_args "")
     set(extra_cmake_args "")
 
+    # Collect modules to skip. These may come from:
+    # 1. The -skip option (consumed by init-repository's option parser)
+    # 2. Exclusion entries in -submodules/--module-subset (e.g. -qtfoo)
+    qt_ir_get_option_value(skip skip_modules)
+
     # If the -submodules or --module-subset options were specified, transform
     # the values into something configure understands and pass them to configure.
     qt_ir_get_option_value(module-subset submodules)
@@ -153,25 +158,10 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         endif()
 
         list(JOIN include_submodules "," include_submodules)
-        list(JOIN exclude_submodules "," exclude_submodules)
 
-        # Handle case when the -skip argument is already passed.
-        # In that case read the passed values, merge with new ones,
-        # remove both the -skip and its values, and re-add it later.
-        list(FIND filtered_args "-skip" skip_index)
-        if(exclude_submodules AND skip_index GREATER -1)
-            list(LENGTH filtered_args filtered_args_length)
-            math(EXPR skip_args_index "${skip_index} + 1")
-
-            if(skip_args_index LESS filtered_args_length)
-                list(GET filtered_args "${skip_args_index}" skip_args)
-                string(REPLACE "," ";" skip_args "${skip_args}")
-                list(APPEND skip_args ${exclude_submodules})
-                list(REMOVE_DUPLICATES skip_args)
-                list(JOIN skip_args "," exclude_submodules)
-                list(REMOVE_AT filtered_args "${skip_args_index}")
-                list(REMOVE_AT filtered_args "${skip_index}")
-            endif()
+        # Merge exclusions from module-subset into the skip list.
+        if(exclude_submodules)
+            list(APPEND skip_modules ${exclude_submodules})
         endif()
 
         # Handle case when only '-submodules existing' is passed and the
@@ -179,9 +169,13 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         if(include_submodules)
             list(APPEND extra_configure_args "-submodules" "${include_submodules}")
         endif()
-        if(exclude_submodules)
-            list(APPEND extra_configure_args "-skip" "${exclude_submodules}")
-        endif()
+    endif()
+
+    # Forward all collected skip modules to configure.
+    if(skip_modules)
+        list(REMOVE_DUPLICATES skip_modules)
+        list(JOIN skip_modules "," skip_csv)
+        list(APPEND extra_configure_args "-skip" "${skip_csv}")
     endif()
 
     # Insert the extra arguments into the proper positions before and after '--'.
