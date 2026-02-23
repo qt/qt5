@@ -6,7 +6,7 @@ Configurations:
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure']
-    Configure arguments: '-developer-build -nomake examples'
+    Configure arguments: '-developer-build -nomake examples -DFEATURE_test_auto=OFF -DFEATURE_test_baseline=ON'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'CTEST_DIR=tests/baseline',
