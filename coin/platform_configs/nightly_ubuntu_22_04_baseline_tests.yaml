@@ -6,9 +6,9 @@ Configurations:
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure']
-    Configure arguments: '-developer-build -nomake examples -DFEATURE_test_auto=OFF -DFEATURE_test_baseline=ON'
+    Configure arguments: '-developer-build -nomake examples'
     Environment variables: [
-        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'CMAKE_ARGS=-DFEATURE_test_auto=OFF -DFEATURE_test_baseline=ON -DOpenGL_GL_PREFERENCE=LEGACY',
         'CTEST_DIR=tests/baseline',
         'TESTARGS=-auto',
         'QT_LANCELOT_SERVER=10.150.153.60'
