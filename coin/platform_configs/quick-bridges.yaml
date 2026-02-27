@@ -43,7 +43,9 @@ Configurations:
         -no-feature-vnc
         -no-feature-picture
         -no-feature-pdf
-    Environment variables: []
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+    ]
 -
     Id: 'windows-quick-bridges'
     Template: 'qtci-windows-11_24H2-x86_64-71'

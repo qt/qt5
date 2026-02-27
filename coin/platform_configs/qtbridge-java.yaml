@@ -33,7 +33,9 @@ Configurations:
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
     Compiler: 'GCC'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'QtBridgesJava']
-
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+    ]
 -
     Id: 'macos-quick-bridges-universal-java'
     Template: 'qtci-macos-15-arm-104'
