@@ -271,10 +271,16 @@ function InstallAndroidArmv7 {
     $patchelf_sources = "https://ci-files01-hki.ci.qt.io/input/android/patchelf/0.17.2.tar.gz"
     $patchelf_download_location = "C:\Windows\Temp\0.17.2.tar.gz"
 
-    Invoke-WebRequest -UseBasicParsing $patchelf_sources -OutFile $patchelf_download_location
-    Verify-Checksum $patchelf_download_location $patchelf_sha1
-    Extract-tar_gz $patchelf_download_location $unzip_location
-    Remove $patchelf_download_location
+    try {
+        Invoke-WebRequest -UseBasicParsing $patchelf_sources -OutFile $patchelf_download_location
+        Verify-Checksum $patchelf_download_location $patchelf_sha1
+        Extract-tar_gz $patchelf_download_location $unzip_location
+        Remove $patchelf_download_location
+    } catch {
+        Write-Host "Error grabbing sources when installing patchelf:"
+        Write-Host $_
+        return $false
+    }
 
     Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.17.2 && ./bootstrap.sh && ./configure && make install`"")
 
