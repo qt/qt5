@@ -13,7 +13,6 @@ Configurations:
         -separate-debug-info
         -optimize-size
         -shared
-        -disable-deprecated-up-to 0x070000
         -no-feature-widgets
         -no-feature-sql
         -no-feature-printsupport
@@ -35,7 +34,6 @@ Configurations:
         -separate-debug-info
         -optimize-size
         -shared
-        -disable-deprecated-up-to 0x070000
         -no-feature-widgets
         -no-feature-sql
         -no-feature-printsupport
@@ -58,7 +56,6 @@ Configurations:
         -force-debug-info
         -optimize-size
         -shared
-        -disable-deprecated-up-to 0x070000
         -no-feature-widgets
         -no-feature-sql
         -no-feature-printsupport
