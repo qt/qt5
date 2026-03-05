@@ -249,7 +249,7 @@
 	branch = dev
 	status = ignore
 [submodule "qtlottie"]
-	depends = qtbase qtdeclarative
+	depends = qtbase qtdeclarative qtquicktimeline
 	path = qtlottie
 	url = ../qtlottie.git
 	branch = dev
