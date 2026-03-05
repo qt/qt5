@@ -21,13 +21,13 @@ prefix="${2:-$default_prefix}"
 pkgconfig_path="$PKG_CONFIG_PATH"
 
 install_ff_nvcodec_headers() {
-    local nv_codec_version="11.1" # use 11.1 to ensure compatibility with 470 nvidia drivers; might be upated to 12.0
-    local nv_codec_url_public="https://github.com/FFmpeg/nv-codec-headers/archive/refs/heads/sdk/$nv_codec_version.zip"
-    local nv_codec_url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/nv-codec-headers/nv-codec-headers-sdk-$nv_codec_version.zip"
-    local nv_codec_sha1="ceb4966ab01b2e41f02074675a8ac5b331bf603e"
+    local nv_codec_version="11.1.5.3" # use 11.x.x.x to ensure compatibility with 470 nvidia drivers; might be upated to 12.0
+    local nv_codec_url_public="https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n$nv_codec_version.zip"
+    local nv_codec_url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/nv-codec-headers/nv-codec-headers-$nv_codec_version.zip"
+    local nv_codec_sha1="78715d521de102362e553dc92577bbe81905a321"
     #nv_codec_sha1="4f30539f8dd31945da4c3da32e66022f9ca59c08" // 12.0
     local target_dir="$HOME"
-    local nv_codec_dir="$target_dir/nv-codec-headers-sdk-$nv_codec_version"
+    local nv_codec_dir="$target_dir/nv-codec-headers-n$nv_codec_version"
 
     if [ ! -d  "$nv_codec_dir" ]; then
         source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
