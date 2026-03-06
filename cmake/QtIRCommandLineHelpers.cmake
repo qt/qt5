@@ -5,6 +5,37 @@
 # with renamed functions, because we need similar logic for init-repository, but
 # we can't access qtbase before we clone it.
 
+function(qt_ir_print_to_stdout text)
+    set(tmp_candidates
+        "${CMAKE_CURRENT_BINARY_DIR}"
+        "$ENV{TMPDIR}"
+        "$ENV{TEMP}"
+        "/tmp"
+    )
+    set(tmp "")
+    foreach(dir IN LISTS tmp_candidates)
+        if(dir STREQUAL "")
+            continue()
+        endif()
+        set(candidate "${dir}/.qt_configure_stdout_tmp")
+        execute_process(
+            COMMAND "${CMAKE_COMMAND}" -E touch "${candidate}"
+            RESULT_VARIABLE touch_result
+        )
+        if(touch_result EQUAL 0)
+            set(tmp "${candidate}")
+            break()
+        endif()
+    endforeach()
+    if(tmp STREQUAL "")
+        message("${text}")  # last resort fallback (stderr)
+        return()
+    endif()
+    file(WRITE "${tmp}" "${text}")
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E cat "${tmp}")
+    file(REMOVE "${tmp}")
+endfunction()
+
 # Call a function with the given arguments.
 function(qt_ir_call_function func)
     set(call_code "${func}(")
@@ -368,16 +399,17 @@ endfunction()
 
 # Shows help for the command line options.
 function(qt_ir_show_help)
+    set(help "")
     set(help_file "${CMAKE_CURRENT_LIST_DIR}/QtIRHelp.txt")
     if(EXISTS "${help_file}")
         file(READ "${help_file}" content)
-        message("${content}")
+        string(APPEND help "${content}")
     endif()
-
-    message([[
+    string(APPEND help [[
 General Options:
 -help, -h ............ Display this help screen
 ]])
+    qt_ir_print_to_stdout("${help}")
 endfunction()
 
 # Gets the unhandled command line args.
