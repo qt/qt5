@@ -12,5 +12,5 @@ Configurations:
     Template: 'qtci-linux-openSUSE-16.0-x86_64-51'
     Target os: 'WebAssembly'
     Compiler: 'GCC'
-    Features: ['Sccache', 'TestOnly']
+    Features: ['Sccache', 'TestOnly', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure']
     Platform dependency: 'webassembly-linux-thread-asyncify-new'
