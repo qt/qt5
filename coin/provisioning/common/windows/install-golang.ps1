@@ -33,7 +33,7 @@ $url_official = "https://go.dev/dl/go" + $version + ".windows-" + $arch + ".msi"
 
 Write-Host "Fetching Go $version..."
 Download $url_official $url_cache $goPackage
-Verify-Checksum $goPackage $sha256 sha256
+Verify-Checksum $goPackage $sha256
 Write-Host "Installing Go $version..."
 Run-Executable "msiexec" "/quiet /i $goPackage"
 Write-Output "Go = $version" >> ~\versions.txt

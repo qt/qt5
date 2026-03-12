@@ -2,16 +2,20 @@ function Verify-Checksum
 {
     Param (
         [string]$File=$(throw("You must specify a filename to get the checksum of.")),
-        [string]$Expected=$(throw("Checksum required")),
-        [ValidateSet("sha256","sha1","md5")][string]$Algorithm="sha1"
+        [string]$Expected=$(throw("Checksum required"))
     )
+    switch ($Expected.Length) {
+        40 { $Algorithm = "SHA1" }
+        64 { $Algorithm = "SHA256" }
+        default { throw "Unknown hash length for: $Expected" }
+    }
     Write-Host "Verifying checksum of $File"
     $fs = new-object System.IO.FileStream $File, "Open"
     $algo = [type]"System.Security.Cryptography.$Algorithm"
     $crypto = $algo::Create()
     $hash = [BitConverter]::ToString($crypto.ComputeHash($fs)).Replace("-", "")
     $fs.Close()
-    if ($hash -ne $Expected) {
+    if ($hash -ine $Expected) {
         throw "Checksum verification failed, got: '$hash' expected: '$Expected'"
     }
 }

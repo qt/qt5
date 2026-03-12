@@ -60,7 +60,7 @@ $vcpkgExeCacheUrl = "\\ci-files01-hki.ci.qt.io\provisioning\vcpkg\vcpkg-$nonDott
 $vcpkgExe = "C:\Windows\Temp\vcpkg.exe"
 
 Download "$vcpkgExeOfficialUrl" "$vcpkgExeCacheUrl" "$vcpkgExe"
-Verify-Checksum $vcpkgExe $vcpkgExechecksum "sha256"
+Verify-Checksum $vcpkgExe $vcpkgExechecksum
 Move-Item "$vcpkgExe" -Destination "$vcpkgRoot" -Force
 
 if(![System.IO.File]::Exists("$vcpkgRoot\vcpkg.exe")){

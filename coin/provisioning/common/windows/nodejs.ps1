@@ -38,7 +38,7 @@ $internalUrl = "http://ci-files01-hki.ci.qt.io/input/windows/node-v$version-win-
 
 Write-Host "Installing Node.js"
 Download $externalUrl $internalUrl $package
-Verify-Checksum $package $sha256 "sha256"
+Verify-Checksum $package $sha256
 Extract-7Zip $package $targetFolder
 Add-Path $installFolder
 Remove $package

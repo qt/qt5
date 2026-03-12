@@ -17,9 +17,9 @@ $install_location = "c:\Utils\$prog"
 
 $tmp_location = "c:\users\qt\downloads"
 Download $cached_url $cached_url "$tmp_location\$pkg"
-Verify-Checksum "$tmp_location\$pkg" $sha1 sha1
+Verify-Checksum "$tmp_location\$pkg" $sha1
 Download $dep_cached_url $dep_cached_url "$tmp_location\$dep_pkg"
-Verify-Checksum "$tmp_location\$dep_pkg" $dep_sha1 sha1
+Verify-Checksum "$tmp_location\$dep_pkg" $dep_sha1
 
 Extract-7Zip "$tmp_location\$pkg" $install_location
 Extract-7Zip "$tmp_location\$dep_pkg" $install_location

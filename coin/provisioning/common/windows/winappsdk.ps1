@@ -13,7 +13,7 @@ $script:package_path = "$packageRoot\\$nugetPackage"
 
 New-Item -ItemType Directory -Path "$packageRoot"
 Download $officialUrl $cachedUrl $package_path
-Verify-Checksum $package_path $sdkChecksumSha1 sha1
+Verify-Checksum $package_path $sdkChecksumSha1
 Write-Host "Installing Nuget"
 Run-Executable "$package_path" "install Microsoft.WindowsAppSDK -OutputDirectory $packageRoot"
 
