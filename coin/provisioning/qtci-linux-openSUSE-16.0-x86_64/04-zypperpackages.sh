@@ -3,6 +3,10 @@
 
 set -ex
 
+# Curl is pre-installed but the original version is buggy.
+# This line here is to update it.
+sudo zypper -nq install curl
+
 sudo zypper -nq install git gcc13 gcc15-c++ ninja
 sudo /usr/sbin/update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-15 1 \
                                      --slave /usr/bin/g++ g++ /usr/bin/g++-15 \
