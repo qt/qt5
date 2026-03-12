@@ -36,4 +36,6 @@ function installSccache {
     # Prevents some random network I/O errors from failing compilation
     # Does not seem to affect much though
     SetEnvVar "SCCACHE_IGNORE_SERVER_IO_ERROR" "1"
+    # Enable a local preprocessor cache.
+    SetEnvVar SCCACHE_DIRECT 1
 }

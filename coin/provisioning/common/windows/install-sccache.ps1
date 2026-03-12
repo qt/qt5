@@ -6,22 +6,22 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$version="v0.11.0-jimis3"
+$version="v0.15.0"
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
     arm64 {
         $arch="aarch64-pc-windows-msvc"
-        $sha1="be429b6c33da9408bba827815d04fceeadf6dbd1"
+        $sha="f4f304dc9dd9bd2f9b0032a0091efac1c093934bb095f207381558f80c3d0a24"
         break
     }
     x64 {
         $arch="x86_64-pc-windows-msvc"
-        $sha1="bcce35f6b39e2d1d0829f2277fd749767e057486"
+        $sha="b0b257a164bf438b2dea134ca7ded41c100f59a64b3bf275a202f1e8102ab217"
         break
     }
     x86 {
         $arch="x86-pc-windows-gnu"
-        $sha1="287f4c3b7db21b72138704b8fe96827e6b1643a8"
+        $sha="287f4c3b7db21b72138704b8fe96827e6b1643a8"
         $version="0.2.13-alpha-0"
         break
     }
@@ -40,7 +40,7 @@ $targetFolder = "C:\Program Files\"
 
 Write-Host "Downloading sccache $version..."
 Download $urlOfficial $urlCache $tempfile
-Verify-Checksum $tempfile $sha1
+Verify-Checksum $tempfile $sha
 Write-Host "Extracting $tempfile to $targetFolder..."
 Extract-tar_gz $tempfile $targetFolder
 Remove-Item -Path $tempfile
@@ -53,6 +53,8 @@ Set-EnvironmentVariable "SCCACHE_IGNORE_SERVER_IO_ERROR" "1"
 
 # add sccache to PATH
 Set-EnvironmentVariable "PATH" "C:\Program Files\$basename\;$([Environment]::GetEnvironmentVariable('PATH', 'Machine'))"
+# Enable a local preprocessor cache.
+Set-EnvironmentVariable "SCCACHE_DIRECT" "1"
 
 # update versions
 Write-Output "sccache = $version" >> ~\versions.txt
