@@ -10,7 +10,7 @@ $sdkChecksumSha1 = "8fe98c00fde0f524760bb9021f438bd7d9304a69"
 $package_path = "C:\Windows\Temp\$package"
 
 Download $officialUrl $cachedUrl $package_path
-Verify-Checksum $package_path $sdkChecksumSha1 sha1
+Verify-Checksum $package_path $sdkChecksumSha1
 Write-Host "Installing DirectX SDK"
 Run-Executable $package_path "/u"
 

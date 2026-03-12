@@ -43,7 +43,7 @@ $tempfile = "C:\Windows\Temp\" + $filename_zip
 
 Write-Host "Fetching Telegraf $version..."
 Download $url_official $url_cache $tempfile
-Verify-Checksum $tempfile $sha256 sha256
+Verify-Checksum $tempfile $sha256
 
 Write-Host "Installing telegraf.exe under C:\Utils\telegraf"
 
