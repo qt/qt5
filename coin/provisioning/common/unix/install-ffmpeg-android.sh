@@ -124,8 +124,14 @@ build_ffmpeg_android() {
         if [ $page_size == "use_16kb_page_size" ]; then
             page_size_arg="16384"
         fi
-
-        sudo "${fix_dependencies}" "${target_dir}" "${libs_prefix}" "no" "$page_size_arg"
+        local set_rpath_arg="no"
+        local readelf_path_arg="${toolchain_bin}/llvm-readelf"
+        sudo "$fix_dependencies" \
+            "$target_dir" \
+            "$libs_prefix" \
+            "$set_rpath_arg" \
+            "$page_size_arg" \
+            "$readelf_path_arg"
     fi
 }
 
