@@ -8,24 +8,26 @@ lib_dir="$1/lib"
 additional_suffix="${2:-}"
 set_rpath="${3:-yes}"
 page_size="${4:-}"
+custom_readelf="${5:-""}"
 
-# readelf and patchelf are prerequisite tools for this script. Check
-# that they are available.
-if [ "$(uname -s)" = "Darwin" ]; then
-    # Under Homebrew, binutils package is not symlinked into PATH.
-    # This lets us use readelf provided by Homebrew.
-    readelf_homebrew_path="$(brew --prefix binutils)/bin/readelf"
-    if [[ ! -x "$readelf_homebrew_path" ]]; then
-        echo "Found no valid readelf executable. It is possible it was not correctly installed through Homebrew."
+# If custom_readelf is not provided, we fallback to host readelf.
+if [ -n "$custom_readelf" ]; then
+    if ! command -v "$custom_readelf"; then
+        echo "Error. Provided readelf executable '${custom_readelf}' is not a valid executable"
         exit 1
     fi
-    readelf() { "$readelf_homebrew_path" "$@"; }
-fi
-
-if ! command -v readelf; then
+elif ! command -v readelf; then
     echo "Found no valid readelf command. It is possible it was not correctly installed."
     exit 1
 fi
+
+readelf_wrapper() {
+    if [ -n "$custom_readelf" ]; then
+        "$custom_readelf" "$@"
+    else
+        readelf "$@"
+    fi
+}
 
 if ! command -v patchelf; then
     echo "Found no valid patchelf command. It is possible it was not correctly installed."
@@ -57,7 +59,7 @@ for lib_name in "${ffmpeg_libs[@]}"; do
     fi
 
     read_needed_deps() {
-        readelf -d "$lib_path" | grep '(NEEDED)'
+        readelf_wrapper -d "$lib_path" | grep '(NEEDED)'
     }
 
     while read -r line; do
