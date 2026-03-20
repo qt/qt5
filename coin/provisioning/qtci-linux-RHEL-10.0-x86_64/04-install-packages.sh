@@ -8,7 +8,8 @@ set -ex
 sudo yum -y remove PackageKit gnome-software
 
 # CI: All platforms should have up-to-date packages when new provision is made
-sudo yum -y update
+echo "Quick fix: Temporarily skip RHEL 10.0 updates due to cockpit update fail (QTQAINFRA-7773)"
+#sudo yum -y update
 
 installPackages=()
 # Make sure needed ca-certificates are available
@@ -83,6 +84,7 @@ installPackages+=(nspr-devel)
 installPackages+=(nss-devel)
 installPackages+=(python3-html5lib)
 installPackages+=(libstdc++-static)
+installPackages+=(libatomic)
 # For Android builds
 #installPackages+=(java-21-openjdk-devel.21.0.9.0.10-1.el10)
 installPackages+=(java-21-openjdk-devel)
