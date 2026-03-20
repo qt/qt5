@@ -1,8 +1,7 @@
 Version: 2
 Include: [
   macos.yaml: [
-     "macos-universal-on-arm64",
-     "macos-13-x86_64-tests"
+     "macos-universal-on-arm64"
   ],
   cmake_platforms.yaml: [
     "ubuntu-22.04",
@@ -35,12 +34,6 @@ Include: [
   offline_documentation.yaml
 ]
 Configurations:
--
-    Id: 'macos-13-arm64-tests'
-    Template: 'qtci-macos-13-arm-107'
-    Compiler: 'Clang'
-    Features: ['TestOnly']
-    Platform dependency: 'macos-universal-on-arm64'
 -
     Id: 'Axivion-QEMU_build'
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
