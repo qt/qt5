@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 download_ffmpeg() {
-    local version="${1:-"n7.1.3"}"
-    local sha1="${2:-27051817deec88bed3b9652d49f9127d22268d83}"
+    local version="${1:-"n8.1.2"}"
+    local sha1="${2:-a7f4ce77209afdadca9f371db261e8d69903dc85}"
 
     local ffmpeg_name="FFmpeg-$version"
     local target_dir="$HOME"
@@ -12,7 +12,7 @@ download_ffmpeg() {
 
     if [ ! -d "$ffmpeg_source_dir" ]; then
         local url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-        local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
+        local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/FFmpeg-$version.tar.gz"
         local app_prefix=""
 
         source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"

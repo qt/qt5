@@ -7,10 +7,10 @@
 # This script will install FFmpeg
 $msys = "C:\Utils\msys64\usr\bin\bash"
 
-$version="n7.1.3"
+$version="n8.1.2"
 $url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-$sha1="27051817deec88bed3b9652d49f9127d22268d83"
-$url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/$version.tar.gz"
+$sha1="a7f4ce77209afdadca9f371db261e8d69903dc85"
+$url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/FFmpeg-$version.tar.gz"
 $ffmpeg_name="FFmpeg-$version"
 
 $download_location = "C:\Windows\Temp\$ffmpeg_name.tar.gz"
@@ -171,6 +171,18 @@ function InstallMsvcFfmpeg {
     $result = EnterVSDevShell -HostArch $hostArch -Arch $arch
     if (-Not $result) {
         return $false
+    }
+
+    # MSVC 2019 workaround: The SSA optimizer (code generation
+    # "pass 2") gets stuck in an infinite loop on some translations
+    # units, such as libavcodec/sanm.c, when compiling FFmpeg n8.1.2 and up.
+    # This only affects the VS2019-based Windows 10 x86_64 image.
+    # VS2022+ hosts build fine. Disabling that optimizer pass lets the
+    # older toolchain finish. This workaround can be dropped once we no
+    # longer build using MSVC 2019.
+    if ($env:VisualStudioVersion -and [version]$env:VisualStudioVersion -lt [version]"17.0") {
+        Write-Host "MSVC $env:VisualStudioVersion (< 2022) detected; adding -d2SSAOptimizer- to avoid build freeze on FFmpeg 8.x"
+        $config += " --extra-cflags=-d2SSAOptimizer-"
     }
 
     $result = InstallFfmpeg -config $config -buildSystem $buildSystem -msystem "MSYS" -toolchain "msvc" -ffmpegDirEnvVar $ffmpegDirEnvVar -shared $true

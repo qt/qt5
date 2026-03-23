@@ -1,4 +1,5 @@
 diffutils
 libva-dev
 make
+nasm
 yasm
