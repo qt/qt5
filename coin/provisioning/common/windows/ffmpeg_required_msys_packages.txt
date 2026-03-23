@@ -1,3 +1,4 @@
 diffutils
 make
+nasm
 yasm

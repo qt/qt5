@@ -3,16 +3,16 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-# This script will installs msys2
+# This script will install msys2
 
 $version = "20240113"
 $prog = "msys2"
 $arch = "x86_64"
 $sha1 = "b46c08fd901da0fdba1dc30422a322766d7d03c6"
-$sha1_prebuilt = "29d16a81de4a570c41f92491e20b5554a1baab8f"
+$sha1_prebuilt = "9AC41CD8B71100BF30058F04790C1AF055BE4957"
 $folder = "msys64"
 
-$package_prebuilt = $folder + "_" + $version + "_prebuilt_v2.7z"
+$package_prebuilt = $folder + "_" + $version + "_prebuilt_v3.7z"
 $package = $prog + "-base-" + $arch + "-" + $version + ".tar.xz"
 
 $url_cache_prebuilt = "\\ci-files01-hki.ci.qt.io\provisioning\windows\$package_prebuilt"
