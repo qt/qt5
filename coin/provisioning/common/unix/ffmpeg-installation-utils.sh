@@ -2,12 +2,8 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-ffmpeg_version_default() {
-    echo "n7.1.3"
-}
-
 download_ffmpeg() {
-    local version="${1:-$(ffmpeg_version_default)}"
+    local version="${1:-"n7.1.3"}"
     local sha1="${2:-27051817deec88bed3b9652d49f9127d22268d83}"
 
     local ffmpeg_name="FFmpeg-$version"
