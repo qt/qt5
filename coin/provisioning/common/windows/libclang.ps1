@@ -25,8 +25,8 @@ function install() {
 
     $zip = "c:\users\qt\downloads\libclang.7z"
 
-    $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-llvmorg-$libclang_version-windows-$toolchain`_$archVer.7z"
-    $script:CachedUrl = "http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-llvmorg-$libclang_version-windows-$toolchain`_$archVer.7z"
+    $script:OfficialUrl = "https://download.qt.io/development_releases/prebuilt/libclang/qt/libclang-llvmorg-$libclang_version-windows-$toolchain$toolchainVersion`_$archVer.7z"
+    $script:CachedUrl = "http://ci-files01-hki.ci.qt.io/input/libclang/qt/libclang-llvmorg-$libclang_version-windows-$toolchain$toolchainVersion`_$archVer.7z"
 
     Download $OfficialUrl $CachedUrl $zip
     Verify-Checksum $zip $sha1
@@ -36,6 +36,7 @@ function install() {
 }
 
 $toolchainSuffix = ""
+$toolchainVersion = ""
 
 if ( $toolchain -eq "vs2022" ) {
     if ( $archVer -eq "64" ) {
@@ -63,13 +64,15 @@ if ( $toolchain -eq "mingw" ) {
 
 if ( $toolchain -eq "llvm-mingw" ) {
     if ( $archVer -eq "64" ) {
-        $sha1 = "3e917d002f363c225e5ee2b7d8999a3cabd8b467"
+        $sha1 = "ced503f1bf9c389a6e93d3abb40bb694fb0ae42c"
     }
     else {
         $sha1 = ""
     }
     # Due to COIN-1137 forced to use a '_' instead of '-'
     $toolchainSuffix = "llvm_mingw"
+
+    $toolchainVersion = "-22.1.7"
 }
 
 if ( $useArchInToolchainSuffix ) {
