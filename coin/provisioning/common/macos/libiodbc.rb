@@ -19,7 +19,7 @@ class Libiodbc < Formula
 
   def install
     if build.with? "universal"
-      ENV['CFLAGS'] = '-O -arch arm64 -arch x86_64 -mmacosx-version-min=10.9'
+      ENV['CFLAGS'] = '-O -arch arm64 -arch x86_64 -mmacosx-version-min=10.9 -std=gnu89'
     end
     system "./autogen.sh"
     system "./configure", "--disable-dependency-tracking", "--prefix=#{prefix}"
