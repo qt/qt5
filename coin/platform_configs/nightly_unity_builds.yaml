@@ -5,10 +5,10 @@ Configurations:
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests'] # note: we cannot build debug builds due to our llvm binaries
-    Configure arguments: 'force-debug-info -headersclean -nomake examples -qt-zlib' # disabled example builds: qmake builds fail with C1041
+    Configure arguments: 'force-debug-info -nomake examples -qt-zlib' # disabled example builds: qmake builds fail with C1041
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DQT_UNITY_BUILD=ON',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF',
         'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
     ]
@@ -17,32 +17,32 @@ Configurations:
     Template: 'qtci-linux-RHEL-9.6-x86_64-51'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'DoNotRunTests']
-    Configure arguments: '-make examples -debug -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_HOME}} -DQT_UNITY_BUILD=ON',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 -
     Id: 'ubuntu-24.04-arm64-unity-build'
     Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
-    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -qpa offscreen\;xcb'
+    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput -qpa offscreen\;xcb'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DQT_UNITY_BUILD=ON',
         'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 -
     Id: 'ubuntu-24.04-x64-unity-build'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests']
-    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY -DQT_UNITY_BUILD=ON',
         'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON'
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 -
     Id: 'macos-universal-on-arm64-unity-build'
@@ -50,8 +50,8 @@ Configurations:
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
     Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
-    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -headersclean -framework'
+    Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -framework'
     Environment variables: [
         'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DQT_UNITY_BUILD=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_UNITY_BUILD=ON',
     ]
