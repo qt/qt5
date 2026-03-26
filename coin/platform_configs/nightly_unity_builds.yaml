@@ -4,8 +4,8 @@ Configurations:
     Id: 'windows-11_24H2-msvc2022-unity-build'
     Template: 'qtci-windows-11_24H2-x86_64-71'
     Compiler: 'MSVC2022'
-    Features: ['Sccache', 'Debug', 'UseConfigure', 'DoNotRunTests']
-    Configure arguments: '-debug -force-debug-info -headersclean -nomake examples -qt-zlib' # disabled example builds: qmake builds fail with C1041
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests'] # note: we cannot build debug builds due to our llvm binaries
+    Configure arguments: 'force-debug-info -headersclean -nomake examples -qt-zlib' # disabled example builds: qmake builds fail with C1041
     Environment variables: [
         'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DQT_UNITY_BUILD=ON',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON',
