@@ -12,7 +12,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_710}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
-        'QT_CMAKE_DIR=/opt/cmake-3.30.5/bin',
+        'QT_CMAKE_DIR=/opt/cmake-4.3.2/bin',
         'QNX_TEST_ENV=TMPDIR=/data/var/tmp HOME=/data/home/root FONTCONFIG_FILE=/data/var/etc/fontconfig/fonts.conf LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=710 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'QNX_QEMU={{.Env.QNX_710_QEMU}}',
@@ -63,7 +63,7 @@ Configurations:
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_800}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
-        'QT_CMAKE_DIR=/opt/cmake-3.30.5/bin',
+        'QT_CMAKE_DIR=/opt/cmake-4.3.2/bin',
         'QNX_TEST_ENV=TMPDIR=/data/var/tmp HOME=/data/home/root FONTCONFIG_FILE=/data/var/etc/fontconfig/fonts.conf LD_LIBRARY_PATH={{.Env.QNX_QEMU_LD_LIBRARY_PATH}} QSG_RHI_BACKEND=software QT_QPA_PLATFORM=offscreen QTEST_ENVIRONMENT=ci',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_SYSTEM_VERSION=802 -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include',
         'QNX_QEMU={{.Env.QNX_800_QEMU}}',
