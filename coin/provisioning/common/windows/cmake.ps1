@@ -3,22 +3,22 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$majorminorversion = "3.30"
-$version = "3.30.5"
+$majorminorversion = "4.3"
+$version = "4.3.2"
 
 $cpu_arch = Get-CpuArchitecture
 Write-Host "Installing CMake for architecture $cpu_arch"
 switch ($cpu_arch) {
     arm64 {
         $arch = "arm64"
-        $sha1 = "408977a174476407bd660604f110a26ba41a6efd"
-        $majorminorversion = "3.30"
-        $version = "3.30.5"
+        $sha1 = "71949e4637accf5a92f35d357dc861e6a8d645cf"
+        $majorminorversion = "4.3"
+        $version = "4.3.2"
         Break
     }
     x64 {
         $arch = "i386"
-        $sha1 = "d0636735c2d13a4443662605cd80c708f265eacc"
+        $sha1 = "abc3ae51ec5a11fb367a39ddfb7db0c9ea697a7b"
     }
     default {
         throw "Unknown architecture $cpu_arch"
