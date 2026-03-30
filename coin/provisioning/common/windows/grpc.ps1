@@ -49,6 +49,7 @@ function build-install-grpc {
         "-DgRPC_SSL_PROVIDER=package"
         # protobuf
         "-DProtobuf_USE_STATIC_LIBS=ON"
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
         "-DCMAKE_PREFIX_PATH=$protobufRoot"
     )
     cmake .. -G"Ninja Multi-Config" -DCMAKE_CONFIGURATION_TYPES="$BuildType" -DCMAKE_INSTALL_PREFIX="$installPath" $extraCMakeArgs $configureOptions
