@@ -199,6 +199,23 @@ echo "Unzipping the Android 16 to $maxVersionDestination"
 sudo unzip -o -q "$maxVersionFilePath" -d "$maxVersionDestination"
 rm "$maxVersionFilePath"
 
+echo "Download and unzip Android 17 Beta 3 16KB System Image"
+insignificantMaxVersionFileName="x86_64-ps16k-37.0_r03.zip"
+insignificantMaxVersionDestination="$sdkTargetFolder/system-images/android-37/google_apis_ps16k/"
+insignificantMaxVersionFilePath="$insignificantMaxVersionDestination/$insignificantMaxVersionFileName"
+insignificantMaxVersionCiUrl="$basePath/system_images/google_apis/$insignificantMaxVersionFileName"
+insignificantMaxVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$insignificantMaxVersionFileName"
+insignificantMaxVersionSha1="b89a6686f9a9e9942d596bed45d422cbccb70c98"
+
+mkdir -p "$insignificantMaxVersionDestination"
+DownloadURL "$insignificantMaxVersionCiUrl" "$insignificantMaxVersionUrl" "$insignificantMaxVersionSha1" "$insignificantMaxVersionFilePath"
+
+echo "Unzipping the Android 17 Beta3 16KB to $insignificantMaxVersionDestination"
+sudo unzip -o -q "$insignificantMaxVersionFilePath" -d "$insignificantMaxVersionDestination"
+# Hack to avoid SDK version bug in source.properties file, the usage of ".0" messes things for avdmanager. TODO: undo when official comes
+sudo sed -i 's/AndroidVersion.ApiLevel=37.0/AndroidVersion.ApiLevel=37/g' "$insignificantMaxVersionDestination/x86_64/source.properties"
+rm "$insignificantMaxVersionFilePath"
+
 echo "Checking the contents of Android SDK again..."
 ls -l "$sdkTargetFolder"
 
@@ -207,6 +224,9 @@ echo "no" | ./avdmanager create avd -n emulator_x86_api_28 -c 2048M -f \
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_36 -c 2048M -f \
     -k "system-images;android-36;google_apis;x86_64"
+
+echo "no" | ./avdmanager create avd -n emulator_x86_64_api_37 -c 2048M -f \
+    -k "system-images;android-37;google_apis,page_size_16kb,ai_glasses_compatible;x86_64"
 
 echo "Install maximum supported SDK level image for Android Automotive $sdkApiLevelAutomotiveMax"
 DownloadURL "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxUrl" "$androidAutomotiveMaxSha" \
