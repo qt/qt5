@@ -315,7 +315,7 @@ function(qt_ir_get_already_initialized_submodules prefix
     )
 
     qt_ir_parse_git_config_file_contents("${prefix}"
-        READ_GIT_CONFIG
+        READ_GIT_CONFIG_LOCAL
         PARENT_REPO_BASE_GIT_PATH "${parent_repo_base_git_path}"
         WORKING_DIRECTORY "${working_directory}"
     )
