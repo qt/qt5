@@ -46,7 +46,8 @@ sudo zypper -nq install libicu-devel
 sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
          libXcomposite-devel libXcursor-devel libXrandr-devel libXtst-devel \
          mozilla-nspr-devel mozilla-nss-devel glproto-devel nodejs \
-         libxshmfence-devel libXdamage-devel cargo rust-bindgen
+         libxshmfence-devel libXdamage-devel \
+         'cargo<1.94' rust-bindgen
 
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
