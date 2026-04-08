@@ -155,6 +155,7 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+        'SCCACHE_C_CUSTOM_CACHE_BUSTER=v1'
     ]
 -
     Id: 'sles-15_sp6-static'
