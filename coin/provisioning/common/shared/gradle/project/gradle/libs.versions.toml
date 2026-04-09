@@ -1,0 +1,16 @@
+[versions]
+agp = "9.0.0"
+kotlin = "2.1.10"
+core = "1.17.0"
+appcompat = "1.7.1"
+material = "1.13.0"
+
+[libraries]
+core = { group = "androidx.core", name = "core", version.ref = "core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

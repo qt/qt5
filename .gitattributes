@@ -4,3 +4,5 @@
 .commit-template        export-ignore eol=lf
 init-repository         export-ignore
 README.git              export-ignore
+*.bat                   text eol=crlf
+*.bat.in                text eol=crlf
