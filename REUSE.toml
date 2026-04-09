@@ -10,7 +10,8 @@ SPDX-License-Identifier = "LicenseRef-Qt-Commercial OR GPL-3.0-only"
 [[annotations]]
 path = ["coin/**", "cmake/**", "**.pro", "**.qrc", "**CMakeLists.txt", ".cmake.conf", "**.yaml",
         "coin/axivion/ci_config_linux.json",
-        "**.cfg", "**.plist", "**.pri", "**.prf", "configure.json"]
+        "**.cfg", "**.plist", "**.pri", "**.prf", "configure.json",
+        "settings.gradle", "gradle/libs.versions.toml"]
 precedence = "closest"
 comment = "build system"
 SPDX-FileCopyrightText = "Copyright (C) 2024 The Qt Company Ltd."

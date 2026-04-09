@@ -11,3 +11,16 @@ build-*/
 init-repository.opt
 init-repository.opt.in
 config.tl.opt
+
+# CLion generated files
+.idea
+
+# Gradle generated files
+.gradle/
+local.properties
+
+# JDTLS generated files
+.project
+.classpath
+.settings/
+bin/

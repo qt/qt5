@@ -1,0 +1,49 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'Qt-for-Android'
+
+def tryIncludeBuild = { String path, Closure config ->
+    if (new File(settingsDir, path).exists()) {
+        includeBuild(path, config)
+    }
+}
+
+// qtbase
+tryIncludeBuild('qtbase/src/android/jar') { name = 'Qt6Android' }
+tryIncludeBuild('qtbase/src/network/android/jar') { name = 'Qt6AndroidNetwork' }
+tryIncludeBuild('qtbase/src/plugins/networkinformation/android/jar') {
+    name = 'Qt6AndroidNetworkInformationBackend'
+}
+
+// qtconnectivity
+tryIncludeBuild('qtconnectivity/src/android/bluetooth') { name = 'Qt6AndroidBluetooth' }
+tryIncludeBuild('qtconnectivity/src/android/nfc') { name = 'Qt6AndroidNfc' }
+
+// qtdeclarative
+tryIncludeBuild('qtdeclarative/src/quick/platform/android/jar') { name = 'Qt6AndroidQuick' }
+
+// qtmultimedia
+tryIncludeBuild('qtmultimedia/src/android/jar') { name = 'Qt6AndroidMultimedia' }
+
+// qtpositioning
+tryIncludeBuild('qtpositioning/src/plugins/position/android/jar') { name = 'Qt6AndroidPositioning' }
+
+// qtspeech
+tryIncludeBuild('qtspeech/src/plugins/tts/android/jar') { name = 'Qt6AndroidTextToSpeech' }
+
+// qtwebview
+tryIncludeBuild('qtwebview/src/jar') { name = 'Qt6AndroidWebView' }
