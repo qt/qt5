@@ -46,7 +46,7 @@ Configurations:
 
     -
         Id: 'macos-13-arm64-tests'
-        Template: 'qtci-macos-13-arm-107'
+        Template: 'qtci-macos-13-arm-108'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
@@ -109,7 +109,7 @@ Configurations:
     # Test on all supported macOS versions (deployment targets)
     -
         Id: 'macos-13-arm64-developer-build-tests'
-        Template: 'qtci-macos-13-arm-107'
+        Template: 'qtci-macos-13-arm-108'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-arm64-developer-build'
