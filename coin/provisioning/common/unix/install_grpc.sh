@@ -9,20 +9,8 @@ set -ex
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
-
-# Extract cmake path from the environment
-if uname -a |grep -q "Ubuntu"; then
-    if lsb_release -a |grep -q "Ubuntu 22.04"; then
-# shellcheck source=/dev/null
-        source ~/.bash_profile
-    else
-# shellcheck source=/dev/null
-        source ~/.profile
-    fi
-else
-# shellcheck source=/dev/null
-    source ~/.bashrc
-fi
+# shellcheck source=./SourceEnvVars.sh
+source "${BASH_SOURCE%/*}/SourceEnvVars.sh"
 
 version="1.50.1"
 sha1="be1b0c3dbfbc9714824921f50dffb7cf044da5ab"

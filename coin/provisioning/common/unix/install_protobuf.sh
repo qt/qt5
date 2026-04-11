@@ -6,17 +6,8 @@
 source "${BASH_SOURCE%/*}/DownloadURL.sh"
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
-
-# Extract cmake path from the environment
-if uname -a |grep -q "Ubuntu"; then
-    if lsb_release -a |grep "Ubuntu 22.04"; then
-        source ~/.bash_profile
-    else
-        source ~/.profile
-    fi
-else
-    source ~/.bashrc
-fi
+# shellcheck source=./SourceEnvVars.sh
+source "${BASH_SOURCE%/*}/SourceEnvVars.sh"
 
 # This script will install Google's Protocal Buffers
 
