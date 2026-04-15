@@ -9,6 +9,11 @@ set -ex
 BASEDIR=$(dirname "$0")
 # shellcheck source=../common/unix/check_and_set_proxy.sh
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
+# shellcheck source=../common/linux/distro_version_check.sh
+source "$BASEDIR/../common/linux/distro_version_check.sh"
+
+# Get distro version to later check if version has changed at the end of the provisioning
+record_os_version
 
 NTS_IP=10.212.2.216
 
