@@ -10,6 +10,11 @@ source "$BASEDIR/../common/shared/network_test_server_ip.txt"
 source "${BASH_SOURCE%/*}/../common/unix/check_and_set_proxy.sh"
 # shellcheck source=../common/unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
+# shellcheck source=../common/linux/distro_version_check.sh
+source "$BASEDIR/../common/linux/distro_version_check.sh"
+
+# Get distro version to later check if version has changed at the end of the provisioning
+record_os_version
 
 # https://bugzilla.opensuse.org/show_bug.cgi?id=1032027
 sudo btrfs quota disable /

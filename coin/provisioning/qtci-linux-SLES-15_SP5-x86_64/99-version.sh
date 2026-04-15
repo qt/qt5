@@ -8,6 +8,13 @@
 
 set -ex
 
+BASEDIR=$(dirname "$0")
+# shellcheck source=../common/linux/distro_version_check.sh
+source "$BASEDIR/../common/linux/distro_version_check.sh"
+
+# Check distro version if it has changed
+verify_os_version_unchanged
+
 # shellcheck disable=SC2129
 echo "*********************************************" >> ~/versions.txt
 echo "***** All installed RPM packages *****" >> ~/versions.txt
