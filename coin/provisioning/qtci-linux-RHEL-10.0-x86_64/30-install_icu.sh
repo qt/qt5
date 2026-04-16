@@ -23,7 +23,7 @@ echo "Installing custom ICU $icuVersion $sha1 packages on RHEL to $icuLocation"
 
 targetFile=$(mktemp)
 DownloadURL "$baseBinaryPackageURL" "$baseBinaryPackageExternalURL" "$sha1" "$targetFile"
-sudo 7z x -snld10 -y -o/usr/lib64 "$targetFile"
+sudo 7z x -y -o/usr/lib64 "$targetFile"
 sudo rm "$targetFile"
 
 echo "Installing custom ICU devel packages on RHEL"
@@ -32,7 +32,7 @@ tempDir=$(mktemp -d)
 
 targetFile=$(mktemp)
 DownloadURL "$develPackageURL" "$develPackageExternalURL" "$sha1Dev" "$targetFile"
-7z x -snld10 -y -o"$tempDir" "$targetFile"
+7z x -y -o"$tempDir" "$targetFile"
 
 sudo cp -a "$tempDir"/lib/* /usr/lib64
 sudo cp -a "$tempDir"/* /usr/
