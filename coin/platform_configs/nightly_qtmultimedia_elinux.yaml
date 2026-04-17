@@ -1,0 +1,28 @@
+Version: 2
+Module only: True
+Include: [
+  cmake_platforms.yaml: [
+    'ubuntu-24.04-x64'
+  ]
+]
+Configurations:
+-
+    Id: 'imx8-arm64-developer-build-2404'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Target os: 'IMX8'
+    Target arch: 'arm64'
+    Compiler: 'GCC'
+    Platform dependency: 'ubuntu-24.04-x64'
+    Features: ['Elinux', 'Sccache', 'UseConfigure', 'DoNotAbortTestingOnFirstFailure']
+    Environment variables: [
+      'TARGET_CONFIGURE_ARGS=-release -force-asserts -force-debug-info -developer-build -no-warnings-are-errors -nomake examples -qt-harfbuzz -device linux-generic-g++ -device-option "CROSS_COMPILE=/opt/b2qt/imx8qm/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux-" -device-option "DISTRO_OPTS=boot2qt" -no-feature-forkfd_pidfd',
+      'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE="/opt/b2qt/imx8qm/sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake" -DQT_FORCE_BUILD_TOOLS=ON -DQT_NO_PACKAGE_VERSION_INCOMPATIBLE_WARNING=TRUE',
+      'QT_YOCTO_ENVSETUP=/opt/b2qt/imx8qm/environment-setup-cortexa72-cortexa53-crypto-poky-linux',
+      'QT_CMAKE_DIR=/opt/cmake-3.30.5/bin',
+      'QT_SYSROOT_FOR_RUNNING_TESTS=/opt/b2qt/imx8qm/sysroots/cortexa72-cortexa53-crypto-poky-linux',
+      'GST_PLUGIN_SCANNER=/opt/b2qt/imx8qm/sysroots/cortexa72-cortexa53-crypto-poky-linux/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
+      'QT_QUICK_BACKEND=software',
+      'VCPKG_HOST_TRIPLET=x64-linux-qt',
+      'VCPKG_TARGET_TRIPLET=arm64-linux-qt'
+    ]
+
