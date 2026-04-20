@@ -9,9 +9,13 @@
 set -ex
 
 # shellcheck disable=SC2129
+source "${BASH_SOURCE%/*}/../common/linux/verify-release-packages.sh"
+
 echo "*********************************************" >> ~/versions.txt
 echo "***** All installed RPM packages *****" >> ~/versions.txt
 rpm -q -a | sort >> ~/versions.txt
 echo "*********************************************" >> ~/versions.txt
 
 "$(dirname "$0")/../common/linux/version.sh"
+
+verify_release_packages "10_[1-9]"
