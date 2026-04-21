@@ -22,6 +22,9 @@
             "_active": true,
             "excludes": [
                 "$(splitpath:EXCLUDE_FILES)"
+            ],
+            "includes": [
+                "$(splitpath:INCLUDE_FILES)"
             ]
         },
         "Frameworks-QtSupport": {
@@ -272,14 +275,17 @@
         "Stylechecks": {
             "excludes": [
                 "$(splitpath:EXCLUDE_FILES)"
+            ],
+            "includes": [
+                "$(splitpath:INCLUDE_FILES)"
             ]
         }
     },
     "_Format": "1.0",
     "_VersionNum": [
         7,
-        10,
-        4,
-        17655
+        11,
+        5,
+        19102
     ]
 }
