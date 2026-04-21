@@ -9,10 +9,10 @@ $version = "20240113"
 $prog = "msys2"
 $arch = "x86_64"
 $sha1 = "b46c08fd901da0fdba1dc30422a322766d7d03c6"
-$sha1_prebuilt = "d86d45d72228f53f7ae060771bc95b6f54c703c8"
+$sha1_prebuilt = "29d16a81de4a570c41f92491e20b5554a1baab8f"
 $folder = "msys64"
 
-$package_prebuilt = $folder + "_" + $version + "_prebuilt.7z"
+$package_prebuilt = $folder + "_" + $version + "_prebuilt_v2.7z"
 $package = $prog + "-base-" + $arch + "-" + $version + ".tar.xz"
 
 $url_cache_prebuilt = "\\ci-files01-hki.ci.qt.io\provisioning\windows\$package_prebuilt"
