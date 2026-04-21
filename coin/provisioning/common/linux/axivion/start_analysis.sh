@@ -10,4 +10,22 @@ export EXCLUDE_FILES="build/*:src/3rdparty/*"
 export MODULE=$TESTED_MODULE_COIN
 export PACKAGE="Add-ons"
 export IRNAME=build/$TESTED_MODULE_COIN.ir
+
+ROOT_DIR=src
+MAGIC="Qt-Security score:critical"
+
+INCLUDE_FILES=""
+
+while IFS= read -r file; do
+    if [ -z "$INCLUDE_FILES" ]; then
+        INCLUDE_FILES="$file"
+    else
+        INCLUDE_FILES="$INCLUDE_FILES:$file"
+    fi
+done <<EOF
+$(grep -rl "$MAGIC" "$ROOT_DIR")
+EOF
+
+export INCLUDE_FILES
+
 axivion_ci "$@"
