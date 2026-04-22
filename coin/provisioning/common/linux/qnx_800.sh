@@ -43,9 +43,17 @@ if [ ! -d "$targetFolder" ]; then
 fi
 
 # QNX SDP
-sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20250612.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20260410.tar.xz"
 targetFile="qnx800.tar.xz"
-sha1="d7ca20be6867b569067a17e8b3fa633c7eadad89"
+sha1="a3fdcd98e12bc5054d00f18e4088af26288fd020"
+DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
+
+# IANA timezone database overlay. Packaged separately from the SDP so it can be
+# bumped without rebuilding the SDP tarball. Archive root is qnx800/target/qnx/
+# so it overlays onto $targetFolder (/opt/) directly.
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/zoneinfo-2026a.tar.xz"
+targetFile="zoneinfo.tar.xz"
+sha1="8c1678ff673bb588f63fc9277497cd38e0ea2253"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
 sudo cp "$aarch64le_toolchain" "$targetPath"
