@@ -52,11 +52,13 @@ sudo zypper -nq install alsa-devel dbus-1-devel libxkbfile-devel \
 # qtwebkit
 sudo zypper -nq install libxml2-devel libxslt-devel
 
-# yasm (for ffmpeg in multimedia)
-sudo zypper -nq install yasm
-
 # GStreamer (qtwebkit and qtmultimedia), pulseaudio (qtmultimedia)
 sudo zypper -nq install gstreamer-devel gstreamer-plugins-base-devel libpulse-devel pipewire-devel # gstreamer-plugin-openh264 not available
+
+# Required FFmpeg packages
+required_ffmpeg_packages=()
+while IFS= read -r line; do required_ffmpeg_packages+=("$line"); done < "${BASH_SOURCE%/*}/../common/linux/ffmpeg_required_opensuse_packages.txt"
+sudo zypper -nq install "${required_ffmpeg_packages[@]}"
 
 # cups
 sudo zypper -nq install cups-devel

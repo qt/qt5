@@ -1,0 +1,4 @@
+diffutils
+libva-dev
+make
+yasm

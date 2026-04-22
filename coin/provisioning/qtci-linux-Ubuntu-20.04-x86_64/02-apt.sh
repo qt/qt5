@@ -109,6 +109,10 @@ installPackages+=(libva-dev)
 # for QtMultimedia streaming tests
 installPackages+=(vlc-bin)
 installPackages+=(vlc-plugin-base)
+# Required FFmpeg packages
+required_ffmpeg_packages=()
+while IFS= read -r line; do required_ffmpeg_packages+=("$line"); done < "${BASH_SOURCE%/*}/../common/linux/ffmpeg_required_ubuntu_packages.txt"
+installPackages+=("${required_ffmpeg_packages[@]}")
 
 # Support for cross-building to x86 (needed by WebEngine boot2qt builds)
 installPackages+=(g++-multilib)

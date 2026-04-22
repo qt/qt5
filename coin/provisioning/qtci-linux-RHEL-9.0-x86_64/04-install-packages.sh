@@ -50,9 +50,10 @@ installPackages+=(dbus-devel)
 installPackages+=(gstreamer1-plugins-bad-free)
 installPackages+=(gstreamer1-devel)
 installPackages+=(gstreamer1-plugins-base-devel)
-# QtMultimedia, ffmpeg
-installPackages+=(yasm)
-installPackages+=(libva-devel)
+# Required FFmpeg packages
+required_ffmpeg_packages=()
+while IFS= read -r line; do required_ffmpeg_packages+=("$line"); done < "${BASH_SOURCE%/*}/../common/linux/ffmpeg_required_rhel_packages.txt"
+installPackages+=("${required_ffmpeg_packages[@]}")
 # gtk3 style for QtGui/QStyle
 installPackages+=(gtk3-devel)
 # libusb1 for tqtc-boot2qt/qdb

@@ -20,7 +20,8 @@ $url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/$package"
 $url_official = "http://repo.msys2.org/distrib/$arch/$package"
 $TargetLocation = "C:\Utils"
 
-$required_packages = @("perl", "make", "yasm", "diffutils")
+$required_packages = @("perl")
+$required_packages += Get-Content "$PSScriptRoot\..\windows\ffmpeg_required_msys_packages.txt"
 
 if ((Test-Path $url_cache_prebuilt)) {
     $PackagePath = "C:\Windows\Temp\$package_prebuilt"
