@@ -116,6 +116,10 @@ installPackages+=(libva-dev)
 # for QtMultimedia streaming tests
 installPackages+=(vlc-bin)
 installPackages+=(vlc-plugin-base)
+# Required FFmpeg packages
+required_ffmpeg_packages=()
+while IFS= read -r line; do required_ffmpeg_packages+=("$line"); done < "${BASH_SOURCE%/*}/../common/linux/ffmpeg_required_ubuntu_packages.txt"
+installPackages+=("${required_ffmpeg_packages[@]}")
 # for tst_qfloat16format, see also QTQAINFRA-6390
 installPackages+=(locales-all)
 

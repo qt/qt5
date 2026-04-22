@@ -41,7 +41,11 @@ build_ffmpeg() {
     popd
 }
 
-brew install yasm
+# Install required packages through Brew
+required_ffmpeg_packages=()
+while IFS= read -r line; do required_ffmpeg_packages+=("$line"); done < "${BASH_SOURCE%/*}/../macos/ffmpeg_required_brew_packages.txt"
+brew install "${required_ffmpeg_packages[@]}"
+
 export MACOSX_DEPLOYMENT_TARGET=12
 fix_relative_dependencies="${BASH_SOURCE%/*}/../macos/fix_relative_dependencies.sh"
 
