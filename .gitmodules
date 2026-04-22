@@ -36,13 +36,6 @@
 	url = ../qttools.git
 	branch = dev
 	status = essential
-[submodule "qtxmlpatterns"]
-	depends = qtbase
-	recommends = qtdeclarative
-	path = qtxmlpatterns
-	url = ../qtxmlpatterns.git
-	branch = dev
-	status = ignore
 [submodule "qttranslations"]
 	depends = qttools
 	path = qttranslations
@@ -92,26 +85,6 @@
 	url = ../qtsensors.git
 	branch = dev
 	status = addon
-[submodule "qtsystems"]
-	depends = qtbase
-	recommends = qtdeclarative
-	path = qtsystems
-	url = ../qtsystems.git
-	branch = dev
-	status = ignore
-[submodule "qtfeedback"]
-	depends = qtdeclarative
-	recommends = qtmultimedia
-	path = qtfeedback
-	url = ../qtfeedback.git
-	branch = master
-	status = ignore
-[submodule "qtpim"]
-	depends = qtdeclarative
-	path = qtpim
-	url = ../qtpim.git
-	branch = dev
-	status = ignore
 [submodule "qtconnectivity"]
 	depends = qtbase
 	recommends = qtdeclarative
@@ -174,12 +147,6 @@
 	branch = dev
 	status = addon
 	priority = 10
-[submodule "qtcanvas3d"]
-	depends = qtdeclarative
-	path = qtcanvas3d
-	url = ../qtcanvas3d.git
-	branch = dev
-	status = ignore
 [submodule "qtwebview"]
 	depends = qtdeclarative
 	recommends = qtwebengine
@@ -208,13 +175,6 @@
 	url = ../qtvirtualkeyboard.git
 	branch = dev
 	status = addon
-[submodule "qtgamepad"]
-	depends = qtbase
-	recommends = qtdeclarative
-	path = qtgamepad
-	url = ../qtgamepad.git
-	branch = dev
-	status = ignore
 [submodule "qtscxml"]
 	depends = qtbase qtdeclarative
 	path = qtscxml
@@ -241,13 +201,6 @@
 	url = ../qtremoteobjects.git
 	branch = dev
 	status = addon
-[submodule "qtwebglplugin"]
-	depends = qtbase qtwebsockets
-	recommends = qtdeclarative
-	path = qtwebglplugin
-	url = ../qtwebglplugin.git
-	branch = dev
-	status = ignore
 [submodule "qtlottie"]
 	depends = qtbase qtdeclarative qtquicktimeline
 	path = qtlottie
