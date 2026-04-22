@@ -91,6 +91,9 @@ installPackages+=(libjpeg-dev)
 installPackages+=(libcups2-dev)
 # Enable support for printer test
 installPackages+=(cups-pdf)
+# Autotools is required for building patchelf from source
+installPackages+=("autotools-dev")
+installPackages+=("autoconf")
 # Install libraries needed for QtMultimedia to be able to support all plugins
 installPackages+=(libasound2-dev)
 installPackages+=(libgstreamer1.0-dev)
@@ -232,8 +235,6 @@ installPackages+=(uml-utilities)
 installPackages+=(cmake)
 # extra linkers
 installPackages+=(lld)
-# Fix dependencies in shared ffmpeg libs
-installPackages+=(patchelf)
 # For qp-apps/qdb
 installPackages+=(libusb-1.0-0-dev)
 # password management support for Qt Creator

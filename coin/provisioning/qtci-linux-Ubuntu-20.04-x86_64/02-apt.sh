@@ -216,8 +216,6 @@ sudo dpkg --add-architecture i386
 installPackages+=(nfs-kernel-server)
 installPackages+=(net-tools)
 installPackages+=(bridge-utils)
-# Fix dependencies in shared ffmpeg libs
-installPackages+=(patchelf)
 # Keep zoneinfo up-to-date (COIN-1282)
 installPackages+=(tzdata)
 

@@ -245,8 +245,6 @@ installPackages+=(keyutils)
 installPackages+=(cifs-utils)
 # VxWorks QEMU network setup (tunctl)
 installPackages+=(uml-utilities)
-# Fix dependencies in shared ffmpeg libs
-installPackages+=(patchelf)
 # For swiftly
 installPackages+=(gnupg2)
 installPackages+=(pkg-config)
