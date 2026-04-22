@@ -8,7 +8,15 @@
   ],
   "dependencies": [
     "openssl",
-    "protobuf",
+    {
+      "name": "protobuf",
+      "platform": "!osx"
+    },
+    {
+      "name": "protobuf",
+      "platform": "osx",
+      "features": [ "target-protoc" ]
+    },
     "grpc"
   ]
 }
