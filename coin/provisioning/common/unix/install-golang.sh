@@ -9,19 +9,19 @@ source "${BASH_SOURCE%/*}/DownloadURL.sh"
 # shellcheck source=./SetEnvVar.sh
 source "${BASH_SOURCE%/*}/SetEnvVar.sh"
 
-# This script will install go 1.25.2
-version="1.25.2"
+# This script will install go 1.26.2
+version="1.26.2"
 
 if [[ "$os" == "linux" ]]; then
     uname_m="$(uname -m)"
     case "$uname_m" in
         x86_64|amd64)
-            sha256="a08c8c36946c86890ca46185765da34442ce64aa"
+            sha256="990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
             pkgname="go$version.linux-amd64.tar.gz"
             dirname="go$version.linux-amd64"
             ;;
         arm64|aarch64)
-            sha256="13690a4ecac03e6cca6988a6d2ce80bfa938eb7b"
+            sha256="c958a1fe1b361391db163a485e21f5f228142d6f8b584f6bef89b26f66dc5b23"
             pkgname="go$version.linux-arm64.tar.gz"
             dirname="go$version.linux-arm64"
             ;;
@@ -31,12 +31,12 @@ elif [ "$os" == "macos" ]; then
     uname_m="$(uname -m)"
     case "$uname_m" in
         x86_64|amd64)
-            sha256="eda89df8fd85a49e4046f85340236248a5d2a7cd"
+            sha256="bc3f1500d9968c36d705442d90ba91addf9271665033748b82532682e90a7966"
             pkgname="go$version.darwin-amd64.tar.gz"
             dirname="go$version.darwin-amd64"
             ;;
         arm64|aarch64)
-            sha256="1745a71d18f9946f7aac9f9528e3227c8132cc08"
+            sha256="32af1522bf3e3ff3975864780a429cc0b41d190ec7bf90faa661d6d64566e7af"
             pkgname="go$version.darwin-arm64.tar.gz"
             dirname="go$version.darwin-arm64"
             ;;

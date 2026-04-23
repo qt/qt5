@@ -3,23 +3,23 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$version = "1.22.4"
+$version = "1.26.2"
 
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
     x64 {
         $arch = "amd64"
-        $sha256 = "3c21105d7b584759b6e266383b777caf6e87142d304a10b539dbc66ab482bb5f"
+        $sha256 = "84826eca833548bb2beabe7429052eaaec18faa902fde723898d906b42e59a73"
         break
     }
     x86 {
         $arch = "386"
-        $sha256 = "5c6446e2ea80bc6a971d2b34446f16e6517e638b0ff8d3ea229228d1931790b0"
+        $sha256 = "9a63074567b8a0a94091e8f6c2096f5d4d0369c7bbaed08158a63004d8b8cac1"
         break
     }
     arm64 {
         $arch = "arm64"
-        $sha256 = "553cc6c460f4e3eb4fad5b897c0bb22cd8bbeb20929f0e3eeb939420320292ce"
+        $sha256 = "f59e0e51370cac7ab5742c4ed9fc151f0a20918396c893996125a1c6ed7d9525"
         break
     }
     default {
