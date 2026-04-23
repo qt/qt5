@@ -22,7 +22,7 @@ lib/libEGL.so.1=usr/lib/libEGL.so.1
 lib/libz.so.2=usr/lib/libz.so.2
 lib/libzstd.so.1=usr/lib/libzstd.so.1
 lib/libxml2.so.2=usr/lib/libxml2.so.2
-lib/libfreetype.so.24=usr/lib/libfreetype.so.24
+lib/libfreetype.so.26=usr/lib/libfreetype.so.26
 lib/libbz2.so.1=usr/lib/libbz2.so.1
 lib/liblzma.so.5=usr/lib/liblzma.so.5
 lib/libdbus-1.so=usr/lib//libdbus-1.so
@@ -54,7 +54,7 @@ xbin/fsevmgr=sbin/fsevmgr
 lib/libscreen.so.1=usr/lib/libscreen.so.1
 
 # for fontconfig
-lib/libfontconfig.so.1=usr/lib/libfontconfig.so.1
+lib/libfontconfig.so.17=usr/lib/libfontconfig.so.17
 xbin/fc-cache=bin/fc-cache
 xbin/fc-match=local/misc_files/fc-match
 
