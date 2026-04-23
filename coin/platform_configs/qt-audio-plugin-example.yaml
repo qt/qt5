@@ -1,0 +1,11 @@
+Version: 2
+Module only: true
+Include: [
+    cmake_platforms.yaml: [
+        'windows-11_24H2-msvc2022'
+    ],
+    macos.yaml: [
+        'macos-universal-on-arm64'
+    ]
+]
+Configurations: []
