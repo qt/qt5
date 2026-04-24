@@ -4,10 +4,10 @@
 . "$PSScriptRoot\helpers.ps1"
 
 Write-Host "Caching Gradle distribution and dependencies"
-$gradleCacheFileName = "gradle_9.3.1_windows_cache.zip"
+$gradleCacheFileName = "gradle_9.3.1_windows_cache_v2.zip"
 $gradleCacheCachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\gradle\$gradleCacheFileName"
 $gradleCacheOfficialUrl = $gradleCacheCachedUrl
-$gradleCacheChecksum = "b657ea2b3e25f0bef7f7831a34080cd2af659f48"
+$gradleCacheChecksum = "fcd653a1f4f30da9074a7aa7cfcad9219ed57d96"
 $gradleCacheZip = "C:\Windows\Temp\$gradleCacheFileName"
 Download $gradleCacheOfficialUrl $gradleCacheCachedUrl $gradleCacheZip
 Verify-Checksum $gradleCacheZip $gradleCacheChecksum

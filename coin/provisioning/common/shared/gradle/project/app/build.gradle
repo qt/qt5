@@ -1,0 +1,20 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace = 'org.qtproject.qt.gradlecache.app'
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId 'org.qtproject.qt.gradlecache.app'
+        minSdk = 28
+    }
+}
+
+dependencies {
+    implementation libs.core
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+}
