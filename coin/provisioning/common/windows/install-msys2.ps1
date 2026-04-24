@@ -20,6 +20,7 @@ $url_cache = "https://ci-files01-hki.ci.qt.io/input/windows/$package"
 $url_official = "http://repo.msys2.org/distrib/$arch/$package"
 $TargetLocation = "C:\Utils"
 
+$required_packages = @("perl", "make", "yasm", "diffutils")
 
 if ((Test-Path $url_cache_prebuilt)) {
     $PackagePath = "C:\Windows\Temp\$package_prebuilt"
@@ -35,7 +36,8 @@ if ((Test-Path $url_cache_prebuilt)) {
 
     # install perl make and yasm
     # Run these without 'Run-Executable' function. When using the function the gpg-agent will lock the needed tmp*.tmp file.
-    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman-key --refresh;pacman -S --noconfirm perl make yasm diffutils`""
+    $required_packages_string = $required_packages -join ' '
+    cmd /c "$msys `"-l`" `"-c`" `"rm -rf /etc/pacman.d/gnupg;pacman-key --init;pacman-key --populate msys2;pacman-key --refresh;pacman -S --noconfirm $required_packages_string`""
     Start-Sleep -s 60
     cmd /c "$msys `"-l`" `"-c`" `"echo y | cpan -i Text::Template Test::More`""
 
@@ -44,6 +46,16 @@ if ((Test-Path $url_cache_prebuilt)) {
     Start-Sleep -s 360
     if (Get-Process -Name "gpg-agent" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name gpg-agent }
     if (Get-Process -Name "dirmngr" -ErrorAction SilentlyContinue) { Stop-Process -Force -Name dirmngr }
+}
+
+$msys = "C:\Utils\msys64\usr\bin\bash"
+# Confirm that we have the correct packages installed, in case prebuilt MSYS
+# binaries are missing them.
+$installed = & "$msys" -lc "pacman -Qq"
+$installedSet = $installed | Sort-Object -Unique
+$missing_packages = $required_packages | Where-Object { $_ -notin $installedSet }
+if ($missing_packages.Count -ne 0) {
+    throw "Missing MSYS packages: $($missing_packages -join ' ')"
 }
 
 Write-Host "Cleaning $PackagePath.."
