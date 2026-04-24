@@ -1,3 +1,9 @@
+# Loopback — the QNX SDP's default /etc/hosts ships these, but this
+# file overrides that default. Tests that connect to http(s)://localhost
+# (e.g. tst_qhttpserver, tst_abstractoauth2) need them present.
+127.0.0.1   localhost
+::1         localhost
+
 # Need to add all testserver names statically
 # as current Docker uses Multicast DNS (mDNS) (avahi)
 # Which does not work with QNX qemu
