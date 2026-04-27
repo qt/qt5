@@ -1,0 +1,67 @@
+### Visual Studio 2026 Official release ###
+ This Visual Studio 2026 version 18.5.1 sets (Latest MSVC) version as: 19.50.35729.0
+
+Installed Components:
+
+.NET 10.0 Runtime (LTS)
+.NET Framework 4.6.1 targeting pack
+.NET Framework 4.7.2 targeting pack
+.NET Framework 4.8 SDK
+.NET Framework 4.8.1 SDK
+.NET Framework 4.8.1 targeting pack
+.NET Native
+.NET Portable Library targeting pack
+.NET SDK
+.NET profiling tools
+Razor Language Services
+
+CLR data types for SQL Sever
+Data sources for SQL Server support
+SQL Server Command Line Utilities
+SQL Server Data Tools
+SQL Server Express 2019 LocalDB
+SQL Server ODBC Driver
+ClickOnce Publishing
+Developer Analytics tools
+NuGet package manager
+Text Template Transformation
+
+C++ Cmake tools for Windows
+C++/CLI support (Latest MSVC)
+MSBuild
+MSVC Build Tools for ARM64/ARM64EC (Latest)
+MSVC Build Tools for x64/x86 (Latest)
+C++ ATL for ARM64/ARM64EC (Latest MSVC)
+C++ ATL for x64/x86 (Latest MSVC)
+C++ profiling tools
+C++ core features
+Windows Universal C Runtime
+
+JavaScript diagnostics
+JavaSript and TypeScript language support
+TypeScript Server
+
+Just-In-Time debugger
+Image and 3D model editors
+
+C# and Visual Basic Roslyn compilers
+C# and Visual Basic
+
+Windows 11 SDK (10.0.26100.7705)  # Older Windows SDK versions were deleted
+
+# NOTE! Work loads were added during installation!
+
+############################################################
+### Visual Studio 2026 build tools ###
+
+ Visual Studio 2026 build tools version 18.5.1 was installed manually using installer:
+ "https://aka.ms/vs/stable/vs_BuildTools.exe"
+  * Only default installation, no additional selections
+
+############################################################
+### Debugging tools ###
+
+* Check that debugging tools are installed in Windows SDK
+    * Modify 'Windows Software Development Kit' from Add or remove programs
+        - Add feature 'Debugging Tools for Windows'
+############################################################

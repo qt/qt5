@@ -80,7 +80,9 @@
 * Activate Windows
 
 # Next
-Install Visual Studio 2022 by following msvc2022.txt
+Install Visual Studio
+   - Install individual components (see the msvc20xx.txt files)
+   - Open Visual Studio IDE -> Help -> About -> Check license status: Add 'ci_msvs' account to Visual Studio
 
 Proceed to install pre-provisioning scripts manually to Tier1 image
  * Copying scripts happens easiest via Remote Desktop
