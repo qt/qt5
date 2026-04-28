@@ -39,7 +39,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-26-x86_64-tests'
-        Template: 'qtci-macos-26-x86_64-102'
+        Template: 'qtci-macos-26-x86_64-103'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging', 'DoNotAbortTestingOnFirstFailure']
         Platform dependency: 'macos-universal-on-arm64'
@@ -74,7 +74,7 @@ Configurations:
 
     -
         Id: 'macos-x86_64-developer-build'
-        Template: 'qtci-macos-26-x86_64-102'
+        Template: 'qtci-macos-26-x86_64-103'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
         Configure arguments: '-developer-build -release -force-asserts -force-debug-info -no-pch -no-framework -qtnamespace TestNamespace -make examples'
