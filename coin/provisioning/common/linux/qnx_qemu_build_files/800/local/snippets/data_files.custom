@@ -13,7 +13,7 @@ PATH=__IFS_PATH__:/system/xbin:.
 var/share/zoneinfo=usr/share/zoneinfo
 
 [uid=0 gid=0 dperms=755 type=dir] var/share/fonts
-var/etc/fontconfig/fonts.conf=etc/fontconfig/fonts.conf
+var/etc/fontconfig/fonts.conf=etc/fonts/fonts.conf
 var/share/fonts=usr/share/fonts
 
 var/etc/hosts=local/misc_files/etc/hosts
