@@ -13,9 +13,9 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 ######### VXworks libs #########
 # Installs to /opt/vxworks
-PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_libs_2503.tar.gz"
+PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_libs_2603.tar.gz"
 AltUrl=""
-sha1="96db52d86c2138a1ca31212372f48838ec08013e"
+sha1="e9337894d4591e1d9e67640181c3d48fdb3d4a12"
 targetFolder="/opt"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "VXWORKS_HOME" "/opt/vxworks"
