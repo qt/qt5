@@ -426,7 +426,7 @@ Configurations:
     ]
 -
     Id: 'android-quick-minimal'
-    Template: 'qtci-macos-14-arm-106'
+    Template: 'qtci-macos-15-arm-104'
     Target os: 'Android_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
@@ -832,7 +832,7 @@ Configurations:
     ]
 -
     Id: 'ios-quick-minimal'
-    Template: 'qtci-macos-14-arm-106'
+    Template: 'qtci-macos-15-arm-104'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
