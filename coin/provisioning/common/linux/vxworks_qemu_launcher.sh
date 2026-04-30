@@ -34,6 +34,26 @@ fi
 # and made idempotent so concurrent instances don't race on the shared bridge.
 exec 9>"/tmp/vxworks_qemu_host_setup.lock"
 flock 9
+NFS_CONF_MARKER="# VxWorks QEMU NFS settings (added by vxworks_qemu_launcher.sh)"
+if ! grep -qF "$NFS_CONF_MARKER" /etc/nfs.conf; then
+    # Configure NFS for UDP traffic
+    sudo bash -c "echo -e '\n${NFS_CONF_MARKER}\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e '[nfsd]\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e 'udp=y\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e 'tcp=n\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e 'vers2=n\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e 'vers3=y\n' >> /etc/nfs.conf"
+    sudo bash -c "echo -e 'vers4=n\n' >> /etc/nfs.conf"
+    # Setup NFS exports that are needed by VxWorks qemu
+    sudo bash -c "echo '/home/qt/work 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+    sudo bash -c "echo '/opt/fsl_imx6_2_0_6_3_VSB 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+    sudo bash -c "echo '/opt/itl_generic_skylake_VSB 172.31.1.10/24(rw,sync,root_squash,no_subtree_check,anonuid=2001,anongid=100)' >> /etc/exports"
+    # Restart NFS server
+    sudo exportfs -a
+    sudo systemctl restart nfs-server
+fi
+
+# Setup bridge if not exist for VxWorks QEMU
 if ! ip link show br0 >/dev/null 2>&1; then
     sudo brctl addbr br0
     sudo brctl stp br0 off
@@ -55,8 +75,8 @@ if [ "$TYPE" = "arm" ] || [ "$TYPE" = "" ]; then
         -monitor none \
         -serial null \
         -serial pipe:${PIPE} \
-        -kernel /opt/fsl_imx6_2_0_6_2_VIP_QEMU/default/uVxWorks \
-        -dtb /opt/fsl_imx6_2_0_6_2_VIP_QEMU/default/imx6q-sabrelite.dtb \
+        -kernel /opt/fsl_imx6_2_0_6_3_VIP_QEMU/default/uVxWorks \
+        -dtb /opt/fsl_imx6_2_0_6_3_VIP_QEMU/default/imx6q-sabrelite.dtb \
         -append "enet(0,0)host:vxWorks h=172.31.1.1 g=172.31.1.1 e=${GUEST_IP} u=target pw=vxTarget s=/romfs/startup_script.txt" \
         -rtc base=localtime,clock=rt \
         -icount sleep=off \
