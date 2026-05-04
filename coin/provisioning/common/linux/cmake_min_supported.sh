@@ -9,11 +9,11 @@ source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
-majorminorversion="3.22"
-version="3.22.6"
+majorminorversion="3.25"
+version="3.25.3"
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/cmake/cmake-$version-linux-x86_64.tar.gz"
 AltUrl="https://cmake.org/files/v$majorminorversion/cmake-$version-linux-x86_64.tar.gz"
-SHA1="4a5ba17568d108d295719850dd584e775583f61b"
+SHA1="725efa8d2b388beaef9eaca190b662f33e6c186d"
 targetFolder="/opt/cmake-$version"
 appPrefix="cmake-$version-linux-x86_64"
 
