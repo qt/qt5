@@ -5,14 +5,14 @@
 
 . "$PSScriptRoot\helpers.ps1"
 
-$version = "7.15.0"
+$version = "7.18.0"
 
 $temp = "$env:tmp"
 Write-Host "Fetching openapi generator ver. $version..."
 $url_cache = "http://ci-files01-hki.ci.qt.io/input/qtopenapi/openapi_client_generators/openapi-generator-cli-$version.jar"
 $url_official = "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/$version/openapi-generator-cli-$version.jar"
 $target_file = "openapi-generator-cli.jar"
-$sha1 = "bb58e257f724fb46b7f2b309a9fa98e63fd7199f"
+$sha1 = "8bd615a50b15ebf5be30e612af112526a6e81ac4"
 
 Download $url_official $url_cache "$temp\$target_file"
 Verify-Checksum "$temp\$target_file" $sha1
