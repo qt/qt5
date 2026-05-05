@@ -280,7 +280,7 @@ Configurations:
     ]
 -
     Id: 'ios-universal'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-26-arm-104'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
@@ -293,7 +293,7 @@ Configurations:
     ]
 -
     Id: 'visionos-developer-build'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-26-arm-104'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
