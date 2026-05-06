@@ -20,11 +20,22 @@ function Verify-Checksum
     }
 }
 
+function Run-Executable-With-Timeout
+{
+    Param (
+        [int]$TimeoutSeconds=$(throw("You must specify a timeout.")),
+        [string]$Executable=$(throw("You must specify a program to run.")),
+        [string[]]$Arguments
+    )
+    Run-Executable -Executable $Executable -Arguments $Arguments -TimeoutSeconds $TimeoutSeconds
+}
+
 function Run-Executable
 {
     Param (
         [string]$Executable=$(throw("You must specify a program to run.")),
-        [string[]]$Arguments
+        [string[]]$Arguments,
+        [int]$TimeoutSeconds = 0
     )
 
     $stdoutFile = [System.IO.Path]::GetTempFileName()
@@ -32,13 +43,32 @@ function Run-Executable
 
     if ([string]::IsNullOrEmpty($Arguments)) {
         Write-Host "Running `"$Executable`""
-        $p = Start-Process -FilePath "$Executable" -Wait -PassThru `
-            -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile
     } else {
         Write-Host "Running `"$Executable`" with arguments `"$Arguments`""
-        $p = Start-Process -FilePath "$Executable" -ArgumentList $Arguments -PassThru `
-            -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile
-        Wait-Process -InputObject $p
+    }
+
+    $startArgs = @{
+        FilePath               = $Executable
+        PassThru               = $true
+        RedirectStandardOutput = $stdoutFile
+        RedirectStandardError  = $stderrFile
+    }
+    if (-not [string]::IsNullOrEmpty($Arguments)) {
+        $startArgs.ArgumentList = $Arguments
+    }
+    $p = Start-Process @startArgs
+    # Force PowerShell to cache the process handle. Without this, $p.ExitCode
+    # can read back as $null after the process exits.
+    # See https://github.com/PowerShell/PowerShell/issues/5421
+    $null = $p.Handle
+
+    if ($TimeoutSeconds -gt 0) {
+        if (-not $p.WaitForExit($TimeoutSeconds * 1000)) {
+            $p.Kill()
+            throw "Process $($Executable) timed out after $TimeoutSeconds seconds"
+        }
+    } else {
+        $p.WaitForExit()
     }
 
     $stdoutContent = [System.IO.File]::ReadAllText($stdoutFile)
