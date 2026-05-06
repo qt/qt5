@@ -36,7 +36,7 @@ $nppPackage = "C:\Windows\Temp\npp-$version.exe"
 
 Download $url_official $url_cache $nppPackage
 Verify-Checksum $nppPackage $sha1
-Run-Executable "$nppPackage" "/S"
+Run-Executable-With-Timeout 1800 "$nppPackage" "/S"
 
 Write-Host "Cleaning $nppPackage.."
 Remove "$nppPackage"
