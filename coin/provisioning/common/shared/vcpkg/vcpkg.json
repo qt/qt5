@@ -7,16 +7,55 @@
     }
   ],
   "dependencies": [
-    "openssl",
+    {
+      "name": "openssl",
+      "platform": "!ohos"
+    },
     {
       "name": "protobuf",
-      "platform": "!osx"
+      "platform": "!osx & !ohos"
     },
     {
       "name": "protobuf",
       "platform": "osx",
       "features": [ "target-protoc" ]
     },
-    "grpc"
+    {
+      "name": "grpc",
+      "platform": "!ohos"
+    },
+    {
+      "name": "brotli",
+      "platform": "ohos"
+    },
+    {
+      "name": "expat",
+      "platform": "ohos"
+    },
+    {
+      "name": "fontconfig",
+      "platform": "ohos"
+    },
+    {
+      "name": "freetype",
+      "default-features": false,
+      "platform": "ohos"
+    },
+    {
+      "name": "icu",
+      "platform": "ohos"
+    },
+    {
+      "name": "libjpeg-turbo",
+      "platform": "ohos"
+    },
+    {
+      "name": "libpng",
+      "platform": "ohos"
+    },
+    {
+      "name": "node-addon-api",
+      "platform": "ohos"
+    }
   ]
 }
