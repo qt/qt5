@@ -4,7 +4,7 @@
 
 # This script will
 #   1) Clone the vcpkg repo   - https://github.com/microsoft/vcpkg/tags
-#   2) Install the vcpkg-tool - https://github.com/microsoft/vcpkg-tool/tags
+#   2) Install the vcpkg-tool - https://github.com/jobor/vcpkg-tool/tags
 
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
@@ -58,7 +58,7 @@ fi
 
 nonDottedReleaseTag=${vcpkgToolReleaseTag//-/}
 
-vcpkgToolOfficialUrl="https://github.com/microsoft/vcpkg-tool/archive/refs/tags/$vcpkgToolReleaseTag.tar.gz"
+vcpkgToolOfficialUrl="https://github.com/jobor/vcpkg-tool/archive/refs/tags/$vcpkgToolReleaseTag.tar.gz"
 vcpkgToolCacheUrl="http://ci-files01-hki.ci.qt.io/input/vcpkg/vcpkg-tool-$nonDottedReleaseTag.tar.gz"
 vcpkgToolSourceFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag"
 vcpkgToolBuildFolder="$HOME/vcpkg-tool-$vcpkgToolReleaseTag/build"
