@@ -7,7 +7,7 @@
 set -ex
 
 # Install the dependencies
-sudo apt install -y make autoconf autopoint libglib2.0-dev libdbus-1-dev libtool
+sudo apt install -y autopoint libglib2.0-dev libdbus-1-dev
 
 BASEDIR=$(dirname "$0")
 "$BASEDIR/../common/linux/install-cpdb.sh"

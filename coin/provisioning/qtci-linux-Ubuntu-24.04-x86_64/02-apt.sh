@@ -252,9 +252,10 @@ installPackages+=(uml-utilities)
 # For swiftly
 installPackages+=(gnupg2)
 installPackages+=(pkg-config)
-
 # Keep zoneinfo up-to-date (COIN-1282)
 installPackages+=(tzdata)
+# Autotools needed by vcpkg ports (gperf, icu, fontconfig)
+installPackages+=(autoconf autoconf-archive automake libtool)
 
 echo "Running update for apt"
 waitLoop
