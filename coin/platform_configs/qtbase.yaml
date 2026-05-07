@@ -1,6 +1,7 @@
 Version: 2
 Include: [
     cmake_platforms.yaml,
+    cmake_platforms_target_harmonyos.yaml,
     cmake_platforms_static_tests.yaml,
     integrity.yaml,
     ios-tests.yaml,
