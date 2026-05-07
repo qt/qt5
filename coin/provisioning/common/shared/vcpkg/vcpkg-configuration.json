@@ -3,7 +3,8 @@
   "default-registry": {
     "kind": "git",
     "repository": "https://git.qt.io/qtbuildsystem/vcpkg",
-    "baseline": "69d76a39e959a55928eb01b206fd82ef1746ffb4"
+    "reference": "refs/tags/2026.05.05-ohos",
+    "baseline": "e59d4f2aeeb7f21a7d22b078111223ef71a509f2"
   },
   "overlay-triplets": [ "./../triplets" ]
 }
