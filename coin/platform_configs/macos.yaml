@@ -31,7 +31,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-14-x86_64-tests'
-        Template: 'qtci-macos-14-x86_64-105'
+        Template: 'qtci-macos-14-x86_64-106'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
@@ -52,7 +52,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-14-arm64-tests'
-        Template: 'qtci-macos-14-arm-106'
+        Template: 'qtci-macos-14-arm-108'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
@@ -115,7 +115,7 @@ Configurations:
         Platform dependency: 'macos-arm64-developer-build'
     -
         Id: 'macos-14-arm64-developer-build-tests'
-        Template: 'qtci-macos-14-arm-106'
+        Template: 'qtci-macos-14-arm-108'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-arm64-developer-build'
