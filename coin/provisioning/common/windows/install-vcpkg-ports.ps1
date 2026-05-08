@@ -21,5 +21,7 @@ Run-Executable "cmake" "-DVCPKG_EXECUTABLE=$vcpkgExe -DVCPKG_INSTALL_ROOT=$vcpkg
 Set-EnvironmentVariable "VCPKG_INSTALLED_DIR" "$vcpkgRoot\installed"
 
 Remove-Item -Path "$vcpkginstallroot" -Recurse -Force
+Remove-Item -Path "$vcpkgRoot\buildtrees" -Recurse -Force
+Remove-Item -Path "$vcpkgRoot\packages" -Recurse -Force
 
 Set-Location "$PSScriptRoot"
