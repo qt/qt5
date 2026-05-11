@@ -25,12 +25,12 @@ Configurations:
 
     # On x86_64
 
-    # -
-    #     Id: 'macos-14-x86_64-tests'
-    #     Template: 'qtci-macos-14-x86_64-106'
-    #     Compiler: 'Clang'
-    #     Features: ['Sccache', 'TestOnly', 'Packaging']
-    #     Platform dependency: 'macos-universal-on-arm64'
+    -
+        Id: 'macos-14-x86_64-tests'
+        Template: 'qtci-macos-14-x86_64-106'
+        Compiler: 'Clang'
+        Features: ['Sccache', 'TestOnly', 'Packaging']
+        Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-15-x86_64-tests'
         Template: 'qtci-macos-15-x86_64-103'

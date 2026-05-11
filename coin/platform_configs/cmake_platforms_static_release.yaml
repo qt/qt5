@@ -65,12 +65,12 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DCMAKE_BUILD_TYPE=Release -DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DFEATURE_native_grpc=OFF',
     ]
 
-# -
-#     Id: 'macos-14-minimal-static-tests-x86_64'
-#     Template: 'qtci-macos-14-x86_64-106'
-#     Compiler: 'Clang'
-#     Features: ['TestOnly', 'Packaging']
-#     Platform dependency: 'macos-universal-on-x86_64-minimal-static-test'
+-
+    Id: 'macos-14-minimal-static-tests-x86_64'
+    Template: 'qtci-macos-14-x86_64-106'
+    Compiler: 'Clang'
+    Features: ['TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-x86_64-minimal-static-test'
 -
     Id: 'macos-14-minimal-static-tests-arm64'
     Template: 'qtci-macos-14-arm-108'
