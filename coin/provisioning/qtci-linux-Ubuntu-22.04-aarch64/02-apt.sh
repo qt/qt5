@@ -40,8 +40,8 @@ installPackages+=(git)
 # 7zip is a needed decompressing tool
 installPackages+=(p7zip-full)
 
-# Packages needed for RTA and Squish
-installPackages+=(openjdk-17-jdk)
+# Packages needed for RTA (java >= 21)
+installPackages+=(openjdk-21-jdk)
 installPackages+=(gcc)
 installPackages+=(curl)
 installPackages+=(libicu-dev)
