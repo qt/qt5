@@ -23,7 +23,7 @@ tempDir=$(mktemp -d)
 
 targetFile=$(mktemp)
 DownloadURL "$develPackageURL" "$develPackageExternalURL" "$sha1Dev" "$targetFile"
-7z x -y -o"$tempDir" "$targetFile"
+7z x -snld20 -y -o"$tempDir" "$targetFile"
 
 sudo cp -a "$tempDir"/* "$icuLocationLib"
 
