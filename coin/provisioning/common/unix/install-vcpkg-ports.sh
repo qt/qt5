@@ -26,5 +26,7 @@ cp -R $install_root/* "$VCPKG_ROOT/installed/"
 SetEnvVar "VCPKG_INSTALLED_DIR" "$VCPKG_ROOT/installed/"
 
 rm -rf $install_root
+rm -rf "$VCPKG_ROOT/buildtrees/"
+rm -rf "$VCPKG_ROOT/packages/"
 
 popd || exit
