@@ -18,6 +18,8 @@ rm -rf /data/var/share/fonts/NotoSansCJK*
 rm -rf /data/var/share/fonts/NotoSansMonoCJK*
 echo "---> Create fontconfig cache"
 fc-cache &
+# For fc-match in QFont tests
+ln -Ps /system/lib/libfontconfig.so.17 /system/lib/libfontconfig.so.1
 
 # Add default route so QNX knows where to send
 # requests for unknown network
