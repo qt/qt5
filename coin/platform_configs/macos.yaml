@@ -9,7 +9,7 @@ Configurations:
 
     -
         Id: 'macos-universal-on-arm64'
-        Template: 'qtci-macos-15-arm-104'
+        Template: 'qtci-macos-15-arm-105'
         Compiler: 'Clang'
         Target arch: 'x86_64-arm64'
         Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
@@ -58,7 +58,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-15-arm64-tests'
-        Template: 'qtci-macos-15-arm-104'
+        Template: 'qtci-macos-15-arm-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
@@ -87,7 +87,7 @@ Configurations:
         ]
     -
         Id: 'macos-arm64-developer-build'
-        Template: 'qtci-macos-15-arm-104'
+        Template: 'qtci-macos-15-arm-105'
         Compiler: 'Clang'
         Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
         Configure arguments: '-developer-build -nomake examples -debug -framework'
@@ -121,7 +121,7 @@ Configurations:
         Platform dependency: 'macos-arm64-developer-build'
     -
         Id: 'macos-15-arm64-developer-build-tests'
-        Template: 'qtci-macos-15-arm-104'
+        Template: 'qtci-macos-15-arm-105'
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-arm64-developer-build'

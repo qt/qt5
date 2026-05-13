@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'macos-quick-bridges'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Configure arguments: >

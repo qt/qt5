@@ -294,7 +294,7 @@ Configurations:
     ]
 -
     Id: 'visionos-developer-build'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'

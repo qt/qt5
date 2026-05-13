@@ -21,7 +21,7 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'DebugAndRelease']
     Configure arguments: ''
@@ -55,7 +55,7 @@ Configurations:
     Configure arguments: ''
     Environment variables: []
 -
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'DebugAndRelease', 'OldestQt']
     Configure arguments: ''
