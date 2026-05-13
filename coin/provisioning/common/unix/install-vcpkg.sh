@@ -69,6 +69,8 @@ cmake --build "$vcpkgToolBuildFolder" --parallel
 
 cp "$vcpkgToolBuildFolder/vcpkg" "$vcpkgRoot/"
 rm -rf "$vcpkgToolSourceFolder"
+rm -rf "$vcpkgRoot/buildtrees/"
+rm -rf "$vcpkgRoot/packages/"
 
 if [ ! -f "$vcpkgRoot/vcpkg" ]
 then
