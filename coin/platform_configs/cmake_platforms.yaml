@@ -298,12 +298,21 @@ Configurations:
         'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
     ]
 -
-    Id: 'windows-11-x86_64-arm64-tests'
+    Id: 'windows-11-x86_64-arm64-native-tests'
     Template: 'qtci-windows-11_23H2-aarch64-53'
     Compiler: 'MSVC2022'
-    Features: ['TestOnly']
+    Features: ['TestOnly', 'BuildTestsInTest', 'UseToolchainFromTargetDir']
     Configure arguments: '-cross-compiled'
     Platform dependency: 'windows-11_24H2-msvc2022-arm64'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64_arm64}}',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DFEATURE_native_grpc=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC_ARM64}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'OPENSSL_CONF_x64={{.Env.OPENSSL_CONF_x64_arm64}}',
+        'OPENSSL_INCLUDE_x64={{.Env.OPENSSL_INCLUDE_x64_arm64}}',
+        'OPENSSL_LIB_x64={{.Env.OPENSSL_LIB_x64_arm64}}',
+        'VCPKG_HOST_TRIPLET=arm64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-windows-qt',
+    ]
 -
     Id: 'windows-11-x86_64-msvc2026-arm64-tests'
     Template: 'qtci-windows-11_23H2-aarch64-54'
