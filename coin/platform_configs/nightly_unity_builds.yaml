@@ -46,7 +46,7 @@ Configurations:
     ]
 -
     Id: 'macos-universal-on-arm64-unity-build'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Target arch: 'x86_64-arm64'
     Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']

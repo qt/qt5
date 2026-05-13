@@ -38,7 +38,7 @@ Configurations:
     ]
 -
     Id: 'macos-quick-bridges-universal-java'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'QtBridgesJava']
     Environment variables: [

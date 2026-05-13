@@ -15,7 +15,7 @@ Configurations:
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesSwift']
 -
     Id: 'macos-quick-bridges-swift'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Platform dependency: 'macos-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesSwift']

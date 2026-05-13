@@ -8,7 +8,7 @@ Configurations:
     Features: ['Packaging', 'UseConfigure']
 -
     Id: 'qtgp-on-macos'
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['TestOnly']
 -
