@@ -20,9 +20,9 @@ sudo mkdir -p "$sdkTargetFolder"
 
 basePath="http://ci-files01-hki.ci.qt.io/input/harmonyos"
 
-toolsVersion="6.0.0.868"
-toolsFile="commandline-tools-linux-x64-6.0.0.868.zip"
-toolsSha1="fc32ea2489ff7b9e5d45324cea0d124572504baf"
+toolsVersion="6.1.0.850"
+toolsFile="commandline-tools-linux-x64-6.1.0.850.zip"
+toolsSha1="6fdf7dbe0faddeb6a36cc76752faaf03d2abd462"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
