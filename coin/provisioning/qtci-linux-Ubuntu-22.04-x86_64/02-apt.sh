@@ -249,6 +249,8 @@ installPackages+=(libtommath-dev)
 installPackages+=(libjson-perl)
 # Keep zoneinfo up-to-date (COIN-1282)
 installPackages+=(tzdata)
+# For RTA: QTQAINFRA-7368
+installPackages+=(xclip)
 
 echo "Running update for apt"
 waitLoop

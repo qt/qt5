@@ -49,6 +49,8 @@ installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(python3-venv)
 installPackages+=(virtualenv)
+# For RTA: QTQAINFRA-7368
+installPackages+=(xclip)
 # For mounting ci-files01 for Squish
 installPackages+=(nfs-common)
 

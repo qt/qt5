@@ -247,6 +247,8 @@ installPackages+=(libusb-1.0-0-dev)
 installPackages+=(libsecret-1-dev)
 # Keep zoneinfo up-to-date (COIN-1282)
 installPackages+=(tzdata)
+# For RTA: QTQAINFRA-7368
+installPackages+=(xclip)
 
 echo "Running update for apt"
 waitLoop

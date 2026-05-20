@@ -260,6 +260,8 @@ installPackages+=(pkg-config)
 installPackages+=(tzdata)
 # Autotools needed by vcpkg ports (gperf, icu, fontconfig)
 installPackages+=(autoconf autoconf-archive automake libtool)
+# For RTA: QTQAINFRA-7368
+installPackages+=(xclip)
 
 echo "Running update for apt"
 waitLoop
