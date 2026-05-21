@@ -25,7 +25,7 @@ Configurations:
     Platform dependency: 'ubuntu-24.04-x64-developer-build'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
     Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-developer-build -debug -no-dbus -no-use-gold-linker -no-pch -openssl-runtime',
+        'TARGET_CONFIGURE_ARGS=-developer-build -debug -make examples -no-dbus -no-use-gold-linker -no-pch -openssl-runtime',
         'TARGET_CMAKE_ARGS=-DOHOS_SDK_ROOT={{.Env.HARMONYOS_SDK_ROOT}} -DOHOS_ABI=arm64-v8a -DWARNINGS_ARE_ERRORS=OFF -DQT_QMAKE_TARGET_MKSPEC=ohos-clang -DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED}}',
         'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED}}',
         'COMMON_TARGET_TEST_CMAKE_ARGS=-DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED}}'
