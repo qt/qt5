@@ -45,7 +45,7 @@
 	priority = 30
 [submodule "qtdoc"]
 	depends = qtdeclarative qttools
-	recommends = qtmultimedia qtshadertools qttasktree qtwebengine
+	recommends = qtmultimedia qtshadertools qttasktree
 	path = qtdoc
 	url = ../qtdoc.git
 	branch = 6.12
@@ -139,17 +139,8 @@
 	url = ../qtwebchannel.git
 	branch = 6.12
 	status = addon
-[submodule "qtwebengine"]
-	depends = qtdeclarative
-	recommends = qtwebchannel qttools qtpositioning
-	path = qtwebengine
-	url = ../qtwebengine.git
-	branch = 6.12
-	status = addon
-	priority = 10
 [submodule "qtwebview"]
 	depends = qtdeclarative
-	recommends = qtwebengine
 	path = qtwebview
 	url = ../qtwebview.git
 	branch = 6.12
