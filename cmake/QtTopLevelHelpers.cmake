@@ -60,7 +60,7 @@ endfunction()
 # Populates $out_module_list with all subdirectories that have a CMakeLists.txt file
 function(qt_internal_find_modules out_module_list)
     set(module_list "")
-    file(GLOB directories LIST_DIRECTORIES true RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" *)
+    file(GLOB directories LIST_DIRECTORIES true RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" qt* tqtc-*)
     foreach(directory IN LISTS directories)
         if(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${directory}"
            AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/CMakeLists.txt")
