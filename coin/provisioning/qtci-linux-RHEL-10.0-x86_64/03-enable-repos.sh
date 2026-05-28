@@ -60,7 +60,7 @@ EOC
 sudo tee "/etc/yum.repos.d/epel-10.0.repo" > /dev/null <<EOC
 [epel-10.0]
 name = Extra Packages for Enterprise Linux 10.0 (Qt pinned)
-baseurl = https://dl.fedoraproject.org/pub/epel/10.0/Everything/x86_64/
+baseurl = https://archive.fedoraproject.org/pub/archive/epel/10.0/Everything/x86_64/
 enabled = 1
 
 gpgcheck = 1
