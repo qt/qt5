@@ -50,7 +50,12 @@ if(!$vcpkgExechecksum) {
     exit 1
 }
 
-$vcpkgExeOfficialUrl = "https://github.com/jobor/vcpkg-tool/releases/download/$vcpkgExeReleaseTag/vcpkg-windows-$arch.exe"
+$suffix = "-$arch"
+if($arch -eq "x64") {
+    $suffix = ""
+}
+
+$vcpkgExeOfficialUrl = "https://github.com/microsoft/vcpkg-tool/releases/download/$vcpkgExeReleaseTag/vcpkg$suffix.exe"
 $vcpkgExeCacheUrl = "\\ci-files01-hki.ci.qt.io\provisioning\vcpkg\vcpkg-$nonDottedReleaseTag-windows-$arch.exe"
 $vcpkgExe = "C:\Windows\Temp\vcpkg.exe"
 
