@@ -2,6 +2,7 @@ Version: 2
 Include: [
   quick-bridges.yaml: [
      "linux-quick-bridges",
+     "macos-quick-bridges",
      "windows-quick-bridges"
   ]
 ]
@@ -19,3 +20,10 @@ Configurations:
     Compiler: 'GCC'
     Platform dependency: 'linux-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'RunAsPlatformDependency', 'QtBridgesRust']
+
+-
+    Id: 'macos-quick-bridges-rust'
+    Template: 'qtci-macos-15-arm-105'
+    Compiler: 'Clang'
+    Platform dependency: 'macos-quick-bridges'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesRust']
