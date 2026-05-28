@@ -1,0 +1,15 @@
+Version: 2
+Module only: True
+Include: [
+  cmake_platforms.yaml: [
+    "ubuntu-24.04-x64"
+  ],
+  cmake_platforms_target_harmonyos.yaml: [
+    "harmonyos-20-arm64-on-ubuntu-24.04-x64"
+  ]
+]
+Configurations: []
+Overrides:
+-
+    Id: 'harmonyos-20-arm64-on-ubuntu-24.04-x64'
+    -Features: ['DoNotRunTests']
