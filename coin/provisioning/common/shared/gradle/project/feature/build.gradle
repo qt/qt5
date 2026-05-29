@@ -1,0 +1,17 @@
+plugins {
+    alias(libs.plugins.android.dynamic.feature)
+}
+
+android {
+    namespace = 'org.qtproject.qt.gradlecache.feature'
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 28
+    }
+}
+
+dependencies {
+    implementation project(':app')
+    implementation libs.play.feature.delivery
+}

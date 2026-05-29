@@ -10,11 +10,14 @@ android {
         applicationId 'org.qtproject.qt.gradlecache.app'
         minSdk = 28
     }
+
+    dynamicFeatures = [':feature']
 }
 
 dependencies {
     implementation libs.core
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.play.feature.delivery
     testImplementation libs.junit
 }
