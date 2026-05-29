@@ -22,3 +22,13 @@ sudo mv "$targetFile" "$targetFolder"
 
 SetEnvVar "PATH" "$targetFolder:\$PATH"
 
+# Extract baseline cache
+sha1="e397b7934a8c892753166435aff8775c0b5aa5bf"
+pkgname="maven_cache-openapi-$version.tar.gz"
+internalUrl="http://ci-files01-hki.ci.qt.io/input/qtopenapi/maven/$pkgname"
+
+targetFile="$HOME/$pkgname"
+DownloadURL "$internalUrl" "$internalUrl" "$sha1" "$targetFile"
+echo "Extracting maven cache to ~/.m2"
+tar -xzf "$targetFile" -C "$HOME"
+rm "$targetFile"
