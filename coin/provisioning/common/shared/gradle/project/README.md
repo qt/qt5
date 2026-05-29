@@ -7,6 +7,7 @@ which use `--offline`.
 Caches dependencies for:
 - `com.android.application`: used by Qt test/example APK builds
 - `com.android.library`: used by Qt JAR builds
+- `android.dynamic.feature`: used by Feature Delivery tests
 - `org.jetbrains.kotlin.android`: used by some Qt modules
 - AndroidX: used by app builds
 

@@ -4,13 +4,16 @@ core = "1.17.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 junit = "4.13.2"
+play-feature-delivery = "2.1.0"
 
 [libraries]
 core = { group = "androidx.core", name = "core", version.ref = "core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+play-feature-delivery = { module = "com.google.android.play:feature-delivery", version.ref = "play-feature-delivery" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "agp" }
