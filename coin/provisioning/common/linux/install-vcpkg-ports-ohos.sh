@@ -20,9 +20,9 @@ fi
 # for the library path). Unset it before invoking vcpkg.
 unset TARGET
 
-"${BASH_SOURCE%/*}/../unix/install-vcpkg-ports.sh" arm64-ohos
+"${BASH_SOURCE%/*}/../unix/install-vcpkg-ports.sh" arm64-ohos-qt
 
-SetEnvVar "VCPKG_OHOS_INSTALLED" "$VCPKG_ROOT/installed/arm64-ohos"
-export VCPKG_OHOS_INSTALLED="$VCPKG_ROOT/installed/arm64-ohos"
+SetEnvVar "VCPKG_OHOS_INSTALLED" "$VCPKG_ROOT/installed/arm64-ohos-qt"
+export VCPKG_OHOS_INSTALLED="$VCPKG_ROOT/installed/arm64-ohos-qt"
 
 echo "OHOS vcpkg ports installed to $VCPKG_OHOS_INSTALLED"
