@@ -31,3 +31,16 @@ Configurations:
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'
+
+-
+    Id: "ios-minimal-static"
+    Template: 'qtci-macos-15-arm-104'
+    Target os: 'IOS_ANY'
+    Target arch: 'arm64'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Platform dependency: 'macos-universal-on-arm64'
+    Features: ['Sccache', 'DebugAndRelease', 'MinimalStaticTests', 'UseConfigure']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang'
+    ]

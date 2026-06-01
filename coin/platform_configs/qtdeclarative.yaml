@@ -2,7 +2,6 @@ Version: 2
 Include: [
     cmake_platforms.yaml,
     integrity.yaml,
-    ios-tests.yaml,
     address_sanitizer_platforms.yaml,
     wasm_qtdeclarative_tests.yaml,
     cmake_platforms_static_tests.yaml,
