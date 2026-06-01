@@ -27,14 +27,14 @@ Configurations:
     ]
 -
     Id: 'macos-minimal-static'
-    Template: 'qtci-macos-15-arm-105'
+    Template: 'qtci-macos-26-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'MinimalStaticTests', 'UseConfigure']
     Configure arguments: '-nomake examples -release -force-debug-info -static -no-framework'
 
 -
     Id: "ios-minimal-static"
-    Template: 'qtci-macos-15-arm-104'
+    Template: 'qtci-macos-26-arm-105'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Compiler: 'Clang'
