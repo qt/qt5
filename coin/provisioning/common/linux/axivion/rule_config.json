@@ -252,7 +252,7 @@
             "_active": true
         },
         "Qt-StrictIterators": {
-            "_active": true
+            "_active": false
         },
         "Qt-TemporaryIterator": {
             "_active": true
