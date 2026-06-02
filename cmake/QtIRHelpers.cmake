@@ -142,6 +142,7 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         qt_ir_get_top_level_submodules(include_submodules exclude_submodules)
         if(NOT include_submodules AND arg_ALREADY_INITIALIZED)
             string(REPLACE "," ";" include_submodules "${submodules}")
+            list(FILTER include_submodules EXCLUDE REGEX "^$")
         endif()
 
         # qtrepotools is always implicitly cloned, but it doesn't actually
