@@ -2,11 +2,14 @@ Version: 2
 Module only: True
 Include: [
   cmake_platforms.yaml: [
-    "ubuntu-22.04"
+    'ubuntu-22.04'
   ]
 ]
-Configurations: []
-Overrides:
+Configurations:
 -
-    Id: 'ubuntu-22.04'
-    Features: ['Axivion', 'DisableTests', 'UseConfigure', 'VMSize16']
+    Id: 'ubuntu-22.04-Axivion'
+    Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['UseConfigure', 'VMSize16', 'TestOnly']
+    Environment variables: ['AXIVION_ANALYSIS=1']
+    Platform dependency: 'ubuntu-22.04'
