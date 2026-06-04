@@ -1,1 +1,1 @@
-vcpkg_version=2026.05.05-ohos
+vcpkg_version=2026.06.01-qt

@@ -13,7 +13,8 @@
     },
     {
       "name": "protobuf",
-      "platform": "!osx & !ohos"
+      "platform": "!osx & !ohos",
+      "features": [ "libprotoc" ]
     },
     {
       "name": "protobuf",
