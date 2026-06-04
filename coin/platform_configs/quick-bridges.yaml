@@ -46,7 +46,7 @@ Configurations:
     ]
 -
     Id: 'windows-quick-bridges'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'Insignificant']
     Configure arguments: >

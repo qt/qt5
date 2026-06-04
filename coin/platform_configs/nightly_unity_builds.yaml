@@ -2,7 +2,7 @@ Version: 2
 Configurations:
 -
     Id: 'windows-11_24H2-msvc2022-unity-build'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests'] # note: we cannot build debug builds due to our llvm binaries
     Configure arguments: '-force-debug-info -nomake examples -qt-zlib' # disabled example builds: qmake builds fail with C1041

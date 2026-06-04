@@ -13,6 +13,6 @@ Configurations:
     Features: ['TestOnly']
 -
     Id: 'qtgp-on-windows-24h2'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Features: ['TestOnly']

@@ -7,7 +7,7 @@ Include: [
 Configurations:
 -
     Id: 'qnx-710-arm64-on-windows'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Target os: 'QNX_710'
     Target arch: 'arm64'
     Compiler: 'Mingw'
