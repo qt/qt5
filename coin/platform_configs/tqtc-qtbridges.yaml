@@ -12,28 +12,28 @@ Include: [
 Configurations:
 -
     Id: 'windows-quick-bridges-dotnet'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Platform dependency: 'windows-quick-bridges'
     Features: ['Packaging', 'Sccache', "DebugAndRelease", 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesDotnet']
 
 -
     Id: 'windows-quick-bridges-rust'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Platform dependency: 'windows-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesRust']
 
 -
     Id: 'windows-quick-bridges-python'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Platform dependency: 'windows-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesPython']
 
 -
     Id: 'windows-quick-bridges-java'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Compiler: 'MSVC2022'
     Platform dependency: 'windows-quick-bridges'
     Features: ['Packaging', 'Sccache', 'UseConfigure', 'DisableTests', 'RunAsPlatformDependency', 'QtBridgesJava']

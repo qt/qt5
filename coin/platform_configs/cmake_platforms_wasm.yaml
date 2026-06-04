@@ -28,7 +28,7 @@ Configurations:
     ]
 -
     Id: 'webassembly-windows'
-    Template: 'qtci-windows-11_24H2-x86_64-71'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
     Target os: 'WebAssembly'
     Compiler: 'Mingw'
     Target compiler: 'Clang'
