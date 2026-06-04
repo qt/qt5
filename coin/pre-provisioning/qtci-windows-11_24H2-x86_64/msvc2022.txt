@@ -63,3 +63,9 @@ https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/
     * Modify 'Windows Software Development Kit' from Add or remove programs
         - Add feature 'Debugging Tools for Windows'
 ############################################################
+
+Visual Studio 2026 and build tools were later updated to 17.14.33 in VS installer.
+This updated (Latest) MSVC components to:
+    - MSVC v14.44.35211.0
+    - Windows 11 SDK (10.0.26100.7705)
+.NET SDK was added
