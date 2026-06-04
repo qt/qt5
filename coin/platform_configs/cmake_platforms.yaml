@@ -3,6 +3,7 @@ Include: [
     cmake_platforms_qemu.yaml,
     cmake_platforms_qemu_qnx.yaml,
     cmake_platforms_target_android.yaml,
+    cmake_platforms_target_harmonyos.yaml,
     cmake_platforms_wasm.yaml,
     macos.yaml
     ]
