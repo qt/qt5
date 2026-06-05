@@ -55,9 +55,13 @@ function InstallXCode() {
     echo "Install packages"
     sudo xcodebuild -runFirstLaunch
 
-    # Metal toolchain not included by default in Xcode 26
+    # Xcode 26 ships a more minimal base install
     if ((majorVersion >= 26)); then
         xcodebuild -downloadComponent MetalToolchain
+        xcodebuild -downloadPlatform iOS
+        if [[ $(uname -m) == "arm64" ]]; then
+            xcodebuild -downloadPlatform visionOS
+        fi
     fi
 
     echo "Enabling developer mode, so that using lldb does not require interactive password entry"
