@@ -112,7 +112,7 @@ do
     echo "Starting emulator ${AVD_NAME}, try ${counter}/${EMULATOR_MAX_RETRIES}" \
         | tee "${EMULATOR_RUN_LOG_PATH}"
     $EMULATOR_EXEC -avd "$AVD_NAME" \
-        -gpu swiftshader_indirect -no-audio $WINDOW_ARG -no-boot-anim \
+        -gpu swiftshader -no-audio $WINDOW_ARG -no-boot-anim \
         -cores 4 -memory 16000 -partition-size 4096 \
         -detect-image-hang -restart-when-stalled -no-snapshot-save \
         -no-nested-warnings -logcat '*:v' -logcat-output "${LOGCAT_PATH}" \
