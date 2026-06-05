@@ -18,7 +18,6 @@ Configurations:
         'AndroidTestRun',
         'MinimalAndroidMultiABITests',
         'InstallDepsPerPlatformSubdir',
-        'InsignificantTests',
         'DoNotAbortTestingOnFirstFailure'
     ]
     Environment variables: [
