@@ -161,12 +161,13 @@ cd "$sdkTargetFolder/cmdline-tools/tools/bin"
 ./sdkmanager --install "emulator" --sdk_root="$sdkTargetFolder" \
     | eval "$sdkmanager_no_progress_bar_cmd"
 
-echo "Download and unzip Android Emulator version 35.2.10"
-emulatorFileName="emulator-linux_x64-12414864.zip"
+echo "Download and unzip Android Emulator version 36.6.11"
+# See https://developer.android.com/studio/emulator_archive
+emulatorFileName="emulator-linux_x64-15507667.zip"
 emulatorCiUrl="https://ci-files01-hki.ci.qt.io/input/android/$emulatorFileName"
 emulatorUrl="http://dl.google.com/android/repository/$emulatorFileName"
 emulatorTargetFile="$sdkTargetFolder/$emulatorFileName"
-emulatorSha1="41dd213d120f727d8c3840347d234b135793ba10"
+emulatorSha1="f8d8b83cf21a04966326eb1378bacda255f63b93"
 DownloadURL "$emulatorCiUrl" "$emulatorUrl" "$emulatorSha1" "$emulatorTargetFile"
 echo "Unzipping the Android Emulator to '$sdkTargetFolder'"
 sudo unzip -o -q "$emulatorTargetFile" -d "$sdkTargetFolder"
