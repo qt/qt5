@@ -41,9 +41,8 @@ Configurations:
         Id: 'macos-26-x86_64-tests'
         Template: 'qtci-macos-26-x86_64-103'
         Compiler: 'Clang'
-        Features: ['Sccache', 'TestOnly', 'Packaging', 'DoNotAbortTestingOnFirstFailure']
+        Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
-        Environment variables: [ 'COIN_CTEST_IGNORE_EXIT_CODE=1' ]
 
     # And arm64
 
@@ -127,4 +126,3 @@ Configurations:
         Compiler: 'Clang'
         Features: ['TestOnly']
         Platform dependency: 'macos-26-arm64-developer-build'
-        Environment variables: [ 'COIN_CTEST_IGNORE_EXIT_CODE=1' ]
