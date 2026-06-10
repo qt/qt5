@@ -91,8 +91,6 @@ installPackages+=(libfreetype6-dev)
 installPackages+=(libjpeg-dev)
 # Enable support for printer driver
 installPackages+=(libcups2-dev)
-# Enable support for printer test
-installPackages+=(cups-pdf)
 # Autotools is required for building patchelf from source
 installPackages+=("autotools-dev")
 installPackages+=("autoconf")
