@@ -62,7 +62,7 @@ Configurations:
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
         'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt',
         'VCPKG_HOST_TRIPLET=arm64-linux-qt',
         'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
     ]
@@ -263,7 +263,7 @@ Configurations:
     Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
-        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt',
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
