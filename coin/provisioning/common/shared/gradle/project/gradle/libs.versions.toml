@@ -5,6 +5,7 @@ appcompat = "1.7.1"
 material = "1.13.0"
 junit = "4.13.2"
 play-feature-delivery = "2.1.0"
+qt-gradle-plugin = "1.4"
 
 [libraries]
 core = { group = "androidx.core", name = "core", version.ref = "core" }
@@ -17,3 +18,4 @@ play-feature-delivery = { module = "com.google.android.play:feature-delivery", v
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+qt-gradle-plugin = { id = "org.qtproject.qt.gradleplugin", version.ref = "qt-gradle-plugin" }
