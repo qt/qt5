@@ -9,6 +9,7 @@ Caches dependencies for:
 - `com.android.library`: used by Qt JAR builds
 - `android.dynamic.feature`: used by Feature Delivery tests
 - `org.jetbrains.kotlin.android`: used by some Qt modules
+- `org.qtproject.qt.gradleplugin`: used by Qt for Android Studio projects
 - AndroidX: used by app builds
 
 These files should be updated each time Qt bumps the supported Android or
