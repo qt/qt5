@@ -1,7 +1,7 @@
 Version: 2
 Configurations:
 -
-    Id: 'harmonyos-20-arm64-on-ubuntu-24.04-x64'
+    Id: 'harmonyos-23-arm64-on-linux'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Target os: 'HarmonyOS_ANY'
     Target arch: 'arm64'
@@ -17,7 +17,7 @@ Configurations:
         'QT_HARMONYOS_HVIGOR=/opt/harmonyos/command-line-tools/bin/hvigorw'
     ]
 -
-    Id: 'harmonyos-20-arm64-on-ubuntu-24.04-x64-developer-build'
+    Id: 'harmonyos-23-arm64-on-linux-developer-build'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Target os: 'HarmonyOS_ANY'
     Target arch: 'arm64'
