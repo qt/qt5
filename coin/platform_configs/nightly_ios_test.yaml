@@ -1,0 +1,24 @@
+Version: 2
+Module only: True
+Include: [
+  cmake_platforms.yaml: [
+    "ios-universal"
+  ]
+]
+Configurations:
+-
+    Id: 'ios-26-simulator-tests'
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Target os: 'IOS_ANY'
+    Target arch: 'arm64'
+    Platform dependency: 'ios-universal'
+    Features: ['TestOnly', 'Insignificant', 'DoNotAbortTestingOnFirstFailure']
+    Environment variables: [
+        'APPLE_SIMULATOR_DEVICE_TYPE=com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB',
+    ]
+Overrides:
+-
+    Id: 'ios-universal'
+    -Features: ['DisableTests']
+    +Features: ['DoNotRunTests']
