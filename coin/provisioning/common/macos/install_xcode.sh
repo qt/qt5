@@ -58,7 +58,12 @@ function InstallXCode() {
     # Xcode 26 ships a more minimal base install
     if ((majorVersion >= 26)); then
         xcodebuild -downloadComponent MetalToolchain
-        xcodebuild -downloadPlatform iOS
+        if ((majorVersion >= 27)); then
+            # No more universal iOS simulator in Xcode 27
+            xcodebuild -downloadPlatform iOS
+        else
+            xcodebuild -downloadPlatform iOS -architectureVariant universal
+        fi
         if [[ $(uname -m) == "arm64" ]]; then
             xcodebuild -downloadPlatform visionOS
         fi
