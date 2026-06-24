@@ -28,6 +28,8 @@ lib/liblzma.so.5=usr/lib/liblzma.so.5
 lib/libdbus-1.so=usr/lib//libdbus-1.so
 lib/libdbus-1.so.22=usr/lib//libdbus-1.so.22
 lib/libbacktrace.so.1=lib/libbacktrace.so.1
+lib/libunwind-nto.so.0=usr/lib/libunwind-nto.so.0
+lib/libunwind-x86_64.so.8=usr/lib/libunwind-x86_64.so.8
 lib/libm.so.3=lib/libm.so.3
 
 #############################################
