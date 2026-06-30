@@ -5,11 +5,11 @@ Include: [
     "ubuntu-24.04-x64"
   ],
   cmake_platforms_target_harmonyos.yaml: [
-    "harmonyos-20-arm64-on-ubuntu-24.04-x64"
+    "harmonyos-23-arm64-on-linux"
   ]
 ]
 Configurations: []
 Overrides:
 -
-    Id: 'harmonyos-20-arm64-on-ubuntu-24.04-x64'
+    Id: 'harmonyos-23-arm64-on-linux'
     -Features: ['DoNotRunTests']
