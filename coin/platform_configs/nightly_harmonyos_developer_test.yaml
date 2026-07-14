@@ -1,0 +1,15 @@
+Version: 2
+Module only: True
+Include: [
+  cmake_platforms.yaml: [
+    "ubuntu-24.04-x64-developer-build"
+  ],
+  cmake_platforms_target_harmonyos.yaml: [
+    "harmonyos-23-arm64-on-linux-developer-build"
+  ]
+]
+Configurations: []
+Overrides:
+-
+    Id: 'harmonyos-23-arm64-on-linux-developer-build'
+    -Features: ['DoNotRunTests']
