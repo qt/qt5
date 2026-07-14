@@ -1386,7 +1386,7 @@ function(qt_internal_foreach_repo_run)
 
     set(color_supported FALSE)
     set(output_goes_where "")
-    if(NOT tty_exit_CODE AND tty_name)
+    if(NOT tty_exit_code AND tty_name)
         set(color_supported TRUE)
         set(output_goes_where "OUTPUT_FILE" "${tty_name}")
     endif()
