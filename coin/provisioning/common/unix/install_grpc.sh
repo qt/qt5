@@ -22,7 +22,7 @@ targetDir="$HOME/grpc-$version"
 targetFile="$targetDir.zip"
 DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
 unzip -q "$targetFile" -d "$HOME"
-sudo rm "$targetFile"
+rm "$targetFile"
 
 # devtoolset is needed when running configuration
 if uname -a |grep -qv "Darwin"; then
@@ -60,7 +60,7 @@ cmake "$targetDir" -G"Ninja Multi-Config" \
     -DgRPC_ZLIB_PROVIDER="package"
 ninja all
 
-sudo env "PATH=$PATH" ninja install
+env "PATH=$PATH" ninja install
 # Refresh shared library cache if OS isn't macOS
 if uname -a |grep -qv "Darwin"; then
     sudo ldconfig
@@ -69,5 +69,5 @@ fi
 SetEnvVar "gRPC_ROOT" "$installPrefix"
 SetEnvVar "absl_ROOT" "$installPrefix"
 
-sudo rm -rf "$targetDir"
-sudo rm -rf "$buildDir"
+rm -rf "$targetDir"
+rm -rf "$buildDir"
