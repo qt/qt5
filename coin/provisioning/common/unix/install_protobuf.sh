@@ -11,6 +11,15 @@ source "${BASH_SOURCE%/*}/SourceEnvVars.sh"
 
 # This script will install Google's Protocal Buffers
 
+# On Intel macOS /usr/local is user-owned by homebrew; using sudo there would
+# change ownership to root and break later brew installations. On Apple Silicon
+# homebrew uses /opt/homebrew instead, and /usr/local stays root-owned, so sudo
+# is still required.
+SUDO="sudo"
+if uname -a | grep -q Darwin && [ "$(uname -m)" = "x86_64" ]; then
+    SUDO=""
+fi
+
 version="21.9"
 sha1="3226a0e49d048759b702ae524da79387c59f05cc"
 internalUrl="http://ci-files01-hki.ci.qt.io/input/automotive_suite/protobuf-all-$version.zip"
@@ -20,7 +29,7 @@ targetDir="$HOME/protobuf-$version"
 targetFile="$targetDir.zip"
 DownloadURL "$internalUrl" "$externalUrl" "$sha1" "$targetFile"
 unzip "$targetFile" -d "$HOME"
-sudo rm "$targetFile"
+$SUDO rm "$targetFile"
 
 cd $targetDir
 
@@ -81,7 +90,7 @@ cmake "$targetDir" -G"Ninja Multi-Config" \
     -DCMAKE_CROSS_CONFIGS=all \
     -DCMAKE_DEFAULT_CONFIGS=all
 ninja all:all
-sudo env "PATH=$PATH" ninja install:all
+$SUDO env "PATH=$PATH" ninja install:all
 
 SetEnvVar "protobuf_ROOT" "$installPrefix"
 
@@ -90,5 +99,5 @@ if uname -a |grep -qv "Darwin"; then
     sudo ldconfig
 fi
 
-sudo rm -r "$targetDir"
-sudo rm -r "$buildDir"
+$SUDO rm -r "$targetDir"
+$SUDO rm -r "$buildDir"
