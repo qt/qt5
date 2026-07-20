@@ -16,6 +16,13 @@ instructions:
     variableName: CONFIGURE_ENV_PREFIX
     variableValue: "{{.Env.ENV_PREFIX}}"
 
+    # Re-fetch the qlitehtml repository in the Coin git mirror, otherwise the
+    # RunCMake.InitRepository test might fail trying to checkout a newer sha1 than what is
+    # available in the Coin git mirror.
+  - type: UpdateRepo
+    gitRemote: code.qt.io
+    repos: [playground/qlitehtml.git]
+
   - type: ExecuteCommand
     command: "{{.Env.CONFIGURE_ENV_PREFIX}} cmake {{.SourceDir}}/tests/manual/RunCMake"
     executeCommandArgumentSplitingBehavior: SplitAfterVariableSubstitution
