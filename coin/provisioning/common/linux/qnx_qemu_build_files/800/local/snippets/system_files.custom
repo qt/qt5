@@ -53,6 +53,11 @@ xbin/fsevmgr=sbin/fsevmgr
 ##############################################
 lib/libscreen.so.1=usr/lib/libscreen.so.1
 
+##############################################
+### Audio support
+##############################################
+lib/libasound.so.5=lib/libasound.so.5
+
 # for fontconfig
 lib/libfontconfig.so.17=usr/lib/libfontconfig.so.17
 xbin/fc-cache=bin/fc-cache
