@@ -102,7 +102,10 @@ function Cache-GradleProfile([string[]]$VersionProfile) {
     Remove-Item -Recurse -Force $project
 }
 
+# Cache both the current and the previous versions to avoid issues during bumps.
 Seed-GradleDistribution "9.3.1" "b266d5ff6b90eada6dc3b20cb090e3731302e553a27c5d3e4df1f0d76beaff06"
 Cache-GradleProfile "gradle=9.3.1", "agp=9.0.0"
+Seed-GradleDistribution "9.5.1" "bafc141b619ad6350fd975fc903156dd5c151998cc8b058e8c1044ab5f7b031f"
+Cache-GradleProfile "gradle=9.5.1", "agp=9.2.1"
 
 Write-Host "Cached Gradle distributions and dependencies under $env:USERPROFILE\.gradle."
