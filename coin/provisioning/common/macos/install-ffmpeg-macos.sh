@@ -22,6 +22,12 @@ ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
 default_prefix="/usr/local/$ffmpeg_name"
 prefix="${2:-$default_prefix}"
 
+# Disable X11 linkage on macOS. FFmpeg auto-detect
+# mechanisms will pull it in as a dependency if found
+# on the host. If this happens, it makes the binaries
+# not loadable on macOS machines without libx11 installed.
+ffmpeg_config_options+=" --disable-libxcb --disable-xlib"
+
 build_ffmpeg() {
     local arch="$1"
     local build_dir="$ffmpeg_source_dir/build/$arch"
