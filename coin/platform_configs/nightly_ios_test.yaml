@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Include: [
   cmake_platforms.yaml: [
-    "ios-universal"
+    "ios-arm64-simulator"
   ]
 ]
 Configurations:
@@ -12,7 +12,7 @@ Configurations:
     Compiler: 'Clang'
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
-    Platform dependency: 'ios-universal'
+    Platform dependency: 'ios-arm64-simulator'
     Features: ['TestOnly', 'Insignificant', 'DoNotAbortTestingOnFirstFailure']
     Environment variables: [
         'APPLE_SIMULATOR_DEVICE_TYPE=com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB',
