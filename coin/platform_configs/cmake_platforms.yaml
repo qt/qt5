@@ -367,19 +367,6 @@ Configurations:
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
 -
-    Id: 'ios-universal'
-    Template: 'qtci-macos-26-arm-105'
-    Target os: 'IOS_ANY'
-    Target arch: 'arm64'
-    Compiler: 'Clang'
-    Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
-    Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
-    Environment variables: [
-        'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang',
-        'NON_QTBASE_TARGET_CMAKE_ARGS= -DQT_PROTOBUF_WELL_KNOWN_TYPES_PROTO_DIR=/usr/local/include -DFFMPEG_DIR={{.Env.FFMPEG_DIR_IOS}} -DQT_DEPLOY_FFMPEG=TRUE',
-    ]
--
     Id: 'ios-device'
     Template: 'qtci-macos-26-arm-105'
     Target os: 'IOS_ANY'
