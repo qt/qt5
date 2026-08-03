@@ -4,7 +4,8 @@ plugins {
 
 android {
     namespace = 'org.qtproject.qt.gradlecache.lib'
-    compileSdk = 36
+    compileSdk = 37
+    compileSdkMinor = 0
 
     defaultConfig {
         minSdk = 28

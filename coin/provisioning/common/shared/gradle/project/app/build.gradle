@@ -4,7 +4,8 @@ plugins {
 
 android {
     namespace = 'org.qtproject.qt.gradlecache.app'
-    compileSdk = 36
+    compileSdk = 37
+    compileSdkMinor = 0
 
     defaultConfig {
         applicationId 'org.qtproject.qt.gradlecache.app'
