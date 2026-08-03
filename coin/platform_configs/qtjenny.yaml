@@ -5,7 +5,7 @@ Include: [
         'rhel-9.6'
     ],
     cmake_platforms_target_android.yaml: [
-        'android-15-x86_64-on-linux'
+        'android-17-x86_64-on-linux'
     ]
 ]
 Configurations: []

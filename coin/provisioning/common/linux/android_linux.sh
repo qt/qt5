@@ -188,21 +188,6 @@ echo "Unzipping the Android 9 to $minVersionDestination"
 sudo unzip -o -q "$minVersionFilePath" -d "$minVersionDestination"
 rm "$minVersionFilePath"
 
-echo "Download and unzip Android 16 System Image"
-maxVersionFileName="x86_64-36_r07.zip"
-maxVersionDestination="$sdkTargetFolder/system-images/android-36/google_apis/"
-maxVersionFilePath="$maxVersionDestination/$maxVersionFileName"
-maxVersionCiUrl="$basePath/system_images/google_apis/$maxVersionFileName"
-maxVersionUrl="https://dl.google.com/android/repository/sys-img/google_apis/$maxVersionFileName"
-maxVersionSha1="c6bf44bdcd885bb902b4ba752d111a073ad7a817"
-
-mkdir -p "$maxVersionDestination"
-DownloadURL "$maxVersionCiUrl" "$maxVersionUrl" "$maxVersionSha1" "$maxVersionFilePath"
-
-echo "Unzipping the Android 16 to $maxVersionDestination"
-sudo unzip -o -q "$maxVersionFilePath" -d "$maxVersionDestination"
-rm "$maxVersionFilePath"
-
 echo "Download and unzip Android 17 (16KB Page Size) System Image"
 insignificantMaxVersionFileName="x86_64-ps16k-37.1_r07.zip"
 insignificantMaxVersionDestination="$sdkTargetFolder/system-images/android-37/google_apis_ps16k/"
@@ -225,9 +210,6 @@ ls -l "$sdkTargetFolder"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_api_28 -c 2048M -f \
     -k "system-images;android-28;google_apis;x86"
-
-echo "no" | ./avdmanager create avd -n emulator_x86_64_api_36 -c 2048M -f \
-    -k "system-images;android-36;google_apis;x86_64"
 
 echo "no" | ./avdmanager create avd -n emulator_x86_64_api_37 -c 2048M -f \
     -k "system-images;android-37;google_apis,page_size_16kb;x86_64"
