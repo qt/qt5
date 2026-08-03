@@ -25,7 +25,7 @@ sudo yum clean all
 sudo tee "/etc/yum.repos.d/local.repo" > /dev/null <<EOC
 [rhel-9-for-x86_64-baseos-rpms]
 metadata_expire = 86400
-baseurl = http://repo-clones-rhel9.ci.qt.io/rhel-9-for-x86_64-baseos-rpms
+baseurl = http://repo-clones-rhel9.ci.qt.io/9.6/rhel-9-for-x86_64-baseos-rpms
 ui_repoid_vars = releasever basearch
 name = Qt Red Hat Enterprise Linux 9 Base OS (RPMs)
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
@@ -34,7 +34,7 @@ gpgcheck = 1
 
 [rhel-9-for-x86_64-appstream-rpms]
 metadata_expire = 86400
-baseurl = http://repo-clones-rhel9.ci.qt.io/rhel-9-for-x86_64-appstream-rpms
+baseurl = http://repo-clones-rhel9.ci.qt.io/9.6/rhel-9-for-x86_64-appstream-rpms
 ui_repoid_vars = releasever basearch
 name = Qt Red Hat Enterprise Linux 9 Appstream (RPMs)
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
@@ -43,7 +43,7 @@ gpgcheck = 1
 
 [codeready-builder-for-rhel-9-x86_64-rpms]
 metadata_expire = 86400
-baseurl = http://repo-clones-rhel9.ci.qt.io/codeready-builder-for-rhel-9-x86_64-rpms
+baseurl = http://repo-clones-rhel9.ci.qt.io/9.6/codeready-builder-for-rhel-9-x86_64-rpms
 ui_repoid_vars = releasever basearch
 name = Qt Red Hat Enterprise Linux Codeready Builder (RPMs)
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
