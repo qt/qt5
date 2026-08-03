@@ -25,8 +25,8 @@ basePath="http://ci-files01-hki.ci.qt.io/input/android"
 toolsVersion="19.0"
 toolsFile="commandlinetools-mac-13114758_latest.zip"
 toolsBackupUrl="https://dl.google.com/android/repository/$toolsFile"
-sdkBuildToolsVersion="35.0.1"
-sdkApiLevel="android-35"
+sdkBuildToolsVersion="37.0.0"
+sdkApiLevel="android-37.0"
 toolsSha1="c3e06a1959762e89167d1cbaa988605f6f7c1d24"
 
 ndkVersionLatest="r27c"
@@ -43,9 +43,6 @@ ndkVersionNightly1=$ndkVersionLatest  # Set as same version as latest = skip NDK
 ndkSha1Nightly1=$ndkSha1Latest
 ndkVersionNightly2=$ndkVersionLatest
 ndkSha1Nightly2=$ndkSha1Latest
-sdkBuildToolsVersion="36.0.0"
-# this is compile sdk version
-sdkApiLevel="android-36"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
