@@ -18,6 +18,8 @@ that might need updates in the future:
 - feature/: an on-demand dynamic feature module, it caches the
     com.android.dynamic-feature plugin and the Play feature delivery library
     used by the Feature Delivery tests.
+- build.gradle: also declares org.qtproject.qt.gradleplugin to cache the Qt
+    Gradle Plugin used by Qt for Android Studio projects.
 
 Other files required for the project build are gradle wrapper and scripts which
 are fetched by android_linux.sh from qtbase.

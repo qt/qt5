@@ -5,6 +5,7 @@ appcompat = "1.7.1"
 material = "1.13.0"
 constraintlayout = "2.2.1"
 play-feature-delivery = "2.1.0"
+qt-gradle-plugin = "1.4"
 
 [libraries]
 core = { group = 'androidx.core', name = "core", version.ref = "core" }
@@ -16,5 +17,6 @@ play-feature-delivery = { module = "com.google.android.play:feature-delivery", v
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidDynamicFeature = { id = "com.android.dynamic-feature", version.ref = "agp" }
+qtGradlePlugin = { id = "org.qtproject.qt.gradleplugin", version.ref = "qt-gradle-plugin" }
 
 [bundles]
