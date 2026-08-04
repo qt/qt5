@@ -2,25 +2,38 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-download_ffmpeg() {
-    local version="${1:-"n8.1.2"}"
-    local sha1="${2:-a7f4ce77209afdadca9f371db261e8d69903dc85}"
+download_ffmpeg() (
+    local version="${1:-"9.0.1"}"
+    local sha1="${2:-89c318905212e6b67e10e42ab10ab8007e0aefda}"
 
-    local ffmpeg_name="FFmpeg-$version"
+    local ffmpeg_name="FFmpeg-n$version"
     local target_dir="$HOME"
     local ffmpeg_source_dir="$target_dir/$ffmpeg_name"
 
     if [ ! -d "$ffmpeg_source_dir" ]; then
-        local url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-        local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/FFmpeg-$version.tar.gz"
+        local url_public="https://ffmpeg.org/releases/ffmpeg-$version.tar.gz"
+        local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/ffmpeg-$version.tar.gz"
         local app_prefix=""
 
+        local temp_dir
+        temp_dir=$(mktemp -d)
+        trap 'rm -rf "$temp_dir"' EXIT
+
         source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
-        InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$target_dir" "$app_prefix" > /dev/null
+        InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$temp_dir" "$app_prefix" > /dev/null
+
+        local extracted_dirs=("$temp_dir"/*/)
+        if [ "${#extracted_dirs[@]}" -ne 1 ] || [ ! -d "${extracted_dirs[0]}" ]; then
+            >&2 echo "Expected exactly one directory in the FFmpeg archive, got: ${extracted_dirs[*]}"
+            exit 1
+        fi
+
+        mkdir -p "$target_dir"
+        mv "${extracted_dirs[0]%/}" "$ffmpeg_source_dir"
     fi
 
     echo "$ffmpeg_source_dir"
-}
+)
 
 get_ffmpeg_config_options() {
     local build_type="$1"

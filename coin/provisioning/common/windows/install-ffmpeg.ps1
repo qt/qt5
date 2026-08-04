@@ -7,21 +7,38 @@
 # This script will install FFmpeg
 $msys = "C:\Utils\msys64\usr\bin\bash"
 
-$version="n8.1.2"
-$url_public="https://github.com/FFmpeg/FFmpeg/archive/refs/tags/$version.tar.gz"
-$sha1="a7f4ce77209afdadca9f371db261e8d69903dc85"
-$url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/FFmpeg-$version.tar.gz"
-$ffmpeg_name="FFmpeg-$version"
+$version="9.0.1"
+$url_public="https://ffmpeg.org/releases/ffmpeg-$version.tar.gz"
+$sha1="89c318905212e6b67e10e42ab10ab8007e0aefda"
+$url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/ffmpeg-$version.tar.gz"
+$ffmpeg_name="FFmpeg-n$version"
 
 $download_location = "C:\Windows\Temp\$ffmpeg_name.tar.gz"
 $unzip_location = "C:\"
+$ffmpeg_source_dir = "C:\$ffmpeg_name"
 
 Write-Host "Fetching FFmpeg $version..."
 
-Download $url_public $url_cached $download_location
-Verify-Checksum $download_location $sha1
-Extract-tar_gz $download_location $unzip_location
-Remove $download_location
+$extract_temp_dir = "C:\Windows\Temp\FFmpeg-extract-$([System.Guid]::NewGuid().ToString('N'))"
+
+try {
+    New-Item -ItemType Directory -Path $extract_temp_dir -Force | Out-Null
+
+    Download $url_public $url_cached $download_location
+    Verify-Checksum $download_location $sha1
+    Extract-tar_gz $download_location $extract_temp_dir
+
+    $extracted_dirs = @(Get-ChildItem -Path $extract_temp_dir -Directory)
+    if ($extracted_dirs.Count -ne 1) {
+        throw "Expected exactly one directory in the FFmpeg archive, got: $($extracted_dirs.Name -join ', ')"
+    }
+
+    Remove $ffmpeg_source_dir
+    Move-Item -Path $extracted_dirs[0].FullName -Destination $ffmpeg_source_dir
+} finally {
+    Remove $download_location
+    Remove $extract_temp_dir
+}
 
 function GetFfmpegDefaultConfiguration {
     $defaultConfiguration = Get-Content "$PSScriptRoot\..\shared\ffmpeg_config_options.txt"
