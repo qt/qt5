@@ -15,6 +15,9 @@ that might need updates in the future:
     layout and logic of the app, this shouldn't need to be touched.
 - AndroidManifest.xml / app/build.gradle: Sets project settings like target version.
 - gradle/libs.versions.toml: This sets the version numbers of various dependencies.
+- feature/: an on-demand dynamic feature module, it caches the
+    com.android.dynamic-feature plugin and the Play feature delivery library
+    used by the Feature Delivery tests.
 
 Other files required for the project build are gradle wrapper and scripts which
 are fetched by android_linux.sh from qtbase.

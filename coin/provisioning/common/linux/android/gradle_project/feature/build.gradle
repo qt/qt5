@@ -1,0 +1,17 @@
+plugins {
+    alias(libs.plugins.androidDynamicFeature)
+}
+
+android {
+    namespace 'com.example.gradle_project.feature'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 28
+    }
+}
+
+dependencies {
+    implementation project(':app')
+    implementation libs.play.feature.delivery
+}

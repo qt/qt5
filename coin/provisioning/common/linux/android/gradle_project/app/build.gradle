@@ -18,10 +18,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+    dynamicFeatures = [':feature']
 }
 
 dependencies {
     implementation libs.core
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.play.feature.delivery
 }
