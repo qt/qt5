@@ -4,5 +4,7 @@
 
 set -ex
 
+brew install autoconf autoconf-archive automake libtool
+
 # shellcheck source=../common/unix/install-vcpkg-ports-ohos.sh
 source "${BASH_SOURCE%/*}/../common/unix/install-vcpkg-ports-ohos.sh"
