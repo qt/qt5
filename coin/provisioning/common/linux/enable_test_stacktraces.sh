@@ -11,8 +11,12 @@ PROVISIONING_DIR="$(dirname "$0")/../.."
 # shellcheck source=../unix/common.sourced.sh
 source "$PROVISIONING_DIR/common/unix/common.sourced.sh"
 
+if [ -f /usr/lib/sysctl.d/55-ptrace.conf ]; then
+    f="/usr/lib/sysctl.d/55-ptrace.conf"  # New location in Ubuntu 26.04
+else
+    f="/etc/sysctl.d/10-ptrace.conf"
+fi
 
-f="/etc/sysctl.d/10-ptrace.conf"
 if [ -f $f ]
 then
     echo "Modifying $f ..."
