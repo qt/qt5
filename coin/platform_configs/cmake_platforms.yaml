@@ -105,11 +105,39 @@ Configurations:
         'VCPKG_HOST_TRIPLET=x64-linux-qt',
         'VCPKG_TARGET_TRIPLET=x64-linux-qt',
     ]
+# Ubuntu 26.04 x64 Wayland
+-
+    Id: 'ubuntu-26.04-x64-developer-build'
+    Template: 'qtci-linux-Ubuntu-26.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InsignificantTests', 'VerboseCTestOutput', 'StandaloneExamples']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -linker gold -qtlibinfix TestInfix -qtnamespace TestNamespace'
+    Environment variables: [
+        'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+    ]
+# Ubuntu 24.04 x64 Wayland
 -
     Id: 'ubuntu-24.04-x64'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Compiler: 'GCC'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'GenerateSBOM', 'VerifySBOM', 'DocsGenerationV2']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+    ]
+# Ubuntu 26.04 x64 Wayland
+-
+    Id: 'ubuntu-26.04-x64'
+    Template: 'qtci-linux-Ubuntu-26.04-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'InsignificantTests', 'VerboseCTestOutput', 'GenerateSBOM', 'VerifySBOM', 'DocsGenerationV2']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -bundled-xcb-xinput'
     Environment variables: [
         'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',

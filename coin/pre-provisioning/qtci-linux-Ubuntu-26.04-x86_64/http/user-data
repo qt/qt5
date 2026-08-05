@@ -1,0 +1,22 @@
+#cloud-config
+# This file is installer/distribution-specific. The generic HCL and wrapper can
+# be reused, but replace this file for a distro that does not use autoinstall.
+autoinstall:
+  version: 1
+  source:
+    id: ubuntu-desktop-minimal
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  timezone: UTC
+  identity:
+    hostname: qtci-ubuntu26-x64
+    username: qt
+    password: "$6$qtciubuntu2604$FAeHIUtg1iOarKFnnDZim5fWEJ6ZaaYXSc360m68XFTqurIBWNBxsmUDKj.8mGJkVDKlWjFdKZLfrqHYhuBH8/"
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    layout:
+      name: direct
+  shutdown: reboot

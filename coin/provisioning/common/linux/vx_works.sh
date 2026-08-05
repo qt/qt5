@@ -77,7 +77,12 @@ targetFolder="/opt/itl_generic_skylake_VSB/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 # Enable ipv4 routing from vxWorks to Qt DNS
-sudo sed -i s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g /etc/sysctl.conf
+if [ -f /etc/sysctl.conf ]; then
+    sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+else
+    # There's no /etc/sysctl.conf in Ubuntu 26.04, use sysctl.d instead
+    echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/99-vxworks.conf
+fi
 sudo iptables -I FORWARD 1 -j ACCEPT
 sudo iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
 

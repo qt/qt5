@@ -59,10 +59,10 @@ zip="/tmp/libclang.7z"
 destination="/usr/local/libclang-$version"
 
 DownloadURL $url_cached $url $sha1 $zip
-if command -v 7zr &> /dev/null; then
-    sudo 7zr x $zip -o/usr/local/
-else
+if command -v 7z &> /dev/null; then
     sudo 7z x $zswitch $zip -o/usr/local/
+else
+    sudo 7zr x $zip -o/usr/local/
 fi
 sudo mv /usr/local/libclang "$destination"
 rm -rf $zip
