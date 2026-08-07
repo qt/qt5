@@ -19,6 +19,6 @@ Configurations:
     ]
 Overrides:
 -
-    Id: 'ios-universal'
+    Id: 'ios-arm64-simulator'
     -Features: ['DisableTests']
     +Features: ['DoNotRunTests']
