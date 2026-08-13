@@ -85,7 +85,7 @@ elif [ "$TYPE" = "intel" ]; then
     $VXWORKS_QEMU/bin/qemu-system-x86_64 \
         -M q35 \
         -smp 4 \
-        -m 4G \
+        -m 8G \
         -cpu "Skylake-Client" \
         -enable-kvm \
         -monitor none \
