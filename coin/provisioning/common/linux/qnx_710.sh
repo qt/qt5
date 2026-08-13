@@ -48,6 +48,14 @@ targetFile="qnx710.tar.xz"
 sha1="98b24df7e8c53a104aee76e769011396fa4bdafd"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
+# IANA timezone database overlay. Packaged separately from the SDP so it can be
+# bumped without rebuilding the SDP tarball. Archive root is usr/ so the same
+# archive suits both the 7.1 and 8.0 SDP layouts.
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/zoneinfo-2026a-usr.tar.xz"
+targetFile="zoneinfo.tar.xz"
+sha1="02deef2df3513d191ee3bb3a13fd61a814d7161a"
+DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetPath/target/qnx7"
+
 sudo cp "$aarch64le_toolchain" "$targetPath"
 sudo cp "$armv7le_toolchain" "$targetPath"
 sudo cp "$x8664_toolchain" "$targetPath"
