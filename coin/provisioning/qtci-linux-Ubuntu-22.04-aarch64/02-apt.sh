@@ -44,7 +44,7 @@ installPackages+=(p7zip-full)
 installPackages+=(openjdk-21-jdk)
 installPackages+=(gcc)
 installPackages+=(curl)
-installPackages+=(libicu-dev)
+# installPackages+=(libicu-dev)
 installPackages+=(python3-dev)
 installPackages+=(python3-pip)
 installPackages+=(python3-venv)
@@ -63,6 +63,10 @@ sudo apt-get update
 echo "Installing packages"
 waitLoop
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y -o DPkg::Lock::Timeout=300 install "${installPackages[@]}"
+
+# libicu70 (libicu-dev) has 70.1-2ubuntu1 vs 70.1-2 apt sync issues
+# Allow 70.1-2ubuntu1 -> 70.1-2 downgrade
+sudo apt install -y --allow-downgrades libicu70=70.1-2 libicu-dev
 
 source "${BASH_SOURCE%/*}/../common/unix/SetEnvVar.sh"
 # SetEnvVar "PATH" "/usr/lib/nodejs-mozilla/bin:\$PATH"
