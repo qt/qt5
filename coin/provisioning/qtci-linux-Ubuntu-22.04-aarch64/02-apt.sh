@@ -29,6 +29,11 @@ EOC
 
 (ping -c 3 repo-clones-apt.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
 
+# Disable proposed repos because it causes Py mismatches
+# python3.10       3.10.12-1~22.04.17  (proposed)
+# python3.10-venv  3.10.12-1~22.04.16  (mirror)
+sudo mv /etc/apt/sources.list.d/proposed.list /etc/apt/sources.list.d/proposed.list.disabled
+
 # Make sure needed ca-certificates are available
 installPackages+=(ca-certificates)
 
