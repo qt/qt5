@@ -122,6 +122,16 @@ Options:
 
         Note that this negates the disk usage benefits gained from the use
         of `--alternates'.
+
+    --depth <n>
+        Creates a shallow clone with a history truncated to <n> commits for
+        each submodule that is cloned, by passing `--depth <n>' to `git
+        clone'. This also applies recursively to submodules of submodules
+        (e.g. qtwebengine's third-party dependencies).
+
+        This option only affects submodules that are freshly cloned; it has
+        no effect on already-cloned submodules that are merely updated or
+        fetched.
     --mirror <url-base>
         Uses <url-base> as the base URL for submodule git mirrors.
 

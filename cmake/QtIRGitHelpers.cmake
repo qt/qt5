@@ -181,6 +181,7 @@ function(qt_ir_clone_one_submodule submodule_name)
     set(oneValueArgs
         ALTERNATES
         BASE_URL
+        DEPTH
         WORKING_DIRECTORY
     )
     set(multiValueArgs "")
@@ -262,6 +263,9 @@ function(qt_ir_clone_one_submodule submodule_name)
             list(APPEND clone_args --branch "${submodule_branch}")
         else()
             list(APPEND clone_args --no-checkout)
+        endif()
+        if(arg_DEPTH)
+            list(APPEND clone_args --depth "${arg_DEPTH}")
         endif()
         list(APPEND clone_args ${progress_args})
         qt_ir_execute_process_and_log_and_handle_error(
@@ -1063,6 +1067,7 @@ function(qt_ir_handle_init_submodules prefix)
     set(oneValueArgs
         ALTERNATES
         BASE_URL
+        DEPTH
         PARENT_REPO_BASE_GIT_PATH
         WORKING_DIRECTORY
     )
@@ -1123,6 +1128,7 @@ function(qt_ir_handle_init_submodules prefix)
         qt_ir_clone_one_submodule(${submodule_name}
             ALTERNATES ${arg_ALTERNATES}
             BASE_URL ${arg_BASE_URL}
+            DEPTH "${arg_DEPTH}"
             WORKING_DIRECTORY "${working_directory}"
             ${branch_flag}
             ${fetch_flag}
@@ -1163,6 +1169,7 @@ function(qt_ir_handle_init_submodules prefix)
                     SUBMODULES "all"
 
                     BASE_URL "${base_url}"
+                    DEPTH "${arg_DEPTH}"
                     PARENT_REPO_BASE_GIT_PATH "${submodule_base_git_path}"
                     WORKING_DIRECTORY "${working_directory}/${submodule_name}"
 

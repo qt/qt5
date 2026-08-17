@@ -312,6 +312,7 @@ function(qt_ir_run_after_args_parsed top_level_src_path out_var_exit_reason)
     # Get some additional options to pass down.
     qt_ir_get_option_as_existing_absolute_path(alternates alternates)
     qt_ir_get_option_as_cmake_flag_option(branch "CHECKOUT_BRANCH" checkout_branch_option)
+    qt_ir_get_option_value(depth depth)
 
     # The prefix for the cmake-style 'dictionary' that will be used by various functions.
     set(prefix "ir_top")
@@ -321,6 +322,7 @@ function(qt_ir_run_after_args_parsed top_level_src_path out_var_exit_reason)
         ALTERNATES "${alternates}"
         ALREADY_INITIALIZED_SUBMODULES "${already_initialized_submodules}"
         BASE_URL "${base_url}"
+        DEPTH "${depth}"
         PARENT_REPO_BASE_GIT_PATH "${qt5_repo_name}"
         PROCESS_SUBMODULES_FROM_COMMAND_LINE
         WORKING_DIRECTORY "${working_directory}"
