@@ -7,9 +7,6 @@ set -ex
 
 name="p7zip"
 version="7-11"
-sudo yum -y install "$name"
-
-# Link 7za to 7z so we can use existing installation scripts
-sudo ln -s /usr/bin/7za /usr/bin/7z
+sudo dnf -y install "$name" "$name-plugins"
 
 echo "$name = $version" >> ~/versions.txt
