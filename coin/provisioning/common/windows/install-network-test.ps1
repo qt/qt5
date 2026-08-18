@@ -6,8 +6,8 @@
 . "$PSScriptRoot\helpers.ps1"
 
 $networkTestLocation = "C:\Program Files"
-$url_public="https://ci-files01-hki.ci.qt.io/input/networktestapp/CiNetworkTest-MSVC-2022-Windows.tgz"
-$sha1="543D4562159140D4E7223721AF15ED6E1998E5B5"
+$url_public="https://ci-files01-hki.ci.qt.io/input/networktestapp/CiNetworkTest-MSVC-2022-Windows-v1.2.tgz"
+$sha1="C1D8871E610CF281E74E009DBE1BE5DA84B49807"
 $download_location = "C:\Windows\Temp\network-test.tgz"
 
 Write-Host "Fetching CiNetworkTest.exe..."
