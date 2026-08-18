@@ -26,7 +26,9 @@ SPDX-FileCopyrightText = "Copyright (C) 2024 The Qt Company Ltd."
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
-path = ["**README*", "CONTRIBUTING.md", ".commit-template", ".github/pull_request_template.md"]
+path = ["**README*", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "GOVERNANCE.md",
+        "SECURITY.md", "CHANGELOG.md", "LICENSE",
+        ".commit-template", ".github/pull_request_template.md"]
 comment = "documentation"
 precedence = "closest"
 SPDX-FileCopyrightText = "Copyright (C) 2024 The Qt Company Ltd."

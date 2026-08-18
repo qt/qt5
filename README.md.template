@@ -34,6 +34,6 @@ We welcome contributions to Qt! If you'd like to contribute, read the
 Qt is available under various licenses. For details, check out the
 [license documentation](https://doc.qt.io/qt-6/licensing.html).
 
-*Note that this README.md.template serves as a guideline for README.md files,
-and that further sections can be added to individual README.md files if
-necessary.*
+*Note that this README.md.template serves as a guideline for the README.md
+files of Qt module repositories, and that further sections can be added to
+individual README.md files if necessary.*
