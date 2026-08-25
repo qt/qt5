@@ -21,7 +21,9 @@ ColumnLimit: 100
 # Disable reflow of some specific comments
 # qdoc comments: indentation rules are different.
 # Translation comments and SPDX license identifiers are also excluded.
+# REUSE-IgnoreStart
 CommentPragmas: "^!|^:|^ SPDX-License-Identifier:"
+# REUSE-IgnoreEnd
 
 # We want a space between the type and the star for pointer types.
 PointerBindsToType: false
