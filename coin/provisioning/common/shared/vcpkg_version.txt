@@ -1,1 +1,1 @@
-vcpkg_version=2026.06.01-qt
+vcpkg_version=2026.06.24-qt
