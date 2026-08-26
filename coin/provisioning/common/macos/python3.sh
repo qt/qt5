@@ -34,6 +34,6 @@ SetEnvVar "SBOM_PYTHON_APPS_PATH" "/Library/Frameworks/Python.framework/Versions
 SetEnvVar "SBOM_PYTHON_INTERP_PATH" "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3"
 
 # Install Python certificates. Required at least for emsdk installation
-open /Applications/Python\ 3.11/Install\ Certificates.command
+/Applications/Python\ 3.11/Install\ Certificates.command
 
 echo "python3 = 3.11.9" >> ~/versions.txt
