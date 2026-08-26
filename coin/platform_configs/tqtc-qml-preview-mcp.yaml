@@ -1,16 +1,25 @@
 Version: 2
 Include: [
     cmake_platforms.yaml: [
+        'ubuntu-22.04',
+        'ubuntu-22.04-x11-tests',
+        'ubuntu-24.04-x64',
+        'ubuntu-24.04-x64-x11-tests',
         'rhel-9.6',
-        'ubuntu-24.04-arm64',
-        'ubuntu-24.04-arm64-offscreen-tests',
+        'rhel-10.0',
         'windows-11_24H2-msvc2022',
-        'windows-11_23h2-arm64-msvc2022'
+        'windows-11_24H2-msvc2026',
+        'windows-11_24h2-mingw15',
+        'windows-11_24H2-llvm'
     ],
     macos.yaml: [
         'macos-universal-on-arm64',
+        'macos-14-x86_64-tests',
+        'macos-15-x86_64-tests',
+        'macos-26-x86_64-tests',
         'macos-14-arm64-tests',
-        'macos-14-x86_64-tests'
+        'macos-15-arm64-tests',
+        'macos-26-arm64-tests'
     ]
 ]
 Configurations: []
