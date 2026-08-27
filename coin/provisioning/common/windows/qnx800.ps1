@@ -28,10 +28,10 @@ $folderName = "qnx800"
 $targetPath = "$targetFolder$folderName"
 
 # QNX SDP
-$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\qnx\qnx800-windows-linux-20260410.tar.xz"
-$sourceFile = "http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20260410.tar.xz"
+$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\qnx\qnx800-windows-linux-20260828.tar.xz"
+$sourceFile = "http://ci-files01-hki.ci.qt.io/input/qnx/qnx800-windows-linux-20260828.tar.xz"
 $targetFile = "qnx800.tar.xz"
-$sha1 = "a3fdcd98e12bc5054d00f18e4088af26288fd020"
+$sha1 = "f44b66d91625ab33e367cfb62a2950a041607caa"
 DownloadAndExtract $sourceFile $sha1 $targetFile $targetFolder $cachedUrl
 
 # IANA timezone database overlay. Packaged separately from the SDP so it can be
