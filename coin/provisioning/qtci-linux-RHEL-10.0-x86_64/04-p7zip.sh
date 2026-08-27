@@ -5,8 +5,7 @@ source "${BASH_SOURCE%/*}/../common/unix/DownloadURL.sh"
 
 set -ex
 
-name="p7zip"
-version="7-11"
-sudo dnf -y install "$name" "$name-plugins"
+# p7zip has a pathing bug in rhel-10, install 7zip-standalone-all instead
+sudo dnf install -y 7zip-standalone-all
 
-echo "$name = $version" >> ~/versions.txt
+sudo ln -s /usr/bin/7zz /usr/bin/7z
