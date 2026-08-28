@@ -43,9 +43,9 @@ if [ ! -d "$targetFolder" ]; then
 fi
 
 # QNX SDP
-sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20260422.tar.xz"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20260828.tar.xz"
 targetFile="qnx710.tar.xz"
-sha1="98b24df7e8c53a104aee76e769011396fa4bdafd"
+sha1="c37e6f3a49a259d450b601843a9af2818b6feb96"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile" "$targetFolder"
 
 # IANA timezone database overlay. Packaged separately from the SDP so it can be
