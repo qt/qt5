@@ -28,10 +28,10 @@ $folderName = "qnx710"
 $targetPath = "$targetFolder$folderName"
 
 # QNX SDP
-$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\qnx\qnx710-windows-linux-20260422.tar.xz"
-$sourceFile = "http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20260422.tar.xz"
+$cachedUrl = "\\ci-files01-hki.ci.qt.io\provisioning\qnx\qnx710-windows-linux-20260828.tar.xz"
+$sourceFile = "http://ci-files01-hki.ci.qt.io/input/qnx/qnx710-windows-linux-20260828.tar.xz"
 $targetFile = "qnx710.tar.xz"
-$sha1 = "98b24df7e8c53a104aee76e769011396fa4bdafd"
+$sha1 = "c37e6f3a49a259d450b601843a9af2818b6feb96"
 DownloadAndExtract $sourceFile $sha1 $targetFile $targetFolder $cachedUrl
 
 Copy-Item $aarch64le_toolchain $targetPath
