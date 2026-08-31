@@ -60,14 +60,17 @@ sudo cp "$aarch64le_toolchain" "$targetPath"
 sudo cp "$armv7le_toolchain" "$targetPath"
 sudo cp "$x8664_toolchain" "$targetPath"
 cp -R "$QNX_qemu_bld_files_dir" "$qemuTargetPath"
-# fc-match tool is missing from QNX SDP and tst_qfont requires it to work corretly
-# Download code-only package from https://www.iana.org/time-zones and follow README
-# to build tools for QNX x86_64. If need to build new tool create new qnx_qemu_utils
-# package which contains it and update required info below
-sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx_qemu_utils_20211208.tar.xz"
+# The SDP ships fc-cache but not fc-match, which tst_qfont needs. Build it from
+# fontconfig's fc-match/fc-match.c at the release matching the SDP's fontconfig
+# (FC_MINOR/FC_REVISION in fontconfig.h), once per arch:
+#   qcc -Vgcc_ntox86_64 -O2 -o fc-match fc-match.c \
+#       -DHAVE_GETOPT_LONG=1 -DHAVE_UNISTD_H=1 -lfontconfig
+# Pack as <arch>/fc-match into a new dated archive, then update below. 7.1 keeps
+# its own archive.
+sourceFile="http://ci-files01-hki.ci.qt.io/input/qnx/qnx_qemu_utils_800_20260825.tar.xz"
 targetFile="qnx_qemu_utils.tar.xz"
 targetFolder="$qemuTargetPath/local/misc_files"
-sha1="7653f5d50f61f1591d7785c3ec261228ecc9dd22"
+sha1="965b957c76d4bc59c010bb0908d1fea8975179c1"
 
 mkdir -p "$targetFolder"
 
