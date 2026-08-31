@@ -67,6 +67,5 @@ xbin/fc-match=local/misc_files/x86_64/fc-match
 
 # network
 lib/libssl.so=usr/lib/libssl.so
-xbin/nslookup=usr/bin/nslookup
 xbin/unbound=sbin/unbound
 xbin/curl=usr/bin/curl
