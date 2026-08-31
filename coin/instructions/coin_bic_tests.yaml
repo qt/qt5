@@ -30,3 +30,6 @@ enable_if:
     - condition: property
       property: target.os
       equals_value: Linux
+    - condition: property
+      property: target.osVersion
+      not_equals_value: HarmonyOS_ANY
