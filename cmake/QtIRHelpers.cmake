@@ -128,7 +128,6 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
 
     set(filtered_args ${unknown_args})
     set(extra_configure_args "")
-    set(extra_cmake_args "")
 
     # Collect modules to skip. These may come from:
     # 1. The -skip option (consumed by init-repository's option parser)
@@ -149,14 +148,10 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         # have a CMakeLists.txt, so remove it.
         list(REMOVE_ITEM include_submodules "qtrepotools")
 
-        # Make sure to explicitly pass -DBUILD_<module>=ON, in case they were
-        # skipped before, otherwise configure might fail.
-        if(include_submodules)
-            set(explicit_build_submodules "${include_submodules}")
-            list(TRANSFORM explicit_build_submodules PREPEND "-DBUILD_")
-            list(TRANSFORM explicit_build_submodules APPEND "=ON")
-            list(APPEND extra_cmake_args ${explicit_build_submodules})
-        endif()
+        # Note: the submodules are turned on explicitly with -DBUILD_<module>=ON by configure's
+        # own handling of -submodules. Adding those arguments here as well would record them in
+        # config.opt, which is supposed to reflect the command line as it was given.
+        # See QTBUG-134948.
 
         list(JOIN include_submodules "," include_submodules)
 
@@ -179,33 +174,14 @@ function(qt_ir_get_args_from_optfile_configure_filtered optfile_path out_var)
         list(APPEND extra_configure_args "-skip" "${skip_csv}")
     endif()
 
-    # Insert the extra arguments into the proper positions before and after '--'.
-    list(FIND filtered_args "--" cmake_args_index)
-
-    # -- is not found
-    if(cmake_args_index EQUAL -1)
-        # Append extra configure args if present
-        if(extra_configure_args)
-            list(APPEND filtered_args ${extra_configure_args})
-        endif()
-        # Append extra cmake args if present, but make sure to add -- first at the end
-        if(extra_cmake_args)
-            list(APPEND filtered_args "--")
-            list(APPEND filtered_args ${extra_cmake_args})
-        endif()
-    else()
-        # -- is found, that means we probably have cmake args
-        # Insert extra configure args if present, before the -- index.
-        if(extra_configure_args)
-            list(INSERT filtered_args "${cmake_args_index}" ${extra_configure_args})
-        endif()
-        # Find the -- index again, because it might have moved
+    # Insert the extra arguments, which are all configure arguments, so they have to go before
+    # a '--' if there is one.
+    if(extra_configure_args)
         list(FIND filtered_args "--" cmake_args_index)
-        # Compute the index of the argument after the --.
-        math(EXPR cmake_args_index "${cmake_args_index} + 1")
-        # Insert extra cmake args if present, after the -- index.
-        if(extra_cmake_args)
-            list(INSERT filtered_args "${cmake_args_index}" ${extra_cmake_args})
+        if(cmake_args_index EQUAL -1)
+            list(APPEND filtered_args ${extra_configure_args})
+        else()
+            list(INSERT filtered_args "${cmake_args_index}" ${extra_configure_args})
         endif()
     endif()
 
