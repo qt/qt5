@@ -24,6 +24,15 @@ echo "Using public repositories for now. Repo-clones isn't set yet for Debian us
 
 echo "deb https://archive.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
 echo "deb-src https://archive.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
+# the securitey.debian.org key has expired
+sudo sed -i 's|http://deb.debian.org/debian-security|http://snapshot.debian.org/archive/debian-security/20260831T211304Z|g' /etc/apt/sources.list
+sudo sed -i 's|http://security.debian.org/debian-security|http://snapshot.debian.org/archive/debian-security/20260831T211304Z|g' /etc/apt/sources.list
+# Disable expiration checks
+cat <<'EOF' | sudo tee /etc/apt/apt.conf.d/99bullseye-eol
+Acquire::Check-Valid-Until "false";
+Acquire::AllowInsecureRepositories "false";
+EOF
+
 # Make sure needed ca-certificates are available
 installPackages+=(ca-certificates)
 # Git is not needed by builds themselves, but is nice to have
@@ -258,7 +267,8 @@ installPackages+=(tzdata)
 
 echo "Running update for apt"
 waitLoop
-sudo apt-get update
+sudo rm -rf /var/lib/apt/lists/*
+sudo apt-get -o Acquire::http::No-Cache=true -o Acquire::Check-Valid-Until=false update
 echo "Installing packages"
 waitLoop
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install "${installPackages[@]}"
