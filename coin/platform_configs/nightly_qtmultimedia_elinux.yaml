@@ -22,7 +22,5 @@ Configurations:
       'QT_SYSROOT_FOR_RUNNING_TESTS=/opt/b2qt/imx8qm/sysroots/cortexa72-cortexa53-crypto-poky-linux',
       'GST_PLUGIN_SCANNER=/opt/b2qt/imx8qm/sysroots/cortexa72-cortexa53-crypto-poky-linux/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
       'QT_QUICK_BACKEND=software',
-      'VCPKG_HOST_TRIPLET=x64-linux-qt',
-      'VCPKG_TARGET_TRIPLET=arm64-linux-qt'
     ]
 

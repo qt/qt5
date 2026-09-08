@@ -33,8 +33,6 @@ Configurations:
         'QT_SYSROOT_FOR_RUNNING_TESTS={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}',
         'GST_PLUGIN_SCANNER={{.Env.QEMUARM64_TOOLCHAIN_SYSROOT}}/usr/libexec/gstreamer-1.0/gst-plugin-scanner',
         'QT_QUICK_BACKEND=software',
-        'VCPKG_HOST_TRIPLET=x64-linux-qt',
-        'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
     ]
 -
     Id: 'qemu-mips64-developer-build'
