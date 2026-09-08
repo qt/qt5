@@ -14,7 +14,7 @@ cp -R x86_64-android-qt-tmp/* "$VCPKG_ROOT/installed/"
 
 cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
     "-DVCPKG_INSTALL_ROOT=$PWD/x86-android-qt-tmp"\
-    "-DOUTPUT=~/versions.txt"\
+    "-DOUTPUT=$HOME/versions.txt"\
     -P\
     "${BASH_SOURCE%/*}/../shared/vcpkg_parse_packages.cmake"
 
