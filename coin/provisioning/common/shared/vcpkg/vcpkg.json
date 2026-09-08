@@ -2,14 +2,19 @@
   "overrides": [
     {
       "name": "openssl",
-      "version": "3.0.7",
-      "port-version": 2
+      "version": "3.5.4",
+      "port-version": 0
     }
   ],
   "dependencies": [
     {
       "name": "openssl",
-      "platform": "!ohos"
+      "platform": "!ohos & !android",
+      "features": [ "tools" ]
+    },
+    {
+      "name": "openssl",
+      "platform": "android"
     },
     {
       "name": "protobuf",
