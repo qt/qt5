@@ -2,9 +2,6 @@
 # Copyright (C) 2025 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-# This script install prebuilt OpenSSL which was built against Android NDK 25.
-# OpenSSL build will fail with Android NDK 22, because it's missing platforms and sysroot directories
-
 set -eux
 # shellcheck source=../unix/DownloadURL.sh
 source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
@@ -13,15 +10,15 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 
 outputPathBase="${HOME}"
 
-sslVersionForLatest="3.5.4"
-ndkVersionLatest="r27c"
+sslVersionForLatest="3.5.9"
+ndkVersionLatest="r30"
 featureSuffixLatest="_16kb_fixed_symversions"
-prebuiltOpensslShaLatest="b9dc30ed77bfd26e526e81d558d6964585b27283"
+prebuiltOpensslShaLatest="0770e65937f57f5604d0ffd755f9052f50c17b56"
 
-sslVersionForPreview="3.5.4"
-ndkVersionPreview="r29-beta2"
-featureSuffixPreview="_16kb_fixed_symversions"
-prebuiltOpensslShaPreview="89b6692e983c7e9678dcd9fc03da623fb75593d3"
+sslVersionForPreview=$sslVersionForLatest
+ndkVersionPreview=$ndkVersionLatest
+featureSuffixPreview=$featureSuffixLatest
+prebuiltOpensslShaPreview=$prebuiltOpensslShaLatest
 
 ndkVersionNightly1=$ndkVersionLatest
 sslVersionForNightly1=$sslVersionForLatest
@@ -34,8 +31,8 @@ featureSuffixNightly2=""
 prebuiltOpensslShaNightly2=$prebuiltOpensslShaLatest
 
 : <<'EOB' SOURCE BUILD INSTRUCTIONS
-Openssl 3.5.4 prebuilt was made using Android NDK r27c Revision 27.2.12479018
-and r29-beta2 Revision 29.0.13599879
+OpenSSL 3.5.9 prebuilt was made using Android NDK r30 Revision 30.0.16248370
+for arm64-v8a, armeabi-v7a, x86 and x86_64, targeting Android API 23.
 
 By using a helpful (build_ssl.sh) script from:
 Android OpenSSL support for Qt
@@ -47,6 +44,8 @@ https://developer.android.com/ndk/downloads
 Modify the script to your liking: set a path to NDK root, set OpenSSL version
 (script will download needed OpenSSL packages)
 Set ANDROID_API to the lowest version of Android which will be used.
+Use 16 KB alignment and preserve the OPENSSL_3.* symbol version names.
+Package common headers with ABI-specific configuration.h files.
 EOB
 
 function BuildOutputPath() {
