@@ -12,8 +12,8 @@
 # NDK
 $ndkZip = "C:\Windows\Temp\android_ndk.zip"
 
-$ndkVersionLatest = "r27c"
-$ndkChecksumLatest = "ac5f7762764b1f15341094e148ad4f847d050c38"
+$ndkVersionLatest = "r30"
+$ndkChecksumLatest = "9bf167a1985fa7d4a036186b78f702eab9179408"
 $ndkCachedUrlLatest = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionLatest-windows.zip"
 $ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$ndkVersionLatest-windows.zip"
 

@@ -29,8 +29,8 @@ sdkBuildToolsVersion="37.0.0"
 sdkApiLevel="android-37.0"
 toolsSha1="c3e06a1959762e89167d1cbaa988605f6f7c1d24"
 
-ndkVersionLatest="r27c"
-ndkSha1Latest="0217c10ffbec496bb9fbfbb3c6fc2477c6b77297"
+ndkVersionLatest="r30"
+ndkSha1Latest="c060be96767eefbb8e0a27796d6f43115fc1a0c4"
 
 # Preview NDK that is in alpha/beta/RC state
 ndkVersionPreview="r29-beta2"
