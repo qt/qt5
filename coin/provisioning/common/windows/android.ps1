@@ -19,8 +19,8 @@ $ndkOfficialUrlLatest = "https://dl.google.com/android/repository/android-ndk-$n
 
 # NDK in alpha/beta/RC state
 
-$ndkVersionPreview = "r29-beta2"
-$ndkChecksumPreview = "59b665f7506f1079771393f2c90f3cb29817ecfb"
+$ndkVersionPreview = $ndkVersionLatest  # Same version = skip NDK install
+$ndkChecksumPreview = $ndkChecksumLatest
 $ndkCachedUrlPreview = "\\ci-files01-hki.ci.qt.io\provisioning\android\android-ndk-$ndkVersionPreview-windows.zip"
 $ndkOfficialUrlPreview = "https://dl.google.com/android/repository/android-ndk-$ndkVersionPreview-windows.zip"
 
