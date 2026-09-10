@@ -33,8 +33,8 @@ ndkVersionLatest="r27c"
 ndkSha1Latest="0217c10ffbec496bb9fbfbb3c6fc2477c6b77297"
 
 # Preview NDK that is in alpha/beta/RC state
-ndkVersionPreview="r29-beta2"
-ndkSha1Preview="09be4f8fb626a9c93415198ea8e75d8d82f528fa"
+ndkVersionPreview=$ndkVersionLatest  # Set as same version as latest = skip NDK install in provisioning
+ndkSha1Preview=$ndkSha1Latest
 
 # Non-latest (but still supported by the qt/qt5 branch) NDKs are installed for nightly targets in:
 # coin/platform_configs/nightly_android.yaml
