@@ -16,35 +16,42 @@ source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
 targetFolder="/opt/harmonyos"
 sdkTargetFolder="$targetFolder/command-line-tools"
 
-sudo mkdir -p "$sdkTargetFolder"
-
 basePath="http://ci-files01-hki.ci.qt.io/input/harmonyos"
 
-toolsVersion="6.1.0.850"
-toolsFile="commandline-tools-linux-x64-6.1.0.850.zip"
-toolsSha1="6fdf7dbe0faddeb6a36cc76752faaf03d2abd462"
+function InstallCommandLineTools() {
 
-toolsTargetFile="/tmp/$toolsFile"
-toolsSourceFile="$basePath/$toolsFile"
+    cltVersion=$1
+    cltSha1=$2
 
-echo "Download and unzip HarmonyOS SDK"
-DownloadURL "$toolsSourceFile" "$toolsSourceFile" "$toolsSha1" "$toolsTargetFile"
-echo "Unzipping HarmonyOS Tools to '$targetFolder'"
-sudo unzip -q "$toolsTargetFile" -d "$targetFolder"
-rm "$toolsTargetFile"
+    cltFile="commandline-tools-linux-x64-$cltVersion.zip"
+    cltTargetFile="/tmp/$cltFile"
+    cltSourceFile="$basePath/$cltFile"
 
-echo "Changing ownership of HarmonyOS files."
-if uname -a |grep -q "el7"; then
-    sudo chown -R qt:wheel "$sdkTargetFolder"
-else
-    sudo chown -R qt:users "$sdkTargetFolder"
-fi
+    cltTargetDir="$targetFolder/$cltVersion"
+    sudo mkdir -p "$cltTargetDir"
 
-sdkRootFolder="$sdkTargetFolder/sdk/default/openharmony"
-echo "Checking the contents of HarmonyOS SDK..."
-ls -l "$sdkRootFolder"
+    DownloadURL "$cltSourceFile" "$cltSourceFile" "$cltSha1" "$cltTargetFile"
+    echo "Unzipping HarmonyOS Command Line Tools to '$cltTargetDir'"
+    # Get the package base directory name as string
+    zipBase=$(sudo zipinfo -1 "$cltTargetFile" 2>/dev/null | awk '!seen {sub("/.*",""); print; seen=1}')
+    sudo unzip -q "$cltTargetFile" -d "$cltTargetDir"
+    rm "$cltTargetFile"
+    harmonycltRoot="${cltTargetDir}/${zipBase}"
 
-SetEnvVar "HARMONYOS_SDK_ROOT" "$sdkRootFolder"
-export HARMONYOS_SDK_ROOT="$sdkRootFolder"
+    echo "Changing ownership of HarmonyOS files."
+    sudo chown -R qt:users "$harmonycltRoot"
+}
+
+cltVersionCurrent="6.1.0.850"
+cltSha1Current="6fdf7dbe0faddeb6a36cc76752faaf03d2abd462"
+InstallCommandLineTools $cltVersionCurrent $cltSha1Current
+SetEnvVar "HARMONYOS_SDK_ROOT_CURRENT" "$harmonycltRoot"
+sudo ln -s "$harmonycltRoot" "$sdkTargetFolder"
+SetEnvVar "HARMONYOS_SDK_ROOT" "$sdkTargetFolder"
+
+cltVersionNext="26.0.0.821"
+cltSha1Next="d89fc1a09ceb5b25a350695068fe9918912785d2"
+InstallCommandLineTools $cltVersionNext $cltSha1Next
+SetEnvVar "HARMONYOS_SDK_ROOT_NEXT" "$harmonycltRoot"
 
 echo "HarmonyOS SDK setup finished"

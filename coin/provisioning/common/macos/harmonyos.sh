@@ -61,4 +61,8 @@ ls -l "$sdkRootFolder"
 SetEnvVar "HARMONYOS_SDK_ROOT" "$sdkRootFolder"
 export HARMONYOS_SDK_ROOT="$sdkRootFolder"
 
+# Same meaning as on Linux: the command-line-tools root, which holds hvigorw.
+SetEnvVar "HARMONYOS_SDK_ROOT_CURRENT" "$sdkTargetFolder"
+export HARMONYOS_SDK_ROOT_CURRENT="$sdkTargetFolder"
+
 echo "HarmonyOS SDK setup finished"
