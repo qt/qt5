@@ -36,8 +36,6 @@ set_internal_repo() {
     deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-updates-amd64 main restricted universe multiverse
     deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-backports-amd64 main restricted universe
     deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-security-amd64 main restricted universe multiverse
-    deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-i386 main restricted universe multiverse
-    deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-updates-i386 main restricted universe multiverse
 EOC
 }
 
@@ -239,18 +237,6 @@ installPackages+=(lz4)
 installPackages+=(libvulkan-dev)
 # Needed for qtdltlogging
 installPackages+=(libdlt-dev)
-# For integrity
-installPackages+=(libc6:i386)
-# TODO: Ubuntu 24.04 Removal - not available
-#installPackages+=(libncurses5:i386)
-
-installPackages+=(libstdc++6:i386)
-installPackages+=(libx11-6:i386)
-installPackages+=(lib32z1)
-installPackages+=(linux-libc-dev:i386)
-installPackages+=(libxcursor1:i386)
-installPackages+=(libc6-dev-i386)
-sudo dpkg --add-architecture i386
 # For QNX
 installPackages+=(nfs-kernel-server)
 installPackages+=(net-tools)
