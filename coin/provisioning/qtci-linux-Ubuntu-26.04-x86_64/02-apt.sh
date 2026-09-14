@@ -14,10 +14,22 @@ for service in apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-dai
     sudo systemctl disable $service
 done
 
-function set_internal_repo {
+set_internal_repo() {
 
     # Stop fetching the dep-11 metadata, since our mirrors do not handle them well
-    sudo mv /etc/apt/apt.conf.d/50appstream{,.disabled}
+    if [ -f /etc/apt/apt.conf.d/50appstream ]; then
+        sudo mv /etc/apt/apt.conf.d/50appstream /etc/apt/apt.conf.d/50appstream.disabled
+    fi
+
+    # Disable external APT sources
+    for source_file in \
+        /etc/apt/sources.list \
+        /etc/apt/sources.list.d/ubuntu.sources
+    do
+        if [ -f "$source_file" ]; then
+            sudo mv "$source_file" "$source_file.disabled"
+        fi
+    done
 
     sudo tee "/etc/apt/sources.list.d/ubuntu.list" > /dev/null <<-EOC
     deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 resolute-amd64 main restricted universe multiverse
@@ -29,7 +41,7 @@ function set_internal_repo {
 EOC
 }
 
-#(ping -c 3 repo-clones-apt.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
+(ping -c 3 repo-clones-apt.ci.qt.io && set_internal_repo) || echo "Internal package repository not found. Using public repositories."
 
 # Make sure needed ca-certificates are available
 sudo apt-get install --reinstall ca-certificates
