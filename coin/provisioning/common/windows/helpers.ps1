@@ -202,6 +202,20 @@ function Is64BitWinHost
     return [environment]::Is64BitOperatingSystem
 }
 
+# Translates a native Windows path into an MSYS compatible one,
+# e.g. "C:\foo\bar" -> "/c/foo/bar".
+function ConvertTo-MsysPath
+{
+    Param (
+        [string]$Path = $(BadParam("a path"))
+    )
+    $result = $Path -replace '\\', '/'
+    if ($result -match '^([A-Za-z]):(.*)$') {
+        $result = "/$($Matches[1].ToLower())$($Matches[2])"
+    }
+    return $result
+}
+
 enum CpuArch {
     x64
     x86
