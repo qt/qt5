@@ -24,8 +24,31 @@
 # These workarounds allow us to run reproducible, architecture-specific builds in CI without modifying
 # the original source tree or requiring upstream changes.
 
+[CmdletBinding(PositionalBinding = $false)]
+param (
+    [switch] $SkipEnvVar,
+    [string] $InstallDir,
+    [switch] $Help
+)
+
 . "$PSScriptRoot\helpers.ps1"
 . "$PSScriptRoot\zlib-helpers.ps1"
+
+$HELP_MESSAGE = @"
+zlib.ps1 - Builds zlib for Windows with multi-architecture support.
+
+Usage:
+    zlib.ps1 [-InstallDir <path>] [-SkipEnvVar] [-Help]
+
+Options:
+    -InstallDir <path>       Root directory for build artifacts. A per-architecture
+                             subfolder is created underneath it. Defaults to a
+                             'build' folder inside the extracted zlib source.
+    -SkipEnvVar              Build without setting the ZLIB_PATH_* environment
+                             variables at the end. Allows the script to run without
+                             elevated privileges.
+    -Help                    Show this help and exit.
+"@
 
 $VERSION='1.3.1'
 $SHA1='f535367b1a11e2f9ac3bec723fb007fbc0d189e5'
@@ -48,12 +71,14 @@ function BuildZlib {
 function CopySource {
     param (
         [Parameter(Mandatory)]
+        [string] $BuildRoot,
+        [Parameter(Mandatory)]
         [CpuArch] $TargetArchitecture
     )
 
     $testDirectory='test'
 
-    $buildDirectory = GetBuildDirectory -TargetArchitecture $TargetArchitecture
+    $buildDirectory = GetBuildDirectory -BuildRoot $BuildRoot -TargetArchitecture $TargetArchitecture
     $win32BuildDirectory = "$buildDirectory\$WIN32_DIRECTORY"
     $testBuildDirectory = "$buildDirectory\$testDirectory"
 
@@ -69,12 +94,14 @@ function CopySource {
 function GetBuildDirectory {
     param (
         [Parameter(Mandatory)]
+        [string] $BuildRoot,
+        [Parameter(Mandatory)]
         [CpuArch] $TargetArchitecture
     )
 
     $architectureDirectory  = CpuArchToString -Architecture $TargetArchitecture
 
-    return "build\$architectureDirectory"
+    return "$BuildRoot\$architectureDirectory"
 }
 
 function GetSource {
@@ -138,10 +165,12 @@ function PatchZconf {
 function PrepareBuild {
     param (
         [Parameter(Mandatory)]
+        [string] $BuildRoot,
+        [Parameter(Mandatory)]
         [CpuArch] $TargetArchitecture
     )
 
-    CopySource -TargetArchitecture $TargetArchitecture
+    CopySource -BuildRoot $BuildRoot -TargetArchitecture $TargetArchitecture
 }
 
 function PrepareBuildEnvironment {
@@ -163,35 +192,47 @@ function PrepareBuildEnvironment {
 function SetZlibEnvironmentVariable {
     param (
         [Parameter(Mandatory)]
-        [CpuArch] $TargetArchitecture,
+        [string] $BuildRoot,
         [Parameter(Mandatory)]
-        [string] $ZlibDirectory
+        [CpuArch] $TargetArchitecture
     )
 
-    $buildDirectory = GetBuildDirectory -TargetArchitecture $TargetArchitecture
+    $buildDirectory = GetBuildDirectory -BuildRoot $BuildRoot -TargetArchitecture $TargetArchitecture
     $environmentVariableName = GetZlibEnvironmentVariableName -TargetArchitecture $TargetArchitecture
-    $environmentVariableValue = "$ZlibDirectory\$buildDirectory"
 
-    Set-EnvironmentVariable $environmentVariableName $environmentVariableValue
+    Set-EnvironmentVariable $environmentVariableName $buildDirectory
+}
+
+function ShowHelp {
+    Write-Host $HELP_MESSAGE
+}
+
+if ($Help) {
+    ShowHelp
+    return
 }
 
 $zlibDirectory = GetSource
 $hostArchitecture = Get-CpuArchitecture
 $targetArchitectures = GetTargetArchitectures -HostArchitecture $hostArchitecture
 
+$buildRoot = if ($InstallDir) { $InstallDir } else { "$zlibDirectory\build" }
+
 Push-Location $zlibDirectory
 
 try {
     foreach ($targetArchitecture in $targetArchitectures) {
-        PrepareBuild -TargetArchitecture $targetArchitecture
+        PrepareBuild -BuildRoot $buildRoot -TargetArchitecture $targetArchitecture
 
-        $buildDirectory = GetBuildDirectory -TargetArchitecture $targetArchitecture
+        $buildDirectory = GetBuildDirectory -BuildRoot $buildRoot -TargetArchitecture $targetArchitecture
         Push-Location $buildDirectory
 
         try {
             PatchSource
             BuildZlib -HostArchitecture $hostArchitecture -TargetArchitecture $targetArchitecture
-            SetZlibEnvironmentVariable -TargetArchitecture $targetArchitecture -ZlibDirectory $zlibDirectory
+            if (-not $SkipEnvVar) {
+                SetZlibEnvironmentVariable -BuildRoot $buildRoot -TargetArchitecture $targetArchitecture
+            }
         }
         finally {
             Pop-Location
