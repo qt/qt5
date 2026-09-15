@@ -69,30 +69,6 @@ function ResolveFFmpegInstallDir {
     return "C:\$ffmpeg_name\build\$buildSystem\$prefix"
 }
 
-# Returns the absolute installation path of FFmpeg for this build
-# variant. Returns a path that is compatible with MSYS.
-#
-# TODO: There is some code duplications here. Make a helper function
-# that translates native Windows paths into MSYS compatible paths.
-function ResolveFFmpegInstallDirMsys {
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$buildSystem,
-
-        [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [string]$ndkVer
-    )
-    if ($ndkVer) {
-        $prefix = "installed-ndk-$ndkVer"
-    } else {
-        $prefix = "installed"
-    }
-
-    return "/c/$ffmpeg_name/build/$buildSystem/$prefix"
-}
-
 function InstallFfmpeg {
     Param (
         [string]$config,
@@ -117,11 +93,10 @@ function InstallFfmpeg {
 
     if ($ndk_ver) {
         $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem -ndkVer $ndk_ver
-        $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem -ndkVer $ndk_ver
     } else {
         $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem
-        $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem
     }
+    $installDirForMsys = ConvertTo-MsysPath $installDir
 
     $cmd = "cd /c/$ffmpeg_name"
     $cmd += " && mkdir -p build/$buildSystem && cd build/$buildSystem"
@@ -179,7 +154,7 @@ function InstallMsvcFfmpeg {
     }
 
     $zlibPath = GetZlibPathByString -TargetArchitecture $arch
-    $zlibPath = $zlibPath -replace '\\', '/'
+    $zlibPath = ConvertTo-MsysPath $zlibPath
 
     $config += " --enable-zlib"
     $config += " --extra-cflags=`"-I$zlibPath`""
@@ -243,7 +218,7 @@ function InstallAndroidArmv7 {
     $target_cpu="armv7-a"
     $api_version="24"
 
-    $ndk_dir = $ndk_root -replace '\\', '/' -replace '^C:', '/c'
+    $ndk_dir = ConvertTo-MsysPath $ndk_root
 
     $toolchain="${ndk_dir}/toolchains/llvm/prebuilt/windows-x86_64"
     $toolchain_bin="${toolchain}/bin"
@@ -255,19 +230,18 @@ function InstallAndroidArmv7 {
     $ranlib="${toolchain_bin}/llvm-ranlib.exe"
     $nm="${toolchain_bin}/llvm-nm.exe"
     $strip="${toolchain_bin}/llvm-strip.exe"
-    $openssl_path = $android_openssl_path.Replace("\", "/")
 
     Write-Host "Copying _3.so's to .so's"
-    Copy-Item -Path ${openssl_path}/armeabi-v7a/libcrypto_3.so -Destination ${openssl_path}/armeabi-v7a/libcrypto.so
-    Copy-Item -Path ${openssl_path}/armeabi-v7a/libssl_3.so -Destination ${openssl_path}/armeabi-v7a/libssl.so
+    Copy-Item -Path ${android_openssl_path}/armeabi-v7a/libcrypto_3.so -Destination ${android_openssl_path}/armeabi-v7a/libcrypto.so
+    Copy-Item -Path ${android_openssl_path}/armeabi-v7a/libssl_3.so -Destination ${android_openssl_path}/armeabi-v7a/libssl.so
 
+    $android_openssl_path_msys = ConvertTo-MsysPath $android_openssl_path
 
     $config = GetFfmpegDefaultConfiguration
     $config += " --enable-cross-compile --target-os=android --enable-jni --enable-mediacodec --enable-openssl --enable-pthreads --enable-neon --disable-asm --disable-indev=android_camera"
     $config += " --arch=$target_arch --cpu=${target_cpu} --sysroot=${sysroot} --sysinclude=${sysroot}/usr/include/"
     $config += " --cc=${cc} --cxx=${cxx} --ar=${ar} --ranlib=${ranlib}"
-    $config += " --extra-cflags=-I${android_openssl_path}/include --extra-ldflags=-L${android_openssl_path}/armeabi-v7a"
-    $config += " --extra-cflags=-I${openssl_path}/include --extra-ldflags=-L${openssl_path}/armeabi-v7a"
+    $config += " --extra-cflags=-I${android_openssl_path_msys}/include --extra-ldflags=-L${android_openssl_path_msys}/armeabi-v7a"
     if ($android_page_size -eq "use_16kb_page_size"){
         $config += " --extra-ldflags=-Wl,-z,max-page-size=16384"
         Write-Host "FFmpeg Android using 16KB page sizes"
@@ -283,8 +257,8 @@ function InstallAndroidArmv7 {
     $buildSystem = "android-arm"
     $result= InstallFfmpeg -config $config -buildSystem $buildSystem -msystem "ANDROID_CLANG" -ffmpegDirEnvVar $ffmpeg_dir_android_envvar_name -shared $shared -ndk_ver $ndk_version
 
-    Remove-Item -Path ${openssl_path}/armeabi-v7a/libcrypto.so
-    Remove-Item -Path ${openssl_path}/armeabi-v7a/libssl.so
+    Remove-Item -Path ${android_openssl_path}/armeabi-v7a/libcrypto.so
+    Remove-Item -Path ${android_openssl_path}/armeabi-v7a/libssl.so
 
     if (-not $shared) {
         return $result
@@ -313,7 +287,8 @@ function InstallAndroidArmv7 {
 
     Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"cd C:/patchelf-0.17.2 && ./bootstrap.sh && ./configure && make install`"")
 
-    $installDirForMsys = ResolveFFmpegInstallDirMsys -buildSystem $buildSystem -ndkVer $ndk_version
+    $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem -ndkVer $ndk_version
+    $installDirForMsys = ConvertTo-MsysPath $installDir
     $command = "${PSScriptRoot}/../shared/fix_ffmpeg_dependencies.sh ${installDirForMsys} _armeabi-v7a no"
     $command = $command.Replace("\", "/")
     $patchResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath $msys -ArgumentList ("-lc", "`"$command`"")
