@@ -29,7 +29,12 @@ function InstallFfmpegsAMD64 {
         Write-Host "Install FFmpeg using older Android NDK for nightly2"
         InstallAndroidArmv7 -ndk_root $env:ANDROID_NDK_ROOT_NIGHTLY2 -ffmpeg_dir_android_envvar_name "FFMPEG_DIR_ANDROID_ARMV7_NDK_NIGHTLY2" -ndk_version "nightly2" -android_openssl_path $env:OPENSSL_ANDROID_HOME_NIGHTLY2
     }
-    $msvcRes = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $false
+    try {
+        $msvcRes = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $false
+    } catch {
+        Write-Host "Failed to build FFmpeg for msvc: $_"
+        $msvcRes = $false
+    }
     $msvcArm64Res = InstallMsvcFfmpeg -hostArch $hostArch -isArm64 $true
 
     Write-Host "FFmpeg installation results:"

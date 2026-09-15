@@ -232,6 +232,16 @@ function Is64BitWinHost
     return [environment]::Is64BitOperatingSystem
 }
 
+# Expands "~" and relative paths into a full native Windows path.
+# The path does not need to exist.
+function Resolve-FullPath
+{
+    Param (
+        [string]$Path = $(BadParam("a path"))
+    )
+    return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Path)
+}
+
 # Translates a native Windows path into an MSYS compatible one,
 # e.g. "C:\foo\bar" -> "/c/foo/bar".
 function ConvertTo-MsysPath
