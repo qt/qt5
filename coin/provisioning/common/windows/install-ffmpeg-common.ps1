@@ -81,10 +81,17 @@ function InstallFfmpeg {
         [string]$ffmpegDirEnvVar,
         [string]$toolchain,
         [bool]$shared,
-        [string]$ndk_ver  # Optional param for installing each ffmpeg build with different Android NDK
+        [string]$ndk_ver,           # Optional param for installing each ffmpeg build with different Android NDK
+        [string]$installDir,        # Optional override for where to install the build artifacts
+        [string]$msysBash,          # Optional override for the MSYS bash executable
+        [bool]$skipEnvVar = $false  # Optional:
+                                    # Don't assign the FFmpeg dir environment variable.
+                                    # Allows the function to run without elevated privileges.
     )
 
     Write-Host "Configure and compile FFmpeg for $buildSystem with configuration: $config"
+
+    $bash = if ($msysBash) { $msysBash } else { $msys }
 
     $oldPath = $env:PATH
 
@@ -94,10 +101,12 @@ function InstallFfmpeg {
     $env:MSYS2_PATH_TYPE = "inherit"
     $env:MSYSTEM = $msystem
 
-    if ($ndk_ver) {
-        $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem -ndkVer $ndk_ver
-    } else {
-        $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem
+    if (-not $installDir) {
+        if ($ndk_ver) {
+            $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem -ndkVer $ndk_ver
+        } else {
+            $installDir = ResolveFFmpegInstallDir -buildSystem $buildSystem
+        }
     }
     $installDirForMsys = ConvertTo-MsysPath $installDir
 
@@ -114,7 +123,7 @@ function InstallFfmpeg {
 
     Write-Host "MSYS cmd:"
     Write-Host $cmd
-    $buildResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$msys" -ArgumentList ("-lc", "`"$cmd`"")
+    $buildResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$bash" -ArgumentList ("-lc", "`"$cmd`"")
 
     $env:PATH = $oldPath
 
@@ -123,6 +132,8 @@ function InstallFfmpeg {
         return $false
     }
 
-    Set-EnvironmentVariable $ffmpegDirEnvVar $installDir
+    if (-not $skipEnvVar) {
+        Set-EnvironmentVariable $ffmpegDirEnvVar $installDir
+    }
     return $true
 }
