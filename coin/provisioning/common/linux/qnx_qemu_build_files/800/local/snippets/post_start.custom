@@ -17,7 +17,11 @@ echo "---> Remove large fonts"
 rm -rf /data/var/share/fonts/NotoSansCJK*
 rm -rf /data/var/share/fonts/NotoSansMonoCJK*
 echo "---> Create fontconfig cache"
-fc-cache &
+# fc-cache needs HOME to locate a writable cache directory, and the startup
+# environment has none. Keep these two in sync with QNX_TEST_ENV in
+# coin/platform_configs/cmake_platforms_qemu_qnx.yaml, so that the cache is
+# written where the tests will look for it.
+HOME=/data/home/root FONTCONFIG_FILE=/data/var/etc/fontconfig/fonts.conf fc-cache &
 
 echo "---> Restart ssh daemon"
 slay sshd

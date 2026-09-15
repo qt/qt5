@@ -62,8 +62,8 @@ lib/libasound.so.5=lib/libasound.so.5
 
 # for fontconfig
 lib/libfontconfig.so.17=usr/lib/libfontconfig.so.17
-xbin/fc-cache=bin/fc-cache
-xbin/fc-match=local/misc_files/x86_64/fc-match
+bin/fc-cache=bin/fc-cache
+bin/fc-match=local/misc_files/x86_64/fc-match
 
 # network
 lib/libssl.so=usr/lib/libssl.so
