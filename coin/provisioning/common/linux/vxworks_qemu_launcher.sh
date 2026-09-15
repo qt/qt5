@@ -86,6 +86,7 @@ exec 9>&-
 if [ "$TYPE" = "arm" ] || [ "$TYPE" = "" ]; then
     $VXWORKS_QEMU/bin/qemu-system-arm \
         -machine sabrelite \
+        -no-reboot \
         -smp 2 \
         -m 3G \
         -nographic \
@@ -101,6 +102,7 @@ if [ "$TYPE" = "arm" ] || [ "$TYPE" = "" ]; then
 elif [ "$TYPE" = "intel" ]; then
     $VXWORKS_QEMU/bin/qemu-system-x86_64 \
         -M q35 \
+        -no-reboot \
         -smp 4 \
         -m 15G \
         -cpu "Skylake-Client" \
