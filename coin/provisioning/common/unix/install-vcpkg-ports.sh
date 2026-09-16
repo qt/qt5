@@ -23,6 +23,10 @@ cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
 mkdir -p "$VCPKG_ROOT/installed"
 cp -R $install_root/* "$VCPKG_ROOT/installed/"
 
+python3 "${BASH_SOURCE%/*}/../shared/vcpkg_generate_attributions.py" \
+    --install-root "$VCPKG_ROOT/installed" \
+    --triplet "$1"
+
 SetEnvVar "VCPKG_INSTALLED_DIR" "$VCPKG_ROOT/installed/"
 
 rm -rf $install_root

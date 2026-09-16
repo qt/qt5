@@ -12,6 +12,12 @@ mkdir -p "$VCPKG_ROOT/installed"
 cp -R x86-android-qt-tmp/* "$VCPKG_ROOT/installed/"
 cp -R x86_64-android-qt-tmp/* "$VCPKG_ROOT/installed/"
 
+for triplet in x86-android-qt x86_64-android-qt; do
+    python3 "${BASH_SOURCE%/*}/../shared/vcpkg_generate_attributions.py" \
+        --install-root "$VCPKG_ROOT/installed" \
+        --triplet "$triplet"
+done
+
 cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
     "-DVCPKG_INSTALL_ROOT=$PWD/x86-android-qt-tmp"\
     "-DOUTPUT=$HOME/versions.txt"\

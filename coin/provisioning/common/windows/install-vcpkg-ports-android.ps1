@@ -13,6 +13,9 @@ Run-Executable "$vcpkgExe" "install --triplet armeabi-v7a-android-qt --x-install
 New-Item -Path "$vcpkgRoot" -Name "installed" -ItemType "directory" -Force
 Copy-Item -Path "$vcpkgInstallRoot\*" -Destination "$vcpkgRoot\installed" -Recurse -Force
 
+$pythonExe = "$([System.Environment]::GetEnvironmentVariable('PYTHON3_PATH', 'Machine'))\python.exe"
+Run-Executable "$pythonExe" "$PSScriptRoot\..\shared\vcpkg_generate_attributions.py --install-root $vcpkgRoot\installed --triplet armeabi-v7a-android-qt"
+
 Run-Executable "cmake" "-DVCPKG_EXECUTABLE=$vcpkgExe -DVCPKG_INSTALL_ROOT=$vcpkgInstallRoot -DOUTPUT=$env:USERPROFILE\versions.txt -P $PSScriptRoot\..\shared\vcpkg_parse_packages.cmake"
 
 Remove-Item -Path "$vcpkgInstallRoot" -Recurse -Force

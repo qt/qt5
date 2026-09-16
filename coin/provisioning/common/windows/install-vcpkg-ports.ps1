@@ -16,6 +16,9 @@ Run-Executable "$vcpkgExe" "install --triplet $arch-windows-qt --x-install-root 
 New-Item -Path "$vcpkgRoot" -Name "installed" -ItemType "directory" -Force
 Copy-Item -Path "$vcpkginstallroot\*" -Destination "$vcpkgRoot\installed" -Recurse -Force
 
+$pythonExe = "$([System.Environment]::GetEnvironmentVariable('PYTHON3_PATH', 'Machine'))\python.exe"
+Run-Executable "$pythonExe" "$PSScriptRoot\..\shared\vcpkg_generate_attributions.py --install-root $vcpkgRoot\installed --triplet $arch-windows-qt"
+
 Run-Executable "cmake" "-DVCPKG_EXECUTABLE=$vcpkgExe -DVCPKG_INSTALL_ROOT=$vcpkgInstallRoot -DOUTPUT=$env:USERPROFILE\versions.txt -P $PSScriptRoot\..\shared\vcpkg_parse_packages.cmake"
 
 Set-EnvironmentVariable "VCPKG_INSTALLED_DIR" "$vcpkgRoot\installed"
