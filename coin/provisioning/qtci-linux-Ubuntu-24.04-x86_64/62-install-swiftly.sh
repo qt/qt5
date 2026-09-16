@@ -16,6 +16,11 @@ target=swiftly.tar.gz
 DownloadURL $url_cached $url $checksum $target
 
 tar zxf swiftly.tar.gz
-./swiftly init --quiet-shell-followup -y
+./swiftly init --quiet-shell-followup -y --skip-install
+# Swift 6.4.0 is not found for Ubuntu 24.04
+# Pin to a toolchain that is published for Ubuntu 24.04.
+swift_version="6.3.3"
+source "${HOME}/.local/share/swiftly/env.sh"
+swiftly install "$swift_version" --use --assume-yes
 # The installer leaves out line feed when modifying .profile
 echo " " >> /home/qt/.profile
