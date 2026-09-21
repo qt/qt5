@@ -26,6 +26,11 @@ done <<EOF
 $(grep -rl "$MAGIC" "$ROOT_DIR")
 EOF
 
+if [ -z "$INCLUDE_FILES" ]; then
+    echo "No Security Critical files found; running analysis with an explicit fallback sentinel."
+    INCLUDE_FILES="__NO_FILES_FOUND__"
+fi
+
 export INCLUDE_FILES
 
 axivion_ci "$@"
