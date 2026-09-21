@@ -1,8 +1,7 @@
 Version: 2
 Include: [
   macos.yaml: [
-     "macos-universal-on-arm64",
-     "macos-14-x86_64-tests",
+     "macos-arm64",
      "macos-14-arm64-tests"
   ],
   cmake_platforms.yaml: [

@@ -13,10 +13,7 @@ Include: [
         'windows-11_24H2-llvm'
     ],
     macos.yaml: [
-        'macos-universal-on-arm64',
-        'macos-14-x86_64-tests',
-        'macos-15-x86_64-tests',
-        'macos-26-x86_64-tests',
+        'macos-arm64',
         'macos-14-arm64-tests',
         'macos-15-arm64-tests',
         'macos-26-arm64-tests'
@@ -24,7 +21,7 @@ Include: [
 ]
 Overrides:
 -
-    Id: 'rhel-(9\.6|10\.0)|windows-11_24H2-(msvc2022|llvm)|windows-11_24h2-mingw15|macos-universal-on-arm64|macos-(14|15|26)-(x86_64|arm64)-tests'
+    Id: 'rhel-(9\.6|10\.0)|windows-11_24H2-(msvc2022|llvm)|windows-11_24h2-mingw15|macos-arm64|macos-(14|15|26)-arm64-tests'
     -Features: ['Packaging']
 
 Configurations:
@@ -89,53 +86,34 @@ Configurations:
         'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
     ]
 
-# macOS universal build, tested on all supported macOS versions
+# macOS build, tested on all supported macOS versions
 -
-    Id: 'macos-universal-on-arm64-nohttp'
+    Id: 'macos-arm64-nohttp'
     Template: 'qtci-macos-26-arm-105'
     Compiler: 'Clang'
-    Target arch: 'x86_64-arm64'
     Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
     Environment variables: [
-        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
         'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DQT_FEATURE_open62541_security=OFF -DQT_FEATURE_httpmcp=OFF',
-        'VCPKG_HOST_TRIPLET=universal-osx-qt',
-        'VCPKG_TARGET_TRIPLET=universal-osx-qt',
+        'VCPKG_HOST_TRIPLET=arm64-osx-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-osx-qt',
     ]
--
-    Id: 'macos-14-x86_64-tests-nohttp'
-    Template: 'qtci-macos-14-x86_64-106'
-    Compiler: 'Clang'
-    Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
--
-    Id: 'macos-15-x86_64-tests-nohttp'
-    Template: 'qtci-macos-15-x86_64-104'
-    Compiler: 'Clang'
-    Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
--
-    Id: 'macos-26-x86_64-tests-nohttp'
-    Template: 'qtci-macos-26-x86_64-103'
-    Compiler: 'Clang'
-    Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
 -
     Id: 'macos-14-arm64-tests-nohttp'
     Template: 'qtci-macos-14-arm-108'
     Compiler: 'Clang'
     Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
+    Platform dependency: 'macos-arm64-nohttp'
 -
     Id: 'macos-15-arm64-tests-nohttp'
     Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
+    Platform dependency: 'macos-arm64-nohttp'
 -
     Id: 'macos-26-arm64-tests-nohttp'
     Template: 'qtci-macos-26-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'TestOnly', 'Packaging']
-    Platform dependency: 'macos-universal-on-arm64-nohttp'
+    Platform dependency: 'macos-arm64-nohttp'

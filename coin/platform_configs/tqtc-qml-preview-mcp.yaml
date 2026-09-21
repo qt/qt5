@@ -5,10 +5,7 @@ Include: [
         'windows-11_24H2-msvc2022-nohttp',
         'windows-11_24h2-mingw15-nohttp',
         'windows-11_24H2-llvm-nohttp',
-        'macos-universal-on-arm64-nohttp',
-        'macos-14-x86_64-tests-nohttp',
-        'macos-15-x86_64-tests-nohttp',
-        'macos-26-x86_64-tests-nohttp',
+        'macos-arm64-nohttp',
         'macos-14-arm64-tests-nohttp',
         'macos-15-arm64-tests-nohttp',
         'macos-26-arm64-tests-nohttp'

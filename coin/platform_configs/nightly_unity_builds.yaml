@@ -45,13 +45,11 @@ Configurations:
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE'
     ]
 -
-    Id: 'macos-universal-on-arm64-unity-build'
+    Id: 'macos-arm64-unity-build'
     Template: 'qtci-macos-15-arm-105'
     Compiler: 'Clang'
-    Target arch: 'x86_64-arm64'
     Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure']
     Configure arguments: '-make examples -debug -force-debug-info -separate-debug-info -framework'
     Environment variables: [
-        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"',
         'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DQT_UNITY_BUILD=ON',
     ]

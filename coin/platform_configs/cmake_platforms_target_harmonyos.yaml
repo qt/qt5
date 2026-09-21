@@ -87,7 +87,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-developer-build -debug -make examples -no-dbus -no-use-gold-linker -no-pch -openssl-runtime',

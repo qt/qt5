@@ -6,9 +6,9 @@ Module only: True
 
 Include: [
     macos.yaml: [
-        'macos-universal-on-arm64',
+        'macos-arm64',
         'macos-26-arm64-tests',
-        'macos-26-arm64-developer-build',
+        'macos-arm64-developer-build',
         'macos-26-arm64-developer-build-tests'
     ],
 ]

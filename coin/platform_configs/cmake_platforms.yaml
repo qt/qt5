@@ -454,7 +454,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang -sdk iphoneos',
@@ -467,7 +467,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang -sdk iphonesimulator',
@@ -481,7 +481,7 @@ Configurations:
     Target arch: 'x86_64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Packaging', 'Sccache', 'DebugAndRelease', 'DisableTests', 'UseConfigure', 'WarningsAreErrors', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-debug-and-release -nomake examples -platform macx-ios-clang -sdk iphonesimulator',
@@ -495,7 +495,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Sccache', 'DisableTests', 'UseConfigure']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-developer-build -no-warnings-are-errors -nomake examples -nomake tests -platform macx-visionos-clang',

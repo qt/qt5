@@ -5,7 +5,7 @@ Include: [
         'windows-11_24H2-msvc2022'
     ],
     macos.yaml: [
-        'macos-universal-on-arm64'
+        'macos-arm64'
     ]
 ]
 Configurations: []

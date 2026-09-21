@@ -15,7 +15,7 @@ Configurations:
     Template: 'qtci-macos-26-arm-105'
     Compiler: 'Clang'
     Features: ['Sccache', 'TestOnly', 'DarwinNativeMediaBackendTests']
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
 -
     Id: 'windows-11_24H2-msvc2022-windows-mediabackend-tests'
     Template: 'qtci-windows-11_24H2-x86_64-73'

@@ -1,7 +1,7 @@
 Version: 2
 Include: [
   macos.yaml: [
-     "macos-universal-on-arm64",
+     "macos-arm64",
   ],
   cmake_platforms.yaml: [
     "opensuse-16.0-developer-build",
@@ -431,7 +431,7 @@ Configurations:
     Compiler: 'Clang'
     Features: ['Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Environment variables: [
         'TARGET_CMAKE_ARGS=
           -DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU
@@ -701,7 +701,7 @@ Configurations:
     Target arch: 'arm64'
     Compiler: 'Clang'
     Target compiler: 'Clang'
-    Platform dependency: 'macos-universal-on-arm64'
+    Platform dependency: 'macos-arm64'
     Features: ['Sccache', 'UseConfigure', 'DisableTests', 'Insignificant']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=

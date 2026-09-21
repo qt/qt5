@@ -6,7 +6,7 @@ Include: [
     "rhel-9.6"
   ],
   macos.yaml: [
-    "macos-universal-on-arm64"
+    "macos-arm64"
   ]
 ]
 Configurations: []

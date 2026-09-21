@@ -1,0 +1,22 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Id: 'macos-x86_64-developer-build'
+    Template: 'qtci-macos-26-x86_64-103'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'StandaloneExamples']
+    Configure arguments: '-developer-build -make examples -debug -no-framework -no-pch -qtnamespace TestNamespace'
+    Environment variables: [
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'QTBASE_EXAMPLES_CMAKE_ARGS=-DQT_BUILD_EXAMPLES_AS_EXTERNAL=ON',
+        'VCPKG_HOST_TRIPLET=x64-osx-qt',
+        'VCPKG_TARGET_TRIPLET=x64-osx-qt',
+    ]
+-
+    Id: 'macos-26-x86_64-developer-build-tests'
+    Template: 'qtci-macos-26-x86_64-103'
+    Compiler: 'Clang'
+    Features: ['TestOnly']
+    Platform dependency: 'macos-x86_64-developer-build'

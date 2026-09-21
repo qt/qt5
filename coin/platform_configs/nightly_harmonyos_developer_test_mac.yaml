@@ -2,7 +2,7 @@ Version: 2
 Module only: True
 Include: [
   macos.yaml: [
-    "macos-universal-on-arm64"
+    "macos-arm64"
   ],
   cmake_platforms_target_harmonyos.yaml: [
     "harmonyos-23-arm64-on-macos-developer-build"

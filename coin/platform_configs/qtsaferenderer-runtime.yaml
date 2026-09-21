@@ -1,7 +1,7 @@
 Version: 2
 Include: [
   macos.yaml: [
-     "macos-universal-on-arm64"
+     "macos-arm64"
   ],
   cmake_platforms.yaml: [
     "ubuntu-22.04",

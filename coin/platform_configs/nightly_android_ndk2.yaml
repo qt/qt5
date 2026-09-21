@@ -11,7 +11,7 @@ Include: [
         'android-arm64-on-macos'
     ],
     macos.yaml: [
-        'macos-universal-on-arm64'
+        'macos-arm64'
     ]
 ]
 Configurations: []
