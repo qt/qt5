@@ -14,10 +14,13 @@ import unittest
 from pathlib import Path
 
 from vcpkg_generate_attributions import (
+    CPE_FILE,
     build_attribution,
+    compose_cpe,
     find_purl,
     generate,
     index_entries,
+    load_cpe_map,
     normalize_license,
     port_installs_files,
     select_download_location,
@@ -67,6 +70,33 @@ class TestStripPortVersion(unittest.TestCase):
 
     def test_empty_stays_empty(self):
         self.assertEqual(strip_port_version(""), "")
+
+
+class TestComposeCpe(unittest.TestCase):
+    def test_vendor_and_product_are_inserted(self):
+        self.assertEqual(
+            compose_cpe("libpng:libpng", "1.6.50"),
+            "cpe:2.3:a:libpng:libpng:1.6.50:*:*:*:*:*:*:*",
+        )
+
+    def test_unmapped_port_yields_nothing(self):
+        self.assertIsNone(compose_cpe(None, "1.6.50"))
+
+    def test_missing_version_yields_nothing(self):
+        # A CPE with an empty version field matches no product at all.
+        self.assertIsNone(compose_cpe("libpng:libpng", ""))
+
+
+class TestLoadCpeMap(unittest.TestCase):
+    def test_shipped_table_has_vendor_and_product_everywhere(self):
+        ports = load_cpe_map(CPE_FILE)
+        self.assertIn("zlib", ports)
+        for port_name, vendor_product in ports.items():
+            with self.subTest(port=port_name):
+                vendor, _, product = vendor_product.partition(":")
+                self.assertTrue(vendor)
+                self.assertTrue(product)
+                self.assertNotIn(":", product)
 
 
 class TestNormalizeLicense(unittest.TestCase):
@@ -180,7 +210,9 @@ class TestIndexEntries(unittest.TestCase):
 
 class TestBuildAttribution(unittest.TestCase):
     def test_full_entry(self):
-        entry = build_attribution(FREETYPE_PORT, [FREETYPE_RESOURCE], TRIPLET, True)
+        entry = build_attribution(
+            FREETYPE_PORT, [FREETYPE_RESOURCE], TRIPLET, True, "freetype:freetype"
+        )
         self.assertEqual(entry["Id"], "freetype")
         self.assertEqual(entry["Name"], "freetype")
         self.assertEqual(entry["Version"], "2.14.3")
@@ -194,7 +226,20 @@ class TestBuildAttribution(unittest.TestCase):
             entry["DownloadLocation"],
             "git+https://gitlab.freedesktop.org//freetype/freetype@VER-2-14-3",
         )
+        self.assertEqual(entry["CPE"], "cpe:2.3:a:freetype:freetype:2.14.3:*:*:*:*:*:*:*")
         self.assertIn(TRIPLET, entry["QtUsage"])
+
+    def test_cpe_uses_the_version_without_the_port_version_suffix(self):
+        port = dict(FREETYPE_PORT)
+        port["versionInfo"] = "2.17.1#3"
+        entry = build_attribution(port, [], TRIPLET, False, "fontconfig_project:fontconfig")
+        self.assertEqual(
+            entry["CPE"], "cpe:2.3:a:fontconfig_project:fontconfig:2.17.1:*:*:*:*:*:*:*"
+        )
+
+    def test_port_absent_from_the_cpe_table_omits_cpe(self):
+        entry = build_attribution(FREETYPE_PORT, [FREETYPE_RESOURCE], TRIPLET, True)
+        self.assertNotIn("CPE", entry)
 
     def test_port_version_is_stripped_from_version_but_not_purl(self):
         port = dict(FREETYPE_PORT)
@@ -270,7 +315,7 @@ class TestGenerate(unittest.TestCase):
             copyright_text="FREETYPE LICENSES\n",
         )
 
-        generate(self.root, TRIPLET)
+        generate(self.root, TRIPLET, {"freetype": "freetype:freetype"})
 
         attribution_path = self.root / TRIPLET / "share" / "freetype" / "qt_attribution.json"
         entries = json.loads(attribution_path.read_text(encoding="utf-8"))
@@ -278,6 +323,9 @@ class TestGenerate(unittest.TestCase):
         self.assertEqual(entries[0]["Id"], "freetype")
         self.assertEqual(entries[0]["Version"], "2.14.3")
         self.assertEqual(entries[0]["LicenseFile"], "copyright")
+        self.assertEqual(
+            entries[0]["CPE"], "cpe:2.3:a:freetype:freetype:2.14.3:*:*:*:*:*:*:*"
+        )
 
         index_path = self.root / TRIPLET / "share" / "qt_vcpkg_ports.json"
         index = json.loads(index_path.read_text(encoding="utf-8"))

@@ -8,6 +8,9 @@ vcpkg writes share/<port>/vcpkg.spdx.json for every installed port; Qt's SBOM
 machinery reads qt_attribution.json. Bridging the two gets vcpkg-provided
 third-party libraries into Qt's SBOM with license, version and provenance
 information, without duplicating that data in Qt repositories.
+
+vcpkg records no CPEs, so those are composed from the port name to vendor and
+product table in vcpkg_port_cpes.json.
 """
 
 import argparse
@@ -24,6 +27,8 @@ METADATA_DIRS = ("share/", "tools/")
 # Only these can show up as an IMPORTED_LOCATION, so only these go into the index.
 INDEXED_DIRS = ("lib/", "bin/")
 
+CPE_FILE = Path(__file__).resolve().with_name("vcpkg_port_cpes.json")
+
 
 def strip_port_version(version_info):
     """Drop vcpkg's '#N' port-version suffix, keeping the upstream version.
@@ -32,6 +37,24 @@ def strip_port_version(version_info):
     matching against advisory data.
     """
     return version_info.split("#", 1)[0]
+
+
+def compose_cpe(vendor_product, version):
+    """Build a CPE 2.3 string for a 'vendor:product' pair at a given version.
+
+    The version is baked in instead of using Qt's $<VERSION> placeholder, which
+    is substituted with the version find_package reported. For libjpeg-turbo that
+    is libjpeg's API version 62, which would yield a CPE matching nothing.
+    """
+    if not vendor_product or not version:
+        return None
+    return f"cpe:2.3:a:{vendor_product}:{version}:*:*:*:*:*:*:*"
+
+
+def load_cpe_map(cpe_file):
+    """Read the port name to 'vendor:product' table used to compose CPEs."""
+    with open(cpe_file, encoding="utf-8") as handle:
+        return json.load(handle)["ports"]
 
 
 def normalize_license(expression):
@@ -96,7 +119,7 @@ def index_entries(list_lines, triplet, port_name):
     }
 
 
-def build_attribution(port_package, resources, triplet, has_copyright):
+def build_attribution(port_package, resources, triplet, has_copyright, vendor_product=None):
     """Map a vcpkg SPDXRef-port package onto a qt_attribution.json entry."""
     name = port_package["name"]
     entry = {
@@ -128,6 +151,10 @@ def build_attribution(port_package, resources, triplet, has_copyright):
     purl = find_purl(port_package.get("externalRefs"))
     if purl:
         entry["PURL"] = purl
+
+    cpe = compose_cpe(vendor_product, version)
+    if cpe:
+        entry["CPE"] = cpe
 
     download_location = select_download_location(resources)
     if download_location:
@@ -167,7 +194,7 @@ def find_list_file(info_dir, port_name, triplet):
     return None
 
 
-def generate(install_root, triplet):
+def generate(install_root, triplet, cpe_map=None):
     share_dir = install_root / triplet / "share"
     info_dir = install_root / "vcpkg" / "info"
 
@@ -179,10 +206,12 @@ def generate(install_root, triplet):
     if not info_dir.is_dir():
         raise SystemExit(f"error: no such directory: {info_dir}")
 
+    cpe_map = cpe_map or {}
     index = {}
     written = []
     skipped = []
     unusable_license = []
+    without_cpe = []
 
     for spdx_path in sorted(share_dir.glob("*/vcpkg.spdx.json")):
         port_dir = spdx_path.parent
@@ -206,10 +235,16 @@ def generate(install_root, triplet):
             index.update(index_entries(list_lines, triplet, port_name))
 
         entry = build_attribution(
-            port_package, resources, triplet, (port_dir / "copyright").is_file()
+            port_package,
+            resources,
+            triplet,
+            (port_dir / "copyright").is_file(),
+            cpe_map.get(port_name),
         )
         if "License" not in entry:
             unusable_license.append(port_name)
+        if "CPE" not in entry:
+            without_cpe.append(port_name)
 
         with open(port_dir / "qt_attribution.json", "w", encoding="utf-8") as handle:
             json.dump([entry], handle, indent=4, sort_keys=True)
@@ -224,6 +259,8 @@ def generate(install_root, triplet):
     print(f"Indexed {len(index)} installed librar(y/ies) in qt_vcpkg_ports.json")
     if skipped:
         print(f"Skipped {len(skipped)} port(s) installing no files: {', '.join(skipped)}")
+    if without_cpe:
+        print(f"No CPE for {len(without_cpe)} port(s): {', '.join(without_cpe)}")
     for port_name in unusable_license:
         print(f"warning: port '{port_name}' has no usable license expression")
 
@@ -240,7 +277,13 @@ def main():
         "--triplet", required=True, help="vcpkg triplet, for example arm64-ohos-qt"
     )
     arguments = parser.parse_args()
-    generate(arguments.install_root.resolve(), arguments.triplet)
+
+    # Dropping CPEs on a missing table would silently defeat vulnerability scanning,
+    # which is the only thing that reads them.
+    if not CPE_FILE.is_file():
+        raise SystemExit(f"error: no such file: {CPE_FILE}")
+
+    generate(arguments.install_root.resolve(), arguments.triplet, load_cpe_map(CPE_FILE))
 
 
 if __name__ == "__main__":

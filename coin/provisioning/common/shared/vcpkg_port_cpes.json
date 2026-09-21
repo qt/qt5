@@ -1,0 +1,22 @@
+{
+    "comment": [
+        "Maps a vcpkg port name to the CPE 2.3 vendor and product of the upstream project.",
+        "vcpkg records no CPEs, and Dependency-Track can only scan CPEs, so the attribution",
+        "generator composes one from this table and the port version.",
+        "brotli, fontconfig and icu were looked up in the NVD CPE dictionary at",
+        "https://services.nvd.nist.gov/rest/json/cpes/2.0?keywordSearch=<name> ; the others were",
+        "copied from the matching qt_attribution.json under qtbase/src/3rdparty.",
+        "Never guess an entry: the obvious icu:icu and fontconfig:fontconfig both match nothing in",
+        "NVD, and a CPE that matches nothing produces a clean scan that means nothing. A port that",
+        "is absent here gets no CPE at all, which is the safe outcome."
+    ],
+    "ports": {
+        "brotli": "google:brotli",
+        "fontconfig": "fontconfig_project:fontconfig",
+        "freetype": "freetype:freetype",
+        "icu": "icu-project:international_components_for_unicode",
+        "libjpeg-turbo": "libjpeg-turbo:libjpeg-turbo",
+        "libpng": "libpng:libpng",
+        "zlib": "zlib:zlib"
+    }
+}
