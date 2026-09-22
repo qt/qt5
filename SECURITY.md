@@ -38,5 +38,5 @@ EWL subscription requires an active
   header that marks how security-relevant a source file is.
 * [QUIP 16](https://contribute.qt-project.org/quips/16) — the branch policy,
   which governs which branches accept which changes.
-* [Responsible Vulnerability Disclosure Agreement](https://www.qt.io/terms-conditions/responsible-vulnerability-disclosure-process) -
-  Terms and Conditions of Responsible Vulnerability Disclosure Process at Qt Group.
+* [Coordinated Vulnerability Disclosure Policy](https://www.qt.io/terms-conditions/coordinated-vulnerability-disclosure-policy) -
+  Terms and Conditions of Coordinated Vulnerability Disclosure Policy at Qt Group.
