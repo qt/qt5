@@ -65,7 +65,7 @@ Configurations:
         'QT_HARMONYOS_HVIGOR={{.Env.HARMONYOS_SDK_ROOT_NEXT}}/bin/hvigorw'
     ]
 -
-    Id: 'harmonyos-23-arm64-on-macos'
+    Id: 'harmonyos-23-arm64-on-macos-developer-build'
     Template: 'qtci-macos-26-arm-105'
     Target os: 'HarmonyOS_ANY'
     Target arch: 'arm64'
