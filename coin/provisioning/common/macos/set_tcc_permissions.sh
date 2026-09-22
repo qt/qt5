@@ -31,29 +31,72 @@ TCC_CLIENTS+=("/usr/libexec/sshd-keygen-wrapper")
 SERVICES=()
 
 # Qt Multimedia tests need microphone access
-SERVICES+=("kTCCServiceMicrophone|$HOME")
+SERVICES+=("kTCCServiceMicrophone|user")
 
 # Qt Connectivity tests need Bluetooth access
-SERVICES+=("kTCCServiceBluetoothAlways|$HOME")
+SERVICES+=("kTCCServiceBluetoothAlways|user")
 
 # Qt Multimedia might need screen capture, and it can
 # also be useful for capturing the state of the VM when
 # a test fails.
-SERVICES+=("kTCCServiceScreenCapture|/")
+SERVICES+=("kTCCServiceScreenCapture|system")
 
 # Squish requires kTCCServiceAccessibility
-SERVICES+=("kTCCServiceAccessibility|/")
+SERVICES+=("kTCCServiceAccessibility|system")
 
 # ------ Implementation ------
+
+# Starting with macOS 27, tccd's per-user database moved out of
+# ~/Library/Application Support/com.apple.TCC into a randomly named
+# container under ProtectedSystem. The container UUID is assigned by
+# containermanagerd and isn't derived from anything we can compute, so
+# look it up by identifier instead. The system-wide database (owned by
+# "tccd system", running as root) is unaffected and stays where it was.
+function find_tccd_container() {
+    local plist
+    for plist in /private/var/containers/Data/ProtectedSystem/*/.com.apple.containermanagerd.metadata.plist; do
+        if [[ "$(sudo defaults read "$plist" MCMMetadataIdentifier 2>/dev/null)" == "com.apple.tccd" ]]; then
+            dirname "$plist"
+            return 0
+        fi
+    done
+    return 1
+}
+
+function is_macos_27_or_later() {
+    local version
+    version=$(sw_vers -productVersion)
+    (( ${version%%.*} >= 27 ))
+}
+
+# Resolve both database locations once, up front, instead of on every
+# add_permission_for_client call. The user one in particular requires
+# walking ProtectedSystem containers on macOS 27+, which is wasteful
+# to repeat for each client/service pair.
+SYSTEM_TCC_DB="/Library/Application Support/com.apple.TCC/TCC.db"
+if is_macos_27_or_later; then
+    tccd_container=$(find_tccd_container) || {
+        echo "Could not locate tccd's ProtectedSystem container" >&2
+        exit 1
+    }
+    USER_TCC_DB="$tccd_container/Data/Library/Application Support/com.apple.TCC/TCC.db"
+else
+    USER_TCC_DB="$HOME/Library/Application Support/com.apple.TCC/TCC.db"
+fi
 
 function add_permission_for_client() {
     local client="$1"
     local service="$2"
 
-    local path="${service#*|}"
+    local scope="${service#*|}"
     local service="${service%|*}"
 
-    tcc_database="${path%/}/Library/Application Support/com.apple.TCC/TCC.db"
+    local tcc_database
+    if [[ "$scope" == "system" ]]; then
+        tcc_database="$SYSTEM_TCC_DB"
+    else
+        tcc_database="$USER_TCC_DB"
+    fi
     if ! sudo touch "$tcc_database"; then
         echo "TCC database is not writable. Is SIP disabled?" >&2
         exit 1
@@ -79,6 +122,7 @@ function add_permission_for_client() {
     local req_hex=$(echo "$req_str" | csreq -r- -b >(xxd -p | tr -d '\n'))
 
     sudo sqlite3 -echo "$tcc_database" <<EOF
+        PRAGMA busy_timeout = 5000;
         DELETE from access WHERE client = '$client' AND service = '$service';
         INSERT INTO access (service, client, client_type, auth_value, auth_reason, auth_version, csreq, flags) VALUES (
           '$service', -- service
