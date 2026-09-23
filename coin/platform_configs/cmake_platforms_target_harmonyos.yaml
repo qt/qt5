@@ -49,6 +49,22 @@ Configurations:
         'QT_HARMONYOS_HVIGOR={{.Env.HARMONYOS_SDK_ROOT_NEXT}}/bin/hvigorw'
     ]
 -
+    Id: 'harmonyos-26-x86_64-on-linux'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
+    Target os: 'HarmonyOS_ANY'
+    Target arch: 'x86_64'
+    Compiler: 'Clang'
+    Target compiler: 'Clang'
+    Platform dependency: 'ubuntu-24.04-x64'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'Packaging', 'GenerateSBOM', 'VerifySBOM']
+    Environment variables: [
+        'TARGET_CONFIGURE_ARGS=-release -nomake examples -no-dbus -no-use-gold-linker -no-pch -openssl-runtime',
+        'TARGET_CMAKE_ARGS=-DOHOS_SDK_ROOT={{.Env.HARMONYOS_SDK_ROOT_NEXT}}/sdk/default/openharmony -DOHOS_ARCH=x86_64 -DWARNINGS_ARE_ERRORS=OFF -DQT_QMAKE_TARGET_MKSPEC=ohos-clang -DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED_X64}} -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
+        'NON_QTBASE_TARGET_CMAKE_ARGS=-DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED_X64}}',
+        'COMMON_TARGET_TEST_CMAKE_ARGS=-DCMAKE_FIND_ROOT_PATH={{.Env.VCPKG_OHOS_INSTALLED_X64}}',
+        'QT_HARMONYOS_HVIGOR={{.Env.HARMONYOS_SDK_ROOT_NEXT}}/bin/hvigorw'
+    ]
+-
     Id: 'harmonyos-26-arm64-on-linux-developer-build'
     Template: 'qtci-linux-Ubuntu-24.04-x86_64-50'
     Target os: 'HarmonyOS_ANY'

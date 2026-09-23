@@ -8,8 +8,14 @@
 
 set -e
 
-if [ -z "$VCPKG_OHOS_INSTALLED" ]; then
-    echo "ERROR: VCPKG_OHOS_INSTALLED not set. Run install-vcpkg-ports-ohos.sh first." >&2
+# The headers are architecture independent, so install them into every OHOS
+# vcpkg installed directory the port script set up.
+installedDirs=()
+[ -n "$VCPKG_OHOS_INSTALLED" ] && installedDirs+=("$VCPKG_OHOS_INSTALLED")
+[ -n "$VCPKG_OHOS_INSTALLED_X64" ] && installedDirs+=("$VCPKG_OHOS_INSTALLED_X64")
+
+if [ ${#installedDirs[@]} -eq 0 ]; then
+    echo "ERROR: No VCPKG_OHOS_INSTALLED* set. Run install-vcpkg-ports-ohos.sh first." >&2
     exit 1
 fi
 
@@ -20,8 +26,10 @@ echo "Installing OpenSSL headers for OHOS"
 rm -rf "$opensslTmpDir"
 git clone --depth 1 "$opensslRepo" "$opensslTmpDir"
 
-mkdir -p "$VCPKG_OHOS_INSTALLED/include/openssl"
-cp "$opensslTmpDir"/include/openssl/*.h "$VCPKG_OHOS_INSTALLED/include/openssl/"
-rm -rf "$opensslTmpDir"
+for installedDir in "${installedDirs[@]}"; do
+    mkdir -p "$installedDir/include/openssl"
+    cp "$opensslTmpDir"/include/openssl/*.h "$installedDir/include/openssl/"
+    echo "OpenSSL headers installed to $installedDir/include/openssl"
+done
 
-echo "OpenSSL headers installed to $VCPKG_OHOS_INSTALLED/include/openssl"
+rm -rf "$opensslTmpDir"

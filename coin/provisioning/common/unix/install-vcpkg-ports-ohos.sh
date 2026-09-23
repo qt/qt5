@@ -29,9 +29,14 @@ export OHOS_SDK_ROOT="$ohosSdkRoot"
 # for the library path). Unset it before invoking vcpkg.
 unset TARGET
 
-"${BASH_SOURCE%/*}/../unix/install-vcpkg-ports.sh" arm64-ohos-qt
+installOhosTriplet() {
+    local triplet=$1
+    local var=$2
+    "${BASH_SOURCE%/*}/../unix/install-vcpkg-ports.sh" "$triplet"
+    SetEnvVar "$var" "$VCPKG_ROOT/installed/$triplet"
+    export "$var=$VCPKG_ROOT/installed/$triplet"
+    echo "OHOS vcpkg ports installed to $VCPKG_ROOT/installed/$triplet"
+}
 
-SetEnvVar "VCPKG_OHOS_INSTALLED" "$VCPKG_ROOT/installed/arm64-ohos-qt"
-export VCPKG_OHOS_INSTALLED="$VCPKG_ROOT/installed/arm64-ohos-qt"
-
-echo "OHOS vcpkg ports installed to $VCPKG_OHOS_INSTALLED"
+installOhosTriplet arm64-ohos-qt VCPKG_OHOS_INSTALLED
+installOhosTriplet x64-ohos-qt VCPKG_OHOS_INSTALLED_X64
