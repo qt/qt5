@@ -16,22 +16,28 @@ Overrides:
 # Set pch off due to stale pch file causing false positive sccache hit
 -
     Id: 'ubuntu-22.04'
+    -Features: ['DoNotRunTests']
     -Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON -DQT_DEPLOY_FFMPEG=TRUE']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DINPUT_headersclean=ON -DQT_DEPLOY_FFMPEG=TRUE -DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'ubuntu-24.04-x64'
+    -Features: ['DoNotRunTests']
     -Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'ubuntu-24.04-arm64'
+    -Features: ['DoNotRunTests']
     -Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt -DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'jammy-arm64-debian-pkg-packaging'
+    -Features: ['DisableTests']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'jammy-amd64-debian-pkg-packaging'
+    -Features: ['DisableTests']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'qemu-arm64-developer-build'
+    -Features: ['InsignificantTests']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
