@@ -33,7 +33,7 @@ Configurations:
         Platform dependency: 'macos-universal-on-arm64'
     -
         Id: 'macos-15-x86_64-tests'
-        Template: 'qtci-macos-15-x86_64-103'
+        Template: 'qtci-macos-15-x86_64-104'
         Compiler: 'Clang'
         Features: ['Sccache', 'TestOnly', 'Packaging']
         Platform dependency: 'macos-universal-on-arm64'
