@@ -22,12 +22,12 @@ SetEnvVar "VXWORKS_HOME" "/opt/vxworks"
 SetEnvVar "VXWORKS_SSH" "WindRiver@172.31.1.10"
 
 # IMX 6
-VXWORKS_BUILD_VER="15-09-2026"
+VXWORKS_BUILD_VER="24-09-2026"
 ######### VXworks toolchain #########
 # Installs to /opt/fsl_imx6_2_0_6_3_VSB
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_arm_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="31bda0328b907a4e4ce76bfd8a38cba2ed40f1b6"
+sha1="aaa8d51a2e9d67573f808e92d71112926bfc2657"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_3_VSB"
@@ -36,7 +36,7 @@ SetEnvVar "WIND_CC_SYSROOT" "/opt/fsl_imx6_2_0_6_3_VSB"
 # Installs to /opt/fsl_imx6_2_0_6_3_VIP_QEMU
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_arm_vip_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="7f20ae7bee6ef44575b282a7a9c001a291bbc144"
+sha1="3b69676a8621776d162d3d14cb97681c5075a4e7"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
@@ -44,20 +44,20 @@ InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder"
 # Installs to /opt/nxp_imx8_1_0_7_1_VSB
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_arm_imx8_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="fe939759cdf60809bb18611cb403e8f17cb824b7"
+sha1="2b79925bf2f439ae23dbbd6d9f0eb7f12f5b5b30"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
 # Installs to /opt/itl_generic_skylake_VSB
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vsb_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="683c5d7a8040d13e0a90a383e2fdabe0d8e2d25c"
+sha1="59a4f78844d6d228fa9d74605a6a219a32f77ca8"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 # Installs to /opt/itl_generic_skylake_VIP_QEMU
 PrimaryUrl="http://ci-files01-hki.ci.qt.io/input/vxworks/vxworks_intel_vip_${VXWORKS_BUILD_VER}.tar.gz"
 AltUrl=""
-sha1="89025ca99d947edf93c140fe8aa6aea33545a656"
+sha1="b56be2e8617004448dc918ff061347a44e653db7"
 targetFolder="/opt/"
 InstallFromCompressedFileFromURL "$PrimaryUrl" "$AltUrl" "$sha1" "$targetFolder" ""
 
