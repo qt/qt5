@@ -20,6 +20,122 @@ Include: [
         'macos-14-arm64-tests',
         'macos-15-arm64-tests',
         'macos-26-arm64-tests'
-    ]
+   ]
 ]
-Configurations: []
+Overrides:
+-
+    Id: 'rhel-(9\.6|10\.0)|windows-11_24H2-(msvc2022|llvm)|windows-11_24h2-mingw15|macos-universal-on-arm64|macos-(14|15|26)-(x86_64|arm64)-tests'
+    -Features: ['Packaging']
+
+Configurations:
+# RHEL 9.6
+-
+    Id: 'rhel-9.6-nohttp'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-nomake examples -release -force-debug-info -headersclean -separate-debug-info -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -no-feature-liburing -bundled-xcb-xinput'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt -DQT_FEATURE_httpmcp=OFF',
+        'VCPKG_HOST_TRIPLET=x64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=x64-linux-qt',
+    ]
+
+# Windows 11 MSVC 2022
+-
+    Id: 'windows-11_24H2-msvc2022-nohttp'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'MSVC2022'
+    Features: ['Sccache', 'Packaging', "DebugAndRelease", 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-debug-and-release -force-debug-info -headersclean -nomake examples -qt-zlib'
+    Environment variables: [
+        'CMAKE_ARGS=-DFEATURE_msvc_obj_debug_info=ON -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_ROOT_DIR_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\..',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MSVC}} -DQT_DEPLOY_FFMPEG=TRUE -DFEATURE_clangcpp=OFF -DINPUT_headersclean=ON -DQT_FEATURE_httpmcp=OFF',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_msvc}}',
+        'VCPKG_HOST_TRIPLET=x64-windows-qt',
+        'VCPKG_TARGET_TRIPLET=x64-windows-qt',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_msvc}}',
+        'WEBVIEW2_SDK_ROOT={{.Env.WEBVIEW2_SDK_ROOT_PATH}}',
+    ]
+
+# Windows 11 MinGW 15
+-
+    Id: 'windows-11_24h2-mingw15-nohttp'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'Mingw'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
+    Environment variables: [
+        'Path={{.Env.MINGW_PATH}}\bin;{{.Env.Path}}',
+        'CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DQT_FEATURE_httpmcp=OFF',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_mingw}}',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_mingw}}',
+    ]
+
+# Windows 11 LLVM-MinGW
+-
+    Id: 'windows-11_24H2-llvm-nohttp'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'Packaging', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-release -force-debug-info -separate-debug-info -nomake examples'
+    Environment variables: [
+        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
+        'CMAKE_ARGS=-DOPENSSL_ROOT_DIR={{.Env.OPENSSL_INCLUDE_x64}}\.. -DPostgreSQL_ROOT={{.Env.POSTGRESQL_LIB_x64}}\.. -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR_LLVM_MINGW}} -DQT_DEPLOY_FFMPEG=TRUE -DCMAKE_IGNORE_PREFIX_PATH=C:/strawberry/c -DQT_FEATURE_httpmcp=OFF',
+        'LLVM_INSTALL_DIR={{.Env.LLVM_INSTALL_DIR_llvm_mingw}}',
+        'Protobuf_ROOT={{.Env.Protobuf_ROOT_llvm_mingw}}',
+    ]
+
+# macOS universal build, tested on all supported macOS versions
+-
+    Id: 'macos-universal-on-arm64-nohttp'
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Target arch: 'x86_64-arm64'
+    Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -framework'
+    Environment variables: [
+        'CMAKE_ARGS=-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DOPENSSL_ROOT_DIR={{.Env.OPENSSL_DIR}}',
+        'NON_QTBASE_CMAKE_ARGS=-DFEATURE_gds=OFF -DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DQT_FEATURE_open62541_security=OFF -DQT_FEATURE_httpmcp=OFF',
+        'VCPKG_HOST_TRIPLET=universal-osx-qt',
+        'VCPKG_TARGET_TRIPLET=universal-osx-qt',
+    ]
+-
+    Id: 'macos-14-x86_64-tests-nohttp'
+    Template: 'qtci-macos-14-x86_64-106'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
+-
+    Id: 'macos-15-x86_64-tests-nohttp'
+    Template: 'qtci-macos-15-x86_64-104'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
+-
+    Id: 'macos-26-x86_64-tests-nohttp'
+    Template: 'qtci-macos-26-x86_64-103'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
+-
+    Id: 'macos-14-arm64-tests-nohttp'
+    Template: 'qtci-macos-14-arm-108'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
+-
+    Id: 'macos-15-arm64-tests-nohttp'
+    Template: 'qtci-macos-15-arm-105'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
+-
+    Id: 'macos-26-arm64-tests-nohttp'
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'Packaging']
+    Platform dependency: 'macos-universal-on-arm64-nohttp'
