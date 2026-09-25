@@ -71,6 +71,25 @@ is_populated_dir() {
     find "$value" -mindepth 1 -maxdepth 1 -print -quit >/dev/null 2>&1 || return 1
 }
 
+# patchelf 0.18.0 doesn't work correctly for Android binaries, so we require
+# the exact version installed by install-patchelf.sh.
+# See patchelf bugreport: https://github.com/NixOS/patchelf/issues/576.
+REQUIRED_PATCHELF_VERSION="0.17.2"
+
+assert_patchelf_version() {
+    if ! command -v patchelf >/dev/null; then
+        echo "Error: patchelf is required for shared builds, but was not found." >&2
+        exit 1
+    fi
+
+    local patchelf_version
+    patchelf_version=$(patchelf --version | awk '{print $2}')
+    if [ "$patchelf_version" != "$REQUIRED_PATCHELF_VERSION" ]; then
+        echo "Error: patchelf version must be exactly $REQUIRED_PATCHELF_VERSION. Got: '$patchelf_version'" >&2
+        exit 1
+    fi
+}
+
 case "$abi" in
     arm64|arm32|x86|x86_64)
         ;;
@@ -101,6 +120,12 @@ if [ -z "$target_dir" ]; then
 fi
 
 build_type=$(get_ffmpeg_build_type)
+
+# Shared builds use patchelf to fix up the dependencies after building.
+if [[ "$build_type" == "shared" ]]; then
+    assert_patchelf_version
+fi
+
 ffmpeg_source_dir=$(download_ffmpeg)
 
 build_ffmpeg_android() {
