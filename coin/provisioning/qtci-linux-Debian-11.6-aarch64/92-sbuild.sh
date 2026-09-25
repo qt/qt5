@@ -59,6 +59,10 @@ rm -rf "$HOME"/deboot
 sudo sbuild-createchroot --include=gnupg,ca-certificates jammy /srv/chroot/jammy-arm64 http://ports.ubuntu.com/ubuntu-ports/
 echo "Done creating chroot for Ubuntu Jammy"
 
+# Create chroot for Ubuntu Noble
+sudo sbuild-createchroot --include=gnupg,ca-certificates noble /srv/chroot/noble-arm64 http://ports.ubuntu.com/ubuntu-ports/
+
 # Update chroot.
 sudo sbuild-update -udcar bookworm
 sudo sbuild-update -udcar jammy
+sudo sbuild-update -udcar noble

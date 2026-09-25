@@ -4,8 +4,8 @@ Include: [
     'ubuntu-22.04',
     'ubuntu-24.04-x64',
     'ubuntu-24.04-arm64',
-    'jammy-arm64-debian-pkg-packaging',
-    'jammy-amd64-debian-pkg-packaging'
+    'noble-arm64-debian-pkg-packaging',
+    'noble-amd64-debian-pkg-packaging'
   ],
   cmake_platforms_qemu.yaml: [
     'qemu-arm64-developer-build'

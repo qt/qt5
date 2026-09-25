@@ -497,6 +497,35 @@ Configurations:
         'COIN_EXTRA_DEBIAN_REPO=deb http://deb.debian.org/debian/ bookworm main',
         'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
     ]
+
+-
+    Id: 'noble-arm64-debian-pkg-packaging'
+    Template: 'qtci-linux-Debian-11.6-aarch64-50'
+    Compiler: 'GCC'
+    Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
+    Environment variables: [
+        'DEBIAN_RULES_REF=6.12_dev',
+        'COIN_TARGET_DIST=tqtc-noble',
+        'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
+        'COIN_SBUILD_CHROOT=noble-arm64-sbuild',
+        'COIN_EXTRA_DEBIAN_REPO=deb http://ports.ubuntu.com/ubuntu-ports/ noble main universe multiverse',
+        'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
+    ]
+
+-
+    Id: 'noble-amd64-debian-pkg-packaging'
+    Template: 'qtci-linux-Ubuntu-24.04-x86_64-54'
+    Compiler: 'GCC'
+    Features: ['Packaging','DebianPackaging','DisableTests', 'Insignificant']
+    Environment variables: [
+        'DEBIAN_RULES_REF=6.12_dev',
+        'COIN_TARGET_DIST=tqtc-noble',
+        'COIN_EXTRA_DEBIAN_PACKAGES={{.Env.HOME}}/debian_packages/',
+        'COIN_SBUILD_CHROOT=noble-amd64-sbuild',
+        'COIN_EXTRA_DEBIAN_REPO=deb http://archive.ubuntu.com/ubuntu/ noble main universe multiverse',
+        'COIN_SKIP_DEBIAN_MODULES=qt5 qtqa qtactiveqt qtdoc qtwebengine qtwebview',
+    ]
+
 -
     # This configuration runs for every submodule, using externally
     # built qdoc and qattributionscanner binaries, to ensure that no
