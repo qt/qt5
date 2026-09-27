@@ -4,6 +4,6 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/macos/install-ffmpeg-macos.sh" "macos-universal"
+source "${BASH_SOURCE%/*}/../common/macos/install-ffmpeg-macos.sh" --os "macos-universal"
 #source "${BASH_SOURCE%/*}/../common/unix/install-ffmpeg-android-multi-ndk.sh" --abi "arm64" --page-size "16kb"
 source "${BASH_SOURCE%/*}/../common/macos/install-ffmpeg-ios.sh"

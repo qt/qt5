@@ -3,14 +3,66 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script builds and installs FFmpeg shared libs
-# Can take an optional final parameter to control installation directory
 
-set -ex
+usage() {
+    cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") --os <os> [--output <dir>] [--skip-env-var]
 
-os="$1"
+Build FFmpeg shared libraries for macOS.
+
+Options:
+  --os <os>             Target. One of: macos, macos-universal.
+                        macos builds for the host architecture only,
+                        macos-universal builds arm64 and x86_64 and lipos them together.
+  --output <dir>        Directory to install FFmpeg into.
+                        Defaults to /usr/local/<FFmpeg source dir name>.
+  --skip-env-var        Don't set the FFMPEG_DIR environment variable to the
+                        installation directory.
+  -h, --help            Show this help and exit.
+
+Example:
+  $(basename "${BASH_SOURCE[0]}") --os macos-universal --output /usr/local/ffmpeg
+EOF
+}
+
+os=""
+prefix=""
+skip_env_var="no"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        --skip-env-var)
+            skip_env_var="yes"
+            ;;
+        --os|--output)
+            if [ $# -lt 2 ]; then
+                echo "Error: option '$1' requires a value." >&2
+                exit 2
+            fi
+            case "$1" in
+                --os) os="$2" ;;
+                --output) prefix="$2" ;;
+            esac
+            shift
+            ;;
+        *)
+            echo "Error: unknown argument '$1'." >&2
+            echo "" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+set -euxo pipefail
 
 if [ "$os" != "macos" ] && [ "$os" != "macos-universal" ]; then
-    >&2 echo "invalid os paremeter: $os"
+    echo "Error: --os must be 'macos' or 'macos-universal'. Got: '$os'" >&2
     exit 1
 fi
 
@@ -19,8 +71,9 @@ source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_name=$(basename "$ffmpeg_source_dir")
 ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
-default_prefix="/usr/local/$ffmpeg_name"
-prefix="${2:-$default_prefix}"
+if [ -z "$prefix" ]; then
+    prefix="/usr/local/$ffmpeg_name"
+fi
 
 # Disable X11 linkage on macOS. FFmpeg auto-detect
 # mechanisms will pull it in as a dependency if found
@@ -29,7 +82,7 @@ prefix="${2:-$default_prefix}"
 ffmpeg_config_options+=" --disable-libxcb --disable-xlib"
 
 build_ffmpeg() {
-    local arch="$1"
+    local arch="${1:-}"
     local build_dir="$ffmpeg_source_dir/build/$arch"
     mkdir -p "$build_dir"
     pushd "$build_dir"
@@ -76,4 +129,6 @@ else
     sudo "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$arm64_install_dir" "$x86_64_install_dir"
 fi
 
-set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
+if [ "$skip_env_var" == "no" ]; then
+    set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
+fi

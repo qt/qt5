@@ -4,4 +4,4 @@
 
 set -ex
 
-source "${BASH_SOURCE%/*}/../common/macos/install-ffmpeg-macos.sh" "macos-universal"
+source "${BASH_SOURCE%/*}/../common/macos/install-ffmpeg-macos.sh" --os "macos-universal"
