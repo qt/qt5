@@ -119,6 +119,45 @@ if [ -z "$target_dir" ]; then
     exit 1
 fi
 
+if [ "$abi" == "x86" ]; then
+    target_toolchain_arch="i686-linux-android"
+    target_arch=x86
+    target_cpu=i686
+    openssl_libs="$openssl_root/x86"
+    libs_prefix="_x86"
+elif [ "$abi" == "x86_64" ]; then
+    target_toolchain_arch="x86_64-linux-android"
+    target_arch=x86_64
+    target_cpu=x86-64
+    openssl_libs="$openssl_root/x86_64"
+    libs_prefix="_x86_64"
+elif [ "$abi" == "arm32" ]; then
+    target_toolchain_arch="armv7a-linux-androideabi"
+    target_arch=arm
+    target_cpu=armv7-a
+    openssl_libs="$openssl_root/armeabi-v7a"
+    libs_prefix="_arm32-v7a"
+elif [ "$abi" == "arm64" ]; then
+    target_toolchain_arch="aarch64-linux-android"
+    target_arch=aarch64
+    target_cpu=armv8-a
+    openssl_libs="$openssl_root/arm64-v8a"
+    libs_prefix="_arm64-v8a"
+fi
+
+for openssl_lib in libcrypto.so libssl.so; do
+    if [ ! -e "${openssl_libs}/${openssl_lib}" ]; then
+        echo "Error: '${openssl_libs}/${openssl_lib}' does not exist." >&2
+        exit 1
+    fi
+done
+
+openssl_include="$openssl_root/include"
+if [ ! -d "$openssl_include" ]; then
+    echo "Error: OpenSSL include dir '$openssl_include' does not exist." >&2
+    exit 1
+fi
+
 build_type=$(get_ffmpeg_build_type)
 
 # Shared builds use patchelf to fix up the dependencies after building.
@@ -132,45 +171,6 @@ build_ffmpeg_android() {
     local target_dir=$1
 
     sudo mkdir -p "$target_dir"
-
-    local openssl_include="$openssl_root/include"
-    local target_arch
-    local openssl_libs
-    local libs_prefix
-    local target_cpu
-    local target_toolchain_arch
-
-    if [ "$abi" == "x86" ]; then
-        target_toolchain_arch="i686-linux-android"
-        target_arch=x86
-        target_cpu=i686
-        openssl_libs="$openssl_root/x86"
-        libs_prefix="_x86"
-    elif [ "$abi" == "x86_64" ]; then
-        target_toolchain_arch="x86_64-linux-android"
-        target_arch=x86_64
-        target_cpu=x86-64
-        openssl_libs="$openssl_root/x86_64"
-        libs_prefix="_x86_64"
-    elif [ "$abi" == "arm32" ]; then
-        target_toolchain_arch="armv7a-linux-androideabi"
-        target_arch=arm
-        target_cpu=armv7-a
-        openssl_libs="$openssl_root/armeabi-v7a"
-        libs_prefix="_arm32-v7a"
-    elif [ "$abi" == "arm64" ]; then
-        target_toolchain_arch="aarch64-linux-android"
-        target_arch=aarch64
-        target_cpu=armv8-a
-        openssl_libs="$openssl_root/arm64-v8a"
-        libs_prefix="_arm64-v8a"
-    else
-        >&2 echo "Unhandled android abi param: $abi"
-        exit 1
-    fi
-
-    ln -Ffs "${openssl_libs}/libcrypto_3.so" "${openssl_libs}/libcrypto.so"
-    ln -Ffs "${openssl_libs}/libssl_3.so" "${openssl_libs}/libssl.so"
 
     local api_version=24
 
@@ -213,9 +213,6 @@ build_ffmpeg_android() {
     sudo make install -j4
 
     popd
-
-    rm -f "${openssl_libs}/libcrypto.so"
-    rm -f "${openssl_libs}/libssl.so"
 
     if [[ "$build_type" == "shared" ]]; then
         local fix_dependencies="${BASH_SOURCE%/*}/../shared/fix_ffmpeg_dependencies.sh"
