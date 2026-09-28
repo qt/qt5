@@ -6,8 +6,12 @@
 #
 # The script will package iOS and iOS-simulator binaries into one
 # single .xcframework. This .xcframework cannot contain .dylibs
-# directly. It must contain .framework files. Unlike macOS, binaries
-# should NOT be lipoed together.
+# directly. It must contain .framework files. Binaries for different
+# SDKs (iphoneos and iphonesimulator) should NOT be lipoed together,
+# they must be separate frameworks inside the .xcframework. However,
+# an .xcframework can hold only one framework per SDK, so binaries for
+# different architectures of the same SDK (arm64 and x86_64 simulator)
+# must be lipoed together into a single universal framework.
 #
 # From https://developer.apple.com/documentation/xcode/creating-a-multi-platform-binary-framework-bundle
 # "Avoid using dynamic library files (.dylib files) for dynamic
@@ -41,6 +45,10 @@ prefix="${1:-$default_prefix}"
 # we care about
 ffmpeg_components="libavcodec libavformat libavutil libswresample libswscale"
 
+# The target platforms to build for. Target platforms that share the
+# same SDK are lipoed together into one framework.
+target_platforms=("arm64-iphoneos" "arm64-simulator" "x86_64-simulator")
+
 target_platform_to_sdk() {
     local target_platform="$1"
     if [[ "$target_platform" == "arm64-simulator" ]] \
@@ -53,6 +61,16 @@ target_platform_to_sdk() {
         exit 1
     fi
 }
+
+# The SDKs of all target platforms, without duplicates. Each SDK ends up as
+# a separate framework inside each .xcframework.
+target_sdks=()
+for target_platform in "${target_platforms[@]}"; do
+    target_sdk="$(target_platform_to_sdk "$target_platform")"
+    if [[ " ${target_sdks[*]:-} " != *" ${target_sdk} "* ]]; then
+        target_sdks+=("$target_sdk")
+    fi
+done
 
 build_ffmpeg_ios() {
     local target_platform="$1"
@@ -111,6 +129,31 @@ build_ffmpeg_ios() {
 
     sudo make install DESTDIR="$build_dir/installed" -j4
     popd
+}
+
+# Combine the FFmpeg dylibs of all target platforms that belong to the given
+# SDK into universal dylibs. The result is placed in a build directory named
+# after the SDK, which is then used to create the framework for that SDK.
+lipo_dylibs() {
+    local target_sdk="$1"
+
+    local sdk_lib_dir="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}/lib"
+    sudo mkdir -p "$sdk_lib_dir"
+
+    local ffmpeg_component_name
+    for ffmpeg_component_name in $ffmpeg_components; do
+        local input_dylibs=()
+        local target_platform
+        for target_platform in "${target_platforms[@]}"; do
+            if [ "$(target_platform_to_sdk "$target_platform")" == "$target_sdk" ]; then
+                input_dylibs+=("${ffmpeg_source_dir}/build_ios/${target_platform}/installed/${prefix}/lib/${ffmpeg_component_name}.dylib")
+            fi
+        done
+
+        sudo lipo -create \
+            "${input_dylibs[@]}" \
+            -output "${sdk_lib_dir}/${ffmpeg_component_name}.dylib"
+    done
 }
 
 build_info_plist() {
@@ -183,9 +226,9 @@ build_info_plist() {
 # See https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Frameworks.html
 create_framework() {
     local ffmpeg_component_name="$1"
-    local platform="$2"
+    local target_sdk="$2"
 
-    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${platform}/installed/${prefix}"
+    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}"
     local ffmpeg_component_src_dylib="${ffmpeg_build_path}/lib/${ffmpeg_component_name}.dylib"
     local ffmpeg_component_framework="${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework"
     local ffmpeg_component_target_dylib="${ffmpeg_component_framework}/${ffmpeg_component_name}"
@@ -213,10 +256,12 @@ create_framework() {
         -id "@rpath/${ffmpeg_component_name}.framework/${ffmpeg_component_name}" \
         "${ffmpeg_component_target_dylib}"
 
-    # Update the runpaths for each FFmpeg dependency entry
+    # Update the runpaths for each FFmpeg dependency entry. The dylib may be
+    # universal, in which case otool lists the dependencies once per
+    # architecture, each list preceded by an unindented header line.
     otool -L "$ffmpeg_component_target_dylib" \
-        | tail -n +2 \
-        | awk '{print $1}' \
+        | awk '/^[[:space:]]/ {print $1}' \
+        | sort -u \
         | while read -r dep; do
             # Go through all dependency entries of this .dylib,
             # see if they point to a FFmpeg component. If it does,
@@ -240,62 +285,65 @@ create_framework() {
 # At the end, we strip the dylib.
 create_dsym() {
     local ffmpeg_component_name="$1"
-    local platform="$2"
+    local target_sdk="$2"
 
-    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${platform}/installed/${prefix}"
+    local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}"
     local target_dylib="${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework/${ffmpeg_component_name}"
 
     sudo dsymutil "${target_dylib}" \
         -o "${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework.dSYM"
-
-    local target_sdk;
-    target_sdk=$(target_platform_to_sdk "${platform}")
 
     local strip;
     strip="$(xcrun -f --sdk ${target_sdk} strip)"
     sudo ${strip} -x "${target_dylib}"
 }
 
+# Create an .xcframework from the given component's framework and dSYM
+# for each target SDK.
 create_xcframework() {
-    # Create 'traditional' framework from the corresponding dylib,
-    # also creating
     local framework_name="$1"
-    local target_platform_a="$2"
-    local target_platform_b="$3"
+    shift
 
-    local platform_a_build="${ffmpeg_source_dir}/build_ios/${target_platform_a}/installed/${prefix}"
-    local fw_a="${platform_a_build}/framework/${framework_name}.framework"
-    local dsym_a="${fw_a}.dSYM"
-
-    local platform_b_build="${ffmpeg_source_dir}/build_ios/${target_platform_b}/installed/${prefix}"
-    local fw_b="${platform_b_build}/framework/${framework_name}.framework"
-    local dsym_b="${fw_b}.dSYM"
+    local xcframework_args=()
+    local target_sdk
+    for target_sdk in "$@"; do
+        local sdk_build="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}"
+        local fw="${sdk_build}/framework/${framework_name}.framework"
+        xcframework_args+=(-framework "$fw" -debug-symbols "${fw}.dSYM")
+    done
 
     sudo mkdir -p "$prefix/lib/"
     sudo xcodebuild -create-xcframework \
-        -framework "$fw_a" -debug-symbols "$dsym_a" \
-        -framework $fw_b -debug-symbols "$dsym_b" \
+        "${xcframework_args[@]}" \
         -output "${prefix}/lib/${framework_name}.xcframework"
 }
 
-build_ffmpeg_ios "arm64-iphoneos"
-build_ffmpeg_ios "x86_64-simulator"
-
-for name in $ffmpeg_components; do
-    create_framework "$name" "arm64-iphoneos"
-    create_framework "$name" "x86_64-simulator"
-
-    create_dsym "$name" "arm64-iphoneos"
-    create_dsym "$name" "x86_64-simulator"
+# Build for each chosen ABI
+for target_platform in "${target_platforms[@]}"; do
+    build_ffmpeg_ios "$target_platform"
 done
 
-# Create corresponding xcframeworks containing both arm64 and x86_64-simulator frameworks:
+# Combine the ABIs of each SDK into universal dylibs
+for target_sdk in "${target_sdks[@]}"; do
+    lipo_dylibs "$target_sdk"
+done
+
+# Create .frameworks and dSYMs for each FFmpeg component, for each SDK
 for name in $ffmpeg_components; do
-    create_xcframework "$name" "arm64-iphoneos" "x86_64-simulator"
+    for target_sdk in "${target_sdks[@]}"; do
+        create_framework "$name" "$target_sdk"
+        create_dsym "$name" "$target_sdk"
+    done
+done
+
+# Create corresponding xcframeworks containing the frameworks of all target SDKs:
+for name in $ffmpeg_components; do
+    create_xcframework "$name" "${target_sdks[@]}"
 done
 
 # xcframeworks are already installed directly into the target output directory.
-# We need to install headers
-sudo cp -r "${ffmpeg_source_dir}/build_ios/arm64-iphoneos/installed/${prefix}/include" "$prefix"
+# We need to install headers. These are the same for all target platforms,
+# so we take them from the first one.
+sudo cp -r "${ffmpeg_source_dir}/build_ios/${target_platforms[0]}/installed/${prefix}/include" "$prefix"
 
 set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" "$prefix"
