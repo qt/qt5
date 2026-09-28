@@ -59,7 +59,7 @@ Configurations:
     Compiler: 'GCC'
     Target compiler: 'QCC'
     Platform dependency: 'ubuntu-22.04'
-    Features: ['Packaging', 'VMSize8', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM', 'InsignificantTests']
+    Features: ['Packaging', 'VMSize8', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM']
     Environment variables: [
         'TARGET_CONFIGURE_ARGS=-release -force-debug-info -developer-build -no-dbus -nomake examples',
         'TARGET_CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE={{.Env.QNX_800}}/qnx-toolchain-x8664.cmake -DQT_GENERATE_WRAPPER_SCRIPTS_FOR_ALL_HOSTS=ON',
