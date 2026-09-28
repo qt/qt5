@@ -19,35 +19,68 @@
 # macOS supports these libraries for dynamic linking. Dynamic linking
 # on iOS, iPadOS, tvOS, visionOS, and watchOS requires the XCFramework
 # to contain .framework bundles."
-#
-# This script can take an optional final parameter to control
-# installation directory.
-set -eoux pipefail
 
-# Must match or be lower than the minimum iOS version supported by the version of Qt that is
-# is currently being built.
-readonly MINIMUM_IOS_VERSION="16.0"
-
-source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
-
-ffmpeg_source_dir=$(download_ffmpeg)
-ffmpeg_version="n$(<"${ffmpeg_source_dir}/RELEASE")"
-if [ ! -n "$ffmpeg_version" ]; then
-    echo "Error. Unable to determine FFmpeg version."
-    exit 1
-fi
-ffmpeg_build_type="shared"
-ffmpeg_config_options=$(get_ffmpeg_config_options "$ffmpeg_build_type")
+default_target_platforms="arm64-iphoneos,arm64-simulator,x86_64-simulator"
 default_prefix="/usr/local/ios/ffmpeg"
-prefix="${1:-$default_prefix}"
 
-# Qt doesn't utilize all FFmpeg components. This is a list of the ones
-# we care about
-ffmpeg_components="libavcodec libavformat libavutil libswresample libswscale"
+usage() {
+    cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [--os <abis>] [--output <dir>] [--skip-env-var]
 
-# The target platforms to build for. Target platforms that share the
-# same SDK are lipoed together into one framework.
-target_platforms=("arm64-iphoneos" "arm64-simulator" "x86_64-simulator")
+Build FFmpeg shared libraries for iOS, packaged as .xcframeworks.
+
+Options:
+  --os <abis>           Comma-separated list of target ABIs. Each one of:
+                        arm64-iphoneos, arm64-simulator, x86_64-simulator.
+                        ABIs that share the same SDK are lipoed together
+                        into one framework.
+                        Defaults to $default_target_platforms.
+  --output <dir>        Directory to install FFmpeg into.
+                        Defaults to $default_prefix.
+  --skip-env-var        Don't set the FFMPEG_DIR_IOS environment variable to the
+                        installation directory.
+  -h, --help            Show this help and exit.
+
+Example:
+  $(basename "${BASH_SOURCE[0]}") --os arm64-iphoneos,arm64-simulator --output /usr/local/ios/ffmpeg
+EOF
+}
+
+os="$default_target_platforms"
+prefix="$default_prefix"
+skip_env_var="no"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        --skip-env-var)
+            skip_env_var="yes"
+            ;;
+        --os|--output)
+            if [ $# -lt 2 ]; then
+                echo "Error: option '$1' requires a value." >&2
+                exit 2
+            fi
+            case "$1" in
+                --os) os="$2" ;;
+                --output) prefix="$2" ;;
+            esac
+            shift
+            ;;
+        *)
+            echo "Error: unknown argument '$1'." >&2
+            echo "" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+set -eoux pipefail
 
 target_platform_to_sdk() {
     local target_platform="$1"
@@ -62,6 +95,13 @@ target_platform_to_sdk() {
     fi
 }
 
+target_platforms=()
+IFS=',' read -r -a target_platforms <<< "$os"
+if [ ${#target_platforms[@]} -eq 0 ]; then
+    echo "Error: --os must contain at least one ABI." >&2
+    exit 1
+fi
+
 # The SDKs of all target platforms, without duplicates. Each SDK ends up as
 # a separate framework inside each .xcframework.
 target_sdks=()
@@ -72,24 +112,38 @@ for target_platform in "${target_platforms[@]}"; do
     fi
 done
 
+source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
+
+ffmpeg_source_dir=$(download_ffmpeg)
+ffmpeg_version="n$(<"${ffmpeg_source_dir}/RELEASE")"
+if [ ! -n "$ffmpeg_version" ]; then
+    echo "Error. Unable to determine FFmpeg version."
+    exit 1
+fi
+ffmpeg_build_type="shared"
+ffmpeg_config_options=$(get_ffmpeg_config_options "$ffmpeg_build_type")
+
+# Qt doesn't utilize all FFmpeg components. This is a list of the ones
+# we care about
+ffmpeg_components="libavcodec libavformat libavutil libswresample libswscale"
+
+# Must match or be lower than the minimum iOS version supported by the version of Qt that is
+# currently being built.
+MINIMUM_IOS_VERSION="16.0"
+
 build_ffmpeg_ios() {
     local target_platform="$1"
-    local target_cpu_arch=""
     local target_sdk;
     target_sdk="$(target_platform_to_sdk "${target_platform}")"
 
-    if [ "$target_platform" == "arm64-simulator" ]; then
-        target_cpu_arch="arm64"
+    # Target platforms are named <arch>-<sdk>, e.g. arm64-simulator.
+    local target_cpu_arch="${target_platform%%-*}"
+
+    local minos
+    if [ "$target_sdk" == "iphonesimulator" ]; then
         minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
-    elif [ "$target_platform" == "x86_64-simulator" ]; then
-        target_cpu_arch="x86_64"
-        minos="-mios-simulator-version-min=$MINIMUM_IOS_VERSION"
-    elif [ "$target_platform" == "arm64-iphoneos" ]; then
-        target_cpu_arch="arm64"
-        minos="-miphoneos-version-min=$MINIMUM_IOS_VERSION"
     else
-        echo "Error when building FFmpeg for iOS. Unknown parameter given for target_platform: '${target_platform}'"
-        exit 1
+        minos="-miphoneos-version-min=$MINIMUM_IOS_VERSION"
     fi
 
     local build_dir="$ffmpeg_source_dir/build_ios/$target_platform"
@@ -346,4 +400,6 @@ done
 # so we take them from the first one.
 sudo cp -r "${ffmpeg_source_dir}/build_ios/${target_platforms[0]}/installed/${prefix}/include" "$prefix"
 
-set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" "$prefix"
+if [ "$skip_env_var" == "no" ]; then
+    set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" "$prefix"
+fi
