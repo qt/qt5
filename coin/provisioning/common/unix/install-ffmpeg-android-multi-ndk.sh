@@ -76,7 +76,7 @@ assert_envvar_is_populated_dir() {
 set -eux
 
 ENVVAR_NAME_BASE="FFMPEG_DIR_ANDROID"
-OUTPUT_PATH_BASE="/usr/local/android"
+OUTPUT_PATH_BASE="$(ffmpeg_default_install_prefix_base)/android"
 
 # Set up environment name and output directory based on ABI parameter.
 # The envvar name will be suffixed with the specific NDK version we
@@ -85,19 +85,19 @@ envvar_name=""
 output_path=""
 case "$abi" in
     x86)
-        output_path="${OUTPUT_PATH_BASE}/ffmpeg-x86"
+        output_path="${OUTPUT_PATH_BASE}/x86"
         envvar_name="${ENVVAR_NAME_BASE}_X86"
         ;;
     x86_64)
-        output_path="${OUTPUT_PATH_BASE}/ffmpeg-x86_64"
+        output_path="${OUTPUT_PATH_BASE}/x86_64"
         envvar_name="${ENVVAR_NAME_BASE}_X86_64"
         ;;
     arm32)
-        output_path="${OUTPUT_PATH_BASE}/ffmpeg-arm32"
+        output_path="${OUTPUT_PATH_BASE}/arm32"
         envvar_name="${ENVVAR_NAME_BASE}_ARM32"
         ;;
     arm64)
-        output_path="${OUTPUT_PATH_BASE}/ffmpeg-arm64"
+        output_path="${OUTPUT_PATH_BASE}/arm64"
         envvar_name="${ENVVAR_NAME_BASE}_ARM64"
         ;;
     *)

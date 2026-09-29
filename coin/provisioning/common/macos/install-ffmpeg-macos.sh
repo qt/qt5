@@ -4,6 +4,10 @@
 
 # This script builds and installs FFmpeg shared libs
 
+source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
+
+default_prefix="$(ffmpeg_default_install_prefix_base)/macos"
+
 usage() {
     cat <<EOF
 Usage: $(basename "${BASH_SOURCE[0]}") --os <os> [--output <dir>] [--skip-env-var]
@@ -15,18 +19,18 @@ Options:
                         macos builds for the host architecture only,
                         macos-universal builds arm64 and x86_64 and lipos them together.
   --output <dir>        Directory to install FFmpeg into.
-                        Defaults to /usr/local/<FFmpeg source dir name>.
+                        Defaults to $default_prefix.
   --skip-env-var        Don't set the FFMPEG_DIR environment variable to the
                         installation directory.
   -h, --help            Show this help and exit.
 
 Example:
-  $(basename "${BASH_SOURCE[0]}") --os macos-universal --output /usr/local/ffmpeg
+  $(basename "${BASH_SOURCE[0]}") --os macos-universal --output ~/my/ffmpeg/macos
 EOF
 }
 
 os=""
-prefix=""
+prefix="$default_prefix"
 skip_env_var="no"
 
 while [ $# -gt 0 ]; do
@@ -66,14 +70,8 @@ if [ "$os" != "macos" ] && [ "$os" != "macos-universal" ]; then
     exit 1
 fi
 
-source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
-
 ffmpeg_source_dir=$(download_ffmpeg)
-ffmpeg_name=$(basename "$ffmpeg_source_dir")
 ffmpeg_config_options=$(get_ffmpeg_config_options "shared")
-if [ -z "$prefix" ]; then
-    prefix="/usr/local/$ffmpeg_name"
-fi
 
 # Disable X11 linkage on macOS. FFmpeg auto-detect
 # mechanisms will pull it in as a dependency if found
@@ -112,9 +110,9 @@ if [ "$os" == "macos"  ]; then
     build_ffmpeg
 
     install_dir="$ffmpeg_source_dir/build/installed"
-    "$fix_relative_dependencies" "$install_dir$prefix/lib"
-    sudo mkdir -p "$prefix"
-    sudo mv "$install_dir$prefix" "$prefix/../"
+    "$fix_relative_dependencies" "$install_dir/$prefix/lib"
+    mkdir -p "$prefix"
+    mv "$install_dir/$prefix" "$prefix/../"
 else
     build_ffmpeg "arm64"
     build_ffmpeg "x86_64"
@@ -122,11 +120,11 @@ else
     arm64_install_dir="$ffmpeg_source_dir/build/arm64/installed"
     x86_64_install_dir="$ffmpeg_source_dir/build/x86_64/installed"
 
-    "$fix_relative_dependencies" "$arm64_install_dir$prefix/lib"
-    "$fix_relative_dependencies" "$x86_64_install_dir$prefix/lib"
+    "$fix_relative_dependencies" "$arm64_install_dir/$prefix/lib"
+    "$fix_relative_dependencies" "$x86_64_install_dir/$prefix/lib"
 
-    sudo rm -rf "$prefix" # lipo fails upon 2nd run
-    sudo "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$arm64_install_dir" "$x86_64_install_dir"
+    rm -rf "$prefix" # lipo fails upon 2nd run
+    "${BASH_SOURCE%/*}/../macos/makeuniversal.sh" "$arm64_install_dir" "$x86_64_install_dir"
 fi
 
 if [ "$skip_env_var" == "no" ]; then

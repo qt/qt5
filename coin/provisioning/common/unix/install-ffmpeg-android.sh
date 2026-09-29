@@ -170,7 +170,7 @@ ffmpeg_source_dir=$(download_ffmpeg)
 build_ffmpeg_android() {
     local target_dir=$1
 
-    sudo mkdir -p "$target_dir"
+    mkdir -p "$target_dir"
 
     local api_version=24
 
@@ -207,10 +207,10 @@ build_ffmpeg_android() {
     pushd "$build_dir"
 
     # shellcheck disable=SC2086
-    sudo "$ffmpeg_source_dir/configure" $ffmpeg_config_options --prefix="$target_dir"
+    "$ffmpeg_source_dir/configure" $ffmpeg_config_options --prefix="$target_dir"
     # shellcheck disable=
 
-    sudo make install -j4
+    make install -j4
 
     popd
 
@@ -223,7 +223,7 @@ build_ffmpeg_android() {
         fi
         local set_rpath_arg="no"
         local readelf_path_arg="${toolchain_bin}/llvm-readelf"
-        sudo "$fix_dependencies" \
+        "$fix_dependencies" \
             "$target_dir" \
             "$libs_prefix" \
             "$set_rpath_arg" \

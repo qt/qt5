@@ -20,8 +20,10 @@
 # on iOS, iPadOS, tvOS, visionOS, and watchOS requires the XCFramework
 # to contain .framework bundles."
 
+source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
+
 default_target_platforms="arm64-iphoneos,arm64-simulator,x86_64-simulator"
-default_prefix="/usr/local/ios/ffmpeg"
+default_prefix="$(ffmpeg_default_install_prefix_base)/ios"
 
 usage() {
     cat <<EOF
@@ -42,7 +44,7 @@ Options:
   -h, --help            Show this help and exit.
 
 Example:
-  $(basename "${BASH_SOURCE[0]}") --os arm64-iphoneos,arm64-simulator --output /usr/local/ios/ffmpeg
+  $(basename "${BASH_SOURCE[0]}") --os arm64-iphoneos,arm64-simulator --output ~/my/ffmpeg/ios
 EOF
 }
 
@@ -112,8 +114,6 @@ for target_platform in "${target_platforms[@]}"; do
     fi
 done
 
-source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
-
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_version="n$(<"${ffmpeg_source_dir}/RELEASE")"
 if [ ! -n "$ffmpeg_version" ]; then
@@ -147,7 +147,7 @@ build_ffmpeg_ios() {
     fi
 
     local build_dir="$ffmpeg_source_dir/build_ios/$target_platform"
-    sudo mkdir -p "$build_dir"
+    mkdir -p "$build_dir"
     pushd "$build_dir"
 
     local sysroot;
@@ -179,9 +179,9 @@ build_ffmpeg_ios() {
         # Make sure to skip it during FFmpeg compilation.
         --disable-stripping
     )
-    sudo "$ffmpeg_source_dir/configure" "${config_parameters[@]}"
+    "$ffmpeg_source_dir/configure" "${config_parameters[@]}"
 
-    sudo make install DESTDIR="$build_dir/installed" -j4
+    make install DESTDIR="$build_dir/installed" -j4
     popd
 }
 
@@ -192,7 +192,7 @@ lipo_dylibs() {
     local target_sdk="$1"
 
     local sdk_lib_dir="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}/lib"
-    sudo mkdir -p "$sdk_lib_dir"
+    mkdir -p "$sdk_lib_dir"
 
     local ffmpeg_component_name
     for ffmpeg_component_name in $ffmpeg_components; do
@@ -204,7 +204,7 @@ lipo_dylibs() {
             fi
         done
 
-        sudo lipo -create \
+        lipo -create \
             "${input_dylibs[@]}" \
             -output "${sdk_lib_dir}/${ffmpeg_component_name}.dylib"
     done
@@ -264,7 +264,7 @@ build_info_plist() {
     <string></string>
 </dict>
 </plist>"
-    echo $info_plist | sudo tee ${file_path} 1>/dev/null
+    echo $info_plist | tee ${file_path} 1>/dev/null
 }
 
 # Create a 'traditional' framework from the corresponding dylib.
@@ -288,7 +288,7 @@ create_framework() {
     local ffmpeg_component_target_dylib="${ffmpeg_component_framework}/${ffmpeg_component_name}"
 
     # Make directory for the .framework
-    sudo mkdir -p "${ffmpeg_component_framework}"
+    mkdir -p "${ffmpeg_component_framework}"
 
     # Inser the Info.plist
     build_info_plist \
@@ -297,7 +297,7 @@ create_framework() {
         "io.qt.ffmpegkit.${ffmpeg_component_name}"
 
     # Copy in the dylib
-    sudo cp \
+    cp \
         "${ffmpeg_component_src_dylib}" \
         "${ffmpeg_component_target_dylib}"
 
@@ -306,7 +306,7 @@ create_framework() {
     # '@rpath/libavcodec.framework/libavcodec.dylib'.
 
     # Set the dylibs self-identity
-    sudo install_name_tool \
+    install_name_tool \
         -id "@rpath/${ffmpeg_component_name}.framework/${ffmpeg_component_name}" \
         "${ffmpeg_component_target_dylib}"
 
@@ -324,7 +324,7 @@ create_framework() {
             for ffdep in $ffmpeg_components; do
                 if [[ "$dep" == */${ffdep}.* ]]; then
                     echo "Rewriting dependency: $dep -> @rpath/${ffdep}.framework/${ffdep}"
-                    sudo install_name_tool -change \
+                    install_name_tool -change \
                         "$dep" \
                         "@rpath/${ffdep}.framework/${ffdep}" \
                         "$ffmpeg_component_target_dylib"
@@ -344,12 +344,12 @@ create_dsym() {
     local ffmpeg_build_path="${ffmpeg_source_dir}/build_ios/${target_sdk}/installed/${prefix}"
     local target_dylib="${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework/${ffmpeg_component_name}"
 
-    sudo dsymutil "${target_dylib}" \
+    dsymutil "${target_dylib}" \
         -o "${ffmpeg_build_path}/framework/${ffmpeg_component_name}.framework.dSYM"
 
     local strip;
     strip="$(xcrun -f --sdk ${target_sdk} strip)"
-    sudo ${strip} -x "${target_dylib}"
+    ${strip} -x "${target_dylib}"
 }
 
 # Create an .xcframework from the given component's framework and dSYM
@@ -366,8 +366,8 @@ create_xcframework() {
         xcframework_args+=(-framework "$fw" -debug-symbols "${fw}.dSYM")
     done
 
-    sudo mkdir -p "$prefix/lib/"
-    sudo xcodebuild -create-xcframework \
+    mkdir -p "$prefix/lib/"
+    xcodebuild -create-xcframework \
         "${xcframework_args[@]}" \
         -output "${prefix}/lib/${framework_name}.xcframework"
 }
@@ -398,7 +398,7 @@ done
 # xcframeworks are already installed directly into the target output directory.
 # We need to install headers. These are the same for all target platforms,
 # so we take them from the first one.
-sudo cp -r "${ffmpeg_source_dir}/build_ios/${target_platforms[0]}/installed/${prefix}/include" "$prefix"
+cp -r "${ffmpeg_source_dir}/build_ios/${target_platforms[0]}/installed/${prefix}/include" "$prefix"
 
 if [ "$skip_env_var" == "no" ]; then
     set_ffmpeg_dir_env_var "FFMPEG_DIR_IOS" "$prefix"

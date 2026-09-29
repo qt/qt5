@@ -2,38 +2,66 @@
 # Copyright (C) 2024 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
-download_ffmpeg() (
-    local version="${1:-"9.0.2"}"
-    local sha1="${2:-40c70cddcdc2e32b1b0fad2c85915c9145532452}"
+# Downloads a .tar.gz archive containing a single top-level directory and
+# extracts that directory to dest_dir, unless dest_dir already exists.
+# Prints dest_dir on stdout; all logging goes to stderr.
+download_and_extract_source() (
+    local name="$1"
+    local url_cached="$2"
+    local url_public="$3"
+    local sha1="$4"
+    local dest_dir="$5"
 
-    local ffmpeg_name="FFmpeg-n$version"
-    local target_dir="$HOME"
-    local ffmpeg_source_dir="$target_dir/$ffmpeg_name"
-
-    if [ ! -d "$ffmpeg_source_dir" ]; then
-        local url_public="https://ffmpeg.org/releases/ffmpeg-$version.tar.gz"
-        local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/ffmpeg-$version.tar.gz"
-        local app_prefix=""
-
+    if [ -d "$dest_dir" ]; then
+        >&2 echo "$name source already present at $dest_dir, skipping download"
+    else
         local temp_dir
         temp_dir=$(mktemp -d)
         trap 'rm -rf "$temp_dir"' EXIT
 
-        source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
-        InstallFromCompressedFileFromURL "$url_cached" "$url_public" "$sha1" "$temp_dir" "$app_prefix" > /dev/null
+        local archive="$temp_dir/archive.tar.gz"
+        local extract_dir="$temp_dir/extracted"
 
-        local extracted_dirs=("$temp_dir"/*/)
-        if [ "${#extracted_dirs[@]}" -ne 1 ] || [ ! -d "${extracted_dirs[0]}" ]; then
-            >&2 echo "Expected exactly one directory in the FFmpeg archive, got: ${extracted_dirs[*]}"
+        source "${BASH_SOURCE%/*}/../unix/DownloadURL.sh"
+        if ! DownloadURL "$url_cached" "$url_public" "$sha1" "$archive" > /dev/null; then
+            >&2 echo "Failed to download $name"
             exit 1
         fi
 
-        mkdir -p "$target_dir"
-        mv "${extracted_dirs[0]%/}" "$ffmpeg_source_dir"
+        mkdir -p "$extract_dir"
+        if ! tar -xzf "$archive" --directory "$extract_dir"; then
+            >&2 echo "Failed to extract $archive"
+            exit 1
+        fi
+
+        local extracted_dirs=("$extract_dir"/*/)
+        if [ "${#extracted_dirs[@]}" -ne 1 ] || [ ! -d "${extracted_dirs[0]}" ]; then
+            >&2 echo "Expected exactly one directory in the $name archive, got: ${extracted_dirs[*]}"
+            exit 1
+        fi
+
+        mkdir -p "$(dirname "$dest_dir")"
+        mv "${extracted_dirs[0]%/}" "$dest_dir"
     fi
 
-    echo "$ffmpeg_source_dir"
+    echo "$dest_dir"
 )
+
+download_ffmpeg() (
+    local version="${1:-"9.0.2"}"
+    local sha1="${2:-40c70cddcdc2e32b1b0fad2c85915c9145532452}"
+    local url_public="https://ffmpeg.org/releases/ffmpeg-$version.tar.gz"
+    local url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/ffmpeg-$version.tar.gz"
+
+    download_and_extract_source "FFmpeg $version" "$url_cached" "$url_public" "$sha1" "$HOME/FFmpeg-n$version"
+)
+
+# Must be appended by platform.
+# E.g "$(ffmpeg_default_install_prefix_base)/macos"
+# or "$(ffmpeg_default_install_prefix_base)/android/arm64"
+ffmpeg_default_install_prefix_base() {
+    echo "$HOME/ffmpeg-install"
+}
 
 get_ffmpeg_config_options() {
     local build_type="$1"

@@ -14,29 +14,28 @@ source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 build_type=$(get_ffmpeg_build_type "$1")
 
 ffmpeg_source_dir=$(download_ffmpeg)
-ffmpeg_name=$(basename "$ffmpeg_source_dir")
 ffmpeg_config_options=$(get_ffmpeg_config_options "$build_type")
-default_prefix="/usr/local/$ffmpeg_name"
+default_prefix="$(ffmpeg_default_install_prefix_base)/linux"
 prefix="${2:-$default_prefix}"
 pkgconfig_path="$PKG_CONFIG_PATH"
 
 install_ff_nvcodec_headers() {
-    local nv_codec_version="12.0.16.1" # use 11.x.x.x to ensure compatibility with 520 nvidia drivers
-    local nv_codec_url_public="https://github.com/FFmpeg/nv-codec-headers/releases/download/n12.0.16.1/nv-codec-headers-$nv_codec_version.tar.gz"
+    local nv_codec_version="12.0.16.1"
+    local nv_codec_url_public="https://github.com/FFmpeg/nv-codec-headers/releases/download/n$nv_codec_version/nv-codec-headers-$nv_codec_version.tar.gz"
     local nv_codec_url_cached="http://ci-files01-hki.ci.qt.io/input/ffmpeg/nv-codec-headers/nv-codec-headers-$nv_codec_version.tar.gz"
     local nv_codec_sha1="df7239777af15af5d7e563d2af0deff874c3b770"
-    local target_dir="$HOME"
-    local nv_codec_dir="$target_dir/nv-codec-headers-$nv_codec_version"
 
-    if [ ! -d  "$nv_codec_dir" ]; then
-        source "${BASH_SOURCE%/*}/../unix/InstallFromCompressedFileFromURL.sh"
-        InstallFromCompressedFileFromURL "$nv_codec_url_cached" "$nv_codec_url_public" "$nv_codec_sha1" "$target_dir" ""
-    fi
+    local nv_codec_dir
+    nv_codec_dir=$(download_and_extract_source "nv-codec-headers $nv_codec_version" \
+        "$nv_codec_url_cached" "$nv_codec_url_public" "$nv_codec_sha1" \
+        "$HOME/nv-codec-headers-$nv_codec_version")
 
-    sudo make -C "$nv_codec_dir" install -j
+    # The headers are only needed while configuring and building FFmpeg,
+    # so install them next to the FFmpeg build instead of into /usr/local.
+    local nv_codec_prefix="$ffmpeg_source_dir/build/nv-codec-headers"
+    make -C "$nv_codec_dir" install PREFIX="$nv_codec_prefix"
 
-    # Might be not detected by default on RHEL
-    pkgconfig_path="$pkgconfig_path:/usr/local/lib/pkgconfig"
+    pkgconfig_path="$nv_codec_prefix/lib/pkgconfig:$pkgconfig_path"
 }
 
 fix_openssl3_pc_files() {
@@ -78,7 +77,8 @@ build_ffmpeg() {
     PKG_CONFIG_PATH="$pkgconfig_path" "$ffmpeg_source_dir/configure" $ffmpeg_config_options --prefix="$prefix"
     # shellcheck disable=
 
-    # on RHEL patchelf is not visible under sudo, so we install to a temporary directory
+    # Install to a staging directory first, so fix_ffmpeg_dependencies.sh can
+    # patch the libraries before they are moved into the final prefix.
     make install DESTDIR="$build_dir/installed" -j
     popd
 }
@@ -99,6 +99,6 @@ if [ "$build_type" == "shared" ]; then
     "$fix_dependencies" "$output_dir"
 fi
 
-sudo mkdir -p "$prefix"
-sudo mv "$output_dir"/* "$prefix"
+mkdir -p "$prefix"
+mv "$output_dir"/* "$prefix"
 set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
