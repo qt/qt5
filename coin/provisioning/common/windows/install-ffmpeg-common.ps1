@@ -123,7 +123,12 @@ function InstallFfmpeg {
 
     Write-Host "MSYS cmd:"
     Write-Host $cmd
-    $buildResult = Start-Process -NoNewWindow -Wait -PassThru -ErrorAction Stop -FilePath "$bash" -ArgumentList ("-lc", "`"$cmd`"")
+    # Don't use Start-Process -Wait. It waits for the whole process tree, which hangs when
+    # MSVC leaves detached helpers behind (e.g. vctip.exe). Wait for bash itself instead.
+    $buildResult = Start-Process -NoNewWindow -PassThru -ErrorAction Stop -FilePath "$bash" -ArgumentList ("-lc", "`"$cmd`"")
+    # Cache the process handle so ExitCode stays available after the process exits
+    $null = $buildResult.Handle
+    $buildResult.WaitForExit()
 
     $env:PATH = $oldPath
 
