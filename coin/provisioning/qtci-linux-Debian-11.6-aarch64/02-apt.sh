@@ -68,6 +68,7 @@ installPackages+=(libxss-dev)
 installPackages+=(rustc)
 installPackages+=(bindgen)
 installPackages+=(clang)
+installPackages+=(libclang-dev)
 installPackages+=(python3-html5lib)
 #
 ## Common event loop handling

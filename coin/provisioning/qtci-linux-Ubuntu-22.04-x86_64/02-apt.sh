@@ -72,10 +72,10 @@ installPackages+=(libvpx-dev)
 installPackages+=(libxkbfile-dev)
 installPackages+=(libxshmfence-dev)
 installPackages+=(libxss-dev)
-installPackages+=(rustc)
-installPackages+=(bindgen)
 installPackages+=(clang)
+installPackages+=(libclang-dev)
 installPackages+=(python3-html5lib)
+installPackages+=(snapd)
 
 # Common event loop handling
 installPackages+=(libglib2.0-dev)
