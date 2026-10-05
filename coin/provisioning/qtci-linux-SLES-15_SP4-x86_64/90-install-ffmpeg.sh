@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../common/linux/install-ffmpeg-linux.sh" "static"
+source "${BASH_SOURCE%/*}/../common/linux/install-ffmpeg-linux.sh" --build-type static

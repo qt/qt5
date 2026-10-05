@@ -3,20 +3,73 @@
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 # This script builds and installs FFmpeg static or shared (default) libs
-# It can take an optional output parameter for installation:
-#
-# install-ffmpeg-linx.sh shared ~/my/install/path
-
-set -ex
 
 source "${BASH_SOURCE%/*}/../unix/ffmpeg-installation-utils.sh"
 
-build_type=$(get_ffmpeg_build_type "$1")
+default_prefix="$(ffmpeg_default_install_prefix_base)/linux"
+
+usage() {
+    cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [--build-type <type>] [--output <dir>] [--skip-env-var]
+
+Build FFmpeg libraries for Linux.
+
+Options:
+  --build-type <type>   One of: shared, static. Defaults to shared.
+  --output <dir>        Directory to install FFmpeg into.
+                        Defaults to $default_prefix.
+  --skip-env-var        Don't set the FFMPEG_DIR environment variable to the
+                        installation directory.
+  -h, --help            Show this help and exit.
+
+Example:
+  $(basename "${BASH_SOURCE[0]}") --build-type static --output ~/my/install/path
+EOF
+}
+
+build_type="shared"
+prefix="$default_prefix"
+skip_env_var="no"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        --skip-env-var)
+            skip_env_var="yes"
+            ;;
+        --build-type|--output)
+            if [ $# -lt 2 ]; then
+                echo "Error: option '$1' requires a value." >&2
+                exit 2
+            fi
+            case "$1" in
+                --build-type) build_type="$2" ;;
+                --output) prefix="$2" ;;
+            esac
+            shift
+            ;;
+        *)
+            echo "Error: unknown argument '$1'." >&2
+            echo "" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+if [ "$build_type" != "shared" ] && [ "$build_type" != "static" ]; then
+    echo "Error: --build-type must be 'shared' or 'static'. Got: '$build_type'" >&2
+    exit 2
+fi
+
+set -ex
 
 ffmpeg_source_dir=$(download_ffmpeg)
 ffmpeg_config_options=$(get_ffmpeg_config_options "$build_type")
-default_prefix="$(ffmpeg_default_install_prefix_base)/linux"
-prefix="${2:-$default_prefix}"
 pkgconfig_path="$PKG_CONFIG_PATH"
 
 install_ff_nvcodec_headers() {
@@ -101,4 +154,6 @@ fi
 
 mkdir -p "$prefix"
 mv "$output_dir"/* "$prefix"
-set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
+if [ "$skip_env_var" == "no" ]; then
+    set_ffmpeg_dir_env_var "FFMPEG_DIR" "$prefix"
+fi
