@@ -92,6 +92,59 @@ Configurations:
         'QT_QPA_PLATFORM=offscreen'
     ]
     Platform dependency: 'ubuntu-24.04-arm64'
+
+# Build on Ubuntu 26.04 ARM64 Wayland and test on offscreen and Wayland later
+-
+    Id: 'ubuntu-26.04-arm64-developer-build'
+    Template: 'qtci-linux-Ubuntu-26.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'StandaloneExamples']
+    Configure arguments: '-make examples -developer-build -c++std c++20 -linker lld -qtlibinfix TestInfix -qtnamespace TestNamespace -qpa offscreen\;xcb'
+    Environment variables: [
+        'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE',
+        'VCPKG_HOST_TRIPLET=arm64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
+    ]
+-
+    Id: 'ubuntu-26.04-arm64'
+    Template: 'qtci-linux-Ubuntu-26.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['Sccache', 'UseConfigure', 'DoNotRunTests', 'GenerateSBOM', 'VerifySBOM']
+    Configure arguments: '-nomake examples -release -force-debug-info -separate-debug-info -headersclean -qt-libjpeg -qt-libpng -qt-pcre -qt-harfbuzz -qt-doubleconversion -no-libudev -no-feature-liburing -bundled-xcb-xinput -qpa offscreen\;xcb'
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'COMMON_TEST_CMAKE_ARGS=-DQT_SKIP_DOCKER_COMPOSE=ON',
+        'NON_QTBASE_CMAKE_ARGS=-DFFMPEG_DIR={{.Env.FFMPEG_DIR}} -DQT_DEPLOY_FFMPEG=TRUE -DINPUT_headersclean=ON -DINPUT_tiff=qt -DINPUT_webp=qt',
+        'VCPKG_HOST_TRIPLET=arm64-linux-qt',
+        'VCPKG_TARGET_TRIPLET=arm64-linux-qt',
+    ]
+# Test on Ubuntu 26.04 ARM64 Wayland
+-
+    Id: 'ubuntu-26.04-arm64-developer-build-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-26.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'InsignificantTests', 'VerboseCTestOutput']
+    Platform dependency: 'ubuntu-26.04-arm64-developer-build'
+-
+    Id: 'ubuntu-26.04-arm64-wayland-tests'
+    Template: 'qtci-linux-Ubuntu-26.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'InsignificantTests', 'VerboseCTestOutput']
+    Platform dependency: 'ubuntu-26.04-arm64'
+# Test on Ubuntu 26.04 ARM64 offscreen
+-
+    Id: 'ubuntu-26.04-arm64-offscreen-tests'
+    Template: 'qtci-linux-Ubuntu-26.04-aarch64-51'
+    Compiler: 'GCC'
+    Features: ['TestOnly', 'InsignificantTests']
+    Environment variables: [
+        'CMAKE_ARGS=-DOpenGL_GL_PREFERENCE=LEGACY',
+        'QT_QPA_OFFSCREEN_NO_GLX=1',
+        'QT_QPA_PLATFORM=offscreen'
+    ]
+    Platform dependency: 'ubuntu-26.04-arm64'
+
 # Build on Ubuntu 24.04 x64 Wayland and test on both X11 and Wayland (Wayland=default)
 -
     Id: 'ubuntu-24.04-x64-developer-build'
