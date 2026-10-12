@@ -5,7 +5,24 @@ Include: [
     cmake_platforms_qemu_vxworks_tests_static.yaml,
     address_sanitizer_platforms.yaml
     ]
-Configurations: []
+
+Configurations:
+
+# Provide platform configs to run older / native mediabackend tests.
+# Relevant test configurations are applied in qtmultimedia repo.
+-
+    Id: 'macos-26-arm64-darwin-mediabackend-tests'
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Features: ['Sccache', 'TestOnly', 'DarwinNativeMediaBackendTests']
+    Platform dependency: 'macos-universal-on-arm64'
+-
+    Id: 'windows-11_24H2-msvc2022-windows-mediabackend-tests'
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'MSVC2022'
+    Features: ['TestOnly', 'WindowsNativeMediaBackendTests']
+    Platform dependency: 'windows-11_24H2-msvc2022'
+
 Overrides:
 # Remove imx8 tests.
 -
