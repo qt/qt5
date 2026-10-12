@@ -1,0 +1,32 @@
+Version: 2
+Module only: True
+Configurations:
+-
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Features: ['DisableTests']
+-
+    Template: 'qtci-linux-Ubuntu-24.04-aarch64-52'
+    Compiler: 'GCC'
+    Features: ['DisableTests']
+-
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Features: ['DisableTests']
+-
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'Clang'
+    Features: ['DisableTests']
+    Environment variables: [
+        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
+        'ELFUTILS_TARGET=x86_64',
+    ]
+-
+    Template: 'qtci-windows-11_24H2-x86_64-73'
+    Compiler: 'Clang'
+    Target arch: 'arm64'
+    Features: ['DisableTests']
+    Environment variables: [
+        'Path=C:\llvm-mingw\bin;{{.Env.Path}}',
+        'ELFUTILS_TARGET=arm64',
+    ]
