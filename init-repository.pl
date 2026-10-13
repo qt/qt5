@@ -9,6 +9,13 @@ use warnings;
 package Qt::InitRepository;
 
 
+sub printDeprecationWarning
+{
+    my $script = $^O eq 'MSWin32' ? 'init-repository.bat' : './init-repository';
+    warn("Warning: init-repository.pl is deprecated and will be removed in a future Qt "
+        . "version. Use '$script' instead.\n");
+}
+
 sub printUsage($)
 {
     my ($ex) = @_;
@@ -127,6 +134,7 @@ Options:
         missing modules will fall back to the canonical URLs.
 
 EOF
+    printDeprecationWarning();
     exit($ex);
 }
 
@@ -628,6 +636,8 @@ sub git_install_hooks
 sub run
 {
     my ($self) = @_;
+
+    printDeprecationWarning();
 
     $self->check_if_already_initialized;
 
