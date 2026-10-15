@@ -39,5 +39,4 @@ Overrides:
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
 -
     Id: 'qemu-arm64-developer-build'
-    -Features: ['InsignificantTests']
     +Environment variables: ['NON_QTBASE_CMAKE_ARGS=-DQT_FEATURE_gstreamer_qt_api=ON -DBUILD_WITH_PCH=OFF']
