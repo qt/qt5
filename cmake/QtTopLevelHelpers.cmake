@@ -936,6 +936,7 @@ endfunction()
 function(qt_internal_checkout module revision)
     set(opt_args
         SHOW_PROGRESS
+        FORCE_CHECKOUT
     )
     set(single_args
         REMOTE_NAME
@@ -967,9 +968,14 @@ function(qt_internal_checkout module revision)
         ${shallow_args}
     )
 
+    set(force_args "")
+    if(arg_FORCE_CHECKOUT)
+        list(APPEND force_args "--force")
+    endif()
+
     message(NOTICE "Checking '${module}' out to revision '${revision}'")
     execute_process(
-        COMMAND "git" "checkout" "${revision}"
+        COMMAND "git" "checkout" ${force_args} "${revision}"
         WORKING_DIRECTORY "${arg_WORKING_DIRECTORY}/${module}"
         RESULT_VARIABLE git_result
         ${swallow_output}
@@ -977,7 +983,7 @@ function(qt_internal_checkout module revision)
     if (git_result EQUAL 128)
         message(WARNING "${git_output}, trying detached checkout")
         execute_process(
-            COMMAND "git" "checkout" "--detach" "${revision}"
+            COMMAND "git" "checkout" ${force_args} "--detach" "${revision}"
             WORKING_DIRECTORY "${arg_WORKING_DIRECTORY}/${module}"
             RESULT_VARIABLE git_result
             ${swallow_output}
@@ -1178,6 +1184,7 @@ function(qt_internal_sync_to module)
     set(opt_args
         VERBOSE
         SHOW_PROGRESS
+        FORCE_CHECKOUT
     )
     set(single_args
         SYNC_REF
@@ -1198,6 +1205,11 @@ function(qt_internal_sync_to module)
         set(show_progress_args SHOW_PROGRESS)
     endif()
 
+    set(force_args "")
+    if(arg_FORCE_CHECKOUT)
+        set(force_args FORCE_CHECKOUT)
+    endif()
+
     if(arg_REMOTE_NAME)
         set(remote_name "${arg_REMOTE_NAME}")
     else()
@@ -1215,7 +1227,7 @@ function(qt_internal_sync_to module)
 
         qt_internal_find_modules(modules)
         foreach(module IN LISTS modules)
-            qt_internal_checkout("${module}" "${revision}" ${show_progress_args}
+            qt_internal_checkout("${module}" "${revision}" ${show_progress_args} ${force_args}
                 REMOTE_NAME "${remote_name}"
                 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             )
@@ -1266,7 +1278,7 @@ function(qt_internal_sync_to module)
     endif()
 
     # Check out the submodule to the given refspec.
-    qt_internal_checkout("${module}" "${revision}" ${show_progress_args}
+    qt_internal_checkout("${module}" "${revision}" ${show_progress_args} ${force_args}
         REMOTE_NAME "${remote_name}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
@@ -1284,6 +1296,7 @@ function(qt_internal_sync_to module)
 
     set(revision "")
     set(should_visit_dependencies "1")
+    set(forced_dependencies "")
     # Load all dependencies for $module, then iterate over the dependencies in reverse order,
     # and check out the first that isn't already at the required revision.
     # Repeat everything (we need to reload dependencies after each checkout) until no more checkouts
@@ -1337,7 +1350,13 @@ function(qt_internal_sync_to module)
                 OUT_VAR head_ref
             )
 
-            if("${head_ref}" STREQUAL "${revision}")
+            # A forced checkout resets local changes, so do it once per dependency.
+            set(is_forced_dependency FALSE)
+            if(arg_FORCE_CHECKOUT AND NOT dependency IN_LIST forced_dependencies)
+                set(is_forced_dependency TRUE)
+            endif()
+
+            if("${head_ref}" STREQUAL "${revision}" AND NOT is_forced_dependency)
                 message(DEBUG
                     "The dependency ${dependency} is already checked out to ${revision}. "
                     "Continuing to next dependency."
@@ -1345,10 +1364,11 @@ function(qt_internal_sync_to module)
                 continue()
             endif()
 
-            qt_internal_checkout("${dependency}" "${revision}" ${show_progress_args}
+            qt_internal_checkout("${dependency}" "${revision}" ${show_progress_args} ${force_args}
                 REMOTE_NAME "${remote_name}"
                 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             )
+            list(APPEND forced_dependencies "${dependency}")
             set(should_visit_dependencies 1)
 
             # Start revisiting the dependencies in the while loop.

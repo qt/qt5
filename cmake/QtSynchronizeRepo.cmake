@@ -18,6 +18,9 @@
 #
 # SHOW_PROGRESS - passes --progress to git submodule update operations
 #
+# FORCE_CHECKOUT - passes --force to git checkout, discarding local changes in the synchronized
+# repos.
+#
 # VERBOSE - enables more verbose output
 #
 # The script also takes the following environment variables:
@@ -51,6 +54,10 @@ else()
 
     if(SHOW_PROGRESS)
         list(APPEND args SHOW_PROGRESS)
+    endif()
+
+    if(FORCE_CHECKOUT)
+        list(APPEND args FORCE_CHECKOUT)
     endif()
 
     if(VERBOSE)
