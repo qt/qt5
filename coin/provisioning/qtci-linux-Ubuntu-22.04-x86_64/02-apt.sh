@@ -26,6 +26,7 @@ function set_internal_repo {
     deb [arch=amd64 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 jammy-security-amd64 main restricted universe multiverse
     deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 jammy-i386 main restricted universe multiverse
     deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 jammy-updates-i386 main restricted universe multiverse
+    deb [arch=i386 trusted=yes] http://repo-clones-apt.ci.qt.io:8080 jammy-security-i386 main restricted universe multiverse
 EOC
 }
 
