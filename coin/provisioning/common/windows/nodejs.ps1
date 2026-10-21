@@ -6,23 +6,17 @@
 # This script will install Node.js
 # Needed by QtWebengine
 
-$version = "20.7.0"
+$version = "24.22.1"
 $cpu_arch = Get-CpuArchitecture
 switch ($cpu_arch) {
     arm64 {
         $arch = "arm64"
-        $sha256 = "ab4b990c2c1d4a55d565813e7a2f71669dc4d1005faa47185d30bde4416975ab"
-        $version = "20.12.2" # TODO: ARM starts with newer, LTS
+        $sha256 = "aa26929d4ca7754aac3bd7fd018eb5c1c7961d00adf8aebf35c435d66edef62e"
         Break
     }
     x64 {
         $arch = "x64"
-        $sha256 = "b3e5cbf8e247c75f9ddd235d49cfe40f25dde65bdd0eec4cefbca2805d80376b"
-        Break
-    }
-    x86 {
-        $arch = "x86"
-        $sha256 = "d6a3c63a5ae71374c144a33c418ab96be497b08df0e9f51861a78127db03aeb5"
+        $sha256 = "bf9245db3a3bb281da45fee3974a74403687ea6030587bee4fd992efc822c35c"
         Break
     }
     default {
