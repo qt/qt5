@@ -8,5 +8,3 @@
 # Downloading https://www.python.org/ftp/python/3.14.3/python-3.14.3-arm64.exe
 . "$PSScriptRoot\..\common\windows\python3.ps1" 64 "1465dedffbc0756f2a66af30e9fbb770a6e55dc7" "C:\Python314" "3.14.3" $true
 & "$PSScriptRoot\..\common\windows\python-pip-security.ps1" "C:\Python314"
-# default
-. "$PSScriptRoot\..\common\windows\python3.ps1" 64 "9e0487af5f0472978b7b6d4f4d3d8fd56865ff97" "C:\Python311_64" "3.11.9"
