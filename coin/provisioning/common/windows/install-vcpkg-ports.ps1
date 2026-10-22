@@ -4,6 +4,7 @@
 param([string]$arch="x64")
 
 . "$PSScriptRoot\helpers.ps1"
+. "$PSScriptRoot\vcpkg-error-logs.ps1"
 
 Write-Host "Installing vcpkg ports"
 $vcpkgExe = "$env:VCPKG_ROOT\vcpkg.exe"
@@ -11,7 +12,12 @@ $vcpkgRoot = "$env:VCPKG_ROOT"
 $vcpkgInstallRoot = "$arch-windows-qt-tmp"
 
 Set-Location -Path "$PSScriptRoot\..\shared\vcpkg"
-Run-Executable "$vcpkgExe" "install --triplet $arch-windows-qt --x-install-root $vcpkginstallroot --debug"
+try {
+    Run-Executable "$vcpkgExe" "install --triplet $arch-windows-qt --x-install-root $vcpkginstallroot --debug"
+} catch {
+    Write-VcpkgErrorLogs
+    throw
+}
 
 New-Item -Path "$vcpkgRoot" -Name "installed" -ItemType "directory" -Force
 Copy-Item -Path "$vcpkginstallroot\*" -Destination "$vcpkgRoot\installed" -Recurse -Force
