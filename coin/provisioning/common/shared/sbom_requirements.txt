@@ -3,6 +3,8 @@ spdx-tools>=0.8.0 ; python_version >= '3.9'
 ntia-conformance-checker ; python_version >= '3.9'
 sbomaudit ; python_version >= '3.9'
 sbom2doc ; python_version >= '3.9'
+# reportlab is an implicit dependency of sbom2doc
+reportlab==5.0.1
 reuse<=5.1.1 ; python_version == '3.9'
 reuse==6.2.0 ; python_version >= '3.10'
 cyclonedx-python-lib==11.12.0 ; python_version >= '3.9'
