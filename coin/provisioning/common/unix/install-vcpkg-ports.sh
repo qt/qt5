@@ -4,6 +4,8 @@
 
 # shellcheck source=../unix/SetEnvVar.sh
 source "${BASH_SOURCE%/*}/../unix/SetEnvVar.sh"
+# shellcheck source=../unix/vcpkg-error-logs.sh
+source "${BASH_SOURCE%/*}/../unix/vcpkg-error-logs.sh"
 
 echo "Installing vcpkg ports"
 
@@ -12,7 +14,10 @@ pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
 install_root=$1-tmp
 vcpkg_extra_args=$2
 
-"$VCPKG_ROOT/vcpkg" install --triplet $1 --x-install-root $install_root --debug $vcpkg_extra_args
+if ! "$VCPKG_ROOT/vcpkg" install --triplet $1 --x-install-root $install_root --debug $vcpkg_extra_args; then
+    printVcpkgErrorLogs
+    exit 1
+fi
 
 cmake "-DVCPKG_EXECUTABLE=$VCPKG_ROOT/vcpkg"\
     "-DVCPKG_INSTALL_ROOT=$PWD/$install_root"\

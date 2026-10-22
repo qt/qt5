@@ -2,11 +2,20 @@
 # Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
+# shellcheck source=../unix/vcpkg-error-logs.sh
+source "${BASH_SOURCE%/*}/../unix/vcpkg-error-logs.sh"
+
 echo "Installing vcpkg android ports"
 
 pushd "${BASH_SOURCE%/*}/../shared/vcpkg" || exit
-"$VCPKG_ROOT/vcpkg" install --triplet x86-android-qt --x-install-root x86-android-qt-tmp --debug
-"$VCPKG_ROOT/vcpkg" install --triplet x86_64-android-qt --x-install-root x86_64-android-qt-tmp --debug
+if ! "$VCPKG_ROOT/vcpkg" install --triplet x86-android-qt --x-install-root x86-android-qt-tmp --debug; then
+    printVcpkgErrorLogs
+    exit 1
+fi
+if ! "$VCPKG_ROOT/vcpkg" install --triplet x86_64-android-qt --x-install-root x86_64-android-qt-tmp --debug; then
+    printVcpkgErrorLogs
+    exit 1
+fi
 
 mkdir -p "$VCPKG_ROOT/installed"
 cp -R x86-android-qt-tmp/* "$VCPKG_ROOT/installed/"
