@@ -8,5 +8,5 @@
 #  - version
 #  - Optional true/false if set as default with PYTHON3/PIP3_PATH variables, default false
 
-. "$PSScriptRoot\..\common\windows\python3.ps1" 64 "06a2d048c4bdcaba0c924265c37dd0c5eb373821" "C:\Python314_64" "3.14.3" $true
+. "$PSScriptRoot\..\common\windows\python3.ps1" 64 "a24ea4573b87718cb52f8fbd7b28930f007e8e35" "C:\Python314_64" "3.14.10" $true
 & "$PSScriptRoot\..\common\windows\python-pip-security.ps1" "C:\Python314_64"
