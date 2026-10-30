@@ -22,10 +22,10 @@ DownloadAndExtract () {
 
 
 # Axivion Bauhaus Suite
-version="7.11.3"
-sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/bauhaus-suite-$version-x86_64-gnu_linux.tar.gz"
+version="7.12.7"
+sourceFile="http://ci-files01-hki.ci.qt.io/input/axivion/Axivion-$version-x86_64-gnu_linux.tar.gz"
 targetFile="bauhaus-suite.tar.gz"
-sha1="8ca558908b38ca99500b7e0687609a1531b19121"
+sha1="e2a3f2121460e94c72b850b710d8083997c8470b"
 cd "$HOME"
 DownloadAndExtract "$sourceFile" "$sha1" "$targetFile"
 
