@@ -3,7 +3,7 @@
   "default-registry": {
     "kind": "git",
     "repository": "https://git.qt.io/qtbuildsystem/vcpkg",
-    "baseline": "a3e9002baa5eb8ac3bd12ef85818ffe5c0c7322d"
+    "baseline": "9241ad16dd89da15d6a4e265c3d0f94bfd32b8df"
   },
   "overlay-triplets": [ "./../triplets" ]
 }
