@@ -4,22 +4,24 @@
 
 # Install Git
 
-$version = "2.51.1"
+$version = "2.56.0.3"
 if (Is64BitWinHost) {
     $arch = "-64-bit"
-    $sha1 = "831c8968c709af0cbd20a634572b44293db43bec"
+    $checksum = "dc6d3db061999136e139f31376c5582a9ed6f36a4ea12f15e54ad7fa2bfc0bf2"
+    $release = "2.56.0.windows.3"
 } else {
     $version = "2.36.1"
     $arch = "-32-bit"
-    $sha1 = "1bbe040254c236607ccb84e14a3f608b1a4e959a"
+    $checksum = "1bbe040254c236607ccb84e14a3f608b1a4e959a"
+    $release = "2.36.1.windows.1"
 }
 $gitPackage = "C:\Windows\Temp\Git-" + $version + $arch + ".exe"
 $url_cache = "\\ci-files01-hki.ci.qt.io\provisioning\windows\Git-" + $version + $arch + ".exe"
-$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $version + ".windows.1/Git-" + $version + $arch + ".exe"
+$url_official = "https://github.com/git-for-windows/git/releases/download/v" + $release + "/Git-" + $version + $arch + ".exe"
 
 Write-Host "Fetching Git $version..."
 Download $url_official $url_cache $gitPackage
-Verify-Checksum $gitPackage $sha1
+Verify-Checksum $gitPackage $checksum
 Write-Host "Installing Git $version..."
 Run-Executable "$gitPackage" "/SILENT /COMPONENTS=`"icons,ext\reg\shellhere,assoc,assoc_sh`""
 Write-Host "Adding SSH and SCP to environment variables for RTA"
