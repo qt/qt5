@@ -24,6 +24,12 @@
 # be cherry-picked to automatically.
 #Pick-to: 
 #
+# One test function per entry, in the form tst_Class::function.
+# Use Flaky-test-function when a commit improves, but does not fully
+# fix, a flaky test function. CI then does not require the function
+# to pass repeatedly, as it does for new or modified tests.
+#Flaky-test-function: 
+#
 # ==[ Please wrap at 72 characters ]===================================|
 #
 # Remember to read http://wiki.qt.io/Commit_Policy
