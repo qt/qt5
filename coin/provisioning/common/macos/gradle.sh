@@ -13,11 +13,10 @@ echo "Caching Gradle distributions and dependencies"
 
 gradle_project_source="${BASH_SOURCE%/*}/../shared/gradle/project"
 gradleDistributionMirror="http://ci-files01-hki.ci.qt.io/input/gradle"
-gradleInitScript="init.d/nexus-mirror.gradle"
 
 # Route every Gradle repository through the internal Nexus mirror.
 mkdir -p "$HOME/.gradle/init.d"
-cp "${BASH_SOURCE%/*}/../shared/gradle/$gradleInitScript" "$HOME/.gradle/$gradleInitScript"
+cp "${BASH_SOURCE%/*}/../shared/gradle/init.d/"*.gradle "$HOME/.gradle/init.d/"
 
 # Returns the hash of the Gradle binary distribution for a given Gradle version.
 # Gradle calculates the hash as base36(md5(distributionUrl)).

@@ -7,11 +7,10 @@ Write-Host "Caching Gradle distributions and dependencies"
 
 $gradleProjectSource = "$PSScriptRoot\..\shared\gradle\project"
 $gradleDistributionMirror = "\\ci-files01-hki.ci.qt.io\provisioning\gradle"
-$gradleInitScript = "init.d\nexus-mirror.gradle"
 
 # Route every Gradle repository through the internal Nexus mirror.
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.gradle\init.d" | Out-Null
-Copy-Item -Force "$PSScriptRoot\..\shared\gradle\$gradleInitScript" "$env:USERPROFILE\.gradle\$gradleInitScript"
+Copy-Item -Force "$PSScriptRoot\..\shared\gradle\init.d\*.gradle" "$env:USERPROFILE\.gradle\init.d\"
 
 # Returns the hash of the Gradle binary distribution for a given Gradle version.
 # Gradle calculates the hash as base36(md5(distributionUrl)).
