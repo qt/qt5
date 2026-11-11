@@ -49,8 +49,8 @@ SetEnvVar "HARMONYOS_SDK_ROOT_CURRENT" "$harmonycltRoot"
 sudo ln -s "$harmonycltRoot" "$sdkTargetFolder"
 SetEnvVar "HARMONYOS_SDK_ROOT" "$sdkTargetFolder"
 
-cltVersionNext="26.0.0.821"
-cltSha1Next="d89fc1a09ceb5b25a350695068fe9918912785d2"
+cltVersionNext="26.0.0.865"
+cltSha1Next="d5ae5a219a5bb4febf04ab534b96f1d9a56d261d"
 InstallCommandLineTools $cltVersionNext $cltSha1Next
 SetEnvVar "HARMONYOS_SDK_ROOT_NEXT" "$harmonycltRoot"
 
