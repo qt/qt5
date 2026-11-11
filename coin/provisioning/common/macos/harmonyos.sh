@@ -20,9 +20,9 @@ sudo mkdir -p "$sdkTargetFolder"
 
 basePath="http://ci-files01-hki.ci.qt.io/input/harmonyos"
 
-toolsVersion="6.1.0.860"
-toolsFile="commandline-tools-mac-arm64-6.1.0.860.zip"
-toolsSha1="4ba9df069fc5c651753c74297d723a2461be12e9"
+toolsVersion="26.0.0.865"
+toolsFile="commandline-tools-mac-arm64-26.0.0.865.zip"
+toolsSha1="7966876ef350875630014ae918155c7d301c99dd"
 
 toolsTargetFile="/tmp/$toolsFile"
 toolsSourceFile="$basePath/$toolsFile"
