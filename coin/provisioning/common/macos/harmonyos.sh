@@ -33,26 +33,9 @@ echo "Unzipping HarmonyOS Tools to '$targetFolder'"
 sudo unzip -q "$toolsTargetFile" -d "$targetFolder"
 rm "$toolsTargetFile"
 
-patchFile="harmonyos_sdk_patches.zip"
-patchSha1="7f912104a5600bc176891bc6e9d97732f4266ad6"
-
-patchTargetFile="/tmp/$patchFile"
-patchSourceFile="$basePath/$patchFile"
-patchTargetFolder="$targetFolder/harmonyos_sdk_patches"
-
-echo "Download and unzip HarmonyOS SDK patches"
-DownloadURL "$patchSourceFile" "$patchSourceFile" "$patchSha1" "$patchTargetFile"
-echo "Unzipping HarmonyOS SDK patches to '$targetFolder'"
-sudo unzip -q "$patchTargetFile" -d "$targetFolder"
-rm "$patchTargetFile"
-
 echo "Changing ownership of HarmonyOS files."
 sudo chown -R qt:wheel "$sdkTargetFolder"
 sudo chmod -R 755 $sdkTargetFolder
-sudo chown -R qt:wheel "$patchTargetFolder"
-sudo chmod -R 755 $patchTargetFolder
-
-echo "Patching HarmonyOS SDK"
 
 sdkRootFolder="$sdkTargetFolder/sdk/default/openharmony"
 echo "Checking the contents of HarmonyOS SDK..."
