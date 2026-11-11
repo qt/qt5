@@ -45,6 +45,7 @@
     {
       "name": "freetype",
       "default-features": false,
+      "features": [ "brotli", "png", "zlib" ],
       "platform": "ohos"
     },
     {
