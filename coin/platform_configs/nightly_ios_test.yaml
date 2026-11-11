@@ -13,7 +13,7 @@ Configurations:
     Target os: 'IOS_ANY'
     Target arch: 'arm64'
     Platform dependency: 'ios-arm64-simulator'
-    Features: ['TestOnly', 'Insignificant', 'DoNotAbortTestingOnFirstFailure']
+    Features: ['TestOnly', 'DoNotAbortTestingOnFirstFailure']
     Environment variables: [
         'APPLE_SIMULATOR_DEVICE_TYPE=com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB',
     ]
