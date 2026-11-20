@@ -10,7 +10,7 @@ Configurations:
     Id: 'ubuntu-26.04-x64-gstreamer-mediabackend-nightly-tests'
     Template: 'qtci-linux-Ubuntu-26.04-x86_64-51'
     Compiler: 'GCC'
-    Features: ['TestOnly', 'InsignificantTests', 'DoNotAbortTestingOnFirstFailure', 'GStreamerMediaBackendNightlyTests']
+    Features: ['TestOnly', 'DoNotAbortTestingOnFirstFailure', 'GStreamerMediaBackendNightlyTests']
     Platform dependency: 'ubuntu-26.04-x64'
 Overrides:
 -
