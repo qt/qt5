@@ -17,6 +17,9 @@ Include: [
   cmake_platforms_target_android.yaml: [
     "android-arm64-on-macos"
   ],
+  cmake_platforms_target_harmonyos.yaml: [
+    "harmonyos-26-arm64-on-linux"
+  ],
   cmake_platforms_qemu.yaml: [
     "qemu-armv7-developer-build"
   ],
