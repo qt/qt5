@@ -1,9 +1,34 @@
 Version: 2
 Module only: True
-Include: [cmake_platforms.yaml]
+Include: [
+  cmake_platforms.yaml,
+  macos.yaml: [
+    'macos-universal-on-arm64'
+  ]
+]
 Configurations:
 -
     Template: 'qtci-linux-Ubuntu-22.04-x86_64-51'
     Compiler: 'GCC'
     Features: ['TestOnly', 'LicenseCheck']
+-
+    Id: 'macos-free-threading'
+    Template: 'qtci-macos-26-arm-105'
+    Compiler: 'Clang'
+    Target arch: 'x86_64-arm64'
+    Platform dependency: 'macos-universal-on-arm64'
+    Features: ['Sccache', 'Packaging', 'DoNotRunTests', 'WarningsAreErrors', 'UseConfigure', 'GenerateSBOM', 'VerifySBOM','RunAsPlatformDependency', 'FreeThreading']
 
+-
+    Id: 'linux-free-threading'
+    Template: 'qtci-linux-RHEL-9.6-x86_64-51'
+    Compiler: 'GCC'
+    Platform dependency: 'rhel-9.6'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM', 'RunAsPlatformDependency', 'FreeThreading']
+
+-
+    Id: 'windows-free-threading'
+    Template: 'qtci-windows-10_22H2-x86_64-53'
+    Compiler: 'MSVC2022'
+    Platform dependency: 'windows-11_24H2-msvc2022'
+    Features: ['Packaging', 'Sccache', 'UseConfigure', 'InstallQt5Dependencies', 'GenerateSBOM', 'VerifySBOM', 'RunAsPlatformDependency', 'FreeThreading']
